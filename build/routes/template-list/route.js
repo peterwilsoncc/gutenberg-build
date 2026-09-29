@@ -11217,20 +11217,22 @@ var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_primi
 var import_element15 = __toESM(require_element(), 1);
 var import_primitives10 = __toESM(require_primitives(), 1);
 var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element15.forwardRef)(function Icon2({ icon, size: size4 = 24, style, ...restProps }, ref) {
-  const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-    import_primitives10.SVG,
-    {
-      ref,
-      ...icon.props,
-      ...restProps,
-      ...mergedStyle ? { style: mergedStyle } : {},
-      width: size4,
-      height: size4
-    }
-  );
-});
+var Icon = (0, import_element15.forwardRef)(
+  function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
+    const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+      import_primitives10.SVG,
+      {
+        ref,
+        ...icon.props,
+        ...restProps,
+        ...mergedStyle ? { style: mergedStyle } : {},
+        width: size4,
+        height: size4
+      }
+    );
+  }
+);
 
 // packages/ui/build-module/utils/keyboard-shortcut.mjs
 var import_element17 = __toESM(require_element(), 1);
@@ -11323,7 +11325,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default3 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
 var VisuallyHidden = (0, import_element16.forwardRef)(
-  function VisuallyHidden2({ render: render4, ...restProps }, ref) {
+  function UnforwardedVisuallyHidden({ render: render4, ...restProps }, ref) {
     const element = useRender({
       render: render4,
       ref,
@@ -11358,7 +11360,7 @@ function useKeyboardShortcutProps({
     }
   };
 }
-var KeyboardShortcutDescription = (0, import_element17.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
+var KeyboardShortcutDescription = (0, import_element17.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
     VisuallyHidden,
     {
@@ -11373,7 +11375,7 @@ var KeyboardShortcutDescription = (0, import_element17.forwardRef)(function Keyb
     }
   );
 });
-var KeyboardShortcutDisplay = (0, import_element17.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
+var KeyboardShortcutDisplay = (0, import_element17.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
 });
 
@@ -11479,7 +11481,7 @@ if (typeof process === "undefined" || true) {
 }
 var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
 var Button3 = (0, import_element18.forwardRef)(
-  function Button22({
+  function UnforwardedButton({
     tone = "brand",
     variant = "solid",
     size: size4 = "default",
@@ -11609,7 +11611,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default5 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
 var ButtonIcon = (0, import_element19.forwardRef)(
-  function ButtonIcon2({ className, icon, ...props }, ref) {
+  function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
       Icon,
       {
@@ -18181,7 +18183,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default6 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
 var IconButton = (0, import_element20.forwardRef)(
-  function IconButton2({
+  function UnforwardedIconButton({
     label,
     className,
     // Prevent accidental forwarding of `children`
@@ -18804,7 +18806,7 @@ function usePreserveDayFocus(forwardedRef, month) {
 // packages/ui/build-module/calendar/calendar.mjs
 var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 var Calendar = (0, import_element26.forwardRef)(
-  function Calendar2({
+  function UnforwardedCalendar({
     defaultValue,
     value: valueProp,
     onValueChange,
@@ -18961,7 +18963,7 @@ function usePreviewRange({
   ]);
 }
 var RangeCalendar = (0, import_element27.forwardRef)(
-  function RangeCalendar2({
+  function UnforwardedRangeCalendar({
     defaultValue,
     value: valueProp,
     onValueChange,
@@ -19158,21 +19160,26 @@ var gapTokens = {
   "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
   "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 };
-var Stack = (0, import_element28.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
-  const style = {
-    gap: gap && gapTokens[gap],
-    alignItems: align,
-    justifyContent: justify,
-    flexDirection: direction,
-    flexWrap: wrap
-  };
-  const element = useRender({
-    render: render4,
-    ref,
-    props: mergeProps(props, { style, className: style_default8.stack })
-  });
-  return element;
-});
+var Stack = (0, import_element28.forwardRef)(
+  function UnforwardedStack({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
+    const style = {
+      gap: gap && gapTokens[gap],
+      alignItems: align,
+      justifyContent: justify,
+      flexDirection: direction,
+      flexWrap: wrap
+    };
+    const element = useRender({
+      render: render4,
+      ref,
+      props: mergeProps(props, {
+        style,
+        className: style_default8.stack
+      })
+    });
+    return element;
+  }
+);
 
 // packages/ui/build-module/form/primitives/input/input.mjs
 var import_element31 = __toESM(require_element(), 1);
@@ -19273,7 +19280,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default9 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
 var InputLayout = (0, import_element29.forwardRef)(
-  function InputLayout2({
+  function UnforwardedInputLayout({
     className,
     children,
     visuallyDisabled,
@@ -19408,7 +19415,7 @@ if (typeof process === "undefined" || true) {
   registerStyle11("e4f4f9600b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._8097270636ca6100__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._8097270636ca6100__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
 }
 var style_default10 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-var InputLayoutSlot = (0, import_element30.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
+var InputLayoutSlot = (0, import_element30.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     "div",
     {
@@ -19425,7 +19432,7 @@ var InputLayoutSlot = (0, import_element30.forwardRef)(function InputLayoutSlot2
 InputLayoutSlot.displayName = "InputLayout.Slot";
 
 // packages/ui/build-module/form/primitives/input-layout/index.mjs
-var InputLayout3 = Object.assign(InputLayout, {
+var InputLayout2 = Object.assign(InputLayout, {
   Slot: InputLayoutSlot
 });
 
@@ -19523,30 +19530,32 @@ if (typeof process === "undefined" || true) {
   registerStyle12("1a25f6a232", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2ae7be2fc1bb17a3__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}}");
 }
 var style_default11 = { "input": "_2ae7be2fc1bb17a3__input" };
-var Input3 = (0, import_element31.forwardRef)(function Input22({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
-    InputLayout3,
-    {
-      className: clsx_default(
-        focus_module_default3["outset-ring--focus-within"],
-        className
-      ),
-      style,
-      size: size4,
-      visuallyDisabled: restProps.disabled,
-      prefix,
-      suffix,
-      children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
-        Input,
-        {
-          ref,
-          className: clsx_default(global_css_defense_default4.input, style_default11.input),
-          ...restProps
-        }
-      )
-    }
-  );
-});
+var Input3 = (0, import_element31.forwardRef)(
+  function UnforwardedInput({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+      InputLayout2,
+      {
+        className: clsx_default(
+          focus_module_default3["outset-ring--focus-within"],
+          className
+        ),
+        style,
+        size: size4,
+        visuallyDisabled: restProps.disabled,
+        prefix,
+        suffix,
+        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+          Input,
+          {
+            ref,
+            className: clsx_default(global_css_defense_default4.input, style_default11.input),
+            ...restProps
+          }
+        )
+      }
+    );
+  }
+);
 
 // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
 var import_i18n6 = __toESM(require_i18n(), 1);
@@ -19640,7 +19649,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default12 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
 var Spinner = (0, import_element32.forwardRef)(
-  function Spinner2({ className, ...props }, ref) {
+  function UnforwardedSpinner({ className, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(
       "svg",
       {
@@ -19823,7 +19832,7 @@ function appendRequiredIndicator(label, required, markWhenOptional) {
   ] });
 }
 var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-var ControlWithError = (0, import_element33.forwardRef)(function ControlWithError2({
+var ControlWithError = (0, import_element33.forwardRef)(function UnforwardedControlWithError({
   required,
   markWhenOptional,
   customValidity,
@@ -20112,22 +20121,24 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default5 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
-var Root4 = (0, import_element34.forwardRef)(function Root22({ className, render: render4 = DEFAULT_RENDER2, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
-    index_parts_exports.Root,
-    {
-      ref,
-      className: clsx_default(resets_default5["box-sizing"], className),
-      render: render4,
-      ...restProps
-    }
-  );
-});
+var Root4 = (0, import_element34.forwardRef)(
+  function UnforwardedRoot({ className, render: render4 = DEFAULT_RENDER2, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+      index_parts_exports.Root,
+      {
+        ref,
+        className: clsx_default(resets_default5["box-sizing"], className),
+        render: render4,
+        ...restProps
+      }
+    );
+  }
+);
 
 // packages/ui/build-module/form/primitives/field/item.mjs
 var import_element35 = __toESM(require_element(), 1);
 var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
-var Item = (0, import_element35.forwardRef)(function Item2(props, ref) {
+var Item = (0, import_element35.forwardRef)(function UnforwardedItem(props, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(index_parts_exports.Item, { ref, ...props });
 });
 
@@ -20219,7 +20230,7 @@ if (typeof process === "undefined" || true) {
 }
 var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var Label = (0, import_element36.forwardRef)(
-  function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
+  function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
     const label = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
       index_parts_exports.Label,
       {
@@ -20330,7 +20341,7 @@ if (typeof process === "undefined" || true) {
   registerStyle17("df33c48b2d", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
 }
 var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-var Description = (0, import_element37.forwardRef)(function Description2({ className, ...restProps }, ref) {
+var Description = (0, import_element37.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
     index_parts_exports.Description,
     {
@@ -20434,7 +20445,7 @@ if (typeof process === "undefined" || true) {
 }
 var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var Details = (0, import_element38.forwardRef)(
-  function Details2({ className, ...restProps }, ref) {
+  function UnforwardedDetails({ className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(import_jsx_runtime51.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(index_parts_exports.Description, {}), children: (0, import_i18n7.__)("More details follow the field.") }),
       /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
@@ -20453,7 +20464,7 @@ var Details = (0, import_element38.forwardRef)(
 var import_element39 = __toESM(require_element(), 1);
 var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 var Control = (0, import_element39.forwardRef)(
-  function Control2(props, ref) {
+  function UnforwardedControl(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(index_parts_exports.Control, { ref, ...props });
   }
 );
@@ -20545,7 +20556,7 @@ if (typeof process === "undefined" || true) {
 }
 var field_default4 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var VisualLabel = (0, import_element40.forwardRef)(
-  function VisualLabel2({ className, render: render4, variant, ...restProps }, ref) {
+  function UnforwardedVisualLabel({ className, render: render4, variant, ...restProps }, ref) {
     return useRender({
       defaultTagName: "span",
       render: render4,
@@ -20659,7 +20670,7 @@ var wrappedRender = (render4, restProps) => {
   };
 };
 var Textarea = (0, import_element41.forwardRef)(
-  function Textarea2({
+  function UnforwardedTextarea({
     className,
     defaultValue,
     disabled: disabled2,
@@ -20784,7 +20795,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default15 = { "root": "a9211a7e6af24bed__root" };
 var InputControl = (0, import_element42.forwardRef)(
-  function InputControl2({
+  function UnforwardedInputControl({
     className,
     label,
     description,
@@ -20804,7 +20815,7 @@ var InputControl = (0, import_element42.forwardRef)(
 // packages/ui/build-module/form/textarea-control/textarea-control.mjs
 var import_element43 = __toESM(require_element(), 1);
 var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
-var TextareaControl = (0, import_element43.forwardRef)(function TextareaControl2({
+var TextareaControl = (0, import_element43.forwardRef)(function UnforwardedTextareaControl({
   className,
   label,
   description,
@@ -20824,7 +20835,7 @@ var TextareaControl = (0, import_element43.forwardRef)(function TextareaControl2
 var import_element44 = __toESM(require_element(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
-var ValidatedInputControl = (0, import_element44.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+var ValidatedInputControl = (0, import_element44.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
   const validityTargetRef = (0, import_element44.useRef)(null);
   const mergedRefs = (0, import_compose3.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
@@ -20843,7 +20854,7 @@ var ValidatedInputControl = (0, import_element44.forwardRef)(function ValidatedI
 var import_element45 = __toESM(require_element(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var ValidatedTextareaControl = (0, import_element45.forwardRef)(function ValidatedTextareaControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+var ValidatedTextareaControl = (0, import_element45.forwardRef)(function UnforwardedValidatedTextareaControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
   const validityTargetRef = (0, import_element45.useRef)(null);
   const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
@@ -23080,7 +23091,7 @@ function Email({
         markWhenOptional,
         validity,
         type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(Icon, { icon: envelope_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(Icon, { icon: envelope_default }) })
       }
     }
   );
@@ -23107,7 +23118,7 @@ function Telephone({
         markWhenOptional,
         validity,
         type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(Icon, { icon: mobile_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(Icon, { icon: mobile_default }) })
       }
     }
   );
@@ -23134,7 +23145,7 @@ function Url({
         markWhenOptional,
         validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(Icon, { icon: link_default }) })
       }
     }
   );
@@ -23552,7 +23563,7 @@ function Toggle({
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
 var import_element69 = __toESM(require_element(), 1);
 var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
-function Textarea3({
+function Textarea2({
   data,
   field,
   onChange,
@@ -23982,7 +23993,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -24023,7 +24034,7 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
           import_components21.Button,
           {
             icon: isVisible ? unseen_default : seen_default,
@@ -24065,7 +24076,7 @@ var FORM_CONTROLS = {
   text: Text,
   time: Time,
   toggle: Toggle,
-  textarea: Textarea3,
+  textarea: Textarea2,
   toggleGroup: ToggleGroup
 };
 function isEditConfig(value) {

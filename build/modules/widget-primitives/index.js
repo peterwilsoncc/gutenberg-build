@@ -364,7 +364,7 @@ function useWidgetHost() {
 var import_element4 = __toESM(require_element(), 1);
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var HostLink = (0, import_element4.forwardRef)(
-  function HostLink2({ href, children, ...props }, ref) {
+  function UnforwardedHostLink({ href, children, ...props }, ref) {
     const { links } = useWidgetHost();
     const { download, target } = props;
     const opensNewDocument = download !== void 0 && download !== false || /^_blank$/i.test(target ?? "");

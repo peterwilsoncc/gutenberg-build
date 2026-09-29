@@ -1743,10 +1743,10 @@ var wp;
       eventsRef.current.onDragMove?.(event);
     }, []);
     const endDrag = (0, import_element16.useCallback)(
-      function endDrag2(event) {
+      function handleEndDrag(event) {
         eventsRef.current.onDragEnd?.(event);
         document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("mouseup", endDrag2);
+        document.removeEventListener("mouseup", handleEndDrag);
         setIsDragging(false);
       },
       [onMouseMove]

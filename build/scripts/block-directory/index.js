@@ -9757,7 +9757,7 @@ var wp;
   }
   var style_default3 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
   var VisuallyHidden = (0, import_element17.forwardRef)(
-    function VisuallyHidden2({ render, ...restProps }, ref) {
+    function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
       const element = useRender({
         render,
         ref,

@@ -28128,23 +28128,25 @@ var wp;
     registerStyle("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
   }
   var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-  var Text = (0, import_element19.forwardRef)(function Text2({ variant = "body-md", render: render5, className, ...props }, ref) {
-    const element = useRender({
-      render: render5,
-      defaultTagName: "span",
-      ref,
-      props: mergeProps(props, {
-        className: clsx_default(
-          style_default.text,
-          global_css_defense_default.heading,
-          global_css_defense_default.p,
-          style_default[variant],
-          className
-        )
-      })
-    });
-    return element;
-  });
+  var Text = (0, import_element19.forwardRef)(
+    function UnforwardedText({ variant = "body-md", render: render5, className, ...props }, ref) {
+      const element = useRender({
+        render: render5,
+        defaultTagName: "span",
+        ref,
+        props: mergeProps(props, {
+          className: clsx_default(
+            style_default.text,
+            global_css_defense_default.heading,
+            global_css_defense_default.p,
+            style_default[variant],
+            className
+          )
+        })
+      });
+      return element;
+    }
+  );
 
   // packages/ui/build-module/badge/badge.mjs
   var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
@@ -28232,21 +28234,23 @@ var wp;
     registerStyle2("40ea4a6382", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._96e6251aad1a6136__badge{border-radius:var(--wpds-border-radius-lg,8px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._99f7158cb520f750__is-high-intent{background-color:var(--wpds-color-background-surface-error,#fae5e1);color:var(--wpds-color-foreground-content-error,#470000)}.c20ebef2365bc8b7__is-medium-intent{background-color:var(--wpds-color-background-surface-warning,#fde6be);color:var(--wpds-color-foreground-content-warning,#2e1900)}._365e1626c6202e52__is-low-intent{background-color:var(--wpds-color-background-surface-caution,#fee995);color:var(--wpds-color-foreground-content-caution,#281d00)}._33f8198127ddf4ef__is-stable-intent{background-color:var(--wpds-color-background-surface-success,#c2f8ca);color:var(--wpds-color-foreground-content-success,#002900)}._04c1aca8fc449412__is-informational-intent{background-color:var(--wpds-color-background-surface-info,#deebfa);color:var(--wpds-color-foreground-content-info,#001b4f)}._90726e69d495ec19__is-draft-intent{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._898f4a544993bd39__is-none-intent{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}}}");
   }
   var style_default2 = { "badge": "_96e6251aad1a6136__badge", "is-high-intent": "_99f7158cb520f750__is-high-intent", "is-medium-intent": "c20ebef2365bc8b7__is-medium-intent", "is-low-intent": "_365e1626c6202e52__is-low-intent", "is-stable-intent": "_33f8198127ddf4ef__is-stable-intent", "is-informational-intent": "_04c1aca8fc449412__is-informational-intent", "is-draft-intent": "_90726e69d495ec19__is-draft-intent", "is-none-intent": "_898f4a544993bd39__is-none-intent" };
-  var Badge = (0, import_element20.forwardRef)(function Badge2({ intent = "none", className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
-      Text,
-      {
-        ref,
-        className: clsx_default(
-          style_default2.badge,
-          style_default2[`is-${intent}-intent`],
-          className
-        ),
-        ...props,
-        variant: "body-sm"
-      }
-    );
-  });
+  var Badge = (0, import_element20.forwardRef)(
+    function UnforwardedBadge({ intent = "none", className, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
+        Text,
+        {
+          ref,
+          className: clsx_default(
+            style_default2.badge,
+            style_default2[`is-${intent}-intent`],
+            className
+          ),
+          ...props,
+          variant: "body-sm"
+        }
+      );
+    }
+  );
 
   // packages/ui/build-module/tooltip/index.mjs
   var tooltip_exports = {};
@@ -28797,50 +28801,52 @@ var wp;
     registerStyle6("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
   }
   var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-  var Link = (0, import_element26.forwardRef)(function Link2({
-    children,
-    variant = "default",
-    tone = "brand",
-    openInNewTab = false,
-    target,
-    render: render5,
-    className,
-    ...props
-  }, ref) {
-    const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
-    const element = useRender({
+  var Link = (0, import_element26.forwardRef)(
+    function UnforwardedLink({
+      children,
+      variant = "default",
+      tone = "brand",
+      openInNewTab = false,
+      target,
       render: render5,
-      defaultTagName: "a",
-      ref,
-      props: mergeProps(props, {
-        className: clsx_default(
-          global_css_defense_default2.a,
-          resets_default2["box-sizing"],
-          focus_module_default["outset-ring--focus-except-active"],
-          variant !== "unstyled" && style_default5.link,
-          variant !== "unstyled" && style_default5[`is-${tone}`],
-          variant === "unstyled" && style_default5["is-unstyled"],
-          className
-        ),
-        target: target ?? (openInNewTab ? "_blank" : void 0),
-        children: /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(import_jsx_runtime158.Fragment, { children: [
-          children,
-          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
-            "span",
-            {
-              className: style_default5["link-icon"],
-              role: "img",
-              "aria-label": (
-                /* translators: accessibility text appended to link text */
-                (0, import_i18n9.__)("(opens in a new tab)")
-              )
-            }
-          )
-        ] })
-      })
-    });
-    return element;
-  });
+      className,
+      ...props
+    }, ref) {
+      const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+      const element = useRender({
+        render: render5,
+        defaultTagName: "a",
+        ref,
+        props: mergeProps(props, {
+          className: clsx_default(
+            global_css_defense_default2.a,
+            resets_default2["box-sizing"],
+            focus_module_default["outset-ring--focus-except-active"],
+            variant !== "unstyled" && style_default5.link,
+            variant !== "unstyled" && style_default5[`is-${tone}`],
+            variant === "unstyled" && style_default5["is-unstyled"],
+            className
+          ),
+          target: target ?? (openInNewTab ? "_blank" : void 0),
+          children: /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(import_jsx_runtime158.Fragment, { children: [
+            children,
+            shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+              "span",
+              {
+                className: style_default5["link-icon"],
+                role: "img",
+                "aria-label": (
+                  /* translators: accessibility text appended to link text */
+                  (0, import_i18n9.__)("(opens in a new tab)")
+                )
+              }
+            )
+          ] })
+        })
+      });
+      return element;
+    }
+  );
 
   // packages/ui/build-module/menu/index.mjs
   var menu_exports = {};
@@ -28872,20 +28878,22 @@ var wp;
   var import_element27 = __toESM(require_element(), 1);
   var import_primitives94 = __toESM(require_primitives(), 1);
   var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
-  var Icon = (0, import_element27.forwardRef)(function Icon2({ icon, size: size4 = 24, style, ...restProps }, ref) {
-    const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-      import_primitives94.SVG,
-      {
-        ref,
-        ...icon.props,
-        ...restProps,
-        ...mergedStyle ? { style: mergedStyle } : {},
-        width: size4,
-        height: size4
-      }
-    );
-  });
+  var Icon = (0, import_element27.forwardRef)(
+    function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
+      const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+        import_primitives94.SVG,
+        {
+          ref,
+          ...icon.props,
+          ...restProps,
+          ...mergedStyle ? { style: mergedStyle } : {},
+          width: size4,
+          height: size4
+        }
+      );
+    }
+  );
 
   // packages/ui/build-module/menu/context.mjs
   var import_element28 = __toESM(require_element(), 1);
@@ -28990,7 +28998,7 @@ var wp;
   }
   var style_default6 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
   var VisuallyHidden = (0, import_element29.forwardRef)(
-    function VisuallyHidden2({ render: render5, ...restProps }, ref) {
+    function UnforwardedVisuallyHidden({ render: render5, ...restProps }, ref) {
       const element = useRender({
         render: render5,
         ref,
@@ -29025,7 +29033,7 @@ var wp;
       }
     };
   }
-  var KeyboardShortcutDescription = (0, import_element30.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
+  var KeyboardShortcutDescription = (0, import_element30.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
       VisuallyHidden,
       {
@@ -29040,19 +29048,19 @@ var wp;
       }
     );
   });
-  var KeyboardShortcutDisplay = (0, import_element30.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
+  var KeyboardShortcutDisplay = (0, import_element30.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
   });
 
   // packages/ui/build-module/utils/item-popup/item-content.mjs
   var import_element31 = __toESM(require_element(), 1);
   var VALIDATION_ENABLED = true;
-  function parseItemContent(children, { Label: Label3, Description: Description4, validationMessage }) {
+  function parseItemContent(children, { Label: Label2, Description: Description3, validationMessage }) {
     const childArray = import_element31.Children.toArray(children);
     const [label, ...descriptions] = childArray;
-    const hasLabel = (0, import_element31.isValidElement)(label) && label.type === Label3;
+    const hasLabel = (0, import_element31.isValidElement)(label) && label.type === Label2;
     const descriptionElements = descriptions.filter(
-      (description) => (0, import_element31.isValidElement)(description) && description.type === Description4
+      (description) => (0, import_element31.isValidElement)(description) && description.type === Description3
     );
     if (VALIDATION_ENABLED && (!hasLabel || descriptionElements.length !== descriptions.length)) {
       throw new Error(validationMessage);
@@ -29087,15 +29095,15 @@ var wp;
       ])
     ).join(" ");
     let descriptionIndex = 0;
-    const { Label: Label3, Description: Description4, descriptionValidationToken } = components;
+    const { Label: Label2, Description: Description3, descriptionValidationToken } = components;
     const contentChildren = import_element31.Children.map(children, (child) => {
       if (!(0, import_element31.isValidElement)(child)) {
         return child;
       }
-      if (child.type === Label3) {
+      if (child.type === Label2) {
         return child.props.id === resolvedLabelId ? child : (0, import_element31.cloneElement)(child, { id: resolvedLabelId });
       }
-      if (child.type !== Description4) {
+      if (child.type !== Description3) {
         return child;
       }
       const descriptionId = resolvedDescriptionIds[descriptionIndex++];
@@ -31263,7 +31271,7 @@ var wp;
   }
   var global_css_defense_default8 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
   var Button4 = (0, import_element49.forwardRef)(
-    function Button22({
+    function UnforwardedButton({
       tone = "brand",
       variant = "solid",
       size: size4 = "default",
@@ -31393,7 +31401,7 @@ var wp;
   }
   var style_default22 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
   var ButtonIcon = (0, import_element50.forwardRef)(
-    function ButtonIcon2({ className, icon, ...props }, ref) {
+    function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
         Icon,
         {
@@ -37965,7 +37973,7 @@ var wp;
   }
   var style_default23 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
   var IconButton = (0, import_element51.forwardRef)(
-    function IconButton2({
+    function UnforwardedIconButton({
       label,
       className,
       // Prevent accidental forwarding of `children`
@@ -38588,7 +38596,7 @@ var wp;
   // packages/ui/build-module/calendar/calendar.mjs
   var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
   var Calendar = (0, import_element57.forwardRef)(
-    function Calendar2({
+    function UnforwardedCalendar({
       defaultValue: defaultValue2,
       value: valueProp,
       onValueChange,
@@ -38745,7 +38753,7 @@ var wp;
     ]);
   }
   var RangeCalendar = (0, import_element58.forwardRef)(
-    function RangeCalendar2({
+    function UnforwardedRangeCalendar({
       defaultValue: defaultValue2,
       value: valueProp,
       onValueChange,
@@ -39857,21 +39865,26 @@ var wp;
     "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
     "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
   };
-  var Stack = (0, import_element72.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render5, ...props }, ref) {
-    const style = {
-      gap: gap && gapTokens[gap],
-      alignItems: align,
-      justifyContent: justify,
-      flexDirection: direction,
-      flexWrap: wrap
-    };
-    const element = useRender({
-      render: render5,
-      ref,
-      props: mergeProps(props, { style, className: style_default29.stack })
-    });
-    return element;
-  });
+  var Stack = (0, import_element72.forwardRef)(
+    function UnforwardedStack({ direction, gap, align, justify, wrap, render: render5, ...props }, ref) {
+      const style = {
+        gap: gap && gapTokens[gap],
+        alignItems: align,
+        justifyContent: justify,
+        flexDirection: direction,
+        flexWrap: wrap
+      };
+      const element = useRender({
+        render: render5,
+        ref,
+        props: mergeProps(props, {
+          style,
+          className: style_default29.stack
+        })
+      });
+      return element;
+    }
+  );
 
   // packages/ui/build-module/utils/use-schedule-validation.mjs
   var import_compose5 = __toESM(require_compose(), 1);
@@ -40003,7 +40016,7 @@ var wp;
   }
   var style_default30 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
   var InputLayout = (0, import_element74.forwardRef)(
-    function InputLayout2({
+    function UnforwardedInputLayout({
       className,
       children,
       visuallyDisabled,
@@ -40138,7 +40151,7 @@ var wp;
     registerStyle35("e4f4f9600b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._8097270636ca6100__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._8097270636ca6100__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
   }
   var style_default31 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-  var InputLayoutSlot = (0, import_element75.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
+  var InputLayoutSlot = (0, import_element75.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
       "div",
       {
@@ -40155,7 +40168,7 @@ var wp;
   InputLayoutSlot.displayName = "InputLayout.Slot";
 
   // packages/ui/build-module/form/primitives/input-layout/index.mjs
-  var InputLayout3 = Object.assign(InputLayout, {
+  var InputLayout2 = Object.assign(InputLayout, {
     Slot: InputLayoutSlot
   });
 
@@ -40253,30 +40266,32 @@ var wp;
     registerStyle36("1a25f6a232", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2ae7be2fc1bb17a3__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}}");
   }
   var style_default32 = { "input": "_2ae7be2fc1bb17a3__input" };
-  var Input3 = (0, import_element76.forwardRef)(function Input22({ className, size: size4 = "default", prefix: prefix2, suffix, style, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
-      InputLayout3,
-      {
-        className: clsx_default(
-          focus_module_default4["outset-ring--focus-within"],
-          className
-        ),
-        style,
-        size: size4,
-        visuallyDisabled: restProps.disabled,
-        prefix: prefix2,
-        suffix,
-        children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
-          Input,
-          {
-            ref,
-            className: clsx_default(global_css_defense_default12.input, style_default32.input),
-            ...restProps
-          }
-        )
-      }
-    );
-  });
+  var Input3 = (0, import_element76.forwardRef)(
+    function UnforwardedInput({ className, size: size4 = "default", prefix: prefix2, suffix, style, ...restProps }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+        InputLayout2,
+        {
+          className: clsx_default(
+            focus_module_default4["outset-ring--focus-within"],
+            className
+          ),
+          style,
+          size: size4,
+          visuallyDisabled: restProps.disabled,
+          prefix: prefix2,
+          suffix,
+          children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+            Input,
+            {
+              ref,
+              className: clsx_default(global_css_defense_default12.input, style_default32.input),
+              ...restProps
+            }
+          )
+        }
+      );
+    }
+  );
 
   // packages/ui/build-module/utils/css/item-popup.mjs
   var STYLE_HASH_ATTRIBUTE37 = "data-wp-hash";
@@ -40474,7 +40489,7 @@ var wp;
   }
   var style_default33 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
   var Spinner = (0, import_element77.forwardRef)(
-    function Spinner2({ className, ...props }, ref) {
+    function UnforwardedSpinner({ className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(
         "svg",
         {
@@ -40657,7 +40672,7 @@ var wp;
     ] });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-  var ControlWithError = (0, import_element78.forwardRef)(function ControlWithError2({
+  var ControlWithError = (0, import_element78.forwardRef)(function UnforwardedControlWithError({
     required,
     markWhenOptional,
     customValidity,
@@ -40850,7 +40865,7 @@ var wp;
   var import_element79 = __toESM(require_element(), 1);
   var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
   var Chips = (0, import_element79.forwardRef)(
-    function Chips2(props, ref) {
+    function UnforwardedChips(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(index_parts_exports2.Chips, { ref, ...props });
     }
   );
@@ -40943,7 +40958,7 @@ var wp;
     registerStyle40("fb14a04e1a", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f3acce91cfa4ddb0__positioner{z-index:var(--wp-ui-combobox-z-index,initial)}._215088f110703fb9__chip{--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-sm,8px);align-items:center;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:1px solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:12px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:default;display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-xs,16px);max-width:100%;min-height:var(--wpds-dimension-size-sm,24px);overflow:hidden;&:not([data-disabled]):focus,&:not([data-disabled]):has(button:not(:disabled,[aria-disabled=true]):hover){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);outline:none;@media (forced-colors:active){background-color:SelectedItem}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:has(.a07649e544b312b5__chip-prefix){--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-xs,4px)}}.a07649e544b312b5__chip-prefix{align-items:center;border-radius:50%;display:flex;flex-shrink:0;height:var(--wpds-dimension-size-xs,20px);justify-content:center;margin-inline-start:1px;overflow:hidden;width:var(--wpds-dimension-size-xs,20px)}.d10525babc99f435__chip-content{min-width:0;overflow-wrap:anywhere;padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline-start:var(--wp-ui-combobox-chip-content-padding-inline-start)}.edd3e6dc8e42005f__chip-remove{border:none}}}");
   }
   var style_default35 = { "positioner": "f3acce91cfa4ddb0__positioner", "chip": "_215088f110703fb9__chip", "chip-prefix": "a07649e544b312b5__chip-prefix", "chip-content": "d10525babc99f435__chip-content", "chip-remove": "edd3e6dc8e42005f__chip-remove" };
-  var ChipWithRemove = (0, import_element80.forwardRef)(function ChipWithRemove2({
+  var ChipWithRemove = (0, import_element80.forwardRef)(function UnforwardedChipWithRemove({
     className,
     children,
     prefix: prefix2,
@@ -41029,7 +41044,7 @@ var wp;
     }
   );
   var Clear = (0, import_element81.forwardRef)(
-    function Clear2({ render: render5 = DEFAULT_RENDER2, ...restProps }, ref) {
+    function UnforwardedClear({ render: render5 = DEFAULT_RENDER2, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(index_parts_exports2.Clear, { ref, render: render5, ...restProps });
     }
   );
@@ -41131,7 +41146,7 @@ var wp;
   }
   var item_popup_default2 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "item-icon": "a3adcfd0b73ffd40__item-icon", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var Empty = (0, import_element82.forwardRef)(
-    function Empty2({ className, ...restProps }, ref) {
+    function UnforwardedEmpty({ className, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
         index_parts_exports2.Empty,
         {
@@ -41231,7 +41246,7 @@ var wp;
   }
   var item_popup_default3 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "item-icon": "a3adcfd0b73ffd40__item-icon", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var Group2 = (0, import_element83.forwardRef)(
-    function Group22({ className, children, ...restProps }, ref) {
+    function UnforwardedGroup({ className, children, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
         index_parts_exports2.Group,
         {
@@ -41332,7 +41347,7 @@ var wp;
   }
   var item_popup_default4 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "item-icon": "a3adcfd0b73ffd40__item-icon", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var GroupLabel2 = (0, import_element84.forwardRef)(
-    function GroupLabel22({ className, children, ...restProps }, ref) {
+    function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
         Text,
         {
@@ -41352,7 +41367,7 @@ var wp;
   var import_element85 = __toESM(require_element(), 1);
   var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   var InputGroup = (0, import_element85.forwardRef)(
-    function InputGroup2(props, ref) {
+    function UnforwardedInputGroup(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(index_parts_exports2.InputGroup, { ref, ...props });
     }
   );
@@ -41363,12 +41378,12 @@ var wp;
   var DEFAULT_RENDER3 = (props) => /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
     Input3,
     {
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Icon, { icon: search_default }) }),
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Icon, { icon: search_default }) }),
       ...props
     }
   );
   var Input4 = (0, import_element86.forwardRef)(
-    function Input23({ render: render5 = DEFAULT_RENDER3, ...restProps }, ref) {
+    function UnforwardedInput2({ render: render5 = DEFAULT_RENDER3, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(index_parts_exports2.Input, { ref, render: render5, ...restProps });
     }
   );
@@ -41469,7 +41484,7 @@ var wp;
   }
   var resets_default13 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
   var Item2 = (0, import_element87.forwardRef)(
-    function Item22({ className, children, variant = "default", ...restProps }, ref) {
+    function UnforwardedItem({ className, children, variant = "default", ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
         index_parts_exports2.Item,
         {
@@ -41587,7 +41602,7 @@ var wp;
   }
   var item_popup_default6 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "item-icon": "a3adcfd0b73ffd40__item-icon", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var List = (0, import_element88.forwardRef)(
-    function List2({ className, ...restProps }, ref) {
+    function UnforwardedList({ className, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
         index_parts_exports2.List,
         {
@@ -41686,7 +41701,7 @@ var wp;
   }
   var item_popup_default7 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "item-icon": "a3adcfd0b73ffd40__item-icon", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var ListBody = (0, import_element89.forwardRef)(
-    function ListBody2({ render: render5, ...props }, ref) {
+    function UnforwardedListBody({ render: render5, ...props }, ref) {
       const element = useRender({
         defaultTagName: "div",
         render: render5,
@@ -41787,7 +41802,7 @@ var wp;
   }
   var item_popup_default8 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "item-icon": "a3adcfd0b73ffd40__item-icon", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var ListFooter = (0, import_element90.forwardRef)(
-    function ListFooter2({ render: render5, ...props }, ref) {
+    function UnforwardedListFooter({ render: render5, ...props }, ref) {
       const element = useRender({
         defaultTagName: "div",
         render: render5,
@@ -42014,7 +42029,7 @@ var wp;
   }
   var item_popup_default9 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "item-icon": "a3adcfd0b73ffd40__item-icon", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var Popup3 = (0, import_element93.forwardRef)(
-    function Popup22({ className, portal, positioner, width, ...restProps }, ref) {
+    function UnforwardedPopup({ className, portal, positioner, width, ...restProps }, ref) {
       const popupContent = /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
         index_parts_exports2.Popup,
         {
@@ -42130,7 +42145,7 @@ var wp;
   }
   var item_popup_default10 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "item-icon": "a3adcfd0b73ffd40__item-icon", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var Status = (0, import_element94.forwardRef)(
-    function Status2({ className, ...restProps }, ref) {
+    function UnforwardedStatus({ className, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
         index_parts_exports2.Status,
         {
@@ -42235,7 +42250,7 @@ var wp;
   }
   var select_trigger_default = { "trigger-wrapper": "_6e4e0445ef20426b__trigger-wrapper", "is-minimal": "fa98c865fb77e675__is-minimal", "trigger": "_7893295e3f6d1af7__trigger", "trigger-value": "e760c9339965ce84__trigger-value", "trigger-caret": "_308bc63e43681f99__trigger-caret" };
   var Trigger4 = (0, import_element95.forwardRef)(
-    function Trigger22({
+    function UnforwardedTrigger({
       className,
       children,
       size: size4 = "default",
@@ -42243,7 +42258,7 @@ var wp;
       ...restProps
     }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-        InputLayout3,
+        InputLayout2,
         {
           className: clsx_default(
             focus_module_default5["outset-ring--focus-within-except-active"],
@@ -42387,22 +42402,24 @@ var wp;
   }
   var resets_default15 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
   var DEFAULT_RENDER4 = (props) => /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
-  var Root8 = (0, import_element96.forwardRef)(function Root22({ className, render: render5 = DEFAULT_RENDER4, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
-      index_parts_exports4.Root,
-      {
-        ref,
-        className: clsx_default(resets_default15["box-sizing"], className),
-        render: render5,
-        ...restProps
-      }
-    );
-  });
+  var Root8 = (0, import_element96.forwardRef)(
+    function UnforwardedRoot({ className, render: render5 = DEFAULT_RENDER4, ...restProps }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+        index_parts_exports4.Root,
+        {
+          ref,
+          className: clsx_default(resets_default15["box-sizing"], className),
+          render: render5,
+          ...restProps
+        }
+      );
+    }
+  );
 
   // packages/ui/build-module/form/primitives/field/item.mjs
   var import_element97 = __toESM(require_element(), 1);
   var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
-  var Item3 = (0, import_element97.forwardRef)(function Item23(props, ref) {
+  var Item3 = (0, import_element97.forwardRef)(function UnforwardedItem2(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(index_parts_exports4.Item, { ref, ...props });
   });
 
@@ -42494,7 +42511,7 @@ var wp;
   }
   var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
   var Label = (0, import_element98.forwardRef)(
-    function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
+    function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
       const label = /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
         index_parts_exports4.Label,
         {
@@ -42605,7 +42622,7 @@ var wp;
     registerStyle54("df33c48b2d", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-  var Description = (0, import_element99.forwardRef)(function Description2({ className, ...restProps }, ref) {
+  var Description = (0, import_element99.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
       index_parts_exports4.Description,
       {
@@ -42709,7 +42726,7 @@ var wp;
   }
   var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
   var Details = (0, import_element100.forwardRef)(
-    function Details2({ className, ...restProps }, ref) {
+    function UnforwardedDetails({ className, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(import_jsx_runtime221.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(index_parts_exports4.Description, {}), children: (0, import_i18n19.__)("More details follow the field.") }),
         /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
@@ -42728,7 +42745,7 @@ var wp;
   var import_element101 = __toESM(require_element(), 1);
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   var Control = (0, import_element101.forwardRef)(
-    function Control2(props, ref) {
+    function UnforwardedControl(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(index_parts_exports4.Control, { ref, ...props });
     }
   );
@@ -42820,7 +42837,7 @@ var wp;
   }
   var field_default4 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
   var VisualLabel = (0, import_element102.forwardRef)(
-    function VisualLabel2({ className, render: render5, variant, ...restProps }, ref) {
+    function UnforwardedVisualLabel({ className, render: render5, variant, ...restProps }, ref) {
       return useRender({
         defaultTagName: "span",
         render: render5,
@@ -43092,7 +43109,7 @@ var wp;
       (0, import_i18n20.isRTL)() ? (0, import_i18n20.__)("Right Arrow") : (0, import_i18n20.__)("Left Arrow")
     );
   }
-  var SearchableChipSelect = (0, import_element103.forwardRef)(function SearchableChipSelect2({
+  var SearchableChipSelect = (0, import_element103.forwardRef)(function UnforwardedSearchableChipSelect({
     children,
     disabled: disabled2,
     emptyContent = (0, import_i18n20.__)("No results found."),
@@ -43127,7 +43144,7 @@ var wp;
                 Chips,
                 {
                   render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                    InputLayout3,
+                    InputLayout2,
                     {
                       className: clsx_default(
                         focus_module_default6["outset-ring--focus-within"],
@@ -43225,7 +43242,7 @@ var wp;
   ChipWithRemove.displayName = "SearchableChipSelect.ChipWithRemove";
   Group2.displayName = "SearchableChipSelect.Group";
   GroupLabel2.displayName = "SearchableChipSelect.GroupLabel";
-  var SearchableChipSelect3 = Object.assign(SearchableChipSelect, {
+  var SearchableChipSelect2 = Object.assign(SearchableChipSelect, {
     Item: Item2,
     ChipWithRemove,
     Group: Group2,
@@ -43238,7 +43255,7 @@ var wp;
   var import_element104 = __toESM(require_element(), 1);
   var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
   var Item4 = (0, import_element104.forwardRef)(
-    function Item24(props, ref) {
+    function UnforwardedItem3(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(Item2, { ref, ...props });
     }
   );
@@ -43389,7 +43406,7 @@ var wp;
       );
     }
   }
-  var SearchableSelect = (0, import_element105.forwardRef)(function SearchableSelect2({
+  var SearchableSelect = (0, import_element105.forwardRef)(function UnforwardedSearchableSelect({
     children,
     emptyContent = (0, import_i18n21.__)("No results found."),
     statusContent,
@@ -43456,7 +43473,7 @@ var wp;
   Item4.displayName = "SearchableSelect.Item";
   Group2.displayName = "SearchableSelect.Group";
   GroupLabel2.displayName = "SearchableSelect.GroupLabel";
-  var SearchableSelect3 = Object.assign(SearchableSelect, {
+  var SearchableSelect2 = Object.assign(SearchableSelect, {
     Item: Item4,
     Group: Group2,
     GroupLabel: GroupLabel2,
@@ -43561,7 +43578,7 @@ var wp;
     };
   };
   var Textarea = (0, import_element106.forwardRef)(
-    function Textarea2({
+    function UnforwardedTextarea({
       className,
       defaultValue: defaultValue2,
       disabled: disabled2,
@@ -43686,7 +43703,7 @@ var wp;
   }
   var style_default40 = { "root": "a9211a7e6af24bed__root" };
   var InputControl = (0, import_element107.forwardRef)(
-    function InputControl2({
+    function UnforwardedInputControl({
       className,
       label,
       description,
@@ -43706,7 +43723,7 @@ var wp;
   // packages/ui/build-module/form/searchable-chip-select-control/searchable-chip-select-control.mjs
   var import_element108 = __toESM(require_element(), 1);
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
-  var SearchableChipSelectControl = (0, import_element108.forwardRef)(function SearchableChipSelectControl2({
+  var SearchableChipSelectControl = (0, import_element108.forwardRef)(function UnforwardedSearchableChipSelectControl({
     className,
     label,
     description,
@@ -43716,14 +43733,14 @@ var wp;
   }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(field_exports.Root, { className, children: [
       /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(SearchableChipSelect3, { ref, ...restProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(SearchableChipSelect2, { ref, ...restProps }),
       description && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(field_exports.Description, { children: description }),
       details && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(field_exports.Details, { children: details })
     ] });
   });
 
   // packages/ui/build-module/form/searchable-chip-select-control/index.mjs
-  var SearchableChipSelectControl3 = Object.assign(
+  var SearchableChipSelectControl2 = Object.assign(
     SearchableChipSelectControl,
     {
       Group: Group2,
@@ -43738,7 +43755,7 @@ var wp;
   // packages/ui/build-module/form/textarea-control/textarea-control.mjs
   var import_element109 = __toESM(require_element(), 1);
   var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
-  var TextareaControl = (0, import_element109.forwardRef)(function TextareaControl2({
+  var TextareaControl = (0, import_element109.forwardRef)(function UnforwardedTextareaControl({
     className,
     label,
     description,
@@ -43758,7 +43775,7 @@ var wp;
   var import_element110 = __toESM(require_element(), 1);
   var import_compose6 = __toESM(require_compose(), 1);
   var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
-  var ValidatedInputControl = (0, import_element110.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+  var ValidatedInputControl = (0, import_element110.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
     const validityTargetRef = (0, import_element110.useRef)(null);
     const mergedRefs = (0, import_compose6.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
@@ -43777,7 +43794,7 @@ var wp;
   var import_element111 = __toESM(require_element(), 1);
   var import_compose7 = __toESM(require_compose(), 1);
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
-  var ValidatedTextareaControl = (0, import_element111.forwardRef)(function ValidatedTextareaControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+  var ValidatedTextareaControl = (0, import_element111.forwardRef)(function UnforwardedValidatedTextareaControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
     const validityTargetRef = (0, import_element111.useRef)(null);
     const mergedRefs = (0, import_compose7.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
@@ -43799,7 +43816,7 @@ var wp;
     ActionLink: () => ActionLink,
     Actions: () => Actions,
     CloseIcon: () => CloseIcon,
-    Description: () => Description3,
+    Description: () => Description2,
     Root: () => Root9,
     Title: () => Title2
   });
@@ -44121,7 +44138,7 @@ var wp;
     registerStyle63("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default43 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var Description3 = (0, import_element114.forwardRef)(
+  var Description2 = (0, import_element114.forwardRef)(
     function NoticeDescription({ className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
         Text,
@@ -44646,7 +44663,7 @@ var wp;
   }
   var style_default48 = { "skeleton": "b20cc1690085c2f0__skeleton", "pulse": "_9b143194fdb45f93__pulse", "skeleton-pulse": "e2b9fe0690281bc8__skeleton-pulse" };
   var Skeleton = (0, import_element119.forwardRef)(
-    function Skeleton2({ render: render5, ...props }, ref) {
+    function UnforwardedSkeleton({ render: render5, ...props }, ref) {
       return useRender({
         render: render5,
         ref,
@@ -44670,7 +44687,7 @@ var wp;
   // packages/ui/build-module/tabs/index.mjs
   var tabs_exports = {};
   __export(tabs_exports, {
-    List: () => List3,
+    List: () => List2,
     Panel: () => Panel2,
     Root: () => Root10,
     Tab: () => Tab
@@ -44765,7 +44782,7 @@ var wp;
   }
   var style_default49 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
   var SCROLL_EPSILON = 1;
-  var List3 = (0, import_element120.forwardRef)(
+  var List2 = (0, import_element120.forwardRef)(
     function TabList({
       children,
       variant = "default",
@@ -45149,21 +45166,29 @@ var wp;
     registerStyle71("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
   }
   var style_default50 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
-  var Tab = (0, import_element124.forwardRef)(function Tab2({ className, children, ...otherProps }, forwardedRef) {
-    useRegisterTab();
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(
-      index_parts_exports5.Tab,
-      {
-        ref: forwardedRef,
-        className: clsx_default(style_default50.tab, className),
-        ...otherProps,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("span", { className: style_default50["tab-children"], children }),
-          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(Icon, { icon: chevron_right_default, className: style_default50["tab-chevron"] })
-        ]
-      }
-    );
-  });
+  var Tab = (0, import_element124.forwardRef)(
+    function UnforwardedTab({ className, children, ...otherProps }, forwardedRef) {
+      useRegisterTab();
+      return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(
+        index_parts_exports5.Tab,
+        {
+          ref: forwardedRef,
+          className: clsx_default(style_default50.tab, className),
+          ...otherProps,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("span", { className: style_default50["tab-children"], children }),
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+              Icon,
+              {
+                icon: chevron_right_default,
+                className: style_default50["tab-chevron"]
+              }
+            )
+          ]
+        }
+      );
+    }
+  );
 
   // packages/fields/build-module/fields/page-title/view.mjs
   var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
@@ -55281,7 +55306,7 @@ var wp;
     return chunks;
   }
   var GridItem = (0, import_element166.forwardRef)(
-    function GridItem2({
+    function UnforwardedGridItem({
       view,
       selection,
       onChangeSelection,
@@ -55322,7 +55347,7 @@ var wp;
         [forwardedRef]
       );
       useIntersectionObserver(elementRef, posinset);
-      const instanceId = (0, import_compose15.useInstanceId)(GridItem2);
+      const instanceId = (0, import_compose15.useInstanceId)(UnforwardedGridItem);
       const isSelected2 = selection.includes(id);
       const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
       const rendersMediaField = showMedia && mediaField?.render;
@@ -57110,7 +57135,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
-  function GridItem3({
+  function GridItem2({
     view,
     selection,
     onChangeSelection,
@@ -57406,7 +57431,7 @@ var wp;
                       children: groupItems.map((item) => {
                         const posInSet = item.position ?? (currentPage - 1) * perPage + data.indexOf(item) + 1;
                         return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-                          GridItem3,
+                          GridItem2,
                           {
                             view,
                             selection,
@@ -57490,7 +57515,7 @@ var wp;
               data.map((item) => {
                 const posinset = item.position;
                 return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-                  GridItem3,
+                  GridItem2,
                   {
                     view,
                     selection,
@@ -66988,7 +67013,7 @@ If there's a particular need for this, please submit a feature request at https:
           markWhenOptional,
           validity,
           type: "email",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(Icon, { icon: envelope_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(Icon, { icon: envelope_default }) })
         }
       }
     );
@@ -67015,7 +67040,7 @@ If there's a particular need for this, please submit a feature request at https:
           markWhenOptional,
           validity,
           type: "tel",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(Icon, { icon: mobile_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(Icon, { icon: mobile_default }) })
         }
       }
     );
@@ -67042,7 +67067,7 @@ If there's a particular need for this, please submit a feature request at https:
           markWhenOptional,
           validity,
           type: "url",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(Icon, { icon: link_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(Icon, { icon: link_default }) })
         }
       }
     );
@@ -67239,7 +67264,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/text.mjs
   var import_element209 = __toESM(require_element(), 1);
   var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
-  function Text3({
+  function Text2({
     data,
     field,
     onChange,
@@ -67460,7 +67485,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
   var import_element212 = __toESM(require_element(), 1);
   var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
-  function Textarea3({
+  function Textarea2({
     data,
     field,
     onChange,
@@ -67719,7 +67744,7 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         type: "text",
         disabled: disabled2,
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
           ColorPickerDropdown,
           {
             color: value,
@@ -67760,7 +67785,7 @@ If there's a particular need for this, please submit a feature request at https:
           markWhenOptional,
           validity,
           type: isVisible2 ? "text" : "password",
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
             import_components72.Button,
             {
               icon: isVisible2 ? unseen_default : seen_default,
@@ -67799,10 +67824,10 @@ If there's a particular need for this, please submit a feature request at https:
     password: Password,
     radio: Radio,
     select: Select2,
-    text: Text3,
+    text: Text2,
     time: Time,
     toggle: Toggle,
-    textarea: Textarea3,
+    textarea: Textarea2,
     toggleGroup: ToggleGroup
   };
   function isEditConfig(value) {
@@ -107978,7 +108003,7 @@ ${content}
       editPost2({ author: Number(author.value) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
-      SearchableSelect3,
+      SearchableSelect2,
       {
         "aria-label": (0, import_i18n249.__)("Author"),
         filter: null,
@@ -110463,7 +110488,7 @@ ${content}
     }
     return /* @__PURE__ */ (0, import_jsx_runtime563.jsxs)(Stack, { direction: "column", gap: "lg", children: [
       /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
-        SearchableChipSelectControl3,
+        SearchableChipSelectControl2,
         {
           openOnInputClick: false,
           filter: null,

@@ -15539,23 +15539,25 @@ if (typeof process === "undefined" || true) {
   registerStyle("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
 }
 var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-var Text = (0, import_element14.forwardRef)(function Text2({ variant = "body-md", render: render4, className, ...props }, ref) {
-  const element = useRender({
-    render: render4,
-    defaultTagName: "span",
-    ref,
-    props: mergeProps(props, {
-      className: clsx_default(
-        style_default.text,
-        global_css_defense_default.heading,
-        global_css_defense_default.p,
-        style_default[variant],
-        className
-      )
-    })
-  });
-  return element;
-});
+var Text = (0, import_element14.forwardRef)(
+  function UnforwardedText({ variant = "body-md", render: render4, className, ...props }, ref) {
+    const element = useRender({
+      render: render4,
+      defaultTagName: "span",
+      ref,
+      props: mergeProps(props, {
+        className: clsx_default(
+          style_default.text,
+          global_css_defense_default.heading,
+          global_css_defense_default.p,
+          style_default[variant],
+          className
+        )
+      })
+    });
+    return element;
+  }
+);
 
 // packages/ui/build-module/badge/badge.mjs
 var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
@@ -15643,21 +15645,23 @@ if (typeof process === "undefined" || true) {
   registerStyle2("40ea4a6382", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._96e6251aad1a6136__badge{border-radius:var(--wpds-border-radius-lg,8px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._99f7158cb520f750__is-high-intent{background-color:var(--wpds-color-background-surface-error,#fae5e1);color:var(--wpds-color-foreground-content-error,#470000)}.c20ebef2365bc8b7__is-medium-intent{background-color:var(--wpds-color-background-surface-warning,#fde6be);color:var(--wpds-color-foreground-content-warning,#2e1900)}._365e1626c6202e52__is-low-intent{background-color:var(--wpds-color-background-surface-caution,#fee995);color:var(--wpds-color-foreground-content-caution,#281d00)}._33f8198127ddf4ef__is-stable-intent{background-color:var(--wpds-color-background-surface-success,#c2f8ca);color:var(--wpds-color-foreground-content-success,#002900)}._04c1aca8fc449412__is-informational-intent{background-color:var(--wpds-color-background-surface-info,#deebfa);color:var(--wpds-color-foreground-content-info,#001b4f)}._90726e69d495ec19__is-draft-intent{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._898f4a544993bd39__is-none-intent{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}}}");
 }
 var style_default2 = { "badge": "_96e6251aad1a6136__badge", "is-high-intent": "_99f7158cb520f750__is-high-intent", "is-medium-intent": "c20ebef2365bc8b7__is-medium-intent", "is-low-intent": "_365e1626c6202e52__is-low-intent", "is-stable-intent": "_33f8198127ddf4ef__is-stable-intent", "is-informational-intent": "_04c1aca8fc449412__is-informational-intent", "is-draft-intent": "_90726e69d495ec19__is-draft-intent", "is-none-intent": "_898f4a544993bd39__is-none-intent" };
-var Badge = (0, import_element15.forwardRef)(function Badge2({ intent = "none", className, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
-    Text,
-    {
-      ref,
-      className: clsx_default(
-        style_default2.badge,
-        style_default2[`is-${intent}-intent`],
-        className
-      ),
-      ...props,
-      variant: "body-sm"
-    }
-  );
-});
+var Badge = (0, import_element15.forwardRef)(
+  function UnforwardedBadge({ intent = "none", className, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+      Text,
+      {
+        ref,
+        className: clsx_default(
+          style_default2.badge,
+          style_default2[`is-${intent}-intent`],
+          className
+        ),
+        ...props,
+        variant: "body-sm"
+      }
+    );
+  }
+);
 
 // packages/ui/build-module/tooltip/index.mjs
 var tooltip_exports = {};
@@ -16208,50 +16212,52 @@ if (typeof process === "undefined" || true) {
   registerStyle6("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
 }
 var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-var Link = (0, import_element21.forwardRef)(function Link2({
-  children,
-  variant = "default",
-  tone = "brand",
-  openInNewTab = false,
-  target,
-  render: render4,
-  className,
-  ...props
-}, ref) {
-  const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
-  const element = useRender({
+var Link = (0, import_element21.forwardRef)(
+  function UnforwardedLink({
+    children,
+    variant = "default",
+    tone = "brand",
+    openInNewTab = false,
+    target,
     render: render4,
-    defaultTagName: "a",
-    ref,
-    props: mergeProps(props, {
-      className: clsx_default(
-        global_css_defense_default2.a,
-        resets_default2["box-sizing"],
-        focus_module_default["outset-ring--focus-except-active"],
-        variant !== "unstyled" && style_default5.link,
-        variant !== "unstyled" && style_default5[`is-${tone}`],
-        variant === "unstyled" && style_default5["is-unstyled"],
-        className
-      ),
-      target: target ?? (openInNewTab ? "_blank" : void 0),
-      children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
-        children,
-        shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-          "span",
-          {
-            className: style_default5["link-icon"],
-            role: "img",
-            "aria-label": (
-              /* translators: accessibility text appended to link text */
-              (0, import_i18n2.__)("(opens in a new tab)")
-            )
-          }
-        )
-      ] })
-    })
-  });
-  return element;
-});
+    className,
+    ...props
+  }, ref) {
+    const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+    const element = useRender({
+      render: render4,
+      defaultTagName: "a",
+      ref,
+      props: mergeProps(props, {
+        className: clsx_default(
+          global_css_defense_default2.a,
+          resets_default2["box-sizing"],
+          focus_module_default["outset-ring--focus-except-active"],
+          variant !== "unstyled" && style_default5.link,
+          variant !== "unstyled" && style_default5[`is-${tone}`],
+          variant === "unstyled" && style_default5["is-unstyled"],
+          className
+        ),
+        target: target ?? (openInNewTab ? "_blank" : void 0),
+        children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
+          children,
+          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+            "span",
+            {
+              className: style_default5["link-icon"],
+              role: "img",
+              "aria-label": (
+                /* translators: accessibility text appended to link text */
+                (0, import_i18n2.__)("(opens in a new tab)")
+              )
+            }
+          )
+        ] })
+      })
+    });
+    return element;
+  }
+);
 
 // packages/ui/build-module/menu/index.mjs
 var menu_exports = {};
@@ -16478,20 +16484,22 @@ var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_pri
 var import_element22 = __toESM(require_element(), 1);
 var import_primitives31 = __toESM(require_primitives(), 1);
 var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element22.forwardRef)(function Icon2({ icon, size: size4 = 24, style, ...restProps }, ref) {
-  const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
-    import_primitives31.SVG,
-    {
-      ref,
-      ...icon.props,
-      ...restProps,
-      ...mergedStyle ? { style: mergedStyle } : {},
-      width: size4,
-      height: size4
-    }
-  );
-});
+var Icon = (0, import_element22.forwardRef)(
+  function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
+    const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+      import_primitives31.SVG,
+      {
+        ref,
+        ...icon.props,
+        ...restProps,
+        ...mergedStyle ? { style: mergedStyle } : {},
+        width: size4,
+        height: size4
+      }
+    );
+  }
+);
 
 // packages/ui/build-module/menu/context.mjs
 var import_element23 = __toESM(require_element(), 1);
@@ -16596,7 +16604,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default6 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
 var VisuallyHidden = (0, import_element24.forwardRef)(
-  function VisuallyHidden2({ render: render4, ...restProps }, ref) {
+  function UnforwardedVisuallyHidden({ render: render4, ...restProps }, ref) {
     const element = useRender({
       render: render4,
       ref,
@@ -16631,7 +16639,7 @@ function useKeyboardShortcutProps({
     }
   };
 }
-var KeyboardShortcutDescription = (0, import_element25.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
+var KeyboardShortcutDescription = (0, import_element25.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
     VisuallyHidden,
     {
@@ -16646,17 +16654,17 @@ var KeyboardShortcutDescription = (0, import_element25.forwardRef)(function Keyb
     }
   );
 });
-var KeyboardShortcutDisplay = (0, import_element25.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
+var KeyboardShortcutDisplay = (0, import_element25.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
 });
 
 // packages/ui/build-module/utils/item-popup/item-content.mjs
 var import_element26 = __toESM(require_element(), 1);
 var VALIDATION_ENABLED = true;
-function parseItemContent(children, { Label: Label3, Description: Description3, validationMessage }) {
+function parseItemContent(children, { Label: Label2, Description: Description3, validationMessage }) {
   const childArray = import_element26.Children.toArray(children);
   const [label, ...descriptions] = childArray;
-  const hasLabel = (0, import_element26.isValidElement)(label) && label.type === Label3;
+  const hasLabel = (0, import_element26.isValidElement)(label) && label.type === Label2;
   const descriptionElements = descriptions.filter(
     (description) => (0, import_element26.isValidElement)(description) && description.type === Description3
   );
@@ -16693,12 +16701,12 @@ function useItemContent(children, components, {
     ])
   ).join(" ");
   let descriptionIndex = 0;
-  const { Label: Label3, Description: Description3, descriptionValidationToken } = components;
+  const { Label: Label2, Description: Description3, descriptionValidationToken } = components;
   const contentChildren = import_element26.Children.map(children, (child) => {
     if (!(0, import_element26.isValidElement)(child)) {
       return child;
     }
-    if (child.type === Label3) {
+    if (child.type === Label2) {
       return child.props.id === resolvedLabelId ? child : (0, import_element26.cloneElement)(child, { id: resolvedLabelId });
     }
     if (child.type !== Description3) {
@@ -18869,7 +18877,7 @@ if (typeof process === "undefined" || true) {
 }
 var global_css_defense_default8 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
 var Button3 = (0, import_element44.forwardRef)(
-  function Button22({
+  function UnforwardedButton({
     tone = "brand",
     variant = "solid",
     size: size4 = "default",
@@ -18999,7 +19007,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default22 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
 var ButtonIcon = (0, import_element45.forwardRef)(
-  function ButtonIcon2({ className, icon, ...props }, ref) {
+  function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
       Icon,
       {
@@ -25571,7 +25579,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default23 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
 var IconButton = (0, import_element46.forwardRef)(
-  function IconButton2({
+  function UnforwardedIconButton({
     label,
     className,
     // Prevent accidental forwarding of `children`
@@ -26194,7 +26202,7 @@ function usePreserveDayFocus(forwardedRef, month) {
 // packages/ui/build-module/calendar/calendar.mjs
 var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 var Calendar = (0, import_element52.forwardRef)(
-  function Calendar2({
+  function UnforwardedCalendar({
     defaultValue: defaultValue2,
     value: valueProp,
     onValueChange,
@@ -26351,7 +26359,7 @@ function usePreviewRange({
   ]);
 }
 var RangeCalendar = (0, import_element53.forwardRef)(
-  function RangeCalendar2({
+  function UnforwardedRangeCalendar({
     defaultValue: defaultValue2,
     value: valueProp,
     onValueChange,
@@ -26548,28 +26556,33 @@ var gapTokens = {
   "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
   "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 };
-var Stack = (0, import_element54.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
-  const style = {
-    gap: gap && gapTokens[gap],
-    alignItems: align,
-    justifyContent: justify,
-    flexDirection: direction,
-    flexWrap: wrap
-  };
-  const element = useRender({
-    render: render4,
-    ref,
-    props: mergeProps(props, { style, className: style_default25.stack })
-  });
-  return element;
-});
+var Stack = (0, import_element54.forwardRef)(
+  function UnforwardedStack({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
+    const style = {
+      gap: gap && gapTokens[gap],
+      alignItems: align,
+      justifyContent: justify,
+      flexDirection: direction,
+      flexWrap: wrap
+    };
+    const element = useRender({
+      render: render4,
+      ref,
+      props: mergeProps(props, {
+        style,
+        className: style_default25.stack
+      })
+    });
+    return element;
+  }
+);
 
 // packages/ui/build-module/empty-state/index.mjs
 var empty_state_exports = {};
 __export(empty_state_exports, {
   Actions: () => Actions,
   Description: () => Description,
-  Icon: () => Icon3,
+  Icon: () => Icon2,
   Root: () => Root5,
   Title: () => Title,
   Visual: () => Visual
@@ -26860,7 +26873,7 @@ if (typeof process === "undefined" || true) {
   registerStyle29("d29c51197e", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}@layer compositions{._70f1dd22bad55b18__description,.b8b96f70820333a1__title{text-wrap:balance}}}');
 }
 var style_default28 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Icon3 = (0, import_element57.forwardRef)(
+var Icon2 = (0, import_element57.forwardRef)(
   function EmptyStateIcon({ icon, className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       Visual,
@@ -27278,7 +27291,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default32 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
 var InputLayout = (0, import_element61.forwardRef)(
-  function InputLayout2({
+  function UnforwardedInputLayout({
     className,
     children,
     visuallyDisabled,
@@ -27413,7 +27426,7 @@ if (typeof process === "undefined" || true) {
   registerStyle34("e4f4f9600b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._8097270636ca6100__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._8097270636ca6100__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
 }
 var style_default33 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-var InputLayoutSlot = (0, import_element62.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
+var InputLayoutSlot = (0, import_element62.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
     "div",
     {
@@ -27430,7 +27443,7 @@ var InputLayoutSlot = (0, import_element62.forwardRef)(function InputLayoutSlot2
 InputLayoutSlot.displayName = "InputLayout.Slot";
 
 // packages/ui/build-module/form/primitives/input-layout/index.mjs
-var InputLayout3 = Object.assign(InputLayout, {
+var InputLayout2 = Object.assign(InputLayout, {
   Slot: InputLayoutSlot
 });
 
@@ -27528,30 +27541,32 @@ if (typeof process === "undefined" || true) {
   registerStyle35("1a25f6a232", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2ae7be2fc1bb17a3__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}}");
 }
 var style_default34 = { "input": "_2ae7be2fc1bb17a3__input" };
-var Input3 = (0, import_element63.forwardRef)(function Input22({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-    InputLayout3,
-    {
-      className: clsx_default(
-        focus_module_default4["outset-ring--focus-within"],
-        className
-      ),
-      style,
-      size: size4,
-      visuallyDisabled: restProps.disabled,
-      prefix,
-      suffix,
-      children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-        Input,
-        {
-          ref,
-          className: clsx_default(global_css_defense_default11.input, style_default34.input),
-          ...restProps
-        }
-      )
-    }
-  );
-});
+var Input3 = (0, import_element63.forwardRef)(
+  function UnforwardedInput({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+      InputLayout2,
+      {
+        className: clsx_default(
+          focus_module_default4["outset-ring--focus-within"],
+          className
+        ),
+        style,
+        size: size4,
+        visuallyDisabled: restProps.disabled,
+        prefix,
+        suffix,
+        children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          Input,
+          {
+            ref,
+            className: clsx_default(global_css_defense_default11.input, style_default34.input),
+            ...restProps
+          }
+        )
+      }
+    );
+  }
+);
 
 // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
 var import_i18n8 = __toESM(require_i18n(), 1);
@@ -27645,7 +27660,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default35 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
 var Spinner = (0, import_element64.forwardRef)(
-  function Spinner2({ className, ...props }, ref) {
+  function UnforwardedSpinner({ className, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(
       "svg",
       {
@@ -27828,7 +27843,7 @@ function appendRequiredIndicator(label, required, markWhenOptional) {
   ] });
 }
 var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-var ControlWithError = (0, import_element65.forwardRef)(function ControlWithError2({
+var ControlWithError = (0, import_element65.forwardRef)(function UnforwardedControlWithError({
   required,
   markWhenOptional,
   customValidity,
@@ -28117,22 +28132,24 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default12 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
-var Root6 = (0, import_element66.forwardRef)(function Root22({ className, render: render4 = DEFAULT_RENDER2, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
-    index_parts_exports2.Root,
-    {
-      ref,
-      className: clsx_default(resets_default12["box-sizing"], className),
-      render: render4,
-      ...restProps
-    }
-  );
-});
+var Root6 = (0, import_element66.forwardRef)(
+  function UnforwardedRoot({ className, render: render4 = DEFAULT_RENDER2, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+      index_parts_exports2.Root,
+      {
+        ref,
+        className: clsx_default(resets_default12["box-sizing"], className),
+        render: render4,
+        ...restProps
+      }
+    );
+  }
+);
 
 // packages/ui/build-module/form/primitives/field/item.mjs
 var import_element67 = __toESM(require_element(), 1);
 var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
-var Item2 = (0, import_element67.forwardRef)(function Item22(props, ref) {
+var Item2 = (0, import_element67.forwardRef)(function UnforwardedItem(props, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(index_parts_exports2.Item, { ref, ...props });
 });
 
@@ -28224,7 +28241,7 @@ if (typeof process === "undefined" || true) {
 }
 var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var Label = (0, import_element68.forwardRef)(
-  function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
+  function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
     const label = /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
       index_parts_exports2.Label,
       {
@@ -28335,7 +28352,7 @@ if (typeof process === "undefined" || true) {
   registerStyle40("df33c48b2d", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
 }
 var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-var Description2 = (0, import_element69.forwardRef)(function Description22({ className, ...restProps }, ref) {
+var Description2 = (0, import_element69.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
     index_parts_exports2.Description,
     {
@@ -28439,7 +28456,7 @@ if (typeof process === "undefined" || true) {
 }
 var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var Details = (0, import_element70.forwardRef)(
-  function Details2({ className, ...restProps }, ref) {
+  function UnforwardedDetails({ className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(import_jsx_runtime109.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n9.__)("More details follow the field.") }),
       /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
@@ -28458,7 +28475,7 @@ var Details = (0, import_element70.forwardRef)(
 var import_element71 = __toESM(require_element(), 1);
 var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 var Control = (0, import_element71.forwardRef)(
-  function Control2(props, ref) {
+  function UnforwardedControl(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(index_parts_exports2.Control, { ref, ...props });
   }
 );
@@ -28550,7 +28567,7 @@ if (typeof process === "undefined" || true) {
 }
 var field_default4 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var VisualLabel = (0, import_element72.forwardRef)(
-  function VisualLabel2({ className, render: render4, variant, ...restProps }, ref) {
+  function UnforwardedVisualLabel({ className, render: render4, variant, ...restProps }, ref) {
     return useRender({
       defaultTagName: "span",
       render: render4,
@@ -28664,7 +28681,7 @@ var wrappedRender = (render4, restProps) => {
   };
 };
 var Textarea = (0, import_element73.forwardRef)(
-  function Textarea2({
+  function UnforwardedTextarea({
     className,
     defaultValue: defaultValue2,
     disabled: disabled2,
@@ -28789,7 +28806,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default38 = { "root": "a9211a7e6af24bed__root" };
 var InputControl = (0, import_element74.forwardRef)(
-  function InputControl2({
+  function UnforwardedInputControl({
     className,
     label,
     description,
@@ -28809,7 +28826,7 @@ var InputControl = (0, import_element74.forwardRef)(
 // packages/ui/build-module/form/textarea-control/textarea-control.mjs
 var import_element75 = __toESM(require_element(), 1);
 var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
-var TextareaControl = (0, import_element75.forwardRef)(function TextareaControl2({
+var TextareaControl = (0, import_element75.forwardRef)(function UnforwardedTextareaControl({
   className,
   label,
   description,
@@ -28829,7 +28846,7 @@ var TextareaControl = (0, import_element75.forwardRef)(function TextareaControl2
 var import_element76 = __toESM(require_element(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
-var ValidatedInputControl = (0, import_element76.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+var ValidatedInputControl = (0, import_element76.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
   const validityTargetRef = (0, import_element76.useRef)(null);
   const mergedRefs = (0, import_compose3.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
@@ -28848,7 +28865,7 @@ var ValidatedInputControl = (0, import_element76.forwardRef)(function ValidatedI
 var import_element77 = __toESM(require_element(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
-var ValidatedTextareaControl = (0, import_element77.forwardRef)(function ValidatedTextareaControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+var ValidatedTextareaControl = (0, import_element77.forwardRef)(function UnforwardedValidatedTextareaControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
   const validityTargetRef = (0, import_element77.useRef)(null);
   const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
@@ -31064,7 +31081,7 @@ function chunk(array, size4) {
   return chunks;
 }
 var GridItem = (0, import_element91.forwardRef)(
-  function GridItem2({
+  function UnforwardedGridItem({
     view,
     selection,
     onChangeSelection,
@@ -31105,7 +31122,7 @@ var GridItem = (0, import_element91.forwardRef)(
       [forwardedRef]
     );
     useIntersectionObserver(elementRef, posinset);
-    const instanceId = (0, import_compose7.useInstanceId)(GridItem2);
+    const instanceId = (0, import_compose7.useInstanceId)(UnforwardedGridItem);
     const isSelected2 = selection.includes(id);
     const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
     const rendersMediaField = showMedia && mediaField?.render;
@@ -32686,7 +32703,7 @@ function useIsMultiselectPicker(actions) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
-function GridItem3({
+function GridItem2({
   view,
   selection,
   onChangeSelection,
@@ -32982,7 +32999,7 @@ function ViewPickerGrid({
                     children: groupItems.map((item) => {
                       const posInSet = item.position ?? (currentPage - 1) * perPage + data.indexOf(item) + 1;
                       return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
-                        GridItem3,
+                        GridItem2,
                         {
                           view,
                           selection,
@@ -33066,7 +33083,7 @@ function ViewPickerGrid({
             data.map((item) => {
               const posinset = item.position;
               return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
-                GridItem3,
+                GridItem2,
                 {
                   view,
                   selection,
@@ -42612,7 +42629,7 @@ function Email({
         markWhenOptional,
         validity,
         type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(Icon, { icon: envelope_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(Icon, { icon: envelope_default }) })
       }
     }
   );
@@ -42639,7 +42656,7 @@ function Telephone({
         markWhenOptional,
         validity,
         type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(Icon, { icon: mobile_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(Icon, { icon: mobile_default }) })
       }
     }
   );
@@ -42666,7 +42683,7 @@ function Url({
         markWhenOptional,
         validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(Icon, { icon: link_default }) })
       }
     }
   );
@@ -42863,7 +42880,7 @@ function Radio({
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
 var import_element135 = __toESM(require_element(), 1);
 var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
-function Text3({
+function Text2({
   data,
   field,
   onChange,
@@ -43084,7 +43101,7 @@ function Toggle({
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
 var import_element138 = __toESM(require_element(), 1);
 var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
-function Textarea3({
+function Textarea2({
   data,
   field,
   onChange,
@@ -43514,7 +43531,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -43555,7 +43572,7 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
           import_components49.Button,
           {
             icon: isVisible2 ? unseen_default : seen_default,
@@ -43594,10 +43611,10 @@ var FORM_CONTROLS = {
   password: Password,
   radio: Radio,
   select: Select2,
-  text: Text3,
+  text: Text2,
   time: Time,
   toggle: Toggle,
-  textarea: Textarea3,
+  textarea: Textarea2,
   toggleGroup: ToggleGroup
 };
 function isEditConfig(value) {

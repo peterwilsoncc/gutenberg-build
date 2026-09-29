@@ -2111,9 +2111,9 @@ var wp;
     __experimentalView: () => component_default,
     __experimentalZStack: () => component_default41,
     __unstableAnimatePresence: () => AnimatePresence,
-    __unstableComposite: () => Composite4,
-    __unstableCompositeGroup: () => CompositeGroup4,
-    __unstableCompositeItem: () => CompositeItem5,
+    __unstableComposite: () => Composite3,
+    __unstableCompositeGroup: () => CompositeGroup3,
+    __unstableCompositeItem: () => CompositeItem4,
     __unstableDisclosureContent: () => DisclosureContent22,
     __unstableGetAnimateClassName: () => getAnimateClassName,
     __unstableMotion: () => motion,
@@ -13029,7 +13029,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/build-module/composite/group.mjs
   var import_element2 = __toESM(require_element(), 1);
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
-  var CompositeGroup22 = (0, import_element2.forwardRef)(function CompositeGroup3(props, ref) {
+  var CompositeGroup22 = (0, import_element2.forwardRef)(function UnforwardedCompositeGroup(props, ref) {
     const context = useCompositeContext2();
     const {
       children,
@@ -13050,7 +13050,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/build-module/composite/group-label.mjs
   var import_element3 = __toESM(require_element(), 1);
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
-  var CompositeGroupLabel22 = (0, import_element3.forwardRef)(function CompositeGroupLabel3(props, ref) {
+  var CompositeGroupLabel22 = (0, import_element3.forwardRef)(function UnforwardedCompositeGroupLabel(props, ref) {
     const context = useCompositeContext2();
     const isWithinGroup = useCompositeGroupContext();
     if (!isWithinGroup) {
@@ -13067,7 +13067,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/build-module/composite/hover.mjs
   var import_element4 = __toESM(require_element(), 1);
   var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-  var CompositeHover22 = (0, import_element4.forwardRef)(function CompositeHover3(props, ref) {
+  var CompositeHover22 = (0, import_element4.forwardRef)(function UnforwardedCompositeHover(props, ref) {
     const context = useCompositeContext2();
     const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(CompositeHover, {
@@ -13081,7 +13081,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element5 = __toESM(require_element(), 1);
   var import_warning = __toESM(require_warning(), 1);
   var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
-  var CompositeItem22 = (0, import_element5.forwardRef)(function CompositeItem3(props, ref) {
+  var CompositeItem22 = (0, import_element5.forwardRef)(function UnforwardedCompositeItem(props, ref) {
     const context = useCompositeContext2();
     const store = props.store ?? context.store;
     if (!store) {
@@ -13097,7 +13097,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/build-module/composite/row.mjs
   var import_element6 = __toESM(require_element(), 1);
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-  var CompositeRow22 = (0, import_element6.forwardRef)(function CompositeRow3(props, ref) {
+  var CompositeRow22 = (0, import_element6.forwardRef)(function UnforwardedCompositeRow(props, ref) {
     const context = useCompositeContext2();
     const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(CompositeRow, {
@@ -13110,7 +13110,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/build-module/composite/typeahead.mjs
   var import_element7 = __toESM(require_element(), 1);
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
-  var CompositeTypeahead22 = (0, import_element7.forwardRef)(function CompositeTypeahead3(props, ref) {
+  var CompositeTypeahead22 = (0, import_element7.forwardRef)(function UnforwardedCompositeTypeahead(props, ref) {
     const context = useCompositeContext2();
     const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(CompositeTypeahead, {
@@ -13122,7 +13122,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/build-module/composite/index.mjs
   var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
-  var Composite22 = Object.assign((0, import_element8.forwardRef)(function Composite3({
+  var Composite22 = Object.assign((0, import_element8.forwardRef)(function UnforwardedComposite({
     // Composite store props
     activeId,
     defaultActiveId,
@@ -48546,7 +48546,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/@base-ui/react/internals/composite/item/CompositeItem.mjs
-  function CompositeItem4(componentProps) {
+  function CompositeItem3(componentProps) {
     const {
       render,
       className,
@@ -48825,7 +48825,7 @@ This message will only show in development mode. It won't appear in production. 
       props
     });
     if (isInMenubar) {
-      return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(CompositeItem4, {
+      return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(CompositeItem3, {
         tag: "button",
         render,
         className,
@@ -49729,23 +49729,25 @@ This message will only show in development mode. It won't appear in production. 
     registerStyle38("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
   }
   var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-  var Text2 = (0, import_element103.forwardRef)(function Text22({ variant = "body-md", render, className, ...props }, ref) {
-    const element = useRender({
-      render,
-      defaultTagName: "span",
-      ref,
-      props: mergeProps2(props, {
-        className: clsx_default(
-          style_default.text,
-          global_css_defense_default.heading,
-          global_css_defense_default.p,
-          style_default[variant],
-          className
-        )
-      })
-    });
-    return element;
-  });
+  var Text2 = (0, import_element103.forwardRef)(
+    function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
+      const element = useRender({
+        render,
+        defaultTagName: "span",
+        ref,
+        props: mergeProps2(props, {
+          className: clsx_default(
+            style_default.text,
+            global_css_defense_default.heading,
+            global_css_defense_default.p,
+            style_default[variant],
+            className
+          )
+        })
+      });
+      return element;
+    }
+  );
 
   // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
   var STYLE_HASH_ATTRIBUTE40 = "data-wp-hash";
@@ -49930,20 +49932,22 @@ This message will only show in development mode. It won't appear in production. 
   var import_element105 = __toESM(require_element(), 1);
   var import_primitives32 = __toESM(require_primitives(), 1);
   var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
-  var Icon2 = (0, import_element105.forwardRef)(function Icon22({ icon, size: size4 = 24, style: style2, ...restProps }, ref) {
-    const mergedStyle = icon.props.style || style2 ? { ...icon.props.style, ...style2 } : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
-      import_primitives32.SVG,
-      {
-        ref,
-        ...icon.props,
-        ...restProps,
-        ...mergedStyle ? { style: mergedStyle } : {},
-        width: size4,
-        height: size4
-      }
-    );
-  });
+  var Icon2 = (0, import_element105.forwardRef)(
+    function UnforwardedIcon({ icon, size: size4 = 24, style: style2, ...restProps }, ref) {
+      const mergedStyle = icon.props.style || style2 ? { ...icon.props.style, ...style2 } : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
+        import_primitives32.SVG,
+        {
+          ref,
+          ...icon.props,
+          ...restProps,
+          ...mergedStyle ? { style: mergedStyle } : {},
+          width: size4,
+          height: size4
+        }
+      );
+    }
+  );
 
   // packages/ui/build-module/menu/context.mjs
   var import_element106 = __toESM(require_element(), 1);
@@ -50048,7 +50052,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   var style_default2 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
   var VisuallyHidden4 = (0, import_element107.forwardRef)(
-    function VisuallyHidden22({ render, ...restProps }, ref) {
+    function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
       const element = useRender({
         render,
         ref,
@@ -50083,7 +50087,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     };
   }
-  var KeyboardShortcutDescription = (0, import_element108.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
+  var KeyboardShortcutDescription = (0, import_element108.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
       VisuallyHidden4,
       {
@@ -50098,7 +50102,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     );
   });
-  var KeyboardShortcutDisplay = (0, import_element108.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
+  var KeyboardShortcutDisplay = (0, import_element108.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
   });
 
@@ -52634,21 +52638,26 @@ This message will only show in development mode. It won't appear in production. 
     "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
     "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
   };
-  var Stack = (0, import_element127.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render, ...props }, ref) {
-    const style2 = {
-      gap: gap && gapTokens[gap],
-      alignItems: align,
-      justifyContent: justify,
-      flexDirection: direction,
-      flexWrap: wrap
-    };
-    const element = useRender({
-      render,
-      ref,
-      props: mergeProps2(props, { style: style2, className: style_default17.stack })
-    });
-    return element;
-  });
+  var Stack = (0, import_element127.forwardRef)(
+    function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+      const style2 = {
+        gap: gap && gapTokens[gap],
+        alignItems: align,
+        justifyContent: justify,
+        flexDirection: direction,
+        flexWrap: wrap
+      };
+      const element = useRender({
+        render,
+        ref,
+        props: mergeProps2(props, {
+          style: style2,
+          className: style_default17.stack
+        })
+      });
+      return element;
+    }
+  );
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
   var import_i18n34 = __toESM(require_i18n(), 1);
@@ -52742,7 +52751,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   var style_default18 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
   var Spinner = (0, import_element128.forwardRef)(
-    function Spinner2({ className, ...props }, ref) {
+    function UnforwardedSpinner({ className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(
         "svg",
         {
@@ -52925,7 +52934,7 @@ This message will only show in development mode. It won't appear in production. 
     ] });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-  var ControlWithError = (0, import_element129.forwardRef)(function ControlWithError2({
+  var ControlWithError = (0, import_element129.forwardRef)(function UnforwardedControlWithError({
     required,
     markWhenOptional,
     customValidity,
@@ -55687,7 +55696,7 @@ This message will only show in development mode. It won't appear in production. 
     registerStyle62("a4ac9b380a", "._5223dcef142ddf2a__spinner{background-color:transparent;color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));display:inline-block;height:16px;margin:5px 11px 0;opacity:1;overflow:visible;position:relative;width:16px}._00e30fe487ccb5cc__track,.b33a3d348ed141fd__indicator{fill:transparent;stroke-width:1.5px}._00e30fe487ccb5cc__track{stroke:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb))}.b33a3d348ed141fd__indicator{stroke:currentColor;stroke-linecap:round;animation:e5c099d0667bd442__spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes e5c099d0667bd442__spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}");
   }
   var style_module_default42 = { "spinner": "_5223dcef142ddf2a__spinner", "track": "_00e30fe487ccb5cc__track", "indicator": "b33a3d348ed141fd__indicator", "spin": "e5c099d0667bd442__spin" };
-  function UnforwardedSpinner({
+  function UnforwardedSpinner2({
     className,
     ...props
   }, forwardedRef) {
@@ -55714,9 +55723,9 @@ This message will only show in development mode. It won't appear in production. 
       })]
     });
   }
-  var Spinner3 = (0, import_element141.forwardRef)(UnforwardedSpinner);
-  Spinner3.displayName = "Spinner";
-  var spinner_default = Spinner3;
+  var Spinner2 = (0, import_element141.forwardRef)(UnforwardedSpinner2);
+  Spinner2.displayName = "Spinner";
+  var spinner_default = Spinner2;
 
   // packages/components/build-module/combobox-control/index.mjs
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
@@ -56090,15 +56099,15 @@ This message will only show in development mode. It won't appear in production. 
       ...props
     });
   });
-  var Composite4 = proxyComposite(Object.assign(Composite22, {
+  var Composite3 = proxyComposite(Object.assign(Composite22, {
     displayName: "__unstableComposite"
   }), {
     baseId: "id"
   });
-  var CompositeGroup4 = proxyComposite(Object.assign(UnproxiedCompositeGroup, {
+  var CompositeGroup3 = proxyComposite(Object.assign(UnproxiedCompositeGroup, {
     displayName: "__unstableCompositeGroup"
   }));
-  var CompositeItem5 = proxyComposite(Object.assign(Composite22.Item, {
+  var CompositeItem4 = proxyComposite(Object.assign(Composite22.Item, {
     displayName: "__unstableCompositeItem"
   }), {
     focusable: "accessibleWhenDisabled"
@@ -56119,7 +56128,7 @@ This message will only show in development mode. It won't appear in production. 
       unstable_virtual: virtualFocus
     } = legacyStateOptions;
     return {
-      baseId: (0, import_compose48.useInstanceId)(Composite4, "composite", baseId),
+      baseId: (0, import_compose48.useInstanceId)(Composite3, "composite", baseId),
       store: useCompositeStore({
         defaultActiveId,
         rtl: rtl2,
@@ -67570,7 +67579,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/item.mjs
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
-  var Item22 = (0, import_element235.forwardRef)(function Item32({
+  var Item22 = (0, import_element235.forwardRef)(function UnforwardedItem({
     prefix: prefix2,
     suffix,
     children,
@@ -67607,7 +67616,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/checkbox-item.mjs
   var import_element236 = __toESM(require_element(), 1);
   var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
-  var CheckboxItem22 = (0, import_element236.forwardRef)(function CheckboxItem3({
+  var CheckboxItem22 = (0, import_element236.forwardRef)(function UnforwardedCheckboxItem({
     suffix,
     children,
     disabled: disabled2 = false,
@@ -67661,7 +67670,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       r: 3
     })
   });
-  var RadioItem22 = (0, import_element237.forwardRef)(function RadioItem3({
+  var RadioItem22 = (0, import_element237.forwardRef)(function UnforwardedRadioItem({
     suffix,
     children,
     disabled: disabled2 = false,
@@ -67705,7 +67714,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/group.mjs
   var import_element238 = __toESM(require_element(), 1);
   var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
-  var Group22 = (0, import_element238.forwardRef)(function Group32(props, ref) {
+  var Group22 = (0, import_element238.forwardRef)(function UnforwardedGroup(props, ref) {
     const menuContext = (0, import_element238.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Group can only be rendered inside a Menu component");
@@ -67745,7 +67754,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/separator.mjs
   var import_element240 = __toESM(require_element(), 1);
   var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
-  var Separator22 = (0, import_element240.forwardRef)(function Separator32(props, ref) {
+  var Separator22 = (0, import_element240.forwardRef)(function UnforwardedSeparator(props, ref) {
     const menuContext = (0, import_element240.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Separator can only be rendered inside a Menu component");
@@ -67761,7 +67770,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/item-label.mjs
   var import_element241 = __toESM(require_element(), 1);
   var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
-  var ItemLabel22 = (0, import_element241.forwardRef)(function ItemLabel3(props, ref) {
+  var ItemLabel22 = (0, import_element241.forwardRef)(function UnforwardedItemLabel(props, ref) {
     const menuContext = (0, import_element241.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemLabel can only be rendered inside a Menu component");
@@ -67776,7 +67785,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/item-help-text.mjs
   var import_element242 = __toESM(require_element(), 1);
   var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
-  var ItemHelpText2 = (0, import_element242.forwardRef)(function ItemHelpText3(props, ref) {
+  var ItemHelpText2 = (0, import_element242.forwardRef)(function UnforwardedItemHelpText(props, ref) {
     const menuContext = (0, import_element242.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemHelpText can only be rendered inside a Menu component");
@@ -67791,7 +67800,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/trigger-button.mjs
   var import_element243 = __toESM(require_element(), 1);
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
-  var TriggerButton = (0, import_element243.forwardRef)(function TriggerButton2({
+  var TriggerButton = (0, import_element243.forwardRef)(function UnforwardedTriggerButton({
     children,
     disabled: disabled2 = false,
     ...props
@@ -67815,7 +67824,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/submenu-trigger-item.mjs
   var import_element244 = __toESM(require_element(), 1);
   var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
-  var SubmenuTriggerItem = (0, import_element244.forwardRef)(function SubmenuTriggerItem2({
+  var SubmenuTriggerItem = (0, import_element244.forwardRef)(function UnforwardedSubmenuTriggerItem({
     suffix,
     ...otherProps
   }, ref) {
@@ -67849,7 +67858,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/popover.mjs
   var import_element245 = __toESM(require_element(), 1);
   var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
-  var Popover4 = (0, import_element245.forwardRef)(function Popover22({
+  var Popover4 = (0, import_element245.forwardRef)(function UnforwardedPopover2({
     gutter,
     shift: shift4,
     modal = true,
@@ -68096,7 +68105,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tabs/tab.mjs
   var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
-  var Tab3 = (0, import_element248.forwardRef)(function Tab23({
+  var Tab3 = (0, import_element248.forwardRef)(function UnforwardedTab({
     children,
     tabId,
     disabled: disabled2,
@@ -68220,7 +68229,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     }, [margin, parent, rect]);
   }
-  var TabList3 = (0, import_element250.forwardRef)(function TabList22({
+  var TabList3 = (0, import_element250.forwardRef)(function UnforwardedTabList({
     children,
     ...otherProps
   }, ref) {
@@ -68271,7 +68280,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element251 = __toESM(require_element(), 1);
   var import_warning14 = __toESM(require_warning(), 1);
   var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
-  var TabPanel3 = (0, import_element251.forwardRef)(function TabPanel24({
+  var TabPanel3 = (0, import_element251.forwardRef)(function UnforwardedTabPanel2({
     children,
     tabId,
     focusable: focusable2 = true,
@@ -68307,7 +68316,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function internalToExternalTabId(internalId, instanceId) {
     return typeof internalId === "string" ? internalId.replace(`${instanceId}-`, "") : internalId;
   }
-  var Tabs = Object.assign(function Tabs2({
+  var Tabs = Object.assign(function TabsRoot({
     selectOnMove = true,
     defaultTabId,
     orientation = "horizontal",
@@ -68318,7 +68327,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     defaultActiveTabId,
     onActiveTabIdChange
   }) {
-    const instanceId = (0, import_compose86.useInstanceId)(Tabs2, "tabs");
+    const instanceId = (0, import_compose86.useInstanceId)(TabsRoot, "tabs");
     const store = useTabStore({
       selectOnMove,
       orientation,
