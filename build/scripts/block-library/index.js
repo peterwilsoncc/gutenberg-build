@@ -37427,7 +37427,9 @@ ${text}
         return icons.filter((icon2) => {
           const iconName = normalizeSearchInput(icon2.name);
           const iconLabel = normalizeSearchInput(icon2.label);
-          return iconName.includes(input) || iconLabel.includes(input);
+          return iconName.includes(input) || iconLabel.includes(input) || (icon2.keywords ?? []).some(
+            (keyword) => normalizeSearchInput(keyword).includes(input)
+          );
         });
       }
       return icons;
