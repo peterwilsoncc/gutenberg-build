@@ -36572,6 +36572,14 @@ ${url}
           width: false
         }
       },
+      spacing: {
+        margin: true,
+        padding: true,
+        __experimentalDefaultControls: {
+          margin: false,
+          padding: false
+        }
+      },
       interactivity: {
         clientNavigation: true
       }

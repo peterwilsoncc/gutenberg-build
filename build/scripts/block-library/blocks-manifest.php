@@ -3389,6 +3389,14 @@ return array(
 					'width' => false
 				)
 			),
+			'spacing' => array(
+				'margin' => true,
+				'padding' => true,
+				'__experimentalDefaultControls' => array(
+					'margin' => false,
+					'padding' => false
+				)
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			)
