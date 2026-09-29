@@ -8082,6 +8082,10 @@ return array(
 				)
 			),
 			'contentRole' => true,
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,
