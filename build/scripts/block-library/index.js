@@ -81267,6 +81267,7 @@ ${text}
       },
       shadow: true,
       spacing: {
+        margin: true,
         padding: true
       },
       typography: {

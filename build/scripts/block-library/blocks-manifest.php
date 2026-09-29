@@ -9187,6 +9187,7 @@ return array(
 			),
 			'shadow' => true,
 			'spacing' => array(
+				'margin' => true,
 				'padding' => true
 			),
 			'typography' => array(
