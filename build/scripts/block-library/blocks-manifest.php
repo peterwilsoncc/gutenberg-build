@@ -2489,7 +2489,8 @@ return array(
 				'allowJustification' => false
 			),
 			'interactivity' => array(
-				'clientNavigation' => true
+				'clientNavigation' => true,
+				'interactive' => true
 			),
 			'filter' => array(
 				'duotone' => true

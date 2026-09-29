@@ -27833,7 +27833,8 @@ var wp;
         allowJustification: false
       },
       interactivity: {
-        clientNavigation: true
+        clientNavigation: true,
+        interactive: true
       },
       filter: {
         duotone: true
