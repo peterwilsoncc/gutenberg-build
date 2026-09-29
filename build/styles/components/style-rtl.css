@@ -540,14 +540,7 @@ p + .components-button.is-tertiary {
   }
 }
 .components-checkbox-control {
-  --checkbox-input-size: 24px;
-}
-@media (min-width: 600px) {
-  .components-checkbox-control {
-    --checkbox-input-size: 16px;
-  }
-}
-.components-checkbox-control {
+  --checkbox-input-size: 16px;
   --checkbox-input-margin: 8px;
 }
 
@@ -655,6 +648,7 @@ p + .components-button.is-tertiary {
   padding: 0 !important;
   text-align: center;
   vertical-align: top;
+  position: relative;
   width: var(--checkbox-input-size);
   height: var(--checkbox-input-size);
   appearance: none;
@@ -678,6 +672,15 @@ p + .components-button.is-tertiary {
 }
 .components-checkbox-control__input[type=checkbox]:checked::before {
   content: none;
+}
+.components-checkbox-control__input[type=checkbox]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: max(var(--checkbox-input-size), 24px);
+  aspect-ratio: 1;
+  transform: translate(50%, -50%);
 }
 
 .components-checkbox-control__input-container {

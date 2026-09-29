@@ -1034,15 +1034,6 @@
 }
 
 .dataviews-selection-checkbox {
-  --checkbox-input-size: 24px;
-}
-
-@media (min-width: 600px) {
-  .dataviews-selection-checkbox {
-    --checkbox-input-size: 16px;
-  }
-}
-.dataviews-selection-checkbox {
   line-height: 0;
   flex-shrink: 0;
 }
@@ -1965,15 +1956,6 @@ div.dataviews-view-list {
   padding-right: 0;
 }
 
-.dataviews-view-table-selection-checkbox {
-  --checkbox-input-size: 24px;
-}
-
-@media (min-width: 600px) {
-  .dataviews-view-table-selection-checkbox {
-    --checkbox-input-size: 16px;
-  }
-}
 .dataviews-column-primary__media {
   max-width: 60px;
   min-width: var(--wpds-dimension-size-md, 32px);

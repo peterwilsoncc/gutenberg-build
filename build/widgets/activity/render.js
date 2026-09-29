@@ -29482,7 +29482,6 @@ function BulkSelectionCheckbox({
     return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
       import_components4.CheckboxControl,
       {
-        className: "dataviews-view-table-selection-checkbox",
         checked: hasSelection,
         disabled: !hasSelection,
         onChange: () => {
@@ -29495,7 +29494,6 @@ function BulkSelectionCheckbox({
   return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     import_components4.CheckboxControl,
     {
-      className: "dataviews-view-table-selection-checkbox",
       checked: areAllSelected,
       indeterminate: !areAllSelected && !!selectedItems.length,
       onChange: () => {
