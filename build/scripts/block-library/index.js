@@ -73979,6 +73979,10 @@ ${text}
           link: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       spacing: {
         padding: true,
         margin: true,

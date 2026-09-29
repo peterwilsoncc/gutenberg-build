@@ -8185,6 +8185,10 @@ return array(
 					'link' => true
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'spacing' => array(
 				'padding' => true,
 				'margin' => true,
