@@ -2575,6 +2575,9 @@ return array(
 					'padding' => false
 				)
 			),
+			'dimensions' => array(
+				'minWidth' => true
+			),
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,

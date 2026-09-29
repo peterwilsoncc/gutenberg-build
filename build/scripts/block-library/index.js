@@ -28333,6 +28333,9 @@ var wp;
           padding: false
         }
       },
+      dimensions: {
+        minWidth: true
+      },
       typography: {
         fontSize: true,
         lineHeight: true,
