@@ -22356,6 +22356,11 @@ var wp;
           type: "flex"
         }
       },
+      spacing: {
+        padding: true,
+        margin: true,
+        blockGap: true
+      },
       typography: {
         fontSize: true,
         lineHeight: true,
