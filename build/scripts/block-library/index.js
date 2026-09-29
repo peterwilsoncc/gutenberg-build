@@ -61003,7 +61003,8 @@ ${text}
         }
       },
       dimensions: {
-        minHeight: true
+        minHeight: true,
+        minWidth: true
       },
       shadow: true,
       spacing: {
