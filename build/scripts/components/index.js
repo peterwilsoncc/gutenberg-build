@@ -87,7 +87,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         function useSyncExternalStore$2(subscribe2, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React96.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React94.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -135,8 +135,8 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React96 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState92 = React96.useState, useEffect91 = React96.useEffect, useLayoutEffect25 = React96.useLayoutEffect, useDebugValue2 = React96.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React96.useSyncExternalStore ? React96.useSyncExternalStore : shim;
+        var React94 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState92 = React94.useState, useEffect91 = React94.useEffect, useLayoutEffect25 = React94.useLayoutEffect, useDebugValue2 = React94.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React94.useSyncExternalStore ? React94.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -1317,14 +1317,14 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React96 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef126 = React96.useRef, useEffect91 = React96.useEffect, useMemo83 = React96.useMemo, useDebugValue2 = React96.useDebugValue;
+        var React94 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef126 = React94.useRef, useEffect91 = React94.useEffect, useMemo84 = React94.useMemo, useDebugValue2 = React94.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual2) {
           var instRef = useRef126(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo83(
+          instRef = useMemo84(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -1934,106 +1934,6 @@ var wp;
   var require_html_entities = __commonJS({
     "package-external:@wordpress/html-entities"(exports, module) {
       module.exports = window.wp.htmlEntities;
-    }
-  });
-
-  // node_modules/fast-memoize/src/index.js
-  var require_src = __commonJS({
-    "node_modules/fast-memoize/src/index.js"(exports, module) {
-      function memoize3(fn, options2) {
-        var cache2 = options2 && options2.cache ? options2.cache : cacheDefault;
-        var serializer = options2 && options2.serializer ? options2.serializer : serializerDefault;
-        var strategy = options2 && options2.strategy ? options2.strategy : strategyDefault;
-        return strategy(fn, {
-          cache: cache2,
-          serializer
-        });
-      }
-      function isPrimitive(value) {
-        return value == null || typeof value === "number" || typeof value === "boolean";
-      }
-      function monadic(fn, cache2, serializer, arg) {
-        var cacheKey = isPrimitive(arg) ? arg : serializer(arg);
-        var computedValue = cache2.get(cacheKey);
-        if (typeof computedValue === "undefined") {
-          computedValue = fn.call(this, arg);
-          cache2.set(cacheKey, computedValue);
-        }
-        return computedValue;
-      }
-      function variadic(fn, cache2, serializer) {
-        var args = Array.prototype.slice.call(arguments, 3);
-        var cacheKey = serializer(args);
-        var computedValue = cache2.get(cacheKey);
-        if (typeof computedValue === "undefined") {
-          computedValue = fn.apply(this, args);
-          cache2.set(cacheKey, computedValue);
-        }
-        return computedValue;
-      }
-      function assemble(fn, context, strategy, cache2, serialize2) {
-        return strategy.bind(
-          context,
-          fn,
-          cache2,
-          serialize2
-        );
-      }
-      function strategyDefault(fn, options2) {
-        var strategy = fn.length === 1 ? monadic : variadic;
-        return assemble(
-          fn,
-          this,
-          strategy,
-          options2.cache.create(),
-          options2.serializer
-        );
-      }
-      function strategyVariadic(fn, options2) {
-        var strategy = variadic;
-        return assemble(
-          fn,
-          this,
-          strategy,
-          options2.cache.create(),
-          options2.serializer
-        );
-      }
-      function strategyMonadic(fn, options2) {
-        var strategy = monadic;
-        return assemble(
-          fn,
-          this,
-          strategy,
-          options2.cache.create(),
-          options2.serializer
-        );
-      }
-      function serializerDefault() {
-        return JSON.stringify(arguments);
-      }
-      function ObjectWithoutPrototypeCache() {
-        this.cache = /* @__PURE__ */ Object.create(null);
-      }
-      ObjectWithoutPrototypeCache.prototype.has = function(key) {
-        return key in this.cache;
-      };
-      ObjectWithoutPrototypeCache.prototype.get = function(key) {
-        return this.cache[key];
-      };
-      ObjectWithoutPrototypeCache.prototype.set = function(key, value) {
-        this.cache[key] = value;
-      };
-      var cacheDefault = {
-        create: function create2() {
-          return new ObjectWithoutPrototypeCache();
-        }
-      };
-      module.exports = memoize3;
-      module.exports.strategies = {
-        variadic: strategyVariadic,
-        monadic: strategyMonadic
-      };
     }
   });
 
@@ -22652,10 +22552,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React7.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx265) {
+  (function(_jsx267) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx265.JSX || (_jsx265.JSX = {})));
+    })(JSX || (JSX = _jsx267.JSX || (_jsx267.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css2() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -26749,10 +26649,10 @@ If there's a particular need for this, please submit a feature request at https:
       const config = this.config;
       if (!state._active) this.clean();
       if ((state._blocked || !state.intentional) && !state._force && !config.triggerAllEvents) return;
-      const memo7 = this.handler(_objectSpread2(_objectSpread2(_objectSpread2({}, shared), state), {}, {
+      const memo8 = this.handler(_objectSpread2(_objectSpread2(_objectSpread2({}, shared), state), {}, {
         [this.aliasKey]: state.values
       }));
-      if (memo7 !== void 0) state.memo = memo7;
+      if (memo8 !== void 0) state.memo = memo8;
     }
     clean() {
       this.eventStore.clean();
@@ -61290,8 +61190,8 @@ This message will only show in development mode. It won't appear in production. 
     }
     var _a = options2.strict, strict = _a === void 0 ? false : _a, _b = options2.start, start = _b === void 0 ? true : _b, _c = options2.end, end = _c === void 0 ? true : _c, _d = options2.encode, encode = _d === void 0 ? function(x2) {
       return x2;
-    } : _d, _e = options2.delimiter, delimiter2 = _e === void 0 ? "/#?" : _e, _f = options2.endsWith, endsWith2 = _f === void 0 ? "" : _f;
-    var endsWithRe = "[".concat(escapeString(endsWith2), "]|$");
+    } : _d, _e = options2.delimiter, delimiter2 = _e === void 0 ? "/#?" : _e, _f = options2.endsWith, endsWith = _f === void 0 ? "" : _f;
+    var endsWithRe = "[".concat(escapeString(endsWith), "]|$");
     var delimiterRe = "[".concat(escapeString(delimiter2), "]");
     var route = start ? "^" : "";
     for (var _i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++) {
@@ -62971,27 +62871,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element196 = __toESM(require_element(), 1);
 
   // node_modules/re-resizable/lib/index.js
-  var React95 = __toESM(require_react());
+  var import_jsx_runtime293 = __toESM(require_jsx_runtime());
+  var import_react107 = __toESM(require_react());
+  var import_react_dom9 = __toESM(require_react_dom());
 
   // node_modules/re-resizable/lib/resizer.js
-  var React94 = __toESM(require_react());
-  var __extends = /* @__PURE__ */ (function() {
-    var extendStatics = function(d2, b2) {
-      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
-        d3.__proto__ = b3;
-      } || function(d3, b3) {
-        for (var p3 in b3) if (b3.hasOwnProperty(p3)) d3[p3] = b3[p3];
-      };
-      return extendStatics(d2, b2);
-    };
-    return function(d2, b2) {
-      extendStatics(d2, b2);
-      function __64() {
-        this.constructor = d2;
-      }
-      d2.prototype = b2 === null ? Object.create(b2) : (__64.prototype = b2.prototype, new __64());
-    };
-  })();
+  var import_jsx_runtime292 = __toESM(require_jsx_runtime());
+  var import_react106 = __toESM(require_react());
   var __assign2 = function() {
     __assign2 = Object.assign || function(t3) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
@@ -63003,101 +62889,63 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     return __assign2.apply(this, arguments);
   };
-  var styles2 = {
-    top: {
-      width: "100%",
-      height: "10px",
-      top: "-5px",
-      left: "0px",
-      cursor: "row-resize"
-    },
-    right: {
-      width: "10px",
-      height: "100%",
-      top: "0px",
-      right: "-5px",
-      cursor: "col-resize"
-    },
-    bottom: {
-      width: "100%",
-      height: "10px",
-      bottom: "-5px",
-      left: "0px",
-      cursor: "row-resize"
-    },
-    left: {
-      width: "10px",
-      height: "100%",
-      top: "0px",
-      left: "-5px",
-      cursor: "col-resize"
-    },
-    topRight: {
-      width: "20px",
-      height: "20px",
-      position: "absolute",
-      right: "-10px",
-      top: "-10px",
-      cursor: "ne-resize"
-    },
-    bottomRight: {
-      width: "20px",
-      height: "20px",
-      position: "absolute",
-      right: "-10px",
-      bottom: "-10px",
-      cursor: "se-resize"
-    },
-    bottomLeft: {
-      width: "20px",
-      height: "20px",
-      position: "absolute",
-      left: "-10px",
-      bottom: "-10px",
-      cursor: "sw-resize"
-    },
-    topLeft: {
-      width: "20px",
-      height: "20px",
-      position: "absolute",
-      left: "-10px",
-      top: "-10px",
-      cursor: "nw-resize"
-    }
+  var rowSizeBase = {
+    width: "100%",
+    height: "10px",
+    top: "0px",
+    left: "0px",
+    cursor: "row-resize"
   };
-  var Resizer = (
-    /** @class */
-    (function(_super) {
-      __extends(Resizer2, _super);
-      function Resizer2() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.onMouseDown = function(e3) {
-          _this.props.onResizeStart(e3, _this.props.direction);
-        };
-        _this.onTouchStart = function(e3) {
-          _this.props.onResizeStart(e3, _this.props.direction);
-        };
-        return _this;
-      }
-      Resizer2.prototype.render = function() {
-        return React94.createElement("div", { className: this.props.className || "", style: __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles2[this.props.direction]), this.props.replaceStyles || {}), onMouseDown: this.onMouseDown, onTouchStart: this.onTouchStart }, this.props.children);
-      };
-      return Resizer2;
-    })(React94.PureComponent)
-  );
+  var colSizeBase = {
+    width: "10px",
+    height: "100%",
+    top: "0px",
+    left: "0px",
+    cursor: "col-resize"
+  };
+  var edgeBase = {
+    width: "20px",
+    height: "20px",
+    position: "absolute",
+    zIndex: 1
+  };
+  var styles2 = {
+    top: __assign2(__assign2({}, rowSizeBase), { top: "-5px" }),
+    right: __assign2(__assign2({}, colSizeBase), { left: void 0, right: "-5px" }),
+    bottom: __assign2(__assign2({}, rowSizeBase), { top: void 0, bottom: "-5px" }),
+    left: __assign2(__assign2({}, colSizeBase), { left: "-5px" }),
+    topRight: __assign2(__assign2({}, edgeBase), { right: "-10px", top: "-10px", cursor: "ne-resize" }),
+    bottomRight: __assign2(__assign2({}, edgeBase), { right: "-10px", bottom: "-10px", cursor: "se-resize" }),
+    bottomLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", bottom: "-10px", cursor: "sw-resize" }),
+    topLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", top: "-10px", cursor: "nw-resize" })
+  };
+  var Resizer = (0, import_react106.memo)(function(props) {
+    var onResizeStart = props.onResizeStart, direction = props.direction, children = props.children, replaceStyles = props.replaceStyles, className = props.className;
+    var onMouseDown = (0, import_react106.useCallback)(function(e3) {
+      onResizeStart(e3, direction);
+    }, [onResizeStart, direction]);
+    var onTouchStart = (0, import_react106.useCallback)(function(e3) {
+      onResizeStart(e3, direction);
+    }, [onResizeStart, direction]);
+    var style2 = (0, import_react106.useMemo)(function() {
+      return __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles2[direction]), replaceStyles !== null && replaceStyles !== void 0 ? replaceStyles : {});
+    }, [replaceStyles, direction]);
+    return (0, import_jsx_runtime292.jsx)("div", { className: className || void 0, style: style2, onMouseDown, onTouchStart, children });
+  });
 
   // node_modules/re-resizable/lib/index.js
-  var import_fast_memoize = __toESM(require_src());
-  var __extends2 = /* @__PURE__ */ (function() {
+  var __extends = /* @__PURE__ */ (function() {
     var extendStatics = function(d2, b2) {
       extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
         d3.__proto__ = b3;
       } || function(d3, b3) {
-        for (var p3 in b3) if (b3.hasOwnProperty(p3)) d3[p3] = b3[p3];
+        for (var p3 in b3) if (Object.prototype.hasOwnProperty.call(b3, p3)) d3[p3] = b3[p3];
       };
       return extendStatics(d2, b2);
     };
     return function(d2, b2) {
+      if (typeof b2 !== "function" && b2 !== null)
+        throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
       extendStatics(d2, b2);
       function __64() {
         this.constructor = d2;
@@ -63120,22 +62968,23 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     width: "auto",
     height: "auto"
   };
-  var clamp5 = (0, import_fast_memoize.default)(function(n2, min2, max2) {
+  var clamp5 = function(n2, min2, max2) {
     return Math.max(Math.min(n2, max2), min2);
-  });
-  var snap = (0, import_fast_memoize.default)(function(n2, size4) {
-    return Math.round(n2 / size4) * size4;
-  });
-  var hasDirection = (0, import_fast_memoize.default)(function(dir, target) {
+  };
+  var snap = function(n2, size4, gridGap) {
+    var v3 = Math.round(n2 / size4);
+    return v3 * size4 + gridGap * (v3 - 1);
+  };
+  var hasDirection = function(dir, target) {
     return new RegExp(dir, "i").test(target);
-  });
+  };
   var isTouchEvent = function(event) {
     return Boolean(event.touches && event.touches.length);
   };
   var isMouseEvent = function(event) {
     return Boolean((event.clientX || event.clientX === 0) && (event.clientY || event.clientY === 0));
   };
-  var findClosestSnap = (0, import_fast_memoize.default)(function(n2, snapArray, snapGap) {
+  var findClosestSnap = function(n2, snapArray, snapGap) {
     if (snapGap === void 0) {
       snapGap = 0;
     }
@@ -63144,56 +62993,53 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, 0);
     var gap = Math.abs(snapArray[closestGapIndex] - n2);
     return snapGap === 0 || gap < snapGap ? snapArray[closestGapIndex] : n2;
-  });
-  var endsWith = (0, import_fast_memoize.default)(function(str, searchStr) {
-    return str.substr(str.length - searchStr.length, searchStr.length) === searchStr;
-  });
-  var getStringSize = (0, import_fast_memoize.default)(function(n2) {
+  };
+  var getStringSize = function(n2) {
     n2 = n2.toString();
     if (n2 === "auto") {
       return n2;
     }
-    if (endsWith(n2, "px")) {
+    if (n2.endsWith("px")) {
       return n2;
     }
-    if (endsWith(n2, "%")) {
+    if (n2.endsWith("%")) {
       return n2;
     }
-    if (endsWith(n2, "vh")) {
+    if (n2.endsWith("vh")) {
       return n2;
     }
-    if (endsWith(n2, "vw")) {
+    if (n2.endsWith("vw")) {
       return n2;
     }
-    if (endsWith(n2, "vmax")) {
+    if (n2.endsWith("vmax")) {
       return n2;
     }
-    if (endsWith(n2, "vmin")) {
+    if (n2.endsWith("vmin")) {
       return n2;
     }
-    return n2 + "px";
-  });
+    return "".concat(n2, "px");
+  };
   var getPixelSize = function(size4, parentSize, innerWidth, innerHeight) {
     if (size4 && typeof size4 === "string") {
-      if (endsWith(size4, "px")) {
+      if (size4.endsWith("px")) {
         return Number(size4.replace("px", ""));
       }
-      if (endsWith(size4, "%")) {
+      if (size4.endsWith("%")) {
         var ratio = Number(size4.replace("%", "")) / 100;
         return parentSize * ratio;
       }
-      if (endsWith(size4, "vw")) {
+      if (size4.endsWith("vw")) {
         var ratio = Number(size4.replace("vw", "")) / 100;
         return innerWidth * ratio;
       }
-      if (endsWith(size4, "vh")) {
+      if (size4.endsWith("vh")) {
         var ratio = Number(size4.replace("vh", "")) / 100;
         return innerHeight * ratio;
       }
     }
     return size4;
   };
-  var calculateNewMax = (0, import_fast_memoize.default)(function(parentSize, innerWidth, innerHeight, maxWidth, maxHeight, minWidth, minHeight) {
+  var calculateNewMax = function(parentSize, innerWidth, innerHeight, maxWidth, maxHeight, minWidth, minHeight) {
     maxWidth = getPixelSize(maxWidth, parentSize.width, innerWidth, innerHeight);
     maxHeight = getPixelSize(maxHeight, parentSize.height, innerWidth, innerHeight);
     minWidth = getPixelSize(minWidth, parentSize.width, innerWidth, innerHeight);
@@ -63204,12 +63050,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       minWidth: typeof minWidth === "undefined" ? void 0 : Number(minWidth),
       minHeight: typeof minHeight === "undefined" ? void 0 : Number(minHeight)
     };
-  });
+  };
+  var normalizeToPair = function(val) {
+    return Array.isArray(val) ? val : [val, val];
+  };
   var definedProps = [
     "as",
+    "ref",
     "style",
     "className",
     "grid",
+    "gridGap",
     "snap",
     "bounds",
     "boundsByDirection",
@@ -63240,8 +63091,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Resizable = (
     /** @class */
     (function(_super) {
-      __extends2(Resizable2, _super);
+      __extends(Resizable2, _super);
       function Resizable2(props) {
+        var _a, _b, _c, _d;
         var _this = _super.call(this, props) || this;
         _this.ratio = 1;
         _this.resizable = null;
@@ -63253,6 +63105,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         _this.resizableBottom = 0;
         _this.targetLeft = 0;
         _this.targetTop = 0;
+        _this.delta = {
+          width: 0,
+          height: 0
+        };
         _this.appendBase = function() {
           if (!_this.resizable || !_this.window) {
             return null;
@@ -63267,7 +63123,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           element.style.position = "absolute";
           element.style.transform = "scale(0, 0)";
           element.style.left = "0";
-          element.style.flex = "0";
+          element.style.flex = "0 0 100%";
           if (element.classList) {
             element.classList.add(baseClassName);
           } else {
@@ -63283,15 +63139,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
           parent.removeChild(base);
         };
-        _this.ref = function(c3) {
-          if (c3) {
-            _this.resizable = c3;
-          }
-        };
         _this.state = {
           isResizing: false,
-          width: typeof (_this.propsSize && _this.propsSize.width) === "undefined" ? "auto" : _this.propsSize && _this.propsSize.width,
-          height: typeof (_this.propsSize && _this.propsSize.height) === "undefined" ? "auto" : _this.propsSize && _this.propsSize.height,
+          width: (_b = (_a = _this.propsSize) === null || _a === void 0 ? void 0 : _a.width) !== null && _b !== void 0 ? _b : "auto",
+          height: (_d = (_c = _this.propsSize) === null || _c === void 0 ? void 0 : _c.height) !== null && _d !== void 0 ? _d : "auto",
           direction: "right",
           original: {
             x: 0,
@@ -63374,17 +63225,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           var _this = this;
           var size4 = this.props.size;
           var getSize = function(key) {
+            var _a;
             if (typeof _this.state[key] === "undefined" || _this.state[key] === "auto") {
               return "auto";
             }
-            if (_this.propsSize && _this.propsSize[key] && endsWith(_this.propsSize[key].toString(), "%")) {
-              if (endsWith(_this.state[key].toString(), "%")) {
+            if (_this.propsSize && _this.propsSize[key] && ((_a = _this.propsSize[key]) === null || _a === void 0 ? void 0 : _a.toString().endsWith("%"))) {
+              if (_this.state[key].toString().endsWith("%")) {
                 return _this.state[key].toString();
               }
               var parentSize = _this.getParentSize();
               var value = Number(_this.state[key].toString().replace("px", ""));
               var percent2 = value / parentSize[key] * 100;
-              return percent2 + "%";
+              return "".concat(percent2, "%");
             }
             return getStringSize(_this.state[key]);
           };
@@ -63414,6 +63266,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
         base.style.position = "relative";
         base.style.minWidth = "100%";
+        base.style.minHeight = "100%";
         var size4 = {
           width: base.offsetWidth,
           height: base.offsetHeight
@@ -63497,33 +63350,33 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
       Resizable2.prototype.calculateNewSizeFromDirection = function(clientX, clientY) {
         var scale2 = this.props.scale || 1;
-        var resizeRatio = this.props.resizeRatio || 1;
-        var _a = this.state, direction = _a.direction, original = _a.original;
-        var _b = this.props, lockAspectRatio = _b.lockAspectRatio, lockAspectRatioExtraHeight = _b.lockAspectRatioExtraHeight, lockAspectRatioExtraWidth = _b.lockAspectRatioExtraWidth;
+        var _a = normalizeToPair(this.props.resizeRatio || 1), resizeRatioX = _a[0], resizeRatioY = _a[1];
+        var _b = this.state, direction = _b.direction, original = _b.original;
+        var _c = this.props, lockAspectRatio = _c.lockAspectRatio, lockAspectRatioExtraHeight = _c.lockAspectRatioExtraHeight, lockAspectRatioExtraWidth = _c.lockAspectRatioExtraWidth;
         var newWidth = original.width;
         var newHeight = original.height;
         var extraHeight = lockAspectRatioExtraHeight || 0;
         var extraWidth = lockAspectRatioExtraWidth || 0;
         if (hasDirection("right", direction)) {
-          newWidth = original.width + (clientX - original.x) * resizeRatio / scale2;
+          newWidth = original.width + (clientX - original.x) * resizeRatioX / scale2;
           if (lockAspectRatio) {
             newHeight = (newWidth - extraWidth) / this.ratio + extraHeight;
           }
         }
         if (hasDirection("left", direction)) {
-          newWidth = original.width - (clientX - original.x) * resizeRatio / scale2;
+          newWidth = original.width - (clientX - original.x) * resizeRatioX / scale2;
           if (lockAspectRatio) {
             newHeight = (newWidth - extraWidth) / this.ratio + extraHeight;
           }
         }
         if (hasDirection("bottom", direction)) {
-          newHeight = original.height + (clientY - original.y) * resizeRatio / scale2;
+          newHeight = original.height + (clientY - original.y) * resizeRatioY / scale2;
           if (lockAspectRatio) {
             newWidth = (newHeight - extraHeight) * this.ratio + extraWidth;
           }
         }
         if (hasDirection("top", direction)) {
-          newHeight = original.height - (clientY - original.y) * resizeRatio / scale2;
+          newHeight = original.height - (clientY - original.y) * resizeRatioY / scale2;
           if (lockAspectRatio) {
             newWidth = (newHeight - extraHeight) * this.ratio + extraWidth;
           }
@@ -63556,25 +63409,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         return { newWidth, newHeight };
       };
       Resizable2.prototype.setBoundingClientRect = function() {
+        var adjustedScale = 1 / (this.props.scale || 1);
         if (this.props.bounds === "parent") {
           var parent_2 = this.parentNode;
           if (parent_2) {
             var parentRect = parent_2.getBoundingClientRect();
-            this.parentLeft = parentRect.left;
-            this.parentTop = parentRect.top;
+            this.parentLeft = parentRect.left * adjustedScale;
+            this.parentTop = parentRect.top * adjustedScale;
           }
         }
         if (this.props.bounds && typeof this.props.bounds !== "string") {
           var targetRect = this.props.bounds.getBoundingClientRect();
-          this.targetLeft = targetRect.left;
-          this.targetTop = targetRect.top;
+          this.targetLeft = targetRect.left * adjustedScale;
+          this.targetTop = targetRect.top * adjustedScale;
         }
         if (this.resizable) {
           var _a = this.resizable.getBoundingClientRect(), left = _a.left, top_1 = _a.top, right = _a.right, bottom = _a.bottom;
-          this.resizableLeft = left;
-          this.resizableRight = right;
-          this.resizableTop = top_1;
-          this.resizableBottom = bottom;
+          this.resizableLeft = left * adjustedScale;
+          this.resizableRight = right * adjustedScale;
+          this.resizableTop = top_1 * adjustedScale;
+          this.resizableBottom = bottom * adjustedScale;
         }
       };
       Resizable2.prototype.onResizeStart = function(event, direction) {
@@ -63586,9 +63440,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         if (event.nativeEvent && isMouseEvent(event.nativeEvent)) {
           clientX = event.nativeEvent.clientX;
           clientY = event.nativeEvent.clientY;
-          if (event.nativeEvent.which === 3) {
-            return;
-          }
         } else if (event.nativeEvent && isTouchEvent(event.nativeEvent)) {
           clientX = event.nativeEvent.touches[0].clientX;
           clientY = event.nativeEvent.touches[0].clientY;
@@ -63637,6 +63488,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         this.setState(state);
       };
       Resizable2.prototype.onMouseMove = function(event) {
+        var _this = this;
         if (!this.state.isResizing || !this.resizable || !this.window) {
           return;
         }
@@ -63659,48 +63511,51 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         minHeight = max2.minHeight;
         var _c = this.calculateNewSizeFromDirection(clientX, clientY), newHeight = _c.newHeight, newWidth = _c.newWidth;
         var boundaryMax = this.calculateNewMaxFromBoundary(maxWidth, maxHeight);
-        var newSize = this.calculateNewSizeFromAspectRatio(newWidth, newHeight, { width: boundaryMax.maxWidth, height: boundaryMax.maxHeight }, { width: minWidth, height: minHeight });
-        newWidth = newSize.newWidth;
-        newHeight = newSize.newHeight;
-        if (this.props.grid) {
-          var newGridWidth = snap(newWidth, this.props.grid[0]);
-          var newGridHeight = snap(newHeight, this.props.grid[1]);
-          var gap = this.props.snapGap || 0;
-          newWidth = gap === 0 || Math.abs(newGridWidth - newWidth) <= gap ? newGridWidth : newWidth;
-          newHeight = gap === 0 || Math.abs(newGridHeight - newHeight) <= gap ? newGridHeight : newHeight;
-        }
         if (this.props.snap && this.props.snap.x) {
           newWidth = findClosestSnap(newWidth, this.props.snap.x, this.props.snapGap);
         }
         if (this.props.snap && this.props.snap.y) {
           newHeight = findClosestSnap(newHeight, this.props.snap.y, this.props.snapGap);
         }
+        var newSize = this.calculateNewSizeFromAspectRatio(newWidth, newHeight, { width: boundaryMax.maxWidth, height: boundaryMax.maxHeight }, { width: minWidth, height: minHeight });
+        newWidth = newSize.newWidth;
+        newHeight = newSize.newHeight;
+        if (this.props.grid) {
+          var newGridWidth = snap(newWidth, this.props.grid[0], this.props.gridGap ? this.props.gridGap[0] : 0);
+          var newGridHeight = snap(newHeight, this.props.grid[1], this.props.gridGap ? this.props.gridGap[1] : 0);
+          var gap = this.props.snapGap || 0;
+          var w2 = gap === 0 || Math.abs(newGridWidth - newWidth) <= gap ? newGridWidth : newWidth;
+          var h2 = gap === 0 || Math.abs(newGridHeight - newHeight) <= gap ? newGridHeight : newHeight;
+          newWidth = w2;
+          newHeight = h2;
+        }
         var delta = {
           width: newWidth - original.width,
           height: newHeight - original.height
         };
+        this.delta = delta;
         if (width && typeof width === "string") {
-          if (endsWith(width, "%")) {
+          if (width.endsWith("%")) {
             var percent2 = newWidth / parentSize.width * 100;
-            newWidth = percent2 + "%";
-          } else if (endsWith(width, "vw")) {
+            newWidth = "".concat(percent2, "%");
+          } else if (width.endsWith("vw")) {
             var vw2 = newWidth / this.window.innerWidth * 100;
-            newWidth = vw2 + "vw";
-          } else if (endsWith(width, "vh")) {
+            newWidth = "".concat(vw2, "vw");
+          } else if (width.endsWith("vh")) {
             var vh2 = newWidth / this.window.innerHeight * 100;
-            newWidth = vh2 + "vh";
+            newWidth = "".concat(vh2, "vh");
           }
         }
         if (height && typeof height === "string") {
-          if (endsWith(height, "%")) {
+          if (height.endsWith("%")) {
             var percent2 = newHeight / parentSize.height * 100;
-            newHeight = percent2 + "%";
-          } else if (endsWith(height, "vw")) {
+            newHeight = "".concat(percent2, "%");
+          } else if (height.endsWith("vw")) {
             var vw2 = newHeight / this.window.innerWidth * 100;
-            newHeight = vw2 + "vw";
-          } else if (endsWith(height, "vh")) {
+            newHeight = "".concat(vw2, "vw");
+          } else if (height.endsWith("vh")) {
             var vh2 = newHeight / this.window.innerHeight * 100;
-            newHeight = vh2 + "vh";
+            newHeight = "".concat(vh2, "vh");
           }
         }
         var newState = {
@@ -63712,25 +63567,32 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         } else if (this.flexDir === "column") {
           newState.flexBasis = newState.height;
         }
-        this.setState(newState);
+        var widthChanged = this.state.width !== newState.width;
+        var heightChanged = this.state.height !== newState.height;
+        var flexBaseChanged = this.state.flexBasis !== newState.flexBasis;
+        var changed = widthChanged || heightChanged || flexBaseChanged;
+        if (changed) {
+          (0, import_react_dom9.flushSync)(function() {
+            _this.setState(newState);
+          });
+        }
         if (this.props.onResize) {
-          this.props.onResize(event, direction, this.resizable, delta);
+          if (changed) {
+            this.props.onResize(event, direction, this.resizable, delta);
+          }
         }
       };
       Resizable2.prototype.onMouseUp = function(event) {
-        var _a = this.state, isResizing = _a.isResizing, direction = _a.direction, original = _a.original;
+        var _a, _b;
+        var _c = this.state, isResizing = _c.isResizing, direction = _c.direction, original = _c.original;
         if (!isResizing || !this.resizable) {
           return;
         }
-        var delta = {
-          width: this.size.width - original.width,
-          height: this.size.height - original.height
-        };
         if (this.props.onResizeStop) {
-          this.props.onResizeStop(event, direction, this.resizable, delta);
+          this.props.onResizeStop(event, direction, this.resizable, this.delta);
         }
         if (this.props.size) {
-          this.setState(this.props.size);
+          this.setState({ width: (_a = this.props.size.width) !== null && _a !== void 0 ? _a : "auto", height: (_b = this.props.size.height) !== null && _b !== void 0 ? _b : "auto" });
         }
         this.unbindEvents();
         this.setState({
@@ -63739,7 +63601,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         });
       };
       Resizable2.prototype.updateSize = function(size4) {
-        this.setState({ width: size4.width, height: size4.height });
+        var _a, _b;
+        this.setState({ width: (_a = size4.width) !== null && _a !== void 0 ? _a : "auto", height: (_b = size4.height) !== null && _b !== void 0 ? _b : "auto" });
       };
       Resizable2.prototype.renderResizer = function() {
         var _this = this;
@@ -63749,11 +63612,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
         var resizers = Object.keys(enable).map(function(dir) {
           if (enable[dir] !== false) {
-            return React95.createElement(Resizer, { key: dir, direction: dir, onResizeStart: _this.onResizeStart, replaceStyles: handleStyles && handleStyles[dir], className: handleClasses && handleClasses[dir] }, handleComponent && handleComponent[dir] ? handleComponent[dir] : null);
+            return (0, import_jsx_runtime293.jsx)(Resizer, { direction: dir, onResizeStart: _this.onResizeStart, replaceStyles: handleStyles && handleStyles[dir], className: handleClasses && handleClasses[dir], children: handleComponent && handleComponent[dir] ? handleComponent[dir] : null }, dir);
           }
           return null;
         });
-        return React95.createElement("div", { className: handleWrapperClass, style: handleWrapperStyle }, resizers);
+        return (0, import_jsx_runtime293.jsx)("div", { className: handleWrapperClass, style: handleWrapperStyle, children: resizers });
       };
       Resizable2.prototype.render = function() {
         var _this = this;
@@ -63769,13 +63632,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           style2.flexBasis = this.state.flexBasis;
         }
         var Wrapper6 = this.props.as || "div";
-        return React95.createElement(
-          Wrapper6,
-          __assign3({ ref: this.ref, style: style2, className: this.props.className }, extendsProps),
-          this.state.isResizing && React95.createElement("div", { style: this.state.backgroundStyle }),
-          this.props.children,
-          this.renderResizer()
-        );
+        return (0, import_jsx_runtime293.jsxs)(Wrapper6, __assign3({ style: style2, className: this.props.className }, extendsProps, {
+          // `ref` is after `extendsProps` to ensure this one wins over a version
+          // passed in
+          ref: function(c3) {
+            if (c3) {
+              _this.resizable = c3;
+            }
+          },
+          children: [this.state.isResizing && (0, import_jsx_runtime293.jsx)("div", { style: this.state.backgroundStyle }), this.props.children, this.renderResizer()]
+        }));
       };
       Resizable2.defaultProps = {
         as: "div",
@@ -63797,6 +63663,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         },
         style: {},
         grid: [1, 1],
+        gridGap: [0, 0],
         lockAspectRatio: false,
         lockAspectRatioExtraWidth: 0,
         lockAspectRatioExtraHeight: 0,
@@ -63805,7 +63672,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         snapGap: 0
       };
       return Resizable2;
-    })(React95.PureComponent)
+    })(import_react107.PureComponent)
   );
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
@@ -63935,7 +63802,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
-  var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE70 = "data-wp-hash";
   function getRuntime70() {
     const globalScope = globalThis;
@@ -64055,16 +63922,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         left: (0, import_i18n69.isRTL)() ? CORNER_OFFSET : void 0
       };
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
       "aria-hidden": "true",
       className: clsx_default("components-resizable-tooltip__tooltip-wrapper", style_module_default49["tooltip-wrapper"]),
       ref,
       style: style2,
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
         className: clsx_default("components-resizable-tooltip__tooltip", style_module_default49.tooltip),
         style: labelStyle,
-        children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(component_default8, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(component_default8, {
           as: "span",
           className: style_module_default49["label-text"],
           children: label
@@ -64076,7 +63943,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var label_default = ForwardedComponent3;
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-  var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE71 = "data-wp-hash";
   function getRuntime71() {
     const globalScope = globalThis;
@@ -64185,13 +64052,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const classes = clsx_default("components-resize-tooltip", style_module_default50.root, className);
-    return /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(PolymorphicElement, {
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(PolymorphicElement, {
       "aria-hidden": "true",
       as,
       ...props,
       className: classes,
       ref,
-      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(label_default, {
+      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(label_default, {
         "aria-hidden": props["aria-hidden"],
         label,
         position: position2,
@@ -64204,7 +64071,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var resize_tooltip_default = ForwardedComponent4;
 
   // packages/components/build-module/resizable-box/index.mjs
-  var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
   var HANDLE_CLASS_NAME = "components-resizable-box__handle";
   var SIDE_HANDLE_CLASS_NAME = "components-resizable-box__side-handle";
   var CORNER_HANDLE_CLASS_NAME = "components-resizable-box__corner-handle";
@@ -64244,16 +64111,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     __experimentalTooltipProps: tooltipProps = {},
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(Resizable, {
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(Resizable, {
       className: clsx_default("components-resizable-box__container", showHandle && "has-show-handle", className),
-      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
+      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("div", {
         tabIndex: -1
       }, key)])),
       handleClasses: HANDLE_CLASSES,
       handleStyles: HANDLE_STYLES,
       ref,
       ...props,
-      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(resize_tooltip_default, {
+      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(resize_tooltip_default, {
         ...tooltipProps
       })]
     });
@@ -64265,7 +64132,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/responsive-wrapper/index.mjs
   var import_deprecated27 = __toESM(require_deprecated(), 1);
   var import_element197 = __toESM(require_element(), 1);
-  var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveWrapper({
     naturalWidth,
     naturalHeight,
@@ -64285,9 +64152,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (naturalWidth && naturalHeight) {
       aspectRatio2 = `${naturalWidth} / ${naturalHeight}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(TagName58, {
+    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(TagName58, {
       className: "components-responsive-wrapper",
-      children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)("div", {
         children: (0, import_element197.cloneElement)(children, {
           className: clsx_default("components-responsive-wrapper__content", children.props.className),
           style: {
@@ -64303,7 +64170,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/sandbox/index.mjs
   var import_element198 = __toESM(require_element(), 1);
   var import_compose68 = __toESM(require_compose(), 1);
-  var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   var observeAndResizeJS = function() {
     const {
       MutationObserver: MutationObserver2
@@ -64400,34 +64267,34 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     scripts,
     lang
   }) {
-    const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)("html", {
+    const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("html", {
       lang,
       className: type,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime296.jsxs)("head", {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime296.jsx)("title", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("head", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime298.jsx)("title", {
           children: title
-        }), /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("style", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("style", {
           dangerouslySetInnerHTML: {
             __html: style
           }
-        }), styles3.map((rules, i2) => /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("style", {
+        }), styles3.map((rules, i2) => /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("style", {
           dangerouslySetInnerHTML: {
             __html: rules
           }
-        }, i2)), /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("script", {
+        }, i2)), /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("script", {
           type: "text/javascript",
           dangerouslySetInnerHTML: {
             __html: `(${observeAndResizeJS.toString()})();`
           }
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)("body", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("body", {
         "data-resizable-iframe-connected": "data-resizable-iframe-connected",
         className: type,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime296.jsx)("div", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime298.jsx)("div", {
           dangerouslySetInnerHTML: {
             __html: html
           }
-        }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("script", {
+        }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("script", {
           src
         }, src))]
       })]
@@ -64502,7 +64369,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         currentView?.removeEventListener("message", checkMessageForResize);
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("iframe", {
       ref: (0, import_compose68.useMergeRefs)([ref, (0, import_compose68.useFocusableIframe)()]),
       title,
       tabIndex,
@@ -64599,7 +64466,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     (0, import_element198.useEffect)(() => {
       trySandBox(true);
     }, [html, type]);
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("iframe", {
       ref: (0, import_compose68.useMergeRefs)([ref, (0, import_compose68.useFocusableIframe)()]),
       title,
       tabIndex,
@@ -64615,11 +64482,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...contentProps
   }) {
     if (allowSameOrigin) {
-      return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(SameOriginSandBox, {
+      return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(SameOriginSandBox, {
         ...contentProps
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(IsolatedSandBox, {
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(IsolatedSandBox, {
       ...contentProps
     });
   }
@@ -64630,7 +64497,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_i18n70 = __toESM(require_i18n(), 1);
   var import_element199 = __toESM(require_element(), 1);
   var import_deprecated28 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE72 = "data-wp-hash";
   function getRuntime72() {
     const globalScope = globalThis;
@@ -64724,9 +64591,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onChange("");
       searchRef.current?.focus();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(InputControlSuffixWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(InputControlSuffixWrapper, {
       variant: "control",
-      children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(button_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(button_default, {
         size: "small",
         icon: close_small_default,
         label: onClose ? (0, import_i18n70.__)("Close search") : (0, import_i18n70.__)("Reset search"),
@@ -64755,7 +64622,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const searchRef = (0, import_element199.useRef)(null);
     const instanceId = (0, import_compose69.useInstanceId)(SearchControl, "components-search-control");
     const hasSuffix = !!onClose || !!value;
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(input_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(input_control_default, {
       id: instanceId,
       hideLabelFromVision,
       label,
@@ -64767,15 +64634,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       autoComplete: "off",
       placeholder,
       value: value ?? "",
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(InputControlPrefixWrapper, {
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(InputControlPrefixWrapper, {
         variant: "icon",
-        children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(icon_default3, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(icon_default3, {
           className: style_module_default51.icon,
           icon: search_default,
           fill: "currentColor"
         })
       }),
-      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(SuffixItem, {
+      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(SuffixItem, {
         searchRef,
         onChange,
         onClose
@@ -64792,7 +64659,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element200 = __toESM(require_element(), 1);
   var import_i18n71 = __toESM(require_i18n(), 1);
   var import_warning10 = __toESM(require_warning(), 1);
-  var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_TIMEOUT = 6e3;
   function useSpokenMessage2(message, politeness) {
     const spokenMessage = typeof message === "string" ? message : (0, import_element200.renderToString)(message);
@@ -64864,7 +64731,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const snackbarContentClassnames = clsx_default("components-snackbar__content", {
       "components-snackbar__content-with-icon": !!icon
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
       ref,
       className: classes,
       onClick: !explicitDismiss ? dismissMe : void 0,
@@ -64873,9 +64740,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onKeyPress: !explicitDismiss ? dismissMe : void 0,
       "aria-label": !explicitDismiss ? (0, import_i18n71.__)("Dismiss this notice") : void 0,
       "data-testid": "snackbar",
-      children: /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", {
         className: snackbarContentClassnames,
-        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("div", {
+        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
           className: "components-snackbar__icon",
           children: icon
         }), children, actions.map(({
@@ -64883,19 +64750,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           onClick,
           url,
           openInNewTab = false
-        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(external_link_default, {
+        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(external_link_default, {
           href: url,
           onClick: (event) => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
-        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(button_default, {
+        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(button_default, {
           __next40pxDefaultSize: true,
           href: url,
           variant: "link",
           onClick: (event) => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
-        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("span", {
+        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("span", {
           role: "button",
           "aria-label": (0, import_i18n71.__)("Dismiss this notice"),
           tabIndex: 0,
@@ -64914,7 +64781,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/snackbar/list.mjs
   var import_compose70 = __toESM(require_compose(), 1);
   var import_element201 = __toESM(require_element(), 1);
-  var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
   var SNACKBAR_VARIANTS = {
     init: {
       height: 0,
@@ -64956,18 +64823,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const isReducedMotion = (0, import_compose70.useReducedMotion)();
     className = clsx_default("components-snackbar-list", className);
     const removeNotice = (notice) => () => onRemove?.(notice.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)("div", {
       className,
       tabIndex: -1,
       ref: listRef,
       "data-testid": "snackbar-list",
-      children: [children, /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(AnimatePresence, {
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(AnimatePresence, {
         children: notices.map((notice) => {
           const {
             content,
             ...restNotice
           } = notice;
-          return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(motion.div, {
+          return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(motion.div, {
             layout: isReducedMotion ? false : "position",
             style: {
               width: "100%"
@@ -64976,9 +64843,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             animate: "open",
             exit: "exit",
             variants: isReducedMotion ? void 0 : SNACKBAR_VARIANTS,
-            children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("div", {
+            children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)("div", {
               className: "components-snackbar-list__notice-container",
-              children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(snackbar_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(snackbar_default, {
                 ...restNotice,
                 onRemove: removeNotice(notice),
                 listRef,
@@ -65008,7 +64875,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element202 = __toESM(require_element(), 1);
   var import_compose71 = __toESM(require_compose(), 1);
   var import_i18n72 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   var extractTabName = (id3) => {
     if (typeof id3 === "undefined" || id3 === null) {
       return;
@@ -65091,21 +64958,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         setTabStoreSelectedId(firstEnabledTab.name);
       }
     }, [tabs, selectedTab?.disabled, setTabStoreSelectedId, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)("div", {
       className,
       ref,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime300.jsx)(TabList, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(TabList, {
         store: tabStore,
         className: "components-tab-panel__tabs",
         children: tabs.map((tab) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(Tab, {
+          return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(Tab, {
             id: prependInstanceId(tab.name),
             className: clsx_default("components-tab-panel__tabs-item", tab.className, {
               [activeClass]: tab.name === selectedTabName
             }),
             disabled: tab.disabled,
             "aria-controls": `${prependInstanceId(tab.name)}-view`,
-            render: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(button_default, {
+            render: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(button_default, {
               __next40pxDefaultSize: true,
               icon: tab.icon,
               label: tab.icon && tab.title,
@@ -65114,7 +64981,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: !tab.icon && tab.title
           }, tab.name);
         })
-      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(TabPanel, {
+      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(TabPanel, {
         id: `${prependInstanceId(selectedTab.name)}-view`,
         store: tabStore,
         tabId: prependInstanceId(selectedTab.name),
@@ -65130,7 +64997,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/text-control/index.mjs
   var import_compose72 = __toESM(require_compose(), 1);
   var import_element203 = __toESM(require_element(), 1);
-  var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTextControl(props, ref) {
     const {
       // Prevent passing legacy props to `input`.
@@ -65148,13 +65015,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = props;
     const id3 = (0, import_compose72.useInstanceId)(TextControl, "inspector-text-control", idProp);
     const onChangeValue = (event) => onChange(event.target.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(base_control_default, {
       label,
       hideLabelFromVision,
       id: id3,
       help,
       className,
-      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)("input", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)("input", {
         className: "components-text-control__input",
         type,
         id: id3,
@@ -65173,7 +65040,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/textarea-control/index.mjs
   var import_compose73 = __toESM(require_compose(), 1);
   var import_element204 = __toESM(require_element(), 1);
-  var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE73 = "data-wp-hash";
   function getRuntime73() {
     const globalScope = globalThis;
@@ -65270,13 +65137,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const id3 = `inspector-textarea-control-${instanceId}`;
     const onChangeValue = (event) => onChange(event.target.value);
     const classes = clsx_default("components-textarea-control", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(base_control_default, {
       label,
       hideLabelFromVision,
       id: id3,
       help,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)("textarea", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)("textarea", {
         className: clsx_default("components-textarea-control__input", style_module_default52.textarea),
         id: id3,
         rows,
@@ -65294,7 +65161,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/text-highlight/index.mjs
   var import_element205 = __toESM(require_element(), 1);
-  var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   var TextHighlight = (props) => {
     const {
       text = "",
@@ -65302,29 +65169,29 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = props;
     const trimmedHighlightText = highlight.trim();
     if (!trimmedHighlightText) {
-      return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(import_jsx_runtime303.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(import_jsx_runtime305.Fragment, {
         children: text
       });
     }
     const regex = new RegExp(`(${escapeRegExp(trimmedHighlightText)})`, "gi");
     return (0, import_element205.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
-      mark: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)("mark", {})
+      mark: /* @__PURE__ */ (0, import_jsx_runtime305.jsx)("mark", {})
     });
   };
   TextHighlight.displayName = "TextHighlight";
   var text_highlight_default = TextHighlight;
 
   // packages/components/build-module/tip/index.mjs
-  var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
   function Tip(props) {
     const {
       children
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime304.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)("div", {
       className: "components-tip",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime304.jsx)(icon_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime306.jsx)(icon_default2, {
         icon: tip_default
-      }), /* @__PURE__ */ (0, import_jsx_runtime304.jsx)("p", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("p", {
         children
       })]
     });
@@ -65334,7 +65201,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/toggle-control/index.mjs
   var import_element206 = __toESM(require_element(), 1);
   var import_compose74 = __toESM(require_compose(), 1);
-  var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToggleControl({
     label,
     checked: checked2,
@@ -65364,17 +65231,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         describedBy = id3 + "__help";
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(base_control_default, {
       id: id3,
-      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime305.jsx)("span", {
+      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("span", {
         className: "components-toggle-control__help",
         children: helpLabel
       }),
       className: clsx_default("components-toggle-control", className),
-      children: /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(component_default9, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)(component_default9, {
         justify: "flex-start",
         spacing: 2,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime305.jsx)(form_toggle_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime307.jsx)(form_toggle_default, {
           id: id3,
           checked: checked2,
           onChange: onChangeToggle,
@@ -65382,7 +65249,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           disabled: disabled2,
           ref,
           ...additionalProps
-        }), /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(component_default5, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(component_default5, {
           as: "label",
           htmlFor: id3,
           className: clsx_default("components-toggle-control__label", {
@@ -65418,7 +65285,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_context_default = ToolbarContext;
 
   // packages/components/build-module/toolbar/toolbar-item/index.mjs
-  var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarItem({
     children,
     as: Component7,
@@ -65437,7 +65304,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     if (!accessibleToolbarStore) {
       if (Component7) {
-        return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(Component7, {
+        return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(Component7, {
           ...allProps,
           children
         });
@@ -65447,10 +65314,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       return children(allProps);
     }
-    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(Component7, {
+    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(Component7, {
       children
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(ToolbarItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ToolbarItem, {
       accessibleWhenDisabled: true,
       ...allProps,
       store: accessibleToolbarStore,
@@ -65462,18 +65329,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_item_default = ToolbarItem22;
 
   // packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.mjs
-  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
   var ToolbarButtonContainer = ({
     children,
     className
-  }) => /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime309.jsx)("div", {
     className,
     children
   });
   var toolbar_button_container_default = ToolbarButtonContainer;
 
   // packages/components/build-module/toolbar/toolbar-button/index.mjs
-  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   function useDeprecatedProps6({
     isDisabled,
     ...otherProps
@@ -65495,9 +65362,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = useDeprecatedProps6(props);
     const accessibleToolbarState = (0, import_element209.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(toolbar_button_container_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(toolbar_button_container_default, {
         className: containerClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(button_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(button_default, {
           ref,
           icon: restProps.icon,
           size: "compact",
@@ -65520,12 +65387,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         })
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(toolbar_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(toolbar_item_default, {
       className: clsx_default("components-toolbar-button", className),
       ...extraProps,
       ...restProps,
       ref,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(button_default, {
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(button_default, {
         size: "compact",
         label: title,
         isPressed: isActive,
@@ -65539,12 +65406,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_button_default = ToolbarButton;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-container.mjs
-  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   var ToolbarGroupContainer = ({
     className,
     children,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime309.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime311.jsx)("div", {
     className,
     ...props,
     children
@@ -65553,14 +65420,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.mjs
   var import_element210 = __toESM(require_element(), 1);
-  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
   function ToolbarGroupCollapsed({
     controls = [],
     toggleProps,
     ...props
   }) {
     const accessibleToolbarState = (0, import_element210.useContext)(toolbar_context_default);
-    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(dropdown_menu_default, {
+    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(dropdown_menu_default, {
       controls,
       toggleProps: {
         ...internalToggleProps,
@@ -65569,7 +65436,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...props
     });
     if (accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(toolbar_item_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(toolbar_item_default, {
         ...toggleProps,
         children: renderDropdownMenu
       });
@@ -65579,7 +65446,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_group_collapsed_default = ToolbarGroupCollapsed;
 
   // packages/components/build-module/toolbar/toolbar-group/index.mjs
-  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
   function isNestedArray(arr) {
     return Array.isArray(arr) && Array.isArray(arr[0]);
   }
@@ -65608,7 +65475,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       controlSets = [controls];
     }
     if (isCollapsed2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(toolbar_group_collapsed_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(toolbar_group_collapsed_default, {
         label: title,
         controls: controlSets,
         className: finalClassName,
@@ -65616,10 +65483,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(toolbar_group_container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(toolbar_group_container_default, {
       className: finalClassName,
       ...props,
-      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(toolbar_button_default, {
+      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(toolbar_button_default, {
         containerClassName: indexOfSet > 0 && indexOfControl === 0 ? "has-left-divider" : void 0,
         ...control
       }, [indexOfSet, indexOfControl].join()))), children]
@@ -65630,7 +65497,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/toolbar/toolbar/toolbar-container.mjs
   var import_element212 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarContainer({
     label,
     ...props
@@ -65641,9 +65508,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     return (
       // This will provide state for `ToolbarButton`'s
-      /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(toolbar_context_default.Provider, {
+      /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(toolbar_context_default.Provider, {
         value: toolbarStore,
-        children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(Toolbar, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(Toolbar, {
           ref,
           "aria-label": label,
           store: toolbarStore,
@@ -65657,7 +65524,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_container_default = ToolbarContainer2;
 
   // packages/components/build-module/toolbar/toolbar/index.mjs
-  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbar({
     className,
     label,
@@ -65691,16 +65558,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         title: _title,
         ...restProps
       } = props;
-      return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(toolbar_group_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(toolbar_group_default, {
         isCollapsed: false,
         ...restProps,
         className
       });
     }
     const finalClassName = clsx_default("components-accessible-toolbar", className, variant && `is-${variant}`);
-    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(ContextSystemProvider, {
       value: contextSystemValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(toolbar_container_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(toolbar_container_default, {
         className: finalClassName,
         label,
         ref,
@@ -65714,18 +65581,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.mjs
   var import_element214 = __toESM(require_element(), 1);
-  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarDropdownMenu(props, ref) {
     const accessibleToolbarState = (0, import_element214.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(dropdown_menu_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(dropdown_menu_default, {
         ...props
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(toolbar_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(toolbar_item_default, {
       ref,
       ...props.toggleProps,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(dropdown_menu_default, {
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(dropdown_menu_default, {
         ...props,
         popoverProps: {
           ...props.popoverProps
@@ -65868,7 +65735,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
-  var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE75 = "data-wp-hash";
   function getRuntime75() {
     const globalScope = globalThis;
@@ -65956,15 +65823,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!items.length) {
       return null;
     }
-    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", {
+    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("span", {
       "aria-hidden": true,
       className: style_module_default54["reset-label"],
       children: (0, import_i18n74.__)("Reset")
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_jsx_runtime315.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_jsx_runtime317.Fragment, {
       children: items.map(([label, hasValue]) => {
         if (hasValue) {
-          return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(menu_item_default, {
+          return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
             className: itemClassName,
             role: "menuitem",
             label: (0, import_i18n74.sprintf)(
@@ -65984,7 +65851,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: label
           }, label);
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
           icon: check_default,
           className: itemClassName,
           role: "menuitemcheckbox",
@@ -66002,7 +65869,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!items.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_jsx_runtime315.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_jsx_runtime317.Fragment, {
       children: items.map(([label, isSelected2]) => {
         const itemLabel = isSelected2 ? (0, import_i18n74.sprintf)(
           // translators: %s: The name of the control being hidden and reset e.g. "Padding".
@@ -66013,7 +65880,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           (0, import_i18n74._x)("Show %s", "input control"),
           label
         );
-        return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
           icon: isSelected2 ? check_default : null,
           isSelected: isSelected2,
           label: itemLabel,
@@ -66067,14 +65934,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     );
     const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n74.__)("All options are currently hidden") : void 0;
     const canResetAll = [...defaultItems, ...optionalItems].some(([, isSelected2]) => isSelected2);
-    return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(component_default9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(component_default9, {
       ...headerProps,
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsx)(component_default19, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime317.jsx)(component_default19, {
         level: headingLevel,
         className: headingClassName,
         children: labelText
-      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(dropdown_menu_default, {
+      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(dropdown_menu_default, {
         ...dropdownMenuProps,
         icon: dropDownMenuIcon,
         label: dropDownMenuLabelText,
@@ -66085,19 +65952,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           size: "small",
           description: dropdownMenuDescriptionText
         },
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(import_jsx_runtime315.Fragment, {
-          children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(menu_group_default, {
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(import_jsx_runtime317.Fragment, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(menu_group_default, {
             label: labelText,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsx)(DefaultControlsGroup, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime317.jsx)(DefaultControlsGroup, {
               items: defaultItems,
               toggleItem,
               itemClassName: defaultControlsItemClassName
-            }), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(OptionalControlsGroup, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(OptionalControlsGroup, {
               items: optionalItems,
               toggleItem
             })]
-          }), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(menu_group_default, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(menu_item_default, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_group_default, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
               "aria-disabled": !canResetAll,
               variant: "tertiary",
               onClick: () => {
@@ -66464,7 +66331,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel/component.mjs
-  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   var TOOLS_PANEL_GAP = space(4);
   var UnconnectedToolsPanel = (props, forwardedRef) => {
     const {
@@ -66477,7 +66344,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       dropdownMenuProps,
       ...toolsPanelProps
     } = useToolsPanel(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(component_default22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(component_default22, {
       ...toolsPanelProps,
       columns: 2,
       gap: 4,
@@ -66485,9 +66352,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       rowGap: TOOLS_PANEL_GAP,
       templateColumns: "repeat( 2, minmax(0, 1fr) )",
       ref: forwardedRef,
-      children: /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(ToolsPanelContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(ToolsPanelContext.Provider, {
         value: panelContext,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime316.jsx)(component_default38, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime318.jsx)(component_default38, {
           label,
           resetAll: resetAllItems,
           toggleItem,
@@ -66674,7 +66541,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-item/component.mjs
-  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var UnconnectedToolsPanelItem = (props, forwardedRef) => {
     const {
       children,
@@ -66683,12 +66550,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...toolsPanelItemProps
     } = useToolsPanelItem(props);
     if (!isShown) {
-      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(component_default, {
+      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(component_default, {
         ...toolsPanelItemProps,
         ref: forwardedRef
       }) : null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(component_default, {
       ...toolsPanelItemProps,
       ref: forwardedRef,
       children
@@ -66713,7 +66580,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var RovingTabIndexProvider = RovingTabIndexContext.Provider;
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
-  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   function RovingTabIndex({
     children
   }) {
@@ -66722,14 +66589,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       lastFocusedElement,
       setLastFocusedElement
     }), [lastFocusedElement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(RovingTabIndexProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(RovingTabIndexProvider, {
       value: providerValue,
       children
     });
   }
 
   // packages/components/build-module/tree-grid/index.mjs
-  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
 
   // packages/components/build-module/tree-grid/row.mjs
   var import_compose76 = __toESM(require_compose(), 1);
@@ -66789,7 +66656,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tree-grid/row.mjs
-  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridRow({
     children,
     level,
@@ -66801,7 +66668,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const rowRef = (0, import_element221.useRef)(null);
     const refs = (0, import_compose76.useMergeRefs)([rowRef, ref]);
     useValidateTreeGridStructure("TreeGridRow", rowRef);
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("tr", {
+    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)("tr", {
       ...props,
       ref: refs,
       role: "row",
@@ -66824,7 +66691,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tree-grid/roving-tab-index-item.mjs
   var import_element222 = __toESM(require_element(), 1);
-  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   var RovingTabIndexItem = (0, import_element222.forwardRef)(function UnforwardedRovingTabIndexItem({
     children,
     as: Component7,
@@ -66861,7 +66728,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!Component7) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(Component7, {
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(Component7, {
       ...allProps,
       children
     });
@@ -66870,12 +66737,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var roving_tab_index_item_default = RovingTabIndexItem;
 
   // packages/components/build-module/tree-grid/item.mjs
-  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridItem({
     children,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(roving_tab_index_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(roving_tab_index_item_default, {
       ref,
       ...props,
       children
@@ -66886,7 +66753,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var item_default2 = TreeGridItem;
 
   // packages/components/build-module/tree-grid/cell.mjs
-  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridCell({
     children,
     withoutGridItem = false,
@@ -66894,16 +66761,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, ref) {
     const cellRef = (0, import_element224.useRef)(null);
     useValidateTreeGridStructure("TreeGridCell", cellRef);
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("td", {
       ref: cellRef,
       ...props,
       role: "gridcell",
-      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_jsx_runtime322.Fragment, {
+      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(import_jsx_runtime324.Fragment, {
         children: typeof children === "function" ? children({
           ...props,
           ref
         }) : children
-      }) : /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(item_default2, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(item_default2, {
         ref,
         children
       })
@@ -67054,16 +66921,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         event.preventDefault();
       }
     }, [onExpandRow, onCollapseRow, onFocusRow]);
-    return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(RovingTabIndex, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(RovingTabIndex, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("div", {
         role: "application",
         "aria-label": applicationAriaLabel,
-        children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("table", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("table", {
           ...props,
           role: "treegrid",
           onKeyDown,
           ref,
-          children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("tbody", {
+          children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("tbody", {
             children
           })
         })
@@ -67077,7 +66944,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/isolated-event-container/index.mjs
   var import_element226 = __toESM(require_element(), 1);
   var import_deprecated31 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
@@ -67085,7 +66952,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     (0, import_deprecated31.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("div", {
       ...props,
       ref,
       onMouseDown: stopPropagation
@@ -67096,7 +66963,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/z-stack/component.mjs
   var import_deprecated32 = __toESM(require_deprecated(), 1);
   var import_element227 = __toESM(require_element(), 1);
-  var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE78 = "data-wp-hash";
   function getRuntime78() {
     const globalScope = globalThis;
@@ -67196,7 +67063,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       const zIndex = isReversed ? childrenLastIndex - index2 : index2;
       const offsetAmount = isLayered ? offset4 * index2 : offset4;
       const key = (0, import_element227.isValidElement)(child) ? child.key : index2;
-      return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("div", {
+      return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)("div", {
         className: style_module_default57.child,
         style: {
           "--z-stack-offset": `${offsetAmount}px`,
@@ -67205,7 +67072,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         children: child
       }, key);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(PolymorphicElement, {
+    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(PolymorphicElement, {
       ...otherProps,
       className: clsx_default(style_module_default57["z-stack"], isLayered && style_module_default57.layered, className),
       ref: forwardedRef,
@@ -67219,7 +67086,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element228 = __toESM(require_element(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
-  var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   var defaultShortcuts = {
     previous: [{
       modifier: "ctrlShift",
@@ -67294,9 +67161,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     shortcuts,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)("div", {
       ...useNavigateRegions(shortcuts),
-      children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(Component7, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(Component7, {
         ...props
       })
     });
@@ -67304,13 +67171,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-constrained-tabbing/index.mjs
   var import_compose78 = __toESM(require_compose(), 1);
-  var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   var withConstrainedTabbing = (0, import_compose78.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
     const ref = (0, import_compose78.useConstrainedTabbing)();
-    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)("div", {
       ref,
       tabIndex: -1,
-      children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(WrappedComponent, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(WrappedComponent, {
         ...props
       })
     });
@@ -67321,7 +67188,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_es63 = __toESM(require_es6(), 1);
   var import_element229 = __toESM(require_element(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
-  var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose79.createHigherOrderComponent)((WrappedComponent) => {
     return function WithFallbackStyles(props) {
       const [fallbackStyles, setFallbackStyles] = (0, import_element229.useState)(void 0);
@@ -67336,11 +67203,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
       });
-      const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(WrappedComponent, {
+      const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(WrappedComponent, {
         ...props,
         ...fallbackStyles
       });
-      return props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime328.jsxs)("div", {
+      return props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)("div", {
         ref: nodeRef,
         children: [" ", wrappedComponent, " "]
       });
@@ -67351,7 +67218,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element230 = __toESM(require_element(), 1);
   var import_hooks9 = __toESM(require_hooks(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
-  var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_FRAME_PERIOD = 16;
   function withFilters(hookName) {
     return (0, import_compose80.createHigherOrderComponent)((OriginalComponent) => {
@@ -67382,7 +67249,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
         render() {
-          return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(FilteredComponent, {
+          return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(FilteredComponent, {
             ...this.props
           });
         }
@@ -67407,7 +67274,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element231 = __toESM(require_element(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
   var import_deprecated33 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element231.Component || typeof object === "function";
   }
@@ -67419,9 +67286,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       } = {}) => (WrappedComponent) => {
         const WithFocusReturn = (props) => {
           const ref = (0, import_compose81.useFocusReturn)(onFocusReturn);
-          return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("div", {
+          return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)("div", {
             ref,
-            children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(WrappedComponent, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(WrappedComponent, {
               ...props
             })
           });
@@ -67449,7 +67316,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-notices/index.mjs
   var import_element232 = __toESM(require_element(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
-  var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
   var with_notices_default = (0, import_compose82.createHigherOrderComponent)((OriginalComponent) => {
     function Component7(props, ref) {
       const [noticeList, setNoticeList] = (0, import_element232.useState)([]);
@@ -67481,16 +67348,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props,
         noticeList,
         noticeOperations,
-        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(list_default, {
+        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(list_default, {
           className: "components-with-notices-ui",
           notices: noticeList,
           onRemove: noticeOperations.removeNotice
         })
       };
-      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(OriginalComponent, {
+      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(OriginalComponent, {
         ...propsOut,
         ref
-      }) : /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(OriginalComponent, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(OriginalComponent, {
         ...propsOut
       });
     }
@@ -67508,9 +67375,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-spoken-messages/index.mjs
   var import_compose83 = __toESM(require_compose(), 1);
   var import_a11y11 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
   var with_spoken_messages_default = (0, import_compose83.createHigherOrderComponent)((Component7) => function WithSpokenMessages(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(Component7, {
+    return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(Component7, {
       ...props,
       speak: import_a11y11.speak,
       debouncedSpeak: (0, import_compose83.useDebounce)(import_a11y11.speak, 500)
@@ -67702,7 +67569,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/menu/item.mjs
-  var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
   var Item22 = (0, import_element235.forwardRef)(function Item32({
     prefix: prefix2,
     suffix,
@@ -67718,19 +67585,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store || !computedStore) {
       throw new Error("Menu.Item can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(Item3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(Item3, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled: disabled2,
       store: computedStore,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ItemPrefixWrapper, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemPrefixWrapper, {
         children: prefix2
-      }), /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -67739,7 +67606,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/checkbox-item.mjs
   var import_element236 = __toESM(require_element(), 1);
-  var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
   var CheckboxItem22 = (0, import_element236.forwardRef)(function CheckboxItem3({
     suffix,
     children,
@@ -67753,28 +67620,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!store) {
       throw new Error("Menu.CheckboxItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(CheckboxItem2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(CheckboxItem2, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled: disabled2,
       store,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime334.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime336.jsx)(MenuItemCheck, {
         store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(icon_default2, {
           icon: check_default,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime334.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime336.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -67784,11 +67651,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/radio-item.mjs
   var import_element237 = __toESM(require_element(), 1);
   var import_primitives36 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
-  var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(import_primitives36.SVG, {
+  var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
+  var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_primitives36.SVG, {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
-    children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(import_primitives36.Circle, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_primitives36.Circle, {
       cx: 12,
       cy: 12,
       r: 3
@@ -67807,28 +67674,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!store) {
       throw new Error("Menu.RadioItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(RadioItem2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(RadioItem2, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled: disabled2,
       store,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime335.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime337.jsx)(MenuItemCheck, {
         store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(icon_default2, {
           icon: radioCheck2,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime337.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -67837,13 +67704,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/group.mjs
   var import_element238 = __toESM(require_element(), 1);
-  var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
   var Group22 = (0, import_element238.forwardRef)(function Group32(props, ref) {
     const menuContext = (0, import_element238.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Group can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(Group4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(Group4, {
       ref,
       ...props,
       store: menuContext.store
@@ -67852,17 +67719,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/group-label.mjs
   var import_element239 = __toESM(require_element(), 1);
-  var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
   var GroupLabel22 = (0, import_element239.forwardRef)(function Group5(props, ref) {
     const menuContext = (0, import_element239.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.GroupLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(GroupLabel4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(GroupLabel4, {
       ref,
       render: (
         // @ts-expect-error The `children` prop is passed
-        /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(component_default8, {
+        /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(component_default8, {
           upperCase: true,
           variant: "muted",
           size: "11px",
@@ -67877,13 +67744,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/separator.mjs
   var import_element240 = __toESM(require_element(), 1);
-  var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
   var Separator22 = (0, import_element240.forwardRef)(function Separator32(props, ref) {
     const menuContext = (0, import_element240.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Separator can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(Separator5, {
+    return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(Separator5, {
       ref,
       ...props,
       store: menuContext.store,
@@ -67893,13 +67760,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/item-label.mjs
   var import_element241 = __toESM(require_element(), 1);
-  var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
   var ItemLabel22 = (0, import_element241.forwardRef)(function ItemLabel3(props, ref) {
     const menuContext = (0, import_element241.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(ItemLabel2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(ItemLabel2, {
       numberOfLines: 1,
       ref,
       ...props
@@ -67908,13 +67775,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/item-help-text.mjs
   var import_element242 = __toESM(require_element(), 1);
-  var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
   var ItemHelpText2 = (0, import_element242.forwardRef)(function ItemHelpText3(props, ref) {
     const menuContext = (0, import_element242.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemHelpText can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(ItemHelpText, {
+    return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(ItemHelpText, {
       numberOfLines: 2,
       ref,
       ...props
@@ -67923,7 +67790,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/trigger-button.mjs
   var import_element243 = __toESM(require_element(), 1);
-  var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
   var TriggerButton = (0, import_element243.forwardRef)(function TriggerButton2({
     children,
     disabled: disabled2 = false,
@@ -67936,7 +67803,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (menuContext.store.parent) {
       throw new Error("Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead.");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(MenuButton, {
       ref,
       ...props,
       disabled: disabled2,
@@ -67947,7 +67814,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/submenu-trigger-item.mjs
   var import_element244 = __toESM(require_element(), 1);
-  var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
   var SubmenuTriggerItem = (0, import_element244.forwardRef)(function SubmenuTriggerItem2({
     suffix,
     ...otherProps
@@ -67956,19 +67823,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store.parent) {
       throw new Error("Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(MenuButton, {
       ref,
       accessibleWhenDisabled: true,
       store: menuContext.store,
-      render: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(Item22, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(Item22, {
         ...otherProps,
         // The menu item needs to register and be part of the parent menu.
         // Without specifying the store explicitly, the `Item` component
         // would otherwise read the store via context and pick up the one from
         // the sub-menu `Menu` component.
         store: menuContext.store.parent,
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(import_jsx_runtime342.Fragment, {
-          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(SubmenuChevronIcon, {
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime344.jsxs)(import_jsx_runtime344.Fragment, {
+          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(SubmenuChevronIcon, {
             "aria-hidden": "true",
             icon: chevron_right_small_default,
             size: 24,
@@ -67981,7 +67848,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/popover.mjs
   var import_element245 = __toESM(require_element(), 1);
-  var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
   var Popover4 = (0, import_element245.forwardRef)(function Popover22({
     gutter,
     shift: shift4,
@@ -68004,13 +67871,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.Popover can only be rendered inside a Menu component");
     }
-    const renderMenu = (0, import_element245.useCallback)((htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(MenuMotionRoot, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(MenuSurface, {
+    const renderMenu = (0, import_element245.useCallback)((htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(MenuMotionRoot, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(MenuSurface, {
         ...htmlProps,
         variant: menuContext.variant
       })
     }), [menuContext.variant]);
-    return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(Menu22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(Menu22, {
       ...otherProps,
       ref,
       modal,
@@ -68028,7 +67895,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/index.mjs
-  var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
   var UnconnectedMenu = (props) => {
     const {
       children,
@@ -68064,7 +67931,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store: menuStore,
       variant
     }), [menuStore, variant]);
-    return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(Context2.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(Context2.Provider, {
       value: contextValue,
       children
     });
@@ -68228,7 +68095,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("&:focus{box-shadow:none;outline:none;}&[data-focus-visible]{box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFtUWtEIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuaW1wb3J0IHsgQ09MT1JTLCBDT05GSUcsIGZvbnQgfSBmcm9tICcuLi91dGlscyc7XG5pbXBvcnQgeyBzcGFjZSB9IGZyb20gJy4uL3V0aWxzL3NwYWNlJztcbmltcG9ydCBJY29uIGZyb20gJy4uL2ljb24nO1xuXG5leHBvcnQgY29uc3QgU3R5bGVkVGFiTGlzdCA9IHN0eWxlZCggQXJpYWtpdC5UYWJMaXN0IClgXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBzdHJldGNoO1xuXHRvdmVyZmxvdy14OiBhdXRvO1xuXG5cdCZbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXSB7XG5cdFx0ZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcblx0fVxuXG5cdDp3aGVyZSggW2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSApIHtcblx0XHR3aWR0aDogZml0LWNvbnRlbnQ7XG5cdH1cblxuXHQtLWRpcmVjdGlvbi1mYWN0b3I6IDE7XG5cdC0tZGlyZWN0aW9uLXN0YXJ0OiBsZWZ0O1xuXHQtLWRpcmVjdGlvbi1lbmQ6IHJpZ2h0O1xuXHQtLXNlbGVjdGVkLXN0YXJ0OiB2YXIoIC0tc2VsZWN0ZWQtbGVmdCwgMCApO1xuXHQmOmRpciggcnRsICkge1xuXHRcdC0tZGlyZWN0aW9uLWZhY3RvcjogLTE7XG5cdFx0LS1kaXJlY3Rpb24tc3RhcnQ6IHJpZ2h0O1xuXHRcdC0tZGlyZWN0aW9uLWVuZDogbGVmdDtcblx0XHQtLXNlbGVjdGVkLXN0YXJ0OiB2YXIoIC0tc2VsZWN0ZWQtcmlnaHQsIDAgKTtcblx0fVxuXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdCZbZGF0YS1pbmRpY2F0b3ItYW5pbWF0ZWRdOjpiZWZvcmUge1xuXHRcdFx0dHJhbnNpdGlvbi1wcm9wZXJ0eTogdHJhbnNmb3JtLCBib3JkZXItcmFkaXVzLCBib3JkZXItYmxvY2s7XG5cdFx0XHR0cmFuc2l0aW9uLWR1cmF0aW9uOiAwLjJzO1xuXHRcdFx0dHJhbnNpdGlvbi10aW1pbmctZnVuY3Rpb246IGVhc2Utb3V0O1xuXHRcdH1cblx0fVxuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdCY6OmJlZm9yZSB7XG5cdFx0Y29udGVudDogJyc7XG5cdFx0cG9zaXRpb246IGFic29sdXRlO1xuXHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHRcdHRyYW5zZm9ybS1vcmlnaW46IHZhciggLS1kaXJlY3Rpb24tc3RhcnQgKSB0b3A7XG5cblx0XHQvLyBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZS5cblx0XHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdFx0b3V0bGluZS1vZmZzZXQ6IC0xcHg7XG5cdH1cblxuXHQvKiBVc2luZyBhIGxhcmdlIHZhbHVlIHRvIGF2b2lkIGFudGlhbGlhc2luZyByb3VuZGluZyBpc3N1ZXNcblx0XHRcdHdoZW4gc2NhbGluZyBpbiB0aGUgdHJhbnNmb3JtLCBzZWU6IGh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vYS81MjE1OTEyMyAqL1xuXHQtLWFudGlhbGlhc2luZy1mYWN0b3I6IDEwMDtcblx0JlthcmlhLW9yaWVudGF0aW9uPSdob3Jpem9udGFsJ10ge1xuXHRcdC0tZmFkZS13aWR0aDogNjRweDtcblx0XHQtLWZhZGUtZ3JhZGllbnQtYmFzZTogdHJhbnNwYXJlbnQgMCUsIGJsYWNrIHZhciggLS1mYWRlLXdpZHRoICk7XG5cdFx0LS1mYWRlLWdyYWRpZW50LWNvbXBvc2VkOlxuXHRcdFx0dmFyKCAtLWZhZGUtZ3JhZGllbnQtYmFzZSApLCBibGFjayA2MCUsIHRyYW5zcGFyZW50IDUwJTtcblx0XHQmLmlzLW92ZXJmbG93aW5nLWZpcnN0IHtcblx0XHRcdG1hc2staW1hZ2U6IGxpbmVhci1ncmFkaWVudChcblx0XHRcdFx0dG8gdmFyKCAtLWRpcmVjdGlvbi1lbmQgKSxcblx0XHRcdFx0dmFyKCAtLWZhZGUtZ3JhZGllbnQtYmFzZSApXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmLmlzLW92ZXJmbG93aW5nLWxhc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHR0byB2YXIoIC0tZGlyZWN0aW9uLXN0YXJ0ICksXG5cdFx0XHRcdHZhciggLS1mYWRlLWdyYWRpZW50LWJhc2UgKVxuXHRcdFx0KTtcblx0XHR9XG5cdFx0Ji5pcy1vdmVyZmxvd2luZy1maXJzdC5pcy1vdmVyZmxvd2luZy1sYXN0IHtcblx0XHRcdG1hc2staW1hZ2U6XG5cdFx0XHRcdGxpbmVhci1ncmFkaWVudCggdG8gcmlnaHQsIHZhciggLS1mYWRlLWdyYWRpZW50LWNvbXBvc2VkICkgKSxcblx0XHRcdFx0bGluZWFyLWdyYWRpZW50KCB0byBsZWZ0LCB2YXIoIC0tZmFkZS1ncmFkaWVudC1jb21wb3NlZCApICk7XG5cdFx0fVxuXG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdGJvdHRvbTogMDtcblx0XHRcdGhlaWdodDogMDtcblx0XHRcdHdpZHRoOiBjYWxjKCB2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApICogMXB4ICk7XG5cdFx0XHR0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1zdGFydCApICogdmFyKCAtLWRpcmVjdGlvbi1mYWN0b3IgKSAqXG5cdFx0XHRcdFx0XHRcdDFweFxuXHRcdFx0XHRcdClcblx0XHRcdFx0KVxuXHRcdFx0XHRzY2FsZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC13aWR0aCwgMCApIC9cblx0XHRcdFx0XHRcdFx0dmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKVxuXHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdGJvcmRlci1ib3R0b206IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKSBzb2xpZFxuXHRcdFx0XHQkeyBDT0xPUlMudGhlbWUuZ3JheVsgNzAwIF0gfTtcblx0XHR9XG5cdH1cblx0JlthcmlhLW9yaWVudGF0aW9uPSd2ZXJ0aWNhbCddIHtcblx0XHQmOjpiZWZvcmUge1xuXHRcdFx0LyogQWRqdXN0aW5nIHRoZSBib3JkZXIgcmFkaXVzIHRvIG1hdGNoIHRoZSBzY2FsaW5nIGluIHRoZSB5IGF4aXMuICovXG5cdFx0XHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfSAvXG5cdFx0XHRcdGNhbGMoXG5cdFx0XHRcdFx0JHsgQ09ORklHLnJhZGl1c1NtYWxsIH0gL1xuXHRcdFx0XHRcdFx0KFxuXHRcdFx0XHRcdFx0XHR2YXIoIC0tc2VsZWN0ZWQtaGVpZ2h0LCAwICkgL1xuXHRcdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdHRvcDogMDtcblx0XHRcdGxlZnQ6IDA7XG5cdFx0XHR3aWR0aDogMTAwJTtcblx0XHRcdGhlaWdodDogY2FsYyggdmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKSAqIDFweCApO1xuXHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVZKCBjYWxjKCB2YXIoIC0tc2VsZWN0ZWQtdG9wLCAwICkgKiAxcHggKSApXG5cdFx0XHRcdHNjYWxlWShcblx0XHRcdFx0XHRjYWxjKFxuXHRcdFx0XHRcdFx0dmFyKCAtLXNlbGVjdGVkLWhlaWdodCwgMCApIC9cblx0XHRcdFx0XHRcdFx0dmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKVxuXHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdGJhY2tncm91bmQtY29sb3I6ICR7IENPTE9SUy50aGVtZS5ncmF5WyAxMDAgXSB9O1xuXHRcdH1cblx0XHQmW2RhdGEtc2VsZWN0LW9uLW1vdmU9J3RydWUnXTpoYXMoXG5cdFx0XHRcdDppcyggOmZvY3VzLXZpc2libGUsIFtkYXRhLWZvY3VzLXZpc2libGVdIClcblx0XHRcdCk6OmJlZm9yZSB7XG5cdFx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdFx0Ym9yZGVyOiB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzICkgc29saWRcblx0XHRcdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdFx0LyogQWRqdXN0aW5nIHRoZSBib3JkZXIgd2lkdGggdG8gbWF0Y2ggdGhlIHNjYWxpbmcgaW4gdGhlIHkgYXhpcy4gKi9cblx0XHRcdGJvcmRlci1ibG9jay13aWR0aDogY2FsYyhcblx0XHRcdFx0dmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cywgMXB4ICkgL1xuXHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHQpO1xuXHRcdH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYiA9IHN0eWxlZCggQXJpYWtpdC5UYWIgKWBcblx0JiB7XG5cdFx0LyogUmVzZXRzICovXG5cdFx0Ym9yZGVyLXJhZGl1czogMDtcblx0XHRiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcblx0XHRib3JkZXI6IG5vbmU7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblxuXHRcdGZsZXg6IDEgMCBhdXRvO1xuXHRcdHdoaXRlLXNwYWNlOiBub3dyYXA7XG5cdFx0ZGlzcGxheTogZmxleDtcblx0XHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRcdGN1cnNvcjogcG9pbnRlcjtcblx0XHRsaW5lLWhlaWdodDogMS4yOyAvLyBDaGFyYWN0ZXJzIGluIHNvbWUgbGFuZ3VhZ2VzIChlLmcuIEphcGFuZXNlKSBtYXkgaGF2ZSBhIG5hdGl2ZSBoaWdoZXIgbGluZS1oZWlnaHQuXG5cdFx0Zm9udC1mYW1pbHk6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRGYW1pbHknICkgfTtcblx0XHRmb250LXdlaWdodDogNDAwO1xuXHRcdGZvbnQtc2l6ZTogJHsgZm9udCggJ2RlZmF1bHQuZm9udFNpemUnICkgfTtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblxuXHRcdCZbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddIHtcblx0XHRcdGN1cnNvcjogZGVmYXVsdDtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkudGV4dERpc2FibGVkIH07XG5cdFx0fVxuXG5cdFx0Jjpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTppcyggOmhvdmVyLCBbZGF0YS1mb2N1cy12aXNpYmxlXSApIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9O1xuXHRcdH1cblxuXHRcdCY6Zm9jdXM6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRib3gtc2hhZG93OiBub25lO1xuXHRcdFx0b3V0bGluZTogbm9uZTtcblx0XHR9XG5cblx0XHQvLyBGb2N1cyBpbmRpY2F0b3IuXG5cdFx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRcdCY6OmFmdGVyIHtcblx0XHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXG5cdFx0XHQvLyBEcmF3IHRoZSBpbmRpY2F0b3IuXG5cdFx0XHQvLyBPdXRsaW5lIHdvcmtzIGZvciBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZSBhcyB3ZWxsLlxuXHRcdFx0b3V0bGluZTogdmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cyApIHNvbGlkXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXG5cdFx0XHQvLyBBbmltYXRpb25cblx0XHRcdG9wYWNpdHk6IDA7XG5cblx0XHRcdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFx0XHR0cmFuc2l0aW9uOiBvcGFjaXR5IDAuMXMgbGluZWFyO1xuXHRcdFx0fVxuXHRcdH1cblxuXHRcdCZbZGF0YS1mb2N1cy12aXNpYmxlXTo6YWZ0ZXIge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdHBhZGRpbmctaW5saW5lOiAkeyBzcGFjZSggNCApIH07XG5cdFx0aGVpZ2h0OiAkeyBzcGFjZSggMTIgKSB9O1xuXHRcdHNjcm9sbC1tYXJnaW46IDI0cHg7XG5cblx0XHQmOjphZnRlciB7XG5cdFx0XHRjb250ZW50OiAnJztcblx0XHRcdGluc2V0OiAkeyBzcGFjZSggMyApIH07XG5cdFx0fVxuXHR9XG5cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAzICkgfTtcblx0XHRtaW4taGVpZ2h0OiAkeyBzcGFjZSggMTAgKSB9O1xuXG5cdFx0JlthcmlhLXNlbGVjdGVkPSd0cnVlJ10ge1xuXHRcdFx0ZmlsbDogY3VycmVudENvbG9yO1xuXHRcdH1cblx0fVxuXHRbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXVtkYXRhLXNlbGVjdC1vbi1tb3ZlPSdmYWxzZSddICY6OmFmdGVyIHtcblx0XHRjb250ZW50OiAnJztcblx0XHRpbnNldDogdmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cyApO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVGFiQ2hpbGRyZW4gPSBzdHlsZWQuc3BhbmBcblx0ZmxleC1ncm93OiAxO1xuXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cblx0W2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSAmIHtcblx0XHRqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcblx0fVxuXHRbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXSAmIHtcblx0XHRqdXN0aWZ5LWNvbnRlbnQ6IHN0YXJ0O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVGFiQ2hldnJvbiA9IHN0eWxlZCggSWNvbiApYFxuXHRmbGV4LXNocmluazogMDtcblx0bWFyZ2luLWlubGluZS1lbmQ6ICR7IHNwYWNlKCAtMSApIH07XG5cdFthcmlhLW9yaWVudGF0aW9uPSdob3Jpem9udGFsJ10gJiB7XG5cdFx0ZGlzcGxheTogbm9uZTtcblx0fVxuXHRvcGFjaXR5OiAwO1xuXHRbcm9sZT0ndGFiJ106aXMoIFthcmlhLXNlbGVjdGVkPSd0cnVlJ10sIFtkYXRhLWZvY3VzLXZpc2libGVdLCA6aG92ZXIgKSAmIHtcblx0XHRvcGFjaXR5OiAxO1xuXHR9XG5cdC8vIFRoZSBjaGV2cm9uIGlzIHRyYW5zaXRpb25lZCBpbnRvIGV4aXN0ZW5jZSB3aGVuIHNlbGVjdE9uTW92ZSBpcyBlbmFibGVkLFxuXHQvLyBiZWNhdXNlIG90aGVyd2lzZSBpdCBsb29rcyBqYXJyaW5nLCBhcyBpdCBzaG93cyB1cCBvdXRzaWRlIG9mIHRoZSBmb2N1c1xuXHQvLyBpbmRpY2F0b3IgdGhhdCdzIGJlaW5nIGFuaW1hdGVkIGF0IHRoZSBzYW1lIHRpbWUuXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFtkYXRhLXNlbGVjdC1vbi1tb3ZlPSd0cnVlJ11cblx0XHRcdFtyb2xlPSd0YWInXTppcyggW2FyaWEtc2VsZWN0ZWQ9J3RydWUnXSwgIClcblx0XHRcdCYge1xuXHRcdFx0dHJhbnNpdGlvbjogb3BhY2l0eSAwLjE1cyAwLjE1cyBsaW5lYXI7XG5cdFx0fVxuXHR9XG5cdCY6ZGlyKCBydGwgKSB7XG5cdFx0cm90YXRlOiAxODBkZWc7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBUYWJQYW5lbCA9IHN0eWxlZCggQXJpYWtpdC5UYWJQYW5lbCApYFxuXHQmOmZvY3VzIHtcblx0XHRib3gtc2hhZG93OiBub25lO1xuXHRcdG91dGxpbmU6IG5vbmU7XG5cdH1cblxuXHQmW2RhdGEtZm9jdXMtdmlzaWJsZV0ge1xuXHRcdGJveC1zaGFkb3c6IDAgMCAwIHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKVxuXHRcdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRvdXRsaW5lLW9mZnNldDogMDtcblx0fVxuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/tabs/tab.mjs
-  var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
   var Tab3 = (0, import_element248.forwardRef)(function Tab23({
     children,
     tabId,
@@ -68245,16 +68112,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime345.jsxs)(Tab22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime347.jsxs)(Tab22, {
       ref,
       store,
       id: instancedTabId,
       disabled: disabled2,
       render,
       ...otherProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime345.jsx)(TabChildren, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime347.jsx)(TabChildren, {
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(TabChevron, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(TabChevron, {
         icon: chevron_right_default
       })]
     });
@@ -68319,7 +68186,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tabs/tablist.mjs
-  var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCROLL_MARGIN = 24;
   function useScrollRectIntoView(parent, rect, {
     margin = DEFAULT_SCROLL_MARGIN
@@ -68384,10 +68251,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       true ? (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(StyledTabList, {
+    return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(StyledTabList, {
       ref: refs,
       store,
-      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime346.jsx)("div", {
+      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime348.jsx)("div", {
         ...props,
         // Fallback to -1 to prevent browsers from making the tablist
         // tabbable when it is a scrolling container.
@@ -68403,7 +68270,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tabs/tabpanel.mjs
   var import_element251 = __toESM(require_element(), 1);
   var import_warning14 = __toESM(require_warning(), 1);
-  var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
   var TabPanel3 = (0, import_element251.forwardRef)(function TabPanel24({
     children,
     tabId,
@@ -68421,7 +68288,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       instanceId
     } = context;
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(TabPanel23, {
+    return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(TabPanel23, {
       ref,
       store,
       id: `${instancedTabId}-view`,
@@ -68433,7 +68300,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/index.mjs
-  var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
   function externalToInternalTabId(externalId, instanceId) {
     return externalId && `${instanceId}-${externalId}`;
   }
@@ -68471,7 +68338,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store,
       instanceId
     }), [store, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(TabsContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(TabsContext.Provider, {
       value: contextValue,
       children
     });
@@ -68505,7 +68372,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/badge/index.mjs
-  var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
   function contextBasedIcon(intent = "default") {
     switch (intent) {
       case "info":
@@ -68528,20 +68395,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
-    return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", {
       className: clsx_default("components-badge", className, {
         [`is-${intent}`]: intent,
         "has-icon": hasIcon
       }),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime349.jsxs)("span", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)("span", {
         className: "components-badge__flex-wrapper",
-        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(icon_default3, {
+        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(icon_default3, {
           icon,
           size: 16,
           fill: "currentColor",
           className: "components-badge__icon"
-        }), /* @__PURE__ */ (0, import_jsx_runtime349.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", {
           className: "components-badge__content",
           children
         })]
@@ -68554,7 +68421,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element253 = __toESM(require_element(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
   var import_deprecated34 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
     customValidity,
@@ -68568,13 +68435,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     const validityTargetRef = (0, import_element253.useRef)(null);
     const mergedRefs = (0, import_compose87.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(ControlWithError, {
       className: "components-validated-control",
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(input_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(input_control_default, {
         ref: mergedRefs,
         ...restProps
       })
@@ -68589,7 +68456,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/content-editable-control/index.mjs
   var import_compose88 = __toESM(require_compose(), 1);
   var import_element254 = __toESM(require_element(), 1);
-  var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE79 = "data-wp-hash";
   function getRuntime79() {
     const globalScope = globalThis;
@@ -68691,16 +68558,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const labelId = `${controlProps.id}__label`;
     const editableRef = (0, import_element254.useRef)(null);
     const mergedRefs = (0, import_compose88.useMergeRefs)([editableRef, forwardedRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(base_control_default, {
       ...baseControlProps,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(component_default2, {
         id: labelId,
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(base_control_default.VisualLabel, {
         id: labelId,
         onClick: () => editableRef.current?.focus(),
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("div", {
         className: style_module_default58.editable,
         role: "textbox",
         "aria-multiline": true,
@@ -68720,7 +68587,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var content_editable_control_default = ContentEditableControl;
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedContentEditableControl = ({
     required,
     customValidity,
@@ -68730,21 +68597,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element255.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime352.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime354.jsx)(ControlWithError, {
         className: "components-validated-control",
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(content_editable_control_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(content_editable_control_default, {
           ref: forwardedRef,
           className: clsx_default("components-validated-control__content-editable", className),
           "aria-invalid": customValidity?.type === "invalid" || void 0,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime354.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -68766,7 +68633,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element256 = __toESM(require_element(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
   var import_deprecated35 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
     customValidity,
@@ -68780,13 +68647,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     const validityTargetRef = (0, import_element256.useRef)(null);
     const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(ControlWithError, {
       className: "components-validated-control",
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(textarea_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(textarea_control_default, {
         ref: mergedRefs,
         ...restProps
       })

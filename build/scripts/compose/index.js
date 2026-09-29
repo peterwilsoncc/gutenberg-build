@@ -2218,13 +2218,15 @@ var wp;
         result: getResult()
       };
     })[0];
+    var isFirstRun = (0, import_react.useRef)(true);
     var committed = (0, import_react.useRef)(initial);
-    var isInputMatch = Boolean(inputs && committed.current.inputs && areInputsEqual(inputs, committed.current.inputs));
-    var cache = isInputMatch ? committed.current : {
+    var useCache = isFirstRun.current || Boolean(inputs && committed.current.inputs && areInputsEqual(inputs, committed.current.inputs));
+    var cache = useCache ? committed.current : {
       inputs,
       result: getResult()
     };
     (0, import_react.useEffect)(function() {
+      isFirstRun.current = false;
       committed.current = cache;
     }, [cache]);
     return cache.result;
