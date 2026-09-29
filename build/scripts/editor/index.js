@@ -124064,28 +124064,33 @@ ${content}
       }
     }, [rawContent]);
     const canResolve = note.parent === 0;
-    const isResolutionNote = note.type === "note" && note.meta && (note.meta._wp_note_status === "resolved" || note.meta._wp_note_status === "reopen");
+    const metaStatus = note.meta?._wp_note_status;
+    const isResolutionNote = metaStatus === "resolved" || metaStatus === "reopen";
+    const hasUserText = typeof rawContent === "string" && rawContent.trim() !== "";
+    const hasResolved = (status) => status === "approved" || parentNote?.status === "approved";
     const menuItems2 = [
       {
         id: "edit",
         title: (0, import_i18n358.__)("Edit"),
-        isEligible: ({ status }) => status !== "approved",
+        isEligible: ({ status }) => (!isResolutionNote || hasUserText) && !hasResolved(status),
         onClick: () => setActionState("edit")
       },
       {
         id: "reopen",
         title: (0, import_i18n358._x)("Reopen", "Reopen note"),
-        isEligible: ({ status }) => status === "approved",
+        isEligible: ({ status }) => canResolve && hasResolved(status),
         onClick: () => onEditNote({ id: note.id, status: "hold" })
       },
       {
         id: "delete",
         title: (0, import_i18n358.__)("Delete"),
-        isEligible: () => true,
+        isEligible: ({ status }) => canResolve || !isResolutionNote && !hasResolved(status),
         onClick: () => setActionState("delete")
       }
     ];
-    const availableItems = parentNote?.status !== "approved" ? menuItems2.filter((item) => item.isEligible(note)) : [];
+    const availableItems = menuItems2.filter(
+      (item) => item.isEligible(note)
+    );
     const deleteConfirmMessage = note.parent === 0 ? (0, import_i18n358.__)(
       "Are you sure you want to delete this note? This will also delete all of this note's replies."
     ) : (0, import_i18n358.__)("Are you sure you want to delete this reply?");
