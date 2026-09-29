@@ -5526,6 +5526,7 @@ return array(
 				'lineHeight' => true,
 				'textAlign' => true,
 				'textColumns' => true,
+				'textIndent' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
