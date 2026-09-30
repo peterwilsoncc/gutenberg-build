@@ -42868,7 +42868,6 @@ var wp;
     const iframeDismissalProps = useIframeDismissalBridge({
       actionsRef: props.actionsRef,
       defaultOpen: props.defaultOpen,
-      disabled: props.disabled,
       modal: props.modal,
       onOpenChange: handleOpenChange,
       open: props.open
@@ -57362,26 +57361,33 @@ var wp;
             [attribute]: void 0
           });
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(menu_exports.Root, { disabled: !hasCompatibleFields, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(menu_exports.Trigger, { render: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components15.__experimentalItem, {}), children: /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(
-            import_components15.__experimentalVStack,
+        children: /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(menu_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+            menu_exports.Trigger,
             {
-              className: "block-editor-bindings__item",
-              spacing: 0,
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components15.__experimentalText, { truncate: true, children: attribute }),
-                /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
-                  import_components15.__experimentalText,
-                  {
-                    truncate: true,
-                    variant: isValid2 ? "muted" : void 0,
-                    isDestructive: !isValid2,
-                    children: displayText
-                  }
-                )
-              ]
+              disabled: !hasCompatibleFields,
+              render: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components15.__experimentalItem, {}),
+              children: /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(
+                import_components15.__experimentalVStack,
+                {
+                  className: "block-editor-bindings__item",
+                  spacing: 0,
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components15.__experimentalText, { truncate: true, children: attribute }),
+                    /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+                      import_components15.__experimentalText,
+                      {
+                        truncate: true,
+                        variant: isValid2 ? "muted" : void 0,
+                        isDestructive: !isValid2,
+                        children: displayText
+                      }
+                    )
+                  ]
+                }
+              )
             }
-          ) }),
+          ),
           !isAttributeReadOnly && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
             menu_exports.Popup,
             {

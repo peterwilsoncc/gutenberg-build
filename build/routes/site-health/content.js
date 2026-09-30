@@ -18512,7 +18512,6 @@ function Root2(props) {
   const iframeDismissalProps = useIframeDismissalBridge({
     actionsRef: props.actionsRef,
     defaultOpen: props.defaultOpen,
-    disabled: props.disabled,
     modal: props.modal,
     onOpenChange: handleOpenChange,
     open: props.open
@@ -29331,10 +29330,11 @@ function CompactItemActions({
     null
   );
   return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(import_jsx_runtime116.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(menu_exports.Root, { disabled: !actions.length, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(menu_exports.Root, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
         menu_exports.Trigger,
         {
+          disabled: !actions.length,
           render: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
             import_components4.Button,
             {
@@ -29342,7 +29342,6 @@ function CompactItemActions({
               icon: more_vertical_default,
               label: (0, import_i18n14.__)("Actions"),
               accessibleWhenDisabled: true,
-              disabled: !actions.length,
               className: "dataviews-all-actions-button"
             }
           )
@@ -31880,10 +31879,11 @@ function ListItem({
           }
         ),
         !hasOnlyOnePrimaryAction && /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)("div", { role: "gridcell", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(menu_exports.Root, { disabled: !actions.length, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(menu_exports.Root, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
               menu_exports.Trigger,
               {
+                disabled: !actions.length,
                 render: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                   import_components12.Composite.Item,
                   {
@@ -31898,7 +31898,6 @@ function ListItem({
                         icon: more_vertical_default,
                         label: (0, import_i18n24.__)("Actions"),
                         accessibleWhenDisabled: true,
-                        disabled: !actions.length,
                         onKeyDownCapture: onDropdownTriggerKeyDown
                       }
                     )
@@ -40335,44 +40334,44 @@ function AddFilterMenu({
   triggerProps
 }) {
   const inactiveFilters = filters.filter((filter) => !filter.isVisible);
-  return (
-    // The `disabled` prop on `Menu.Root` (rather than on the trigger)
-    // keeps the menu from opening while letting the trigger button stay
-    // focusable via its own `accessibleWhenDisabled`.
-    /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(menu_exports.Root, { disabled: !inactiveFilters.length, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(menu_exports.Trigger, { ...triggerProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(menu_exports.Popup, { children: inactiveFilters.map((filter) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
-          menu_exports.Item,
-          {
-            onClick: () => {
-              setOpenedFilter(filter.field);
-              onChangeView({
-                ...view,
-                page: 1,
-                filters: [
-                  ...view.filters || [],
-                  {
-                    field: filter.field,
-                    value: void 0,
-                    operator: filter.operators[0]
-                  }
-                ]
-              });
-            },
-            children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(menu_exports.ItemLabel, { children: filter.name })
+  return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(menu_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+      menu_exports.Trigger,
+      {
+        ...triggerProps,
+        disabled: !inactiveFilters.length || triggerProps.disabled
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(menu_exports.Popup, { children: inactiveFilters.map((filter) => {
+      return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+        menu_exports.Item,
+        {
+          onClick: () => {
+            setOpenedFilter(filter.field);
+            onChangeView({
+              ...view,
+              page: 1,
+              filters: [
+                ...view.filters || [],
+                {
+                  field: filter.field,
+                  value: void 0,
+                  operator: filter.operators[0]
+                }
+              ]
+            });
           },
-          filter.field
-        );
-      }) })
-    ] })
-  );
+          children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(menu_exports.ItemLabel, { children: filter.name })
+        },
+        filter.field
+      );
+    }) })
+  ] });
 }
 function AddFilter({ filters, view, onChangeView, setOpenedFilter }, ref) {
   if (!filters.length || filters.every(({ isPrimary }) => isPrimary)) {
     return null;
   }
-  const inactiveFilters = filters.filter((filter) => !filter.isVisible);
   return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
     AddFilterMenu,
     {
@@ -40384,7 +40383,6 @@ function AddFilter({ filters, view, onChangeView, setOpenedFilter }, ref) {
             size: "compact",
             className: "dataviews-filters-button",
             variant: "tertiary",
-            disabled: !inactiveFilters.length,
             ref
           }
         ),

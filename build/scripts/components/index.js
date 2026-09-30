@@ -51942,7 +51942,6 @@ This message will only show in development mode. It won't appear in production. 
     const iframeDismissalProps = useIframeDismissalBridge({
       actionsRef: props.actionsRef,
       defaultOpen: props.defaultOpen,
-      disabled: props.disabled,
       modal: props.modal,
       onOpenChange: handleOpenChange,
       open: props.open
