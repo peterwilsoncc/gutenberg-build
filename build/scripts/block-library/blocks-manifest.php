@@ -4231,6 +4231,10 @@ return array(
 					'text' => true
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,

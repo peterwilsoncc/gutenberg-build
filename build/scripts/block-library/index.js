@@ -43730,6 +43730,10 @@ ${text}
           text: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       shadow: true,
       spacing: {
         margin: true,
