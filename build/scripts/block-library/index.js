@@ -76728,6 +76728,9 @@ ${text}
       spacing: {
         padding: true
       },
+      dimensions: {
+        minHeight: true
+      },
       typography: {
         fontSize: true,
         lineHeight: true,

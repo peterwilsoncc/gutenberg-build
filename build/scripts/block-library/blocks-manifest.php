@@ -8676,6 +8676,9 @@ return array(
 			'spacing' => array(
 				'padding' => true
 			),
+			'dimensions' => array(
+				'minHeight' => true
+			),
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
