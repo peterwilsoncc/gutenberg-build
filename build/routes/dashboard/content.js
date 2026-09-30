@@ -26162,6 +26162,10 @@ var MenuContext = (0, import_element25.createContext)({
   isSubmenu: false
 });
 var useMenuContext = () => (0, import_element25.useContext)(MenuContext);
+var MenuGroupContext2 = (0, import_element25.createContext)(
+  null
+);
+var useMenuGroupContext = () => (0, import_element25.useContext)(MenuGroupContext2);
 var MenuItemContentContext = (0, import_element25.createContext)(null);
 var useMenuItemContentContext = () => (0, import_element25.useContext)(MenuItemContentContext);
 
@@ -27079,14 +27083,20 @@ if (typeof process === "undefined" || true) {
 }
 var style_default11 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var Group = (0, import_element33.forwardRef)(function MenuGroup3({ className, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+  const parentGroup = useMenuGroupContext();
+  if (parentGroup === "radio-group") {
+    throw new Error(
+      "Menu.Group: Cannot be nested inside Menu.RadioGroup. Remove Menu.Group and put Menu.GroupLabel and Menu.RadioItem directly inside Menu.RadioGroup."
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(MenuGroupContext2.Provider, { value: "group", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
     index_parts_exports4.Group,
     {
       ref,
       className: clsx_default(style_default11.group, className),
       ...props
     }
-  );
+  ) });
 });
 
 // packages/ui/build-module/menu/group-label.mjs
@@ -27806,14 +27816,20 @@ if (typeof process === "undefined" || true) {
 var style_default17 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var RadioGroup = (0, import_element40.forwardRef)(
   function MenuRadioGroup3({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+    const parentGroup = useMenuGroupContext();
+    if (parentGroup === "group") {
+      throw new Error(
+        "Menu.RadioGroup: Cannot be nested inside Menu.Group. Move Menu.RadioGroup outside Menu.Group and put its Menu.GroupLabel inside Menu.RadioGroup."
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(MenuGroupContext2.Provider, { value: "radio-group", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
       index_parts_exports4.RadioGroup,
       {
         ref,
         className: clsx_default(style_default17["radio-group"], className),
         ...props
       }
-    );
+    ) });
   }
 );
 
@@ -28156,7 +28172,7 @@ function Root2(props) {
     onOpenChange: handleOpenChange,
     open: props.open
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(index_parts_exports4.Root, { ...props, ...iframeDismissalProps }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(index_parts_exports4.Root, { ...props, ...iframeDismissalProps }) }) }) });
 }
 
 // packages/ui/build-module/menu/separator.mjs
@@ -28262,7 +28278,7 @@ var Separator2 = (0, import_element43.forwardRef)(
 // packages/ui/build-module/menu/submenu-root.mjs
 var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
 function SubmenuRoot(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(MenuContext.Provider, { value: { isSubmenu: true }, children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(index_parts_exports4.SubmenuRoot, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(MenuContext.Provider, { value: { isSubmenu: true }, children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(index_parts_exports4.SubmenuRoot, { ...props }) }) });
 }
 
 // packages/ui/build-module/menu/submenu-trigger.mjs
