@@ -36588,6 +36588,10 @@ ${url}
         }
       },
       shadow: true,
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       __experimentalBorder: {
         color: true,
         radius: true,

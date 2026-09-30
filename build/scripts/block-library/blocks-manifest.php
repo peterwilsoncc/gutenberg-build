@@ -3377,6 +3377,10 @@ return array(
 				)
 			),
 			'shadow' => true,
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'__experimentalBorder' => array(
 				'color' => true,
 				'radius' => true,
