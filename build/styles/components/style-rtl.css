@@ -2679,10 +2679,10 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   margin-left: 12px;
   transition: none;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  max-width: 24px;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  max-width: 16px;
   position: relative;
 }
 @media not (prefers-reduced-motion) {
@@ -2690,21 +2690,22 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
     transition: box-shadow 0.1s linear;
   }
 }
-@media (min-width: 600px) {
-  .components-radio-control__input[type=radio] {
-    height: 16px;
-    width: 16px;
-    min-width: 16px;
-    max-width: 16px;
-  }
+.components-radio-control__input[type=radio]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: 24px;
+  aspect-ratio: 1;
+  transform: translate(50%, -50%);
 }
 .components-radio-control__input[type=radio]:hover {
   border-color: var(--wpds-color-stroke-interactive-neutral-active, #6e6e6e);
 }
 .components-radio-control__input[type=radio]:checked::before {
   box-sizing: inherit;
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   position: absolute;
   top: 50%;
   right: 50%;
@@ -2712,12 +2713,6 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   margin: 0;
   background-color: currentColor;
   border: 4px solid currentColor;
-}
-@media (min-width: 600px) {
-  .components-radio-control__input[type=radio]:checked::before {
-    width: 8px;
-    height: 8px;
-  }
 }
 .components-radio-control__input[type=radio]:focus {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
@@ -2775,12 +2770,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   cursor: var(--wpds-cursor-control, pointer);
 }
 .components-radio-control__label {
-  line-height: 24px;
-}
-@media (min-width: 600px) {
-  .components-radio-control__label {
-    line-height: 16px;
-  }
+  line-height: 16px;
 }
 
 .components-radio-control__option-description {

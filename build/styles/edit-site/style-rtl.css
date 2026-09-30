@@ -644,10 +644,10 @@ body.admin-color-fresh {
   margin-left: 12px;
   transition: none;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  max-width: 24px;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  max-width: 16px;
   position: relative;
 }
 
@@ -656,22 +656,24 @@ body.admin-color-fresh {
     transition: box-shadow 0.1s linear;
   }
 }
-@media (min-width: 600px) {
-  .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-single-selection {
-    height: 16px;
-    width: 16px;
-    min-width: 16px;
-    max-width: 16px;
-  }
+.dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-single-selection::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: 24px;
+  aspect-ratio: 1;
+  transform: translate(50%, -50%);
 }
+
 .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-single-selection:hover {
   border-color: var(--wpds-color-stroke-interactive-neutral-active, #6e6e6e);
 }
 
 .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-single-selection:checked::before {
   box-sizing: inherit;
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   position: absolute;
   top: 50%;
   right: 50%;
@@ -681,12 +683,6 @@ body.admin-color-fresh {
   border: 4px solid currentColor;
 }
 
-@media (min-width: 600px) {
-  .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-single-selection:checked::before {
-    width: 8px;
-    height: 8px;
-  }
-}
 .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-single-selection:focus {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   outline: 2px solid transparent;
@@ -726,8 +722,8 @@ body.admin-color-fresh {
   content: "";
   border-radius: 50%;
   box-sizing: inherit;
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   position: absolute;
   top: 50%;
   right: 50%;
@@ -737,12 +733,6 @@ body.admin-color-fresh {
   border: 4px solid var(--wpds-color-foreground-interactive-brand-strong, #fff);
 }
 
-@media (min-width: 600px) {
-  .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-single-selection.is-selected::before {
-    width: 8px;
-    height: 8px;
-  }
-}
 .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-multi-selection {
   --checkbox-size: 24px;
   flex-shrink: 0;
