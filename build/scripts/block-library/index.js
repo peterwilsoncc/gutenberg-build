@@ -64411,6 +64411,10 @@ ${text}
           text: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       html: false,
       shadow: true,
       spacing: {

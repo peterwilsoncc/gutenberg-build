@@ -6604,6 +6604,10 @@ return array(
 					'text' => true
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'html' => false,
 			'shadow' => true,
 			'spacing' => array(
