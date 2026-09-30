@@ -9685,8 +9685,8 @@ var wp;
         return {
           userAgent: uaData.brands.map(({
             brand,
-            version: version2
-          }) => `${brand}/${version2}`).join(" "),
+            version: version3
+          }) => `${brand}/${version3}`).join(" "),
           platform: uaData.platform ?? navigator.platform ?? "",
           maxTouchPoints: navigator.maxTouchPoints ?? 0
         };
@@ -24003,12 +24003,12 @@ var wp;
       unmount: forceUnmount,
       close: handleImperativeClose
     }), [forceUnmount, handleImperativeClose]);
-    let ctx9;
+    let ctx8;
     if (parent.type === "context-menu") {
-      ctx9 = parent.context;
+      ctx8 = parent.context;
     }
-    React129.useImperativeHandle(ctx9?.positionerRef, () => positionerElement, [positionerElement]);
-    React129.useImperativeHandle(ctx9?.actionsRef, () => ({
+    React129.useImperativeHandle(ctx8?.positionerRef, () => positionerElement, [positionerElement]);
+    React129.useImperativeHandle(ctx8?.actionsRef, () => ({
       setOpen
     }), [setOpen]);
     const dismiss = useDismiss(floatingRootContext, {
@@ -45760,7 +45760,23 @@ var wp;
   var import_media_utils = __toESM(require_media_utils(), 1);
   var import_notices2 = __toESM(require_notices(), 1);
 
-  // node_modules/@react-spring/rafz/dist/react-spring-rafz.esm.js
+  // node_modules/@react-spring/shared/dist/chunk.mjs
+  var __defProp2 = Object.defineProperty;
+  var __exportAll = (all, no_symbols) => {
+    let target = {};
+    for (var name2 in all) {
+      __defProp2(target, name2, {
+        get: all[name2],
+        enumerable: true
+      });
+    }
+    if (!no_symbols) {
+      __defProp2(target, Symbol.toStringTag, { value: "Module" });
+    }
+    return target;
+  };
+
+  // node_modules/@react-spring/rafz/dist/react-spring_rafz.modern.mjs
   var updateQueue = makeQueue();
   var raf = (fn) => schedule(fn, updateQueue);
   var writeQueue = makeQueue();
@@ -45773,13 +45789,13 @@ var wp;
   raf.onFinish = (fn) => schedule(fn, onFinishQueue);
   var timeouts = [];
   raf.setTimeout = (handler, ms) => {
-    let time = raf.now() + ms;
-    let cancel = () => {
-      let i2 = timeouts.findIndex((t3) => t3.cancel == cancel);
+    const time = raf.now() + ms;
+    const cancel = () => {
+      const i2 = timeouts.findIndex((t3) => t3.cancel == cancel);
       if (~i2) timeouts.splice(i2, 1);
       pendingCount -= ~i2 ? 1 : 0;
     };
-    let timeout = {
+    const timeout = {
       time,
       handler,
       cancel
@@ -45829,12 +45845,11 @@ var wp;
   raf.batchedUpdates = (fn) => fn();
   raf.catch = console.error;
   raf.frameLoop = "always";
+  raf.onDemand = () => {
+  };
   raf.advance = () => {
-    if (raf.frameLoop !== "demand") {
-      console.warn("Cannot call the manual advancement of rafz whilst frameLoop is not set as demand");
-    } else {
-      update2();
-    }
+    if (raf.frameLoop !== "demand") console.warn("Cannot call the manual advancement of rafz whilst frameLoop is not set as demand");
+    else update2();
   };
   var ts = -1;
   var pendingCount = 0;
@@ -45846,14 +45861,13 @@ var wp;
     } else {
       queue.add(fn);
       start();
+      if (raf.frameLoop === "demand") raf.onDemand();
     }
   }
   function start() {
     if (ts < 0) {
       ts = 0;
-      if (raf.frameLoop !== "demand") {
-        nativeRaf(loop);
-      }
+      if (raf.frameLoop !== "demand") nativeRaf(loop);
     }
   }
   function stop() {
@@ -45866,9 +45880,9 @@ var wp;
     }
   }
   function update2() {
-    let prevTs = ts;
+    const prevTs = ts;
     ts = raf.now();
-    let count = findTimeout(ts);
+    const count = findTimeout(ts);
     if (count) {
       eachSafely(timeouts.splice(0, count), (t3) => t3.handler());
       pendingCount -= count;
@@ -45882,6 +45896,7 @@ var wp;
     onFrameQueue.flush();
     writeQueue.flush();
     onFinishQueue.flush();
+    if (raf.frameLoop === "demand" && pendingCount > 0) raf.onDemand();
   }
   function makeQueue() {
     let next = /* @__PURE__ */ new Set();
@@ -45916,8 +45931,8 @@ var wp;
     });
   }
 
-  // node_modules/@react-spring/shared/dist/react-spring-shared.esm.js
-  var import_react55 = __toESM(require_react());
+  // node_modules/@react-spring/shared/dist/react-spring_shared.modern.mjs
+  var import_react55 = __toESM(require_react(), 1);
   function noop4() {
   }
   var defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {
@@ -45928,7 +45943,7 @@ var wp;
   var is = {
     arr: Array.isArray,
     obj: (a2) => !!a2 && a2.constructor.name === "Object",
-    fun: (a2) => typeof a2 === "function",
+    fun: ((a2) => typeof a2 === "function"),
     str: (a2) => typeof a2 === "string",
     num: (a2) => typeof a2 === "number",
     und: (a2) => a2 === void 0
@@ -45936,26 +45951,18 @@ var wp;
   function isEqual(a2, b2) {
     if (is.arr(a2)) {
       if (!is.arr(b2) || a2.length !== b2.length) return false;
-      for (let i2 = 0; i2 < a2.length; i2++) {
-        if (a2[i2] !== b2[i2]) return false;
-      }
+      for (let i2 = 0; i2 < a2.length; i2++) if (a2[i2] !== b2[i2]) return false;
       return true;
     }
     return a2 === b2;
   }
   var each = (obj, fn) => obj.forEach(fn);
-  function eachProp(obj, fn, ctx9) {
+  function eachProp(obj, fn, ctx8) {
     if (is.arr(obj)) {
-      for (let i2 = 0; i2 < obj.length; i2++) {
-        fn.call(ctx9, obj[i2], `${i2}`);
-      }
+      for (let i2 = 0; i2 < obj.length; i2++) fn.call(ctx8, obj[i2], `${i2}`);
       return;
     }
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        fn.call(ctx9, obj[key], key);
-      }
-    }
+    for (const key in obj) if (obj.hasOwnProperty(key)) fn.call(ctx8, obj[key], key);
   }
   var toArray = (a2) => is.und(a2) ? [] : is.arr(a2) ? a2 : [a2];
   function flush(queue, iterator) {
@@ -45967,41 +45974,31 @@ var wp;
   }
   var flushCalls = (queue, ...args) => flush(queue, (fn) => fn(...args));
   var isSSR = () => typeof window === "undefined" || !window.navigator || /ServerSideRendering|^Deno\//.test(window.navigator.userAgent);
+  var globals_exports = /* @__PURE__ */ __exportAll({
+    assign: () => assign,
+    colors: () => colors$1,
+    createStringInterpolator: () => createStringInterpolator$1,
+    skipAnimation: () => skipAnimation,
+    to: () => to,
+    willAdvance: () => willAdvance
+  });
   var createStringInterpolator$1;
   var to;
   var colors$1 = null;
   var skipAnimation = false;
   var willAdvance = noop4;
-  var assign = (globals2) => {
-    if (globals2.to) to = globals2.to;
-    if (globals2.now) raf.now = globals2.now;
-    if (globals2.colors !== void 0) colors$1 = globals2.colors;
-    if (globals2.skipAnimation != null) skipAnimation = globals2.skipAnimation;
-    if (globals2.createStringInterpolator) createStringInterpolator$1 = globals2.createStringInterpolator;
-    if (globals2.requestAnimationFrame) raf.use(globals2.requestAnimationFrame);
-    if (globals2.batchedUpdates) raf.batchedUpdates = globals2.batchedUpdates;
-    if (globals2.willAdvance) willAdvance = globals2.willAdvance;
-    if (globals2.frameLoop) raf.frameLoop = globals2.frameLoop;
+  var assign = (globals) => {
+    if (globals.to) to = globals.to;
+    if (globals.now) raf.now = globals.now;
+    if (globals.colors !== void 0) colors$1 = globals.colors;
+    if (globals.skipAnimation != null) skipAnimation = globals.skipAnimation;
+    if (globals.createStringInterpolator) createStringInterpolator$1 = globals.createStringInterpolator;
+    if (globals.requestAnimationFrame) raf.use(globals.requestAnimationFrame);
+    if (globals.batchedUpdates) raf.batchedUpdates = globals.batchedUpdates;
+    if (globals.willAdvance) willAdvance = globals.willAdvance;
+    if (globals.frameLoop) raf.frameLoop = globals.frameLoop;
+    if (globals.onDemand) raf.onDemand = globals.onDemand;
   };
-  var globals = /* @__PURE__ */ Object.freeze({
-    __proto__: null,
-    get createStringInterpolator() {
-      return createStringInterpolator$1;
-    },
-    get to() {
-      return to;
-    },
-    get colors() {
-      return colors$1;
-    },
-    get skipAnimation() {
-      return skipAnimation;
-    },
-    get willAdvance() {
-      return willAdvance;
-    },
-    assign
-  });
   var startQueue = /* @__PURE__ */ new Set();
   var currentFrame = [];
   var prevFrame = [];
@@ -46010,6 +46007,7 @@ var wp;
     get idle() {
       return !startQueue.size && !currentFrame.length;
     },
+    /** Advance the given animation on every frame until idle. */
     start(animation) {
       if (priority > animation.priority) {
         startQueue.add(animation);
@@ -46019,11 +46017,12 @@ var wp;
         raf(advance);
       }
     },
+    /** Advance all animations by the given time. */
     advance,
+    /** Call this when an animation's priority changes. */
     sort(animation) {
-      if (priority) {
-        raf.onFrame(() => frameLoop.sort(animation));
-      } else {
+      if (priority) raf.onFrame(() => frameLoop.sort(animation));
+      else {
         const prevIndex = currentFrame.indexOf(animation);
         if (~prevIndex) {
           currentFrame.splice(prevIndex, 1);
@@ -46031,6 +46030,11 @@ var wp;
         }
       }
     },
+    /**
+    * Clear all animations. For testing purposes.
+    *
+    * ☠️ Never call this from within the frameloop.
+    */
     clear() {
       currentFrame = [];
       startQueue.clear();
@@ -46055,9 +46059,7 @@ var wp;
       if (!animation.idle) {
         willAdvance(animation);
         animation.advance(dt);
-        if (!animation.idle) {
-          nextFrame.push(animation);
-        }
+        if (!animation.idle) nextFrame.push(animation);
       }
     }
     priority = 0;
@@ -46070,6 +46072,7 @@ var wp;
     const index3 = arr.findIndex(test);
     return index3 < 0 ? arr.length : index3;
   }
+  var clamp2 = (min4, max4, v3) => Math.min(Math.max(v3, min4), max4);
   var colors = {
     transparent: 0,
     aliceblue: 4042850303,
@@ -46223,7 +46226,7 @@ var wp;
     yellowgreen: 2597139199
   };
   var NUMBER = "[-+]?\\d*\\.?\\d+";
-  var PERCENTAGE = NUMBER + "%";
+  var PERCENTAGE = "[-+]?\\d*\\.?\\d+%";
   function call(...parts) {
     return "\\(\\s*(" + parts.join(")\\s*,\\s*(") + ")\\s*\\)";
   }
@@ -46237,32 +46240,16 @@ var wp;
   var hex8 = /^#([0-9a-fA-F]{8})$/;
   function normalizeColor(color) {
     let match3;
-    if (typeof color === "number") {
-      return color >>> 0 === color && color >= 0 && color <= 4294967295 ? color : null;
-    }
+    if (typeof color === "number") return color >>> 0 === color && color >= 0 && color <= 4294967295 ? color : null;
     if (match3 = hex6.exec(color)) return parseInt(match3[1] + "ff", 16) >>> 0;
-    if (colors$1 && colors$1[color] !== void 0) {
-      return colors$1[color];
-    }
-    if (match3 = rgb.exec(color)) {
-      return (parse255(match3[1]) << 24 | parse255(match3[2]) << 16 | parse255(match3[3]) << 8 | 255) >>> 0;
-    }
-    if (match3 = rgba.exec(color)) {
-      return (parse255(match3[1]) << 24 | parse255(match3[2]) << 16 | parse255(match3[3]) << 8 | parse1(match3[4])) >>> 0;
-    }
-    if (match3 = hex3.exec(color)) {
-      return parseInt(match3[1] + match3[1] + match3[2] + match3[2] + match3[3] + match3[3] + "ff", 16) >>> 0;
-    }
+    if (colors$1 && colors$1[color] !== void 0) return colors$1[color];
+    if (match3 = rgb.exec(color)) return (parse255(match3[1]) << 24 | parse255(match3[2]) << 16 | parse255(match3[3]) << 8 | 255) >>> 0;
+    if (match3 = rgba.exec(color)) return (parse255(match3[1]) << 24 | parse255(match3[2]) << 16 | parse255(match3[3]) << 8 | parse1(match3[4])) >>> 0;
+    if (match3 = hex3.exec(color)) return parseInt(match3[1] + match3[1] + match3[2] + match3[2] + match3[3] + match3[3] + "ff", 16) >>> 0;
     if (match3 = hex8.exec(color)) return parseInt(match3[1], 16) >>> 0;
-    if (match3 = hex4.exec(color)) {
-      return parseInt(match3[1] + match3[1] + match3[2] + match3[2] + match3[3] + match3[3] + match3[4] + match3[4], 16) >>> 0;
-    }
-    if (match3 = hsl.exec(color)) {
-      return (hslToRgb(parse360(match3[1]), parsePercentage(match3[2]), parsePercentage(match3[3])) | 255) >>> 0;
-    }
-    if (match3 = hsla.exec(color)) {
-      return (hslToRgb(parse360(match3[1]), parsePercentage(match3[2]), parsePercentage(match3[3])) | parse1(match3[4])) >>> 0;
-    }
+    if (match3 = hex4.exec(color)) return parseInt(match3[1] + match3[1] + match3[2] + match3[2] + match3[3] + match3[3] + match3[4] + match3[4], 16) >>> 0;
+    if (match3 = hsl.exec(color)) return (hslToRgb(parse360(match3[1]), parsePercentage(match3[2]), parsePercentage(match3[3])) | 255) >>> 0;
+    if (match3 = hsla.exec(color)) return (hslToRgb(parse360(match3[1]), parsePercentage(match3[2]), parsePercentage(match3[3])) | parse1(match3[4])) >>> 0;
     return null;
   }
   function hue2rgb(p4, q2, t3) {
@@ -46288,8 +46275,7 @@ var wp;
     return int;
   }
   function parse360(str3) {
-    const int = parseFloat(str3);
-    return (int % 360 + 360) % 360 / 360;
+    return (parseFloat(str3) % 360 + 360) % 360 / 360;
   }
   function parse1(str3) {
     const num = parseFloat(str3);
@@ -46307,26 +46293,16 @@ var wp;
     let int32Color = normalizeColor(input);
     if (int32Color === null) return input;
     int32Color = int32Color || 0;
-    let r4 = (int32Color & 4278190080) >>> 24;
-    let g3 = (int32Color & 16711680) >>> 16;
-    let b2 = (int32Color & 65280) >>> 8;
-    let a2 = (int32Color & 255) / 255;
-    return `rgba(${r4}, ${g3}, ${b2}, ${a2})`;
+    return `rgba(${(int32Color & 4278190080) >>> 24}, ${(int32Color & 16711680) >>> 16}, ${(int32Color & 65280) >>> 8}, ${(int32Color & 255) / 255})`;
   }
   var createInterpolator = (range, output, extrapolate) => {
-    if (is.fun(range)) {
-      return range;
-    }
-    if (is.arr(range)) {
-      return createInterpolator({
-        range,
-        output,
-        extrapolate
-      });
-    }
-    if (is.str(range.output[0])) {
-      return createStringInterpolator$1(range);
-    }
+    if (is.fun(range)) return range;
+    if (is.arr(range)) return createInterpolator({
+      range,
+      output,
+      extrapolate
+    });
+    if (is.str(range.output[0])) return createStringInterpolator$1(range);
     const config2 = range;
     const outputRange = config2.output;
     const inputRange = config2.range || [0, 1];
@@ -46363,47 +46339,76 @@ var wp;
     for (var i2 = 1; i2 < inputRange.length - 1; ++i2) if (inputRange[i2] >= input) break;
     return i2 - 1;
   }
-  function _extends() {
-    _extends = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i2 = 1; i2 < arguments.length; i2++) {
-        var source = arguments[i2];
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-      return target;
-    };
-    return _extends.apply(this, arguments);
-  }
+  var steps = (steps2, direction = "end") => (progress) => {
+    progress = direction === "end" ? Math.min(progress, 0.999) : Math.max(progress, 1e-3);
+    const expanded = progress * steps2;
+    return clamp2(0, 1, (direction === "end" ? Math.floor(expanded) : Math.ceil(expanded)) / steps2);
+  };
+  var c1 = 1.70158;
+  var c2 = c1 * 1.525;
+  var c3 = 2.70158;
+  var c4 = 2 * Math.PI / 3;
+  var c5 = 2 * Math.PI / 4.5;
+  var bounceOut = (x2) => {
+    const n1 = 7.5625;
+    const d1 = 2.75;
+    if (x2 < 1 / d1) return n1 * x2 * x2;
+    else if (x2 < 2 / d1) return n1 * (x2 -= 1.5 / d1) * x2 + 0.75;
+    else if (x2 < 2.5 / d1) return n1 * (x2 -= 2.25 / d1) * x2 + 0.9375;
+    else return n1 * (x2 -= 2.625 / d1) * x2 + 0.984375;
+  };
+  var easings = {
+    linear: (x2) => x2,
+    easeInQuad: (x2) => x2 * x2,
+    easeOutQuad: (x2) => 1 - (1 - x2) * (1 - x2),
+    easeInOutQuad: (x2) => x2 < 0.5 ? 2 * x2 * x2 : 1 - Math.pow(-2 * x2 + 2, 2) / 2,
+    easeInCubic: (x2) => x2 * x2 * x2,
+    easeOutCubic: (x2) => 1 - Math.pow(1 - x2, 3),
+    easeInOutCubic: (x2) => x2 < 0.5 ? 4 * x2 * x2 * x2 : 1 - Math.pow(-2 * x2 + 2, 3) / 2,
+    easeInQuart: (x2) => x2 * x2 * x2 * x2,
+    easeOutQuart: (x2) => 1 - Math.pow(1 - x2, 4),
+    easeInOutQuart: (x2) => x2 < 0.5 ? 8 * x2 * x2 * x2 * x2 : 1 - Math.pow(-2 * x2 + 2, 4) / 2,
+    easeInQuint: (x2) => x2 * x2 * x2 * x2 * x2,
+    easeOutQuint: (x2) => 1 - Math.pow(1 - x2, 5),
+    easeInOutQuint: (x2) => x2 < 0.5 ? 16 * x2 * x2 * x2 * x2 * x2 : 1 - Math.pow(-2 * x2 + 2, 5) / 2,
+    easeInSine: (x2) => 1 - Math.cos(x2 * Math.PI / 2),
+    easeOutSine: (x2) => Math.sin(x2 * Math.PI / 2),
+    easeInOutSine: (x2) => -(Math.cos(Math.PI * x2) - 1) / 2,
+    easeInExpo: (x2) => x2 === 0 ? 0 : Math.pow(2, 10 * x2 - 10),
+    easeOutExpo: (x2) => x2 === 1 ? 1 : 1 - Math.pow(2, -10 * x2),
+    easeInOutExpo: (x2) => x2 === 0 ? 0 : x2 === 1 ? 1 : x2 < 0.5 ? Math.pow(2, 20 * x2 - 10) / 2 : (2 - Math.pow(2, -20 * x2 + 10)) / 2,
+    easeInCirc: (x2) => 1 - Math.sqrt(1 - Math.pow(x2, 2)),
+    easeOutCirc: (x2) => Math.sqrt(1 - Math.pow(x2 - 1, 2)),
+    easeInOutCirc: (x2) => x2 < 0.5 ? (1 - Math.sqrt(1 - Math.pow(2 * x2, 2))) / 2 : (Math.sqrt(1 - Math.pow(-2 * x2 + 2, 2)) + 1) / 2,
+    easeInBack: (x2) => c3 * x2 * x2 * x2 - c1 * x2 * x2,
+    easeOutBack: (x2) => 1 + c3 * Math.pow(x2 - 1, 3) + c1 * Math.pow(x2 - 1, 2),
+    easeInOutBack: (x2) => x2 < 0.5 ? Math.pow(2 * x2, 2) * (3.5949095 * 2 * x2 - c2) / 2 : (Math.pow(2 * x2 - 2, 2) * (3.5949095 * (x2 * 2 - 2) + c2) + 2) / 2,
+    easeInElastic: (x2) => x2 === 0 ? 0 : x2 === 1 ? 1 : -Math.pow(2, 10 * x2 - 10) * Math.sin((x2 * 10 - 10.75) * c4),
+    easeOutElastic: (x2) => x2 === 0 ? 0 : x2 === 1 ? 1 : Math.pow(2, -10 * x2) * Math.sin((x2 * 10 - 0.75) * c4) + 1,
+    easeInOutElastic: (x2) => x2 === 0 ? 0 : x2 === 1 ? 1 : x2 < 0.5 ? -(Math.pow(2, 20 * x2 - 10) * Math.sin((20 * x2 - 11.125) * c5)) / 2 : Math.pow(2, -20 * x2 + 10) * Math.sin((20 * x2 - 11.125) * c5) / 2 + 1,
+    easeInBounce: (x2) => 1 - bounceOut(1 - x2),
+    easeOutBounce: bounceOut,
+    easeInOutBounce: (x2) => x2 < 0.5 ? (1 - bounceOut(1 - 2 * x2)) / 2 : (1 + bounceOut(2 * x2 - 1)) / 2,
+    steps
+  };
   var $get = /* @__PURE__ */ Symbol.for("FluidValue.get");
   var $observers = /* @__PURE__ */ Symbol.for("FluidValue.observers");
   var hasFluidValue = (arg) => Boolean(arg && arg[$get]);
   var getFluidValue = (arg) => arg && arg[$get] ? arg[$get]() : arg;
   var getFluidObservers = (target) => target[$observers] || null;
   function callFluidObserver(observer, event) {
-    if (observer.eventObserved) {
-      observer.eventObserved(event);
-    } else {
-      observer(event);
-    }
+    if (observer.eventObserved) observer.eventObserved(event);
+    else observer(event);
   }
   function callFluidObservers(target, event) {
-    let observers = target[$observers];
-    if (observers) {
-      observers.forEach((observer) => {
-        callFluidObserver(observer, event);
-      });
-    }
+    const observers = target[$observers];
+    if (observers) observers.forEach((observer) => {
+      callFluidObserver(observer, event);
+    });
   }
   var FluidValue = class {
     constructor(get) {
-      this[$get] = void 0;
-      this[$observers] = void 0;
-      if (!get && !(get = this.get)) {
-        throw Error("Unknown getter");
-      }
+      if (!get && !(get = this.get)) throw Error("Unknown getter");
       setFluidGetter(this, get);
     }
   };
@@ -46411,30 +46416,21 @@ var wp;
   function addFluidObserver(target, observer) {
     if (target[$get]) {
       let observers = target[$observers];
-      if (!observers) {
-        setHidden(target, $observers, observers = /* @__PURE__ */ new Set());
-      }
+      if (!observers) setHidden(target, $observers, observers = /* @__PURE__ */ new Set());
       if (!observers.has(observer)) {
         observers.add(observer);
-        if (target.observerAdded) {
-          target.observerAdded(observers.size, observer);
-        }
+        if (target.observerAdded) target.observerAdded(observers.size, observer);
       }
     }
     return observer;
   }
   function removeFluidObserver(target, observer) {
-    let observers = target[$observers];
+    const observers = target[$observers];
     if (observers && observers.has(observer)) {
       const count = observers.size - 1;
-      if (count) {
-        observers.delete(observer);
-      } else {
-        target[$observers] = null;
-      }
-      if (target.observerRemoved) {
-        target.observerRemoved(count, observer);
-      }
+      if (count) observers.delete(observer);
+      else target[$observers] = null;
+      if (target.observerRemoved) target.observerRemoved(count, observer);
     }
   }
   var setHidden = (target, key, value) => Object.defineProperty(target, key, {
@@ -46449,24 +46445,18 @@ var wp;
   var cssVariableRegex = /var\((--[a-zA-Z0-9-_]+),? ?([a-zA-Z0-9 ()%#.,-]+)?\)/;
   var variableToRgba = (input) => {
     const [token, fallback] = parseCSSVariable(input);
-    if (!token || isSSR()) {
-      return input;
-    }
+    if (!token || isSSR()) return input;
     const value = window.getComputedStyle(document.documentElement).getPropertyValue(token);
-    if (value) {
+    if (value)
       return value.trim();
-    } else if (fallback && fallback.startsWith("--")) {
-      const _value = window.getComputedStyle(document.documentElement).getPropertyValue(fallback);
-      if (_value) {
-        return _value;
-      } else {
-        return input;
-      }
-    } else if (fallback && cssVariableRegex.test(fallback)) {
+    else if (fallback && fallback.startsWith("--")) {
+      const value2 = window.getComputedStyle(document.documentElement).getPropertyValue(fallback);
+      if (value2) return value2;
+      else return input;
+    } else if (fallback && cssVariableRegex.test(fallback))
       return variableToRgba(fallback);
-    } else if (fallback) {
+    else if (fallback)
       return fallback;
-    }
     return input;
   };
   var parseCSSVariable = (current) => {
@@ -46477,35 +46467,48 @@ var wp;
   };
   var namedColorRegex;
   var rgbaRound = (_, p1, p22, p32, p4) => `rgba(${Math.round(p1)}, ${Math.round(p22)}, ${Math.round(p32)}, ${p4})`;
+  var getNumbers = (value) => value.match(numberRegex) ?? [];
   var createStringInterpolator = (config2) => {
     if (!namedColorRegex) namedColorRegex = colors$1 ? new RegExp(`(${Object.keys(colors$1).join("|")})(?!\\w)`, "g") : /^\b$/;
     const output = config2.output.map((value) => {
       return getFluidValue(value).replace(cssVariableRegex, variableToRgba).replace(colorRegex, colorToRgba).replace(namedColorRegex, colorToRgba);
     });
-    const keyframes = output.map((value) => value.match(numberRegex).map(Number));
-    const outputRanges = keyframes[0].map((_, i2) => keyframes.map((values) => {
-      if (!(i2 in values)) {
-        throw Error('The arity of each "output" value must be equal');
-      }
+    const keyframes = output.map((value) => getNumbers(value).map(Number));
+    const interpolators = keyframes[0].map((_, i2) => keyframes.map((values) => {
+      if (!(i2 in values)) throw Error('The arity of each "output" value must be equal');
       return values[i2];
-    }));
-    const interpolators = outputRanges.map((output2) => createInterpolator(_extends({}, config2, {
+    })).map((output2) => createInterpolator({
+      ...config2,
       output: output2
-    })));
+    }));
+    const inputRange = config2.range || [0, 1];
+    const allTokens = output.map((value) => getNumbers(value));
+    const decimalCounts = allTokens[0].map((_, pos) => {
+      const counts = allTokens.map((tokens) => {
+        const token = tokens[pos];
+        const dot2 = token.indexOf(".");
+        return dot2 === -1 ? 0 : token.length - dot2 - 1;
+      });
+      return counts.every((c6) => c6 === counts[0]) && counts[0] > 0 ? counts[0] : null;
+    });
     return (input) => {
-      var _output$find;
-      const missingUnit = !unitRegex.test(output[0]) && ((_output$find = output.find((value) => unitRegex.test(value))) == null ? void 0 : _output$find.replace(numberRegex, ""));
+      const keyIdx = inputRange.indexOf(input);
+      if (keyIdx !== -1) return output[keyIdx];
+      const missingUnit = !unitRegex.test(output[0]) && output.find((value) => unitRegex.test(value))?.replace(numberRegex, "");
       let i2 = 0;
-      return output[0].replace(numberRegex, () => `${interpolators[i2++](input)}${missingUnit || ""}`).replace(rgbaRegex, rgbaRound);
+      return output[0].replace(numberRegex, () => {
+        const pos = i2++;
+        const value = interpolators[pos](input);
+        const decimals = decimalCounts[pos];
+        return `${decimals != null ? value.toFixed(decimals) : value}${missingUnit || ""}`;
+      }).replace(rgbaRegex, rgbaRound);
     };
   };
   var prefix = "react-spring: ";
   var once = (fn) => {
     const func = fn;
     let called = false;
-    if (typeof func != "function") {
-      throw new TypeError(`${prefix}once requires a function parameter`);
-    }
+    if (typeof func != "function") throw new TypeError(`${prefix}once requires a function parameter`);
     return (...args) => {
       if (!called) {
         func(...args);
@@ -46536,59 +46539,19 @@ var wp;
     const update4 = (0, import_react55.useState)()[1];
     const isMounted = useIsMounted();
     return () => {
-      if (isMounted.current) {
-        update4(Math.random());
-      }
+      if (isMounted.current) update4(Math.random());
     };
-  }
-  function useMemoOne(getResult, inputs) {
-    const [initial2] = (0, import_react55.useState)(() => ({
-      inputs,
-      result: getResult()
-    }));
-    const committed = (0, import_react55.useRef)();
-    const prevCache = committed.current;
-    let cache = prevCache;
-    if (cache) {
-      const useCache = Boolean(inputs && cache.inputs && areInputsEqual(inputs, cache.inputs));
-      if (!useCache) {
-        cache = {
-          inputs,
-          result: getResult()
-        };
-      }
-    } else {
-      cache = initial2;
-    }
-    (0, import_react55.useEffect)(() => {
-      committed.current = cache;
-      if (prevCache == initial2) {
-        initial2.inputs = initial2.result = void 0;
-      }
-    }, [cache]);
-    return cache.result;
-  }
-  function areInputsEqual(next, prev) {
-    if (next.length !== prev.length) {
-      return false;
-    }
-    for (let i2 = 0; i2 < next.length; i2++) {
-      if (next[i2] !== prev[i2]) {
-        return false;
-      }
-    }
-    return true;
   }
   var useOnce = (effect) => (0, import_react55.useEffect)(effect, emptyDeps);
   var emptyDeps = [];
 
-  // node_modules/@react-spring/core/dist/react-spring-core.esm.js
-  var React205 = __toESM(require_react());
-  var import_react57 = __toESM(require_react());
+  // node_modules/@react-spring/core/dist/react-spring_core.modern.mjs
+  var React205 = __toESM(require_react(), 1);
+  var import_react57 = __toESM(require_react(), 1);
 
-  // node_modules/@react-spring/animated/dist/react-spring-animated.esm.js
-  var React204 = __toESM(require_react());
-  var import_react56 = __toESM(require_react());
+  // node_modules/@react-spring/animated/dist/react-spring_animated.modern.mjs
+  var React204 = __toESM(require_react(), 1);
+  var import_react56 = __toESM(require_react(), 1);
   var $node = /* @__PURE__ */ Symbol.for("Animated:node");
   var isAnimated = (value) => !!value && value[$node] === value;
   var getAnimated = (owner) => owner && owner[$node];
@@ -46596,29 +46559,24 @@ var wp;
   var getPayload = (owner) => owner && owner[$node] && owner[$node].getPayload();
   var Animated = class {
     constructor() {
-      this.payload = void 0;
       setAnimated(this, this);
     }
+    /** Get every `AnimatedValue` used by this node. */
     getPayload() {
       return this.payload || [];
     }
   };
-  var AnimatedValue = class _AnimatedValue extends Animated {
+  var AnimatedValue = class AnimatedValue2 extends Animated {
     constructor(_value) {
       super();
-      this.done = true;
-      this.elapsedTime = void 0;
-      this.lastPosition = void 0;
-      this.lastVelocity = void 0;
-      this.v0 = void 0;
-      this.durationProgress = 0;
       this._value = _value;
-      if (is.num(this._value)) {
-        this.lastPosition = this._value;
-      }
+      this.done = true;
+      this.durationProgress = 0;
+      if (is.num(this._value)) this.lastPosition = this._value;
     }
+    /** @internal */
     static create(value) {
-      return new _AnimatedValue(value);
+      return new AnimatedValue2(value);
     }
     getPayload() {
       return [this];
@@ -46631,21 +46589,15 @@ var wp;
         this.lastPosition = value;
         if (step) {
           value = Math.round(value / step) * step;
-          if (this.done) {
-            this.lastPosition = value;
-          }
+          if (this.done) this.lastPosition = value;
         }
       }
-      if (this._value === value) {
-        return false;
-      }
+      if (this._value === value) return false;
       this._value = value;
       return true;
     }
     reset() {
-      const {
-        done
-      } = this;
+      const { done } = this;
       this.done = false;
       if (is.num(this._value)) {
         this.elapsedTime = 0;
@@ -46656,49 +46608,36 @@ var wp;
       }
     }
   };
-  var AnimatedString = class _AnimatedString extends AnimatedValue {
+  var AnimatedString = class AnimatedString2 extends AnimatedValue {
     constructor(value) {
       super(0);
       this._string = null;
-      this._toString = void 0;
-      this._toString = createInterpolator({
-        output: [value, value]
-      });
+      this._toString = createInterpolator({ output: [value, value] });
     }
+    /** @internal */
     static create(value) {
-      return new _AnimatedString(value);
+      return new AnimatedString2(value);
     }
     getValue() {
-      let value = this._string;
+      const value = this._string;
       return value == null ? this._string = this._toString(this._value) : value;
     }
     setValue(value) {
       if (is.str(value)) {
-        if (value == this._string) {
-          return false;
-        }
+        if (value == this._string) return false;
         this._string = value;
         this._value = 1;
-      } else if (super.setValue(value)) {
-        this._string = null;
-      } else {
-        return false;
-      }
+      } else if (super.setValue(value)) this._string = null;
+      else return false;
       return true;
     }
     reset(goal) {
-      if (goal) {
-        this._toString = createInterpolator({
-          output: [this.getValue(), goal]
-        });
-      }
+      if (goal) this._toString = createInterpolator({ output: [this.getValue(), goal] });
       this._value = 0;
       super.reset();
     }
   };
-  var TreeContext = {
-    dependencies: null
-  };
+  var TreeContext = { dependencies: null };
   var AnimatedObject = class extends Animated {
     constructor(source) {
       super();
@@ -46708,25 +46647,21 @@ var wp;
     getValue(animated2) {
       const values = {};
       eachProp(this.source, (source, key) => {
-        if (isAnimated(source)) {
-          values[key] = source.getValue(animated2);
-        } else if (hasFluidValue(source)) {
-          values[key] = getFluidValue(source);
-        } else if (!animated2) {
-          values[key] = source;
-        }
+        if (isAnimated(source)) values[key] = source.getValue(animated2);
+        else if (hasFluidValue(source)) values[key] = getFluidValue(source);
+        else if (!animated2) values[key] = source;
       });
       return values;
     }
+    /** Replace the raw object data */
     setValue(source) {
       this.source = source;
       this.payload = this._makePayload(source);
     }
     reset() {
-      if (this.payload) {
-        each(this.payload, (node) => node.reset());
-      }
+      if (this.payload) each(this.payload, (node) => node.reset());
     }
+    /** Create a payload set. */
     _makePayload(source) {
       if (source) {
         const payload = /* @__PURE__ */ new Set();
@@ -46734,56 +46669,37 @@ var wp;
         return Array.from(payload);
       }
     }
+    /** Add to a payload set. */
     _addToPayload(source) {
-      if (TreeContext.dependencies && hasFluidValue(source)) {
-        TreeContext.dependencies.add(source);
-      }
+      if (TreeContext.dependencies && hasFluidValue(source)) TreeContext.dependencies.add(source);
       const payload = getPayload(source);
-      if (payload) {
-        each(payload, (node) => this.add(node));
-      }
+      if (payload) each(payload, (node) => this.add(node));
     }
   };
-  var AnimatedArray = class _AnimatedArray extends AnimatedObject {
+  var AnimatedArray = class AnimatedArray2 extends AnimatedObject {
     constructor(source) {
       super(source);
     }
+    /** @internal */
     static create(source) {
-      return new _AnimatedArray(source);
+      return new AnimatedArray2(source);
     }
     getValue() {
       return this.source.map((node) => node.getValue());
     }
     setValue(source) {
       const payload = this.getPayload();
-      if (source.length == payload.length) {
-        return payload.map((node, i2) => node.setValue(source[i2])).some(Boolean);
-      }
+      if (source.length == payload.length) return payload.map((node, i2) => node.setValue(source[i2])).some(Boolean);
       super.setValue(source.map(makeAnimated));
       return true;
     }
   };
   function makeAnimated(value) {
-    const nodeType = isAnimatedString(value) ? AnimatedString : AnimatedValue;
-    return nodeType.create(value);
+    return (isAnimatedString(value) ? AnimatedString : AnimatedValue).create(value);
   }
   function getAnimatedType(value) {
     const parentNode = getAnimated(value);
     return parentNode ? parentNode.constructor : is.arr(value) ? AnimatedArray : isAnimatedString(value) ? AnimatedString : AnimatedValue;
-  }
-  function _extends2() {
-    _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i2 = 1; i2 < arguments.length; i2++) {
-        var source = arguments[i2];
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-      return target;
-    };
-    return _extends2.apply(this, arguments);
   }
   var withAnimated = (Component3, host2) => {
     const hasInstance = !is.fun(Component3) || Component3.prototype && Component3.prototype.isReactComponent;
@@ -46796,16 +46712,11 @@ var wp;
       const forceUpdate = useForceUpdate();
       const callback = () => {
         const instance = instanceRef.current;
-        if (hasInstance && !instance) {
-          return;
-        }
-        const didUpdate = instance ? host2.applyAnimatedValues(instance, props.getValue(true)) : false;
-        if (didUpdate === false) {
-          forceUpdate();
-        }
+        if (hasInstance && !instance) return;
+        if ((instance ? host2.applyAnimatedValues(instance, props.getValue(true)) : false) === false) forceUpdate();
       };
       const observer = new PropsObserver(callback, deps);
-      const observerRef = (0, import_react56.useRef)();
+      const observerRef = (0, import_react56.useRef)(void 0);
       useIsomorphicLayoutEffect2(() => {
         observerRef.current = observer;
         each(deps, (dep) => addFluidObserver(dep, observer));
@@ -46822,9 +46733,10 @@ var wp;
         each(observer2.deps, (dep) => removeFluidObserver(dep, observer2));
       });
       const usedProps = host2.getComponentProps(props.getValue());
-      return React204.createElement(Component3, _extends2({}, usedProps, {
+      return /* @__PURE__ */ React204.createElement(Component3, {
+        ...usedProps,
         ref
-      }));
+      });
     });
   };
   var PropsObserver = class {
@@ -46833,76 +46745,60 @@ var wp;
       this.deps = deps;
     }
     eventObserved(event) {
-      if (event.type == "change") {
-        raf.write(this.update);
-      }
+      if (event.type == "change") raf.write(this.update);
     }
   };
   function getAnimatedState(props, host2) {
     const dependencies = /* @__PURE__ */ new Set();
     TreeContext.dependencies = dependencies;
-    if (props.style) props = _extends2({}, props, {
+    if (props.style) props = {
+      ...props,
       style: host2.createAnimatedStyle(props.style)
-    });
+    };
     props = new AnimatedObject(props);
     TreeContext.dependencies = null;
     return [props, dependencies];
   }
   function updateRef(ref, value) {
-    if (ref) {
-      if (is.fun(ref)) ref(value);
-      else ref.current = value;
-    }
+    if (ref) if (is.fun(ref)) ref(value);
+    else ref.current = value;
     return value;
   }
   var cacheKey = /* @__PURE__ */ Symbol.for("AnimatedComponent");
-  var createHost = (components, {
-    applyAnimatedValues: _applyAnimatedValues = () => false,
-    createAnimatedStyle: _createAnimatedStyle = (style) => new AnimatedObject(style),
-    getComponentProps: _getComponentProps = (props) => props
-  } = {}) => {
+  var fallbackCache = /* @__PURE__ */ new WeakMap();
+  var createHost = (components, { applyAnimatedValues: applyAnimatedValues2 = () => false, createAnimatedStyle = (style) => new AnimatedObject(style), getComponentProps = (props) => props } = {}) => {
     const hostConfig = {
-      applyAnimatedValues: _applyAnimatedValues,
-      createAnimatedStyle: _createAnimatedStyle,
-      getComponentProps: _getComponentProps
+      applyAnimatedValues: applyAnimatedValues2,
+      createAnimatedStyle,
+      getComponentProps
     };
     const animated2 = (Component3) => {
       const displayName = getDisplayName(Component3) || "Anonymous";
-      if (is.str(Component3)) {
-        Component3 = animated2[Component3] || (animated2[Component3] = withAnimated(Component3, hostConfig));
-      } else {
-        Component3 = Component3[cacheKey] || (Component3[cacheKey] = withAnimated(Component3, hostConfig));
+      if (is.str(Component3)) Component3 = animated2[Component3] || (animated2[Component3] = withAnimated(Component3, hostConfig));
+      else {
+        let cached = Component3[cacheKey] ?? fallbackCache.get(Component3);
+        if (!cached) {
+          cached = withAnimated(Component3, hostConfig);
+          try {
+            Component3[cacheKey] = cached;
+          } catch {
+          }
+          fallbackCache.set(Component3, cached);
+        }
+        Component3 = cached;
       }
       Component3.displayName = `Animated(${displayName})`;
       return Component3;
     };
     eachProp(components, (Component3, key) => {
-      if (is.arr(components)) {
-        key = getDisplayName(Component3);
-      }
+      if (is.arr(components)) key = getDisplayName(Component3);
       animated2[key] = animated2(Component3);
     });
-    return {
-      animated: animated2
-    };
+    return { animated: animated2 };
   };
   var getDisplayName = (arg) => is.str(arg) ? arg : arg && is.str(arg.displayName) ? arg.displayName : is.fun(arg) && arg.name || null;
 
-  // node_modules/@react-spring/core/dist/react-spring-core.esm.js
-  function _extends3() {
-    _extends3 = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i2 = 1; i2 < arguments.length; i2++) {
-        var source = arguments[i2];
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-      return target;
-    };
-    return _extends3.apply(this, arguments);
-  }
+  // node_modules/@react-spring/core/dist/react-spring_core.modern.mjs
   function callProp(value, ...args) {
     return is.fun(value) ? value(...args) : value;
   }
@@ -46919,13 +46815,19 @@ var wp;
     const defaults2 = {};
     for (const key of keys) {
       const value = transform(props[key], key);
-      if (!is.und(value)) {
-        defaults2[key] = value;
-      }
+      if (!is.und(value)) defaults2[key] = value;
     }
     return defaults2;
   };
-  var DEFAULT_PROPS = ["config", "onProps", "onStart", "onChange", "onPause", "onResume", "onRest"];
+  var DEFAULT_PROPS = [
+    "config",
+    "onProps",
+    "onStart",
+    "onChange",
+    "onPause",
+    "onResume",
+    "onRest"
+  ];
   var RESERVED_PROPS = {
     config: 1,
     from: 1,
@@ -46969,27 +46871,25 @@ var wp;
         count++;
       }
     });
-    if (count) {
-      return forward;
-    }
+    if (count) return forward;
   }
   function inferTo(props) {
     const to2 = getForwardProps(props);
     if (to2) {
-      const out = {
-        to: to2
-      };
+      const out = { to: to2 };
       eachProp(props, (val, key) => key in to2 || (out[key] = val));
       return out;
     }
-    return _extends3({}, props);
+    return { ...props };
   }
   function computeGoal(value) {
-    value = getFluidValue(value);
-    return is.arr(value) ? value.map(computeGoal) : isAnimatedString(value) ? globals.createStringInterpolator({
+    const resolved = getFluidValue(value);
+    if (is.arr(resolved)) return resolved.map(computeGoal);
+    if (isAnimatedString(resolved)) return globals_exports.createStringInterpolator({
       range: [0, 1],
-      output: [value, value]
-    })(1) : value;
+      output: [resolved, resolved]
+    })(1);
+    return resolved;
   }
   function isAsyncTo(to2) {
     return is.fun(to2) || is.arr(to2) && is.obj(to2[0]);
@@ -47020,101 +46920,33 @@ var wp;
       friction: 120
     }
   };
-  var c1 = 1.70158;
-  var c2 = c1 * 1.525;
-  var c3 = c1 + 1;
-  var c4 = 2 * Math.PI / 3;
-  var c5 = 2 * Math.PI / 4.5;
-  var bounceOut = (x2) => {
-    const n1 = 7.5625;
-    const d1 = 2.75;
-    if (x2 < 1 / d1) {
-      return n1 * x2 * x2;
-    } else if (x2 < 2 / d1) {
-      return n1 * (x2 -= 1.5 / d1) * x2 + 0.75;
-    } else if (x2 < 2.5 / d1) {
-      return n1 * (x2 -= 2.25 / d1) * x2 + 0.9375;
-    } else {
-      return n1 * (x2 -= 2.625 / d1) * x2 + 0.984375;
-    }
-  };
-  var easings = {
-    linear: (x2) => x2,
-    easeInQuad: (x2) => x2 * x2,
-    easeOutQuad: (x2) => 1 - (1 - x2) * (1 - x2),
-    easeInOutQuad: (x2) => x2 < 0.5 ? 2 * x2 * x2 : 1 - Math.pow(-2 * x2 + 2, 2) / 2,
-    easeInCubic: (x2) => x2 * x2 * x2,
-    easeOutCubic: (x2) => 1 - Math.pow(1 - x2, 3),
-    easeInOutCubic: (x2) => x2 < 0.5 ? 4 * x2 * x2 * x2 : 1 - Math.pow(-2 * x2 + 2, 3) / 2,
-    easeInQuart: (x2) => x2 * x2 * x2 * x2,
-    easeOutQuart: (x2) => 1 - Math.pow(1 - x2, 4),
-    easeInOutQuart: (x2) => x2 < 0.5 ? 8 * x2 * x2 * x2 * x2 : 1 - Math.pow(-2 * x2 + 2, 4) / 2,
-    easeInQuint: (x2) => x2 * x2 * x2 * x2 * x2,
-    easeOutQuint: (x2) => 1 - Math.pow(1 - x2, 5),
-    easeInOutQuint: (x2) => x2 < 0.5 ? 16 * x2 * x2 * x2 * x2 * x2 : 1 - Math.pow(-2 * x2 + 2, 5) / 2,
-    easeInSine: (x2) => 1 - Math.cos(x2 * Math.PI / 2),
-    easeOutSine: (x2) => Math.sin(x2 * Math.PI / 2),
-    easeInOutSine: (x2) => -(Math.cos(Math.PI * x2) - 1) / 2,
-    easeInExpo: (x2) => x2 === 0 ? 0 : Math.pow(2, 10 * x2 - 10),
-    easeOutExpo: (x2) => x2 === 1 ? 1 : 1 - Math.pow(2, -10 * x2),
-    easeInOutExpo: (x2) => x2 === 0 ? 0 : x2 === 1 ? 1 : x2 < 0.5 ? Math.pow(2, 20 * x2 - 10) / 2 : (2 - Math.pow(2, -20 * x2 + 10)) / 2,
-    easeInCirc: (x2) => 1 - Math.sqrt(1 - Math.pow(x2, 2)),
-    easeOutCirc: (x2) => Math.sqrt(1 - Math.pow(x2 - 1, 2)),
-    easeInOutCirc: (x2) => x2 < 0.5 ? (1 - Math.sqrt(1 - Math.pow(2 * x2, 2))) / 2 : (Math.sqrt(1 - Math.pow(-2 * x2 + 2, 2)) + 1) / 2,
-    easeInBack: (x2) => c3 * x2 * x2 * x2 - c1 * x2 * x2,
-    easeOutBack: (x2) => 1 + c3 * Math.pow(x2 - 1, 3) + c1 * Math.pow(x2 - 1, 2),
-    easeInOutBack: (x2) => x2 < 0.5 ? Math.pow(2 * x2, 2) * ((c2 + 1) * 2 * x2 - c2) / 2 : (Math.pow(2 * x2 - 2, 2) * ((c2 + 1) * (x2 * 2 - 2) + c2) + 2) / 2,
-    easeInElastic: (x2) => x2 === 0 ? 0 : x2 === 1 ? 1 : -Math.pow(2, 10 * x2 - 10) * Math.sin((x2 * 10 - 10.75) * c4),
-    easeOutElastic: (x2) => x2 === 0 ? 0 : x2 === 1 ? 1 : Math.pow(2, -10 * x2) * Math.sin((x2 * 10 - 0.75) * c4) + 1,
-    easeInOutElastic: (x2) => x2 === 0 ? 0 : x2 === 1 ? 1 : x2 < 0.5 ? -(Math.pow(2, 20 * x2 - 10) * Math.sin((20 * x2 - 11.125) * c5)) / 2 : Math.pow(2, -20 * x2 + 10) * Math.sin((20 * x2 - 11.125) * c5) / 2 + 1,
-    easeInBounce: (x2) => 1 - bounceOut(1 - x2),
-    easeOutBounce: bounceOut,
-    easeInOutBounce: (x2) => x2 < 0.5 ? (1 - bounceOut(1 - 2 * x2)) / 2 : (1 + bounceOut(2 * x2 - 1)) / 2
-  };
-  var defaults = _extends3({}, config.default, {
+  var defaults = {
+    ...config.default,
     mass: 1,
     damping: 1,
     easing: easings.linear,
     clamp: false
-  });
+  };
   var AnimationConfig = class {
     constructor() {
-      this.tension = void 0;
-      this.friction = void 0;
-      this.frequency = void 0;
-      this.damping = void 0;
-      this.mass = void 0;
       this.velocity = 0;
-      this.restVelocity = void 0;
-      this.precision = void 0;
-      this.progress = void 0;
-      this.duration = void 0;
-      this.easing = void 0;
-      this.clamp = void 0;
-      this.bounce = void 0;
-      this.decay = void 0;
-      this.round = void 0;
       Object.assign(this, defaults);
     }
   };
   function mergeConfig(config2, newConfig, defaultConfig) {
     if (defaultConfig) {
-      defaultConfig = _extends3({}, defaultConfig);
+      defaultConfig = { ...defaultConfig };
       sanitizeConfig(defaultConfig, newConfig);
-      newConfig = _extends3({}, defaultConfig, newConfig);
+      newConfig = {
+        ...defaultConfig,
+        ...newConfig
+      };
     }
     sanitizeConfig(config2, newConfig);
     Object.assign(config2, newConfig);
-    for (const key in defaults) {
-      if (config2[key] == null) {
-        config2[key] = defaults[key];
-      }
-    }
-    let {
-      mass,
-      frequency,
-      damping
-    } = config2;
+    for (const key in defaults) if (config2[key] == null) config2[key] = defaults[key];
+    let { frequency, damping } = config2;
+    const { mass } = config2;
     if (!is.und(frequency)) {
       if (frequency < 0.01) frequency = 0.01;
       if (damping < 0) damping = 0;
@@ -47124,17 +46956,14 @@ var wp;
     return config2;
   }
   function sanitizeConfig(config2, props) {
-    if (!is.und(props.decay)) {
-      config2.duration = void 0;
-    } else {
+    if (!is.und(props.decay)) config2.duration = void 0;
+    else {
       const isTensionConfig = !is.und(props.tension) || !is.und(props.friction);
       if (isTensionConfig || !is.und(props.frequency) || !is.und(props.damping) || !is.und(props.mass)) {
         config2.duration = void 0;
         config2.decay = void 0;
       }
-      if (isTensionConfig) {
-        config2.frequency = void 0;
-      }
+      if (isTensionConfig) config2.frequency = void 0;
     }
   }
   var emptyArray = [];
@@ -47144,34 +46973,20 @@ var wp;
       this.values = emptyArray;
       this.toValues = null;
       this.fromValues = emptyArray;
-      this.to = void 0;
-      this.from = void 0;
       this.config = new AnimationConfig();
       this.immediate = false;
     }
   };
-  function scheduleProps(callId, {
-    key,
-    props,
-    defaultProps,
-    state: state2,
-    actions: actions2
-  }) {
+  function scheduleProps(callId, { key, props, defaultProps, state: state2, actions: actions2 }) {
     return new Promise((resolve, reject) => {
-      var _props$cancel;
       let delay;
       let timeout;
-      let cancel = matchProp((_props$cancel = props.cancel) != null ? _props$cancel : defaultProps == null ? void 0 : defaultProps.cancel, key);
-      if (cancel) {
-        onStart();
-      } else {
-        if (!is.und(props.pause)) {
-          state2.paused = matchProp(props.pause, key);
-        }
-        let pause = defaultProps == null ? void 0 : defaultProps.pause;
-        if (pause !== true) {
-          pause = state2.paused || matchProp(pause, key);
-        }
+      let cancel = matchProp(props.cancel ?? defaultProps?.cancel, key);
+      if (cancel) onStart();
+      else {
+        if (!is.und(props.pause)) state2.paused = matchProp(props.pause, key);
+        let pause = defaultProps?.pause;
+        if (pause !== true) pause = state2.paused || matchProp(pause, key);
         delay = callProp(props.delay || 0, key);
         if (pause) {
           state2.resumeQueue.add(onResume);
@@ -47188,29 +47003,24 @@ var wp;
         delay = timeout.time - raf.now();
       }
       function onResume() {
-        if (delay > 0 && !globals.skipAnimation) {
+        if (delay > 0 && !globals_exports.skipAnimation) {
           state2.delayed = true;
           timeout = raf.setTimeout(onStart, delay);
           state2.pauseQueue.add(onPause);
           state2.timeouts.add(timeout);
-        } else {
-          onStart();
-        }
+        } else onStart();
       }
       function onStart() {
-        if (state2.delayed) {
-          state2.delayed = false;
-        }
+        if (state2.delayed) state2.delayed = false;
         state2.pauseQueue.delete(onPause);
         state2.timeouts.delete(timeout);
-        if (callId <= (state2.cancelId || 0)) {
-          cancel = true;
-        }
+        if (callId <= (state2.cancelId || 0)) cancel = true;
         try {
-          actions2.start(_extends3({}, props, {
+          actions2.start({
+            ...props,
             callId,
             cancel
-          }), resolve);
+          }, resolve);
         } catch (err) {
           reject(err);
         }
@@ -47235,18 +47045,9 @@ var wp;
     finished: false
   });
   function runAsync(to2, props, state2, target) {
-    const {
-      callId,
-      parentId,
-      onRest
-    } = props;
-    const {
-      asyncTo: prevTo,
-      promise: prevPromise
-    } = state2;
-    if (!parentId && to2 === prevTo && !props.reset) {
-      return prevPromise;
-    }
+    const { callId, parentId, onRest } = props;
+    const { asyncTo: prevTo, promise: prevPromise } = state2;
+    if (!parentId && to2 === prevTo && !props.reset) return prevPromise;
     return state2.promise = (async () => {
       state2.asyncId = callId;
       state2.asyncTo = to2;
@@ -47262,62 +47063,52 @@ var wp;
           throw bailSignal;
         }
       };
+      let skipAnimationCallCount = 0;
+      const SKIP_ANIMATION_CALL_LIMIT = 1024;
       const animate = (arg1, arg2) => {
         const bailSignal = new BailSignal();
-        const skipAnimationSignal = new SkipAniamtionSignal();
+        const skipAnimationSignal = new SkipAnimationSignal();
         return (async () => {
-          if (globals.skipAnimation) {
-            stopAsync(state2);
-            skipAnimationSignal.result = getFinishedResult(target, false);
-            bail(skipAnimationSignal);
-            throw skipAnimationSignal;
-          }
           bailIfEnded(bailSignal);
-          const props2 = is.obj(arg1) ? _extends3({}, arg1) : _extends3({}, arg2, {
+          const props2 = is.obj(arg1) ? { ...arg1 } : {
+            ...arg2,
             to: arg1
-          });
+          };
           props2.parentId = callId;
           eachProp(defaultProps, (value, key) => {
-            if (is.und(props2[key])) {
-              props2[key] = value;
-            }
+            if (is.und(props2[key])) props2[key] = value;
           });
+          if (globals_exports.skipAnimation) {
+            if (++skipAnimationCallCount > SKIP_ANIMATION_CALL_LIMIT) {
+              stopAsync(state2);
+              skipAnimationSignal.result = getFinishedResult(target, false);
+              bail(skipAnimationSignal);
+              throw skipAnimationSignal;
+            }
+            props2.immediate = true;
+            return await target.start(props2);
+          }
           const result2 = await target.start(props2);
           bailIfEnded(bailSignal);
-          if (state2.paused) {
-            await new Promise((resume) => {
-              state2.resumeQueue.add(resume);
-            });
-          }
+          if (state2.paused) await new Promise((resume) => {
+            state2.resumeQueue.add(resume);
+          });
           return result2;
         })();
       };
       let result;
-      if (globals.skipAnimation) {
-        stopAsync(state2);
-        return getFinishedResult(target, false);
-      }
       try {
         let animating;
-        if (is.arr(to2)) {
-          animating = (async (queue) => {
-            for (const props2 of queue) {
-              await animate(props2);
-            }
-          })(to2);
-        } else {
-          animating = Promise.resolve(to2(animate, target.stop.bind(target)));
-        }
+        if (is.arr(to2)) animating = (async (queue) => {
+          for (const props2 of queue) await animate(props2);
+        })(to2);
+        else animating = Promise.resolve(to2(animate, target.stop.bind(target)));
         await Promise.all([animating.then(preventBail), bailPromise]);
         result = getFinishedResult(target.get(), true, false);
       } catch (err) {
-        if (err instanceof BailSignal) {
-          result = err.result;
-        } else if (err instanceof SkipAniamtionSignal) {
-          result = err.result;
-        } else {
-          throw err;
-        }
+        if (err instanceof BailSignal) result = err.result;
+        else if (err instanceof SkipAnimationSignal) result = err.result;
+        else throw err;
       } finally {
         if (callId == state2.asyncId) {
           state2.asyncId = parentId;
@@ -47325,11 +47116,9 @@ var wp;
           state2.promise = parentId ? prevPromise : void 0;
         }
       }
-      if (is.fun(onRest)) {
-        raf.batchedUpdates(() => {
-          onRest(result, target, target.item);
-        });
-      }
+      if (is.fun(onRest)) raf.batchedUpdates(() => {
+        onRest(result, target, target.item);
+      });
       return result;
     })();
   }
@@ -47343,22 +47132,19 @@ var wp;
   var BailSignal = class extends Error {
     constructor() {
       super("An async animation has been interrupted. You see this error because you forgot to use `await` or `.catch(...)` on its returned promise.");
-      this.result = void 0;
     }
   };
-  var SkipAniamtionSignal = class extends Error {
+  var SkipAnimationSignal = class extends Error {
     constructor() {
       super("SkipAnimationSignal");
-      this.result = void 0;
     }
   };
   var isFrameValue = (value) => value instanceof FrameValue;
   var nextId$1 = 1;
   var FrameValue = class extends FluidValue {
-    constructor(...args) {
-      super(...args);
+    constructor(..._args) {
+      super(..._args);
       this.id = nextId$1++;
-      this.key = void 0;
       this._priority = 0;
     }
     get priority() {
@@ -47370,16 +47156,19 @@ var wp;
         this._onPriorityChange(priority2);
       }
     }
+    /** Get the current value */
     get() {
       const node = getAnimated(this);
       return node && node.getValue();
     }
+    /** Create a spring that maps our value to another value */
     to(...args) {
-      return globals.to(this, args);
+      return globals_exports.to(this, args);
     }
+    /** @deprecated Use the `to` method instead. */
     interpolate(...args) {
       deprecateInterpolate();
-      return globals.to(this, args);
+      return globals_exports.to(this, args);
     }
     toJSON() {
       return this.get();
@@ -47390,10 +47179,13 @@ var wp;
     observerRemoved(count) {
       if (count == 0) this._detach();
     }
+    /** Called when the first child is added. */
     _attach() {
     }
+    /** Called when the last child is removed. */
     _detach() {
     }
+    /** Tell our children about our new value */
     _onChange(value, idle = false) {
       callFluidObservers(this, {
         type: "change",
@@ -47402,10 +47194,9 @@ var wp;
         idle
       });
     }
+    /** Tell our children about our new priority */
     _onPriorityChange(priority2) {
-      if (!this.idle) {
-        frameLoop.sort(this);
-      }
+      if (!this.idle) frameLoop.sort(this);
       callFluidObservers(this, {
         type: "priority",
         parent: this,
@@ -47420,14 +47211,12 @@ var wp;
   var hasAnimated = (target) => (target[$P] & HAS_ANIMATED) > 0;
   var isAnimating = (target) => (target[$P] & IS_ANIMATING) > 0;
   var isPaused = (target) => (target[$P] & IS_PAUSED) > 0;
-  var setActiveBit = (target, active) => active ? target[$P] |= IS_ANIMATING | HAS_ANIMATED : target[$P] &= ~IS_ANIMATING;
-  var setPausedBit = (target, paused) => paused ? target[$P] |= IS_PAUSED : target[$P] &= ~IS_PAUSED;
+  var setActiveBit = (target, active) => active ? target[$P] |= 3 : target[$P] &= -3;
+  var setPausedBit = (target, paused) => paused ? target[$P] |= IS_PAUSED : target[$P] &= -5;
   var SpringValue = class extends FrameValue {
     constructor(arg1, arg2) {
       super();
-      this.key = void 0;
       this.animation = new Animation2();
-      this.queue = void 0;
       this.defaultProps = {};
       this._state = {
         paused: false,
@@ -47441,15 +47230,15 @@ var wp;
       this._lastToId = 0;
       this._memoizedDuration = 0;
       if (!is.und(arg1) || !is.und(arg2)) {
-        const props = is.obj(arg1) ? _extends3({}, arg1) : _extends3({}, arg2, {
+        const props = is.obj(arg1) ? { ...arg1 } : {
+          ...arg2,
           from: arg1
-        });
-        if (is.und(props.default)) {
-          props.default = true;
-        }
+        };
+        if (is.und(props.default)) props.default = true;
         this.start(props);
       }
     }
+    /** Equals true when not advancing on each frame. */
     get idle() {
       return !(isAnimating(this) || this._state.asyncTo) || isPaused(this);
     }
@@ -47460,30 +47249,41 @@ var wp;
       const node = getAnimated(this);
       return node instanceof AnimatedValue ? node.lastVelocity || 0 : node.getPayload().map((node2) => node2.lastVelocity || 0);
     }
+    /**
+    * When true, this value has been animated at least once.
+    */
     get hasAnimated() {
       return hasAnimated(this);
     }
+    /**
+    * When true, this value has an unfinished animation,
+    * which is either active or paused.
+    */
     get isAnimating() {
       return isAnimating(this);
     }
+    /**
+    * When true, all current and future animations are paused.
+    */
     get isPaused() {
       return isPaused(this);
     }
+    /**
+    *
+    *
+    */
     get isDelayed() {
       return this._state.delayed;
     }
+    /** Advance the current animation by a number of milliseconds */
     advance(dt) {
       let idle = true;
       let changed = false;
       const anim = this.animation;
-      let {
-        config: config2,
-        toValues
-      } = anim;
+      let { toValues } = anim;
+      const { config: config2 } = anim;
       const payload = getPayload(anim.to);
-      if (!payload && hasFluidValue(anim.to)) {
-        toValues = toArray(getFluidValue(anim.to));
-      }
+      if (!payload && hasFluidValue(anim.to)) toValues = toArray(getFluidValue(anim.to));
       anim.values.forEach((node2, i2) => {
         if (node2.done) return;
         const to2 = node2.constructor == AnimatedString ? 1 : payload ? payload[i2].lastPosition : toValues[i2];
@@ -47499,7 +47299,7 @@ var wp;
           const from = anim.fromValues[i2];
           const v0 = node2.v0 != null ? node2.v0 : node2.v0 = is.arr(config2.velocity) ? config2.velocity[i2] : config2.velocity;
           let velocity;
-          const precision = config2.precision || (from == to2 ? 5e-3 : Math.min(1, Math.abs(to2 - from) * 1e-3));
+          const precision = config2.precision || (from == to2 ? 5e-3 : Math.max(Math.max(Math.abs(to2), Math.abs(from), 1) * Number.EPSILON, Math.min(1, Math.abs(to2 - from) * 1e-3)));
           if (!is.und(config2.duration)) {
             let p4 = 1;
             if (config2.duration > 0) {
@@ -47537,9 +47337,7 @@ var wp;
               isMoving = Math.abs(velocity) > restVelocity;
               if (!isMoving) {
                 finished = Math.abs(to2 - position) <= precision;
-                if (finished) {
-                  break;
-                }
+                if (finished) break;
               }
               if (canBounce) {
                 isBouncing = position == to2 || position > to2 == isGrowing;
@@ -47548,9 +47346,7 @@ var wp;
                   position = to2;
                 }
               }
-              const springForce = -config2.tension * 1e-6 * (position - to2);
-              const dampingForce = -config2.friction * 1e-3 * velocity;
-              const acceleration = (springForce + dampingForce) / config2.mass;
+              const acceleration = (-config2.tension * 1e-6 * (position - to2) + -config2.friction * 1e-3 * velocity) / config2.mass;
               velocity = velocity + acceleration * step;
               position = position + velocity * step;
             }
@@ -47561,17 +47357,10 @@ var wp;
             finished = true;
           }
         }
-        if (payload && !payload[i2].done) {
-          finished = false;
-        }
-        if (finished) {
-          node2.done = true;
-        } else {
-          idle = false;
-        }
-        if (node2.setValue(position, config2.round)) {
-          changed = true;
-        }
+        if (payload && !payload[i2].done) finished = false;
+        if (finished) node2.done = true;
+        else idle = false;
+        if (node2.setValue(position, config2.round)) changed = true;
       });
       const node = getAnimated(this);
       const currVal = node.getValue();
@@ -47580,14 +47369,13 @@ var wp;
         if ((currVal !== finalVal || changed) && !config2.decay) {
           node.setValue(finalVal);
           this._onChange(finalVal);
-        } else if (changed && config2.decay) {
+        } else if (changed && config2.decay)
           this._onChange(currVal);
-        }
         this._stop();
-      } else if (changed) {
+      } else if (changed)
         this._onChange(currVal);
-      }
     }
+    /** Set the current value, while stopping the current animation */
     set(value) {
       raf.batchedUpdates(() => {
         this._stop();
@@ -47596,87 +47384,82 @@ var wp;
       });
       return this;
     }
+    /**
+    * Freeze the active animation in time, as well as any updates merged
+    * before `resume` is called.
+    */
     pause() {
-      this._update({
-        pause: true
-      });
+      this._update({ pause: true });
     }
+    /** Resume the animation if paused. */
     resume() {
-      this._update({
-        pause: false
-      });
+      this._update({ pause: false });
     }
+    /** Skip to the end of the current animation. */
     finish() {
       if (isAnimating(this)) {
-        const {
-          to: to2,
-          config: config2
-        } = this.animation;
+        const { to: to2, config: config2 } = this.animation;
         raf.batchedUpdates(() => {
           this._onStart();
-          if (!config2.decay) {
-            this._set(to2, false);
-          }
+          if (!config2.decay) this._set(to2, false);
           this._stop();
         });
       }
       return this;
     }
+    /** Push props into the pending queue. */
     update(props) {
-      const queue = this.queue || (this.queue = []);
-      queue.push(props);
+      (this.queue || (this.queue = [])).push(props);
       return this;
     }
     start(to2, arg2) {
       let queue;
-      if (!is.und(to2)) {
-        queue = [is.obj(to2) ? to2 : _extends3({}, arg2, {
-          to: to2
-        })];
-      } else {
+      if (!is.und(to2)) queue = [is.obj(to2) ? to2 : {
+        ...arg2,
+        to: to2
+      }];
+      else {
         queue = this.queue || [];
         this.queue = [];
       }
       return Promise.all(queue.map((props) => {
-        const up = this._update(props);
-        return up;
+        return this._update(props);
       })).then((results) => getCombinedResult(this, results));
     }
+    /**
+    * Stop the current animation, and cancel any delayed updates.
+    *
+    * Pass `true` to call `onRest` with `cancelled: true`.
+    */
     stop(cancel) {
-      const {
-        to: to2
-      } = this.animation;
-      this._focus(this.get());
+      const { to: to2 } = this.animation;
+      if (!is.und(to2)) this._focus(this.get());
       stopAsync(this._state, cancel && this._lastCallId);
       raf.batchedUpdates(() => this._stop(to2, cancel));
       return this;
     }
+    /** Restart the animation. */
     reset() {
-      this._update({
-        reset: true
-      });
+      this._update({ reset: true });
     }
+    /** @internal */
     eventObserved(event) {
-      if (event.type == "change") {
-        this._start();
-      } else if (event.type == "priority") {
-        this.priority = event.priority + 1;
-      }
+      if (event.type == "change") this._start();
+      else if (event.type == "priority") this.priority = event.priority + 1;
     }
+    /**
+    * Parse the `to` and `from` range from the given `props` object.
+    *
+    * This also ensures the initial value is available to animated components
+    * during the render phase.
+    */
     _prepareNode(props) {
       const key = this.key || "";
-      let {
-        to: to2,
-        from
-      } = props;
+      let { to: to2, from } = props;
       to2 = is.obj(to2) ? to2[key] : to2;
-      if (to2 == null || isAsyncTo(to2)) {
-        to2 = void 0;
-      }
+      if (to2 == null || isAsyncTo(to2)) to2 = void 0;
       from = is.obj(from) ? from[key] : from;
-      if (from == null) {
-        from = void 0;
-      }
+      if (from == null) from = void 0;
       const range = {
         to: to2,
         from
@@ -47684,27 +47467,19 @@ var wp;
       if (!hasAnimated(this)) {
         if (props.reverse) [to2, from] = [from, to2];
         from = getFluidValue(from);
-        if (!is.und(from)) {
-          this._set(from);
-        } else if (!getAnimated(this)) {
-          this._set(to2);
-        }
+        if (!is.und(from)) this._set(from);
+        else if (!getAnimated(this)) this._set(to2);
       }
       return range;
     }
-    _update(_ref, isLoop) {
-      let props = _extends3({}, _ref);
-      const {
-        key,
-        defaultProps
-      } = this;
+    /** Every update is processed by this method before merging. */
+    _update({ ...props }, isLoop) {
+      const { key, defaultProps } = this;
       if (props.default) Object.assign(defaultProps, getDefaultProps(props, (value, prop) => /^on/.test(prop) ? resolveProp(value, key) : value));
       mergeActiveFn(this, props, "onProps");
       sendEvent(this, "onProps", props, this);
       const range = this._prepareNode(props);
-      if (Object.isFrozen(this)) {
-        throw Error("Cannot animate a `SpringValue` object that is frozen. Did you forget to pass your component to `animated(...)` before animating its props?");
-      }
+      if (Object.isFrozen(this)) throw Error("Cannot animate a `SpringValue` object that is frozen. Did you forget to pass your component to `animated(...)` before animating its props?");
       const state2 = this._state;
       return scheduleProps(++this._lastCallId, {
         key,
@@ -47722,9 +47497,7 @@ var wp;
           resume: () => {
             if (isPaused(this)) {
               setPausedBit(this, false);
-              if (isAnimating(this)) {
-                this._resume();
-              }
+              if (isAnimating(this)) this._resume();
               flushCalls(state2.resumeQueue);
               sendEvent(this, "onResume", getFinishedResult(this, checkFinished(this, this.animation.to)), this);
             }
@@ -47734,13 +47507,12 @@ var wp;
       }).then((result) => {
         if (props.loop && result.finished && !(isLoop && result.noop)) {
           const nextProps = createLoopUpdate(props);
-          if (nextProps) {
-            return this._update(nextProps, true);
-          }
+          if (nextProps) return this._update(nextProps, true);
         }
         return result;
       });
     }
+    /** Merge props into the current animation */
     _merge(range, props, resolve) {
       if (props.cancel) {
         this.stop(true);
@@ -47748,57 +47520,25 @@ var wp;
       }
       const hasToProp = !is.und(range.to);
       const hasFromProp = !is.und(range.from);
-      if (hasToProp || hasFromProp) {
-        if (props.callId > this._lastToId) {
-          this._lastToId = props.callId;
-        } else {
-          return resolve(getCancelledResult(this));
-        }
-      }
-      const {
-        key,
-        defaultProps,
-        animation: anim
-      } = this;
-      const {
-        to: prevTo,
-        from: prevFrom
-      } = anim;
-      let {
-        to: to2 = prevTo,
-        from = prevFrom
-      } = range;
-      if (hasFromProp && !hasToProp && (!props.default || is.und(to2))) {
-        to2 = from;
-      }
+      if (hasToProp || hasFromProp) if (props.callId > this._lastToId) this._lastToId = props.callId;
+      else return resolve(getCancelledResult(this));
+      const { key, defaultProps, animation: anim } = this;
+      const { to: prevTo, from: prevFrom } = anim;
+      let { to: to2 = prevTo, from = prevFrom } = range;
+      if (hasFromProp && !hasToProp && (!props.default || is.und(to2))) to2 = from;
       if (props.reverse) [to2, from] = [from, to2];
       const hasFromChanged = !isEqual(from, prevFrom);
-      if (hasFromChanged) {
-        anim.from = from;
-      }
+      if (hasFromChanged) anim.from = from;
       from = getFluidValue(from);
       const hasToChanged = !isEqual(to2, prevTo);
-      if (hasToChanged) {
-        this._focus(to2);
-      }
+      if (hasToChanged) this._focus(to2);
       const hasAsyncTo = isAsyncTo(props.to);
-      const {
-        config: config2
-      } = anim;
-      const {
-        decay,
-        velocity
-      } = config2;
-      if (hasToProp || hasFromProp) {
-        config2.velocity = 0;
-      }
-      if (props.config && !hasAsyncTo) {
-        mergeConfig(config2, callProp(props.config, key), props.config !== defaultProps.config ? callProp(defaultProps.config, key) : void 0);
-      }
+      const { config: config2 } = anim;
+      const { decay, velocity } = config2;
+      if ((hasToProp || hasFromProp) && !config2.decay) config2.velocity = 0;
+      if (props.config && !hasAsyncTo) mergeConfig(config2, callProp(props.config, key), props.config !== defaultProps.config ? callProp(defaultProps.config, key) : void 0);
       let node = getAnimated(this);
-      if (!node || is.und(to2)) {
-        return resolve(getFinishedResult(this, true));
-      }
+      if (!node || is.und(to2)) return resolve(getFinishedResult(this, true));
       const reset = is.und(props.reset) ? hasFromProp && !props.default : !is.und(from) && matchProp(props.reset, key);
       const value = reset ? from : this.get();
       const goal = computeGoal(to2);
@@ -47806,11 +47546,8 @@ var wp;
       const immediate = !hasAsyncTo && (!isAnimatable || matchProp(defaultProps.immediate || props.immediate, key));
       if (hasToChanged) {
         const nodeType = getAnimatedType(to2);
-        if (nodeType !== node.constructor) {
-          if (immediate) {
-            node = this._set(goal);
-          } else throw Error(`Cannot animate between ${node.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
-        }
+        if (nodeType !== node.constructor) if (immediate) node = this._set(goal);
+        else throw Error(`Cannot animate between ${node.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
       }
       const goalType = node.constructor;
       let started = hasFluidValue(to2);
@@ -47821,16 +47558,11 @@ var wp;
           finished = isEqual(computeGoal(value), goal);
           started = !finished;
         }
-        if (!isEqual(anim.immediate, immediate) && !immediate || !isEqual(config2.decay, decay) || !isEqual(config2.velocity, velocity)) {
-          started = true;
-        }
+        if (!isEqual(anim.immediate, immediate) && !immediate || !isEqual(config2.decay, decay) || !isEqual(config2.velocity, velocity)) started = true;
       }
       if (finished && isAnimating(this)) {
-        if (anim.changed && !reset) {
-          started = true;
-        } else if (!started) {
-          this._stop(prevTo);
-        }
+        if (anim.changed && !reset) started = true;
+        else if (!started) this._stop(prevTo);
       }
       if (!hasAsyncTo) {
         if (started || hasFluidValue(prevTo)) {
@@ -47839,91 +47571,65 @@ var wp;
         }
         if (anim.immediate != immediate) {
           anim.immediate = immediate;
-          if (!immediate && !reset) {
-            this._set(prevTo);
-          }
+          if (!immediate && !reset) this._set(prevTo);
         }
         if (started) {
-          const {
-            onRest
-          } = anim;
+          const { onRest } = anim;
           each(ACTIVE_EVENTS, (type) => mergeActiveFn(this, props, type));
           const result = getFinishedResult(this, checkFinished(this, prevTo));
           flushCalls(this._pendingCalls, result);
           this._pendingCalls.add(resolve);
           if (anim.changed) raf.batchedUpdates(() => {
             anim.changed = !reset;
-            onRest == null ? void 0 : onRest(result, this);
-            if (reset) {
-              callProp(defaultProps.onRest, result);
-            } else {
-              anim.onStart == null ? void 0 : anim.onStart(result, this);
-            }
+            onRest?.(result, this);
+            if (reset) callProp(defaultProps.onRest, result);
+            else anim.onStart?.(result, this);
           });
         }
       }
-      if (reset) {
-        this._set(value);
-      }
-      if (hasAsyncTo) {
-        resolve(runAsync(props.to, props, this._state, this));
-      } else if (started) {
-        this._start();
-      } else if (isAnimating(this) && !hasToChanged) {
-        this._pendingCalls.add(resolve);
-      } else {
-        resolve(getNoopResult(value));
-      }
+      if (reset) this._set(value);
+      if (hasAsyncTo) resolve(runAsync(props.to, props, this._state, this));
+      else if (started) this._start();
+      else if (isAnimating(this) && !hasToChanged) this._pendingCalls.add(resolve);
+      else resolve(getNoopResult(value));
     }
+    /** Update the `animation.to` value, which might be a `FluidValue` */
     _focus(value) {
       const anim = this.animation;
       if (value !== anim.to) {
-        if (getFluidObservers(this)) {
-          this._detach();
-        }
+        if (getFluidObservers(this)) this._detach();
         anim.to = value;
-        if (getFluidObservers(this)) {
-          this._attach();
-        }
+        if (getFluidObservers(this)) this._attach();
       }
     }
     _attach() {
       let priority2 = 0;
-      const {
-        to: to2
-      } = this.animation;
+      const { to: to2 } = this.animation;
       if (hasFluidValue(to2)) {
         addFluidObserver(to2, this);
-        if (isFrameValue(to2)) {
-          priority2 = to2.priority + 1;
-        }
+        if (isFrameValue(to2)) priority2 = to2.priority + 1;
       }
       this.priority = priority2;
     }
     _detach() {
-      const {
-        to: to2
-      } = this.animation;
-      if (hasFluidValue(to2)) {
-        removeFluidObserver(to2, this);
-      }
+      const { to: to2 } = this.animation;
+      if (hasFluidValue(to2)) removeFluidObserver(to2, this);
     }
+    /**
+    * Update the current value from outside the frameloop,
+    * and return the `Animated` node.
+    */
     _set(arg, idle = true) {
       const value = getFluidValue(arg);
       if (!is.und(value)) {
         const oldNode = getAnimated(this);
         if (!oldNode || !isEqual(value, oldNode.getValue())) {
           const nodeType = getAnimatedType(value);
-          if (!oldNode || oldNode.constructor != nodeType) {
-            setAnimated(this, nodeType.create(value));
-          } else {
-            oldNode.setValue(value);
-          }
-          if (oldNode) {
-            raf.batchedUpdates(() => {
-              this._onChange(value, idle);
-            });
-          }
+          if (!oldNode || oldNode.constructor != nodeType) setAnimated(this, nodeType.create(value));
+          else oldNode.setValue(value);
+          if (oldNode) raf.batchedUpdates(() => {
+            this._onChange(value, idle);
+          });
         }
       }
       return getAnimated(this);
@@ -47936,33 +47642,32 @@ var wp;
       }
     }
     _onChange(value, idle) {
+      const result = getFinishedResult(value, false);
       if (!idle) {
         this._onStart();
-        callProp(this.animation.onChange, value, this);
+        callProp(this.animation.onChange, result, this);
       }
-      callProp(this.defaultProps.onChange, value, this);
+      callProp(this.defaultProps.onChange, result, this);
       super._onChange(value, idle);
     }
     _start() {
       const anim = this.animation;
       getAnimated(this).reset(getFluidValue(anim.to));
-      if (!anim.immediate) {
-        anim.fromValues = anim.values.map((node) => node.lastPosition);
-      }
+      if (!anim.immediate) anim.fromValues = anim.values.map((node) => node.lastPosition);
       if (!isAnimating(this)) {
         setActiveBit(this, true);
-        if (!isPaused(this)) {
-          this._resume();
-        }
+        if (!isPaused(this)) this._resume();
       }
     }
     _resume() {
-      if (globals.skipAnimation) {
-        this.finish();
-      } else {
-        frameLoop.start(this);
-      }
+      if (globals_exports.skipAnimation) this.finish();
+      else frameLoop.start(this);
     }
+    /**
+    * Exit the frameloop and notify `onRest` listeners.
+    *
+    * Always wrap `_stop` calls with `batchedUpdates`.
+    */
     _stop(goal, cancel) {
       if (isAnimating(this)) {
         setActiveBit(this, false);
@@ -47970,48 +47675,42 @@ var wp;
         each(anim.values, (node) => {
           node.done = true;
         });
-        if (anim.toValues) {
-          anim.onChange = anim.onPause = anim.onResume = void 0;
-        }
+        if (anim.toValues) anim.onChange = anim.onPause = anim.onResume = void 0;
         callFluidObservers(this, {
           type: "idle",
           parent: this
         });
-        const result = cancel ? getCancelledResult(this.get()) : getFinishedResult(this.get(), checkFinished(this, goal != null ? goal : anim.to));
+        const result = cancel ? getCancelledResult(this.get()) : getFinishedResult(this.get(), checkFinished(this, goal ?? anim.to));
         flushCalls(this._pendingCalls, result);
-        if (anim.changed) {
-          anim.changed = false;
-          sendEvent(this, "onRest", result, this);
-        }
+        anim.changed = false;
+        sendEvent(this, "onRest", result, this);
       }
     }
   };
   function checkFinished(target, to2) {
     const goal = computeGoal(to2);
-    const value = computeGoal(target.get());
-    return isEqual(value, goal);
+    return isEqual(computeGoal(target.get()), goal);
   }
   function createLoopUpdate(props, loop2 = props.loop, to2 = props.to) {
-    let loopRet = callProp(loop2);
+    const loopRet = callProp(loop2);
     if (loopRet) {
       const overrides = loopRet !== true && inferTo(loopRet);
       const reverse = (overrides || props).reverse;
       const reset = !overrides || overrides.reset;
-      return createUpdate(_extends3({}, props, {
+      return createUpdate({
+        ...props,
         loop: loop2,
         default: false,
         pause: void 0,
         to: !reverse || isAsyncTo(to2) ? to2 : void 0,
         from: reset ? props.from : void 0,
-        reset
-      }, overrides));
+        reset,
+        ...overrides
+      });
     }
   }
   function createUpdate(props) {
-    const {
-      to: to2,
-      from
-    } = props = inferTo(props);
+    const { to: to2, from } = props = inferTo(props);
     const keys = /* @__PURE__ */ new Set();
     if (is.obj(to2)) findDefined(to2, keys);
     if (is.obj(from)) findDefined(from, keys);
@@ -48021,30 +47720,36 @@ var wp;
   function findDefined(values, keys) {
     eachProp(values, (value, key) => value != null && keys.add(key));
   }
-  var ACTIVE_EVENTS = ["onStart", "onRest", "onChange", "onPause", "onResume"];
+  var ACTIVE_EVENTS = [
+    "onStart",
+    "onRest",
+    "onChange",
+    "onPause",
+    "onResume"
+  ];
   function mergeActiveFn(target, props, type) {
     target.animation[type] = props[type] !== getDefaultProp(props, type) ? resolveProp(props[type], target.key) : void 0;
   }
   function sendEvent(target, type, ...args) {
-    var _target$animation$typ, _target$animation, _target$defaultProps$, _target$defaultProps;
-    (_target$animation$typ = (_target$animation = target.animation)[type]) == null ? void 0 : _target$animation$typ.call(_target$animation, ...args);
-    (_target$defaultProps$ = (_target$defaultProps = target.defaultProps)[type]) == null ? void 0 : _target$defaultProps$.call(_target$defaultProps, ...args);
+    target.animation[type]?.(...args);
+    target.defaultProps[type]?.(...args);
   }
-  var BATCHED_EVENTS = ["onStart", "onChange", "onRest"];
+  var BATCHED_EVENTS = [
+    "onStart",
+    "onChange",
+    "onRest"
+  ];
   var nextId = 1;
   var Controller = class {
     constructor(props, flush2) {
       this.id = nextId++;
       this.springs = {};
       this.queue = [];
-      this.ref = void 0;
-      this._flush = void 0;
-      this._initialProps = void 0;
       this._lastAsyncId = 0;
+      this._lastLoopId = 0;
       this._active = /* @__PURE__ */ new Set();
       this._changed = /* @__PURE__ */ new Set();
       this._started = false;
-      this._item = void 0;
       this._state = {
         paused: false,
         pauseQueue: /* @__PURE__ */ new Set(),
@@ -48057,15 +47762,16 @@ var wp;
         onRest: /* @__PURE__ */ new Map()
       };
       this._onFrame = this._onFrame.bind(this);
-      if (flush2) {
-        this._flush = flush2;
-      }
-      if (props) {
-        this.start(_extends3({
-          default: true
-        }, props));
-      }
+      if (flush2) this._flush = flush2;
+      if (props) this.start({
+        default: true,
+        ...props
+      });
     }
+    /**
+    * Equals `true` when no spring values are in the frameloop, and
+    * no async animation is currently active.
+    */
     get idle() {
       return !this._state.asyncTo && Object.values(this.springs).every((spring) => {
         return spring.idle && !spring.isDelayed && !spring.isPaused;
@@ -48077,44 +47783,42 @@ var wp;
     set item(item) {
       this._item = item;
     }
+    /** Get the current values of our springs */
     get() {
       const values = {};
       this.each((spring, key) => values[key] = spring.get());
       return values;
     }
+    /** Set the current values without animating. */
     set(values) {
       for (const key in values) {
         const value = values[key];
-        if (!is.und(value)) {
-          this.springs[key].set(value);
-        }
+        if (!is.und(value)) this.springs[key].set(value);
       }
     }
+    /** Push an update onto the queue of each value. */
     update(props) {
-      if (props) {
-        this.queue.push(createUpdate(props));
-      }
+      if (props) this.queue.push(createUpdate(props));
       return this;
     }
+    /**
+    * Start the queued animations for every spring, and resolve the returned
+    * promise once all queued animations have finished or been cancelled.
+    *
+    * When you pass a queue (instead of nothing), that queue is used instead of
+    * the queued animations added with the `update` method, which are left alone.
+    */
     start(props) {
-      let {
-        queue
-      } = this;
-      if (props) {
-        queue = toArray(props).map(createUpdate);
-      } else {
-        this.queue = [];
-      }
-      if (this._flush) {
-        return this._flush(this, queue);
-      }
+      let { queue } = this;
+      if (props) queue = toArray(props).map(createUpdate);
+      else this.queue = [];
+      if (this._flush) return this._flush(this, queue);
       prepareKeys(this, queue);
       return flushUpdateQueue(this, queue);
     }
+    /** @internal */
     stop(arg, keys) {
-      if (arg !== !!arg) {
-        keys = arg;
-      }
+      if (arg !== !!arg) keys = arg;
       if (keys) {
         const springs = this.springs;
         each(toArray(keys), (key) => springs[key].stop(!!arg));
@@ -48124,37 +47828,44 @@ var wp;
       }
       return this;
     }
+    /** Freeze the active animation in time */
     pause(keys) {
-      if (is.und(keys)) {
-        this.start({
-          pause: true
-        });
-      } else {
+      if (is.und(keys)) this.start({ pause: true });
+      else {
         const springs = this.springs;
         each(toArray(keys), (key) => springs[key].pause());
       }
       return this;
     }
+    /** Resume the animation if paused. */
     resume(keys) {
-      if (is.und(keys)) {
-        this.start({
-          pause: false
-        });
-      } else {
+      if (is.und(keys)) this.start({ pause: false });
+      else {
         const springs = this.springs;
         each(toArray(keys), (key) => springs[key].resume());
       }
       return this;
     }
+    /** Call a function once per spring value */
     each(iterator) {
       eachProp(this.springs, iterator);
     }
+    /**
+    * Subscribe to loop iteration restarts on this controller. Returns an
+    * unsubscribe function. Listeners fire synchronously inside `flushUpdate`
+    * just before the next iteration is dispatched.
+    * @internal
+    */
+    onLoopReset(fn) {
+      const set3 = this._onLoopReset ?? (this._onLoopReset = /* @__PURE__ */ new Set());
+      set3.add(fn);
+      return () => {
+        set3.delete(fn);
+      };
+    }
+    /** @internal Called at the end of every animation frame */
     _onFrame() {
-      const {
-        onStart,
-        onChange,
-        onRest
-      } = this._events;
+      const { onStart, onChange, onRest } = this._events;
       const active = this._active.size > 0;
       const changed = this._changed.size > 0;
       if (active && !this._started || changed && !this._started) {
@@ -48166,12 +47877,10 @@ var wp;
       }
       const idle = !active && this._started;
       const values = changed || idle && onRest.size ? this.get() : null;
-      if (changed && onChange.size) {
-        flush(onChange, ([onChange2, result]) => {
-          result.value = values;
-          onChange2(result, this, this._item);
-        });
-      }
+      if (changed && onChange.size) flush(onChange, ([onChange2, result]) => {
+        result.value = values;
+        onChange2(result, this, this._item);
+      });
       if (idle) {
         this._started = false;
         flush(onRest, ([onRest2, result]) => {
@@ -48180,15 +47889,13 @@ var wp;
         });
       }
     }
+    /** @internal */
     eventObserved(event) {
       if (event.type == "change") {
         this._changed.add(event.parent);
-        if (!event.idle) {
-          this._active.add(event.parent);
-        }
-      } else if (event.type == "idle") {
-        this._active.delete(event.parent);
-      } else return;
+        if (!event.idle) this._active.add(event.parent);
+      } else if (event.type == "idle") this._active.delete(event.parent);
+      else return;
       raf.onFrame(this._onFrame);
     }
   };
@@ -48196,115 +47903,86 @@ var wp;
     return Promise.all(queue.map((props) => flushUpdate(ctrl, props))).then((results) => getCombinedResult(ctrl, results));
   }
   async function flushUpdate(ctrl, props, isLoop) {
-    const {
-      keys,
-      to: to2,
-      from,
-      loop: loop2,
-      onRest,
-      onResolve
-    } = props;
+    const { keys, to: to2, from, loop: loop2, onRest, onResolve } = props;
     const defaults2 = is.obj(props.default) && props.default;
-    if (loop2) {
-      props.loop = false;
-    }
+    if (loop2) props.loop = false;
+    const propsAny = props;
+    const loopId = !isLoop && !propsAny.parentId && "loop" in props ? ++ctrl["_lastLoopId"] : isLoop ? propsAny.loopId : ctrl["_lastLoopId"];
     if (to2 === false) props.to = null;
     if (from === false) props.from = null;
     const asyncTo = is.arr(to2) || is.fun(to2) ? to2 : void 0;
     if (asyncTo) {
       props.to = void 0;
       props.onRest = void 0;
-      if (defaults2) {
-        defaults2.onRest = void 0;
+      if (defaults2) defaults2.onRest = void 0;
+    } else each(BATCHED_EVENTS, (key) => {
+      const handler = props[key];
+      if (is.fun(handler)) {
+        const queue = ctrl["_events"][key];
+        props[key] = (({ finished, cancelled: cancelled2 }) => {
+          const result2 = queue.get(handler);
+          if (result2) {
+            if (!finished) result2.finished = false;
+            if (cancelled2) result2.cancelled = true;
+          } else queue.set(handler, {
+            value: null,
+            finished: finished || false,
+            cancelled: cancelled2 || false
+          });
+        });
+        if (defaults2) defaults2[key] = props[key];
       }
-    } else {
-      each(BATCHED_EVENTS, (key) => {
-        const handler = props[key];
-        if (is.fun(handler)) {
-          const queue = ctrl["_events"][key];
-          props[key] = ({
-            finished,
-            cancelled: cancelled2
-          }) => {
-            const result2 = queue.get(handler);
-            if (result2) {
-              if (!finished) result2.finished = false;
-              if (cancelled2) result2.cancelled = true;
-            } else {
-              queue.set(handler, {
-                value: null,
-                finished: finished || false,
-                cancelled: cancelled2 || false
-              });
-            }
-          };
-          if (defaults2) {
-            defaults2[key] = props[key];
-          }
-        }
-      });
-    }
+    });
     const state2 = ctrl["_state"];
     if (props.pause === !state2.paused) {
       state2.paused = props.pause;
       flushCalls(props.pause ? state2.pauseQueue : state2.resumeQueue);
-    } else if (state2.paused) {
-      props.pause = true;
-    }
+    } else if (state2.paused) props.pause = true;
     const promises = (keys || Object.keys(ctrl.springs)).map((key) => ctrl.springs[key].start(props));
     const cancel = props.cancel === true || getDefaultProp(props, "cancel") === true;
-    if (asyncTo || cancel && state2.asyncId) {
-      promises.push(scheduleProps(++ctrl["_lastAsyncId"], {
-        props,
-        state: state2,
-        actions: {
-          pause: noop4,
-          resume: noop4,
-          start(props2, resolve) {
-            if (cancel) {
-              stopAsync(state2, ctrl["_lastAsyncId"]);
-              resolve(getCancelledResult(ctrl));
-            } else {
-              props2.onRest = onRest;
-              resolve(runAsync(asyncTo, props2, state2, ctrl));
-            }
+    if (asyncTo || cancel && state2.asyncId) promises.push(scheduleProps(++ctrl["_lastAsyncId"], {
+      props,
+      state: state2,
+      actions: {
+        pause: noop4,
+        resume: noop4,
+        start(props2, resolve) {
+          if (cancel) {
+            stopAsync(state2, ctrl["_lastAsyncId"]);
+            resolve(getCancelledResult(ctrl));
+          } else {
+            props2.onRest = onRest;
+            resolve(runAsync(asyncTo, props2, state2, ctrl));
           }
         }
-      }));
-    }
-    if (state2.paused) {
-      await new Promise((resume) => {
-        state2.resumeQueue.add(resume);
-      });
-    }
+      }
+    }));
+    if (state2.paused) await new Promise((resume) => {
+      state2.resumeQueue.add(resume);
+    });
     const result = getCombinedResult(ctrl, await Promise.all(promises));
-    if (loop2 && result.finished && !(isLoop && result.noop)) {
+    if (loop2 && result.finished && !(isLoop && result.noop) && loopId === ctrl["_lastLoopId"]) {
       const nextProps = createLoopUpdate(props, loop2, to2);
       if (nextProps) {
+        nextProps.loopId = loopId;
+        ctrl["_onLoopReset"]?.forEach((fn) => fn());
         prepareKeys(ctrl, [nextProps]);
         return flushUpdate(ctrl, nextProps, true);
       }
     }
-    if (onResolve) {
-      raf.batchedUpdates(() => onResolve(result, ctrl, ctrl.item));
-    }
+    if (onResolve) raf.batchedUpdates(() => onResolve(result, ctrl, ctrl.item));
     return result;
   }
   function createSpring(key, observer) {
     const spring = new SpringValue();
     spring.key = key;
-    if (observer) {
-      addFluidObserver(spring, observer);
-    }
+    if (observer) addFluidObserver(spring, observer);
     return spring;
   }
   function prepareSprings(springs, props, create7) {
-    if (props.keys) {
-      each(props.keys, (key) => {
-        const spring = springs[key] || (springs[key] = create7(key));
-        spring["_prepareNode"](props);
-      });
-    }
+    if (props.keys) each(props.keys, (key) => {
+      (springs[key] || (springs[key] = create7(key)))["_prepareNode"](props);
+    });
   }
   function prepareKeys(ctrl, queue) {
     each(queue, (props) => {
@@ -48313,60 +47991,16 @@ var wp;
       });
     });
   }
-  function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i2;
-    for (i2 = 0; i2 < sourceKeys.length; i2++) {
-      key = sourceKeys[i2];
-      if (excluded.indexOf(key) >= 0) continue;
-      target[key] = source[key];
-    }
-    return target;
-  }
-  var _excluded$3 = ["children"];
-  var SpringContext = (_ref) => {
-    let {
-      children
-    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
-    const inherited = (0, import_react57.useContext)(ctx);
-    const pause = props.pause || !!inherited.pause, immediate = props.immediate || !!inherited.immediate;
-    props = useMemoOne(() => ({
-      pause,
-      immediate
-    }), [pause, immediate]);
-    const {
-      Provider: Provider2
-    } = ctx;
-    return React205.createElement(Provider2, {
-      value: props
-    }, children);
-  };
-  var ctx = makeContext(SpringContext, {});
-  SpringContext.Provider = ctx.Provider;
-  SpringContext.Consumer = ctx.Consumer;
-  function makeContext(target, init2) {
-    Object.assign(target, React205.createContext(init2));
-    target.Provider._context = target;
-    target.Consumer._context = target;
-    return target;
-  }
-  var TransitionPhase;
-  (function(TransitionPhase2) {
-    TransitionPhase2["MOUNT"] = "mount";
-    TransitionPhase2["ENTER"] = "enter";
-    TransitionPhase2["UPDATE"] = "update";
-    TransitionPhase2["LEAVE"] = "leave";
-  })(TransitionPhase || (TransitionPhase = {}));
+  var SpringContext = React205.createContext({
+    pause: false,
+    immediate: false
+  });
   var Interpolation = class extends FrameValue {
     constructor(source, args) {
       super();
-      this.key = void 0;
-      this.idle = true;
-      this.calc = void 0;
-      this._active = /* @__PURE__ */ new Set();
       this.source = source;
+      this.idle = true;
+      this._active = /* @__PURE__ */ new Set();
       this.calc = createInterpolator(...args);
       const value = this._get();
       const nodeType = getAnimatedType(value);
@@ -48374,14 +48008,11 @@ var wp;
     }
     advance(_dt) {
       const value = this._get();
-      const oldValue = this.get();
-      if (!isEqual(value, oldValue)) {
+      if (!isEqual(value, this.get())) {
         getAnimated(this).setValue(value);
         this._onChange(value, this.idle);
       }
-      if (!this.idle && checkIdle(this._active)) {
-        becomeIdle(this);
-      }
+      if (!this.idle && checkIdle(this._active)) becomeIdle(this);
     }
     _get() {
       const inputs = is.arr(this.source) ? this.source.map(getFluidValue) : toArray(getFluidValue(this.source));
@@ -48393,24 +48024,18 @@ var wp;
         each(getPayload(this), (node) => {
           node.done = false;
         });
-        if (globals.skipAnimation) {
+        if (globals_exports.skipAnimation) {
           raf.batchedUpdates(() => this.advance());
           becomeIdle(this);
-        } else {
-          frameLoop.start(this);
-        }
+        } else frameLoop.start(this);
       }
     }
     _attach() {
       let priority2 = 1;
       each(toArray(this.source), (source) => {
-        if (hasFluidValue(source)) {
-          addFluidObserver(source, this);
-        }
+        if (hasFluidValue(source)) addFluidObserver(source, this);
         if (isFrameValue(source)) {
-          if (!source.idle) {
-            this._active.add(source);
-          }
+          if (!source.idle) this._active.add(source);
           priority2 = Math.max(priority2, source.priority + 1);
         }
       });
@@ -48419,26 +48044,20 @@ var wp;
     }
     _detach() {
       each(toArray(this.source), (source) => {
-        if (hasFluidValue(source)) {
-          removeFluidObserver(source, this);
-        }
+        if (hasFluidValue(source)) removeFluidObserver(source, this);
       });
       this._active.clear();
       becomeIdle(this);
     }
+    /** @internal */
     eventObserved(event) {
-      if (event.type == "change") {
-        if (event.idle) {
-          this.advance();
-        } else {
-          this._active.add(event.parent);
-          this._start();
-        }
-      } else if (event.type == "idle") {
-        this._active.delete(event.parent);
-      } else if (event.type == "priority") {
-        this.priority = toArray(this.source).reduce((highest, parent) => Math.max(highest, (isFrameValue(parent) ? parent.priority : 0) + 1), 0);
+      if (event.type == "change") if (event.idle) this.advance();
+      else {
+        this._active.add(event.parent);
+        this._start();
       }
+      else if (event.type == "idle") this._active.delete(event.parent);
+      else if (event.type == "priority") this.priority = toArray(this.source).reduce((highest, parent) => Math.max(highest, (isFrameValue(parent) ? parent.priority : 0) + 1), 0);
     }
   };
   function isIdle(source) {
@@ -48459,27 +48078,14 @@ var wp;
       });
     }
   }
-  globals.assign({
+  globals_exports.assign({
     createStringInterpolator,
     to: (source, args) => new Interpolation(source, args)
   });
   var update3 = frameLoop.advance;
 
-  // node_modules/@react-spring/web/dist/react-spring-web.esm.js
-  var import_react_dom3 = __toESM(require_react_dom());
-  function _objectWithoutPropertiesLoose2(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i2;
-    for (i2 = 0; i2 < sourceKeys.length; i2++) {
-      key = sourceKeys[i2];
-      if (excluded.indexOf(key) >= 0) continue;
-      target[key] = source[key];
-    }
-    return target;
-  }
-  var _excluded$2 = ["style", "children", "scrollTop", "scrollLeft"];
+  // node_modules/@react-spring/web/dist/react-spring_web.modern.mjs
+  var import_react_dom3 = __toESM(require_react_dom(), 1);
   var isCustomPropRE = /^--/;
   function dangerousStyleValue(name2, value) {
     if (value == null || typeof value === "boolean" || value === "") return "";
@@ -48488,40 +48094,28 @@ var wp;
   }
   var attributeCache = {};
   function applyAnimatedValues(instance, props) {
-    if (!instance.nodeType || !instance.setAttribute) {
-      return false;
-    }
+    if (!instance.nodeType || !instance.setAttribute || !instance.removeAttribute) return false;
     const isFilterElement = instance.nodeName === "filter" || instance.parentNode && instance.parentNode.nodeName === "filter";
-    const _ref = props, {
-      style,
-      children,
-      scrollTop,
-      scrollLeft
-    } = _ref, attributes = _objectWithoutPropertiesLoose2(_ref, _excluded$2);
+    const { className, style, children, scrollTop, scrollLeft, viewBox, ...attributes } = props;
     const values = Object.values(attributes);
     const names = Object.keys(attributes).map((name2) => isFilterElement || instance.hasAttribute(name2) ? name2 : attributeCache[name2] || (attributeCache[name2] = name2.replace(/([A-Z])/g, (n2) => "-" + n2.toLowerCase())));
-    if (children !== void 0) {
-      instance.textContent = children;
-    }
-    for (let name2 in style) {
-      if (style.hasOwnProperty(name2)) {
-        const value = dangerousStyleValue(name2, style[name2]);
-        if (isCustomPropRE.test(name2)) {
-          instance.style.setProperty(name2, value);
-        } else {
-          instance.style[name2] = value;
-        }
-      }
+    if (props.hasOwnProperty("children")) instance.textContent = children;
+    for (const name2 in style) if (style.hasOwnProperty(name2)) {
+      const value = dangerousStyleValue(name2, style[name2]);
+      if (isCustomPropRE.test(name2)) instance.style.setProperty(name2, value);
+      else instance.style[name2] = value;
     }
     names.forEach((name2, i2) => {
-      instance.setAttribute(name2, values[i2]);
+      const value = values[i2];
+      if (value !== void 0) instance.setAttribute(name2, value);
+      else instance.removeAttribute(name2);
     });
-    if (scrollTop !== void 0) {
-      instance.scrollTop = scrollTop;
-    }
-    if (scrollLeft !== void 0) {
-      instance.scrollLeft = scrollLeft;
-    }
+    if (props.hasOwnProperty("className")) if (className !== void 0) instance.className = className;
+    else instance.removeAttribute("class");
+    if (scrollTop !== void 0) instance.scrollTop = scrollTop;
+    if (scrollLeft !== void 0) instance.scrollLeft = scrollLeft;
+    if (props.hasOwnProperty("viewBox")) if (viewBox !== void 0) instance.setAttribute("viewBox", viewBox);
+    else instance.removeAttribute("viewBox");
   }
   var isUnitlessNumber = {
     animationIterationCount: true,
@@ -48567,28 +48161,31 @@ var wp;
     strokeWidth: true
   };
   var prefixKey = (prefix2, key) => prefix2 + key.charAt(0).toUpperCase() + key.substring(1);
-  var prefixes = ["Webkit", "Ms", "Moz", "O"];
+  var prefixes = [
+    "Webkit",
+    "Ms",
+    "Moz",
+    "O"
+  ];
   isUnitlessNumber = Object.keys(isUnitlessNumber).reduce((acc, prop) => {
     prefixes.forEach((prefix2) => acc[prefixKey(prefix2, prop)] = acc[prop]);
     return acc;
   }, isUnitlessNumber);
-  var _excluded$1 = ["x", "y", "z"];
-  var domTransforms = /^(matrix|translate|scale|rotate|skew)/;
+  var domTransforms = /^(matrix3d|matrix|translate3d|translate[XYZ]?|scale3d|scale[XYZ]?|rotate3d|rotate[XYZ]?|skew[XY]?)$/;
   var pxTransforms = /^(translate)/;
   var degTransforms = /^(rotate|skew)/;
   var addUnit = (value, unit) => is.num(value) && value !== 0 ? value + unit : value;
   var isValueIdentity = (value, id) => is.arr(value) ? value.every((v3) => isValueIdentity(v3, id)) : is.num(value) ? value === id : parseFloat(value) === id;
   var AnimatedStyle = class extends AnimatedObject {
-    constructor(_ref) {
-      let {
-        x: x2,
-        y: y3,
-        z
-      } = _ref, style = _objectWithoutPropertiesLoose2(_ref, _excluded$1);
+    constructor({ x: x2, y: y3, z, ...style }) {
       const inputs = [];
       const transforms = [];
       if (x2 || y3 || z) {
-        inputs.push([x2 || 0, y3 || 0, z || 0]);
+        inputs.push([
+          x2 || 0,
+          y3 || 0,
+          z || 0
+        ]);
         transforms.push((xyz) => [`translate3d(${xyz.map((v3) => addUnit(v3, "px")).join(",")})`, isValueIdentity(xyz, 0)]);
       }
       eachProp(style, (value, key) => {
@@ -48603,18 +48200,16 @@ var wp;
           transforms.push(key === "rotate3d" ? ([x3, y4, z2, deg]) => [`rotate3d(${x3},${y4},${z2},${addUnit(deg, unit)})`, isValueIdentity(deg, 0)] : (input) => [`${key}(${input.map((v3) => addUnit(v3, unit)).join(",")})`, isValueIdentity(input, key.startsWith("scale") ? 1 : 0)]);
         }
       });
-      if (inputs.length) {
-        style.transform = new FluidTransform(inputs, transforms);
-      }
+      if (inputs.length) style.transform = new FluidTransform(inputs, transforms);
       super(style);
     }
   };
   var FluidTransform = class extends FluidValue {
     constructor(inputs, transforms) {
       super();
-      this._value = null;
       this.inputs = inputs;
       this.transforms = transforms;
+      this._value = null;
     }
     get() {
       return this._value || (this._value = this._get());
@@ -48637,15 +48232,146 @@ var wp;
       if (count == 0) each(this.inputs, (input) => each(input, (value) => hasFluidValue(value) && removeFluidObserver(value, this)));
     }
     eventObserved(event) {
-      if (event.type == "change") {
-        this._value = null;
-      }
+      if (event.type == "change") this._value = null;
       callFluidObservers(this, event);
     }
   };
-  var primitives = ["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "u", "ul", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "tspan"];
-  var _excluded = ["scrollTop", "scrollLeft"];
-  globals.assign({
+  var primitives = [
+    "a",
+    "abbr",
+    "address",
+    "area",
+    "article",
+    "aside",
+    "audio",
+    "b",
+    "base",
+    "bdi",
+    "bdo",
+    "big",
+    "blockquote",
+    "body",
+    "br",
+    "button",
+    "canvas",
+    "caption",
+    "cite",
+    "code",
+    "col",
+    "colgroup",
+    "data",
+    "datalist",
+    "dd",
+    "del",
+    "details",
+    "dfn",
+    "dialog",
+    "div",
+    "dl",
+    "dt",
+    "em",
+    "embed",
+    "fieldset",
+    "figcaption",
+    "figure",
+    "footer",
+    "form",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "head",
+    "header",
+    "hgroup",
+    "hr",
+    "html",
+    "i",
+    "iframe",
+    "img",
+    "input",
+    "ins",
+    "kbd",
+    "keygen",
+    "label",
+    "legend",
+    "li",
+    "link",
+    "main",
+    "map",
+    "mark",
+    "menu",
+    "menuitem",
+    "meta",
+    "meter",
+    "nav",
+    "noscript",
+    "object",
+    "ol",
+    "optgroup",
+    "option",
+    "output",
+    "p",
+    "param",
+    "picture",
+    "pre",
+    "progress",
+    "q",
+    "rp",
+    "rt",
+    "ruby",
+    "s",
+    "samp",
+    "script",
+    "section",
+    "select",
+    "small",
+    "source",
+    "span",
+    "strong",
+    "style",
+    "sub",
+    "summary",
+    "sup",
+    "table",
+    "tbody",
+    "td",
+    "textarea",
+    "tfoot",
+    "th",
+    "thead",
+    "time",
+    "title",
+    "tr",
+    "track",
+    "u",
+    "ul",
+    "var",
+    "video",
+    "wbr",
+    "circle",
+    "clipPath",
+    "defs",
+    "ellipse",
+    "foreignObject",
+    "g",
+    "image",
+    "line",
+    "linearGradient",
+    "mask",
+    "path",
+    "pattern",
+    "polygon",
+    "polyline",
+    "radialGradient",
+    "rect",
+    "stop",
+    "svg",
+    "text",
+    "tspan"
+  ];
+  globals_exports.assign({
     batchedUpdates: import_react_dom3.unstable_batchedUpdates,
     createStringInterpolator,
     colors
@@ -48653,10 +48379,7 @@ var wp;
   var host = createHost(primitives, {
     applyAnimatedValues,
     createAnimatedStyle: (style) => new AnimatedStyle(style),
-    getComponentProps: (_ref) => {
-      let props = _objectWithoutPropertiesLoose2(_ref, _excluded);
-      return props;
-    }
+    getComponentProps: ({ scrollTop, scrollLeft, ...props }) => props
   });
   var animated = host.animated;
 
@@ -60079,12 +59802,12 @@ var wp;
   });
 
   // node_modules/@ariakit/react-components/dist/collection/collection-context.js
-  var ctx2 = createStoreContext();
-  var useCollectionContext = ctx2.useContext;
-  var useCollectionScopedContext = ctx2.useScopedContext;
-  var useCollectionProviderContext = ctx2.useProviderContext;
-  var CollectionContextProvider = ctx2.ContextProvider;
-  var CollectionScopedContextProvider = ctx2.ScopedContextProvider;
+  var ctx = createStoreContext();
+  var useCollectionContext = ctx.useContext;
+  var useCollectionScopedContext = ctx.useScopedContext;
+  var useCollectionProviderContext = ctx.useProviderContext;
+  var CollectionContextProvider = ctx.ContextProvider;
+  var CollectionScopedContextProvider = ctx.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/collection/collection-item.js
   var import_react63 = __toESM(require_react(), 1);
@@ -60123,12 +59846,12 @@ var wp;
 
   // node_modules/@ariakit/react-components/dist/composite/composite-context.js
   var import_react64 = __toESM(require_react(), 1);
-  var ctx3 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
-  var useCompositeContext = ctx3.useContext;
-  var useCompositeScopedContext = ctx3.useScopedContext;
-  var useCompositeProviderContext = ctx3.useProviderContext;
-  var CompositeContextProvider = ctx3.ContextProvider;
-  var CompositeScopedContextProvider = ctx3.ScopedContextProvider;
+  var ctx2 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
+  var useCompositeContext = ctx2.useContext;
+  var useCompositeScopedContext = ctx2.useScopedContext;
+  var useCompositeProviderContext = ctx2.useProviderContext;
+  var CompositeContextProvider = ctx2.ContextProvider;
+  var CompositeScopedContextProvider = ctx2.ScopedContextProvider;
   var CompositeItemContext = (0, import_react64.createContext)(void 0);
   var CompositeRowContext = (0, import_react64.createContext)(void 0);
 
@@ -62125,21 +61848,21 @@ If there's a particular need for this, please submit a feature request at https:
   });
 
   // node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
-  var ctx4 = createStoreContext();
-  var useDisclosureContext = ctx4.useContext;
-  var useDisclosureScopedContext = ctx4.useScopedContext;
-  var useDisclosureProviderContext = ctx4.useProviderContext;
-  var DisclosureContextProvider = ctx4.ContextProvider;
-  var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
+  var ctx3 = createStoreContext();
+  var useDisclosureContext = ctx3.useContext;
+  var useDisclosureScopedContext = ctx3.useScopedContext;
+  var useDisclosureProviderContext = ctx3.useProviderContext;
+  var DisclosureContextProvider = ctx3.ContextProvider;
+  var DisclosureScopedContextProvider = ctx3.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
   var import_react68 = __toESM(require_react(), 1);
-  var ctx5 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
-  var useDialogContext = ctx5.useContext;
-  var useDialogScopedContext = ctx5.useScopedContext;
-  var useDialogProviderContext = ctx5.useProviderContext;
-  var DialogContextProvider = ctx5.ContextProvider;
-  var DialogScopedContextProvider = ctx5.ScopedContextProvider;
+  var ctx4 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
+  var useDialogContext = ctx4.useContext;
+  var useDialogScopedContext = ctx4.useScopedContext;
+  var useDialogProviderContext = ctx4.useProviderContext;
+  var DialogContextProvider = ctx4.ContextProvider;
+  var DialogScopedContextProvider = ctx4.ScopedContextProvider;
   var DialogHeadingContext = (0, import_react68.createContext)(void 0);
   var DialogDescriptionContext = (0, import_react68.createContext)(void 0);
 
@@ -62352,22 +62075,22 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/popover/popover-context.js
-  var ctx6 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
-  var usePopoverContext = ctx6.useContext;
-  var usePopoverScopedContext = ctx6.useScopedContext;
-  var usePopoverProviderContext = ctx6.useProviderContext;
-  var PopoverContextProvider = ctx6.ContextProvider;
-  var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
+  var ctx5 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
+  var usePopoverContext = ctx5.useContext;
+  var usePopoverScopedContext = ctx5.useScopedContext;
+  var usePopoverProviderContext = ctx5.useProviderContext;
+  var PopoverContextProvider = ctx5.ContextProvider;
+  var PopoverScopedContextProvider = ctx5.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
   var import_react70 = __toESM(require_react(), 1);
   var ComboboxListRoleContext = (0, import_react70.createContext)(null);
-  var ctx7 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
-  var useComboboxContext = ctx7.useContext;
-  var useComboboxScopedContext = ctx7.useScopedContext;
-  var useComboboxProviderContext = ctx7.useProviderContext;
-  var ComboboxContextProvider = ctx7.ContextProvider;
-  var ComboboxScopedContextProvider = ctx7.ScopedContextProvider;
+  var ctx6 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
+  var useComboboxContext = ctx6.useContext;
+  var useComboboxScopedContext = ctx6.useScopedContext;
+  var useComboboxProviderContext = ctx6.useProviderContext;
+  var ComboboxContextProvider = ctx6.ContextProvider;
+  var ComboboxScopedContextProvider = ctx6.ScopedContextProvider;
   var ComboboxItemValueContext = (0, import_react70.createContext)(void 0);
   var ComboboxItemCheckedContext = (0, import_react70.createContext)(false);
   var ComboboxHeadingContext = (0, import_react70.createContext)(null);
@@ -62753,7 +62476,7 @@ If there's a particular need for this, please submit a feature request at https:
         canAutoSelectRef.current = false;
         userScrolledRef.current = true;
       };
-      const onScroll = () => {
+      const onScroll2 = () => {
         if (!isAutoScrollingRef.current) userScrolledRef.current = true;
         if (!store4) return;
         if (!canAutoSelectRef.current) return;
@@ -62768,11 +62491,11 @@ If there's a particular need for this, please submit a feature request at https:
       };
       scrollingElement.addEventListener("wheel", onUserScroll, options);
       scrollingElement.addEventListener("touchmove", onUserScroll, options);
-      scrollingElement.addEventListener("scroll", onScroll, options);
+      scrollingElement.addEventListener("scroll", onScroll2, options);
       return () => {
         scrollingElement.removeEventListener("wheel", onUserScroll, true);
         scrollingElement.removeEventListener("touchmove", onUserScroll, true);
-        scrollingElement.removeEventListener("scroll", onScroll, true);
+        scrollingElement.removeEventListener("scroll", onScroll2, true);
       };
     }, [
       open3,
@@ -63447,12 +63170,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_react76 = __toESM(require_react(), 1);
   var TagValueContext = (0, import_react76.createContext)(null);
   var TagRemoveIdContext = (0, import_react76.createContext)(null);
-  var ctx8 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
-  var useTagContext = ctx8.useContext;
-  var useTagScopedContext = ctx8.useScopedContext;
-  var useTagProviderContext = ctx8.useProviderContext;
-  var TagContextProvider = ctx8.ContextProvider;
-  var TagScopedContextProvider = ctx8.ScopedContextProvider;
+  var ctx7 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
+  var useTagContext = ctx7.useContext;
+  var useTagScopedContext = ctx7.useScopedContext;
+  var useTagProviderContext = ctx7.useProviderContext;
+  var TagContextProvider = ctx7.ContextProvider;
+  var TagScopedContextProvider = ctx7.ScopedContextProvider;
 
   // node_modules/@ariakit/components/dist/combobox/combobox-store.js
   var isTouchSafari = isSafari() && isTouchDevice();
@@ -73098,8 +72821,8 @@ If there's a particular need for this, please submit a feature request at https:
     const canvas = document.createElement("canvas");
     canvas.width = outW;
     canvas.height = outH;
-    const ctx9 = canvas.getContext("2d");
-    if (!ctx9) {
+    const ctx8 = canvas.getContext("2d");
+    if (!ctx8) {
       throw new Error(
         "Could not obtain a 2D context for the export canvas."
       );
@@ -73108,7 +72831,7 @@ If there's a particular need for this, please submit a feature request at https:
       width: outW,
       height: outH
     });
-    ctx9.setTransform(
+    ctx8.setTransform(
       camera[0],
       camera[1],
       camera[2],
@@ -73116,7 +72839,7 @@ If there's a particular need for this, please submit a feature request at https:
       camera[4],
       camera[5]
     );
-    ctx9.drawImage(image, 0, 0);
+    ctx8.drawImage(image, 0, 0);
     return canvas;
   }
   function canvasToBlob(canvas, mimeType = "image/png", quality = DEFAULT_QUALITY) {
@@ -118256,11 +117979,11 @@ ${content}
       postType2 ?? null,
       RERENDER_DELAY_MS
     );
-    const onResize = (0, import_element392.useCallback)(() => {
+    const onResize2 = (0, import_element392.useCallback)(() => {
       rerenderCursorsOnResize();
       rerenderHighlightsOnResize();
     }, [rerenderCursorsOnResize, rerenderHighlightsOnResize]);
-    const resizeObserverRef = (0, import_compose82.useResizeObserver)(onResize);
+    const resizeObserverRef = (0, import_compose82.useResizeObserver)(onResize2);
     (0, import_element392.useEffect)(() => {
       const cleanupCursors = rerenderCursorsAfterDelay();
       const cleanupHighlights = rerenderHighlightsAfterDelay();
@@ -119203,12 +118926,12 @@ ${content}
   var import_data215 = __toESM(require_data(), 1);
   var import_block_editor80 = __toESM(require_block_editor(), 1);
   var DISTANCE_THRESHOLD = 500;
-  function clamp2(value, min4, max4) {
+  function clamp3(value, min4, max4) {
     return Math.min(Math.max(value, min4), max4);
   }
   function distanceFromRect(x2, y3, rect) {
-    const dx = x2 - clamp2(x2, rect.left, rect.right);
-    const dy = y3 - clamp2(y3, rect.top, rect.bottom);
+    const dx = x2 - clamp3(x2, rect.left, rect.right);
+    const dy = y3 - clamp3(y3, rect.top, rect.bottom);
     return Math.sqrt(dx * dx + dy * dy);
   }
   function useSelectNearestEditableBlock({
@@ -124924,7 +124647,7 @@ ${content}
         listener();
       }
     }
-    function onResize(entries) {
+    function onResize2(entries) {
       for (const entry of entries) {
         const id = idByElement.get(entry.target);
         if (id !== void 0) {
@@ -124964,7 +124687,7 @@ ${content}
       }
     }
     function connect() {
-      observer = new window.ResizeObserver(onResize);
+      observer = new window.ResizeObserver(onResize2);
       styleObserver = new window.MutationObserver(onStyleChange);
       const targets = [
         ...floatingRefs.values(),
