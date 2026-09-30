@@ -17062,14 +17062,14 @@ var wp;
         import_components9.ToolbarButton,
         {
           name: "link",
-          icon: !isURLSet ? link_default : link_off_default,
-          title: !isURLSet ? (0, import_i18n16.__)("Link") : (0, import_i18n16.__)("Unlink"),
-          shortcut: !isURLSet ? import_keycodes.displayShortcut.primary("k") : import_keycodes.displayShortcut.primaryShift("k"),
-          onClick: !isURLSet ? startEditing : unlink,
+          icon: link_default,
+          title: (0, import_i18n16.__)("Link"),
+          shortcut: import_keycodes.displayShortcut.primary("k"),
+          onClick: () => setIsEditingURL(!isEditingURL),
           isActive: isURLSet
         }
       ) }),
-      isLinkTag && isSelected && (isEditingURL || isURLSet) && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
+      isLinkTag && isSelected && isEditingURL && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
         import_components9.Popover,
         {
           placement: "bottom",
@@ -17101,7 +17101,7 @@ var wp;
                 unlink();
                 richTextRef.current?.focus();
               },
-              forceIsEditingLink: isEditingURL,
+              forceIsEditingLink: !isURLSet,
               settings: LINK_SETTINGS,
               createSuggestion: createPageEntity && handleCreate,
               withCreateSuggestion: userCanCreatePages,
