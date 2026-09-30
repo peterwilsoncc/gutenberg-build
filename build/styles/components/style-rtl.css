@@ -928,9 +928,9 @@ input.components-combobox-control__input[type=text]:focus {
   border-radius: 4px 4px 0 0;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
-.components-color-palette__custom-color-button:focus {
-  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
-  outline-width: 2px;
+.components-color-palette__custom-color-button:focus:not(:active) {
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
 }
 .components-color-palette__custom-color-button::after {
   content: "";
