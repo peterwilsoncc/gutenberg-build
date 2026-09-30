@@ -42940,17 +42940,15 @@ function useMediaEditorState(initialState) {
     ),
     [dispatchCropperAction]
   );
-  const setImage = (0, import_element141.useCallback)((image) => {
+  const setSourceImage = (0, import_element141.useCallback)((image) => {
     if (areCropperImagesEqual(stateRef.current.cropper.image, image)) {
       return;
     }
-    const action = {
-      type: "CROPPER",
-      action: { type: "SET_IMAGE", payload: image }
-    };
-    const next = mediaEditorReducer(stateRef.current, action);
+    const next = buildInitialMediaEditorState(
+      enforceContainment({ ...DEFAULT_STATE2, image })
+    );
     stateRef.current = next;
-    dispatch(action);
+    dispatch({ type: "RESTORE_SNAPSHOT", payload: next });
     setInitialBaseline(next);
     isGestureOpenRef.current = false;
     gestureSnapshotRef.current = null;
@@ -43035,7 +43033,7 @@ function useMediaEditorState(initialState) {
     (mimeType, quality) => {
       if (!state.cropper.image) {
         return Promise.reject(
-          new Error("No image loaded \u2014 call setImage first.")
+          new Error("No image loaded \u2014 call setSourceImage first.")
         );
       }
       return exportCroppedImage(
@@ -43047,52 +43045,62 @@ function useMediaEditorState(initialState) {
     },
     [state.cropper]
   );
-  const controller = (0, import_element141.useMemo)(
+  const cropper = (0, import_element141.useMemo)(
     () => ({
-      // CropperController surface (state is the cropper slice so a
-      // <Cropper> takes this controller as-is).
       ...cropperSetters,
       state: state.cropper,
-      setImage,
+      setImage: setSourceImage,
       reset,
-      isDirty,
+      isDirty: isCropperDirty,
       getCroppedImage,
-      // Composite extensions
-      cropOptions: state.cropOptions,
-      setAspectRatioValue,
-      resetCropOptions,
-      isCropperDirty,
-      hasUndo,
-      hasRedo,
-      undo,
-      redo,
-      beginGesture,
-      endGesture,
       setVisualSize,
       adjustCropRectForViewport
     }),
     [
       cropperSetters,
       state.cropper,
-      setImage,
+      setSourceImage,
       reset,
-      isDirty,
+      isCropperDirty,
       getCroppedImage,
+      setVisualSize,
+      adjustCropRectForViewport
+    ]
+  );
+  const session = (0, import_element141.useMemo)(
+    () => ({
+      cropper,
+      cropOptions: state.cropOptions,
+      setAspectRatioValue,
+      resetCropOptions,
+      setSourceImage,
+      isDirty,
+      // Only geometry changes the saved image so far.
+      hasOutputEdits: isCropperDirty,
+      hasUndo,
+      hasRedo,
+      undo,
+      redo,
+      beginGesture,
+      endGesture
+    }),
+    [
+      cropper,
       state.cropOptions,
       setAspectRatioValue,
       resetCropOptions,
+      setSourceImage,
+      isDirty,
       isCropperDirty,
       hasUndo,
       hasRedo,
       undo,
       redo,
       beginGesture,
-      endGesture,
-      setVisualSize,
-      adjustCropRectForViewport
+      endGesture
     ]
   );
-  return controller;
+  return session;
 }
 
 // packages/media-editor/build-module/state/media-editor-state-provider.mjs
@@ -43131,10 +43139,10 @@ function MediaEditorCanvas({
   disabled: disabled2 = false
 }) {
   const { media } = useMediaEditorContext();
-  const controller = useMediaEditor();
-  const { aspectRatioValue } = controller.cropOptions;
-  const cropperImage = controller.state.image;
-  const { beginGesture, endGesture, setImage } = controller;
+  const session = useMediaEditor();
+  const { aspectRatioValue } = session.cropOptions;
+  const cropperImage = session.cropper.state.image;
+  const { beginGesture, endGesture, setSourceImage } = session;
   const [status, setStatus] = (0, import_element143.useState)(
     "loading"
   );
@@ -43158,12 +43166,12 @@ function MediaEditorCanvas({
     if (cropperImage || !mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
       return;
     }
-    setImage({
+    setSourceImage({
       src: mediaUrl,
       naturalWidth: mediaWidth,
       naturalHeight: mediaHeight
     });
-  }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setImage]);
+  }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setSourceImage]);
   const isImage = mediaType.type === "image";
   (0, import_element143.useEffect)(() => {
     if (!mediaUrl || !isImage) {
@@ -43200,7 +43208,7 @@ function MediaEditorCanvas({
           Cropper,
           {
             src: mediaUrl,
-            controller,
+            controller: session.cropper,
             aspectRatio,
             freeformCrop: true,
             showGrid: "interactive",
@@ -43568,7 +43576,7 @@ function MediaEditorFineRotation({
   onPlacementControlInteraction,
   disabled: disabled2 = false
 }) {
-  const { state, setRotation } = useMediaEditor();
+  const { state, setRotation } = useMediaEditor().cropper;
   const rotationGestureHandlers = useCropGestureHandlers({
     commitOnKeyUp: false
   });
@@ -43627,7 +43635,7 @@ function useCropOptions({
 } = {}) {
   const controller = useMediaEditor();
   const { aspectRatioValue } = controller.cropOptions;
-  const cropperImage = controller.state.image;
+  const cropperImage = controller.cropper.state.image;
   const aspectRatioOptions = (0, import_element147.useMemo)(
     () => getAspectRatioOptions(aspectRatioPresets),
     [aspectRatioPresets]
@@ -43655,7 +43663,7 @@ function MediaEditorImageControls({
   zoomFactor = DEFAULT_ZOOM_FACTOR,
   disabled: disabled2 = false
 }) {
-  const { state, setFlip, snapRotate90, setZoom } = useMediaEditor();
+  const { state, setFlip, snapRotate90, setZoom } = useMediaEditor().cropper;
   const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
   const hasAspectRatioControl = !withLabels && showAspectRatioControl;
   const minZoom = getMinZoom(state);
@@ -44125,13 +44133,14 @@ var METADATA_EDIT_KEYS = [
   "post"
 ];
 var MEDIA_EDITOR_NOTICES_CONTEXT = "media-editor";
-function getCropModifiers(cropper) {
-  if (!cropper.isCropperDirty || !cropper.state.image) {
+function getCropModifiers(session) {
+  const { state } = session.cropper;
+  if (!session.hasOutputEdits || !state.image) {
     return [];
   }
-  return buildModifiers(cropper.state, {
-    width: cropper.state.image.naturalWidth,
-    height: cropper.state.image.naturalHeight
+  return buildModifiers(state, {
+    width: state.image.naturalWidth,
+    height: state.image.naturalHeight
   });
 }
 function getMetadataEdits(pendingEdits, media) {
@@ -44147,7 +44156,7 @@ function getMetadataEdits(pendingEdits, media) {
   return metadataEdits;
 }
 function useSaveMediaEditor({
-  cropper,
+  session,
   id,
   isImage,
   media,
@@ -44166,7 +44175,7 @@ function useSaveMediaEditor({
     setIsSaving(true);
     try {
       let saved;
-      const modifiers = getCropModifiers(cropper);
+      const modifiers = getCropModifiers(session);
       const previous = modifiers.length > 0 && media ? {
         id,
         url: media.source_url
@@ -44210,7 +44219,7 @@ function useSaveMediaEditor({
       }
       if (next && next.id) {
         if (next.id === id) {
-          cropper.reset();
+          session.cropper.reset();
         }
         onSaved?.({
           id: next.id,
@@ -44242,7 +44251,6 @@ function useSaveMediaEditor({
   }, [
     clearEntityRecordEdits,
     createErrorNotice,
-    cropper,
     id,
     isImage,
     media,
@@ -44250,7 +44258,8 @@ function useSaveMediaEditor({
     receiveEntityRecords,
     registry,
     removeAllNotices,
-    saveEditedEntityRecord
+    saveEditedEntityRecord,
+    session
   ]);
   return { isSaving, save };
 }
@@ -44373,7 +44382,7 @@ function HeaderActions({ showCloseButton = false }) {
 function HistoryActions() {
   const { isImage, isUndoRedoDisabled, onReset, isWide, activePanel } = useMediaEditorFrameContext();
   const {
-    reset,
+    cropper: { reset },
     isDirty,
     hasUndo,
     hasRedo,
@@ -44505,7 +44514,7 @@ function MediaEditorContent({
   noticesPortalElement,
   shouldCloseOnEsc = false
 }) {
-  const cropper = useMediaEditor();
+  const session = useMediaEditor();
   const isWide = (0, import_compose19.useViewportMatch)("small");
   const [activePanel, setActivePanel] = (0, import_element150.useState)(
     isWide ? DETAILS_PANEL : null
@@ -44551,7 +44560,7 @@ function MediaEditorContent({
     },
     [id]
   );
-  const hasChanges = cropper.isCropperDirty || hasEdits;
+  const hasChanges = session.hasOutputEdits || hasEdits;
   const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data3.useDispatch)(import_core_data2.store);
   const { removeAllNotices } = (0, import_data3.useDispatch)(import_notices2.store);
   const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element150.useState)(false);
@@ -44610,7 +44619,7 @@ function MediaEditorContent({
     resetCropOptions
   } = useCropOptions({ aspectRatioPresets });
   const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
-    cropper,
+    session,
     id,
     isImage,
     media,
@@ -44649,9 +44658,9 @@ function MediaEditorContent({
           return;
         }
         if (isRedoShortcut) {
-          cropper.redo();
+          session.redo();
         } else {
-          cropper.undo();
+          session.undo();
         }
       }
     }

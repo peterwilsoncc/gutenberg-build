@@ -76332,17 +76332,15 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [dispatchCropperAction]
     );
-    const setImage = (0, import_element244.useCallback)((image) => {
+    const setSourceImage = (0, import_element244.useCallback)((image) => {
       if (areCropperImagesEqual(stateRef.current.cropper.image, image)) {
         return;
       }
-      const action = {
-        type: "CROPPER",
-        action: { type: "SET_IMAGE", payload: image }
-      };
-      const next = mediaEditorReducer(stateRef.current, action);
+      const next = buildInitialMediaEditorState(
+        enforceContainment({ ...DEFAULT_STATE2, image })
+      );
       stateRef.current = next;
-      dispatch9(action);
+      dispatch9({ type: "RESTORE_SNAPSHOT", payload: next });
       setInitialBaseline(next);
       isGestureOpenRef.current = false;
       gestureSnapshotRef.current = null;
@@ -76427,7 +76425,7 @@ If there's a particular need for this, please submit a feature request at https:
       (mimeType, quality) => {
         if (!state2.cropper.image) {
           return Promise.reject(
-            new Error("No image loaded \u2014 call setImage first.")
+            new Error("No image loaded \u2014 call setSourceImage first.")
           );
         }
         return exportCroppedImage(
@@ -76439,52 +76437,62 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [state2.cropper]
     );
-    const controller = (0, import_element244.useMemo)(
+    const cropper = (0, import_element244.useMemo)(
       () => ({
-        // CropperController surface (state is the cropper slice so a
-        // <Cropper> takes this controller as-is).
         ...cropperSetters,
         state: state2.cropper,
-        setImage,
+        setImage: setSourceImage,
         reset,
-        isDirty,
+        isDirty: isCropperDirty,
         getCroppedImage,
-        // Composite extensions
-        cropOptions: state2.cropOptions,
-        setAspectRatioValue,
-        resetCropOptions,
-        isCropperDirty,
-        hasUndo,
-        hasRedo,
-        undo: undo2,
-        redo: redo2,
-        beginGesture,
-        endGesture,
         setVisualSize,
         adjustCropRectForViewport
       }),
       [
         cropperSetters,
         state2.cropper,
-        setImage,
+        setSourceImage,
         reset,
-        isDirty,
+        isCropperDirty,
         getCroppedImage,
+        setVisualSize,
+        adjustCropRectForViewport
+      ]
+    );
+    const session = (0, import_element244.useMemo)(
+      () => ({
+        cropper,
+        cropOptions: state2.cropOptions,
+        setAspectRatioValue,
+        resetCropOptions,
+        setSourceImage,
+        isDirty,
+        // Only geometry changes the saved image so far.
+        hasOutputEdits: isCropperDirty,
+        hasUndo,
+        hasRedo,
+        undo: undo2,
+        redo: redo2,
+        beginGesture,
+        endGesture
+      }),
+      [
+        cropper,
         state2.cropOptions,
         setAspectRatioValue,
         resetCropOptions,
+        setSourceImage,
+        isDirty,
         isCropperDirty,
         hasUndo,
         hasRedo,
         undo2,
         redo2,
         beginGesture,
-        endGesture,
-        setVisualSize,
-        adjustCropRectForViewport
+        endGesture
       ]
     );
-    return controller;
+    return session;
   }
 
   // packages/media-editor/build-module/state/media-editor-state-provider.mjs
@@ -76523,10 +76531,10 @@ If there's a particular need for this, please submit a feature request at https:
     disabled: disabled2 = false
   }) {
     const { media } = useMediaEditorContext();
-    const controller = useMediaEditor();
-    const { aspectRatioValue } = controller.cropOptions;
-    const cropperImage = controller.state.image;
-    const { beginGesture, endGesture, setImage } = controller;
+    const session = useMediaEditor();
+    const { aspectRatioValue } = session.cropOptions;
+    const cropperImage = session.cropper.state.image;
+    const { beginGesture, endGesture, setSourceImage } = session;
     const [status, setStatus] = (0, import_element246.useState)(
       "loading"
     );
@@ -76550,12 +76558,12 @@ If there's a particular need for this, please submit a feature request at https:
       if (cropperImage || !mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
         return;
       }
-      setImage({
+      setSourceImage({
         src: mediaUrl,
         naturalWidth: mediaWidth,
         naturalHeight: mediaHeight
       });
-    }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setImage]);
+    }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setSourceImage]);
     const isImage = mediaType.type === "image";
     (0, import_element246.useEffect)(() => {
       if (!mediaUrl || !isImage) {
@@ -76592,7 +76600,7 @@ If there's a particular need for this, please submit a feature request at https:
             Cropper,
             {
               src: mediaUrl,
-              controller,
+              controller: session.cropper,
               aspectRatio,
               freeformCrop: true,
               showGrid: "interactive",
@@ -76960,7 +76968,7 @@ If there's a particular need for this, please submit a feature request at https:
     onPlacementControlInteraction,
     disabled: disabled2 = false
   }) {
-    const { state: state2, setRotation } = useMediaEditor();
+    const { state: state2, setRotation } = useMediaEditor().cropper;
     const rotationGestureHandlers = useCropGestureHandlers({
       commitOnKeyUp: false
     });
@@ -77019,7 +77027,7 @@ If there's a particular need for this, please submit a feature request at https:
   } = {}) {
     const controller = useMediaEditor();
     const { aspectRatioValue } = controller.cropOptions;
-    const cropperImage = controller.state.image;
+    const cropperImage = controller.cropper.state.image;
     const aspectRatioOptions = (0, import_element250.useMemo)(
       () => getAspectRatioOptions(aspectRatioPresets),
       [aspectRatioPresets]
@@ -77047,7 +77055,7 @@ If there's a particular need for this, please submit a feature request at https:
     zoomFactor = DEFAULT_ZOOM_FACTOR,
     disabled: disabled2 = false
   }) {
-    const { state: state2, setFlip, snapRotate90, setZoom } = useMediaEditor();
+    const { state: state2, setFlip, snapRotate90, setZoom } = useMediaEditor().cropper;
     const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
     const hasAspectRatioControl = !withLabels && showAspectRatioControl;
     const minZoom = getMinZoom(state2);
@@ -77517,13 +77525,14 @@ If there's a particular need for this, please submit a feature request at https:
     "post"
   ];
   var MEDIA_EDITOR_NOTICES_CONTEXT = "media-editor";
-  function getCropModifiers(cropper) {
-    if (!cropper.isCropperDirty || !cropper.state.image) {
+  function getCropModifiers(session) {
+    const { state: state2 } = session.cropper;
+    if (!session.hasOutputEdits || !state2.image) {
       return [];
     }
-    return buildModifiers(cropper.state, {
-      width: cropper.state.image.naturalWidth,
-      height: cropper.state.image.naturalHeight
+    return buildModifiers(state2, {
+      width: state2.image.naturalWidth,
+      height: state2.image.naturalHeight
     });
   }
   function getMetadataEdits(pendingEdits, media) {
@@ -77539,7 +77548,7 @@ If there's a particular need for this, please submit a feature request at https:
     return metadataEdits;
   }
   function useSaveMediaEditor({
-    cropper,
+    session,
     id,
     isImage,
     media,
@@ -77558,7 +77567,7 @@ If there's a particular need for this, please submit a feature request at https:
       setIsSaving(true);
       try {
         let saved;
-        const modifiers = getCropModifiers(cropper);
+        const modifiers = getCropModifiers(session);
         const previous = modifiers.length > 0 && media ? {
           id,
           url: media.source_url
@@ -77602,7 +77611,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         if (next && next.id) {
           if (next.id === id) {
-            cropper.reset();
+            session.cropper.reset();
           }
           onSaved?.({
             id: next.id,
@@ -77634,7 +77643,6 @@ If there's a particular need for this, please submit a feature request at https:
     }, [
       clearEntityRecordEdits,
       createErrorNotice,
-      cropper,
       id,
       isImage,
       media,
@@ -77642,7 +77650,8 @@ If there's a particular need for this, please submit a feature request at https:
       receiveEntityRecords,
       registry,
       removeAllNotices,
-      saveEditedEntityRecord
+      saveEditedEntityRecord,
+      session
     ]);
     return { isSaving, save };
   }
@@ -77765,7 +77774,7 @@ If there's a particular need for this, please submit a feature request at https:
   function HistoryActions() {
     const { isImage, isUndoRedoDisabled, onReset, isWide, activePanel } = useMediaEditorFrameContext();
     const {
-      reset,
+      cropper: { reset },
       isDirty,
       hasUndo,
       hasRedo,
@@ -77897,7 +77906,7 @@ If there's a particular need for this, please submit a feature request at https:
     noticesPortalElement,
     shouldCloseOnEsc = false
   }) {
-    const cropper = useMediaEditor();
+    const session = useMediaEditor();
     const isWide = (0, import_compose38.useViewportMatch)("small");
     const [activePanel, setActivePanel] = (0, import_element253.useState)(
       isWide ? DETAILS_PANEL : null
@@ -77943,7 +77952,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [id]
     );
-    const hasChanges = cropper.isCropperDirty || hasEdits;
+    const hasChanges = session.hasOutputEdits || hasEdits;
     const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data42.useDispatch)(import_core_data33.store);
     const { removeAllNotices } = (0, import_data42.useDispatch)(import_notices15.store);
     const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element253.useState)(false);
@@ -78002,7 +78011,7 @@ If there's a particular need for this, please submit a feature request at https:
       resetCropOptions
     } = useCropOptions({ aspectRatioPresets });
     const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
-      cropper,
+      session,
       id,
       isImage,
       media,
@@ -78041,9 +78050,9 @@ If there's a particular need for this, please submit a feature request at https:
             return;
           }
           if (isRedoShortcut) {
-            cropper.redo();
+            session.redo();
           } else {
-            cropper.undo();
+            session.undo();
           }
         }
       }
