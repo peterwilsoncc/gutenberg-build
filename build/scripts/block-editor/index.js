@@ -61055,11 +61055,8 @@ var wp;
       return;
     }
     const element = anchorNode.nodeType === anchorNode.ELEMENT_NODE ? anchorNode : anchorNode.parentElement;
-    let editable = element?.closest('[contenteditable="true"]');
-    if (editable === root) {
-      editable = element?.closest(BLOCK_SELECTOR);
-    }
-    if (!editable || editable === root || !editable.isContentEditable || !editable.contains(focusNode)) {
+    const editable = element?.closest('[contenteditable="true"]');
+    if (!editable || editable === root || !editable.contains(focusNode)) {
       return;
     }
     return editable;
@@ -61184,27 +61181,14 @@ var wp;
           return;
         }
       }
+      const { activeElement: activeElement2 } = ownerDocument2;
       const selection2 = ownerDocument2.defaultView.getSelection();
       const { clientId: selectionClientId, offset: offset4 } = getSelectionStart2();
-      const hasCaret = !!selection2.anchorNode && target.contains(selection2.anchorNode);
+      const hasCaret = activeElement2?.isContentEditable && activeElement2.contains(target) && !!selection2.anchorNode && target.contains(selection2.anchorNode);
       const isDeliberate = initialPosition2 === 0 || offset4 !== void 0 && selectionClientId === clientId;
-      if (hasCaret && isDeliberate) {
-        const { activeElement: activeElement2 } = ownerDocument2;
-        const isHosted = activeElement2?.isContentEditable && activeElement2.contains(target);
-        if (!isHosted) {
-          target.focus();
-        }
-        return;
+      if (!(hasCaret && isDeliberate)) {
+        (0, import_dom33.placeCaretAtHorizontalEdge)(target, isReverse);
       }
-      if (target.isContentEditable && target.contentEditable !== "true") {
-        selection2.collapse(
-          target,
-          isReverse ? target.childNodes.length : 0
-        );
-        target.focus();
-        return;
-      }
-      (0, import_dom33.placeCaretAtHorizontalEdge)(target, isReverse);
     }, [initialPosition2, clientId]);
     return ref;
   }
@@ -61284,10 +61268,6 @@ var wp;
             return;
           }
           if (!isInsideRootBlock(node, event.target)) {
-            return;
-          }
-          const { anchorNode } = node.ownerDocument.defaultView.getSelection();
-          if (anchorNode && node.contains(anchorNode) && isBlockSelected2(getBlockClientId(anchorNode)) && node.isContentEditable) {
             return;
           }
           if (event.target.isContentEditable) {
@@ -65100,16 +65080,9 @@ var wp;
     if (isReverse) {
       focusableNodes.reverse();
     }
-    const targetIndex = focusableNodes.indexOf(target);
-    if (targetIndex !== -1) {
-      focusableNodes = focusableNodes.slice(targetIndex + 1);
-    } else {
-      focusableNodes = focusableNodes.filter((focusableNode) => {
-        const position = target.compareDocumentPosition(focusableNode);
-        const mask = isReverse ? target.DOCUMENT_POSITION_PRECEDING : target.DOCUMENT_POSITION_FOLLOWING;
-        return !!(position & mask) && !target.contains(focusableNode);
-      });
-    }
+    focusableNodes = focusableNodes.slice(
+      focusableNodes.indexOf(target) + 1
+    );
     let targetRect;
     if (onlyVertical) {
       targetRect = target.getBoundingClientRect();
@@ -65425,8 +65398,7 @@ var wp;
       isSelectionEnabled: isSelectionEnabled3,
       hasSelectedBlock: hasSelectedBlock2,
       isDraggingBlocks: isDraggingBlocks2,
-      isMultiSelecting: isMultiSelecting3,
-      getSelectedBlockClientId: getSelectedBlockClientId2
+      isMultiSelecting: isMultiSelecting3
     } = (0, import_data47.useSelect)(store);
     return (0, import_compose38.useRefEffect)(
       (node) => {
@@ -65478,8 +65450,7 @@ var wp;
           if (node === target) {
             return;
           }
-          const isField = target.contentEditable === "true" || target.isContentEditable && target.dataset.block === getSelectedBlockClientId2();
-          if (!isField && !getSettings9().isPreviewMode) {
+          if (target.getAttribute("contenteditable") !== "true" && !getSettings9().isPreviewMode) {
             return;
           }
           if (!isSelectionEnabled3()) {
@@ -65603,15 +65574,8 @@ var wp;
             collapsedClientId === getSelectedBlockClientId2() && canHostEditableRoot2(collapsedClientId)) {
               setContentEditableWrapper(node, true);
               const { activeElement: activeElement2 } = ownerDocument2;
-              if (activeElement2 !== node && activeElement2?.isContentEditable && node.contains(activeElement2) && activeElement2.contains(selection2.anchorNode)) {
+              if (activeElement2 !== node && activeElement2?.isContentEditable && node.contains(activeElement2) && getBlockClientId(activeElement2) === collapsedClientId) {
                 node.focus();
-              } else if (
-                // A click on the inert field leaves the default
-                // target (iframe body or page body) active but
-                // unfocused: take focus for the host.
-                (activeElement2 === node || activeElement2 === ownerDocument2.body) && ownerDocument2.hasFocus() && !activeElement2.matches(":focus")
-              ) {
-                node.focus({ preventScroll: true });
               }
               return;
             }
@@ -65756,9 +65720,13 @@ var wp;
           const endClientId = getBlockClientId(
             extractSelectionEndNode(selection2, isTripleClick)
           );
-          if (startClientId !== endClientId) {
-            onSelectionChange(event);
+          if (startClientId === endClientId) {
+            return;
           }
+          if (getSelectionStart2().clientId === startClientId && getSelectionEnd2().clientId === endClientId) {
+            return;
+          }
+          onSelectionChange(event);
         }
         ownerDocument2.addEventListener(
           "selectionchange",
@@ -65771,6 +65739,11 @@ var wp;
         defaultView.addEventListener("mouseup", onMouseUp);
         node.addEventListener("mousedown", onMouseDown);
         node.addEventListener("keydown", onKeyDown);
+        defaultView.addEventListener(
+          "keydown",
+          ensureMultiBlockSelectionSync,
+          true
+        );
         ownerDocument2.addEventListener(
           "copy",
           ensureMultiBlockSelectionSync,
@@ -65794,6 +65767,11 @@ var wp;
           defaultView.removeEventListener("mouseup", onMouseUp);
           node.removeEventListener("mousedown", onMouseDown);
           node.removeEventListener("keydown", onKeyDown);
+          defaultView.removeEventListener(
+            "keydown",
+            ensureMultiBlockSelectionSync,
+            true
+          );
           ownerDocument2.removeEventListener(
             "copy",
             ensureMultiBlockSelectionSync,
@@ -65818,23 +65796,31 @@ var wp;
   // packages/block-editor/build-module/components/writing-flow/use-click-selection.mjs
   var import_data49 = __toESM(require_data(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
+  var placesCaretOnTap = typeof window !== "undefined" && !!window.CSS?.supports?.("-webkit-touch-callout", "none");
   function useClickSelection() {
     const { selectBlock: selectBlock2 } = (0, import_data49.useDispatch)(store);
     const {
       isSelectionEnabled: isSelectionEnabled3,
       getBlockSelectionStart: getBlockSelectionStart2,
       getSelectionStart: getSelectionStart2,
-      hasMultiSelection: hasMultiSelection2,
-      canHostEditableRoot: canHostEditableRoot2
-    } = unlock((0, import_data49.useSelect)(store));
+      hasMultiSelection: hasMultiSelection2
+    } = (0, import_data49.useSelect)(store);
     return (0, import_compose40.useRefEffect)(
       (node) => {
+        let pointerType;
+        function onPointerDown(event) {
+          pointerType = event.pointerType;
+        }
         function onMouseDown(event) {
           if (!isSelectionEnabled3() || event.button !== 0) {
             return;
           }
           const startClientId = getBlockSelectionStart2();
           const clickedClientId = getBlockClientId(event.target);
+          if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && node.ownerDocument.activeElement === node) {
+            event.preventDefault();
+            return;
+          }
           if (event.shiftKey) {
             if (startClientId && startClientId !== clickedClientId) {
               const { clientId, attributeKey } = getSelectionStart2();
@@ -65861,19 +65847,12 @@ var wp;
             }
           } else if (hasMultiSelection2()) {
             selectBlock2(clickedClientId);
-          } else if (clickedClientId && clickedClientId !== startClientId && canHostEditableRoot2(clickedClientId)) {
-            const editable = event.target.closest(
-              '[contenteditable="true"]'
-            );
-            if (editable && getBlockClientId(editable) === clickedClientId) {
-              setContentEditableWrapper(node, true);
-              editable.removeAttribute("contenteditable");
-              selectBlock2(clickedClientId, null);
-            }
           }
         }
+        node.addEventListener("pointerdown", onPointerDown);
         node.addEventListener("mousedown", onMouseDown);
         return () => {
+          node.removeEventListener("pointerdown", onPointerDown);
           node.removeEventListener("mousedown", onMouseDown);
         };
       },
@@ -92842,25 +92821,15 @@ var wp;
     const shouldDisableEditing = readOnly || disableBoundBlock || shouldDisableForPattern;
     const isEditingHost = (0, import_data157.useSelect)(
       (select3) => {
-        if (shouldDisableEditing || !hasDefaultEditingMode) {
+        if (shouldDisableEditing || !hasDefaultEditingMode || !isBlockSelected2) {
           return false;
         }
-        const {
-          getSelectedBlockClientId: getSelectedBlockClientId2,
-          canHostEditableRoot: canHostEditableRoot2,
-          isBlockMultiSelected: isBlockMultiSelected2
-        } = unlock(select3(store));
-        if (isBlockSelected2) {
-          return canHostEditableRoot2(getSelectedBlockClientId2());
-        }
-        return isBlockMultiSelected2(clientId);
+        const { getSelectedBlockClientId: getSelectedBlockClientId2, canHostEditableRoot: canHostEditableRoot2 } = unlock(
+          select3(store)
+        );
+        return canHostEditableRoot2(getSelectedBlockClientId2());
       },
-      [
-        shouldDisableEditing,
-        hasDefaultEditingMode,
-        isBlockSelected2,
-        clientId
-      ]
+      [shouldDisableEditing, hasDefaultEditingMode, isBlockSelected2]
     );
     const { getSelectionStart: getSelectionStart2, getSelectionEnd: getSelectionEnd2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data157.useSelect)(store);
     const { selectionChange: selectionChange2, __unstableMarkLastChangeAsPersistent: __unstableMarkLastChangeAsPersistent2 } = (0, import_data157.useDispatch)(store);
@@ -92936,7 +92905,7 @@ var wp;
     });
     (0, import_element302.useLayoutEffect)(() => {
       const element = anchorRef.current;
-      if (!isSelected || element?.contentEditable === "false") {
+      if (!isSelected || element?.contentEditable !== "true") {
         return;
       }
       const { ownerDocument: ownerDocument2 } = element;
@@ -93014,43 +92983,9 @@ var wp;
     function onFocus() {
       anchorRef.current?.focus();
     }
-    const focusUnderHostRef = (0, import_compose106.useRefEffect)(
-      (element) => {
-        if (!isEditingHost) {
-          return;
-        }
-        const { ownerDocument: ownerDocument2 } = element;
-        const { focus: nativeFocus } = element;
-        element.focus = (options) => {
-          const host2 = element.parentElement?.closest(
-            '[contenteditable="true"]'
-          );
-          if (!host2) {
-            nativeFocus.call(element, options);
-            return;
-          }
-          const selection2 = ownerDocument2.defaultView.getSelection();
-          if (!element.contains(selection2.anchorNode)) {
-            selection2.collapse(element, 0);
-          }
-          if (ownerDocument2.activeElement !== host2 || !ownerDocument2.hasFocus()) {
-            const range2 = selection2.getRangeAt(0).cloneRange();
-            host2.focus({ preventScroll: true, ...options });
-            if (!element.contains(selection2.anchorNode)) {
-              selection2.removeAllRanges();
-              selection2.addRange(range2);
-            }
-          }
-        };
-        return () => {
-          delete element.focus;
-        };
-      },
-      [isEditingHost]
-    );
     let tabIndex = props.tabIndex;
     if (isEditingHost) {
-      tabIndex = null;
+      tabIndex = props.tabIndex ?? 0;
     } else if (!shouldDisableEditing && props.tabIndex === 0) {
       tabIndex = null;
     }
@@ -93119,16 +93054,9 @@ var wp;
               supportsSplitting
             }),
             anchorRef,
-            setAnchorElement,
-            focusUnderHostRef
+            setAnchorElement
           ]),
-          contentEditable: (
-            // Under the editing host the field is editable through the
-            // host, not an editing host of its own. The attribute must
-            // be absent, not "inherit": Gecko treats the invalid value
-            // as non-editable.
-            isEditingHost ? void 0 : !shouldDisableEditing
-          ),
+          contentEditable: !shouldDisableEditing,
           suppressContentEditableWarning: true,
           className: clsx_default(
             "block-editor-rich-text__editable",

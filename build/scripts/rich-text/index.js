@@ -1988,7 +1988,7 @@ var wp;
     if (activeElement === element) {
       return true;
     }
-    if (!activeElement || activeElement.contentEditable !== "true" || element.contentEditable !== "true" && element.contentEditable !== "inherit" || !activeElement.contains(element)) {
+    if (!activeElement || activeElement.contentEditable !== "true" || element.contentEditable !== "true" || !activeElement.contains(element)) {
       return false;
     }
     const selection = ownerDocument.defaultView.getSelection();
@@ -2297,8 +2297,7 @@ var wp;
     let selectionSnapshot;
     function handleSelectionChange() {
       const { record, applyRecord, createRecord, onSelectionChange } = props.current;
-      const { contentEditable } = element;
-      if (contentEditable !== "true" && contentEditable !== "inherit") {
+      if (element.contentEditable !== "true") {
         return;
       }
       if (ownerDocument.activeElement !== element && !ownsSelection(element)) {
@@ -2528,9 +2527,6 @@ var wp;
           return;
         }
         if (!event.target.closest("[data-block]")) {
-          return;
-        }
-        if (element.getAttribute("contenteditable") !== "true") {
           return;
         }
         value = element.getAttribute("contenteditable");
