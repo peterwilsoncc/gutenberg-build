@@ -343,6 +343,7 @@
   width: var(--wp--lightbox-container-width);
   height: var(--wp--lightbox-container-height);
   z-index: 2000001;
+  cursor: default;
 }
 .wp-lightbox-overlay .wp-block-image {
   position: relative;
