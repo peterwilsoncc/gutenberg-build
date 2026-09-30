@@ -1669,7 +1669,7 @@ var wp;
             if (!(child instanceof defaultView.HTMLElement)) {
               return;
             }
-            if (!child.getAttribute("inert")) {
+            if (!child.hasAttribute("inert")) {
               child.setAttribute("inert", "true");
               updates.push(() => {
                 child.removeAttribute("inert");

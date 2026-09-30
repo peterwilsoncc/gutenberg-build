@@ -11060,6 +11060,16 @@ var wp;
     }
   );
 
+  // packages/ui/build-module/utils/inert-value.mjs
+  var import_react5 = __toESM(require_react(), 1);
+  var majorVersion2 = parseInt(import_react5.version, 10);
+  function inertValue2(value) {
+    if (majorVersion2 >= 19) {
+      return value;
+    }
+    return value ? "true" : void 0;
+  }
+
   // packages/ui/build-module/stack/stack.mjs
   var import_element9 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
@@ -14441,7 +14451,7 @@ var wp;
           "audio",
           {
             controls: "controls",
-            inert: !isSingleSelected ? "true" : void 0,
+            inert: inertValue2(!isSingleSelected),
             src: src ?? temporaryURL
           }
         ),
@@ -20421,99 +20431,106 @@ var wp;
       (select10) => select10(import_block_editor42.store).getSettings().__experimentalDiscussionSettings?.avatarURL,
       []
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "wp-block-comments__legacy-placeholder", inert: "true", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("h3", {
-        /* translators: %s: Post title. */
-        children: (0, import_i18n33.sprintf)((0, import_i18n33.__)("One response to %s"), postTitle)
-      }),
-      /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "navigation", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "alignleft", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("a", { href: "#top", children: [
-          "\xAB ",
-          (0, import_i18n33.__)("Older Comments")
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "alignright", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("a", { href: "#top", children: [
-          (0, import_i18n33.__)("Newer Comments"),
-          " \xBB"
-        ] }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("ol", { className: "commentlist", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("li", { className: "comment even thread-even depth-1", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("article", { className: "comment-body", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("footer", { className: "comment-meta", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "comment-author vcard", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
-              "img",
-              {
-                alt: (0, import_i18n33.__)("Commenter Avatar"),
-                src: avatarURL,
-                className: "avatar avatar-32 photo",
-                height: "32",
-                width: "32",
-                loading: "lazy"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("b", { className: "fn", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("a", { href: "#top", className: "url", children: (0, import_i18n33.__)("A WordPress Commenter") }) }),
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("span", { className: "says", children: [
-              (0, import_i18n33.__)("says"),
-              ":"
-            ] })
+    return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(
+      "div",
+      {
+        className: "wp-block-comments__legacy-placeholder",
+        inert: inertValue2(true),
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("h3", {
+            /* translators: %s: Post title. */
+            children: (0, import_i18n33.sprintf)((0, import_i18n33.__)("One response to %s"), postTitle)
+          }),
+          /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "navigation", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "alignleft", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("a", { href: "#top", children: [
+              "\xAB ",
+              (0, import_i18n33.__)("Older Comments")
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "alignright", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("a", { href: "#top", children: [
+              (0, import_i18n33.__)("Newer Comments"),
+              " \xBB"
+            ] }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "comment-metadata", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("a", { href: "#top", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("time", { dateTime: "2000-01-01T00:00:00+00:00", children: (0, import_i18n33.__)("January 1, 2000 at 00:00 am") }) }),
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("span", { className: "edit-link", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("ol", { className: "commentlist", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("li", { className: "comment even thread-even depth-1", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("article", { className: "comment-body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("footer", { className: "comment-meta", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "comment-author vcard", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+                  "img",
+                  {
+                    alt: (0, import_i18n33.__)("Commenter Avatar"),
+                    src: avatarURL,
+                    className: "avatar avatar-32 photo",
+                    height: "32",
+                    width: "32",
+                    loading: "lazy"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("b", { className: "fn", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("a", { href: "#top", className: "url", children: (0, import_i18n33.__)("A WordPress Commenter") }) }),
+                " ",
+                /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("span", { className: "says", children: [
+                  (0, import_i18n33.__)("says"),
+                  ":"
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "comment-metadata", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("a", { href: "#top", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("time", { dateTime: "2000-01-01T00:00:00+00:00", children: (0, import_i18n33.__)("January 1, 2000 at 00:00 am") }) }),
+                " ",
+                /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("span", { className: "edit-link", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+                  "a",
+                  {
+                    className: "comment-edit-link",
+                    href: "#top",
+                    children: (0, import_i18n33.__)("Edit")
+                  }
+                ) })
+              ] })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "comment-content", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("p", { children: [
+              (0, import_i18n33.__)("Hi, this is a comment."),
+              /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("br", {}),
+              (0, import_i18n33.__)(
+                "To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard."
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("br", {}),
+              (0, import_element43.createInterpolateElement)(
+                (0, import_i18n33.__)(
+                  "Commenter avatars come from <a>Gravatar</a>."
+                ),
+                {
+                  a: (
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("a", { href: "https://gravatar.com/" })
+                  )
+                }
+              )
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "reply", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
               "a",
               {
-                className: "comment-edit-link",
+                className: "comment-reply-link",
                 href: "#top",
-                children: (0, import_i18n33.__)("Edit")
+                "aria-label": (0, import_i18n33.__)(
+                  "Reply to A WordPress Commenter"
+                ),
+                /* translators: Comment reply button text. */
+                children: (0, import_i18n33._x)("Reply", "verb")
               }
             ) })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "comment-content", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("p", { children: [
-          (0, import_i18n33.__)("Hi, this is a comment."),
-          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("br", {}),
-          (0, import_i18n33.__)(
-            "To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard."
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("br", {}),
-          (0, import_element43.createInterpolateElement)(
-            (0, import_i18n33.__)(
-              "Commenter avatars come from <a>Gravatar</a>."
-            ),
-            {
-              a: (
-                // eslint-disable-next-line jsx-a11y/anchor-has-content
-                /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("a", { href: "https://gravatar.com/" })
-              )
-            }
-          )
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "reply", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
-          "a",
-          {
-            className: "comment-reply-link",
-            href: "#top",
-            "aria-label": (0, import_i18n33.__)(
-              "Reply to A WordPress Commenter"
-            ),
-            /* translators: Comment reply button text. */
-            children: (0, import_i18n33._x)("Reply", "verb")
-          }
-        ) })
-      ] }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "navigation", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "alignleft", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("a", { href: "#top", children: [
-          "\xAB ",
-          (0, import_i18n33.__)("Older Comments")
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "alignright", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("a", { href: "#top", children: [
-          (0, import_i18n33.__)("Newer Comments"),
-          " \xBB"
-        ] }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(form_default, { postId, postType })
-    ] });
+          ] }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("div", { className: "navigation", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "alignleft", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("a", { href: "#top", children: [
+              "\xAB ",
+              (0, import_i18n33.__)("Older Comments")
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "alignright", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("a", { href: "#top", children: [
+              (0, import_i18n33.__)("Newer Comments"),
+              " \xBB"
+            ] }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(form_default, { postId, postType })
+        ]
+      }
+    );
   }
 
   // packages/block-library/build-module/comments/edit/comments-legacy.mjs
@@ -84583,7 +84600,7 @@ ${text}
           "video",
           {
             controls,
-            inert: !isSingleSelected ? "true" : void 0,
+            inert: inertValue2(!isSingleSelected),
             poster,
             src: src || temporaryURL,
             ref: videoPlayer,

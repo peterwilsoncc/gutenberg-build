@@ -40865,8 +40865,8 @@ This message will only show in development mode. It won't appear in production. 
         return {
           userAgent: uaData.brands.map(({
             brand,
-            version: version2
-          }) => `${brand}/${version2}`).join(" "),
+            version: version3
+          }) => `${brand}/${version3}`).join(" "),
           platform: uaData.platform ?? navigator.platform ?? "",
           maxTouchPoints: navigator.maxTouchPoints ?? 0
         };
@@ -52220,6 +52220,16 @@ This message will only show in development mode. It won't appear in production. 
     }
   );
 
+  // packages/ui/build-module/utils/inert-value.mjs
+  var import_react100 = __toESM(require_react(), 1);
+  var majorVersion2 = parseInt(import_react100.version, 10);
+  function inertValue2(value) {
+    if (majorVersion2 >= 19) {
+      return value;
+    }
+    return value ? "true" : void 0;
+  }
+
   // node_modules/date-fns/constants.js
   var daysInYear = 365.2425;
   var maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1e3;
@@ -58138,7 +58148,7 @@ This message will only show in development mode. It won't appear in production. 
       value: isDisabled,
       children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("div", {
         // @ts-expect-error `inert` is not declared in React 18's HTML attribute types.
-        inert: isDisabled ? "true" : void 0,
+        inert: inertValue2(isDisabled),
         className: clsx_default(className, isDisabled && [style_module_default45.disabled, "components-disabled"]) || void 0,
         ...props,
         children
@@ -62099,7 +62109,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var notice_default = Notice;
 
   // packages/components/build-module/notice/list.mjs
-  var import_react105 = __toESM(require_react(), 1);
+  var import_react106 = __toESM(require_react(), 1);
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
   var noop21 = () => {
   };
@@ -62118,7 +62128,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           content,
           ...restNotice
         } = notice;
-        return /* @__PURE__ */ (0, import_react105.createElement)(notice_default, {
+        return /* @__PURE__ */ (0, import_react106.createElement)(notice_default, {
           ...restNotice,
           key: notice.id,
           onRemove: removeNotice(notice.id)
@@ -62862,12 +62872,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // node_modules/re-resizable/lib/index.js
   var import_jsx_runtime293 = __toESM(require_jsx_runtime());
-  var import_react107 = __toESM(require_react());
+  var import_react108 = __toESM(require_react());
   var import_react_dom9 = __toESM(require_react_dom());
 
   // node_modules/re-resizable/lib/resizer.js
   var import_jsx_runtime292 = __toESM(require_jsx_runtime());
-  var import_react106 = __toESM(require_react());
+  var import_react107 = __toESM(require_react());
   var __assign2 = function() {
     __assign2 = Object.assign || function(t3) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
@@ -62909,15 +62919,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     bottomLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", bottom: "-10px", cursor: "sw-resize" }),
     topLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", top: "-10px", cursor: "nw-resize" })
   };
-  var Resizer = (0, import_react106.memo)(function(props) {
+  var Resizer = (0, import_react107.memo)(function(props) {
     var onResizeStart = props.onResizeStart, direction = props.direction, children = props.children, replaceStyles = props.replaceStyles, className = props.className;
-    var onMouseDown = (0, import_react106.useCallback)(function(e3) {
+    var onMouseDown = (0, import_react107.useCallback)(function(e3) {
       onResizeStart(e3, direction);
     }, [onResizeStart, direction]);
-    var onTouchStart = (0, import_react106.useCallback)(function(e3) {
+    var onTouchStart = (0, import_react107.useCallback)(function(e3) {
       onResizeStart(e3, direction);
     }, [onResizeStart, direction]);
-    var style2 = (0, import_react106.useMemo)(function() {
+    var style2 = (0, import_react107.useMemo)(function() {
       return __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles2[direction]), replaceStyles !== null && replaceStyles !== void 0 ? replaceStyles : {});
     }, [replaceStyles, direction]);
     return (0, import_jsx_runtime292.jsx)("div", { className: className || void 0, style: style2, onMouseDown, onTouchStart, children });
@@ -63662,7 +63672,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         snapGap: 0
       };
       return Resizable2;
-    })(import_react107.PureComponent)
+    })(import_react108.PureComponent)
   );
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs

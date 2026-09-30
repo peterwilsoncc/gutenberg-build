@@ -1524,8 +1524,8 @@ function readRawData() {
       return {
         userAgent: uaData.brands.map(({
           brand,
-          version: version2
-        }) => `${brand}/${version2}`).join(" "),
+          version: version3
+        }) => `${brand}/${version3}`).join(" "),
         platform: uaData.platform ?? navigator.platform ?? "",
         maxTouchPoints: navigator.maxTouchPoints ?? 0
       };
@@ -9504,6 +9504,16 @@ var KeyboardShortcutDisplay = (0, import_element19.forwardRef)(function Unforwar
   return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
 });
 
+// packages/ui/build-module/utils/inert-value.mjs
+var import_react6 = __toESM(require_react(), 1);
+var majorVersion2 = parseInt(import_react6.version, 10);
+function inertValue2(value) {
+  if (majorVersion2 >= 19) {
+    return value;
+  }
+  return value ? "true" : void 0;
+}
+
 // packages/ui/build-module/stack/stack.mjs
 var import_element20 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
@@ -12584,7 +12594,7 @@ function Canvas({ canvas }) {
       "div",
       {
         style: { height: "100%" },
-        inert: canvas.isPreview ? "true" : void 0,
+        inert: inertValue2(canvas.isPreview),
         children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
           Editor,
           {
