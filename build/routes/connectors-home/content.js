@@ -12292,6 +12292,7 @@ function ApiKeyConnector({
     initialIsConnected: auth?.isConnected
   });
   const isExternallyConfigured = keySource === "env" || keySource === "constant";
+  const isReadOnly = isConnected || isExternallyConfigured || !!currentApiKey;
   const showUnavailableBadge = pluginStatus === "not-installed" && canInstallPlugins === false || pluginStatus === "inactive" && canActivatePlugins === false;
   const actionButtonRef = (0, import_element34.useRef)(null);
   return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
@@ -12320,7 +12321,7 @@ function ApiKeyConnector({
         {
           initialValue: isExternallyConfigured ? "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" : currentApiKey,
           helpUrl,
-          readOnly: isConnected || isExternallyConfigured,
+          readOnly: isReadOnly,
           keySource,
           onRemove: isExternallyConfigured ? void 0 : async () => {
             await removeApiKey();
@@ -12332,7 +12333,7 @@ function ApiKeyConnector({
             actionButtonRef.current?.focus();
           }
         },
-        isConnected ? "connected" : "setup"
+        isReadOnly ? "read-only" : "setup"
       )
     }
   );
