@@ -551,13 +551,6 @@ var wp;
     }
   });
 
-  // vendor-external:react
-  var require_react = __commonJS({
-    "vendor-external:react"(exports, module) {
-      module.exports = window.React;
-    }
-  });
-
   // packages/compose/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
@@ -2198,45 +2191,13 @@ var wp;
   }
   var use_warn_on_change_default = useWarnOnChange;
 
-  // node_modules/.store/use-memo-one@1.1.3-sM18hGxXd3mKnnZsbMzxRw/node_modules/use-memo-one/dist/use-memo-one.esm.js
-  var import_react = __toESM(require_react());
-  function areInputsEqual(newInputs, lastInputs) {
-    if (newInputs.length !== lastInputs.length) {
-      return false;
-    }
-    for (var i = 0; i < newInputs.length; i++) {
-      if (newInputs[i] !== lastInputs[i]) {
-        return false;
-      }
-    }
-    return true;
-  }
-  function useMemoOne(getResult, inputs) {
-    var initial = (0, import_react.useState)(function() {
-      return {
-        inputs,
-        result: getResult()
-      };
-    })[0];
-    var isFirstRun = (0, import_react.useRef)(true);
-    var committed = (0, import_react.useRef)(initial);
-    var useCache = isFirstRun.current || Boolean(inputs && committed.current.inputs && areInputsEqual(inputs, committed.current.inputs));
-    var cache = useCache ? committed.current : {
-      inputs,
-      result: getResult()
-    };
-    (0, import_react.useEffect)(function() {
-      isFirstRun.current = false;
-      committed.current = cache;
-    }, [cache]);
-    return cache.result;
-  }
-
   // packages/compose/build-module/hooks/use-debounce/index.mjs
   var import_element25 = __toESM(require_element(), 1);
   function useDebounce(fn, wait, options) {
-    const debounced = useMemoOne(
+    const debounced = (0, import_element25.useMemo)(
       () => debounce(fn, wait ?? 0, options),
+      // Depends on the individual options rather than the `options` object.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       [fn, wait, options?.leading, options?.trailing, options?.maxWait]
     );
     (0, import_element25.useEffect)(() => () => debounced.cancel(), [debounced]);
@@ -2258,7 +2219,7 @@ var wp;
   // packages/compose/build-module/hooks/use-throttle/index.mjs
   var import_element27 = __toESM(require_element(), 1);
   function useThrottle(fn, wait, options) {
-    const throttled = useMemoOne(
+    const throttled = (0, import_element27.useMemo)(
       () => throttle(fn, wait ?? 0, options),
       [fn, wait, options]
     );
