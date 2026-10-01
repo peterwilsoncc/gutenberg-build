@@ -3481,6 +3481,17 @@ var wp;
       shouldSync(kind, name) {
         return Boolean(getSyncManager() && getSyncConfig(kind, name));
       },
+      isLoaded(kind, name, recordId) {
+        if (!hasSyncManager()) {
+          return false;
+        }
+        return Boolean(
+          getSyncManager()?.isLoaded(
+            `${kind}/${name}`,
+            toObjectId(recordId)
+          )
+        );
+      },
       load(kind, name, recordId, record, handlers) {
         const syncConfig = getSyncConfig(kind, name);
         const manager = getSyncManager();
@@ -3560,10 +3571,29 @@ var wp;
           getSyncManager()?.unloadAll();
         }
       },
-      // A getter, so the value is read when core-data asks: the undo
-      // manager only exists once a synced entity is loaded.
-      get undoManager() {
-        return getSyncManager()?.undoManager;
+      // A getter, so the value is read when core-data asks. There is no
+      // history before a sync manager exists, and asking must not create
+      // one.
+      get undoHistory() {
+        if (!hasSyncManager()) {
+          return void 0;
+        }
+        const undoManager2 = getSyncManager()?.undoManager;
+        if (!undoManager2) {
+          return void 0;
+        }
+        return {
+          undo: (kind, name, recordId) => undoManager2.undo(
+            `${kind}/${name}`,
+            toObjectId(recordId)
+          ),
+          redo: (kind, name, recordId) => undoManager2.redo(
+            `${kind}/${name}`,
+            toObjectId(recordId)
+          ),
+          stopCapturing: () => undoManager2.stopCapturing(),
+          clearRedo: () => undoManager2.clearRedo()
+        };
       }
     };
   }
@@ -3614,7 +3644,7 @@ var wp;
       editRecord: handlers.editRecord,
       getEditedRecord: handlers.getEditedRecord,
       refetchRecord: handlers.refetchRecord,
-      onUndoStackChange: handlers.onUndoStackChange,
+      onUndoLevelOpened: handlers.onUndoLevelOpened,
       // Handle sync connection status changes.
       onStatusChange: (status) => {
         unlock(data.dispatch(STORE_NAME)).setSyncConnectionStatus(
@@ -4372,13 +4402,10 @@ var wp;
   function undoManager(state = (0, import_undo_manager.createUndoManager)()) {
     return state;
   }
-  function syncUndoManagerState(state = { hasRedo: false, hasUndo: false }, action) {
+  function undoManagerReference(state = {}, action) {
     switch (action.type) {
-      case "SYNC_UNDO_MANAGER_CHANGE":
-        return {
-          hasRedo: action.hasRedo,
-          hasUndo: action.hasUndo
-        };
+      case "RECORD_SYNC_UNDO_LEVEL":
+        return {};
     }
     return state;
   }
@@ -4554,7 +4581,7 @@ var wp;
     themeGlobalStyleRevisions,
     entities,
     editsReference,
-    syncUndoManagerState,
+    undoManagerReference,
     undoManager,
     embedPreviews,
     userPermissions,
@@ -4685,7 +4712,7 @@ var wp;
   // packages/core-data/build-module/private-selectors.mjs
   var EMPTY_OBJECT = {};
   function getUndoManager(state) {
-    return getEntitySyncManager()?.undoManager ?? state.undoManager;
+    return state.undoManager;
   }
   function getNavigationFallbackId(state) {
     return state.navigationFallbackId;
@@ -5226,15 +5253,9 @@ var wp;
     return void 0;
   }
   function hasUndo(state) {
-    if (getEntitySyncManager()?.undoManager) {
-      return state.syncUndoManagerState.hasUndo;
-    }
     return getUndoManager(state).hasUndo();
   }
   function hasRedo(state) {
-    if (getEntitySyncManager()?.undoManager) {
-      return state.syncUndoManagerState.hasRedo;
-    }
     return getUndoManager(state).hasRedo();
   }
   function getCurrentTheme(state) {
@@ -5610,6 +5631,101 @@ var wp;
     }
   };
 
+  // packages/core-data/build-module/utils/sync-undo-levels.mjs
+  var syncUndoLevelCount = 0;
+  function createSyncUndoLevelRecord(kind, name, recordId) {
+    syncUndoLevelCount += 1;
+    return [
+      {
+        id: { kind, name, recordId, isSyncUndoLevel: true },
+        changes: {
+          level: {
+            from: syncUndoLevelCount - 1,
+            to: syncUndoLevelCount
+          }
+        }
+      }
+    ];
+  }
+  function isSyncUndoLevel(changes) {
+    return "string" !== typeof changes.id && true === changes.id.isSyncUndoLevel;
+  }
+  function getRecordReference(id) {
+    if ("string" === typeof id) {
+      return void 0;
+    }
+    const { kind, name, recordId } = id;
+    if ("string" !== typeof kind || "string" !== typeof name) {
+      return void 0;
+    }
+    if ("string" !== typeof recordId && "number" !== typeof recordId) {
+      return void 0;
+    }
+    return { kind, name, recordId };
+  }
+  function isLoadedRecord(syncManager2, record) {
+    if (!record) {
+      return false;
+    }
+    return Boolean(
+      syncManager2?.isLoaded?.(record.kind, record.name, record.recordId)
+    );
+  }
+  function recordEntityEdit(undoManager2, syncManager2, record, isStaged = false) {
+    const undoHistory = syncManager2?.undoHistory;
+    undoHistory?.stopCapturing();
+    undoHistory?.clearRedo();
+    if (!record) {
+      undoManager2.addRecord();
+      return;
+    }
+    if (isStaged && undoManager2.hasRedo()) {
+      undoManager2.addRecord();
+    }
+    undoManager2.addRecord(record, isStaged);
+  }
+  function popUndoLevel(undoManager2, syncManager2, type) {
+    const undoHistory = syncManager2?.undoHistory;
+    let record;
+    if ("undo" === type) {
+      record = undoManager2.undo();
+    } else {
+      record = undoManager2.redo();
+    }
+    if (!record) {
+      return void 0;
+    }
+    const changes = record.filter(
+      (entry) => !isSyncUndoLevel(entry) && !isLoadedRecord(syncManager2, getRecordReference(entry.id))
+    );
+    const syncLevel = record.find(isSyncUndoLevel);
+    let syncLevelRecord;
+    if (syncLevel) {
+      syncLevelRecord = getRecordReference(syncLevel.id);
+    }
+    let didApplySyncLevel = false;
+    if (undoHistory && syncLevelRecord && isLoadedRecord(syncManager2, syncLevelRecord)) {
+      const { kind, name, recordId } = syncLevelRecord;
+      didApplySyncLevel = undoHistory[type](kind, name, recordId);
+    }
+    return {
+      changes,
+      didApply: changes.length > 0 || didApplySyncLevel
+    };
+  }
+  function applyUndoLevel(undoManager2, syncManager2, type) {
+    syncManager2?.undoHistory?.stopCapturing();
+    let level = popUndoLevel(undoManager2, syncManager2, type);
+    while (level && !level.didApply) {
+      level = popUndoLevel(undoManager2, syncManager2, type);
+    }
+    if (!level) {
+      return void 0;
+    }
+    syncManager2?.undoHistory?.stopCapturing();
+    return level.changes;
+  }
+
   // packages/core-data/build-module/actions.mjs
   function addTitleToAutoDraft(record) {
     return record.status === "auto-draft" ? { ...record, title: "" } : record;
@@ -5787,12 +5903,15 @@ var wp;
       // so that the property is not considered dirty.
       edits: clearUnchangedEdits(editsWithMerges, record)
     };
-    getEntitySyncManager()?.update(kind, name, recordId, editsWithMerges, {
+    const syncManager2 = getEntitySyncManager();
+    syncManager2?.update(kind, name, recordId, editsWithMerges, {
       isCached: Boolean(options.isCached),
       undoIgnore: Boolean(options.undoIgnore)
     });
-    if (!options.undoIgnore) {
-      select6.getUndoManager().addRecord(
+    if (!options.undoIgnore && !syncManager2?.isLoaded?.(kind, name, recordId)) {
+      recordEntityEdit(
+        select6.getUndoManager(),
+        syncManager2,
         [
           {
             id: { kind, name, recordId },
@@ -5845,7 +5964,11 @@ var wp;
     });
   };
   var undo = () => ({ select: select6, dispatch: dispatch4 }) => {
-    const undoRecord = select6.getUndoManager().undo();
+    const undoRecord = applyUndoLevel(
+      select6.getUndoManager(),
+      getEntitySyncManager(),
+      "undo"
+    );
     if (!undoRecord) {
       return;
     }
@@ -5855,7 +5978,11 @@ var wp;
     });
   };
   var redo = () => ({ select: select6, dispatch: dispatch4 }) => {
-    const redoRecord = select6.getUndoManager().redo();
+    const redoRecord = applyUndoLevel(
+      select6.getUndoManager(),
+      getEntitySyncManager(),
+      "redo"
+    );
     if (!redoRecord) {
       return;
     }
@@ -5865,7 +5992,7 @@ var wp;
     });
   };
   var __unstableCreateUndoLevel = () => ({ select: select6 }) => {
-    select6.getUndoManager().addRecord();
+    recordEntityEdit(select6.getUndoManager(), getEntitySyncManager());
   };
   var saveEntityRecord = (kind, name, record, options = {}) => async ({ select: select6, resolveSelect: resolveSelect3, dispatch: dispatch4 }) => {
     const {
@@ -6195,12 +6322,12 @@ var wp;
   // packages/core-data/build-module/private-actions.mjs
   var private_actions_exports = {};
   __export(private_actions_exports, {
-    __unstableNotifySyncUndoManagerChange: () => __unstableNotifySyncUndoManagerChange,
     editMediaEntity: () => editMediaEntity,
     receiveEditorAssets: () => receiveEditorAssets,
     receiveEditorSettings: () => receiveEditorSettings,
     receiveRegisteredPostMeta: () => receiveRegisteredPostMeta,
     receiveViewConfig: () => receiveViewConfig,
+    recordSyncUndoLevel: () => recordSyncUndoLevel,
     saveDirtyEntities: () => saveDirtyEntities,
     setCollaborationSupported: () => setCollaborationSupported,
     setSyncConnectionStatus: () => setSyncConnectionStatus
@@ -6299,13 +6426,8 @@ var wp;
   }
   var setCollaborationSupported = (supported) => ({ dispatch: dispatch4 }) => {
     dispatch4({ type: "SET_COLLABORATION_SUPPORTED", supported });
-    const syncManager2 = getEntitySyncManager();
-    if (!supported && syncManager2) {
-      syncManager2.unloadAll();
-      dispatch4.__unstableNotifySyncUndoManagerChange({
-        hasUndo: false,
-        hasRedo: false
-      });
+    if (!supported) {
+      getEntitySyncManager()?.unloadAll();
     }
   };
   function receiveViewConfig(kind, name, config) {
@@ -6316,12 +6438,10 @@ var wp;
       config
     };
   }
-  function __unstableNotifySyncUndoManagerChange(state) {
-    return {
-      type: "SYNC_UNDO_MANAGER_CHANGE",
-      ...state
-    };
-  }
+  var recordSyncUndoLevel = (kind, name, recordId) => ({ select: select6, dispatch: dispatch4 }) => {
+    select6.getUndoManager().addRecord(createSyncUndoLevelRecord(kind, name, recordId));
+    dispatch4({ type: "RECORD_SYNC_UNDO_LEVEL" });
+  };
   function setSyncConnectionStatus(kind, name, key, status) {
     if (!status) {
       return {
@@ -6909,10 +7029,8 @@ var wp;
               query
             );
           },
-          onUndoStackChange: (undoState) => {
-            dispatch4.__unstableNotifySyncUndoManagerChange(
-              undoState
-            );
+          onUndoLevelOpened: () => {
+            dispatch4.recordSyncUndoLevel(kind, name, key);
           }
         });
       }

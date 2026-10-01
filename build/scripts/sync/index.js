@@ -10960,311 +10960,42 @@ ${err.toString()}`);
     return providerCreators;
   }
 
-  // packages/sync/build-module/y-utilities/y-multidoc-undomanager.mjs
-  var popStackItem2 = (mum, type) => {
-    const stack = type === "undo" ? mum.undoStack : mum.redoStack;
-    while (stack.length > 0) {
-      const um = (
-        /** @type {Y.UndoManager} */
-        stack.pop()
-      );
-      const prevUmStack = type === "undo" ? um.undoStack : um.redoStack;
-      const stackItem = (
-        /** @type {any} */
-        prevUmStack.pop()
-      );
-      let actionPerformed = false;
-      if (type === "undo") {
-        um.undoStack = [stackItem];
-        actionPerformed = um.undo() !== null;
-        um.undoStack = prevUmStack;
-      } else {
-        um.redoStack = [stackItem];
-        actionPerformed = um.redo() !== null;
-        um.redoStack = prevUmStack;
-      }
-      if (actionPerformed) {
-        return stackItem;
-      }
-    }
-    return null;
-  };
-  var YMultiDocUndoManager = class extends Observable {
-    /**
-     * @param {Y.AbstractType<any>|Array<Y.AbstractType<any>>} typeScope Accepts either a single type, or an array of types
-     * @param {ConstructorParameters<typeof Y.UndoManager>[1]} opts
-     */
-    constructor(typeScope = [], opts = {}) {
-      super();
-      this.docs = /* @__PURE__ */ new Map();
-      this.trackedOrigins = opts.trackedOrigins || /* @__PURE__ */ new Set([null]);
-      opts.trackedOrigins = this.trackedOrigins;
-      this._defaultOpts = opts;
-      this.undoStack = [];
-      this.redoStack = [];
-      this.addToScope(typeScope);
-    }
-    /**
-     * @param {Array<Y.AbstractType<any>> | Y.AbstractType<any>} ytypes
-     */
-    addToScope(ytypes) {
-      ytypes = isArray(ytypes) ? ytypes : [ytypes];
-      ytypes.forEach((ytype) => {
-        const ydoc = (
-          /** @type {Y.Doc} */
-          ytype.doc
-        );
-        const um = setIfUndefined(this.docs, ydoc, () => {
-          const um2 = new UndoManager([ytype], this._defaultOpts);
-          um2.on(
-            "stack-cleared",
-            /** @param {any} opts */
-            ({
-              undoStackCleared,
-              redoStackCleared
-            }) => {
-              this.clear(undoStackCleared, redoStackCleared);
-            }
-          );
-          ydoc.on("destroy", () => {
-            this.docs.delete(ydoc);
-            this.undoStack = this.undoStack.filter(
-              (um3) => um3.doc !== ydoc
-            );
-            this.redoStack = this.redoStack.filter(
-              (um3) => um3.doc !== ydoc
-            );
-          });
-          um2.on(
-            "stack-item-added",
-            /** @param {any} change */
-            (change) => {
-              const stack = change.type === "undo" ? this.undoStack : this.redoStack;
-              stack.push(um2);
-              this.emit("stack-item-added", [
-                { ...change, ydoc },
-                this
-              ]);
-            }
-          );
-          um2.on(
-            "stack-item-updated",
-            /** @param {any} change */
-            (change) => {
-              this.emit("stack-item-updated", [
-                { ...change, ydoc },
-                this
-              ]);
-            }
-          );
-          um2.on(
-            "stack-item-popped",
-            /** @param {any} change */
-            (change) => {
-              this.emit("stack-item-popped", [
-                { ...change, ydoc },
-                this
-              ]);
-            }
-          );
-          return um2;
-        });
-        if (um.scope.every((yt) => yt !== ytype)) {
-          um.scope.push(ytype);
-        }
-      });
-    }
-    /**
-     * @param {any} origin
-     */
-    /* c8 ignore next 3 */
-    addTrackedOrigin(origin2) {
-      this.trackedOrigins.add(origin2);
-    }
-    /**
-     * @param {any} origin
-     */
-    /* c8 ignore next 3 */
-    removeTrackedOrigin(origin2) {
-      this.trackedOrigins.delete(origin2);
-    }
-    /**
-     * Undo last changes on type.
-     *
-     * @return {any?} Returns StackItem if a change was applied
-     */
-    undo() {
-      return popStackItem2(this, "undo");
-    }
-    /**
-     * Redo last undo operation.
-     *
-     * @return {any?} Returns StackItem if a change was applied
-     */
-    redo() {
-      return popStackItem2(this, "redo");
-    }
-    clear(clearUndoStack = true, clearRedoStack = true) {
-      if (clearUndoStack && this.canUndo() || clearRedoStack && this.canRedo()) {
-        this.docs.forEach((um) => {
-          clearUndoStack && (this.undoStack = []);
-          clearRedoStack && (this.redoStack = []);
-          um.clear(clearUndoStack, clearRedoStack);
-        });
-        this.emit("stack-cleared", [
-          {
-            undoStackCleared: clearUndoStack,
-            redoStackCleared: clearRedoStack
-          }
-        ]);
-      }
-    }
-    /* c8 ignore next 5 */
-    stopCapturing() {
-      this.docs.forEach((um) => {
-        um.stopCapturing();
-      });
-    }
-    /**
-     * Are undo steps available?
-     *
-     * @return {boolean} `true` if undo is possible
-     */
-    canUndo() {
-      return this.undoStack.length > 0;
-    }
-    /**
-     * Are redo steps available?
-     *
-     * @return {boolean} `true` if redo is possible
-     */
-    canRedo() {
-      return this.redoStack.length > 0;
-    }
-    destroy() {
-      this.docs.forEach((um) => um.destroy());
-      super.destroy();
-    }
-  };
-
   // packages/sync/build-module/undo-manager.mjs
-  function createUndoManager() {
-    const undoMetaHandlers = /* @__PURE__ */ new Map();
-    const yUndoManager = new YMultiDocUndoManager([], {
+  function createEntityUndoManager(ydoc, ymap, handlers) {
+    let isApplyingHistory = false;
+    const yUndoManager = new UndoManager(ymap, {
       // Throttle undo/redo captures after 500ms of inactivity.
       // 500 was selected from subjective local UX testing, shorter timeouts
       // may cause mid-word undo stack items.
       captureTimeout: 500,
       // Ensure that we only scope the undo/redo to the current editor.
-      // The yjs document's clientID is added once it's available.
       trackedOrigins: /* @__PURE__ */ new Set([LOCAL_EDITOR_ORIGIN])
     });
-    const getUndoStackState = () => ({
-      hasRedo: yUndoManager.canRedo(),
-      hasUndo: yUndoManager.canUndo()
-    });
-    const notifyUndoStackChange = (ydoc) => {
-      undoMetaHandlers.get(ydoc)?.onUndoStackChange?.(getUndoStackState());
-    };
     yUndoManager.on("stack-item-added", (event) => {
-      const handlers = undoMetaHandlers.get(event.ydoc);
-      if (!handlers) {
-        return;
+      handlers.addUndoMeta(ydoc, event.stackItem.meta);
+      if ("undo" === event.type && !isApplyingHistory) {
+        handlers.onUndoLevelOpened?.();
       }
-      handlers.addUndoMeta(event.ydoc, event.stackItem.meta);
-      notifyUndoStackChange(event.ydoc);
-    });
-    yUndoManager.on("stack-item-updated", (event) => {
-      notifyUndoStackChange(event.ydoc);
     });
     yUndoManager.on("stack-item-popped", (event) => {
-      const handlers = undoMetaHandlers.get(event.ydoc);
-      if (!handlers) {
-        return;
+      handlers.restoreUndoMeta(ydoc, event.stackItem.meta);
+    });
+    const applyHistory = (type) => {
+      isApplyingHistory = true;
+      try {
+        const stackItem = "undo" === type ? yUndoManager.undo() : yUndoManager.redo();
+        return null !== stackItem;
+      } finally {
+        isApplyingHistory = false;
       }
-      handlers.restoreUndoMeta(event.ydoc, event.stackItem.meta);
-      notifyUndoStackChange(event.ydoc);
-    });
-    yUndoManager.on("stack-cleared", () => {
-      undoMetaHandlers.forEach((handlers) => {
-        handlers.onUndoStackChange?.(getUndoStackState());
-      });
-    });
+    };
     return {
-      /**
-       * Record changes into the history.
-       * Since Yjs automatically tracks changes, this method translates the WordPress
-       * HistoryRecord format into Yjs operations.
-       *
-       * @param _record   A record of changes to record.
-       * @param _isStaged Whether to immediately create an undo point or not.
-       */
-      addRecord(_record, _isStaged = false) {
-      },
-      /**
-       * Add a Yjs map to the scope of the undo manager.
-       *
-       * @param {Y.Map< any >} ymap                       The Yjs map to add to the scope.
-       * @param                handlers                   Handlers for the scoped document.
-       * @param                handlers.addUndoMeta       Handler to add metadata to undo items.
-       * @param                handlers.onUndoStackChange Handler for undo stack changes.
-       * @param                handlers.restoreUndoMeta   Handler to restore metadata from undo items.
-       */
-      addToScope(ymap, handlers) {
-        if (ymap.doc === null) {
-          return;
-        }
-        const ydoc = ymap.doc;
-        yUndoManager.addToScope(ymap);
-        if (!undoMetaHandlers.has(ydoc)) {
-          ydoc.on("destroy", () => undoMetaHandlers.delete(ydoc));
-        }
-        undoMetaHandlers.set(ydoc, handlers);
-      },
-      /**
-       * Undo the last recorded changes.
-       *
-       */
-      undo() {
-        if (!yUndoManager.canUndo()) {
-          return;
-        }
-        yUndoManager.undo();
-        return [];
-      },
-      /**
-       * Redo the last undone changes.
-       */
-      redo() {
-        if (!yUndoManager.canRedo()) {
-          return;
-        }
-        yUndoManager.redo();
-        return [];
-      },
-      /**
-       * Check if there are changes that can be undone.
-       *
-       * @return {boolean} Whether there are changes to undo.
-       */
-      hasUndo() {
-        return yUndoManager.canUndo();
-      },
-      /**
-       * Check if there are changes that can be redone.
-       *
-       * @return {boolean} Whether there are changes to redo.
-       */
-      hasRedo() {
-        return yUndoManager.canRedo();
-      },
-      /**
-       * Stop capturing changes into the current undo item.
-       * The next change will create a new undo item.
-       */
-      stopCapturing() {
-        yUndoManager.stopCapturing();
-      }
+      clearRedo: () => yUndoManager.clear(false, true),
+      hasRedo: () => yUndoManager.canRedo(),
+      hasUndo: () => yUndoManager.canUndo(),
+      redo: () => applyHistory("redo"),
+      stopCapturing: () => yUndoManager.stopCapturing(),
+      undo: () => applyHistory("undo")
     };
   }
 
@@ -11347,7 +11078,44 @@ ${err.toString()}`);
     const debugWrap = debug ? logPerformanceTiming : passThru;
     const collectionStates = /* @__PURE__ */ new Map();
     const entityStates = /* @__PURE__ */ new Map();
-    let undoManager;
+    const undoManager = {
+      undo(objectType, objectId) {
+        flushPendingCRDTDocUpdates();
+        const entityState = entityStates.get(
+          getEntityId(objectType, objectId)
+        );
+        return entityState?.undoManager.undo() ?? false;
+      },
+      redo(objectType, objectId) {
+        flushPendingCRDTDocUpdates();
+        const entityState = entityStates.get(
+          getEntityId(objectType, objectId)
+        );
+        return entityState?.undoManager.redo() ?? false;
+      },
+      hasUndo() {
+        return [...entityStates.values()].some(
+          (entityState) => entityState.undoManager.hasUndo()
+        );
+      },
+      hasRedo() {
+        return [...entityStates.values()].some(
+          (entityState) => entityState.undoManager.hasRedo()
+        );
+      },
+      stopCapturing() {
+        flushPendingCRDTDocUpdates();
+        entityStates.forEach(
+          (entityState) => entityState.undoManager.stopCapturing()
+        );
+      },
+      clearRedo() {
+        flushPendingCRDTDocUpdates();
+        entityStates.forEach(
+          (entityState) => entityState.undoManager.clearRedo()
+        );
+      }
+    };
     function log(component, message, entityId, context = {}) {
       if (!debug) {
         return;
@@ -11381,7 +11149,7 @@ ${err.toString()}`);
         persistCRDTDoc: debugWrap(handlers.persistCRDTDoc),
         refetchRecord: debugWrap(handlers.refetchRecord),
         restoreUndoMeta: debugWrap(handlers.restoreUndoMeta),
-        onUndoStackChange: handlers.onUndoStackChange ? debugWrap(handlers.onUndoStackChange) : void 0
+        onUndoLevelOpened: handlers.onUndoLevelOpened ? debugWrap(handlers.onUndoLevelOpened) : void 0
       };
       const ydoc = createYjsDoc({ objectType });
       const recordMap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
@@ -11425,14 +11193,19 @@ ${err.toString()}`);
           }
         });
       };
-      if (!undoManager) {
-        undoManager = createUndoManager();
-      }
-      const { addUndoMeta, onUndoStackChange, restoreUndoMeta } = handlers;
-      undoManager.addToScope(recordMap, {
+      const { addUndoMeta, onUndoLevelOpened, restoreUndoMeta } = handlers;
+      const entityUndoManager = createEntityUndoManager(ydoc, recordMap, {
         addUndoMeta,
         restoreUndoMeta,
-        onUndoStackChange
+        onUndoLevelOpened: () => {
+          entityStates.forEach((other) => {
+            if (other.undoManager !== entityUndoManager) {
+              other.undoManager.stopCapturing();
+              other.undoManager.clearRedo();
+            }
+          });
+          onUndoLevelOpened?.();
+        }
       });
       let providerResults;
       const entityState = {
@@ -11441,6 +11214,7 @@ ${err.toString()}`);
         objectId,
         objectType,
         syncConfig,
+        undoManager: entityUndoManager,
         unload,
         ydoc
       };
@@ -11555,6 +11329,9 @@ ${err.toString()}`);
       hasObserversAttached = true;
       initializeYjsDoc(ydoc);
     }
+    function isLoaded(objectType, objectId) {
+      return entityStates.has(getEntityId(objectType, objectId));
+    }
     function unloadEntity(objectType, objectId) {
       const entityId = getEntityId(objectType, objectId);
       log("unloadEntity", "unloading", entityId);
@@ -11569,7 +11346,6 @@ ${err.toString()}`);
         entityState.unload();
       }
       entityStates.clear();
-      undoManager = void 0;
       for (const [, collectionState] of [...collectionStates]) {
         collectionState.unload();
       }
@@ -11639,8 +11415,8 @@ ${err.toString()}`);
       const collectionState = collectionStates.get(objectType);
       if (entityState) {
         const { syncConfig, ydoc } = entityState;
-        if (isNewUndoLevel && undoManager) {
-          undoManager.stopCapturing?.();
+        if (isNewUndoLevel) {
+          undoManager.stopCapturing();
         }
         ydoc.transact(() => {
           log("updateCRDTDoc", "applying changes", entityId, {
@@ -11659,12 +11435,21 @@ ${err.toString()}`);
       }
     }
     const pendingCRDTDocUpdates = [];
+    let isFlushingCRDTDocUpdates = false;
     function flushPendingCRDTDocUpdates() {
-      while (pendingCRDTDocUpdates.length > 0) {
-        const args2 = pendingCRDTDocUpdates.shift();
-        if (args2) {
-          updateCRDTDoc(...args2);
+      if (isFlushingCRDTDocUpdates) {
+        return;
+      }
+      isFlushingCRDTDocUpdates = true;
+      try {
+        while (pendingCRDTDocUpdates.length > 0) {
+          const args2 = pendingCRDTDocUpdates.shift();
+          if (args2) {
+            updateCRDTDoc(...args2);
+          }
         }
+      } finally {
+        isFlushingCRDTDocUpdates = false;
       }
     }
     function deferUpdateCRDTDoc(...args2) {
@@ -11738,12 +11523,10 @@ ${err.toString()}`);
       entityContainsSnapshot: debugWrap(entityContainsSnapshot),
       getAwareness,
       getEntitySnapshot: debugWrap(getEntitySnapshot),
+      isLoaded,
       load: debugWrap(loadEntity),
       loadCollection: debugWrap(loadCollection),
-      // Use getter to ensure we always return the current value of `undoManager`.
-      get undoManager() {
-        return undoManager;
-      },
+      undoManager,
       unload: debugWrap(unloadEntity),
       unloadAll: debugWrap(unloadAll),
       update: debugWrap(updateOrDefer)
