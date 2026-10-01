@@ -54046,7 +54046,7 @@ var wp;
     ].filter(Boolean);
     return fields2.filter(
       (f2) => !togglableFields.includes(f2.id) && f2.type !== "media" && f2.enableHiding !== false
-    );
+    ).sort((a2, b2) => a2.label.localeCompare(b2.label));
   }
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/get-table-columns.mjs

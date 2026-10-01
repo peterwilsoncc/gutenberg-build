@@ -48423,7 +48423,7 @@ function getHideableFields(view, fields2) {
   ].filter(Boolean);
   return fields2.filter(
     (f) => !togglableFields.includes(f.id) && f.type !== "media" && f.enableHiding !== false
-  );
+  ).sort((a, b) => a.label.localeCompare(b.label));
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/get-table-columns.mjs
