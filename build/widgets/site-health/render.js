@@ -952,7 +952,7 @@ var Stack = (0, import_element3.forwardRef)(
 );
 
 // widgets/site-health/render.tsx
-import { HostLink } from "@wordpress/widget-primitives";
+import { HostLink, useWidgetActions } from "@wordpress/widget-primitives";
 
 // widgets/site-health/components/circle-progress/circle-progress.tsx
 var import_primitives = __toESM(require_primitives());
@@ -1161,6 +1161,23 @@ function reviewHref(counts) {
 function SiteHealth() {
   const [counts, setCounts] = (0, import_element4.useState)(null);
   const [isLoading, setIsLoading] = (0, import_element4.useState)(true);
+  const issuesTotal = counts ? counts.recommended + counts.critical : 0;
+  const reviewLabel = (0, import_i18n2.sprintf)(
+    /* translators: %d: Number of issues to address. */
+    (0, import_i18n2._n)("Review %d item", "Review %d items", issuesTotal),
+    issuesTotal
+  );
+  const href = counts ? reviewHref(counts) : "";
+  const hosted = useWidgetActions(
+    issuesTotal > 0 ? [
+      {
+        id: "site-health-review",
+        label: reviewLabel,
+        relevance: "medium",
+        href
+      }
+    ] : []
+  );
   (0, import_element4.useEffect)(() => {
     let ignore = false;
     const requests = ASYNC_TEST_PATHS.map(
@@ -1204,14 +1221,7 @@ function SiteHealth() {
   }
   const total = counts.good + counts.recommended + counts.critical;
   const percentage = total > 0 ? Math.round(counts.good / total * 100) : 0;
-  const issuesTotal = counts.recommended + counts.critical;
   const tone = toneForPercentage(percentage);
-  const href = reviewHref(counts);
-  const reviewLabel = (0, import_i18n2.sprintf)(
-    /* translators: %d: Number of issues to address. */
-    (0, import_i18n2._n)("Review %d item", "Review %d items", issuesTotal),
-    issuesTotal
-  );
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
     Stack,
     {
@@ -1223,7 +1233,7 @@ function SiteHealth() {
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(CircleProgress, { percentage, tone }),
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Text, { variant: "body-lg", children: statusMessage(counts) }),
-        issuesTotal > 0 && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Link, { render: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(HostLink, { href }), children: reviewLabel })
+        issuesTotal > 0 && !hosted && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Link, { render: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(HostLink, { href }), children: reviewLabel })
       ]
     }
   );
