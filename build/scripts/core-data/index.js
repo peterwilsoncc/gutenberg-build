@@ -6623,37 +6623,82 @@ var wp;
     const responses = await Promise.all(queries2);
     let results = responses.flat();
     results = results.filter((result) => !!result.id);
-    results = sortResults(results, search);
-    results = results.slice(0, perPage);
-    return results;
+    return sortResults(results, search);
+  }
+  function getTitleMatch(title, search) {
+    const plain = (text) => (text ?? "").toLowerCase().trim().replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"');
+    const haystack = plain(title);
+    const needle = plain(search);
+    if (!haystack || !needle) {
+      return { contains: false, begins: false };
+    }
+    return {
+      contains: haystack.includes(needle),
+      begins: haystack.startsWith(needle)
+    };
+  }
+  var TYPE_ORDER = [
+    "post",
+    "term",
+    "post-format",
+    "attachment"
+  ];
+  function getSearchType(result) {
+    if (result.kind === "media") {
+      return "attachment";
+    }
+    if (result.type === "post-format") {
+      return "post-format";
+    }
+    return result.kind === "taxonomy" ? "term" : "post";
+  }
+  function getTypeWeight(result) {
+    return TYPE_ORDER.length - TYPE_ORDER.indexOf(getSearchType(result));
+  }
+  function countWordsFound(title, searchTokens) {
+    const titleTokens = tokenize(title || "");
+    return searchTokens.filter(
+      (searchToken) => titleTokens.some((titleToken) => titleToken.includes(searchToken))
+    ).length;
+  }
+  function getCoverage(title, searchTokens) {
+    if (!title || !searchTokens.length) {
+      return 0;
+    }
+    const titleTokens = tokenize(title);
+    const covered = searchTokens.reduce((total, searchToken) => {
+      const best = titleTokens.reduce(
+        (most, titleToken) => titleToken.includes(searchToken) ? Math.max(most, searchToken.length / titleToken.length) : most,
+        0
+      );
+      return total + best;
+    }, 0);
+    return covered / searchTokens.length * 10;
   }
   function sortResults(results, search) {
     const searchTokens = tokenize(search);
-    const scoreKey = (result) => `${result.kind}:${result.type}:${result.id}`;
-    const scores = {};
-    for (const result of results) {
-      if (result.title) {
-        const titleTokens = tokenize(result.title);
-        const exactMatchingTokens = titleTokens.filter(
-          (titleToken) => searchTokens.some(
-            (searchToken) => titleToken === searchToken
-          )
-        );
-        const subMatchingTokens = titleTokens.filter(
-          (titleToken) => searchTokens.some(
-            (searchToken) => titleToken !== searchToken && titleToken.includes(searchToken)
-          )
-        );
-        const exactMatchScore = exactMatchingTokens.length / titleTokens.length * 10;
-        const subMatchScore = subMatchingTokens.length / titleTokens.length;
-        scores[scoreKey(result)] = exactMatchScore + subMatchScore;
-      } else {
-        scores[scoreKey(result)] = 0;
-      }
-    }
-    return results.sort(
-      (a, b) => scores[scoreKey(b)] - scores[scoreKey(a)]
+    const scored = results.map((result) => ({
+      result,
+      found: countWordsFound(result.title, searchTokens),
+      ...getTitleMatch(result.title, search),
+      type: getTypeWeight(result),
+      score: getCoverage(result.title, searchTokens)
+    }));
+    scored.sort(
+      (a, b) => (
+        // Does the title contain all words searched or just one?
+        // If the search is "black cat" then "Black is my favorite color" should rank lower than "Cats that are black"
+        b.found - a.found || // Then whether it holds them together, as one string: i.e. "Black cats are great" vs "Cats that are black"
+        Number(b.contains) - Number(a.contains) || // Matches are equal so far, so enforce banding by type
+        b.type - a.type || // Within a band, rank matches that start with the search string higher than mid-string matches:
+        // i.e the search "cat" ranks the title "caterpillar" higher than "concatenate"
+        Number(b.begins) - Number(a.begins) || // Rank by how much of the matched word the search contains: the search
+        // "cat" ranks the title "Cats" above the title "Caterpillar" since cat is 75% of "Cats"
+        // and only 27% of "Caterpillar"
+        b.score - a.score
+      )
     );
+    return scored.map(({ result }) => result);
   }
   function tokenize(text) {
     return text.toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
