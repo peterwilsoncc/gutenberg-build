@@ -22431,6 +22431,12 @@ var wp;
           fontSize: true
         }
       },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      },
       interactivity: {
         clientNavigation: true
       }

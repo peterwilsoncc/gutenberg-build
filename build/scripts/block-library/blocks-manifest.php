@@ -2073,6 +2073,12 @@ return array(
 					'fontSize' => true
 				)
 			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			)
