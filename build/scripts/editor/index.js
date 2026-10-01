@@ -126868,7 +126868,6 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime688.jsx)(
       more_menu_item_default,
       {
-        icon: download_default,
         onClick: handleExport,
         info: (0, import_i18n372.__)(
           "Download your theme with updated templates and styles."
