@@ -76238,10 +76238,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return areCropperStatesEqual(a2.cropper, b2.cropper) && a2.cropOptions.aspectRatioValue === b2.cropOptions.aspectRatioValue;
   }
-  function buildInitialMediaEditorState(initialCropper, initialOptions) {
+  function buildInitialMediaEditorState(cropper) {
     return {
-      cropper: initialCropper,
-      cropOptions: { ...DEFAULT_CROP_OPTIONS, ...initialOptions }
+      cropper,
+      cropOptions: { ...DEFAULT_CROP_OPTIONS }
     };
   }
 
@@ -76265,17 +76265,11 @@ If there's a particular need for this, please submit a feature request at https:
   function areCropperImagesEqual(a2, b2) {
     return a2?.src === b2?.src && a2?.naturalWidth === b2?.naturalWidth && a2?.naturalHeight === b2?.naturalHeight;
   }
-  function useMediaEditorState(initialState) {
+  function useMediaEditorState() {
     const [state2, dispatch9] = (0, import_element245.useReducer)(
       mediaEditorReducer,
       null,
-      () => buildInitialMediaEditorState(
-        enforceContainment({
-          ...DEFAULT_STATE2,
-          ...initialState?.cropper
-        }),
-        initialState?.cropOptions
-      )
+      () => buildInitialMediaEditorState({ ...DEFAULT_STATE2 })
     );
     const [initialBaseline, setInitialBaseline] = (0, import_element245.useState)(() => state2);
     const stateRef = (0, import_element245.useRef)(state2);
@@ -76514,14 +76508,9 @@ If there's a particular need for this, please submit a feature request at https:
     null
   );
   function MediaEditorStateProvider({
-    initialCropperState,
-    initialCropOptions,
     children
   }) {
-    const controller = useMediaEditorState({
-      cropper: initialCropperState,
-      cropOptions: initialCropOptions
-    });
+    const controller = useMediaEditorState();
     return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
   }
   function useMediaEditor() {

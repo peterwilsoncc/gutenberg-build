@@ -42834,10 +42834,10 @@ function areMediaEditorStatesEqual(a, b) {
   }
   return areCropperStatesEqual(a.cropper, b.cropper) && a.cropOptions.aspectRatioValue === b.cropOptions.aspectRatioValue;
 }
-function buildInitialMediaEditorState(initialCropper, initialOptions) {
+function buildInitialMediaEditorState(cropper) {
   return {
-    cropper: initialCropper,
-    cropOptions: { ...DEFAULT_CROP_OPTIONS, ...initialOptions }
+    cropper,
+    cropOptions: { ...DEFAULT_CROP_OPTIONS }
   };
 }
 
@@ -42861,17 +42861,11 @@ function resolveAspectRatio(presetKey, cropperImage) {
 function areCropperImagesEqual(a, b) {
   return a?.src === b?.src && a?.naturalWidth === b?.naturalWidth && a?.naturalHeight === b?.naturalHeight;
 }
-function useMediaEditorState(initialState) {
+function useMediaEditorState() {
   const [state, dispatch] = (0, import_element141.useReducer)(
     mediaEditorReducer,
     null,
-    () => buildInitialMediaEditorState(
-      enforceContainment({
-        ...DEFAULT_STATE2,
-        ...initialState?.cropper
-      }),
-      initialState?.cropOptions
-    )
+    () => buildInitialMediaEditorState({ ...DEFAULT_STATE2 })
   );
   const [initialBaseline, setInitialBaseline] = (0, import_element141.useState)(() => state);
   const stateRef = (0, import_element141.useRef)(state);
@@ -43110,14 +43104,9 @@ var MediaEditorStateContext = (0, import_element142.createContext)(
   null
 );
 function MediaEditorStateProvider({
-  initialCropperState,
-  initialCropOptions,
   children
 }) {
-  const controller = useMediaEditorState({
-    cropper: initialCropperState,
-    cropOptions: initialCropOptions
-  });
+  const controller = useMediaEditorState();
   return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
 }
 function useMediaEditor() {
