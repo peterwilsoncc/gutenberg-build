@@ -70242,6 +70242,10 @@ ${text}
         margin: true,
         padding: true
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       color: {
         gradients: true,
         __experimentalDefaultControls: {

@@ -7468,6 +7468,10 @@ return array(
 				'margin' => true,
 				'padding' => true
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'color' => array(
 				'gradients' => true,
 				'__experimentalDefaultControls' => array(
