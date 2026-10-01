@@ -12101,7 +12101,7 @@ var KeyboardShortcutDisplay = (0, import_element20.forwardRef)(function Unforwar
   return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
 });
 
-// packages/ui/build-module/utils/inert-value.mjs
+// packages/react-inert-value/build-module/index.mjs
 var import_react6 = __toESM(require_react(), 1);
 var majorVersion2 = parseInt(import_react6.version, 10);
 function inertValue2(value) {
@@ -32963,8 +32963,8 @@ function MediaEditControl({
 
 // routes/identity/stage.tsx
 var import_element105 = __toESM(require_element());
-import { loadEditorAssets } from "@wordpress/lazy-editor";
 var import_html_entities2 = __toESM(require_html_entities());
+import { loadEditorAssets } from "@wordpress/lazy-editor";
 
 // packages/style-runtime/src/index.ts
 var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";

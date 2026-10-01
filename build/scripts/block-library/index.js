@@ -11060,7 +11060,7 @@ var wp;
     }
   );
 
-  // packages/ui/build-module/utils/inert-value.mjs
+  // packages/react-inert-value/build-module/index.mjs
   var import_react5 = __toESM(require_react(), 1);
   var majorVersion2 = parseInt(import_react5.version, 10);
   function inertValue2(value) {

@@ -52220,7 +52220,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   );
 
-  // packages/ui/build-module/utils/inert-value.mjs
+  // packages/react-inert-value/build-module/index.mjs
   var import_react100 = __toESM(require_react(), 1);
   var majorVersion2 = parseInt(import_react100.version, 10);
   function inertValue2(value) {

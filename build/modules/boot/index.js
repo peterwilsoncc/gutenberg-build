@@ -9504,7 +9504,7 @@ var KeyboardShortcutDisplay = (0, import_element19.forwardRef)(function Unforwar
   return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
 });
 
-// packages/ui/build-module/utils/inert-value.mjs
+// packages/react-inert-value/build-module/index.mjs
 var import_react6 = __toESM(require_react(), 1);
 var majorVersion2 = parseInt(import_react6.version, 10);
 function inertValue2(value) {
@@ -12310,9 +12310,9 @@ var import_element37 = __toESM(require_element(), 1);
 var import_element36 = __toESM(require_element(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
+import { useNavigate as useNavigate2, useSearch as useSearch2 } from "@wordpress/route";
 var import_data10 = __toESM(require_data(), 1);
 var import_core_data5 = __toESM(require_core_data(), 1);
-import { useNavigate as useNavigate2, useSearch as useSearch2 } from "@wordpress/route";
 
 // packages/boot/build-module/components/canvas/back-button.mjs
 var import_components11 = __toESM(require_components(), 1);

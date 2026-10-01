@@ -28445,7 +28445,7 @@ var Trigger2 = (0, import_element45.forwardRef)(
   }
 );
 
-// packages/ui/build-module/utils/inert-value.mjs
+// packages/react-inert-value/build-module/index.mjs
 var import_react6 = __toESM(require_react(), 1);
 var majorVersion2 = parseInt(import_react6.version, 10);
 function inertValue2(value) {
