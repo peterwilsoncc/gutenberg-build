@@ -47,9 +47,9 @@ function __wpWarnCompat(key) {var w = __wpWarnCompat.warned || (__wpWarnCompat.w
     }
   });
 
-  // ../react-19/node_modules/react/cjs/react.development.js
+  // ../../node_modules/.store/react@19.3.0-tJRCs5toIV1MwFohgXUjkg/node_modules/react/cjs/react.development.js
   var require_react_development = __commonJS({
-    "../react-19/node_modules/react/cjs/react.development.js"(exports, module) {
+    "../../node_modules/.store/react@19.3.0-tJRCs5toIV1MwFohgXUjkg/node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
       (function() {
         function defineDeprecationWarning(methodName, info) {
@@ -1044,9 +1044,9 @@ function __wpWarnCompat(key) {var w = __wpWarnCompat.warned || (__wpWarnCompat.w
     }
   });
 
-  // ../react-19/node_modules/react/index.js
+  // ../../node_modules/.store/react@19.3.0-tJRCs5toIV1MwFohgXUjkg/node_modules/react/index.js
   var require_react = __commonJS({
-    "../react-19/node_modules/react/index.js"(exports, module) {
+    "../../node_modules/.store/react@19.3.0-tJRCs5toIV1MwFohgXUjkg/node_modules/react/index.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;

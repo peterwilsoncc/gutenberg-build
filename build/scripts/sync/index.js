@@ -54,9 +54,9 @@ var wp;
     }
   });
 
-  // node_modules/fast-deep-equal/es6/index.js
+  // node_modules/.store/fast-deep-equal@3.1.3-Dk0kpzcWCOUHE1bkOO2LLA/node_modules/fast-deep-equal/es6/index.js
   var require_es6 = __commonJS({
-    "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
+    "node_modules/.store/fast-deep-equal@3.1.3-Dk0kpzcWCOUHE1bkOO2LLA/node_modules/fast-deep-equal/es6/index.js"(exports, module) {
       "use strict";
       module.exports = function equal(a, b) {
         if (a === b) return true;
@@ -119,7 +119,7 @@ var wp;
     privateApis: () => privateApis
   });
 
-  // node_modules/yjs/dist/yjs.mjs
+  // node_modules/.store/yjs@13.6.29-TJYJpNVE3l2_hFsy5BI5FA/node_modules/yjs/dist/yjs.mjs
   var yjs_exports = {};
   __export(yjs_exports, {
     AbsolutePosition: () => AbsolutePosition,
@@ -227,7 +227,7 @@ var wp;
     typeMapGetSnapshot: () => typeMapGetSnapshot
   });
 
-  // node_modules/lib0/map.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/map.js
   var create = () => /* @__PURE__ */ new Map();
   var copy = (m) => {
     const r = create();
@@ -259,10 +259,10 @@ var wp;
     return false;
   };
 
-  // node_modules/lib0/set.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/set.js
   var create2 = () => /* @__PURE__ */ new Set();
 
-  // node_modules/lib0/array.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/array.js
   var last = (arr) => arr[arr.length - 1];
   var appendTo = (dest, src) => {
     for (let i = 0; i < src.length; i++) {
@@ -295,7 +295,7 @@ var wp;
   };
   var isArray = Array.isArray;
 
-  // node_modules/lib0/observable.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/observable.js
   var ObservableV2 = class {
     constructor() {
       this._observers = create();
@@ -417,7 +417,7 @@ var wp;
     }
   };
 
-  // node_modules/lib0/math.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/math.js
   var floor = Math.floor;
   var abs = Math.abs;
   var min = (a, b) => a < b ? a : b;
@@ -425,7 +425,7 @@ var wp;
   var isNaN2 = Number.isNaN;
   var isNegativeZero = (n) => n !== 0 ? n < 0 : 1 / n < 0;
 
-  // node_modules/lib0/binary.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/binary.js
   var BIT1 = 1;
   var BIT2 = 2;
   var BIT3 = 4;
@@ -467,7 +467,7 @@ var wp;
   var BITS30 = BIT31 - 1;
   var BITS31 = 2147483647;
 
-  // node_modules/lib0/number.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/number.js
   var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
   var MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER;
   var LOWEST_INT32 = 1 << 31;
@@ -475,7 +475,7 @@ var wp;
   var isNaN3 = Number.isNaN;
   var parseInt2 = Number.parseInt;
 
-  // node_modules/lib0/string.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/string.js
   var fromCharCode = String.fromCharCode;
   var fromCodePoint = String.fromCodePoint;
   var MAX_UTF16_CHARACTER = fromCharCode(65535);
@@ -506,7 +506,7 @@ var wp;
   }
   var repeat = (source, n) => unfold(n, () => source).join("");
 
-  // node_modules/lib0/encoding.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/encoding.js
   var Encoder = class {
     constructor() {
       this.cpos = 0;
@@ -814,7 +814,7 @@ var wp;
     }
   };
 
-  // node_modules/lib0/error.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/error.js
   var create3 = (s) => new Error(s);
   var methodUnimplemented = () => {
     throw create3("Method unimplemented");
@@ -823,7 +823,7 @@ var wp;
     throw create3("Unexpected case");
   };
 
-  // node_modules/lib0/decoding.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/decoding.js
   var errorUnexpectedEndOfArray = create3("Unexpected end of array");
   var errorIntegerOutOfRange = create3("Integer out of Range");
   var Decoder = class {
@@ -1066,11 +1066,11 @@ var wp;
     }
   };
 
-  // node_modules/lib0/webcrypto.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/webcrypto.js
   var subtle = crypto.subtle;
   var getRandomValues = crypto.getRandomValues.bind(crypto);
 
-  // node_modules/lib0/random.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/random.js
   var uint32 = () => getRandomValues(new Uint32Array(1))[0];
   var uuidv4Template = "10000000-1000-4000-8000" + -1e11;
   var uuidv4 = () => uuidv4Template.replace(
@@ -1079,20 +1079,20 @@ var wp;
     (c) => (c ^ uint32() & 15 >> c / 4).toString(16)
   );
 
-  // node_modules/lib0/time.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/time.js
   var getUnixTime = Date.now;
 
-  // node_modules/lib0/promise.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/promise.js
   var create4 = (f) => (
     /** @type {Promise<T>} */
     new Promise(f)
   );
   var all = Promise.all.bind(Promise);
 
-  // node_modules/lib0/conditions.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/conditions.js
   var undefinedToNull = (v) => v === void 0 ? null : v;
 
-  // node_modules/lib0/storage.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/storage.js
   var VarStoragePolyfill = class {
     constructor() {
       this.map = /* @__PURE__ */ new Map();
@@ -1122,11 +1122,11 @@ var wp;
   }
   var varStorage = _localStorage;
 
-  // node_modules/lib0/trait/equality.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/trait/equality.js
   var EqualityTraitSymbol = /* @__PURE__ */ Symbol("Equality");
   var equals = (a, b) => a === b || !!a?.[EqualityTraitSymbol]?.(b) || false;
 
-  // node_modules/lib0/object.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/object.js
   var isObject = (o) => typeof o === "object";
   var assign = Object.assign;
   var keys = Object.keys;
@@ -1163,7 +1163,7 @@ var wp;
     return freeze(o);
   };
 
-  // node_modules/lib0/function.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/function.js
   var callAll = (fs, args2, i = 0) => {
     try {
       for (; i < fs.length; i++) {
@@ -1252,7 +1252,7 @@ var wp;
   };
   var isOneOf = (value, options) => options.includes(value);
 
-  // node_modules/lib0/environment.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/environment.js
   var isNode = typeof process !== "undefined" && process.release && /node|io\.js/.test(process.release.name) && Object.prototype.toString.call(typeof process !== "undefined" ? process : 0) === "[object process]";
   var isBrowser = typeof window !== "undefined" && typeof document !== "undefined" && !isNode;
   var isMac = typeof navigator !== "undefined" ? /Mac/.test(navigator.platform) : false;
@@ -1306,7 +1306,7 @@ var wp;
   var supportsColor = forceColor || !hasParam("--no-colors") && // @todo deprecate --no-colors
   !hasConf("no-color") && (!isNode || process.stdout.isTTY) && (!isNode || hasParam("--color") || getVariable("COLORTERM") !== null || (getVariable("TERM") || "").includes("color"));
 
-  // node_modules/lib0/buffer.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/buffer.js
   var createUint8ArrayFromLen = (len) => new Uint8Array(len);
   var createUint8ArrayViewFromArrayBuffer = (buffer, byteOffset, length2) => new Uint8Array(buffer, byteOffset, length2);
   var toBase64Browser = (bytes) => {
@@ -1337,7 +1337,7 @@ var wp;
     return newBuf;
   };
 
-  // node_modules/lib0/pair.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/pair.js
   var Pair = class {
     /**
      * @param {L} left
@@ -1350,7 +1350,7 @@ var wp;
   };
   var create5 = (left, right) => new Pair(left, right);
 
-  // node_modules/lib0/prng.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/prng.js
   var bool = (gen) => gen.next() >= 0.5;
   var int53 = (gen, min2, max2) => floor(gen.next() * (max2 + 1 - min2) + min2);
   var int32 = (gen, min2, max2) => floor(gen.next() * (max2 + 1 - min2) + min2);
@@ -1366,7 +1366,7 @@ var wp;
   };
   var oneOf = (gen, array) => array[int31(gen, 0, array.length - 1)];
 
-  // node_modules/lib0/schema.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/schema.js
   var schemaSymbol = /* @__PURE__ */ Symbol("0schema");
   var ValidationError = class {
     constructor() {
@@ -2102,7 +2102,7 @@ ${err.toString()}`);
     _random($(schema), gen)
   );
 
-  // node_modules/lib0/dom.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/dom.js
   var doc = (
     /** @type {Document} */
     typeof document !== "undefined" ? document : {}
@@ -2124,10 +2124,10 @@ ${err.toString()}`);
   var DOCUMENT_FRAGMENT_NODE = doc.DOCUMENT_FRAGMENT_NODE;
   var $node = $custom((el) => el.nodeType === DOCUMENT_NODE);
 
-  // node_modules/lib0/symbol.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/symbol.js
   var create6 = Symbol;
 
-  // node_modules/lib0/logging.common.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/logging.common.js
   var BOLD = create6();
   var UNBOLD = create6();
   var BLUE = create6();
@@ -2169,7 +2169,7 @@ ${err.toString()}`);
   };
   var lastLoggingTime = getUnixTime();
 
-  // node_modules/lib0/logging.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/logging.js
   var _browserStyleMap = {
     [BOLD]: create5("font-weight", "bold"),
     [UNBOLD]: create5("font-weight", "normal"),
@@ -2239,7 +2239,7 @@ ${err.toString()}`);
   };
   var vconsoles = create2();
 
-  // node_modules/lib0/iterator.js
+  // node_modules/.store/lib0@0.2.117-AWthJenbqlRhwK8dg2Xkww/node_modules/lib0/iterator.js
   var createIterator = (next) => ({
     /**
      * @return {IterableIterator<T>}
@@ -2262,7 +2262,7 @@ ${err.toString()}`);
     return { done, value: done ? void 0 : fmap(value) };
   });
 
-  // node_modules/yjs/dist/yjs.mjs
+  // node_modules/.store/yjs@13.6.29-TJYJpNVE3l2_hFsy5BI5FA/node_modules/yjs/dist/yjs.mjs
   var AbstractConnector = class extends ObservableV2 {
     /**
      * @param {Doc} ydoc
@@ -9797,7 +9797,7 @@ ${err.toString()}`);
   }
   glo[importIdentifier] = true;
 
-  // node_modules/y-protocols/awareness.js
+  // node_modules/.store/y-protocols@1.0.7-LCrc4ked9I2BIv1vBZfNXw/node_modules/y-protocols/awareness.js
   var outdatedTimeout = 3e4;
   var Awareness = class extends Observable {
     /**
@@ -9985,7 +9985,7 @@ ${err.toString()}`);
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
   var import_hooks2 = __toESM(require_hooks(), 1);
 
-  // node_modules/y-protocols/sync.js
+  // node_modules/.store/y-protocols@1.0.7-LCrc4ked9I2BIv1vBZfNXw/node_modules/y-protocols/sync.js
   var messageYjsSyncStep1 = 0;
   var messageYjsSyncStep2 = 1;
   var messageYjsUpdate = 2;
@@ -11750,7 +11750,7 @@ ${err.toString()}`);
     };
   }
 
-  // node_modules/diff/libesm/diff/base.js
+  // node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/base.js
   var Diff = class {
     diff(oldStr, newStr, options = {}) {
       let callback;
@@ -11952,7 +11952,7 @@ ${err.toString()}`);
     }
   };
 
-  // node_modules/diff/libesm/diff/character.js
+  // node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/character.js
   var CharacterDiff = class extends Diff {
   };
   var characterDiff = new CharacterDiff();
@@ -11960,7 +11960,7 @@ ${err.toString()}`);
     return characterDiff.diff(oldStr, newStr, options);
   }
 
-  // node_modules/diff/libesm/diff/line.js
+  // node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/line.js
   var LineDiff = class extends Diff {
     constructor() {
       super(...arguments);

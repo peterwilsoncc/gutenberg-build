@@ -1,4 +1,4 @@
-// node_modules/temml/dist/temml.mjs
+// node_modules/.store/temml@0.10.34-cIom-bDUKdjul-PTPEPx3w/node_modules/temml/dist/temml.mjs
 var ParseError = class _ParseError {
   constructor(message, token) {
     let error = " " + message;

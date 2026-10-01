@@ -328,7 +328,7 @@ function resolve(id, parentUrl) {
   return resolveImportMap(importMap, urlResolved || id, parentUrl) || id;
 }
 
-// node_modules/es-module-lexer/dist/lexer.js
+// node_modules/.store/es-module-lexer@1.7.0-gHi57fYnqFW7Bwxoq90PCA/node_modules/es-module-lexer/dist/lexer.js
 var ImportType;
 !(function(A2) {
   A2[A2.Static = 1] = "Static", A2[A2.Dynamic = 2] = "Dynamic", A2[A2.ImportMeta = 3] = "ImportMeta", A2[A2.StaticSourcePhase = 4] = "StaticSourcePhase", A2[A2.DynamicSourcePhase = 5] = "DynamicSourcePhase", A2[A2.StaticDeferPhase = 6] = "StaticDeferPhase", A2[A2.DynamicDeferPhase = 7] = "DynamicDeferPhase";

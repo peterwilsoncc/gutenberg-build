@@ -1,7 +1,7 @@
 // packages/block-library/build-module/playlist/view.mjs
 import { store, getContext, getElement } from "@wordpress/interactivity";
 
-// node_modules/colord/index.mjs
+// node_modules/.store/colord@2.10.0-Qx66Amv6c9C3nDPQDizV6Q/node_modules/colord/index.mjs
 for (r = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, t = function(r2) {
   return "string" == typeof r2 ? r2.length > 0 : "number" == typeof r2;
 }, n = function(r2, t2, n2) {
@@ -172,7 +172,7 @@ var A = function(r) {
   return r instanceof q ? r : new q(r);
 };
 
-// node_modules/@arraypress/waveform-player/dist/waveform-player-no-autoinit.esm.js
+// node_modules/.store/@arraypress/waveform-player@1.27.0-5lSg0kJG4ah83J6WIqLUFw/node_modules/@arraypress/waveform-player/dist/waveform-player-no-autoinit.esm.js
 function $2() {
   return typeof window < "u" && typeof document < "u";
 }

@@ -89,9 +89,9 @@ var wp;
     }
   });
 
-  // node_modules/remove-accents/index.js
+  // node_modules/.store/remove-accents@0.5.0-S_lnImruWgc6kBSjIJlPgw/node_modules/remove-accents/index.js
   var require_remove_accents = __commonJS({
-    "node_modules/remove-accents/index.js"(exports, module) {
+    "node_modules/.store/remove-accents@0.5.0-S_lnImruWgc6kBSjIJlPgw/node_modules/remove-accents/index.js"(exports, module) {
       var characterMap = {
         "\xC0": "A",
         "\xC1": "A",
@@ -571,9 +571,9 @@ var wp;
     }
   });
 
-  // node_modules/fast-deep-equal/es6/index.js
+  // node_modules/.store/fast-deep-equal@3.1.3-Dk0kpzcWCOUHE1bkOO2LLA/node_modules/fast-deep-equal/es6/index.js
   var require_es6 = __commonJS({
-    "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
+    "node_modules/.store/fast-deep-equal@3.1.3-Dk0kpzcWCOUHE1bkOO2LLA/node_modules/fast-deep-equal/es6/index.js"(exports, module) {
       "use strict";
       module.exports = function equal(a, b2) {
         if (a === b2) return true;
@@ -627,9 +627,9 @@ var wp;
     }
   });
 
-  // packages/blocks/node_modules/react-is/cjs/react-is.development.js
+  // node_modules/.store/react-is@18.3.1-GEUr3tnTgu7DlXKA8ptPiw/node_modules/react-is/cjs/react-is.development.js
   var require_react_is_development = __commonJS({
-    "packages/blocks/node_modules/react-is/cjs/react-is.development.js"(exports) {
+    "node_modules/.store/react-is@18.3.1-GEUr3tnTgu7DlXKA8ptPiw/node_modules/react-is/cjs/react-is.development.js"(exports) {
       "use strict";
       if (true) {
         (function() {
@@ -809,9 +809,9 @@ var wp;
     }
   });
 
-  // packages/blocks/node_modules/react-is/index.js
+  // node_modules/.store/react-is@18.3.1-GEUr3tnTgu7DlXKA8ptPiw/node_modules/react-is/index.js
   var require_react_is = __commonJS({
-    "packages/blocks/node_modules/react-is/index.js"(exports, module) {
+    "node_modules/.store/react-is@18.3.1-GEUr3tnTgu7DlXKA8ptPiw/node_modules/react-is/index.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;
@@ -966,7 +966,7 @@ var wp;
   // packages/blocks/build-module/store/index.mjs
   var import_data5 = __toESM(require_data(), 1);
 
-  // node_modules/tslib/tslib.es6.mjs
+  // node_modules/.store/tslib@2.8.1-LT-dxu1EkVy7OUDyVf5glQ/node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
     __assign = Object.assign || function __assign2(t2) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -978,12 +978,12 @@ var wp;
     return __assign.apply(this, arguments);
   };
 
-  // node_modules/lower-case/dist.es2015/index.js
+  // node_modules/.store/lower-case@2.0.2-5YZP5nczP5_f_8Vt5KBPjA/node_modules/lower-case/dist.es2015/index.js
   function lowerCase(str) {
     return str.toLowerCase();
   }
 
-  // node_modules/no-case/dist.es2015/index.js
+  // node_modules/.store/no-case@3.0.4-R4Hzt6qn-erEsTak7ojDpg/node_modules/no-case/dist.es2015/index.js
   var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
   var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
   function noCase(input, options) {
@@ -1008,7 +1008,7 @@ var wp;
     }, input);
   }
 
-  // node_modules/pascal-case/dist.es2015/index.js
+  // node_modules/.store/pascal-case@3.1.2-khtSA9hpCTEVLYfMgyRdoA/node_modules/pascal-case/dist.es2015/index.js
   function pascalCaseTransform(input, index) {
     var firstChar = input.charAt(0);
     var lowerChars = input.substr(1).toLowerCase();
@@ -1024,7 +1024,7 @@ var wp;
     return noCase(input, __assign({ delimiter: "", transform: pascalCaseTransform }, options));
   }
 
-  // node_modules/camel-case/dist.es2015/index.js
+  // node_modules/.store/camel-case@4.1.2-5Gz5buNb7xjdcDcS4uJ7xw/node_modules/camel-case/dist.es2015/index.js
   function camelCaseTransform(input, index) {
     if (index === 0)
       return input.toLowerCase();
@@ -1041,7 +1041,7 @@ var wp;
   var import_data2 = __toESM(require_data(), 1);
   var import_i18n3 = __toESM(require_i18n(), 1);
 
-  // node_modules/colord/index.mjs
+  // node_modules/.store/colord@2.10.0-Qx66Amv6c9C3nDPQDizV6Q/node_modules/colord/index.mjs
   for (r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, t2 = function(r3) {
     return "string" == typeof r3 ? r3.length > 0 : "number" == typeof r3;
   }, n = function(r3, t3, n2) {
@@ -1218,7 +1218,7 @@ var wp;
     });
   };
 
-  // node_modules/colord/plugins/names.mjs
+  // node_modules/.store/colord@2.10.0-Qx66Amv6c9C3nDPQDizV6Q/node_modules/colord/plugins/names.mjs
   var e = function(e2, f2) {
     var a = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r2 = {};
     for (var d2 in a) r2[a[d2]] = d2;
@@ -1243,7 +1243,7 @@ var wp;
     }, "name"]);
   };
 
-  // node_modules/colord/plugins/a11y.mjs
+  // node_modules/.store/colord@2.10.0-Qx66Amv6c9C3nDPQDizV6Q/node_modules/colord/plugins/a11y.mjs
   var o = function(o2) {
     var t2 = o2 / 255;
     return t2 < 0.04045 ? t2 / 12.92 : Math.pow((t2 + 0.055) / 1.055, 2.4);
@@ -2903,7 +2903,7 @@ var wp;
   });
   var import_deprecated5 = __toESM(require_deprecated(), 1);
 
-  // node_modules/is-plain-object/dist/is-plain-object.mjs
+  // node_modules/.store/is-plain-object@5.1.0-5G_-lUnpSwJHYfRbkIxLrw/node_modules/is-plain-object/dist/is-plain-object.mjs
   function isObject3(o2) {
     return Object.prototype.toString.call(o2) === "[object Object]";
   }
@@ -3257,7 +3257,7 @@ var wp;
   unlock(store).registerPrivateSelectors(private_selectors_exports);
   unlock(store).registerPrivateActions(private_actions_exports);
 
-  // node_modules/uuid/dist/stringify.js
+  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/stringify.js
   var byteToHex = [];
   for (let i = 0; i < 256; ++i) {
     byteToHex.push((i + 256).toString(16).slice(1));
@@ -3266,13 +3266,13 @@ var wp;
     return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
   }
 
-  // node_modules/uuid/dist/rng.js
+  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/rng.js
   var rnds8 = new Uint8Array(16);
   function rng() {
     return crypto.getRandomValues(rnds8);
   }
 
-  // node_modules/uuid/dist/v4.js
+  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/v4.js
   function v4(options, buf, offset) {
     if (!buf && !options && crypto.randomUUID) {
       return crypto.randomUUID();
@@ -3827,7 +3827,7 @@ var wp;
     return blocksArray.map((block) => serializeBlock(block, options)).join("\n\n");
   }
 
-  // node_modules/simple-html-tokenizer/dist/es6/index.js
+  // node_modules/.store/simple-html-tokenizer@0.5.7-XqyG3gha3SmBXttNwRHo8w/node_modules/simple-html-tokenizer/dist/es6/index.js
   var HEXCHARCODE = /^#[xX]([A-Fa-f0-9]+)$/;
   var CHARCODE = /^#([0-9]+)$/;
   var NAMED = /^([A-Za-z0-9]+)$/;
@@ -5086,7 +5086,7 @@ var wp;
     return [name, newAttributes];
   }
 
-  // node_modules/hpq/es/get-path.js
+  // node_modules/.store/hpq@1.4.0-W9NdSIZtdLeCHL5yGEJLvQ/node_modules/hpq/es/get-path.js
   function getPath(object, path) {
     var segments = path.split(".");
     var segment;
@@ -5099,7 +5099,7 @@ var wp;
     return object;
   }
 
-  // node_modules/hpq/es/index.js
+  // node_modules/.store/hpq@1.4.0-W9NdSIZtdLeCHL5yGEJLvQ/node_modules/hpq/es/index.js
   var getDocument = /* @__PURE__ */ (function() {
     var doc;
     return function() {
@@ -5179,7 +5179,7 @@ var wp;
     };
   }
 
-  // node_modules/memize/dist/index.js
+  // node_modules/.store/memize@2.1.1-roXbtpG2bis3Lggp7SQpAA/node_modules/memize/dist/index.js
   function memize(fn, options) {
     var size = 0;
     var head;
@@ -6615,7 +6615,7 @@ var wp;
     node.innerHTML = normaliseBlocks(node.innerHTML);
   }
 
-  // node_modules/marked/lib/marked.esm.js
+  // node_modules/.store/marked@18.0.13-B-tDZfJAz9zUYDQYWjYtzA/node_modules/marked/lib/marked.esm.js
   function A2() {
     return { async: false, breaks: false, extensions: null, gfm: true, hooks: null, pedantic: false, renderer: null, silent: false, tokenizer: null, walkTokens: null };
   }

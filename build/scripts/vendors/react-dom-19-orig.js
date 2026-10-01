@@ -62,9 +62,9 @@ var ReactDOM = (() => {
     }
   });
 
-  // ../react-19/node_modules/react-dom/cjs/react-dom.development.js
+  // ../../node_modules/.store/react-dom@19.3.0-NNb4pI9-pzhGhPvydBQc-A/node_modules/react-dom/cjs/react-dom.development.js
   var require_react_dom_development = __commonJS({
-    "../react-19/node_modules/react-dom/cjs/react-dom.development.js"(exports) {
+    "../../node_modules/.store/react-dom@19.3.0-NNb4pI9-pzhGhPvydBQc-A/node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
       (function() {
         function noop() {
@@ -317,9 +317,9 @@ var ReactDOM = (() => {
     }
   });
 
-  // ../react-19/node_modules/react-dom/index.js
+  // ../../node_modules/.store/react-dom@19.3.0-NNb4pI9-pzhGhPvydBQc-A/node_modules/react-dom/index.js
   var require_react_dom = __commonJS({
-    "../react-19/node_modules/react-dom/index.js"(exports, module) {
+    "../../node_modules/.store/react-dom@19.3.0-NNb4pI9-pzhGhPvydBQc-A/node_modules/react-dom/index.js"(exports, module) {
       "use strict";
       if (false) {
         checkDCE();
@@ -330,9 +330,9 @@ var ReactDOM = (() => {
     }
   });
 
-  // ../react-19/node_modules/scheduler/cjs/scheduler.development.js
+  // ../../node_modules/.store/scheduler@0.28.0-gTIJ_pVVJq3bMj1IomW2Sw/node_modules/scheduler/cjs/scheduler.development.js
   var require_scheduler_development = __commonJS({
-    "../react-19/node_modules/scheduler/cjs/scheduler.development.js"(exports) {
+    "../../node_modules/.store/scheduler@0.28.0-gTIJ_pVVJq3bMj1IomW2Sw/node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
       (function() {
         function performWorkUntilDeadline() {
@@ -589,9 +589,9 @@ var ReactDOM = (() => {
     }
   });
 
-  // ../react-19/node_modules/scheduler/index.js
+  // ../../node_modules/.store/scheduler@0.28.0-gTIJ_pVVJq3bMj1IomW2Sw/node_modules/scheduler/index.js
   var require_scheduler = __commonJS({
-    "../react-19/node_modules/scheduler/index.js"(exports, module) {
+    "../../node_modules/.store/scheduler@0.28.0-gTIJ_pVVJq3bMj1IomW2Sw/node_modules/scheduler/index.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;
@@ -601,9 +601,9 @@ var ReactDOM = (() => {
     }
   });
 
-  // ../react-19/node_modules/react-dom/cjs/react-dom-client.development.js
+  // ../../node_modules/.store/react-dom@19.3.0-NNb4pI9-pzhGhPvydBQc-A/node_modules/react-dom/cjs/react-dom-client.development.js
   var require_react_dom_client_development = __commonJS({
-    "../react-19/node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
+    "../../node_modules/.store/react-dom@19.3.0-NNb4pI9-pzhGhPvydBQc-A/node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
       (function() {
         function findHook(fiber, id) {
@@ -22562,9 +22562,9 @@ var ReactDOM = (() => {
     }
   });
 
-  // ../react-19/node_modules/react-dom/client.js
+  // ../../node_modules/.store/react-dom@19.3.0-NNb4pI9-pzhGhPvydBQc-A/node_modules/react-dom/client.js
   var require_client = __commonJS({
-    "../react-19/node_modules/react-dom/client.js"(exports, module) {
+    "../../node_modules/.store/react-dom@19.3.0-NNb4pI9-pzhGhPvydBQc-A/node_modules/react-dom/client.js"(exports, module) {
       "use strict";
       if (false) {
         checkDCE();

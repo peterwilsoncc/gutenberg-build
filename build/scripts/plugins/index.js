@@ -75,9 +75,9 @@ var wp;
     }
   });
 
-  // packages/plugins/node_modules/react-is/cjs/react-is.development.js
+  // node_modules/.store/react-is@18.3.1-GEUr3tnTgu7DlXKA8ptPiw/node_modules/react-is/cjs/react-is.development.js
   var require_react_is_development = __commonJS({
-    "packages/plugins/node_modules/react-is/cjs/react-is.development.js"(exports) {
+    "node_modules/.store/react-is@18.3.1-GEUr3tnTgu7DlXKA8ptPiw/node_modules/react-is/cjs/react-is.development.js"(exports) {
       "use strict";
       if (true) {
         (function() {
@@ -257,9 +257,9 @@ var wp;
     }
   });
 
-  // packages/plugins/node_modules/react-is/index.js
+  // node_modules/.store/react-is@18.3.1-GEUr3tnTgu7DlXKA8ptPiw/node_modules/react-is/index.js
   var require_react_is = __commonJS({
-    "packages/plugins/node_modules/react-is/index.js"(exports, module) {
+    "node_modules/.store/react-is@18.3.1-GEUr3tnTgu7DlXKA8ptPiw/node_modules/react-is/index.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;
@@ -288,7 +288,7 @@ var wp;
     withPluginContext: () => withPluginContext
   });
 
-  // node_modules/memize/dist/index.js
+  // node_modules/.store/memize@2.1.1-roXbtpG2bis3Lggp7SQpAA/node_modules/memize/dist/index.js
   function memize(fn, options) {
     var size = 0;
     var head;
