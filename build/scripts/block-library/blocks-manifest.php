@@ -6878,7 +6878,8 @@ return array(
 				)
 			),
 			'dimensions' => array(
-				'minHeight' => true
+				'minHeight' => true,
+				'minWidth' => true
 			),
 			'shadow' => true,
 			'spacing' => array(
