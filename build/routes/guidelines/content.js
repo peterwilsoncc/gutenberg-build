@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState64({
+        cachedValue = useState65({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React153 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState64 = React153.useState, useEffect58 = React153.useEffect, useLayoutEffect6 = React153.useLayoutEffect, useDebugValue2 = React153.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React153 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState65 = React153.useState, useEffect58 = React153.useEffect, useLayoutEffect6 = React153.useLayoutEffect, useDebugValue2 = React153.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React153.useSyncExternalStore ? React153.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -30432,7 +30432,7 @@ var page_default = Page;
 
 // routes/guidelines/stage.tsx
 var import_i18n68 = __toESM(require_i18n());
-var import_element171 = __toESM(require_element());
+var import_element172 = __toESM(require_element());
 var import_components63 = __toESM(require_components());
 
 // routes/guidelines/style.scss
@@ -30464,8 +30464,7 @@ function GuidelineAccordion({
 var import_components58 = __toESM(require_components());
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element154 = __toESM(require_element(), 1);
-var import_compose25 = __toESM(require_compose(), 1);
+var import_element155 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-context/index.mjs
 var import_element86 = __toESM(require_element(), 1);
@@ -38274,11 +38273,11 @@ function useStoreProps(store, props, key, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React152.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState64 = React152.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState65 = React152.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React152.useMemo(() => ({
     ...store,
-    useState: useState64
-  }), [store, useState64]), useEvent(() => {
+    useState: useState65
+  }), [store, useState65]), useEvent(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -46397,8 +46396,29 @@ function normalizeFields(fields2) {
   });
 }
 
-// packages/dataviews/build-module/hooks/use-data.mjs
+// packages/dataviews/build-module/hooks/use-container-width.mjs
 var import_element151 = __toESM(require_element(), 1);
+var import_compose23 = __toESM(require_compose(), 1);
+function useContainerWidth() {
+  const [width, setWidth] = (0, import_element151.useState)(0);
+  const measureRef = (0, import_element151.useCallback)((element) => {
+    if (element) {
+      setWidth(element.offsetWidth);
+    }
+  }, []);
+  const observerRef = (0, import_compose23.useResizeObserver)(
+    (entries) => {
+      setWidth(
+        Math.floor(entries[0].borderBoxSize[0].inlineSize)
+      );
+    },
+    { box: "border-box" }
+  );
+  return [width, (0, import_compose23.useMergeRefs)([measureRef, observerRef])];
+}
+
+// packages/dataviews/build-module/hooks/use-data.mjs
+var import_element152 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -46408,32 +46428,32 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element151.useState)(!isLoading);
-  (0, import_element151.useEffect)(() => {
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element152.useState)(!isLoading);
+  (0, import_element152.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element151.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element151.useRef)(paginationInfo);
-  (0, import_element151.useEffect)(() => {
+  const previousDataRef = (0, import_element152.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element152.useRef)(paginationInfo);
+  (0, import_element152.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element151.useState)([]);
-  const positionMapRef = (0, import_element151.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element151.useRef)([]);
-  const prevViewParamsRef = (0, import_element151.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element152.useState)([]);
+  const positionMapRef = (0, import_element152.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element152.useRef)([]);
+  const prevViewParamsRef = (0, import_element152.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element151.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element151.useRef)(void 0);
-  const hasInitializedRef = (0, import_element151.useRef)(false);
-  const allLoadedRecords = (0, import_element151.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element152.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element152.useRef)(void 0);
+  const hasInitializedRef = (0, import_element152.useRef)(false);
+  const allLoadedRecords = (0, import_element152.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -46555,8 +46575,8 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element152 = __toESM(require_element(), 1);
-var import_compose23 = __toESM(require_compose(), 1);
+var import_element153 = __toESM(require_element(), 1);
+var import_compose24 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -46591,18 +46611,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element152.useRef)(null);
-  const viewRef = (0, import_element152.useRef)(view);
-  const isLoadingRef = (0, import_element152.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element152.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element152.useRef)(paginationInfo.totalItems);
-  (0, import_element152.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element153.useRef)(null);
+  const viewRef = (0, import_element153.useRef)(view);
+  const isLoadingRef = (0, import_element153.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element153.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element153.useRef)(paginationInfo.totalItems);
+  (0, import_element153.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element152.useCallback)(
+  const intersectionObserverCallback = (0, import_element153.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -46634,7 +46654,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element152.useLayoutEffect)(() => {
+  (0, import_element153.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -46654,10 +46674,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element152.useRef)(
+  const intersectionObserverRef = (0, import_element153.useRef)(
     null
   );
-  (0, import_element152.useEffect)(() => {
+  (0, import_element153.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -46676,14 +46696,14 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element152.useEffect)(() => {
+  (0, import_element153.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose23.throttle)((event) => {
+    const handleScroll = (0, import_compose24.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -46736,8 +46756,8 @@ function useInfiniteScroll({
 }
 
 // packages/dataviews/build-module/hooks/use-page-clamp.mjs
-var import_element153 = __toESM(require_element(), 1);
-var import_compose24 = __toESM(require_compose(), 1);
+var import_element154 = __toESM(require_element(), 1);
+var import_compose25 = __toESM(require_compose(), 1);
 function usePageClamp({
   view,
   onChangeView,
@@ -46746,12 +46766,12 @@ function usePageClamp({
 }) {
   const lastPage = typeof totalPages === "number" && Number.isFinite(totalPages) ? Math.max(totalPages, 1) : null;
   const page = view.page;
-  const goToLastPage = (0, import_compose24.useEvent)(() => {
+  const goToLastPage = (0, import_compose25.useEvent)(() => {
     if (lastPage !== null) {
       onChangeView({ ...view, page: lastPage });
     }
   });
-  (0, import_element153.useEffect)(() => {
+  (0, import_element154.useEffect)(() => {
     if (isLoading || lastPage === null || !page || page <= lastPage) {
       return;
     }
@@ -46773,7 +46793,7 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element154.useContext)(dataviews_context_default);
+  const { view } = (0, import_element155.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
   return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(import_jsx_runtime208.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
@@ -46836,7 +46856,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element154.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element155.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -46852,17 +46872,9 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element154.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element154.useState)(0);
-  const resizeObserverRef = (0, import_compose25.useResizeObserver)(
-    (resizeObserverEntries) => {
-      setContainerWidth(
-        resizeObserverEntries[0].borderBoxSize[0].inlineSize
-      );
-    },
-    { box: "border-box" }
-  );
-  const [openedFilter, setOpenedFilter] = (0, import_element154.useState)(null);
+  const containerRef = (0, import_element155.useRef)(null);
+  const [containerWidth, resizeObserverRef] = useContainerWidth();
+  const [openedFilter, setOpenedFilter] = (0, import_element155.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -46872,8 +46884,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element154.useMemo)(() => normalizeFields(fields2), [fields2]);
-  const _selection = (0, import_element154.useMemo)(() => {
+  const _fields = (0, import_element155.useMemo)(() => normalizeFields(fields2), [fields2]);
+  const _selection = (0, import_element155.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -46882,13 +46894,13 @@ function DataViews({
     );
   }, [selection, data, getItemId, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element154.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element155.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element154.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element155.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -46905,12 +46917,12 @@ function DataViews({
     isLoading,
     totalPages: paginationInfo.totalPages
   });
-  (0, import_element154.useEffect)(() => {
+  (0, import_element155.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element154.useMemo)(
+  const defaultLayouts = (0, import_element155.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -46984,12 +46996,12 @@ DataViewsSubComponents.Footer = DataViewsFooter;
 var dataviews_default = DataViewsSubComponents;
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element165 = __toESM(require_element(), 1);
+var import_element166 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
-var import_element155 = __toESM(require_element(), 1);
+var import_element156 = __toESM(require_element(), 1);
 var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
-var DataFormContext = (0, import_element155.createContext)({
+var DataFormContext = (0, import_element156.createContext)({
   fields: []
 });
 DataFormContext.displayName = "DataFormContext";
@@ -47002,10 +47014,10 @@ function DataFormProvider({
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element164 = __toESM(require_element(), 1);
+var import_element165 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_element156 = __toESM(require_element(), 1);
+var import_element157 = __toESM(require_element(), 1);
 var import_components52 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/can-render-field.mjs
@@ -47153,9 +47165,9 @@ function FormRegularField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element156.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element157.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form = (0, import_element156.useMemo)(
+  const form = (0, import_element157.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -47248,7 +47260,7 @@ function FormRegularField({
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components55 = __toESM(require_components(), 1);
-var import_element160 = __toESM(require_element(), 1);
+var import_element161 = __toESM(require_element(), 1);
 var import_compose27 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
@@ -47449,7 +47461,7 @@ function SummaryButton({
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es62 = __toESM(require_es6(), 1);
-var import_element157 = __toESM(require_element(), 1);
+var import_element158 = __toESM(require_element(), 1);
 var import_i18n59 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
@@ -47872,11 +47884,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields2, form) {
-  const [formValidity, setFormValidity] = (0, import_element157.useState)();
-  const customCounterRef = (0, import_element157.useRef)({});
-  const elementsCounterRef = (0, import_element157.useRef)({});
-  const previousValuesRef = (0, import_element157.useRef)({});
-  const validate = (0, import_element157.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element158.useState)();
+  const customCounterRef = (0, import_element158.useRef)({});
+  const elementsCounterRef = (0, import_element158.useRef)({});
+  const previousValuesRef = (0, import_element158.useRef)({});
+  const validate = (0, import_element158.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -47934,7 +47946,7 @@ function useFormValidity(item, fields2, form) {
       return validity;
     });
   }, [item, fields2, form]);
-  (0, import_element157.useEffect)(() => {
+  (0, import_element158.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -47945,9 +47957,9 @@ function useFormValidity(item, fields2, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element158 = __toESM(require_element(), 1);
+var import_element159 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element158.useCallback)(() => {
+  const revealValidity = (0, import_element159.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -47960,7 +47972,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element158.useEffect)(() => {
+  (0, import_element159.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -47969,7 +47981,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element159 = __toESM(require_element(), 1);
+var import_element160 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -48006,7 +48018,7 @@ var getFieldDefinition = (field, fields2) => {
   return fields2.find((_field) => _field.id === field.id);
 };
 function useFieldFromFormField(field) {
-  const { fields: fields2 } = (0, import_element159.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element160.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields2);
   const fieldDefinition = getFieldDefinition(field, fields2);
@@ -48038,14 +48050,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields: fields2 } = (0, import_element160.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element160.useState)({});
-  const modalData = (0, import_element160.useMemo)(() => {
+  const { fields: fields2 } = (0, import_element161.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element161.useState)({});
+  const modalData = (0, import_element161.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element160.useMemo)(
+  const form = (0, import_element161.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -48081,7 +48093,7 @@ function ModalContent({
     );
   };
   const focusOnMountRef = (0, import_compose27.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element160.useRef)(null);
+  const contentRef = (0, import_element161.useRef)(null);
   const mergedRef = (0, import_compose27.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
@@ -48153,8 +48165,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element160.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element160.useState)(false);
+  const [touched, setTouched] = (0, import_element161.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element161.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -48197,7 +48209,7 @@ var modal_default = PanelModal;
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components56 = __toESM(require_components(), 1);
 var import_i18n60 = __toESM(require_i18n(), 1);
-var import_element161 = __toESM(require_element(), 1);
+var import_element162 = __toESM(require_element(), 1);
 var import_compose28 = __toESM(require_compose(), 1);
 var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
@@ -48230,7 +48242,7 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element161.useRef)(null);
+  const ref = (0, import_element162.useRef)(null);
   useRevealValidity(ref, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("div", { ref, children });
 }
@@ -48240,11 +48252,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element161.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element161.useState)(
+  const [touched, setTouched] = (0, import_element162.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element162.useState)(
     null
   );
-  const popoverProps = (0, import_element161.useMemo)(
+  const popoverProps = (0, import_element162.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -48258,7 +48270,7 @@ function PanelDropdown({
   const [dialogRef, dialogProps] = (0, import_compose28.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element161.useMemo)(
+  const form = (0, import_element162.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -48268,7 +48280,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element161.useMemo)(() => {
+  const formValidity = (0, import_element162.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -48381,7 +48393,7 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element162 = __toESM(require_element(), 1);
+var import_element163 = __toESM(require_element(), 1);
 var import_compose29 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
@@ -48549,11 +48561,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element162.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element163.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element162.useRef)(null);
-  const hasFocusedContentRef = (0, import_element162.useRef)(false);
-  const form = (0, import_element162.useMemo)(
+  const contentRef = (0, import_element163.useRef)(null);
+  const hasFocusedContentRef = (0, import_element163.useRef)(false);
+  const form = (0, import_element163.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -48561,12 +48573,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen, setIsOpen] = (0, import_element162.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element162.useState)(false);
-  (0, import_element162.useEffect)(() => {
+  const [isOpen, setIsOpen] = (0, import_element163.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element163.useState)(false);
+  (0, import_element163.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element162.useCallback)((open3) => {
+  const handleOpenChange = (0, import_element163.useCallback)((open3) => {
     if (!open3) {
       setTouched(true);
     }
@@ -48576,10 +48588,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen : true) && touched
   );
-  const handleContentFocus = (0, import_element162.useCallback)(() => {
+  const handleContentFocus = (0, import_element163.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element162.useCallback)(() => {
+  const handleFocusOutside = (0, import_element163.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -48747,7 +48759,7 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element163 = __toESM(require_element(), 1);
+var import_element164 = __toESM(require_element(), 1);
 var import_i18n62 = __toESM(require_i18n(), 1);
 var import_compose30 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
@@ -48758,20 +48770,20 @@ function FormDetailsField({
   onChange,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element163.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element163.useRef)(null);
-  const contentRef = (0, import_element163.useRef)(null);
-  const hasFocusedContentRef = (0, import_element163.useRef)(false);
-  const [touched, setTouched] = (0, import_element163.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element163.useState)(false);
-  const form = (0, import_element163.useMemo)(
+  const { fields: fields2 } = (0, import_element164.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element164.useRef)(null);
+  const contentRef = (0, import_element164.useRef)(null);
+  const hasFocusedContentRef = (0, import_element164.useRef)(false);
+  const [touched, setTouched] = (0, import_element164.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element164.useState)(false);
+  const form = (0, import_element164.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element163.useEffect)(() => {
+  (0, import_element164.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -48789,10 +48801,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-  const handleContentFocus = (0, import_element163.useCallback)(() => {
+  const handleContentFocus = (0, import_element164.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element163.useCallback)(() => {
+  const handleFocusOutside = (0, import_element164.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -48946,8 +48958,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element164.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element164.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element165.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element165.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f) => !!f.isValid?.required
     ).length;
@@ -49002,8 +49014,8 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element165.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element165.useMemo)(
+  const normalizedForm = (0, import_element166.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element166.useMemo)(
     () => normalizeFields(fields2),
     [fields2]
   );
@@ -49119,12 +49131,12 @@ function filterSortAndPaginate(data, view, fields2) {
 
 // routes/guidelines/components/guideline-accordion-form.tsx
 var import_i18n63 = __toESM(require_i18n());
-var import_element167 = __toESM(require_element());
+var import_element168 = __toESM(require_element());
 var import_data7 = __toESM(require_data());
 var import_notices = __toESM(require_notices());
 
 // routes/guidelines/data.ts
-var import_element166 = __toESM(require_element());
+var import_element167 = __toESM(require_element());
 var import_data6 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_blocks = __toESM(require_blocks());
@@ -49161,7 +49173,7 @@ function useContentBlocks() {
 function useGuidelineData() {
   const { records: scopeRecords, hasResolved: scopesResolved } = (0, import_core_data.useEntityRecords)("root", "guidelineScope");
   const contentBlocks = useContentBlocks();
-  const scopes = (0, import_element166.useMemo)(
+  const scopes = (0, import_element167.useMemo)(
     () => (scopeRecords ?? []).map((s) => ({
       slug: s.slug,
       title: s.title,
@@ -49170,7 +49182,7 @@ function useGuidelineData() {
     })).sort((a, b) => a.order - b.order),
     [scopeRecords]
   );
-  const slugs = (0, import_element166.useMemo)(() => {
+  const slugs = (0, import_element167.useMemo)(() => {
     const hasBlocksScope = scopes.some((s) => s.slug === BLOCKS_SCOPE);
     const list = [
       // The Blocks scope has no single row; its per-block rows are added below.
@@ -49179,7 +49191,7 @@ function useGuidelineData() {
     ];
     return list.length > 0 ? list : [NO_MATCH_SLUG];
   }, [scopes, contentBlocks]);
-  const query = (0, import_element166.useMemo)(
+  const query = (0, import_element167.useMemo)(
     () => ({
       slug: slugs,
       // The published row is the canonical one. Private/draft/suffixed
@@ -49195,7 +49207,7 @@ function useGuidelineData() {
     KNOWLEDGE_NAME,
     query
   );
-  const bySlug = (0, import_element166.useMemo)(() => {
+  const bySlug = (0, import_element167.useMemo)(() => {
     const map = {};
     for (const row of rowRecords ?? []) {
       map[row.slug] = {
@@ -49303,13 +49315,13 @@ function GuidelineAccordionForm({
   query
 }) {
   const { createSuccessNotice } = (0, import_data7.useDispatch)(import_notices.store);
-  const [loading, setLoading] = (0, import_element167.useState)(false);
-  const [error2, setError] = (0, import_element167.useState)(null);
-  const [showClearConfirmation, setShowClearConfirmation] = (0, import_element167.useState)(false);
-  const [draft, setDraft] = (0, import_element167.useState)(content);
-  (0, import_element167.useEffect)(() => setDraft(content), [content]);
-  const data = (0, import_element167.useMemo)(() => ({ guidelines: draft }), [draft]);
-  const fields2 = (0, import_element167.useMemo)(
+  const [loading, setLoading] = (0, import_element168.useState)(false);
+  const [error2, setError] = (0, import_element168.useState)(null);
+  const [showClearConfirmation, setShowClearConfirmation] = (0, import_element168.useState)(false);
+  const [draft, setDraft] = (0, import_element168.useState)(content);
+  (0, import_element168.useEffect)(() => setDraft(content), [content]);
+  const data = (0, import_element168.useMemo)(() => ({ guidelines: draft }), [draft]);
+  const fields2 = (0, import_element168.useMemo)(
     () => [
       {
         id: "guidelines",
@@ -49324,7 +49336,7 @@ function GuidelineAccordionForm({
     ],
     [scope.title]
   );
-  const form = (0, import_element167.useMemo)(
+  const form = (0, import_element168.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: ["guidelines"]
@@ -49448,14 +49460,14 @@ function GuidelineAccordionForm({
 // routes/guidelines/components/block-guidelines.tsx
 var import_components60 = __toESM(require_components());
 var import_i18n65 = __toESM(require_i18n());
-var import_element169 = __toESM(require_element());
+var import_element170 = __toESM(require_element());
 var import_data11 = __toESM(require_data());
 var import_notices3 = __toESM(require_notices());
 
 // routes/guidelines/components/block-guideline-modal.tsx
 var import_components59 = __toESM(require_components());
 var import_i18n64 = __toESM(require_i18n());
-var import_element168 = __toESM(require_element());
+var import_element169 = __toESM(require_element());
 var import_data9 = __toESM(require_data());
 var import_notices2 = __toESM(require_notices());
 
@@ -49477,16 +49489,16 @@ function BlockGuidelineModal({
   query,
   onRemoved
 }) {
-  const [selectedBlock, setSelectedBlock] = (0, import_element168.useState)(
+  const [selectedBlock, setSelectedBlock] = (0, import_element169.useState)(
     initialBlock
   );
-  const [isSaving, setIsSaving] = (0, import_element168.useState)(false);
-  const [error2, setError] = (0, import_element168.useState)(null);
-  const [showRemoveConfirmation, setShowRemoveConfirmation] = (0, import_element168.useState)(false);
+  const [isSaving, setIsSaving] = (0, import_element169.useState)(false);
+  const [error2, setError] = (0, import_element169.useState)(null);
+  const [showRemoveConfirmation, setShowRemoveConfirmation] = (0, import_element169.useState)(false);
   const isEditing = !!initialBlock;
   const currentGuideline = selectedBlock ? bySlug[blockSlug(selectedBlock)]?.content ?? "" : "";
-  const [guidelineText, setGuidelineText] = (0, import_element168.useState)(currentGuideline);
-  const availableBlockOptions = (0, import_element168.useMemo)(() => {
+  const [guidelineText, setGuidelineText] = (0, import_element169.useState)(currentGuideline);
+  const availableBlockOptions = (0, import_element169.useMemo)(() => {
     return contentBlocks.filter(
       (block) => !bySlug[blockSlug(block.name)] || block.name === selectedBlock
     ).filter((block) => block.name !== initialBlock).map((block) => ({
@@ -49494,7 +49506,7 @@ function BlockGuidelineModal({
       label: block.title
     }));
   }, [contentBlocks, bySlug, initialBlock, selectedBlock]);
-  const selectedBlockLabel = (0, import_element168.useMemo)(
+  const selectedBlockLabel = (0, import_element169.useMemo)(
     () => contentBlocks.find((block) => block.name === selectedBlock)?.title || "",
     [contentBlocks, selectedBlock]
   );
@@ -49695,18 +49707,18 @@ function BlockGuidelines({
   bySlug,
   query
 }) {
-  const [isOpen, setIsOpen] = (0, import_element169.useState)(false);
-  const [view, setView] = (0, import_element169.useState)(initialView);
-  const [selectedItem, setSelectedItem] = (0, import_element169.useState)();
-  const [error2, setError] = (0, import_element169.useState)(null);
-  const [busy, setBusy] = (0, import_element169.useState)(false);
-  const [itemToDelete, setItemToDelete] = (0, import_element169.useState)(
+  const [isOpen, setIsOpen] = (0, import_element170.useState)(false);
+  const [view, setView] = (0, import_element170.useState)(initialView);
+  const [selectedItem, setSelectedItem] = (0, import_element170.useState)();
+  const [error2, setError] = (0, import_element170.useState)(null);
+  const [busy, setBusy] = (0, import_element170.useState)(false);
+  const [itemToDelete, setItemToDelete] = (0, import_element170.useState)(
     null
   );
   const { createSuccessNotice } = (0, import_data11.useDispatch)(import_notices3.store);
-  const addButtonRef = (0, import_element169.useRef)(null);
-  const [shouldFocusAddButton, setShouldFocusAddButton] = (0, import_element169.useState)(false);
-  const rows = (0, import_element169.useMemo)(
+  const addButtonRef = (0, import_element170.useRef)(null);
+  const [shouldFocusAddButton, setShouldFocusAddButton] = (0, import_element170.useState)(false);
+  const rows = (0, import_element170.useMemo)(
     () => contentBlocks.filter((block) => bySlug[blockSlug(block.name)]).map((block) => ({
       id: block.name,
       label: block.title,
@@ -49717,14 +49729,14 @@ function BlockGuidelines({
     })),
     [contentBlocks, bySlug]
   );
-  const handleRowClick = (0, import_element169.useCallback)(
+  const handleRowClick = (0, import_element170.useCallback)(
     (id) => {
       setSelectedItem(id);
       setIsOpen(true);
     },
     [setSelectedItem, setIsOpen]
   );
-  const actions = (0, import_element169.useMemo)(
+  const actions = (0, import_element170.useMemo)(
     () => [
       {
         id: "edit",
@@ -49764,11 +49776,11 @@ function BlockGuidelines({
       setItemToDelete(null);
     });
   };
-  const { data: processedData, paginationInfo } = (0, import_element169.useMemo)(
+  const { data: processedData, paginationInfo } = (0, import_element170.useMemo)(
     () => filterSortAndPaginate(rows, view, fields),
     [rows, view]
   );
-  (0, import_element169.useEffect)(() => {
+  (0, import_element170.useEffect)(() => {
     if (shouldFocusAddButton) {
       addButtonRef.current?.focus();
       setShouldFocusAddButton(false);
@@ -49859,7 +49871,7 @@ function BlockGuidelines({
 // routes/guidelines/components/guideline-actions-section.tsx
 var import_components62 = __toESM(require_components());
 var import_i18n67 = __toESM(require_i18n());
-var import_element170 = __toESM(require_element());
+var import_element171 = __toESM(require_element());
 
 // routes/guidelines/components/guideline-actions-section.scss
 if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='6d10be742e']")) {
@@ -50045,10 +50057,10 @@ function GuidelineActionsSection({
   bySlug,
   query
 }) {
-  const fileInputRef = (0, import_element170.useRef)(null);
-  const [isImporting, setIsImporting] = (0, import_element170.useState)(false);
-  const [error2, setError] = (0, import_element170.useState)(null);
-  const [pendingImport, setPendingImport] = (0, import_element170.useState)(null);
+  const fileInputRef = (0, import_element171.useRef)(null);
+  const [isImporting, setIsImporting] = (0, import_element171.useState)(false);
+  const [error2, setError] = (0, import_element171.useState)(null);
+  const [pendingImport, setPendingImport] = (0, import_element171.useState)(null);
   function handleImportClick() {
     fileInputRef.current?.click();
   }
@@ -50173,8 +50185,8 @@ function GuidelineActionsSection({
 var import_jsx_runtime228 = __toESM(require_jsx_runtime());
 function GuidelinesPage() {
   const { scopes, contentBlocks, bySlug, query, isLoading } = useGuidelineData();
-  const [hasLoaded, setHasLoaded] = (0, import_element171.useState)(false);
-  (0, import_element171.useEffect)(() => {
+  const [hasLoaded, setHasLoaded] = (0, import_element172.useState)(false);
+  (0, import_element172.useEffect)(() => {
     if (!isLoading) {
       setHasLoaded(true);
     }

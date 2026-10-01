@@ -49,13 +49,6 @@ var require_element = __commonJS({
   }
 });
 
-// package-external:@wordpress/compose
-var require_compose = __commonJS({
-  "package-external:@wordpress/compose"(exports, module) {
-    module.exports = window.wp.compose;
-  }
-});
-
 // vendor-external:react
 var require_react = __commonJS({
   "vendor-external:react"(exports, module) {
@@ -229,6 +222,13 @@ var require_with_selector = __commonJS({
     } else {
       module.exports = require_with_selector_development();
     }
+  }
+});
+
+// package-external:@wordpress/compose
+var require_compose = __commonJS({
+  "package-external:@wordpress/compose"(exports, module) {
+    module.exports = window.wp.compose;
   }
 });
 

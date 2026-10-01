@@ -63,13 +63,6 @@ var require_private_apis = __commonJS({
   }
 });
 
-// package-external:@wordpress/compose
-var require_compose = __commonJS({
-  "package-external:@wordpress/compose"(exports, module) {
-    module.exports = window.wp.compose;
-  }
-});
-
 // vendor-external:react
 var require_react = __commonJS({
   "vendor-external:react"(exports, module) {
@@ -110,7 +103,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState52({
+        cachedValue = useState53({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -148,7 +141,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState52 = React147.useState, useEffect48 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState53 = React147.useState, useEffect48 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React147.useSyncExternalStore ? React147.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -243,6 +236,13 @@ var require_with_selector = __commonJS({
     } else {
       module.exports = require_with_selector_development();
     }
+  }
+});
+
+// package-external:@wordpress/compose
+var require_compose = __commonJS({
+  "package-external:@wordpress/compose"(exports, module) {
+    module.exports = window.wp.compose;
   }
 });
 
@@ -1224,8 +1224,7 @@ function clsx() {
 var clsx_default = clsx;
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element141 = __toESM(require_element(), 1);
-var import_compose24 = __toESM(require_compose(), 1);
+var import_element142 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/badge/badge.mjs
 var import_element16 = __toESM(require_element(), 1);
@@ -36454,11 +36453,11 @@ function useStoreProps(store, props, key, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React146.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState52 = React146.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState53 = React146.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React146.useMemo(() => ({
     ...store,
-    useState: useState52
-  }), [store, useState52]), useEvent(() => {
+    useState: useState53
+  }), [store, useState53]), useEvent(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -44577,8 +44576,29 @@ function normalizeFields(fields) {
   });
 }
 
-// packages/dataviews/build-module/hooks/use-data.mjs
+// packages/dataviews/build-module/hooks/use-container-width.mjs
 var import_element138 = __toESM(require_element(), 1);
+var import_compose22 = __toESM(require_compose(), 1);
+function useContainerWidth() {
+  const [width, setWidth] = (0, import_element138.useState)(0);
+  const measureRef = (0, import_element138.useCallback)((element) => {
+    if (element) {
+      setWidth(element.offsetWidth);
+    }
+  }, []);
+  const observerRef = (0, import_compose22.useResizeObserver)(
+    (entries) => {
+      setWidth(
+        Math.floor(entries[0].borderBoxSize[0].inlineSize)
+      );
+    },
+    { box: "border-box" }
+  );
+  return [width, (0, import_compose22.useMergeRefs)([measureRef, observerRef])];
+}
+
+// packages/dataviews/build-module/hooks/use-data.mjs
+var import_element139 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -44588,32 +44608,32 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element138.useState)(!isLoading);
-  (0, import_element138.useEffect)(() => {
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element139.useState)(!isLoading);
+  (0, import_element139.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element138.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element138.useRef)(paginationInfo);
-  (0, import_element138.useEffect)(() => {
+  const previousDataRef = (0, import_element139.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element139.useRef)(paginationInfo);
+  (0, import_element139.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element138.useState)([]);
-  const positionMapRef = (0, import_element138.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element138.useRef)([]);
-  const prevViewParamsRef = (0, import_element138.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element139.useState)([]);
+  const positionMapRef = (0, import_element139.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element139.useRef)([]);
+  const prevViewParamsRef = (0, import_element139.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element138.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element138.useRef)(void 0);
-  const hasInitializedRef = (0, import_element138.useRef)(false);
-  const allLoadedRecords = (0, import_element138.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element139.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element139.useRef)(void 0);
+  const hasInitializedRef = (0, import_element139.useRef)(false);
+  const allLoadedRecords = (0, import_element139.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -44735,8 +44755,8 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element139 = __toESM(require_element(), 1);
-var import_compose22 = __toESM(require_compose(), 1);
+var import_element140 = __toESM(require_element(), 1);
+var import_compose23 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -44771,18 +44791,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element139.useRef)(null);
-  const viewRef = (0, import_element139.useRef)(view);
-  const isLoadingRef = (0, import_element139.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element139.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element139.useRef)(paginationInfo.totalItems);
-  (0, import_element139.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element140.useRef)(null);
+  const viewRef = (0, import_element140.useRef)(view);
+  const isLoadingRef = (0, import_element140.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element140.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element140.useRef)(paginationInfo.totalItems);
+  (0, import_element140.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element139.useCallback)(
+  const intersectionObserverCallback = (0, import_element140.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -44814,7 +44834,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element139.useLayoutEffect)(() => {
+  (0, import_element140.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -44834,10 +44854,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element139.useRef)(
+  const intersectionObserverRef = (0, import_element140.useRef)(
     null
   );
-  (0, import_element139.useEffect)(() => {
+  (0, import_element140.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -44856,14 +44876,14 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element139.useEffect)(() => {
+  (0, import_element140.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose22.throttle)((event) => {
+    const handleScroll = (0, import_compose23.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -44916,8 +44936,8 @@ function useInfiniteScroll({
 }
 
 // packages/dataviews/build-module/hooks/use-page-clamp.mjs
-var import_element140 = __toESM(require_element(), 1);
-var import_compose23 = __toESM(require_compose(), 1);
+var import_element141 = __toESM(require_element(), 1);
+var import_compose24 = __toESM(require_compose(), 1);
 function usePageClamp({
   view,
   onChangeView,
@@ -44926,12 +44946,12 @@ function usePageClamp({
 }) {
   const lastPage = typeof totalPages === "number" && Number.isFinite(totalPages) ? Math.max(totalPages, 1) : null;
   const page = view.page;
-  const goToLastPage = (0, import_compose23.useEvent)(() => {
+  const goToLastPage = (0, import_compose24.useEvent)(() => {
     if (lastPage !== null) {
       onChangeView({ ...view, page: lastPage });
     }
   });
-  (0, import_element140.useEffect)(() => {
+  (0, import_element141.useEffect)(() => {
     if (isLoading || lastPage === null || !page || page <= lastPage) {
       return;
     }
@@ -44953,7 +44973,7 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element141.useContext)(dataviews_context_default);
+  const { view } = (0, import_element142.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
   return /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(import_jsx_runtime191.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(
@@ -45016,7 +45036,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element141.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element142.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -45032,17 +45052,9 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element141.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element141.useState)(0);
-  const resizeObserverRef = (0, import_compose24.useResizeObserver)(
-    (resizeObserverEntries) => {
-      setContainerWidth(
-        resizeObserverEntries[0].borderBoxSize[0].inlineSize
-      );
-    },
-    { box: "border-box" }
-  );
-  const [openedFilter, setOpenedFilter] = (0, import_element141.useState)(null);
+  const containerRef = (0, import_element142.useRef)(null);
+  const [containerWidth, resizeObserverRef] = useContainerWidth();
+  const [openedFilter, setOpenedFilter] = (0, import_element142.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -45052,8 +45064,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element141.useMemo)(() => normalizeFields(fields), [fields]);
-  const _selection = (0, import_element141.useMemo)(() => {
+  const _fields = (0, import_element142.useMemo)(() => normalizeFields(fields), [fields]);
+  const _selection = (0, import_element142.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -45062,13 +45074,13 @@ function DataViews({
     );
   }, [selection, data, getItemId, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element141.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element142.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element141.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element142.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -45085,12 +45097,12 @@ function DataViews({
     isLoading,
     totalPages: paginationInfo.totalPages
   });
-  (0, import_element141.useEffect)(() => {
+  (0, import_element142.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element141.useMemo)(
+  const defaultLayouts = (0, import_element142.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -45260,9 +45272,9 @@ function filterSortAndPaginate(data, view, fields) {
 }
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element142 = __toESM(require_element(), 1);
+var import_element143 = __toESM(require_element(), 1);
 var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element142.forwardRef)(
+var NavigableRegion = (0, import_element143.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
       Tag,
@@ -45759,7 +45771,7 @@ var page_default = Page;
 var import_core_data4 = __toESM(require_core_data());
 var import_components52 = __toESM(require_components());
 var import_data12 = __toESM(require_data());
-var import_element146 = __toESM(require_element());
+var import_element147 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 var import_patterns3 = __toESM(require_patterns());
 var import_i18n61 = __toESM(require_i18n());
@@ -45813,14 +45825,14 @@ var previewField = {
 var import_i18n59 = __toESM(require_i18n());
 var import_data9 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
-var import_element143 = __toESM(require_element());
+var import_element144 = __toESM(require_element());
 var import_jsx_runtime197 = __toESM(require_jsx_runtime());
 function CategoryField({ item }) {
   const blockPatternCategories = (0, import_data9.useSelect)(
     (select2) => select2(import_core_data2.store).getBlockPatternCategories(),
     []
   );
-  const categoryLabels = (0, import_element143.useMemo)(() => {
+  const categoryLabels = (0, import_element144.useMemo)(() => {
     if (!item.categories || !Array.isArray(item.categories)) {
       return [];
     }
@@ -45845,7 +45857,7 @@ function usePatternCategories() {
     (select2) => select2(import_core_data2.store).getBlockPatternCategories(),
     []
   );
-  return (0, import_element143.useMemo)(() => {
+  return (0, import_element144.useMemo)(() => {
     const categoryMap = /* @__PURE__ */ new Map();
     userPatternCategories?.forEach((cat) => {
       if (!categoryMap.has(cat.name)) {
@@ -45870,7 +45882,7 @@ function usePatternCategories() {
 }
 function usePatternCategoryField() {
   const categories = usePatternCategories();
-  return (0, import_element143.useMemo)(
+  return (0, import_element144.useMemo)(
     () => ({
       label: (0, import_i18n59.__)("Category"),
       id: "category",
@@ -45890,7 +45902,7 @@ function usePatternCategoryField() {
 // routes/pattern-list/use-patterns.ts
 var import_data10 = __toESM(require_data());
 var import_core_data3 = __toESM(require_core_data());
-var import_element144 = __toESM(require_element());
+var import_element145 = __toESM(require_element());
 var import_patterns = __toESM(require_patterns());
 var import_block_editor = __toESM(require_block_editor());
 
@@ -46086,7 +46098,7 @@ var selectPatterns = (0, import_data10.createSelector)(
   ]
 );
 function useAugmentPatternsWithPermissions(patterns2) {
-  const idsAndTypes = (0, import_element144.useMemo)(
+  const idsAndTypes = (0, import_element145.useMemo)(
     () => patterns2?.filter((record) => record.type !== PATTERN_TYPES.theme).map((record) => [
       record.type,
       record._recordId,
@@ -46113,7 +46125,7 @@ function useAugmentPatternsWithPermissions(patterns2) {
     },
     [idsAndTypes]
   );
-  return (0, import_element144.useMemo)(
+  return (0, import_element145.useMemo)(
     () => patterns2?.map((record) => ({
       ...record,
       permissions: permissions?.[record.id] ?? {}
@@ -46162,14 +46174,14 @@ var use_patterns_default = usePatterns;
 
 // routes/pattern-list/import-pattern-button.tsx
 var import_components51 = __toESM(require_components());
-var import_element145 = __toESM(require_element());
+var import_element146 = __toESM(require_element());
 var import_i18n60 = __toESM(require_i18n());
 var import_data11 = __toESM(require_data());
 var import_notices = __toESM(require_notices());
 var import_patterns2 = __toESM(require_patterns());
 var import_jsx_runtime198 = __toESM(require_jsx_runtime());
 function ImportPatternButton() {
-  const inputRef = (0, import_element145.useRef)(null);
+  const inputRef = (0, import_element146.useRef)(null);
   const { createPatternFromFile } = unlock3((0, import_data11.useDispatch)(import_patterns2.store));
   const { createSuccessNotice, createErrorNotice } = (0, import_data11.useDispatch)(import_notices.store);
   return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
@@ -46275,8 +46287,8 @@ function PatternListView({
     }),
     []
   );
-  const [showPatternModal, setShowPatternModal] = (0, import_element146.useState)(false);
-  const handleQueryParamsChange = (0, import_element146.useCallback)(
+  const [showPatternModal, setShowPatternModal] = (0, import_element147.useState)(false);
+  const handleQueryParamsChange = (0, import_element147.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -46306,15 +46318,15 @@ function PatternListView({
       invalidate();
     }
   };
-  const categoryFilter = (0, import_element146.useMemo)(() => {
+  const categoryFilter = (0, import_element147.useMemo)(() => {
     const filter = view.filters?.find((f) => f.field === "category");
     return filter?.value || "all-patterns";
   }, [view.filters]);
-  const syncStatusFilter = (0, import_element146.useMemo)(() => {
+  const syncStatusFilter = (0, import_element147.useMemo)(() => {
     const filter = view.filters?.find((f) => f.field === "sync-status");
     return filter?.value;
   }, [view.filters]);
-  const patternType = (0, import_element146.useMemo)(() => {
+  const patternType = (0, import_element147.useMemo)(() => {
     if (type === "my-patterns") {
       return PATTERN_TYPES2.user;
     } else if (type === "registered") {
@@ -46335,7 +46347,7 @@ function PatternListView({
     postType: "wp_block"
   });
   const patternCategoryField = usePatternCategoryField();
-  const fields = (0, import_element146.useMemo)(() => {
+  const fields = (0, import_element147.useMemo)(() => {
     return [
       previewField,
       ...(postTypeFields || []).filter(
@@ -46346,7 +46358,7 @@ function PatternListView({
       patternCategoryField
     ];
   }, [type, postTypeFields, patternCategoryField]);
-  const { data: posts, paginationInfo } = (0, import_element146.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element147.useMemo)(() => {
     const viewWithoutFilters = { ...view };
     delete viewWithoutFilters.search;
     viewWithoutFilters.filters = [];
@@ -46357,7 +46369,7 @@ function PatternListView({
     );
   }, [patternsWithPermissions, view, fields]);
   const { totalItems, totalPages } = paginationInfo;
-  const cleanupDeletedPostIdsFromUrl = (0, import_element146.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element147.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map((item) => item.id);
       const currentPostIds = searchParams.postIds || [];
@@ -46386,7 +46398,7 @@ function PatternListView({
       }
     }
   });
-  const actions = (0, import_element146.useMemo)(() => {
+  const actions = (0, import_element147.useMemo)(() => {
     return [
       ...postTypeActions?.flatMap((action) => {
         if (action.id === "view-post-revisions") {
@@ -46396,7 +46408,7 @@ function PatternListView({
       })
     ];
   }, [postTypeActions]);
-  const handleTabChange = (0, import_element146.useCallback)(
+  const handleTabChange = (0, import_element147.useCallback)(
     (typeSlug) => {
       navigate({
         to: `/patterns/list/${typeSlug}`

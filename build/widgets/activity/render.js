@@ -91,13 +91,6 @@ var require_jsx_runtime = __commonJS({
   }
 });
 
-// package-external:@wordpress/compose
-var require_compose = __commonJS({
-  "package-external:@wordpress/compose"(exports, module) {
-    module.exports = window.wp.compose;
-  }
-});
-
 // vendor-external:react
 var require_react = __commonJS({
   "vendor-external:react"(exports, module) {
@@ -131,7 +124,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState52({
+        cachedValue = useState53({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -169,7 +162,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState52 = React147.useState, useEffect48 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState53 = React147.useState, useEffect48 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React147.useSyncExternalStore ? React147.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -264,6 +257,13 @@ var require_with_selector = __commonJS({
     } else {
       module.exports = require_with_selector_development();
     }
+  }
+});
+
+// package-external:@wordpress/compose
+var require_compose = __commonJS({
+  "package-external:@wordpress/compose"(exports, module) {
+    module.exports = window.wp.compose;
   }
 });
 
@@ -841,7 +841,7 @@ var require_deprecated = __commonJS({
 });
 
 // widgets/activity/render.tsx
-var import_element148 = __toESM(require_element());
+var import_element149 = __toESM(require_element());
 var import_data6 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_i18n56 = __toESM(require_i18n());
@@ -1075,8 +1075,7 @@ function clsx() {
 var clsx_default = clsx;
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element147 = __toESM(require_element(), 1);
-var import_compose24 = __toESM(require_compose(), 1);
+var import_element148 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/badge/badge.mjs
 var import_element16 = __toESM(require_element(), 1);
@@ -36740,11 +36739,11 @@ function useStoreProps(store, props, key, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React146.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState52 = React146.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState53 = React146.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React146.useMemo(() => ({
     ...store,
-    useState: useState52
-  }), [store, useState52]), useEvent(() => {
+    useState: useState53
+  }), [store, useState53]), useEvent(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -44863,8 +44862,29 @@ function normalizeFields(fields) {
   });
 }
 
-// packages/dataviews/build-module/hooks/use-data.mjs
+// packages/dataviews/build-module/hooks/use-container-width.mjs
 var import_element144 = __toESM(require_element(), 1);
+var import_compose22 = __toESM(require_compose(), 1);
+function useContainerWidth() {
+  const [width, setWidth] = (0, import_element144.useState)(0);
+  const measureRef = (0, import_element144.useCallback)((element) => {
+    if (element) {
+      setWidth(element.offsetWidth);
+    }
+  }, []);
+  const observerRef = (0, import_compose22.useResizeObserver)(
+    (entries) => {
+      setWidth(
+        Math.floor(entries[0].borderBoxSize[0].inlineSize)
+      );
+    },
+    { box: "border-box" }
+  );
+  return [width, (0, import_compose22.useMergeRefs)([measureRef, observerRef])];
+}
+
+// packages/dataviews/build-module/hooks/use-data.mjs
+var import_element145 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -44874,32 +44894,32 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element144.useState)(!isLoading);
-  (0, import_element144.useEffect)(() => {
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element145.useState)(!isLoading);
+  (0, import_element145.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element144.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element144.useRef)(paginationInfo);
-  (0, import_element144.useEffect)(() => {
+  const previousDataRef = (0, import_element145.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element145.useRef)(paginationInfo);
+  (0, import_element145.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element144.useState)([]);
-  const positionMapRef = (0, import_element144.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element144.useRef)([]);
-  const prevViewParamsRef = (0, import_element144.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element145.useState)([]);
+  const positionMapRef = (0, import_element145.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element145.useRef)([]);
+  const prevViewParamsRef = (0, import_element145.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element144.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element144.useRef)(void 0);
-  const hasInitializedRef = (0, import_element144.useRef)(false);
-  const allLoadedRecords = (0, import_element144.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element145.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element145.useRef)(void 0);
+  const hasInitializedRef = (0, import_element145.useRef)(false);
+  const allLoadedRecords = (0, import_element145.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -45021,8 +45041,8 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element145 = __toESM(require_element(), 1);
-var import_compose22 = __toESM(require_compose(), 1);
+var import_element146 = __toESM(require_element(), 1);
+var import_compose23 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -45057,18 +45077,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element145.useRef)(null);
-  const viewRef = (0, import_element145.useRef)(view);
-  const isLoadingRef = (0, import_element145.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element145.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element145.useRef)(paginationInfo.totalItems);
-  (0, import_element145.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element146.useRef)(null);
+  const viewRef = (0, import_element146.useRef)(view);
+  const isLoadingRef = (0, import_element146.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element146.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element146.useRef)(paginationInfo.totalItems);
+  (0, import_element146.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element145.useCallback)(
+  const intersectionObserverCallback = (0, import_element146.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -45100,7 +45120,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element145.useLayoutEffect)(() => {
+  (0, import_element146.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -45120,10 +45140,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element145.useRef)(
+  const intersectionObserverRef = (0, import_element146.useRef)(
     null
   );
-  (0, import_element145.useEffect)(() => {
+  (0, import_element146.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -45142,14 +45162,14 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element145.useEffect)(() => {
+  (0, import_element146.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose22.throttle)((event) => {
+    const handleScroll = (0, import_compose23.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -45202,8 +45222,8 @@ function useInfiniteScroll({
 }
 
 // packages/dataviews/build-module/hooks/use-page-clamp.mjs
-var import_element146 = __toESM(require_element(), 1);
-var import_compose23 = __toESM(require_compose(), 1);
+var import_element147 = __toESM(require_element(), 1);
+var import_compose24 = __toESM(require_compose(), 1);
 function usePageClamp({
   view,
   onChangeView,
@@ -45212,12 +45232,12 @@ function usePageClamp({
 }) {
   const lastPage = typeof totalPages === "number" && Number.isFinite(totalPages) ? Math.max(totalPages, 1) : null;
   const page = view.page;
-  const goToLastPage = (0, import_compose23.useEvent)(() => {
+  const goToLastPage = (0, import_compose24.useEvent)(() => {
     if (lastPage !== null) {
       onChangeView({ ...view, page: lastPage });
     }
   });
-  (0, import_element146.useEffect)(() => {
+  (0, import_element147.useEffect)(() => {
     if (isLoading || lastPage === null || !page || page <= lastPage) {
       return;
     }
@@ -45239,7 +45259,7 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element147.useContext)(dataviews_context_default);
+  const { view } = (0, import_element148.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
   return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(import_jsx_runtime196.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(
@@ -45302,7 +45322,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element147.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element148.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -45318,17 +45338,9 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element147.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element147.useState)(0);
-  const resizeObserverRef = (0, import_compose24.useResizeObserver)(
-    (resizeObserverEntries) => {
-      setContainerWidth(
-        resizeObserverEntries[0].borderBoxSize[0].inlineSize
-      );
-    },
-    { box: "border-box" }
-  );
-  const [openedFilter, setOpenedFilter] = (0, import_element147.useState)(null);
+  const containerRef = (0, import_element148.useRef)(null);
+  const [containerWidth, resizeObserverRef] = useContainerWidth();
+  const [openedFilter, setOpenedFilter] = (0, import_element148.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -45338,8 +45350,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element147.useMemo)(() => normalizeFields(fields), [fields]);
-  const _selection = (0, import_element147.useMemo)(() => {
+  const _fields = (0, import_element148.useMemo)(() => normalizeFields(fields), [fields]);
+  const _selection = (0, import_element148.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -45348,13 +45360,13 @@ function DataViews({
     );
   }, [selection, data, getItemId, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element147.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element148.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element147.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element148.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -45371,12 +45383,12 @@ function DataViews({
     isLoading,
     totalPages: paginationInfo.totalPages
   });
-  (0, import_element147.useEffect)(() => {
+  (0, import_element148.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element147.useMemo)(
+  const defaultLayouts = (0, import_element148.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -45638,8 +45650,8 @@ var DEFAULT_VIEW = {
 };
 function Activity({ attributes }) {
   const perPage = Math.max(1, attributes?.perPage ?? DEFAULT_PER_PAGE);
-  const [view, setView] = (0, import_element148.useState)(DEFAULT_VIEW);
-  const queries = (0, import_element148.useMemo)(
+  const [view, setView] = (0, import_element149.useState)(DEFAULT_VIEW);
+  const queries = (0, import_element149.useMemo)(
     () => ({
       future: {
         status: "future",
@@ -45693,7 +45705,7 @@ function Activity({ attributes }) {
     },
     [queries]
   );
-  const allEvents = (0, import_element148.useMemo)(() => {
+  const allEvents = (0, import_element149.useMemo)(() => {
     const events = [];
     for (const post of futurePosts ?? []) {
       events.push({
@@ -45733,11 +45745,11 @@ function Activity({ attributes }) {
     }
     return events;
   }, [futurePosts, recentPosts, comments]);
-  const resolvedView = (0, import_element148.useMemo)(
+  const resolvedView = (0, import_element149.useMemo)(
     () => ({ ...view, perPage: perPage * SOURCE_COUNT }),
     [view, perPage]
   );
-  const { data: shownData, paginationInfo } = (0, import_element148.useMemo)(
+  const { data: shownData, paginationInfo } = (0, import_element149.useMemo)(
     () => filterSortAndPaginate(allEvents, resolvedView, FIELDS),
     [allEvents, resolvedView]
   );

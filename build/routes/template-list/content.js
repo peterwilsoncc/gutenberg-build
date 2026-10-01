@@ -63,13 +63,6 @@ var require_private_apis = __commonJS({
   }
 });
 
-// package-external:@wordpress/compose
-var require_compose = __commonJS({
-  "package-external:@wordpress/compose"(exports, module) {
-    module.exports = window.wp.compose;
-  }
-});
-
 // vendor-external:react
 var require_react = __commonJS({
   "vendor-external:react"(exports, module) {
@@ -110,7 +103,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState54({
+        cachedValue = useState55({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -148,7 +141,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState54 = React147.useState, useEffect51 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState55 = React147.useState, useEffect51 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React147.useSyncExternalStore ? React147.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -243,6 +236,13 @@ var require_with_selector = __commonJS({
     } else {
       module.exports = require_with_selector_development();
     }
+  }
+});
+
+// package-external:@wordpress/compose
+var require_compose = __commonJS({
+  "package-external:@wordpress/compose"(exports, module) {
+    module.exports = window.wp.compose;
   }
 });
 
@@ -1230,8 +1230,7 @@ function clsx() {
 var clsx_default = clsx;
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element141 = __toESM(require_element(), 1);
-var import_compose24 = __toESM(require_compose(), 1);
+var import_element142 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/badge/badge.mjs
 var import_element16 = __toESM(require_element(), 1);
@@ -36566,11 +36565,11 @@ function useStoreProps(store, props, key, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React146.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState54 = React146.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState55 = React146.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React146.useMemo(() => ({
     ...store,
-    useState: useState54
-  }), [store, useState54]), useEvent(() => {
+    useState: useState55
+  }), [store, useState55]), useEvent(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -44689,8 +44688,29 @@ function normalizeFields(fields) {
   });
 }
 
-// packages/dataviews/build-module/hooks/use-data.mjs
+// packages/dataviews/build-module/hooks/use-container-width.mjs
 var import_element138 = __toESM(require_element(), 1);
+var import_compose22 = __toESM(require_compose(), 1);
+function useContainerWidth() {
+  const [width, setWidth] = (0, import_element138.useState)(0);
+  const measureRef = (0, import_element138.useCallback)((element) => {
+    if (element) {
+      setWidth(element.offsetWidth);
+    }
+  }, []);
+  const observerRef = (0, import_compose22.useResizeObserver)(
+    (entries) => {
+      setWidth(
+        Math.floor(entries[0].borderBoxSize[0].inlineSize)
+      );
+    },
+    { box: "border-box" }
+  );
+  return [width, (0, import_compose22.useMergeRefs)([measureRef, observerRef])];
+}
+
+// packages/dataviews/build-module/hooks/use-data.mjs
+var import_element139 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -44700,32 +44720,32 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element138.useState)(!isLoading);
-  (0, import_element138.useEffect)(() => {
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element139.useState)(!isLoading);
+  (0, import_element139.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element138.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element138.useRef)(paginationInfo);
-  (0, import_element138.useEffect)(() => {
+  const previousDataRef = (0, import_element139.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element139.useRef)(paginationInfo);
+  (0, import_element139.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element138.useState)([]);
-  const positionMapRef = (0, import_element138.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element138.useRef)([]);
-  const prevViewParamsRef = (0, import_element138.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element139.useState)([]);
+  const positionMapRef = (0, import_element139.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element139.useRef)([]);
+  const prevViewParamsRef = (0, import_element139.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element138.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element138.useRef)(void 0);
-  const hasInitializedRef = (0, import_element138.useRef)(false);
-  const allLoadedRecords = (0, import_element138.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element139.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element139.useRef)(void 0);
+  const hasInitializedRef = (0, import_element139.useRef)(false);
+  const allLoadedRecords = (0, import_element139.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -44847,8 +44867,8 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element139 = __toESM(require_element(), 1);
-var import_compose22 = __toESM(require_compose(), 1);
+var import_element140 = __toESM(require_element(), 1);
+var import_compose23 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -44883,18 +44903,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element139.useRef)(null);
-  const viewRef = (0, import_element139.useRef)(view);
-  const isLoadingRef = (0, import_element139.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element139.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element139.useRef)(paginationInfo.totalItems);
-  (0, import_element139.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element140.useRef)(null);
+  const viewRef = (0, import_element140.useRef)(view);
+  const isLoadingRef = (0, import_element140.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element140.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element140.useRef)(paginationInfo.totalItems);
+  (0, import_element140.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element139.useCallback)(
+  const intersectionObserverCallback = (0, import_element140.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -44926,7 +44946,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element139.useLayoutEffect)(() => {
+  (0, import_element140.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -44946,10 +44966,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element139.useRef)(
+  const intersectionObserverRef = (0, import_element140.useRef)(
     null
   );
-  (0, import_element139.useEffect)(() => {
+  (0, import_element140.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -44968,14 +44988,14 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element139.useEffect)(() => {
+  (0, import_element140.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose22.throttle)((event) => {
+    const handleScroll = (0, import_compose23.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -45028,8 +45048,8 @@ function useInfiniteScroll({
 }
 
 // packages/dataviews/build-module/hooks/use-page-clamp.mjs
-var import_element140 = __toESM(require_element(), 1);
-var import_compose23 = __toESM(require_compose(), 1);
+var import_element141 = __toESM(require_element(), 1);
+var import_compose24 = __toESM(require_compose(), 1);
 function usePageClamp({
   view,
   onChangeView,
@@ -45038,12 +45058,12 @@ function usePageClamp({
 }) {
   const lastPage = typeof totalPages === "number" && Number.isFinite(totalPages) ? Math.max(totalPages, 1) : null;
   const page = view.page;
-  const goToLastPage = (0, import_compose23.useEvent)(() => {
+  const goToLastPage = (0, import_compose24.useEvent)(() => {
     if (lastPage !== null) {
       onChangeView({ ...view, page: lastPage });
     }
   });
-  (0, import_element140.useEffect)(() => {
+  (0, import_element141.useEffect)(() => {
     if (isLoading || lastPage === null || !page || page <= lastPage) {
       return;
     }
@@ -45065,7 +45085,7 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element141.useContext)(dataviews_context_default);
+  const { view } = (0, import_element142.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
   return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(import_jsx_runtime206.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
@@ -45128,7 +45148,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element141.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element142.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -45144,17 +45164,9 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element141.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element141.useState)(0);
-  const resizeObserverRef = (0, import_compose24.useResizeObserver)(
-    (resizeObserverEntries) => {
-      setContainerWidth(
-        resizeObserverEntries[0].borderBoxSize[0].inlineSize
-      );
-    },
-    { box: "border-box" }
-  );
-  const [openedFilter, setOpenedFilter] = (0, import_element141.useState)(null);
+  const containerRef = (0, import_element142.useRef)(null);
+  const [containerWidth, resizeObserverRef] = useContainerWidth();
+  const [openedFilter, setOpenedFilter] = (0, import_element142.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -45164,8 +45176,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element141.useMemo)(() => normalizeFields(fields), [fields]);
-  const _selection = (0, import_element141.useMemo)(() => {
+  const _fields = (0, import_element142.useMemo)(() => normalizeFields(fields), [fields]);
+  const _selection = (0, import_element142.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -45174,13 +45186,13 @@ function DataViews({
     );
   }, [selection, data, getItemId2, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element141.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element142.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element141.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element142.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -45197,12 +45209,12 @@ function DataViews({
     isLoading,
     totalPages: paginationInfo.totalPages
   });
-  (0, import_element141.useEffect)(() => {
+  (0, import_element142.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element141.useMemo)(
+  const defaultLayouts = (0, import_element142.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -45372,9 +45384,9 @@ function filterSortAndPaginate(data, view, fields) {
 }
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element142 = __toESM(require_element(), 1);
+var import_element143 = __toESM(require_element(), 1);
 var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element142.forwardRef)(
+var NavigableRegion = (0, import_element143.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
       Tag,
@@ -45871,7 +45883,7 @@ var page_default2 = Page;
 var import_core_data5 = __toESM(require_core_data());
 var import_components54 = __toESM(require_components());
 var import_data11 = __toESM(require_data());
-var import_element147 = __toESM(require_element());
+var import_element148 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 var import_i18n62 = __toESM(require_i18n());
 
@@ -45907,7 +45919,7 @@ var previewField = {
 // routes/template-list/add-new-template/index.tsx
 var import_components53 = __toESM(require_components());
 var import_html_entities3 = __toESM(require_html_entities());
-var import_element146 = __toESM(require_element());
+var import_element147 = __toESM(require_element());
 var import_data10 = __toESM(require_data());
 var import_core_data4 = __toESM(require_core_data());
 var import_i18n61 = __toESM(require_i18n());
@@ -45916,7 +45928,7 @@ var import_dom28 = __toESM(require_dom());
 import { useNavigate, useInvalidate } from "@wordpress/route";
 
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
-var import_element144 = __toESM(require_element());
+var import_element145 = __toESM(require_element());
 var import_i18n59 = __toESM(require_i18n());
 var import_components51 = __toESM(require_components());
 var import_core_data3 = __toESM(require_core_data());
@@ -45929,7 +45941,7 @@ var import_url4 = __toESM(require_url());
 var import_data9 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
 var import_html_entities = __toESM(require_html_entities());
-var import_element143 = __toESM(require_element());
+var import_element144 = __toESM(require_element());
 var import_i18n58 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
 var TEMPLATE_POST_TYPE = "wp_template";
@@ -45973,7 +45985,7 @@ var usePublicPostTypes = () => {
     (select2) => select2(import_core_data2.store).getPostTypes({ per_page: -1 }),
     []
   );
-  return (0, import_element143.useMemo)(() => {
+  return (0, import_element144.useMemo)(() => {
     const excludedPostTypes = ["attachment"];
     return postTypes?.filter(
       ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -45990,7 +46002,7 @@ var usePublicTaxonomies = () => {
     (select2) => select2(import_core_data2.store).getTaxonomies({ per_page: -1 }),
     []
   );
-  return (0, import_element143.useMemo)(() => {
+  return (0, import_element144.useMemo)(() => {
     return taxonomies?.filter(
       ({ visibility }) => visibility?.publicly_queryable
     );
@@ -45998,14 +46010,14 @@ var usePublicTaxonomies = () => {
 };
 function usePostTypeArchiveMenuItems() {
   const publicPostTypes = usePublicPostTypes();
-  const postTypesWithArchives = (0, import_element143.useMemo)(
+  const postTypesWithArchives = (0, import_element144.useMemo)(
     () => publicPostTypes?.filter(
       (postType) => postType.has_archive
     ),
     [publicPostTypes]
   );
   const existingTemplates = useExistingTemplates();
-  const postTypeLabels = (0, import_element143.useMemo)(
+  const postTypeLabels = (0, import_element144.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const singularName = labels.singular_name.toLowerCase();
       accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -46013,14 +46025,14 @@ function usePostTypeArchiveMenuItems() {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element143.useCallback)(
+  const needsUniqueIdentifier = (0, import_element144.useCallback)(
     ({ labels, slug }) => {
       const singularName = labels.singular_name.toLowerCase();
       return postTypeLabels[singularName] > 1 && singularName !== slug;
     },
     [postTypeLabels]
   );
-  return (0, import_element143.useMemo)(
+  return (0, import_element144.useMemo)(
     () => postTypesWithArchives?.filter(
       (postType) => !(existingTemplates || []).some(
         (existingTemplate) => existingTemplate.slug === "archive-" + postType.slug
@@ -46064,7 +46076,7 @@ function usePostTypeArchiveMenuItems() {
 var usePostTypeMenuItems = (onClickMenuItem) => {
   const publicPostTypes = usePublicPostTypes();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templateLabels = (0, import_element143.useMemo)(
+  const templateLabels = (0, import_element144.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -46072,14 +46084,14 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element143.useCallback)(
+  const needsUniqueIdentifier = (0, import_element144.useCallback)(
     ({ labels, slug }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       return templateLabels[templateName] > 1 && templateName !== slug;
     },
     [templateLabels]
   );
-  const templatePrefixes = (0, import_element143.useMemo)(
+  const templatePrefixes = (0, import_element144.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (slug !== "page") {
@@ -46176,7 +46188,7 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const postTypesMenuItems = (0, import_element143.useMemo)(
+  const postTypesMenuItems = (0, import_element144.useMemo)(
     () => menuItems.reduce(
       (accumulator, postType) => {
         const { slug } = postType;
@@ -46197,7 +46209,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
   const publicTaxonomies = usePublicTaxonomies();
   const existingTemplates = useExistingTemplates();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templatePrefixes = (0, import_element143.useMemo)(
+  const templatePrefixes = (0, import_element144.useMemo)(
     () => publicTaxonomies?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (!["category", "post_tag"].includes(slug)) {
@@ -46309,7 +46321,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const taxonomiesMenuItems = (0, import_element143.useMemo)(
+  const taxonomiesMenuItems = (0, import_element144.useMemo)(
     () => menuItems.reduce(
       (accumulator, taxonomy) => {
         const { slug } = taxonomy;
@@ -46424,7 +46436,7 @@ var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters =
     },
     [templatePrefixes, entityName, additionalQueryParameters]
   );
-  const entitiesInfo = (0, import_element143.useMemo)(() => {
+  const entitiesInfo = (0, import_element144.useMemo)(() => {
     return Object.keys(templatePrefixes || {}).reduce(
       (accumulator, slug) => {
         accumulator[slug] = {
@@ -46496,7 +46508,7 @@ function SuggestionListItem({
 }
 function useSearchSuggestions(entityForSuggestions, search) {
   const { config } = entityForSuggestions;
-  const query = (0, import_element144.useMemo)(
+  const query = (0, import_element145.useMemo)(
     () => ({
       order: "asc",
       context: "view",
@@ -46511,8 +46523,8 @@ function useSearchSuggestions(entityForSuggestions, search) {
     entityForSuggestions.slug,
     query
   );
-  const [suggestions, setSuggestions] = (0, import_element144.useState)(EMPTY_ARRAY8);
-  (0, import_element144.useEffect)(() => {
+  const [suggestions, setSuggestions] = (0, import_element145.useState)(EMPTY_ARRAY8);
+  (0, import_element145.useEffect)(() => {
     if (!searchHasResolved) {
       return;
     }
@@ -46540,7 +46552,7 @@ function SuggestionList({
     debouncedSearch
   );
   const { labels } = entityForSuggestions;
-  const [showSearchControl, setShowSearchControl] = (0, import_element144.useState)(false);
+  const [showSearchControl, setShowSearchControl] = (0, import_element145.useState)(false);
   if (!showSearchControl && suggestions?.length > 9) {
     setShowSearchControl(true);
   }
@@ -46589,8 +46601,8 @@ function AddCustomTemplateModalContent({
   onBack,
   containerRef
 }) {
-  const [showSearchEntities, setShowSearchEntities] = (0, import_element144.useState)(false);
-  (0, import_element144.useEffect)(() => {
+  const [showSearchEntities, setShowSearchEntities] = (0, import_element145.useState)(false);
+  (0, import_element145.useEffect)(() => {
     if (containerRef.current) {
       const [firstFocusable] = import_dom27.focus.focusable.find(
         containerRef.current
@@ -46734,7 +46746,7 @@ function AddCustomTemplateModalContent({
 var add_custom_template_modal_content_default = AddCustomTemplateModalContent;
 
 // routes/template-list/add-new-template/add-custom-generic-template-modal-content.tsx
-var import_element145 = __toESM(require_element());
+var import_element146 = __toESM(require_element());
 var import_i18n60 = __toESM(require_i18n());
 var import_components52 = __toESM(require_components());
 var import_jsx_runtime213 = __toESM(require_jsx_runtime());
@@ -46742,11 +46754,11 @@ function AddCustomGenericTemplateModalContent({
   createTemplate,
   onBack
 }) {
-  const [title, setTitle] = (0, import_element145.useState)("");
+  const [title, setTitle] = (0, import_element146.useState)("");
   const defaultTitle = (0, import_i18n60.__)("Custom Template");
-  const [isBusy, setIsBusy] = (0, import_element145.useState)(false);
-  const inputRef = (0, import_element145.useRef)(null);
-  (0, import_element145.useEffect)(() => {
+  const [isBusy, setIsBusy] = (0, import_element146.useState)(false);
+  const inputRef = (0, import_element146.useRef)(null);
+  (0, import_element146.useEffect)(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -46896,9 +46908,9 @@ var modalContentMap = {
   customGenericTemplate: 3
 };
 function NewTemplateModal({ onClose }) {
-  const [modalContent, setModalContent] = (0, import_element146.useState)(modalContentMap.templatesList);
-  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element146.useState)();
-  const [isSubmitting, setIsSubmitting] = (0, import_element146.useState)(false);
+  const [modalContent, setModalContent] = (0, import_element147.useState)(modalContentMap.templatesList);
+  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element147.useState)();
+  const [isSubmitting, setIsSubmitting] = (0, import_element147.useState)(false);
   const missingTemplates = useMissingTemplates(
     setEntityForSuggestions,
     () => setModalContent(modalContentMap.customTemplate)
@@ -46907,8 +46919,8 @@ function NewTemplateModal({ onClose }) {
   const invalidate = useInvalidate();
   const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data4.store);
   const { createErrorNotice, createSuccessNotice } = (0, import_data10.useDispatch)(import_notices.store);
-  const containerRef = (0, import_element146.useRef)(null);
-  (0, import_element146.useEffect)(() => {
+  const containerRef = (0, import_element147.useRef)(null);
+  (0, import_element147.useEffect)(() => {
     if (containerRef.current && modalContent === modalContentMap.templatesList) {
       const [firstFocusable] = import_dom28.focus.focusable.find(
         containerRef.current
@@ -47052,7 +47064,7 @@ function NewTemplateModal({ onClose }) {
   );
 }
 function NewTemplate() {
-  const [showModal, setShowModal] = (0, import_element146.useState)(false);
+  const [showModal, setShowModal] = (0, import_element147.useState)(false);
   const { postType } = (0, import_data10.useSelect)((select2) => {
     const { getPostType } = select2(import_core_data4.store);
     return {
@@ -47119,7 +47131,7 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
   ];
   return missingTemplates;
 }
-var add_new_template_default = (0, import_element146.memo)(NewTemplate);
+var add_new_template_default = (0, import_element147.memo)(NewTemplate);
 
 // routes/template-list/style.scss
 if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='e7a8313260']")) {
@@ -47159,7 +47171,7 @@ function TemplateList() {
     kind: "postType",
     name: TEMPLATE_POST_TYPE3
   });
-  const activeViewOverrides = (0, import_element147.useMemo)(
+  const activeViewOverrides = (0, import_element148.useMemo)(
     () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
     [viewList, activeView]
   );
@@ -47191,7 +47203,7 @@ function TemplateListView({
     (select2) => select2(import_core_data5.store).getPostType(TEMPLATE_POST_TYPE3),
     []
   );
-  const handleQueryParamsChange = (0, import_element147.useCallback)(
+  const handleQueryParamsChange = (0, import_element148.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -47227,14 +47239,14 @@ function TemplateListView({
   });
   const records = templates ?? EMPTY_ARRAY9;
   const postFields = usePostFields({ postType: TEMPLATE_POST_TYPE3 });
-  const fields = (0, import_element147.useMemo)(
+  const fields = (0, import_element148.useMemo)(
     () => [previewField, ...postFields],
     [postFields]
   );
-  const { data: posts, paginationInfo } = (0, import_element147.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element148.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const cleanupDeletedPostIdsFromUrl = (0, import_element147.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element148.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
         (item) => item.id.toString()
@@ -47256,7 +47268,7 @@ function TemplateListView({
     },
     [invalidate, searchParams, navigate]
   );
-  const onActionPerformed = (0, import_element147.useCallback)(
+  const onActionPerformed = (0, import_element148.useCallback)(
     (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
         cleanupDeletedPostIdsFromUrl(items);
@@ -47269,7 +47281,7 @@ function TemplateListView({
     context: "list",
     onActionPerformed
   });
-  const actions = (0, import_element147.useMemo)(() => {
+  const actions = (0, import_element148.useMemo)(() => {
     return postTypeActions?.flatMap((action) => {
       if (action.id === "view-post-revisions") {
         return [];
@@ -47277,7 +47289,7 @@ function TemplateListView({
       return [action];
     });
   }, [postTypeActions]);
-  const handleTabChange = (0, import_element147.useCallback)(
+  const handleTabChange = (0, import_element148.useCallback)(
     (viewSlug) => {
       navigate({
         to: `/templates/list/${viewSlug}`
