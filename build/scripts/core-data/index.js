@@ -6521,6 +6521,7 @@ var wp;
     const {
       type,
       subtype,
+      preferTypes,
       page,
       perPage = searchOptions.isInitialSuggestions ? 3 : 20
     } = searchOptionsToUse;
@@ -6623,7 +6624,7 @@ var wp;
     const responses = await Promise.all(queries2);
     let results = responses.flat();
     results = results.filter((result) => !!result.id);
-    return sortResults(results, search);
+    return sortResults({ results, search, preferTypes });
   }
   function getTitleMatch(title, search) {
     const plain = (text) => (text ?? "").toLowerCase().trim().replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"');
@@ -6652,8 +6653,15 @@ var wp;
     }
     return result.kind === "taxonomy" ? "term" : "post";
   }
-  function getTypeWeight(result) {
-    return TYPE_ORDER.length - TYPE_ORDER.indexOf(getSearchType(result));
+  function getTypeRank(result, preferTypes = []) {
+    const searchType = getSearchType(result);
+    const preferred = preferTypes.findIndex(
+      (entry) => typeof entry === "string" ? entry === searchType : entry.type === searchType && entry.subtype === result.type
+    );
+    if (preferred !== -1) {
+      return TYPE_ORDER.length + (preferTypes.length - preferred);
+    }
+    return TYPE_ORDER.length - TYPE_ORDER.indexOf(searchType);
   }
   function countWordsFound(title, searchTokens) {
     const titleTokens = tokenize(title || "");
@@ -6675,13 +6683,17 @@ var wp;
     }, 0);
     return covered / searchTokens.length * 10;
   }
-  function sortResults(results, search) {
+  function sortResults({
+    results,
+    search,
+    preferTypes
+  }) {
     const searchTokens = tokenize(search);
     const scored = results.map((result) => ({
       result,
       found: countWordsFound(result.title, searchTokens),
       ...getTitleMatch(result.title, search),
-      type: getTypeWeight(result),
+      type: getTypeRank(result, preferTypes),
       score: getCoverage(result.title, searchTokens)
     }));
     scored.sort(

@@ -50235,35 +50235,33 @@ ${text}
 
   // packages/block-library/build-module/navigation-link/link-ui/index.mjs
   var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
-  function getSuggestionsQuery(type, kind) {
-    const perPage = 20;
+  function getOwnTypeSearchOptions(type, kind) {
     switch (type) {
       case "post":
       case "page":
-        return { type: "post", subtype: type, perPage };
+        return { type: "post", subtype: type };
       case "category":
-        return { type: "term", subtype: "category", perPage };
+        return { type: "term", subtype: "category" };
       case "tag":
-        return { type: "term", subtype: "post_tag", perPage };
+        return { type: "term", subtype: "post_tag" };
       case "post_format":
-        return { type: "post-format", perPage };
+        return { type: "post-format" };
       default:
         if (kind === "taxonomy") {
-          return { type: "term", subtype: type, perPage };
+          return { type: "term", subtype: type };
         }
         if (kind === "post-type") {
-          return { type: "post", subtype: type, perPage };
+          return { type: "post", subtype: type };
         }
-        return {
-          // for custom link which has no type
-          // always show pages as initial suggestions
-          initialSuggestionsSearchOptions: {
-            type: "post",
-            subtype: "page",
-            perPage
-          }
-        };
+        return { type: "post", subtype: "page" };
     }
+  }
+  function getSuggestionsQuery(type, kind) {
+    const ownType = getOwnTypeSearchOptions(type, kind);
+    return {
+      preferTypes: [ownType.subtype ? ownType : ownType.type],
+      initialSuggestionsSearchOptions: { ...ownType, perPage: 20 }
+    };
   }
   function UnforwardedLinkUI(props, ref) {
     const { label, url, opensInNewTab, type, kind, id } = props.link;
