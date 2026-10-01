@@ -63103,7 +63103,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime405.jsxs)("figure", { ...blockProps, children: [
-        !!isLink ? /* @__PURE__ */ (0, import_jsx_runtime405.jsx)("a", { href: postPermalink, target: linkTarget, children: image }) : image,
+        !!isLink && (featuredImage || temporaryURL) ? /* @__PURE__ */ (0, import_jsx_runtime405.jsx)("a", { href: postPermalink, target: linkTarget, children: image }) : image,
         /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
           overlay_default,
           {
