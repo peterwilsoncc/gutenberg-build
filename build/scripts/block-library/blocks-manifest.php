@@ -596,12 +596,16 @@ return array(
 			'filter' => array(
 				'duotone' => true
 			),
+			'shadow' => array(
+				'__experimentalSkipSerialization' => true
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			)
 		),
 		'selectors' => array(
 			'border' => '.wp-block-avatar img',
+			'shadow' => '.wp-block-avatar img',
 			'filter' => array(
 				'duotone' => '.wp-block-avatar img'
 			)

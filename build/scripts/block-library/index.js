@@ -6067,12 +6067,16 @@ var wp;
       filter: {
         duotone: true
       },
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
       interactivity: {
         clientNavigation: true
       }
     },
     selectors: {
       border: ".wp-block-avatar img",
+      shadow: ".wp-block-avatar img",
       filter: {
         duotone: ".wp-block-avatar img"
       }
@@ -13555,6 +13559,7 @@ var wp;
     isSelected
   }) => {
     const borderProps = (0, import_block_editor12.__experimentalUseBorderProps)(attributes2);
+    const shadowProps = (0, import_block_editor12.__experimentalGetShadowClassesAndStyles)(attributes2);
     const doubledSizedSrc = (0, import_url.addQueryArgs)(
       (0, import_url.removeQueryArgs)(avatar?.src, ["s"]),
       {
@@ -13598,7 +13603,10 @@ var wp;
               "wp-block-avatar__image",
               borderProps.className
             ),
-            style: borderProps.style
+            style: {
+              ...borderProps.style,
+              ...shadowProps.style
+            }
           }
         )
       }
