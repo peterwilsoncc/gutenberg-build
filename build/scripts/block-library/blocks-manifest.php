@@ -3096,6 +3096,7 @@ return array(
 				'background' => true,
 				'gradients' => true
 			),
+			'shadow' => true,
 			'layout' => array(
 				'allowSwitching' => false,
 				'allowInheriting' => false,

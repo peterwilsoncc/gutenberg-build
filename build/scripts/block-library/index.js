@@ -34557,6 +34557,7 @@ ${url}
         background: true,
         gradients: true
       },
+      shadow: true,
       layout: {
         allowSwitching: false,
         allowInheriting: false,
