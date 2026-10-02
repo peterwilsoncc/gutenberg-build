@@ -4047,6 +4047,7 @@ return array(
 					'padding' => false
 				)
 			),
+			'shadow' => true,
 			'__unstablePasteTextInline' => true,
 			'__experimentalOnMerge' => true,
 			'__experimentalSlashInserter' => true,
@@ -4056,7 +4057,8 @@ return array(
 			'listView' => true
 		),
 		'selectors' => array(
-			'border' => '.wp-block-list:not(.wp-block-list .wp-block-list)'
+			'border' => '.wp-block-list:not(.wp-block-list .wp-block-list)',
+			'shadow' => '.wp-block-list:not(.wp-block-list .wp-block-list)'
 		),
 		'editorStyle' => 'wp-block-list-editor',
 		'style' => 'wp-block-list'
