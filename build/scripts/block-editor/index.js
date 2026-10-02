@@ -6011,6 +6011,7 @@ var wp;
     __unstableUseTypewriter: () => useTypewriter,
     __unstableUseTypingObserver: () => useTypingObserver,
     createCustomColorsHOC: () => createCustomColorsHOC,
+    getBackgroundClassesAndStyles: () => getBackgroundClassesAndStyles,
     getColorClassName: () => getColorClassName,
     getColorObjectByAttributeValues: () => getColorObjectByAttributeValues,
     getColorObjectByColorValue: () => getColorObjectByColorValue,
@@ -6032,6 +6033,7 @@ var wp;
     store: () => store,
     storeConfig: () => storeConfig,
     transformStyles: () => transform_styles_default,
+    useBackgroundProps: () => useBackgroundProps,
     useBlockBindingsUtils: () => useBlockBindingsUtils,
     useBlockCommands: () => useBlockCommands,
     useBlockDisplayInformation: () => useBlockDisplayInformation,
@@ -97056,6 +97058,13 @@ var wp;
     if (!hasBackgroundSupport(name) || !style?.background?.backgroundImage) {
       return;
     }
+    const skipSerialization = (0, import_blocks97.getBlockSupport)(name, [
+      BACKGROUND_SUPPORT_KEY,
+      "__experimentalSkipSerialization"
+    ]);
+    if (skipSerialization === true || Array.isArray(skipSerialization) && skipSerialization.includes("backgroundImage")) {
+      return;
+    }
     const backgroundStyles = setBackgroundStyleDefaults2(style?.background);
     if (!backgroundStyles) {
       return;
@@ -97326,6 +97335,15 @@ var wp;
     props.className = newClassName ? newClassName : void 0;
     return props;
   }
+  function getSerializedBackgroundClasses(name, style) {
+    const shouldSerialize = (feature) => !shouldSkipSerialization(name, BACKGROUND_SUPPORT_KEY, feature);
+    return getBackgroundImageClasses({
+      background: {
+        backgroundImage: shouldSerialize("backgroundImage") ? style?.background?.backgroundImage : void 0,
+        gradient: shouldSerialize("gradient") ? style?.background?.gradient : void 0
+      }
+    });
+  }
   function useBlockProps5({
     name,
     backgroundColor,
@@ -97346,8 +97364,12 @@ var wp;
       ],
       [userPalette, themePalette, defaultPalette]
     );
-    if (!hasColorSupport(name) || shouldSkipSerialization(name, COLOR_SUPPORT_KEY2)) {
+    if (!hasColorSupport(name)) {
       return {};
+    }
+    const backgroundClassName = getSerializedBackgroundClasses(name, style);
+    if (shouldSkipSerialization(name, COLOR_SUPPORT_KEY2)) {
+      return backgroundClassName ? { className: backgroundClassName } : {};
     }
     const extraStyles = {};
     if (textColor && !shouldSkipSerialization(name, COLOR_SUPPORT_KEY2, "text")) {
@@ -97368,13 +97390,12 @@ var wp;
       gradient,
       style
     });
-    const hasBackgroundValue = backgroundColor || style?.color?.background || gradient || style?.color?.gradient;
+    const hasColorBackgroundClass = saveProps.className?.split(" ").includes("has-background");
     return {
       ...saveProps,
       className: clsx_default(
         saveProps.className,
-        // Add background image classes in the editor, if not already handled by background color values.
-        !hasBackgroundValue && getBackgroundImageClasses(style)
+        !hasColorBackgroundClass && backgroundClassName
       )
     };
   }
@@ -106228,6 +106249,9 @@ var wp;
     ],
     [`${SHADOW_SUPPORT_KEY}.__experimentalSkipSerialization`]: [
       SHADOW_SUPPORT_KEY
+    ],
+    [`${BACKGROUND_SUPPORT_KEY}.__experimentalSkipSerialization`]: [
+      BACKGROUND_SUPPORT_KEY
     ]
   };
   var skipSerializationPathsSave = {
@@ -115933,6 +115957,25 @@ var wp;
       return hasAutoGenerateControl(blockType?.attributes);
     }
   };
+
+  // packages/block-editor/build-module/hooks/use-background-props.mjs
+  function getBackgroundClassesAndStyles(attributes) {
+    const { style } = attributes;
+    const backgroundStyles = style?.background || {};
+    const className = "text" !== backgroundStyles.backgroundClip ? getBackgroundImageClasses(style) : "";
+    return {
+      className: className || void 0,
+      style: getInlineStyles({
+        background: {
+          ...backgroundStyles,
+          ...setBackgroundStyleDefaults2(backgroundStyles)
+        }
+      })
+    };
+  }
+  function useBackgroundProps(attributes) {
+    return getBackgroundClassesAndStyles(attributes);
+  }
 
   // packages/block-editor/build-module/hooks/use-dimensions-props.mjs
   function getDimensionsClassesAndStyles(attributes) {
