@@ -17708,6 +17708,10 @@ var wp;
           fontSize: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       __experimentalBorder: {
         color: true,
         radius: true,
