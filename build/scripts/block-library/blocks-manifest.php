@@ -1417,6 +1417,10 @@ return array(
 					'gradient' => true
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'spacing' => array(
 				'blockGap' => array(
 					'__experimentalDefault' => '2em',

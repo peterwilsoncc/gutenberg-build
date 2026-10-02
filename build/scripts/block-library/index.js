@@ -19578,6 +19578,10 @@ var wp;
           gradient: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       spacing: {
         blockGap: {
           __experimentalDefault: "2em",
