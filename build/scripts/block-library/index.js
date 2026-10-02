@@ -56164,6 +56164,7 @@ ${text}
         style: true,
         width: true
       },
+      shadow: true,
       color: {
         gradients: true,
         link: true,

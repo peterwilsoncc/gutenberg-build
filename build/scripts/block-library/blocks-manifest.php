@@ -5202,6 +5202,7 @@ return array(
 				'style' => true,
 				'width' => true
 			),
+			'shadow' => true,
 			'color' => array(
 				'gradients' => true,
 				'link' => true,
