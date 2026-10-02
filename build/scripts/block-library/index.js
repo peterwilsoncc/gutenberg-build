@@ -72149,7 +72149,8 @@ ${text}
         }
       },
       spacing: {
-        margin: true
+        margin: true,
+        padding: true
       },
       html: false
     },
