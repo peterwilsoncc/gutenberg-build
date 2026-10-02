@@ -75720,6 +75720,7 @@ ${text}
           style: true
         }
       },
+      shadow: true,
       contentRole: true,
       listView: true
     },

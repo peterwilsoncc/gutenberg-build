@@ -8452,6 +8452,7 @@ return array(
 					'style' => true
 				)
 			),
+			'shadow' => true,
 			'contentRole' => true,
 			'listView' => true
 		),
