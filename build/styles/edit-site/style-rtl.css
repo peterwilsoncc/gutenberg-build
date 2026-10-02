@@ -4409,7 +4409,7 @@ button.font-library__upload-area {
   padding: 32px;
   display: flex;
   flex-direction: column;
-  border: 1px solid #ddd;
+  border: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
   justify-content: center;
 }
 .edit-site-custom-template-modal__contents > .components-button span:first-child,
@@ -4634,7 +4634,7 @@ button.font-library__upload-area {
   box-sizing: border-box;
   width: 280px;
   background-color: #fff;
-  border: 1px dotted #ddd;
+  border: 1px dotted var(--wpds-color-stroke-surface-neutral, #dbdbdb);
   padding: 24px;
   display: flex;
   justify-content: center;
