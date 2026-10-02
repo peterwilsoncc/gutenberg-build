@@ -99403,24 +99403,16 @@ var wp;
       if (!blockElement || !hasFitTextSupport2 || !fitText) {
         return;
       }
-      const styleId = `fit-text-${clientId}`;
-      let styleElement = blockElement.ownerDocument.getElementById(styleId);
-      if (!styleElement) {
-        styleElement = blockElement.ownerDocument.createElement("style");
-        styleElement.id = styleId;
-        blockElement.ownerDocument.head.appendChild(styleElement);
-      }
-      const blockSelector = `#block-${clientId}`;
       const applyFontSizeStyle = (size4) => {
         if (size4 === 0) {
-          styleElement.textContent = "";
+          blockElement.style.removeProperty("font-size");
         } else {
-          styleElement.textContent = `${blockSelector} { font-size: ${size4}px !important; }`;
+          blockElement.style.setProperty("font-size", `${size4}px`);
         }
       };
       const optimalSize = optimizeFitText(blockElement, applyFontSizeStyle);
       setFontSize(optimalSize);
-    }, [blockElement, clientId, hasFitTextSupport2, fitText]);
+    }, [blockElement, hasFitTextSupport2, fitText]);
     (0, import_element327.useEffect)(() => {
       if (!fitText || !blockElement || !clientId || !hasFitTextSupport2 || blockMode === "html") {
         return;
@@ -99458,11 +99450,7 @@ var wp;
         if (resizeObserver) {
           resizeObserver.disconnect();
         }
-        const styleId = `fit-text-${clientId}`;
-        const styleElement = currentElement.ownerDocument.getElementById(styleId);
-        if (styleElement) {
-          styleElement.remove();
-        }
+        currentElement.style.removeProperty("font-size");
       };
     }, [
       fitText,
