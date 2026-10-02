@@ -30708,6 +30708,7 @@ ${url}
           style: true
         }
       },
+      shadow: true,
       interactivity: true
     },
     editorStyle: "wp-block-file-editor",
