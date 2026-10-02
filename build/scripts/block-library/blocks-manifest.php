@@ -8582,10 +8582,14 @@ return array(
 					'padding' => true,
 					'blockGap' => true
 				)
+			),
+			'shadow' => array(
+				'__experimentalSkipSerialization' => true
 			)
 		),
 		'selectors' => array(
 			'border' => '.wp-block-tab-list button',
+			'shadow' => '.wp-block-tab-list button',
 			'color' => array(
 				'background' => '.wp-block-tab-list button',
 				'text' => '.wp-block-tab-list button'

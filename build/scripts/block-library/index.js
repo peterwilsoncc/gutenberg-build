@@ -79419,6 +79419,7 @@ ${text}
     const colorProps = (0, import_block_editor259.__experimentalUseColorProps)(attributes2);
     const borderProps = (0, import_block_editor259.__experimentalUseBorderProps)(attributes2);
     const spacingProps = (0, import_block_editor259.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const shadowProps = (0, import_block_editor259.__experimentalGetShadowClassesAndStyles)(attributes2);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { tabsClientId, tabPanels, editorActiveTabIndex, activeTabIndex } = (0, import_data150.useSelect)(
       (select10) => {
@@ -79506,7 +79507,8 @@ ${text}
     const buttonStyle = {
       ...colorProps.style,
       ...borderProps.style,
-      ...spacingProps.style
+      ...spacingProps.style,
+      ...shadowProps.style
     };
     return /* @__PURE__ */ (0, import_jsx_runtime534.jsxs)(import_jsx_runtime534.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(import_block_editor259.InspectorControls, { group: "settings", children: /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
@@ -79588,11 +79590,13 @@ ${text}
     const colorProps = (0, import_block_editor260.__experimentalGetColorClassesAndStyles)(attributes2);
     const borderProps = (0, import_block_editor260.__experimentalGetBorderClassesAndStyles)(attributes2);
     const spacingProps = (0, import_block_editor260.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const shadowProps = (0, import_block_editor260.__experimentalGetShadowClassesAndStyles)(attributes2);
     const buttonClassName = clsx_default(colorProps.className, borderProps.className);
     const buttonStyle = {
       ...colorProps.style,
       ...borderProps.style,
-      ...spacingProps.style
+      ...spacingProps.style,
+      ...shadowProps.style
     };
     return /* @__PURE__ */ (0, import_jsx_runtime535.jsx)("div", { ...blockProps, children: tabs.map((tab, index2) => /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(
       import_block_editor260.RichText.Content,
@@ -79676,10 +79680,14 @@ ${text}
           padding: true,
           blockGap: true
         }
+      },
+      shadow: {
+        __experimentalSkipSerialization: true
       }
     },
     selectors: {
       border: ".wp-block-tab-list button",
+      shadow: ".wp-block-tab-list button",
       color: {
         background: ".wp-block-tab-list button",
         text: ".wp-block-tab-list button"
