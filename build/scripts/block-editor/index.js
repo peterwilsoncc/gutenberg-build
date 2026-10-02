@@ -88894,7 +88894,9 @@ var wp;
   };
   function SearchItemIcon({ isURL: isURL4, suggestion }) {
     let icon = null;
-    if (isURL4) {
+    if (suggestion.icon) {
+      icon = suggestion.icon;
+    } else if (isURL4) {
       icon = globe_default;
     } else if (suggestion.type in TYPES) {
       icon = TYPES[suggestion.type].icon;
@@ -88984,6 +88986,9 @@ var wp;
     }
     if (suggestion.isBlogHome) {
       return (0, import_i18n162.__)("Blog home");
+    }
+    if (suggestion.typeLabel) {
+      return suggestion.typeLabel;
     }
     if (suggestion.type in TYPES) {
       return TYPES[suggestion.type].label;
@@ -89147,9 +89152,15 @@ var wp;
       }
     ]);
   };
-  var handleEntitySearch = async (val, suggestionsQuery, fetchSearchSuggestions, withCreateSuggestion, pageOnFront, pageForPosts) => {
+  var handleEntitySearch = async (val, suggestionsQuery, fetchSearchSuggestions, withCreateSuggestion, pageOnFront, pageForPosts, transformSuggestions) => {
     const { isInitialSuggestions } = suggestionsQuery;
-    const results = await fetchSearchSuggestions(val, suggestionsQuery);
+    let results = await fetchSearchSuggestions(val, suggestionsQuery);
+    if (transformSuggestions) {
+      results = await transformSuggestions(results, {
+        isInitialSuggestions: !!isInitialSuggestions,
+        searchTerm: val
+      });
+    }
     results.map((result) => {
       if (result.type !== "page") {
         return result;
@@ -89177,7 +89188,7 @@ var wp;
       type: CREATE_TYPE
     });
   };
-  function useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggestion) {
+  function useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggestion, transformSuggestions) {
     const { fetchSearchSuggestions, pageOnFront, pageForPosts } = (0, import_data149.useSelect)(
       (select3) => {
         const { getSettings: getSettings9 } = select3(store);
@@ -89198,7 +89209,8 @@ var wp;
           fetchSearchSuggestions,
           withCreateSuggestion,
           pageOnFront,
-          pageForPosts
+          pageForPosts,
+          transformSuggestions
         );
       },
       [
@@ -89207,6 +89219,7 @@ var wp;
         pageOnFront,
         pageForPosts,
         suggestionsQuery,
+        transformSuggestions,
         withCreateSuggestion
       ]
     );
@@ -89234,7 +89247,7 @@ var wp;
       allowDirectEntry = true,
       showInitialSuggestions = false,
       suggestionsQuery = {},
-      withURLSuggestion = true,
+      transformSuggestions = null,
       createSuggestionButtonText,
       hideLabelFromVision = false,
       suffix,
@@ -89245,7 +89258,7 @@ var wp;
         suggestionsQuery,
         allowDirectEntry,
         withCreateSuggestion,
-        withURLSuggestion
+        transformSuggestions
       );
       const searchHandler = showSuggestions ? fetchSuggestions || genericSearchHandler : noopSearchHandler;
       const [focusedSuggestion, setFocusedSuggestion] = (0, import_element287.useState)();
@@ -89759,6 +89772,7 @@ var wp;
     withCreateSuggestion,
     inputValue: propInputValue = "",
     suggestionsQuery = {},
+    transformSuggestions,
     noURLSuggestion = false,
     createSuggestionButtonText,
     hasRichPreviews = false,
@@ -90058,6 +90072,7 @@ var wp;
                       allowDirectEntry: !noDirectEntry,
                       showSuggestions,
                       suggestionsQuery,
+                      transformSuggestions,
                       withURLSuggestion: !noURLSuggestion,
                       createSuggestionButtonText,
                       hideLabelFromVision: !showTextControl,
