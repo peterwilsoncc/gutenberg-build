@@ -5082,6 +5082,10 @@ return array(
 				)
 			),
 			'shadow' => true,
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'contentRole' => true
 		),
 		'editorStyle' => 'wp-block-page-list-editor',

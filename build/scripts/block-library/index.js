@@ -54838,6 +54838,10 @@ ${text}
         }
       },
       shadow: true,
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       contentRole: true
     },
     editorStyle: "wp-block-page-list-editor",
