@@ -3599,6 +3599,7 @@ var wp;
       "background-surface-neutral-strong"
     ],
     "bg-fgSurface4": [
+      "background-thumb-neutral",
       "foreground-content-neutral",
       "foreground-interactive-neutral",
       "foreground-interactive-neutral-active",
