@@ -59348,6 +59348,12 @@ This message will only show in development mode. It won't appear in production. 
         children: /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(MediaContainer, {
           className: "components-focal-point-picker",
           onKeyDown: arrowKeyStep,
+          onPointerDown: (event) => {
+            if (event.button !== 0) {
+              return;
+            }
+            event.currentTarget.setPointerCapture(event.pointerId);
+          },
           onMouseDown: startDrag,
           onBlur: () => {
             if (isDragging2) {
