@@ -154,6 +154,7 @@ return array(
 					'letterSpacing'
 				),
 				'fontSize' => true,
+				'lineHeight' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
