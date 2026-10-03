@@ -2552,7 +2552,6 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 }
 .components-popover {
   z-index: 1000000;
-  will-change: transform;
 }
 .components-popover.is-expanded {
   position: fixed;

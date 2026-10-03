@@ -30287,6 +30287,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
   var SLOT_NAME = "Popover";
   var OVERFLOW_PADDING = 8;
+  var WILL_CHANGE_IDLE_TIMEOUT = 200;
   var ArrowTriangle = () => /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_primitives31.SVG, {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 100 100",
@@ -30459,6 +30460,8 @@ This message will only show in development mode. It won't appear in production. 
       y: y3,
       // Object with "regular" refs to both "reference" and "floating"
       refs,
+      // The "reference" and "floating" DOM elements
+      elements: elements2,
       // Type of CSS position property to use (absolute or fixed)
       strategy,
       update: update2,
@@ -30492,7 +30495,19 @@ This message will only show in development mode. It won't appear in production. 
       });
       refs.setReference(resultingReferenceElement);
     }, [anchor, anchorRef, anchorRefTop, anchorRefBottom, anchorRefStartContainer, anchorRefCurrent, anchorRect, getAnchorRect, fallbackReferenceElement, refs]);
-    const mergedFloatingRef = (0, import_compose16.useMergeRefs)([refs.setFloating, dialogRef, forwardedRef]);
+    const popoverElementRef = (0, import_element51.useRef)(null);
+    const mergedFloatingRef = (0, import_compose16.useMergeRefs)([refs.setFloating, dialogRef, popoverElementRef, forwardedRef]);
+    (0, import_element51.useLayoutEffect)(() => {
+      const popoverElement = popoverElementRef.current;
+      if (!popoverElement) {
+        return;
+      }
+      popoverElement.style.willChange = "transform";
+      const timeoutId = setTimeout(() => {
+        popoverElement.style.willChange = "auto";
+      }, WILL_CHANGE_IDLE_TIMEOUT);
+      return () => clearTimeout(timeoutId);
+    }, [x2, y3, elements2.floating]);
     const style2 = isExpanded ? void 0 : {
       position: strategy,
       top: 0,
