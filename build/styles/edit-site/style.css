@@ -3342,6 +3342,11 @@ fieldset.fields__media-edit .fields__media-edit-thumbnail {
   aspect-ratio: 1/1;
   flex-shrink: 0;
   border-radius: 2px;
+  /*rtl:begin:ignore*/
+  background-image: repeating-linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%, #e0e0e0), repeating-linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%, #e0e0e0);
+  background-position: 0 0, 4px 4px;
+  /*rtl:end:ignore*/
+  background-size: 8px 8px;
 }
 
 fieldset.fields__media-edit .fields__media-edit-expanded {
@@ -3417,6 +3422,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-thu
   height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
+  /*rtl:begin:ignore*/
+  background-image: repeating-linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%, #e0e0e0), repeating-linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%, #e0e0e0);
+  background-position: 0 0, 12px 12px;
+  /*rtl:end:ignore*/
+  background-size: 24px 24px;
 }
 
 fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-filename {
