@@ -5690,17 +5690,69 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   color: #757575;
 }
 
-.interface-interface-skeleton__sidebar:has(.editor-collab-sidebar) {
-  box-shadow: none;
+.editor-collab-sidebar-overlay {
+  height: 100%;
 }
-
-.editor-collab-sidebar__header {
+@keyframes __wp-base-styles-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media not (prefers-reduced-motion) {
+  .editor-collab-sidebar-overlay {
+    animation: __wp-base-styles-fade-in var(--wpds-motion-duration-lg, 300ms) var(--wpds-motion-easing-balanced, cubic-bezier(0.4, 0, 0.2, 1)) 0s;
+    animation-fill-mode: forwards;
+  }
+}
+.editor-collab-sidebar-overlay.is-minimized .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) {
+  right: auto;
+  padding: 8px;
+}
+.editor-collab-sidebar-overlay.is-minimized .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__deleted-block-notice,
+.editor-collab-sidebar-overlay.is-minimized .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__more-reply-separator,
+.editor-collab-sidebar-overlay.is-minimized .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__note ~ .editor-collab-sidebar-panel__note,
+.editor-collab-sidebar-overlay.is-minimized .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__note > :not(:first-child),
+.editor-collab-sidebar-overlay.is-minimized .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__note-actions {
   display: none;
 }
-
-.editor-collab-sidebar {
-  height: 100%;
-  overflow: hidden;
+.editor-collab-sidebar-overlay.is-minimized .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__user-info {
+  white-space: nowrap;
+}
+.editor-collab-sidebar-overlay.is-minimized .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus):not(:hover, :focus-within) .editor-collab-sidebar-panel__user-info {
+  display: none;
+}
+@container (width < 880px) {
+  .editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) {
+    right: auto;
+    padding: 8px;
+  }
+  .editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__deleted-block-notice,
+  .editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__more-reply-separator,
+  .editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__note ~ .editor-collab-sidebar-panel__note,
+  .editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__note > :not(:first-child),
+  .editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__note-actions {
+    display: none;
+  }
+  .editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus) .editor-collab-sidebar-panel__user-info {
+    white-space: nowrap;
+  }
+  .editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread.is-floating:not(.is-selected.has-focus):not(:hover, :focus-within) .editor-collab-sidebar-panel__user-info {
+    display: none;
+  }
+}
+.editor-collab-sidebar-overlay .editor-collab-sidebar-panel {
+  border-right: 0;
+}
+.editor-resizable-editor.has-canvas-margin .editor-collab-sidebar-overlay .editor-collab-sidebar-panel {
+  margin-inline-start: calc(-1 * var(--canvas-scrollbar-width, 0px));
+  margin-inline-end: var(--canvas-scrollbar-width, 0px);
+}
+.editor-collab-sidebar-overlay .editor-collab-sidebar-panel__thread,
+.editor-collab-sidebar-overlay .editor-collab-sidebar-panel__add-note {
+  pointer-events: auto;
 }
 
 .editor-collab-sidebar-panel {
@@ -8734,6 +8786,24 @@ textarea.editor-post-text-editor::placeholder {
 }
 .editor-visual-editor .components-button.is-tertiary, .editor-visual-editor .components-button.has-icon {
   padding: 6px;
+}
+
+.editor-visual-editor__canvas-margin {
+  display: none;
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 280px;
+  pointer-events: none;
+}
+
+.editor-resizable-editor.has-canvas-margin {
+  container-type: inline-size;
+}
+@container (min-width: 482px) {
+  .editor-resizable-editor.has-canvas-margin .editor-visual-editor__canvas-margin {
+    display: block;
+  }
 }
 
 .editor-fields-content-preview {
