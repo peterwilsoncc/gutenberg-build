@@ -32992,7 +32992,7 @@ function CompositeGrid({
   data,
   isInfiniteScroll,
   className,
-  inert,
+  inert = false,
   isLoading,
   view,
   fields: fields2,
@@ -33069,7 +33069,7 @@ function CompositeGrid({
           ),
           role: "feed",
           focusWrap: true,
-          inert,
+          inert: inertValue2(inert),
           children: [
             Array.from({ length: placeholdersNeeded }).map(
               (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
@@ -33160,7 +33160,7 @@ function CompositeGrid({
           "aria-busy": isLoading,
           "aria-rowcount": totalRows,
           ref: resizeObserverRef,
-          inert,
+          inert: inertValue2(inert),
           children: chunk(data, gridColumns).map((row, i) => /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
             import_components11.Composite.Row,
             {
@@ -33288,7 +33288,7 @@ function ViewGrid({
     className: clsx_default(className, {
       "is-refreshing": !isInfiniteScroll && isDelayedLoading
     }),
-    inert: inertValue2(!isInfiniteScroll && isLoading),
+    inert: !isInfiniteScroll && !!isLoading,
     isLoading,
     view,
     fields: fields2,
