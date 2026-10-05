@@ -13982,7 +13982,8 @@ var wp;
       anchor: true,
       align: true,
       spacing: {
-        margin: true
+        margin: true,
+        padding: true
       },
       interactivity: {
         clientNavigation: true

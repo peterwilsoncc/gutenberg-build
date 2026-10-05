@@ -2673,7 +2673,8 @@ return array(
 			'anchor' => true,
 			'align' => true,
 			'spacing' => array(
-				'margin' => true
+				'margin' => true,
+				'padding' => true
 			),
 			'interactivity' => array(
 				'clientNavigation' => true
