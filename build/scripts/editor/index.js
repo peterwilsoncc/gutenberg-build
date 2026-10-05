@@ -116553,7 +116553,7 @@ ${content}
     );
     const anchorThread = orderedThreads[anchorIndex];
     if (!anchorThread || !blockRects[anchorThread.id]) {
-      return { positions: {} };
+      return { positions: {}, contentHeight: 0 };
     }
     const anchorRect = blockRects[anchorThread.id];
     const anchorTop = anchorRect.top || 0;
@@ -116596,13 +116596,21 @@ ${content}
       belowAdjustedTop = threadTop + offset4;
     }
     const positions = {};
+    let contentHeight = 0;
     for (const thread of orderedThreads) {
       const blockRect = blockRects[thread.id];
       if (blockRect && offsets[thread.id] !== void 0) {
-        positions[thread.id] = blockRect.top + scrollTop + offsets[thread.id];
+        const top = blockRect.top + scrollTop + offsets[thread.id];
+        positions[thread.id] = top;
+        if (heights[thread.id]) {
+          contentHeight = Math.max(
+            contentHeight,
+            top + THREAD_GAP + heights[thread.id] + THREAD_GAP
+          );
+        }
       }
     }
-    return { positions };
+    return { positions, contentHeight };
   }
   function findNoteThread(noteId, container, additionalSelector) {
     if (!container) {
@@ -118963,8 +118971,9 @@ ${content}
   var COMPACT_TIER = { minCanvasWidth: 482, width: 82 };
   function getCanvasMarginCSS(isCompact) {
     const tiers = isCompact ? [COMPACT_TIER] : [COMPACT_TIER, FULL_TIER];
-    return tiers.map(
-      ({ minCanvasWidth, width }) => `@media (min-width:${minCanvasWidth}px){:root{padding-inline-end:${width}px;}body{overflow-x:clip;}:root::after{content:"";position:fixed;inset-block:0;inset-inline-end:${width - 1}px;width:1px;background:color-mix(in srgb,currentColor 10%,transparent);pointer-events:none;}}`
+    const roomProperty = '@property --wp-editor-canvas-min-height{syntax:"<length>";inherits:false;initial-value:0px;}';
+    return roomProperty + tiers.map(
+      ({ minCanvasWidth, width }) => `@media (min-width:${minCanvasWidth}px){:root{padding-inline-end:${width}px;min-height:var(--wp-editor-canvas-min-height,0);}body{overflow-x:clip;}:root::after{content:"";position:fixed;inset-block:0;inset-inline-end:${width - 1}px;width:1px;background:color-mix(in srgb,currentColor 10%,transparent);pointer-events:none;}}`
     ).join("");
   }
 
@@ -124420,7 +124429,7 @@ ${content}
         return;
       }
       scrollNoteThreadIntoView(note.id, sidebarRef.current);
-    }, [isSelected2, floating?.y, note.id, sidebarRef]);
+    }, [isSelected2, floating?.y, floating?.height, note.id, sidebarRef]);
     const focusOutside = (0, import_compose100.__experimentalUseFocusOutside)((event) => {
       setHasFocus(false);
       const isNoteFocused2 = event.relatedTarget?.closest(
@@ -125173,49 +125182,99 @@ ${content}
   }
   var subscribeNoop = () => () => {
   };
-  function useFloatingBoard({
-    threads,
-    selectedNoteId,
-    isFloating,
-    sidebarRef
-  }) {
-    const [store4] = (0, import_element436.useState)(createBoardStore);
-    const { heights, anchorRects, canvas, frameOffset, scrollbarWidth } = (0, import_element436.useSyncExternalStore)(
-      isFloating ? store4.subscribe : subscribeNoop,
-      store4.getSnapshot
-    );
+  function useCanvasRoom({ canvas, contentHeight, isFloating }) {
     (0, import_element436.useLayoutEffect)(() => {
-      store4.requestMeasure();
-    }, [store4, threads]);
-    const notePositions = (0, import_element436.useMemo)(
-      () => calculateNotePositions({
-        threads,
-        selectedNoteId,
-        blockRects: anchorRects,
-        heights
-      }).positions,
-      [threads, selectedNoteId, anchorRects, heights]
-    );
+      if (!isFloating || !canvas || !contentHeight) {
+        return;
+      }
+      const root = canvas.ownerDocument.documentElement;
+      root.style.setProperty(
+        "--wp-editor-canvas-min-height",
+        `${contentHeight}px`
+      );
+      return () => {
+        root.style.removeProperty("--wp-editor-canvas-min-height");
+      };
+    }, [isFloating, canvas, contentHeight]);
+  }
+  function useMirroredScroll({ sidebarRef, canvas, isFloating }) {
     (0, import_element436.useLayoutEffect)(() => {
       const panel = sidebarRef?.current;
       if (!isFloating || !panel || !canvas) {
         return;
       }
-      const applyScroll = () => {
-        panel.style.setProperty(
-          "--canvas-scroll",
-          `${-canvas.scrollTop}px`
-        );
+      const isNear = (a2, b2) => Math.abs(a2 - b2) < 1;
+      let range;
+      const syncRange = () => {
+        const next = canvas.scrollHeight - canvas.clientHeight;
+        if (next !== range) {
+          range = next;
+          panel.style.setProperty(
+            "--canvas-scroll-range",
+            `${next}px`
+          );
+        }
       };
-      applyScroll();
-      const view = canvas.ownerDocument.defaultView;
+      let panelEcho = -1;
+      let canvasEcho = -1;
+      const scrollPanelTo = (top) => {
+        panel.scrollTo({ top, behavior: "instant" });
+        panelEcho = panel.scrollTop;
+      };
+      const fromCanvas = () => {
+        const top = canvas.scrollTop;
+        const isEcho = isNear(top, canvasEcho);
+        canvasEcho = -1;
+        if (!isEcho && !isNear(panel.scrollTop, top)) {
+          scrollPanelTo(top);
+        }
+      };
+      const fromPanel = () => {
+        const top = panel.scrollTop;
+        const isEcho = isNear(top, panelEcho);
+        panelEcho = -1;
+        if (isEcho || isNear(canvas.scrollTop, top)) {
+          return;
+        }
+        canvas.scrollTo({ top, behavior: "instant" });
+        canvasEcho = canvas.scrollTop;
+        if (!isNear(canvasEcho, top)) {
+          scrollPanelTo(canvasEcho);
+        }
+      };
+      syncRange();
+      fromCanvas();
+      const { body, defaultView: view } = canvas.ownerDocument;
+      const resizeObserver = new window.ResizeObserver(syncRange);
+      resizeObserver.observe(canvas);
+      resizeObserver.observe(body);
+      resizeObserver.observe(panel);
+      const onCanvasScroll = (event) => {
+        if (event.target === canvas || event.target === canvas.ownerDocument) {
+          fromCanvas();
+        }
+      };
       const listenerOptions = { passive: true, capture: true };
-      view.addEventListener("scroll", applyScroll, listenerOptions);
+      view.addEventListener("scroll", onCanvasScroll, listenerOptions);
+      panel.addEventListener("scroll", fromPanel, { passive: true });
       return () => {
-        view.removeEventListener("scroll", applyScroll, listenerOptions);
-        panel.style.removeProperty("--canvas-scroll");
+        resizeObserver.disconnect();
+        view.removeEventListener(
+          "scroll",
+          onCanvasScroll,
+          listenerOptions
+        );
+        panel.removeEventListener("scroll", fromPanel);
+        panel.style.removeProperty("--canvas-scroll-range");
       };
     }, [sidebarRef, isFloating, canvas]);
+  }
+  function usePanelOffsets({
+    sidebarRef,
+    frameOffset,
+    scrollbarWidth,
+    isFloating
+  }) {
     (0, import_element436.useLayoutEffect)(() => {
       const panel = sidebarRef?.current;
       if (!isFloating || !panel) {
@@ -125231,8 +125290,36 @@ ${content}
         panel.style.removeProperty("--canvas-scrollbar-width");
       };
     }, [sidebarRef, isFloating, frameOffset, scrollbarWidth]);
+  }
+  function useFloatingBoard({
+    threads,
+    selectedNoteId,
+    isFloating,
+    sidebarRef
+  }) {
+    const [store4] = (0, import_element436.useState)(createBoardStore);
+    const { heights, anchorRects, canvas, frameOffset, scrollbarWidth } = (0, import_element436.useSyncExternalStore)(
+      isFloating ? store4.subscribe : subscribeNoop,
+      store4.getSnapshot
+    );
+    (0, import_element436.useLayoutEffect)(() => {
+      store4.requestMeasure();
+    }, [store4, threads]);
+    const { positions: notePositions, contentHeight } = (0, import_element436.useMemo)(
+      () => calculateNotePositions({
+        threads,
+        selectedNoteId,
+        blockRects: anchorRects,
+        heights
+      }),
+      [threads, selectedNoteId, anchorRects, heights]
+    );
+    useCanvasRoom({ canvas, contentHeight, isFloating });
+    useMirroredScroll({ sidebarRef, canvas, isFloating });
+    usePanelOffsets({ sidebarRef, frameOffset, scrollbarWidth, isFloating });
     return {
       notePositions,
+      heights,
       registerThread: store4.registerThread,
       unregisterThread: store4.unregisterThread
     };
@@ -125321,7 +125408,7 @@ ${content}
         relatedBlockElement?.focus();
       }
     };
-    const { notePositions, registerThread, unregisterThread } = useFloatingBoard({
+    const { notePositions, heights, registerThread, unregisterThread } = useFloatingBoard({
       threads,
       selectedNoteId: selectedNote2,
       isFloating,
@@ -125346,23 +125433,20 @@ ${content}
           toggleBlockSpotlight(thread.blockClientId, false);
         }
         focusNoteThread(thread.id, sidebarRef.current);
-      } else if (event.key === "ArrowDown" && currentIndex < threads.length - 1 && isSelfTarget2) {
-        focusNoteThread(
-          threads[currentIndex + 1].id,
-          sidebarRef.current
-        );
-      } else if (event.key === "ArrowUp" && currentIndex > 0 && isSelfTarget2) {
-        focusNoteThread(
-          threads[currentIndex - 1].id,
-          sidebarRef.current
-        );
-      } else if (event.key === "Home" && isSelfTarget2) {
-        focusNoteThread(threads[0].id, sidebarRef.current);
-      } else if (event.key === "End" && isSelfTarget2) {
-        focusNoteThread(
-          threads[threads.length - 1].id,
-          sidebarRef.current
-        );
+      } else if (isSelfTarget2) {
+        const targetIndex = {
+          ArrowDown: Math.min(currentIndex + 1, threads.length - 1),
+          ArrowUp: Math.max(currentIndex - 1, 0),
+          Home: 0,
+          End: threads.length - 1
+        }[event.key];
+        if (targetIndex !== void 0) {
+          event.preventDefault();
+          focusNoteThread(
+            threads[targetIndex].id,
+            sidebarRef.current
+          );
+        }
       }
     };
     const firstResolvedIndex = isFloating ? -1 : threads.findIndex(
@@ -125413,6 +125497,7 @@ ${content}
                 sidebarRef,
                 floating: isFloating ? {
                   y: notePositions[thread.id],
+                  height: heights[thread.id],
                   registerThread,
                   unregisterThread
                 } : void 0,

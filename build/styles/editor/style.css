@@ -5759,6 +5759,16 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 .editor-collab-sidebar-overlay .editor-collab-sidebar-panel {
   border-left: 0;
+  overflow-y: auto;
+  overflow-anchor: none;
+  scrollbar-width: none;
+}
+.editor-collab-sidebar-overlay .editor-collab-sidebar-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: calc(100% + var(--canvas-scroll-range, 0px));
 }
 .editor-resizable-editor.has-canvas-margin .editor-collab-sidebar-overlay .editor-collab-sidebar-panel {
   margin-inline-start: calc(-1 * var(--canvas-scrollbar-width, 0px));
@@ -5804,8 +5814,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   right: 16px;
   position: absolute;
   margin-top: 16px;
-  transform: translateY(calc(var(--canvas-offset, 0px) + var(--canvas-scroll, 0px)));
-  will-change: transform;
+  transform: translateY(var(--canvas-offset, 0px));
   max-height: calc(100dvh - var(--wp-admin--admin-bar--height, 0px) - 128px);
   overflow-y: auto;
 }
