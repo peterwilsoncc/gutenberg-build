@@ -124963,7 +124963,11 @@ ${content}
       getSelectionStart,
       getSelectionEnd
     } = (0, import_data264.useSelect)(import_block_editor104.store);
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data264.useDispatch)(import_block_editor104.store);
+    const {
+      updateBlockAttributes: updateBlockAttributes2,
+      __unstableMarkNextChangeAsNotPersistent,
+      __unstableMarkLastChangeAsPersistent
+    } = (0, import_data264.useDispatch)(import_block_editor104.store);
     const onError = (error2) => {
       const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities36.decodeEntities)(error2.message) : (0, import_i18n360.__)("An error occurred while performing an update.");
       createNotice("error", errorMessage, {
@@ -125091,20 +125095,70 @@ ${content}
         onError(error2);
       }
     };
+    const updateNoteAnchor = (clientId, attributes) => {
+      __unstableMarkNextChangeAsNotPersistent({ history: "ignore" });
+      updateBlockAttributes2(clientId, attributes);
+      __unstableMarkLastChangeAsPersistent();
+    };
+    const restoreNote = async (noteId, anchor) => {
+      try {
+        await saveEntityRecord(
+          "root",
+          "comment",
+          { id: noteId, status: "untrash" },
+          { throwOnError: true }
+        );
+        const attributes = anchor ? getBlockAttributes2(anchor.clientId) : null;
+        if (attributes) {
+          const newAttributes = {};
+          if (!getNoteIdsFromMetadata(attributes.metadata).includes(
+            noteId
+          )) {
+            newAttributes.metadata = addNoteIdToMetadata(
+              attributes.metadata,
+              noteId
+            );
+          }
+          const { inline: inline4 } = anchor;
+          const value = inline4 && attributes[inline4.attributeKey];
+          if (inline4 && !findNoteInBlock(attributes, noteId) && value?.text?.slice(inline4.start, inline4.end) === inline4.text) {
+            const wrapped = wrapInlineNote(
+              value,
+              noteId,
+              inline4.start,
+              inline4.end
+            );
+            if (wrapped) {
+              newAttributes[inline4.attributeKey] = wrapped;
+            }
+          }
+          if (Object.keys(newAttributes).length > 0) {
+            updateNoteAnchor(anchor.clientId, newAttributes);
+          }
+        }
+        createNotice("snackbar", (0, import_i18n360.__)("Note restored."), {
+          type: "snackbar",
+          isDismissible: true
+        });
+      } catch (error2) {
+        onError(error2);
+      }
+    };
     const onDelete = async (note) => {
       try {
         const clientId = !note.parent ? note.blockClientId || getSelectedBlockClientId2() : null;
         await deleteEntityRecord("root", "comment", note.id, void 0, {
           throwOnError: true
         });
-        if (clientId) {
-          const attributes = getBlockAttributes2(clientId);
+        let anchor = null;
+        const attributes = clientId ? getBlockAttributes2(clientId) : null;
+        if (getNoteIdsFromMetadata(attributes?.metadata).includes(
+          note.id
+        )) {
+          anchor = { clientId };
           const newAttributes = {
             metadata: cleanEmptyObject3(
-              removeNoteIdFromMetadata(
-                attributes?.metadata,
-                note.id
-              )
+              removeNoteIdFromMetadata(attributes.metadata, note.id)
             )
           };
           const found = findNoteInBlock(attributes, note.id);
@@ -125115,13 +125169,23 @@ ${content}
             );
             if (next) {
               newAttributes[found.attributeKey] = next;
+              anchor.inline = {
+                ...found,
+                text: next.text.slice(found.start, found.end)
+              };
             }
           }
-          updateBlockAttributes2(clientId, newAttributes);
+          updateNoteAnchor(clientId, newAttributes);
         }
         createNotice("snackbar", (0, import_i18n360.__)("Note deleted."), {
           type: "snackbar",
-          isDismissible: true
+          isDismissible: true,
+          actions: [
+            {
+              label: (0, import_i18n360.__)("Undo"),
+              onClick: () => restoreNote(note.id, anchor)
+            }
+          ]
         });
         return true;
       } catch (error2) {
