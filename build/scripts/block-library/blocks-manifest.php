@@ -4449,10 +4449,18 @@ return array(
 					'fontSize' => true
 				)
 			),
+			'filter' => array(
+				'duotone' => true
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
 			'allowedBlocks' => true
+		),
+		'selectors' => array(
+			'filter' => array(
+				'duotone' => '.wp-block-media-text > .wp-block-media-text__media img, .wp-block-media-text > .wp-block-media-text__media video'
+			)
 		),
 		'editorStyle' => 'wp-block-media-text-editor',
 		'style' => 'wp-block-media-text'
