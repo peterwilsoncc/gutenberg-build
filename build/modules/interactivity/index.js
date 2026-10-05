@@ -2475,6 +2475,94 @@ directive(
   { priority: 1 }
 );
 
+// packages/interactivity/build-module/html.mjs
+var trustedHtmlByToken = /* @__PURE__ */ new WeakMap();
+function asDangerousHTML(html) {
+  const { trustedTypes } = globalThis;
+  if (typeof html !== "string" && !trustedTypes?.isHTML(html)) {
+    throw new TypeError(
+      "asDangerousHTML() expects a string or a native TrustedHTML value."
+    );
+  }
+  const token = Object.freeze(/* @__PURE__ */ Object.create(null));
+  trustedHtmlByToken.set(token, html);
+  return token;
+}
+function isDangerousHTML(value) {
+  return typeof value === "object" && value !== null && trustedHtmlByToken.has(value);
+}
+function getDangerousHTML(token) {
+  return trustedHtmlByToken.get(token);
+}
+
+// packages/interactivity/build-module/directives/html.mjs
+var STABLE_EMPTY_HTML = Object.freeze({ __html: "" });
+directive(
+  "html",
+  ({ directives: { html: htmlEntries }, element, evaluate }) => {
+    const entry = htmlEntries.find(isDefaultDirectiveSuffix);
+    const lastValue = A2(void 0);
+    const lastWrittenKey = A2(void 0);
+    if (!entry) {
+      if (true) {
+        warn(
+          "The usage of data-wp-html--suffix is not supported. Please use data-wp-html instead."
+        );
+      }
+    } else if (entry.uniqueId) {
+      if (true) {
+        warnUniqueIdNotSupported("html", entry.uniqueId);
+      }
+    } else {
+      let result;
+      try {
+        result = evaluate(entry);
+      } catch {
+        result = void 0;
+      }
+      if (result !== PENDING_GETTER) {
+        if (typeof result === "function") {
+          result = result();
+        }
+        if (isDangerousHTML(result)) {
+          lastValue.current = getDangerousHTML(result);
+        }
+      }
+    }
+    const resolvedValue = lastValue.current;
+    useLayoutEffect(() => {
+      if (resolvedValue === void 0) {
+        return;
+      }
+      const key = String(resolvedValue);
+      if (lastWrittenKey.current === key) {
+        return;
+      }
+      const node = element.ref.current;
+      if (lastWrittenKey.current === void 0 && node.innerHTML === key) {
+        lastWrittenKey.current = key;
+        return;
+      }
+      try {
+        node.innerHTML = resolvedValue;
+        lastWrittenKey.current = key;
+      } catch (error) {
+        lastWrittenKey.current = key;
+        if (true) {
+          warn(
+            `data-wp-html: the browser rejected this HTML value, so the element's existing content was left in place. ${error}`
+          );
+        }
+      }
+    }, [resolvedValue, element.ref]);
+    if (resolvedValue === void 0) {
+      return;
+    }
+    element.props.dangerouslySetInnerHTML = STABLE_EMPTY_HTML;
+    element.props.children = void 0;
+  }
+);
+
 // packages/interactivity/build-module/directives/ignore.mjs
 init_preact_module();
 directive(
@@ -3066,7 +3154,15 @@ function toVdom(root) {
         );
       }
     }
-    if (props.__directives?.["each-child"]) {
+    const hasDefaultHtmlDirective = props.__directives?.html?.some(
+      ({ suffix }) => suffix === null
+    );
+    if (props.__directives?.["each-child"] || hasDefaultHtmlDirective) {
+      if (hasDefaultHtmlDirective) {
+        elementNode.querySelectorAll("[data-wp-interactive]").forEach((islandNode) => {
+          hydratedIslands.add(islandNode);
+        });
+      }
       props.dangerouslySetInnerHTML = {
         __html: elementNode.innerHTML
       };
@@ -3184,6 +3280,7 @@ window.addEventListener("popstate", (event) => {
   }
 });
 export {
+  asDangerousHTML,
   getConfig,
   getContext,
   getElement,
