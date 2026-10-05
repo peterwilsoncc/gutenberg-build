@@ -3112,10 +3112,18 @@ return array(
 					'type' => 'flex'
 				)
 			),
+			'filter' => array(
+				'duotone' => true
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
 			'listView' => true
+		),
+		'selectors' => array(
+			'filter' => array(
+				'duotone' => '.wp-block-gallery :where(img)'
+			)
 		),
 		'editorStyle' => 'wp-block-gallery-editor',
 		'style' => 'wp-block-gallery'

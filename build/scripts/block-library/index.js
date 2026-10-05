@@ -34573,10 +34573,18 @@ ${url}
           type: "flex"
         }
       },
+      filter: {
+        duotone: true
+      },
       interactivity: {
         clientNavigation: true
       },
       listView: true
+    },
+    selectors: {
+      filter: {
+        duotone: ".wp-block-gallery :where(img)"
+      }
     },
     editorStyle: "wp-block-gallery-editor",
     style: "wp-block-gallery"
