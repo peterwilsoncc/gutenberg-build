@@ -1267,6 +1267,14 @@ var onDOMReady = (callback) => {
     document.addEventListener("DOMContentLoaded", callback);
   }
 };
+var watch = (callback) => E2(() => {
+  setScope();
+  try {
+    return callback();
+  } finally {
+    resetScope();
+  }
+});
 function createFlusher(compute, notify) {
   let flush = () => void 0;
   const dispose = E2(function() {
@@ -2940,6 +2948,20 @@ function parseDirectiveName(directiveName) {
   return { prefix, suffix: suffix || null, uniqueId: null };
 }
 var nsPathRegExp = /^([\w_\/-]+)::(.+)$/;
+function parseDirectiveValue(rawValue) {
+  const regexResult = nsPathRegExp.exec(rawValue);
+  const namespace = regexResult?.[1] ?? null;
+  const rawDirectiveValue = regexResult?.[2] ?? rawValue;
+  let value = rawDirectiveValue;
+  try {
+    const parsedValue = JSON.parse(rawDirectiveValue);
+    if (isObject(parsedValue)) {
+      value = parsedValue;
+    }
+  } catch {
+  }
+  return { namespace, value };
+}
 var hydratedIslands = /* @__PURE__ */ new WeakSet();
 function toVdom(root) {
   const nodesToRemove = /* @__PURE__ */ new Set();
@@ -2977,14 +2999,7 @@ function toVdom(root) {
         if (attributeName === "data-wp-ignore") {
           ignore = true;
         } else {
-          const regexResult = nsPathRegExp.exec(attributeValue);
-          const namespace = regexResult?.[1] ?? null;
-          let value = regexResult?.[2] ?? attributeValue;
-          try {
-            const parsedValue = JSON.parse(value);
-            value = isObject(parsedValue) ? parsedValue : value;
-          } catch {
-          }
+          const { namespace, value } = parseDirectiveValue(attributeValue);
           if (attributeName === "data-wp-interactive") {
             island = true;
             const islandNamespace = (
@@ -3128,7 +3143,6 @@ var hydrateRegions = async () => {
 if (true) {
   await Promise.resolve().then(() => (init_debug_module(), debug_module_exports));
 }
-var watch = E2;
 var requiredConsent = "I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress.";
 var privateApis = (lock) => {
   if (lock === requiredConsent) {
@@ -3136,6 +3150,8 @@ var privateApis = (lock) => {
       getRegionRootFragment,
       initialVdomPromise,
       toVdom,
+      // Shares the directive-value interpretation with internal consumers.
+      parseDirectiveValue,
       directive,
       getNamespace,
       h: k,
@@ -3149,7 +3165,9 @@ var privateApis = (lock) => {
       deepReadOnly,
       navigationSignal,
       sessionId,
-      warn
+      warn,
+      afterNextFrame,
+      getScope
     };
   }
   throw new Error("Forbidden access.");
