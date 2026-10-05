@@ -83824,6 +83824,8 @@ ${text}
         __experimentalFontFamily: true,
         lineHeight: true,
         textAlign: true,
+        textColumns: true,
+        textIndent: true,
         __experimentalFontStyle: true,
         __experimentalFontWeight: true,
         __experimentalLetterSpacing: true,
