@@ -11840,6 +11840,14 @@ var wp;
               });
             }
             break;
+          case "permanently-delete":
+            {
+              document.location.href = (0, import_url6.addQueryArgs)("edit.php", {
+                deleted: 1,
+                post_type: items[0].type
+              });
+            }
+            break;
           case "duplicate-post":
             {
               const newItem = items[0];
