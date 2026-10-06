@@ -46527,6 +46527,7 @@ ${text}
         margin: true,
         padding: true
       },
+      shadow: true,
       typography: {
         fontSize: true,
         lineHeight: true,
