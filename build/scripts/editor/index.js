@@ -116722,22 +116722,10 @@ ${content}
       new import_rich_text6.RichTextData({ ...record, formats }).toHTMLString()
     ) : null;
   }
-  function clearInlineNoteMarker(noteId, getClientIdsWithDescendants2, getBlockAttributes2, updateBlockAttributes2) {
-    for (const clientId of getClientIdsWithDescendants2()) {
-      const attributes = getBlockAttributes2(clientId);
-      const found = findNoteInBlock(attributes, noteId);
-      if (!found) {
-        continue;
-      }
-      const next = removeNoteFormat(
-        attributes[found.attributeKey],
-        noteId
-      );
-      if (next) {
-        updateBlockAttributes2(clientId, { [found.attributeKey]: next });
-      }
-      return;
-    }
+  function removeInlineNote(attributes, noteId) {
+    const found = findNoteInBlock(attributes, noteId);
+    const value = found && removeNoteFormat(attributes[found.attributeKey], noteId);
+    return value ? { ...found, value } : null;
   }
   function pickPrimaryNote(threads) {
     return threads.find((thread) => thread.status === "hold") ?? threads[0] ?? null;
@@ -124473,7 +124461,7 @@ ${content}
         id: "reopen",
         title: (0, import_i18n358._x)("Reopen", "Reopen note"),
         isEligible: ({ status }) => canResolve && hasResolved(status),
-        onClick: () => onEditNote({ id: note.id, status: "hold" })
+        onClick: () => onEditNote(note, { status: "hold" })
       },
       {
         id: "delete",
@@ -124498,8 +124486,7 @@ ${content}
         NoteForm,
         {
           onSubmit: async (value) => {
-            const saved = await onEditNote({
-              id: note.id,
+            const saved = await onEditNote(note, {
               content: value
             });
             if (saved) {
@@ -124688,7 +124675,7 @@ ${content}
       toggleBlockSpotlight(note.blockClientId, false);
     }
     function handleResolve() {
-      onEditNote({ id: note.id, status: "approved" });
+      onEditNote(note, { status: "approved" });
       onDeselectNote();
       if (isFloating) {
         relatedBlockElement?.focus();
@@ -124837,8 +124824,7 @@ ${content}
             {
               onSubmit: (inputComment) => {
                 if ("approved" === note.status) {
-                  return onEditNote({
-                    id: note.id,
+                  return onEditNote(note, {
                     status: "hold",
                     content: inputComment
                   });
@@ -125172,7 +125158,6 @@ ${content}
     const { getCurrentPostId: getCurrentPostId2 } = (0, import_data264.useSelect)(store);
     const {
       getBlockAttributes: getBlockAttributes2,
-      getClientIdsWithDescendants: getClientIdsWithDescendants2,
       getSelectedBlockClientId: getSelectedBlockClientId2,
       getSelectionStart,
       getSelectionEnd
@@ -125188,6 +125173,11 @@ ${content}
         type: "snackbar",
         isDismissible: true
       });
+    };
+    const updateNoteAnchor = (clientId, attributes) => {
+      __unstableMarkNextChangeAsNotPersistent({ history: "ignore" });
+      updateBlockAttributes2(clientId, attributes);
+      __unstableMarkLastChangeAsPersistent();
     };
     const onCreate = async ({ content, parent }) => {
       try {
@@ -125226,7 +125216,7 @@ ${content}
               newAttributes[inlineSelection.attributeKey] = wrapped;
             }
           }
-          updateBlockAttributes2(clientId, newAttributes);
+          updateNoteAnchor(clientId, newAttributes);
         }
         createNotice(
           "snackbar",
@@ -125241,7 +125231,8 @@ ${content}
         onError(error2);
       }
     };
-    const onEdit = async ({ id, content, status }) => {
+    const onEdit = async (note, { content, status }) => {
+      const { id } = note;
       try {
         if (status === "approved" || status === "hold") {
           await saveEntityRecord(
@@ -125274,13 +125265,14 @@ ${content}
               throwOnError: true
             }
           );
-          if (status === "approved") {
-            clearInlineNoteMarker(
-              id,
-              getClientIdsWithDescendants2,
-              getBlockAttributes2,
-              updateBlockAttributes2
-            );
+          const removed = status === "approved" && note.blockClientId && removeInlineNote(
+            getBlockAttributes2(note.blockClientId),
+            id
+          );
+          if (removed) {
+            updateNoteAnchor(note.blockClientId, {
+              [removed.attributeKey]: removed.value
+            });
           }
           (0, import_a11y17.speak)(
             status === "approved" ? (0, import_i18n360.__)("Note marked as resolved.") : (0, import_i18n360.__)("Note reopened.")
@@ -125308,11 +125300,6 @@ ${content}
       } catch (error2) {
         onError(error2);
       }
-    };
-    const updateNoteAnchor = (clientId, attributes) => {
-      __unstableMarkNextChangeAsNotPersistent({ history: "ignore" });
-      updateBlockAttributes2(clientId, attributes);
-      __unstableMarkLastChangeAsPersistent();
     };
     const restoreNote = async (noteId, anchor) => {
       try {
@@ -125360,7 +125347,7 @@ ${content}
     };
     const onDelete = async (note) => {
       try {
-        const clientId = !note.parent ? note.blockClientId || getSelectedBlockClientId2() : null;
+        const clientId = !note.parent ? note.blockClientId : null;
         await deleteEntityRecord("root", "comment", note.id, void 0, {
           throwOnError: true
         });
@@ -125375,19 +125362,16 @@ ${content}
               removeNoteIdFromMetadata(attributes.metadata, note.id)
             )
           };
-          const found = findNoteInBlock(attributes, note.id);
-          if (found) {
-            const next = removeNoteFormat(
-              attributes[found.attributeKey],
-              note.id
-            );
-            if (next) {
-              newAttributes[found.attributeKey] = next;
-              anchor.inline = {
-                ...found,
-                text: next.text.slice(found.start, found.end)
-              };
-            }
+          const removed = removeInlineNote(attributes, note.id);
+          if (removed) {
+            const { attributeKey, start: start2, end, value } = removed;
+            newAttributes[attributeKey] = value;
+            anchor.inline = {
+              attributeKey,
+              start: start2,
+              end,
+              text: value.text.slice(start2, end)
+            };
           }
           updateNoteAnchor(clientId, newAttributes);
         }
