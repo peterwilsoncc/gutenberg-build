@@ -125376,9 +125376,14 @@ ${content}
     const onDelete = async (note) => {
       try {
         const clientId = !note.parent ? note.blockClientId : null;
-        await deleteEntityRecord("root", "comment", note.id, void 0, {
-          throwOnError: true
-        });
+        const canMoveToTrash = !!note._links?.["wp:action-trash"];
+        await deleteEntityRecord(
+          "root",
+          "comment",
+          note.id,
+          canMoveToTrash ? void 0 : { force: true },
+          { throwOnError: true }
+        );
         let anchor = null;
         const attributes = clientId ? getBlockAttributes2(clientId) : null;
         if (getNoteIdsFromMetadata(attributes?.metadata).includes(
@@ -125406,12 +125411,12 @@ ${content}
         createNotice("snackbar", (0, import_i18n360.__)("Note deleted."), {
           type: "snackbar",
           isDismissible: true,
-          actions: [
+          actions: canMoveToTrash ? [
             {
               label: (0, import_i18n360.__)("Undo"),
               onClick: () => restoreNote(note.id, anchor)
             }
-          ]
+          ] : []
         });
         return true;
       } catch (error2) {
