@@ -1008,7 +1008,8 @@ return array(
 				'clientNavigation' => true
 			),
 			'listView' => true,
-			'contentRole' => true
+			'contentRole' => true,
+			'shadow' => true
 		),
 		'editorStyle' => 'wp-block-buttons-editor',
 		'style' => 'wp-block-buttons'
