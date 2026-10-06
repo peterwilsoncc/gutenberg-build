@@ -7750,6 +7750,10 @@ return array(
 					'textDecoration' => true
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'spacing' => array(
 				'margin' => array(
 					'top',

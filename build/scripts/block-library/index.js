@@ -71733,6 +71733,10 @@ ${text}
           textDecoration: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       spacing: {
         margin: ["top", "bottom"],
         padding: true,
