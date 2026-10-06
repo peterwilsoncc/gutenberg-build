@@ -43999,6 +43999,7 @@ ${text}
           padding: false
         }
       },
+      shadow: true,
       typography: {
         fontSize: true,
         lineHeight: true,
@@ -44018,7 +44019,8 @@ ${text}
     },
     selectors: {
       root: ".wp-block-list > li",
-      border: ".wp-block-list:not(.wp-block-list .wp-block-list) > li"
+      border: ".wp-block-list:not(.wp-block-list .wp-block-list) > li",
+      shadow: ".wp-block-list:not(.wp-block-list .wp-block-list) > li"
     }
   };
 
