@@ -12475,6 +12475,7 @@ function useActionPerformed(postType) {
     (actionId, items) => {
       switch (actionId) {
         case "move-to-trash":
+        case "permanently-delete":
         case "delete-post": {
           const to = postType && getEntityLink2(postType);
           if (to) {

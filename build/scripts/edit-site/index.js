@@ -40796,6 +40796,7 @@ var wp;
       (actionId, items) => {
         switch (actionId) {
           case "move-to-trash":
+          case "permanently-delete":
           case "delete-post":
             {
               history.navigate(

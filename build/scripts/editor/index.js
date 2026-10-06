@@ -5954,6 +5954,7 @@ var wp;
   var import_a11y9 = __toESM(require_a11y(), 1);
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
+  var import_url15 = __toESM(require_url(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_warning4 = __toESM(require_warning(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
@@ -51803,7 +51804,10 @@ var wp;
         return false;
       }
       const { status, permissions } = item;
-      return status === "trash" && permissions?.delete;
+      if (!status || status === "auto-draft" || !permissions?.delete) {
+        return false;
+      }
+      return status === "trash" || !hasActionLink(item, "wp:action-trash");
     },
     hideModalHeader: true,
     modalFocusOnMount: "firstContentElement",
@@ -52070,7 +52074,7 @@ var wp;
       if (item.type === "wp_template" && typeof item.id === "string") {
         return false;
       }
-      return !!item.status && !["auto-draft", "trash"].includes(item.status) && item.permissions?.delete;
+      return !!item.status && !["auto-draft", "trash"].includes(item.status) && item.permissions?.delete && hasActionLink(item, "wp:action-trash");
     },
     supportsBulk: true,
     hideModalHeader: true,
@@ -103445,7 +103449,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return { type: "DO_NOTHING" };
   }
-  var trashPost2 = () => async ({ select: select9, dispatch: dispatch9, registry }) => {
+  var trashPost2 = ({ force = false } = {}) => async ({ select: select9, dispatch: dispatch9, registry }) => {
     const postTypeSlug = select9.getCurrentPostType();
     const postType2 = await registry.resolveSelect(import_core_data63.store).getPostType(postTypeSlug);
     const { rest_base: restBase, rest_namespace: restNamespace = "wp/v2" } = postType2;
@@ -103453,10 +103457,23 @@ If there's a particular need for this, please submit a feature request at https:
     try {
       const post2 = select9.getCurrentPost();
       await (0, import_api_fetch8.default)({
-        path: `/${restNamespace}/${restBase}/${post2.id}`,
+        path: (0, import_url15.addQueryArgs)(
+          `/${restNamespace}/${restBase}/${post2.id}`,
+          force ? { force } : {}
+        ),
         method: "DELETE"
       });
-      await dispatch9.savePost();
+      if (force) {
+        registry.dispatch(import_core_data63.store).receiveEntityRecords(
+          "postType",
+          postTypeSlug,
+          [],
+          void 0,
+          true
+        );
+      } else {
+        await dispatch9.savePost();
+      }
     } catch (error2) {
       registry.dispatch(import_notices20.store).createErrorNotice(
         ...getNotificationArgumentsForTrashFail({ error: error2 })
@@ -103906,7 +103923,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/autocompleters/link.mjs
   var import_api_fetch9 = __toESM(require_api_fetch(), 1);
-  var import_url15 = __toESM(require_url(), 1);
+  var import_url16 = __toESM(require_url(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
   var SHOWN_SUGGESTIONS = 10;
@@ -103917,7 +103934,7 @@ If there's a particular need for this, please submit a feature request at https:
     isDebounced: true,
     async options(filterValue) {
       const options = await (0, import_api_fetch9.default)({
-        path: (0, import_url15.addQueryArgs)("/wp/v2/search", {
+        path: (0, import_url16.addQueryArgs)("/wp/v2/search", {
           per_page: SHOWN_SUGGESTIONS,
           search: filterValue,
           type: "post"
@@ -106859,7 +106876,7 @@ ${content}
   var import_html_entities18 = __toESM(require_html_entities(), 1);
   var import_core_data74 = __toESM(require_core_data(), 1);
   var import_block_editor47 = __toESM(require_block_editor(), 1);
-  var import_url16 = __toESM(require_url(), 1);
+  var import_url17 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-panel-row/index.mjs
   var import_components164 = __toESM(require_components(), 1);
@@ -107125,7 +107142,7 @@ ${content}
                 (0, import_i18n241.__)(
                   'Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %s<wbr />/services<wbr />/pricing.'
                 ),
-                (0, import_url16.filterURLForDisplay)(homeUrl).replace(
+                (0, import_url17.filterURLForDisplay)(homeUrl).replace(
                   /([/.])/g,
                   "<wbr />$1"
                 )
@@ -109327,7 +109344,7 @@ ${content}
   var import_i18n259 = __toESM(require_i18n(), 1);
   var import_components186 = __toESM(require_components(), 1);
   var import_data142 = __toESM(require_data(), 1);
-  var import_url17 = __toESM(require_url(), 1);
+  var import_url18 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-last-revision/check.mjs
   var import_data141 = __toESM(require_data(), 1);
@@ -109367,7 +109384,7 @@ ${content}
     const { lastRevisionId, revisionsCount, disableVisualRevisions } = usePostLastRevisionInfo();
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data142.useDispatch)(store));
     const buttonProps = disableVisualRevisions ? {
-      href: (0, import_url17.addQueryArgs)("revision.php", {
+      href: (0, import_url18.addQueryArgs)("revision.php", {
         revision: lastRevisionId
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
@@ -109391,7 +109408,7 @@ ${content}
     const { lastRevisionId, revisionsCount, disableVisualRevisions } = usePostLastRevisionInfo();
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data142.useDispatch)(store));
     const buttonProps = disableVisualRevisions ? {
-      href: (0, import_url17.addQueryArgs)("revision.php", {
+      href: (0, import_url18.addQueryArgs)("revision.php", {
         revision: lastRevisionId
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
@@ -109429,7 +109446,7 @@ ${content}
   var import_i18n261 = __toESM(require_i18n(), 1);
   var import_components188 = __toESM(require_components(), 1);
   var import_data143 = __toESM(require_data(), 1);
-  var import_url18 = __toESM(require_url(), 1);
+  var import_url19 = __toESM(require_url(), 1);
   var import_element348 = __toESM(require_element(), 1);
   var import_hooks53 = __toESM(require_hooks(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
@@ -109625,14 +109642,14 @@ ${content}
     }
     const userDisplayName = user.name;
     const userAvatar = user.avatar;
-    const unlockUrl = (0, import_url18.addQueryArgs)("post.php", {
+    const unlockUrl = (0, import_url19.addQueryArgs)("post.php", {
       "get-post-lock": "1",
       lockKey: true,
       post: postId2,
       action: "edit",
       _wpnonce: postLockUtils.nonce
     });
-    const allPostsUrl = (0, import_url18.addQueryArgs)("edit.php", {
+    const allPostsUrl = (0, import_url19.addQueryArgs)("edit.php", {
       post_type: postType2?.slug
     });
     const allPostsLabel = (0, import_i18n261.__)("Exit editor");
@@ -110193,7 +110210,7 @@ ${content}
   var import_i18n275 = __toESM(require_i18n(), 1);
   var import_components201 = __toESM(require_components(), 1);
   var import_data160 = __toESM(require_data(), 1);
-  var import_url19 = __toESM(require_url(), 1);
+  var import_url20 = __toESM(require_url(), 1);
   var import_core_data99 = __toESM(require_core_data(), 1);
   var import_html_entities26 = __toESM(require_html_entities(), 1);
 
@@ -111613,7 +111630,7 @@ ${content}
         ]),
         siteIconUrl: siteData.site_icon_url,
         siteTitle: siteData.name,
-        siteHome: siteData.home && (0, import_url19.filterURLForDisplay)(siteData.home)
+        siteHome: siteData.home && (0, import_url20.filterURLForDisplay)(siteData.home)
       };
     }, []);
     let siteIcon = /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(
@@ -111722,7 +111739,7 @@ ${content}
   var import_i18n276 = __toESM(require_i18n(), 1);
   var import_element357 = __toESM(require_element(), 1);
   var import_data161 = __toESM(require_data(), 1);
-  var import_url20 = __toESM(require_url(), 1);
+  var import_url21 = __toESM(require_url(), 1);
   var import_html_entities27 = __toESM(require_html_entities(), 1);
   var import_compose69 = __toESM(require_compose(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
@@ -111781,7 +111798,7 @@ ${content}
     const viewPostLabel = postType2?.labels?.view_item;
     const addNewPostLabel = postType2?.labels?.add_new_item;
     const link = post2.status === "future" ? getFuturePostUrl(post2) : post2.link;
-    const addLink = (0, import_url20.addQueryArgs)("post-new.php", {
+    const addLink = (0, import_url21.addQueryArgs)("post-new.php", {
       post_type: post2.type
     });
     const postLinkRef = (0, import_element357.useCallback)(
@@ -111817,7 +111834,7 @@ ${content}
                 (0, import_i18n276.__)("%s address"),
                 postLabel
               ),
-              value: (0, import_url20.safeDecodeURIComponent)(link),
+              value: (0, import_url21.safeDecodeURIComponent)(link),
               onFocus: (event) => event.target.select()
             }
           ),
@@ -113151,15 +113168,19 @@ ${content}
   var import_jsx_runtime586 = __toESM(require_jsx_runtime(), 1);
   function PostTrash({ onActionPerformed }) {
     const registry = (0, import_data180.useRegistry)();
-    const { isNew, isDeleting, postId: postId2, title } = (0, import_data180.useSelect)((select9) => {
-      const store4 = select9(store);
-      return {
-        isNew: store4.isEditedPostNew(),
-        isDeleting: store4.isDeletingPost(),
-        postId: store4.getCurrentPostId(),
-        title: store4.getCurrentPostAttribute("title")
-      };
-    }, []);
+    const { isNew, isDeleting, postId: postId2, title, canMoveToTrash } = (0, import_data180.useSelect)(
+      (select9) => {
+        const store4 = select9(store);
+        return {
+          isNew: store4.isEditedPostNew(),
+          isDeleting: store4.isDeletingPost(),
+          postId: store4.getCurrentPostId(),
+          title: store4.getCurrentPostAttribute("title"),
+          canMoveToTrash: !!store4.getCurrentPost()._links?.["wp:action-trash"]
+        };
+      },
+      []
+    );
     const { trashPost: trashPost3 } = (0, import_data180.useDispatch)(store);
     const [showConfirmDialog, setShowConfirmDialog] = (0, import_element369.useState)(false);
     if (isNew || !postId2) {
@@ -113167,10 +113188,21 @@ ${content}
     }
     const handleConfirm = async () => {
       setShowConfirmDialog(false);
-      await trashPost3();
+      await trashPost3({ force: !canMoveToTrash });
       const item = await registry.resolveSelect(store).getCurrentPost();
-      onActionPerformed?.("move-to-trash", [item]);
+      onActionPerformed?.(
+        canMoveToTrash ? "move-to-trash" : "permanently-delete",
+        [item]
+      );
     };
+    const label = canMoveToTrash ? (0, import_i18n287.__)("Move to trash") : (0, import_i18n287.__)("Delete permanently");
+    const message2 = canMoveToTrash ? (
+      // translators: %s: The item's title.
+      (0, import_i18n287.__)('Are you sure you want to move "%s" to the trash?')
+    ) : (
+      // translators: %s: The item's title.
+      (0, import_i18n287.__)('Are you sure you want to permanently delete "%s"?')
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime586.jsxs)(PostTrashCheck, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(
         import_components211.Button,
@@ -113182,7 +113214,7 @@ ${content}
           isBusy: isDeleting,
           "aria-disabled": isDeleting,
           onClick: isDeleting ? void 0 : () => setShowConfirmDialog(true),
-          children: (0, import_i18n287.__)("Move to trash")
+          children: label
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(
@@ -113191,13 +113223,9 @@ ${content}
           isOpen: showConfirmDialog,
           onConfirm: handleConfirm,
           onCancel: () => setShowConfirmDialog(false),
-          confirmButtonText: (0, import_i18n287.__)("Move to trash"),
+          confirmButtonText: label,
           size: "small",
-          children: (0, import_i18n287.sprintf)(
-            // translators: %s: The item's title.
-            (0, import_i18n287.__)('Are you sure you want to move "%s" to the trash?'),
-            title
-          )
+          children: (0, import_i18n287.sprintf)(message2, title)
         }
       )
     ] });
@@ -113205,7 +113233,7 @@ ${content}
 
   // packages/editor/build-module/components/post-url/index.mjs
   var import_data181 = __toESM(require_data(), 1);
-  var import_url21 = __toESM(require_url(), 1);
+  var import_url22 = __toESM(require_url(), 1);
   var import_element370 = __toESM(require_element(), 1);
   var import_block_editor62 = __toESM(require_block_editor(), 1);
   var import_i18n288 = __toESM(require_i18n(), 1);
@@ -113231,7 +113259,7 @@ ${content}
       const hasPublishAction = post2?._links?.["wp:action-publish"] ?? false;
       return {
         isEditable: select9(store).isPermalinkEditable() && hasPublishAction,
-        postSlug: (0, import_url21.safeDecodeURIComponent)(
+        postSlug: (0, import_url22.safeDecodeURIComponent)(
           select9(store).getEditedPostSlug()
         ),
         hasSlug: !!select9(store).getEditedPostAttribute("slug"),
@@ -113239,7 +113267,7 @@ ${content}
         postLink: post2.link,
         permalinkPrefix: permalinkParts?.prefix,
         permalinkSuffix: permalinkParts?.suffix,
-        permalink: (0, import_url21.safeDecodeURIComponent)(
+        permalink: (0, import_url22.safeDecodeURIComponent)(
           select9(store).getPermalink()
         )
       };
@@ -113316,7 +113344,7 @@ ${content}
                 onBlur: (event) => {
                   if (hasSlug) {
                     editPost2({
-                      slug: (0, import_url21.cleanForSlug)(
+                      slug: (0, import_url22.cleanForSlug)(
                         event.target.value
                       )
                     });
@@ -113387,7 +113415,7 @@ ${content}
 
   // packages/editor/build-module/components/post-url/label.mjs
   var import_data183 = __toESM(require_data(), 1);
-  var import_url22 = __toESM(require_url(), 1);
+  var import_url23 = __toESM(require_url(), 1);
   function PostURLLabel() {
     return usePostURLLabel();
   }
@@ -113396,7 +113424,7 @@ ${content}
       (select9) => select9(store).getPermalink(),
       []
     );
-    return (0, import_url22.filterURLForDisplay)((0, import_url22.safeDecodeURIComponent)(postLink));
+    return (0, import_url23.filterURLForDisplay)((0, import_url23.safeDecodeURIComponent)(postLink));
   }
 
   // packages/editor/build-module/components/post-url/panel.mjs
@@ -113404,7 +113432,7 @@ ${content}
   var import_data184 = __toESM(require_data(), 1);
   var import_components213 = __toESM(require_components(), 1);
   var import_i18n289 = __toESM(require_i18n(), 1);
-  var import_url23 = __toESM(require_url(), 1);
+  var import_url24 = __toESM(require_url(), 1);
   var import_core_data110 = __toESM(require_core_data(), 1);
   var import_jsx_runtime588 = __toESM(require_jsx_runtime(), 1);
   function PostURLPanel() {
@@ -113460,7 +113488,7 @@ ${content}
         slug: select9(store).getEditedPostSlug()
       };
     }, []);
-    const decodedSlug = (0, import_url23.safeDecodeURIComponent)(slug);
+    const decodedSlug = (0, import_url24.safeDecodeURIComponent)(slug);
     return /* @__PURE__ */ (0, import_jsx_runtime588.jsx)(
       import_components213.Button,
       {
@@ -122258,7 +122286,7 @@ ${content}
   var import_components257 = __toESM(require_components(), 1);
   var import_data245 = __toESM(require_data(), 1);
   var import_i18n340 = __toESM(require_i18n(), 1);
-  var import_url24 = __toESM(require_url(), 1);
+  var import_url25 = __toESM(require_url(), 1);
   var import_jsx_runtime650 = __toESM(require_jsx_runtime(), 1);
   function RevisionsView() {
     const { lastRevisionId, revisionsCount, disableVisualRevisions } = (0, import_data245.useSelect)((select9) => {
@@ -122278,7 +122306,7 @@ ${content}
     }, []);
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data245.useDispatch)(store));
     const buttonProps = disableVisualRevisions ? {
-      href: (0, import_url24.addQueryArgs)("revision.php", {
+      href: (0, import_url25.addQueryArgs)("revision.php", {
         revision: lastRevisionId
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
@@ -122601,7 +122629,7 @@ ${content}
   var import_data249 = __toESM(require_data(), 1);
   var import_components259 = __toESM(require_components(), 1);
   var import_i18n346 = __toESM(require_i18n(), 1);
-  var import_url25 = __toESM(require_url(), 1);
+  var import_url26 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-revisions-timeline/index.mjs
   var import_data247 = __toESM(require_data(), 1);
@@ -122897,7 +122925,7 @@ ${content}
         /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
           import_components259.ExternalLink,
           {
-            href: (0, import_url25.addQueryArgs)("revision.php", {
+            href: (0, import_url26.addQueryArgs)("revision.php", {
               revision: revisionId2
             }),
             children: (0, import_i18n346.__)("Open classic revisions screen")
