@@ -84079,6 +84079,9 @@ ${text}
     supports: {
       anchor: true,
       align: true,
+      filter: {
+        duotone: true
+      },
       spacing: {
         margin: true,
         padding: true,
@@ -84095,7 +84098,10 @@ ${text}
       }
     },
     selectors: {
-      shadow: ".wp-block-video video"
+      shadow: ".wp-block-video video",
+      filter: {
+        duotone: ".wp-block-video video"
+      }
     },
     editorStyle: "wp-block-video-editor",
     style: "wp-block-video"

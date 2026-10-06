@@ -9972,6 +9972,9 @@ return array(
 		'supports' => array(
 			'anchor' => true,
 			'align' => true,
+			'filter' => array(
+				'duotone' => true
+			),
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,
@@ -9988,7 +9991,10 @@ return array(
 			)
 		),
 		'selectors' => array(
-			'shadow' => '.wp-block-video video'
+			'shadow' => '.wp-block-video video',
+			'filter' => array(
+				'duotone' => '.wp-block-video video'
+			)
 		),
 		'editorStyle' => 'wp-block-video-editor',
 		'style' => 'wp-block-video'
