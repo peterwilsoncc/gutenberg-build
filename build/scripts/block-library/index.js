@@ -71930,6 +71930,10 @@ ${text}
           margin: false
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       shadow: true,
       background: {
         backgroundImage: true,
