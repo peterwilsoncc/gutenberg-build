@@ -43955,6 +43955,11 @@ ${text}
       html: false,
       className: false,
       splitting: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       __experimentalBorder: {
         color: true,
         radius: true,

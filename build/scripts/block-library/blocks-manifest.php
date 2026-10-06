@@ -4111,6 +4111,11 @@ return array(
 			'html' => false,
 			'className' => false,
 			'splitting' => true,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'__experimentalBorder' => array(
 				'color' => true,
 				'radius' => true,
