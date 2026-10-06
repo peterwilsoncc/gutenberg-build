@@ -100444,7 +100444,8 @@ var wp;
     const hasStyleFills = styleFills.length;
     const advancedFills = [
       ...(0, import_components204.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || [],
-      ...(0, import_components204.__experimentalUseSlotFills)(bindingsGroup.name) || []
+      ...(0, import_components204.__experimentalUseSlotFills)(bindingsGroup.name) || [],
+      ...(0, import_components204.__experimentalUseSlotFills)(PrivateInspectorControlsAllowedBlocks.name) || []
     ];
     const settingsFills = [
       ...(0, import_components204.__experimentalUseSlotFills)(defaultGroup.name) || [],
@@ -102141,7 +102142,14 @@ var wp;
               shareWithChildBlocks,
               supportsPatternEditing
             } = feature;
-            const shouldDisplayControls = supportsPatternEditing && context[mayDisplayPatternEditingControlsKey] || context[mayDisplayControlsKey] || context[mayDisplayParentControlsKey] && shareWithChildBlocks;
+            if (context[mayDisplayPatternEditingControlsKey] && supportsPatternEditing === false) {
+              return null;
+            }
+            const shouldDisplayControls = (
+              // Explicit `true` also shows controls for unselected blocks
+              // in the section. `undefined` uses the selection/parent rules.
+              supportsPatternEditing === true && context[mayDisplayPatternEditingControlsKey] || context[mayDisplayControlsKey] || context[mayDisplayParentControlsKey] && shareWithChildBlocks
+            );
             if (!shouldDisplayControls || !hasSupport(props.name)) {
               return null;
             }
@@ -102847,6 +102855,11 @@ var wp;
   var allowed_blocks_default = {
     edit: BlockEditAllowedBlocksControlPure,
     attributeKeys: ["allowedBlocks"],
+    // The control fills its own private slot rather than going through
+    // InspectorControls, so it isn't hidden from section (pattern) blocks by
+    // InspectorControlsFill. Opt out of rendering during pattern editing so a
+    // section doesn't gain a Settings tab holding only Manage allowed blocks.
+    supportsPatternEditing: false,
     hasSupport(name) {
       return (0, import_blocks113.hasBlockSupport)(name, "allowedBlocks");
     }
