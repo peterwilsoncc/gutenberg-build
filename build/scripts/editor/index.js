@@ -124198,11 +124198,20 @@ ${content}
     "core/code"
   ];
   var NOTE_COMPLETERS = [note_mention_completer_default];
-  function NoteForm({ onSubmit, onCancel, note, labels }) {
-    const [inputComment, setInputComment] = (0, import_element433.useState)(
-      note?.content?.raw ?? ""
-    );
+  function NoteForm({
+    onSubmit,
+    onCancel,
+    onChange,
+    note,
+    labels,
+    initialValue = note?.content?.raw ?? ""
+  }) {
+    const [inputComment, setInputComment] = (0, import_element433.useState)(initialValue);
     const [isSubmitting, setIsSubmitting] = (0, import_element433.useState)(false);
+    function updateComment(value) {
+      setInputComment(value);
+      onChange?.(value);
+    }
     const inputId = (0, import_compose100.useInstanceId)(NoteForm, "comment-input");
     const trimmedPlainText = sanitizeNoteContent((0, import_dom39.__unstableStripHTML)(inputComment));
     const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
@@ -124213,7 +124222,7 @@ ${content}
       setIsSubmitting(true);
       const result = await onSubmit(inputComment);
       if (result) {
-        setInputComment("");
+        updateComment("");
       }
       setIsSubmitting(false);
     }
@@ -124247,7 +124256,7 @@ ${content}
               label: labels?.input ?? (0, import_i18n356.__)("Note"),
               hideLabelFromVision: true,
               value: inputComment,
-              onChange: setInputComment,
+              onChange: updateComment,
               disabled: isSubmitting,
               placeholder: labels?.placeholder,
               allowedFormats: ALLOWED_NOTE_FORMATS,
@@ -124326,17 +124335,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_jsx_runtime672 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement } = unlock(import_block_editor102.privateApis);
-  function AddNote({ onSubmit, sidebarRef, floating }) {
-    const { clientId } = (0, import_data262.useSelect)((select9) => {
-      const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor102.store);
-      return {
-        clientId: getSelectedBlockClientId2()
-      };
-    }, []);
-    const selectedNote2 = (0, import_data262.useSelect)(
-      (select9) => unlock(select9(store)).getSelectedNote(),
-      []
-    );
+  function AddNote({ clientId, onSubmit, sidebarRef, floating }) {
     const blockElement = useBlockElement(clientId);
     const { toggleBlockSpotlight } = unlock((0, import_data262.useDispatch)(import_block_editor102.store));
     const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store));
@@ -124361,9 +124360,6 @@ ${content}
       blockElement?.focus();
       toggleBlockSpotlight(clientId, false);
     };
-    if (selectedNote2 !== "new" || !clientId) {
-      return null;
-    }
     return /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
       FloatingContainer,
       {
@@ -124618,6 +124614,36 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_jsx_runtime674 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement: useBlockElement2 } = unlock(import_block_editor103.privateApis);
+  function NoteReply({ note, onEditNote, onAddReply, onCancel }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(NoteCard, { role: "treeitem", children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+      NoteForm,
+      {
+        onSubmit: (inputComment) => {
+          if ("approved" === note.status) {
+            return onEditNote(note, {
+              status: "hold",
+              content: inputComment
+            });
+          }
+          return onAddReply({
+            content: inputComment,
+            parent: note.id
+          });
+        },
+        onCancel,
+        labels: {
+          submit: "approved" === note.status ? (0, import_i18n359.__)("Reopen & Reply") : (0, import_i18n359.__)("Reply"),
+          input: (0, import_i18n359.sprintf)(
+            // translators: %1$s: note identifier, %2$s: author name
+            (0, import_i18n359.__)("Reply to note %1$s by %2$s"),
+            note.id,
+            note.author_name
+          ),
+          placeholder: (0, import_i18n359.__)("Reply or @ mention")
+        }
+      }
+    ) });
+  }
   function NoteThread({
     note,
     onEditNote,
@@ -124729,6 +124755,7 @@ ${content}
       return /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
         AddNote,
         {
+          clientId: note.blockClientId,
           onSubmit: onAddReply,
           sidebarRef,
           floating: { y: floating.y, ref: floatingRef }
@@ -124845,38 +124872,19 @@ ${content}
               onDeleteNote
             }
           ),
-          isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(NoteCard, { role: "treeitem", children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-            NoteForm,
+          isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            NoteReply,
             {
-              onSubmit: (inputComment) => {
-                if ("approved" === note.status) {
-                  return onEditNote(note, {
-                    status: "hold",
-                    content: inputComment
-                  });
-                }
-                return onAddReply({
-                  content: inputComment,
-                  parent: note.id
-                });
-              },
+              note,
+              onEditNote,
+              onAddReply,
               onCancel: (event) => {
                 event.stopPropagation();
                 onDeselectNote();
                 focusNoteThread(note.id, sidebarRef.current);
-              },
-              labels: {
-                submit: "approved" === note.status ? (0, import_i18n359.__)("Reopen & Reply") : (0, import_i18n359.__)("Reply"),
-                input: (0, import_i18n359.sprintf)(
-                  // translators: %1$s: note identifier, %2$s: author name
-                  (0, import_i18n359.__)("Reply to note %1$s by %2$s"),
-                  note.id,
-                  note.author_name
-                ),
-                placeholder: (0, import_i18n359.__)("Reply or @ mention")
               }
             }
-          ) }),
+          ),
           !!note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
             import_components268.Button,
             {
@@ -125707,7 +125715,6 @@ ${content}
       isFloating,
       sidebarRef
     });
-    const hasThreads = Array.isArray(threads) && threads.length > 0;
     const navigate = (event, thread, isSelected2) => {
       if (event.defaultPrevented) {
         return;
@@ -125745,7 +125752,8 @@ ${content}
     const firstResolvedIndex = isFloating ? -1 : threads.findIndex(
       (thread) => thread.status === "approved" && !!thread.blockClientId
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime675.jsx)(
+    const isAddingNote = !isFloating && selectedNote2 === "new" && !!selectedBlockClientId;
+    return /* @__PURE__ */ (0, import_jsx_runtime675.jsxs)(
       Stack,
       {
         className: "editor-collab-sidebar-panel",
@@ -125759,10 +125767,11 @@ ${content}
           }
         },
         "aria-label": isFloating ? (0, import_i18n361.__)("Unresolved notes") : (0, import_i18n361.__)("All notes"),
-        children: !hasThreads && !isFloating ? /* @__PURE__ */ (0, import_jsx_runtime675.jsx)(AddNote, { onSubmit: onAddReply, sidebarRef }) : /* @__PURE__ */ (0, import_jsx_runtime675.jsxs)(import_jsx_runtime675.Fragment, { children: [
-          !isFloating && selectedNote2 === "new" && /* @__PURE__ */ (0, import_jsx_runtime675.jsx)(
+        children: [
+          isAddingNote && /* @__PURE__ */ (0, import_jsx_runtime675.jsx)(
             AddNote,
             {
+              clientId: selectedBlockClientId,
               onSubmit: onAddReply,
               sidebarRef
             }
@@ -125802,7 +125811,7 @@ ${content}
               }
             )
           ] }, thread.id))
-        ] })
+        ]
       }
     );
   }
