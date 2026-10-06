@@ -392,7 +392,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState181({
+          cachedValue = useState182({
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState181 = React208.useState, useEffect137 = React208.useEffect, useLayoutEffect23 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState182 = React208.useState, useEffect137 = React208.useEffect, useLayoutEffect23 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React208.useSyncExternalStore ? React208.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -59491,16 +59491,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React206.createContext(void 0);
     const scopedContext = React206.createContext(void 0);
-    const useContext103 = () => React206.useContext(context);
+    const useContext104 = () => React206.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React206.useContext(scopedContext);
-      const store4 = useContext103();
+      const store4 = useContext104();
       if (onlyScoped) return scoped;
       return scoped || store4;
     };
     const useProviderContext = () => {
       const scoped = React206.useContext(scopedContext);
-      const store4 = useContext103();
+      const store4 = useContext104();
       if (scoped && scoped === store4) return;
       return store4;
     };
@@ -59522,7 +59522,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext103,
+      useContext: useContext104,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -61340,11 +61340,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store4, setStore] = React207.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store4), [store4]);
-    const useState181 = React207.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
+    const useState182 = React207.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
     return [React207.useMemo(() => ({
       ...store4,
-      useState: useState181
-    }), [store4, useState181]), useEvent3(() => {
+      useState: useState182
+    }), [store4, useState182]), useEvent3(() => {
       setStore((store5) => createStore2({
         ...props,
         ...store5.getState()
@@ -123705,20 +123705,20 @@ ${content}
   var import_block_editor105 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
-  var import_element436 = __toESM(require_element(), 1);
+  var import_element437 = __toESM(require_element(), 1);
   var import_components268 = __toESM(require_components(), 1);
-  var import_compose102 = __toESM(require_compose(), 1);
-  var import_i18n359 = __toESM(require_i18n(), 1);
-  var import_data263 = __toESM(require_data(), 1);
-  var import_dom40 = __toESM(require_dom(), 1);
-  var import_block_editor103 = __toESM(require_block_editor(), 1);
+  var import_compose103 = __toESM(require_compose(), 1);
+  var import_i18n360 = __toESM(require_i18n(), 1);
+  var import_data264 = __toESM(require_data(), 1);
+  var import_dom41 = __toESM(require_dom(), 1);
+  var import_block_editor104 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
-  var import_i18n357 = __toESM(require_i18n(), 1);
-  var import_element434 = __toESM(require_element(), 1);
-  var import_compose101 = __toESM(require_compose(), 1);
-  var import_data262 = __toESM(require_data(), 1);
-  var import_block_editor102 = __toESM(require_block_editor(), 1);
+  var import_i18n358 = __toESM(require_i18n(), 1);
+  var import_element435 = __toESM(require_element(), 1);
+  var import_compose102 = __toESM(require_compose(), 1);
+  var import_data263 = __toESM(require_data(), 1);
+  var import_block_editor103 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-byline.mjs
   var import_i18n355 = __toESM(require_i18n(), 1);
@@ -124357,590 +124357,19 @@ ${content}
     );
   }
 
-  // packages/editor/build-module/components/collab-sidebar/add-note.mjs
-  var import_jsx_runtime672 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElement } = unlock(import_block_editor102.privateApis);
-  function AddNote({ clientId, onSubmit, sidebarRef, floating }) {
-    const blockElement = useBlockElement(clientId);
-    const { toggleBlockSpotlight } = unlock((0, import_data262.useDispatch)(import_block_editor102.store));
-    const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store));
-    const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data262.useSelect)(store));
-    const isSubmittingRef = (0, import_element434.useRef)(false);
-    const focusOutside = (0, import_compose101.__experimentalUseFocusOutside)((event) => {
-      if (event.relatedTarget?.closest(
-        ".editor-collab-sidebar-panel__add-note"
-      )) {
-        return;
-      }
-      if (isSubmittingRef.current) {
-        return;
-      }
-      if (getSelectedNote2() === "new") {
-        toggleBlockSpotlight(clientId, false);
-        selectNote2(void 0);
-      }
-    });
-    const unselectNote = () => {
-      selectNote2(void 0);
-      blockElement?.focus();
-      toggleBlockSpotlight(clientId, false);
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
-      FloatingContainer,
-      {
-        floating,
-        className: "editor-collab-sidebar-panel__add-note is-selected",
-        gap: "md",
-        tabIndex: 0,
-        "aria-label": (0, import_i18n357.__)("New note"),
-        role: "treeitem",
-        ...focusOutside,
-        children: /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(NoteCard, { children: /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
-          NoteForm,
-          {
-            onSubmit: async (inputComment) => {
-              isSubmittingRef.current = true;
-              try {
-                const savedRecord = await onSubmit({
-                  content: inputComment
-                });
-                if (savedRecord) {
-                  selectNote2(savedRecord.id);
-                  focusNoteThread(
-                    savedRecord.id,
-                    sidebarRef.current
-                  );
-                }
-                return savedRecord;
-              } finally {
-                isSubmittingRef.current = false;
-              }
-            },
-            onCancel: unselectNote,
-            labels: {
-              input: (0, import_i18n357.__)("New note"),
-              placeholder: (0, import_i18n357.__)("Add a note or @ mention")
-            }
-          }
-        ) })
-      }
-    );
-  }
-
-  // packages/editor/build-module/components/collab-sidebar/note.mjs
-  var import_element435 = __toESM(require_element(), 1);
-  var import_components267 = __toESM(require_components(), 1);
-  var import_i18n358 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime673 = __toESM(require_jsx_runtime(), 1);
-  function NoteActionsMenu({ items, buttonRef }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(
-      menu_exports.Root,
-      {
-        modal: false,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-            menu_exports.Trigger,
-            {
-              disabled: !items.length,
-              render: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-                import_components267.Button,
-                {
-                  ref: buttonRef,
-                  size: "small",
-                  icon: more_vertical_default,
-                  label: (0, import_i18n358.__)("Actions"),
-                  accessibleWhenDisabled: true
-                }
-              )
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-            menu_exports.Popup,
-            {
-              positioner: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(menu_exports.Positioner, { side: "bottom", align: "end" }),
-              children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(menu_exports.Item, { onClick: item.onClick, children: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(menu_exports.ItemLabel, { children: item.title }) }, item.id))
-            }
-          )
-        ]
-      }
-    );
-  }
-  function Note({
-    note,
-    parentNote,
-    isSelected: isSelected2,
-    onEditNote,
-    onDeleteNote,
-    onResolve
-  }) {
-    const [actionState, setActionState] = (0, import_element435.useState)(null);
-    const actionButtonRef = (0, import_element435.useRef)(null);
-    const commentRef = (0, import_element435.useRef)(null);
-    const rawContent = note?.content?.raw;
-    const [prevContent, setPrevContent] = (0, import_element435.useState)(rawContent);
-    const [isExpanded, setIsExpanded] = (0, import_element435.useState)(false);
-    const [isOverflowing, setIsOverflowing] = (0, import_element435.useState)(false);
-    if (prevContent !== rawContent) {
-      setPrevContent(rawContent);
-      setIsExpanded(false);
-    }
-    (0, import_element435.useLayoutEffect)(() => {
-      const commentElement = commentRef.current;
-      if (commentElement) {
-        setIsOverflowing(
-          commentElement.scrollHeight > commentElement.clientHeight
-        );
-      }
-    }, [rawContent]);
-    const canResolve = note.parent === 0;
-    const metaStatus = note.meta?._wp_note_status;
-    const isResolutionNote = metaStatus === "resolved" || metaStatus === "reopen";
-    const hasUserText = typeof rawContent === "string" && rawContent.trim() !== "";
-    const hasResolved = (status) => status === "approved" || parentNote?.status === "approved";
-    const menuItems2 = [
-      {
-        id: "edit",
-        title: (0, import_i18n358.__)("Edit"),
-        isEligible: ({ status }) => (!isResolutionNote || hasUserText) && !hasResolved(status),
-        onClick: () => setActionState("edit")
-      },
-      {
-        id: "reopen",
-        title: (0, import_i18n358._x)("Reopen", "Reopen note"),
-        isEligible: ({ status }) => canResolve && hasResolved(status),
-        onClick: () => onEditNote(note, { status: "hold" })
-      },
-      {
-        id: "delete",
-        title: (0, import_i18n358.__)("Delete"),
-        isEligible: ({ status }) => canResolve || !isResolutionNote && !hasResolved(status),
-        onClick: () => setActionState("delete")
-      }
-    ];
-    const availableItems = menuItems2.filter(
-      (item) => item.isEligible(note)
-    );
-    const deleteConfirmMessage = note.parent === 0 ? (0, import_i18n358.__)(
-      "Are you sure you want to delete this note? This will also delete all of this note's replies."
-    ) : (0, import_i18n358.__)("Are you sure you want to delete this reply?");
-    const handleCancel = () => {
-      setActionState(null);
-      actionButtonRef.current?.focus();
-    };
-    let body;
-    if (actionState === "edit") {
-      body = /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-        NoteForm,
-        {
-          onSubmit: async (value) => {
-            const saved = await onEditNote(note, {
-              content: value
-            });
-            if (saved) {
-              handleCancel();
-            }
-            return saved;
-          },
-          onCancel: handleCancel,
-          note,
-          labels: {
-            submit: (0, import_i18n358._x)("Update", "verb"),
-            input: (0, import_i18n358.sprintf)(
-              // translators: %1$s: note identifier, %2$s: author name.
-              (0, import_i18n358.__)("Edit note %1$s by %2$s"),
-              note.id,
-              note.author_name
-            )
-          }
-        }
-      );
-    } else {
-      let content;
-      if (isResolutionNote) {
-        const actionText = note.meta._wp_note_status === "resolved" ? (0, import_i18n358.__)("Marked as resolved") : (0, import_i18n358.__)("Reopened");
-        const raw = note?.content?.raw;
-        content = raw && typeof raw === "string" && raw.trim() !== "" ? (0, import_i18n358.sprintf)(
-          // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: note text.
-          (0, import_i18n358.__)("%1$s: %2$s"),
-          actionText,
-          raw
-        ) : actionText;
-      } else {
-        content = note?.content?.rendered;
-      }
-      body = /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-        "div",
-        {
-          ref: commentRef,
-          className: clsx_default("editor-collab-sidebar-panel__note-content", {
-            "editor-collab-sidebar-panel__resolution-text": isResolutionNote,
-            "is-collapsed": !isExpanded
-          }),
-          dangerouslySetInnerHTML: { __html: content ?? "" }
-        }
-      );
-    }
-    const actions2 = isSelected2 ? /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(import_jsx_runtime673.Fragment, { children: [
-      canResolve && onResolve && /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-        import_components267.Button,
-        {
-          label: (0, import_i18n358._x)("Resolve", "Mark note as resolved"),
-          size: "small",
-          icon: published_default,
-          disabled: note.status === "approved",
-          accessibleWhenDisabled: note.status === "approved",
-          onClick: onResolve
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-        NoteActionsMenu,
-        {
-          items: availableItems,
-          buttonRef: actionButtonRef
-        }
-      )
-    ] }) : null;
-    return /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(
-      NoteCard,
-      {
-        note,
-        actions: actions2,
-        role: note.parent !== 0 ? "treeitem" : void 0,
-        children: [
-          body,
-          actionState === "delete" && /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-            import_components267.__experimentalConfirmDialog,
-            {
-              isOpen: true,
-              onConfirm: () => {
-                onDeleteNote(note);
-                setActionState(null);
-              },
-              onCancel: handleCancel,
-              confirmButtonText: (0, import_i18n358.__)("Delete"),
-              children: deleteConfirmMessage
-            }
-          ),
-          isOverflowing && "edit" !== actionState && /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-            Button5,
-            {
-              className: "editor-collab-sidebar-panel__show-more-button",
-              variant: "unstyled",
-              size: "small",
-              onClick: () => setIsExpanded(!isExpanded),
-              children: !isExpanded ? (0, import_i18n358.__)("Show more") : (0, import_i18n358.__)("Show less")
-            }
-          )
-        ]
-      }
-    );
-  }
-
-  // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
-  var import_jsx_runtime674 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor103.privateApis);
-  function NoteReply({ note, onEditNote, onAddReply, onCancel }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(NoteCard, { role: "treeitem", children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-      NoteForm,
-      {
-        onSubmit: (inputComment) => {
-          if ("approved" === note.status) {
-            return onEditNote(note, {
-              status: "hold",
-              content: inputComment
-            });
-          }
-          return onAddReply({
-            content: inputComment,
-            parent: note.id
-          });
-        },
-        onCancel,
-        labels: {
-          submit: "approved" === note.status ? (0, import_i18n359.__)("Reopen & Reply") : (0, import_i18n359.__)("Reply"),
-          input: (0, import_i18n359.sprintf)(
-            // translators: %1$s: note identifier, %2$s: author name
-            (0, import_i18n359.__)("Reply to note %1$s by %2$s"),
-            note.id,
-            note.author_name
-          ),
-          placeholder: (0, import_i18n359.__)("Reply or @ mention")
-        }
-      }
-    ) });
-  }
-  function NoteThread({
-    note,
-    onEditNote,
-    onAddReply,
-    onDeleteNote,
-    isSelected: isSelected2,
-    sidebarRef,
-    floating,
-    onKeyDown
-  }) {
-    const isFloating = !!floating;
-    const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
-      (0, import_data263.useDispatch)(import_block_editor103.store)
-    );
-    const { selectNote: selectNote2 } = unlock((0, import_data263.useDispatch)(store));
-    const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data263.useSelect)(store));
-    const relatedBlockElement = useBlockElement2(note.blockClientId);
-    const debouncedToggleBlockHighlight = (0, import_compose102.useDebounce)(
-      toggleBlockHighlight,
-      50
-    );
-    const floatingRef = (0, import_element436.useRef)(null);
-    const isKeyboardTabbingRef = (0, import_element436.useRef)(false);
-    const [hasFocus2, setHasFocus] = (0, import_element436.useState)(false);
-    const registerThread = floating?.registerThread;
-    const unregisterThread = floating?.unregisterThread;
-    (0, import_element436.useEffect)(() => {
-      const floatingEl = floatingRef.current;
-      if (floatingEl && registerThread) {
-        registerThread(note.id, relatedBlockElement, floatingEl);
-      }
-      return () => unregisterThread?.(note.id);
-    }, [relatedBlockElement, note.id, registerThread, unregisterThread]);
-    (0, import_element436.useEffect)(() => {
-      if (!isSelected2 || note.id === "new") {
-        return;
-      }
-      scrollNoteThreadIntoView(note.id, sidebarRef.current);
-    }, [isSelected2, floating?.y, floating?.height, note.id, sidebarRef]);
-    const focusOutside = (0, import_compose102.__experimentalUseFocusOutside)((event) => {
-      setHasFocus(false);
-      const isNoteFocused2 = event.relatedTarget?.closest(
-        ".editor-collab-sidebar-panel__thread"
-      );
-      if (isNoteFocused2 && !isKeyboardTabbingRef.current) {
-        return;
-      }
-      if (!isNoteFocused2) {
-        debouncedToggleBlockHighlight.cancel();
-        toggleBlockHighlight(note.blockClientId, false);
-      }
-      if (getSelectedNote2() === note.id) {
-        onDeselectNote();
-      }
-    });
-    function onMouseEnter() {
-      debouncedToggleBlockHighlight(note.blockClientId, true);
-    }
-    function onMouseLeave() {
-      debouncedToggleBlockHighlight(note.blockClientId, false);
-    }
-    function onFocus(event) {
-      focusOutside.onFocus(event);
-      setHasFocus(true);
-      debouncedToggleBlockHighlight.cancel();
-      toggleBlockHighlight(note.blockClientId, true);
-    }
-    function onSelectNote() {
-      if (isSelected2) {
-        return;
-      }
-      selectNote2(note.id);
-      focusNoteThread(note.id, sidebarRef.current);
-      toggleBlockSpotlight(note.blockClientId, true);
-      if (!!note.blockClientId) {
-        selectBlock2(note.blockClientId, null);
-      }
-    }
-    function onDeselectNote() {
-      selectNote2(void 0);
-      toggleBlockSpotlight(note.blockClientId, false);
-    }
-    function handleResolve() {
-      onEditNote(note, { status: "approved" });
-      onDeselectNote();
-      if (isFloating) {
-        relatedBlockElement?.focus();
-      } else {
-        focusNoteThread(note.id, sidebarRef.current);
-      }
-    }
-    const allReplies = note?.reply || [];
-    const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : void 0;
-    const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
-    const noteExcerpt = getNoteExcerpt(
-      (0, import_dom40.__unstableStripHTML)(note.content?.rendered),
-      10
-    );
-    const ariaLabel = !!note.blockClientId ? (0, import_i18n359.sprintf)(
-      // translators: %s: note excerpt
-      (0, import_i18n359.__)("Note: %s"),
-      noteExcerpt
-    ) : (0, import_i18n359.sprintf)(
-      // translators: %s: note excerpt
-      (0, import_i18n359.__)("Original block deleted. Note: %s"),
-      noteExcerpt
-    );
-    if (isFloating && note.id === "new") {
-      return /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-        AddNote,
-        {
-          clientId: note.blockClientId,
-          onSubmit: onAddReply,
-          sidebarRef,
-          floating: { y: floating.y, ref: floatingRef }
-        }
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime674.jsxs)(
-      FloatingContainer,
-      {
-        floating: isFloating ? { y: floating.y, ref: floatingRef } : void 0,
-        className: clsx_default("editor-collab-sidebar-panel__thread", {
-          "is-selected": isSelected2,
-          "has-focus": hasFocus2
-        }),
-        id: `note-thread-${note.id}`,
-        gap: "md",
-        onClick: onSelectNote,
-        onMouseEnter,
-        onMouseLeave,
-        ...focusOutside,
-        onFocus,
-        onKeyUp: (event) => {
-          if (event.key === "Tab") {
-            isKeyboardTabbingRef.current = false;
-          }
-        },
-        onKeyDown: (event) => {
-          if (event.key === "Tab") {
-            isKeyboardTabbingRef.current = true;
-          } else {
-            onKeyDown(event);
-          }
-        },
-        tabIndex: 0,
-        role: "treeitem",
-        "aria-label": ariaLabel,
-        "aria-expanded": isSelected2,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-            import_components268.Button,
-            {
-              className: "editor-collab-sidebar-panel__skip-to-note",
-              variant: "secondary",
-              size: "compact",
-              onClick: () => {
-                focusNoteThread(
-                  note.id,
-                  sidebarRef.current,
-                  '[role="textbox"]'
-                );
-              },
-              children: (0, import_i18n359.__)("Add new reply")
-            }
-          ),
-          !note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)("p", { className: "editor-collab-sidebar-panel__deleted-block-notice", children: (0, import_i18n359.__)("Original block deleted.") }),
-          /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-            Note,
-            {
-              note,
-              isSelected: isSelected2,
-              onEditNote,
-              onDeleteNote,
-              onResolve: handleResolve
-            }
-          ),
-          isSelected2 && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-            Note,
-            {
-              note: reply,
-              parentNote: note,
-              isSelected: isSelected2,
-              onEditNote,
-              onDeleteNote
-            },
-            reply.id
-          )),
-          !isSelected2 && restReplies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-            Stack,
-            {
-              direction: "row",
-              align: "center",
-              justify: "space-between",
-              className: "editor-collab-sidebar-panel__more-reply-separator",
-              children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-                import_components268.Button,
-                {
-                  size: "compact",
-                  variant: "tertiary",
-                  className: "editor-collab-sidebar-panel__more-reply-button",
-                  onClick: (event) => {
-                    event.stopPropagation();
-                    onSelectNote();
-                  },
-                  children: (0, import_i18n359.sprintf)(
-                    // translators: %s: number of replies.
-                    (0, import_i18n359._n)(
-                      "%s more reply",
-                      "%s more replies",
-                      restReplies.length
-                    ),
-                    restReplies.length
-                  )
-                }
-              )
-            }
-          ),
-          !isSelected2 && lastReply && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-            Note,
-            {
-              note: lastReply,
-              parentNote: note,
-              isSelected: false,
-              onEditNote,
-              onDeleteNote
-            }
-          ),
-          isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-            NoteReply,
-            {
-              note,
-              onEditNote,
-              onAddReply,
-              onCancel: (event) => {
-                event.stopPropagation();
-                onDeselectNote();
-                focusNoteThread(note.id, sidebarRef.current);
-              }
-            }
-          ),
-          !!note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-            import_components268.Button,
-            {
-              className: "editor-collab-sidebar-panel__skip-to-block",
-              variant: "secondary",
-              size: "compact",
-              onClick: (event) => {
-                event.stopPropagation();
-                relatedBlockElement?.focus();
-              },
-              children: (0, import_i18n359.__)("Back to block")
-            }
-          )
-        ]
-      }
-    );
-  }
-
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
   var import_a11y17 = __toESM(require_a11y(), 1);
-  var import_i18n360 = __toESM(require_i18n(), 1);
-  var import_element437 = __toESM(require_element(), 1);
-  var import_compose103 = __toESM(require_compose(), 1);
+  var import_i18n357 = __toESM(require_i18n(), 1);
+  var import_element434 = __toESM(require_element(), 1);
+  var import_compose101 = __toESM(require_compose(), 1);
   var import_core_data148 = __toESM(require_core_data(), 1);
-  var import_data264 = __toESM(require_data(), 1);
-  var import_block_editor104 = __toESM(require_block_editor(), 1);
+  var import_data262 = __toESM(require_data(), 1);
+  var import_block_editor102 = __toESM(require_block_editor(), 1);
   var import_notices37 = __toESM(require_notices(), 1);
   var import_html_entities36 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/board-store.mjs
-  var import_dom41 = __toESM(require_dom(), 1);
+  var import_dom40 = __toESM(require_dom(), 1);
   var EMPTY_SNAPSHOT = {
     heights: {},
     anchorRects: {},
@@ -125027,7 +124456,7 @@ ${content}
         return;
       }
       rootEl = nextRootEl;
-      canvas = rootEl ? (0, import_dom41.getScrollContainer)(rootEl) : null;
+      canvas = rootEl ? (0, import_dom40.getScrollContainer)(rootEl) : null;
       frameEl = rootEl?.ownerDocument.defaultView?.frameElement ?? null;
       if (observer) {
         disconnect();
@@ -125111,7 +124540,8 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
-  var { cleanEmptyObject: cleanEmptyObject3 } = unlock(import_block_editor104.privateApis);
+  var { cleanEmptyObject: cleanEmptyObject3 } = unlock(import_block_editor102.privateApis);
+  var NoteDraftsContext = (0, import_element434.createContext)();
   function useNoteThreads(postId2) {
     const queryArgs = {
       post: postId2,
@@ -125125,14 +124555,14 @@ ${content}
       queryArgs,
       { enabled: !!postId2 && typeof postId2 === "number" }
     );
-    const { getBlockAttributes: getBlockAttributes2 } = (0, import_data264.useSelect)(import_block_editor104.store);
-    const { clientIds } = (0, import_data264.useSelect)((select9) => {
-      const { getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select9(import_block_editor104.store);
+    const { getBlockAttributes: getBlockAttributes2 } = (0, import_data262.useSelect)(import_block_editor102.store);
+    const { clientIds } = (0, import_data262.useSelect)((select9) => {
+      const { getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select9(import_block_editor102.store);
       return {
         clientIds: getClientIdsWithDescendants2()
       };
     }, []);
-    const { notes, unresolvedNotes } = (0, import_element437.useMemo)(() => {
+    const { notes, unresolvedNotes } = (0, import_element434.useMemo)(() => {
       if (!threads || threads.length === 0) {
         return { notes: [], unresolvedNotes: [] };
       }
@@ -125212,22 +124642,22 @@ ${content}
     };
   }
   function useNoteActions() {
-    const { createNotice } = (0, import_data264.useDispatch)(import_notices37.store);
-    const { saveEntityRecord, deleteEntityRecord } = (0, import_data264.useDispatch)(import_core_data148.store);
-    const { getCurrentPostId: getCurrentPostId2 } = (0, import_data264.useSelect)(store);
+    const { createNotice } = (0, import_data262.useDispatch)(import_notices37.store);
+    const { saveEntityRecord, deleteEntityRecord } = (0, import_data262.useDispatch)(import_core_data148.store);
+    const { getCurrentPostId: getCurrentPostId2 } = (0, import_data262.useSelect)(store);
     const {
       getBlockAttributes: getBlockAttributes2,
       getSelectedBlockClientId: getSelectedBlockClientId2,
       getSelectionStart,
       getSelectionEnd
-    } = (0, import_data264.useSelect)(import_block_editor104.store);
+    } = (0, import_data262.useSelect)(import_block_editor102.store);
     const {
       updateBlockAttributes: updateBlockAttributes2,
       __unstableMarkNextChangeAsNotPersistent,
       __unstableMarkLastChangeAsPersistent
-    } = (0, import_data264.useDispatch)(import_block_editor104.store);
+    } = (0, import_data262.useDispatch)(import_block_editor102.store);
     const onError = (error2) => {
-      const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities36.decodeEntities)(error2.message) : (0, import_i18n360.__)("An error occurred while performing an update.");
+      const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities36.decodeEntities)(error2.message) : (0, import_i18n357.__)("An error occurred while performing an update.");
       createNotice("error", errorMessage, {
         type: "snackbar",
         isDismissible: true
@@ -125279,7 +124709,7 @@ ${content}
         }
         createNotice(
           "snackbar",
-          parent ? (0, import_i18n360.__)("Reply added.") : (0, import_i18n360.__)("Note added."),
+          parent ? (0, import_i18n357.__)("Reply added.") : (0, import_i18n357.__)("Note added."),
           {
             type: "snackbar",
             isDismissible: true
@@ -125334,7 +124764,7 @@ ${content}
             });
           }
           (0, import_a11y17.speak)(
-            status === "approved" ? (0, import_i18n360.__)("Note marked as resolved.") : (0, import_i18n360.__)("Note reopened.")
+            status === "approved" ? (0, import_i18n357.__)("Note marked as resolved.") : (0, import_i18n357.__)("Note reopened.")
           );
           return savedRecord2;
         }
@@ -125351,7 +124781,7 @@ ${content}
             throwOnError: true
           }
         );
-        createNotice("snackbar", (0, import_i18n360.__)("Note updated."), {
+        createNotice("snackbar", (0, import_i18n357.__)("Note updated."), {
           type: "snackbar",
           isDismissible: true
         });
@@ -125396,7 +124826,7 @@ ${content}
             updateNoteAnchor(anchor.clientId, newAttributes);
           }
         }
-        createNotice("snackbar", (0, import_i18n360.__)("Note restored."), {
+        createNotice("snackbar", (0, import_i18n357.__)("Note restored."), {
           type: "snackbar",
           isDismissible: true
         });
@@ -125439,12 +124869,12 @@ ${content}
           }
           updateNoteAnchor(clientId, newAttributes);
         }
-        createNotice("snackbar", (0, import_i18n360.__)("Note deleted."), {
+        createNotice("snackbar", (0, import_i18n357.__)("Note deleted."), {
           type: "snackbar",
           isDismissible: true,
           actions: canMoveToTrash ? [
             {
-              label: (0, import_i18n360.__)("Undo"),
+              label: (0, import_i18n357.__)("Undo"),
               onClick: () => restoreNote(note.id, anchor)
             }
           ] : []
@@ -125456,14 +124886,28 @@ ${content}
     };
     return { onCreate, onEdit, onDelete };
   }
+  function useNoteDraft(key) {
+    const drafts = (0, import_element434.useContext)(NoteDraftsContext);
+    const [initialValue] = (0, import_element434.useState)(() => drafts.get(key) ?? "");
+    const setDraft = (content) => {
+      if (content) {
+        drafts.set(key, content);
+      } else {
+        drafts.delete(key);
+      }
+    };
+    const hasDraft = () => drafts.has(key);
+    return { initialValue, setDraft, hasDraft };
+  }
   function useNoteSelection({ notes, sidebarRef }) {
-    const registry = (0, import_data264.useRegistry)();
-    const { selectNote: selectNote2 } = unlock((0, import_data264.useDispatch)(store));
-    const selectedBlockClientId = (0, import_data264.useSelect)(
-      (select9) => select9(import_block_editor104.store).getSelectedBlockClientId(),
+    const registry = (0, import_data262.useRegistry)();
+    const drafts = (0, import_element434.useContext)(NoteDraftsContext);
+    const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store));
+    const selectedBlockClientId = (0, import_data262.useSelect)(
+      (select9) => select9(import_block_editor102.store).getSelectedBlockClientId(),
       []
     );
-    const { selectedNote: selectedNote2, noteFocused } = (0, import_data264.useSelect)((select9) => {
+    const { selectedNote: selectedNote2, noteFocused } = (0, import_data262.useSelect)((select9) => {
       const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
         select9(store)
       );
@@ -125472,7 +124916,7 @@ ${content}
         noteFocused: isNoteFocused2()
       };
     }, []);
-    const syncWithBlock = (0, import_compose103.useEvent)((clientId) => {
+    const syncWithBlock = (0, import_compose101.useEvent)((clientId) => {
       const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
         registry.select(store)
       );
@@ -125484,17 +124928,18 @@ ${content}
       if (blockThreads.some((thread) => thread.id === currentNoteId)) {
         return;
       }
-      selectNote2(pickPrimaryNote(blockThreads)?.id);
+      const draftNoteId = drafts.has(clientId) ? "new" : void 0;
+      selectNote2(pickPrimaryNote(blockThreads)?.id ?? draftNoteId);
     });
-    const prevBlockIdRef = (0, import_element437.useRef)(selectedBlockClientId);
-    (0, import_element437.useEffect)(() => {
+    const prevBlockIdRef = (0, import_element434.useRef)(selectedBlockClientId);
+    (0, import_element434.useEffect)(() => {
       if (prevBlockIdRef.current === selectedBlockClientId) {
         return;
       }
       prevBlockIdRef.current = selectedBlockClientId;
       syncWithBlock(selectedBlockClientId);
     }, [selectedBlockClientId, syncWithBlock]);
-    (0, import_element437.useEffect)(() => {
+    (0, import_element434.useEffect)(() => {
       if (!noteFocused || !selectedNote2) {
         return;
       }
@@ -125509,7 +124954,7 @@ ${content}
   var subscribeNoop = () => () => {
   };
   function useCanvasRoom({ canvas, contentHeight, isFloating }) {
-    (0, import_element437.useLayoutEffect)(() => {
+    (0, import_element434.useLayoutEffect)(() => {
       if (!isFloating || !canvas || !contentHeight) {
         return;
       }
@@ -125524,7 +124969,7 @@ ${content}
     }, [isFloating, canvas, contentHeight]);
   }
   function useMirroredScroll({ sidebarRef, canvas, isFloating }) {
-    (0, import_element437.useLayoutEffect)(() => {
+    (0, import_element434.useLayoutEffect)(() => {
       const panel = sidebarRef?.current;
       if (!isFloating || !panel || !canvas) {
         return;
@@ -125601,7 +125046,7 @@ ${content}
     scrollbarWidth,
     isFloating
   }) {
-    (0, import_element437.useLayoutEffect)(() => {
+    (0, import_element434.useLayoutEffect)(() => {
       const panel = sidebarRef?.current;
       if (!isFloating || !panel) {
         return;
@@ -125623,15 +125068,15 @@ ${content}
     isFloating,
     sidebarRef
   }) {
-    const [store4] = (0, import_element437.useState)(createBoardStore);
-    const { heights, anchorRects, canvas, frameOffset, scrollbarWidth } = (0, import_element437.useSyncExternalStore)(
+    const [store4] = (0, import_element434.useState)(createBoardStore);
+    const { heights, anchorRects, canvas, frameOffset, scrollbarWidth } = (0, import_element434.useSyncExternalStore)(
       isFloating ? store4.subscribe : subscribeNoop,
       store4.getSnapshot
     );
-    (0, import_element437.useLayoutEffect)(() => {
+    (0, import_element434.useLayoutEffect)(() => {
       store4.requestMeasure();
     }, [store4, threads]);
-    const { positions: notePositions, contentHeight } = (0, import_element437.useMemo)(
+    const { positions: notePositions, contentHeight } = (0, import_element434.useMemo)(
       () => calculateNotePositions({
         threads,
         selectedNoteId,
@@ -125649,6 +125094,588 @@ ${content}
       registerThread: store4.registerThread,
       unregisterThread: store4.unregisterThread
     };
+  }
+
+  // packages/editor/build-module/components/collab-sidebar/add-note.mjs
+  var import_jsx_runtime672 = __toESM(require_jsx_runtime(), 1);
+  var { useBlockElement } = unlock(import_block_editor103.privateApis);
+  function AddNote({ clientId, onSubmit, sidebarRef, floating }) {
+    const blockElement = useBlockElement(clientId);
+    const { toggleBlockSpotlight } = unlock((0, import_data263.useDispatch)(import_block_editor103.store));
+    const { selectNote: selectNote2 } = unlock((0, import_data263.useDispatch)(store));
+    const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data263.useSelect)(store));
+    const isSubmittingRef = (0, import_element435.useRef)(false);
+    const { initialValue, setDraft, hasDraft } = useNoteDraft(clientId);
+    const focusOutside = (0, import_compose102.__experimentalUseFocusOutside)((event) => {
+      if (event.relatedTarget?.closest(
+        ".editor-collab-sidebar-panel__add-note"
+      )) {
+        return;
+      }
+      if (isSubmittingRef.current) {
+        return;
+      }
+      if (getSelectedNote2() === "new" && !hasDraft()) {
+        toggleBlockSpotlight(clientId, false);
+        selectNote2(void 0);
+      }
+    });
+    const unselectNote = () => {
+      setDraft("");
+      selectNote2(void 0);
+      blockElement?.focus();
+      toggleBlockSpotlight(clientId, false);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
+      FloatingContainer,
+      {
+        floating,
+        className: "editor-collab-sidebar-panel__add-note is-selected",
+        gap: "md",
+        tabIndex: 0,
+        "aria-label": (0, import_i18n358.__)("New note"),
+        role: "treeitem",
+        ...focusOutside,
+        children: /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(NoteCard, { children: /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
+          NoteForm,
+          {
+            onSubmit: async (inputComment) => {
+              isSubmittingRef.current = true;
+              try {
+                const savedRecord = await onSubmit({
+                  content: inputComment
+                });
+                if (savedRecord) {
+                  selectNote2(savedRecord.id);
+                  focusNoteThread(
+                    savedRecord.id,
+                    sidebarRef.current
+                  );
+                }
+                return savedRecord;
+              } finally {
+                isSubmittingRef.current = false;
+              }
+            },
+            onCancel: unselectNote,
+            initialValue,
+            onChange: setDraft,
+            labels: {
+              input: (0, import_i18n358.__)("New note"),
+              placeholder: (0, import_i18n358.__)("Add a note or @ mention")
+            }
+          }
+        ) })
+      }
+    );
+  }
+
+  // packages/editor/build-module/components/collab-sidebar/note.mjs
+  var import_element436 = __toESM(require_element(), 1);
+  var import_components267 = __toESM(require_components(), 1);
+  var import_i18n359 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime673 = __toESM(require_jsx_runtime(), 1);
+  function NoteActionsMenu({ items, buttonRef }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(
+      menu_exports.Root,
+      {
+        modal: false,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+            menu_exports.Trigger,
+            {
+              disabled: !items.length,
+              render: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+                import_components267.Button,
+                {
+                  ref: buttonRef,
+                  size: "small",
+                  icon: more_vertical_default,
+                  label: (0, import_i18n359.__)("Actions"),
+                  accessibleWhenDisabled: true
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+            menu_exports.Popup,
+            {
+              positioner: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(menu_exports.Positioner, { side: "bottom", align: "end" }),
+              children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(menu_exports.Item, { onClick: item.onClick, children: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(menu_exports.ItemLabel, { children: item.title }) }, item.id))
+            }
+          )
+        ]
+      }
+    );
+  }
+  function Note({
+    note,
+    parentNote,
+    isSelected: isSelected2,
+    onEditNote,
+    onDeleteNote,
+    onResolve
+  }) {
+    const [actionState, setActionState] = (0, import_element436.useState)(null);
+    const actionButtonRef = (0, import_element436.useRef)(null);
+    const commentRef = (0, import_element436.useRef)(null);
+    const rawContent = note?.content?.raw;
+    const [prevContent, setPrevContent] = (0, import_element436.useState)(rawContent);
+    const [isExpanded, setIsExpanded] = (0, import_element436.useState)(false);
+    const [isOverflowing, setIsOverflowing] = (0, import_element436.useState)(false);
+    if (prevContent !== rawContent) {
+      setPrevContent(rawContent);
+      setIsExpanded(false);
+    }
+    (0, import_element436.useLayoutEffect)(() => {
+      const commentElement = commentRef.current;
+      if (commentElement) {
+        setIsOverflowing(
+          commentElement.scrollHeight > commentElement.clientHeight
+        );
+      }
+    }, [rawContent]);
+    const canResolve = note.parent === 0;
+    const metaStatus = note.meta?._wp_note_status;
+    const isResolutionNote = metaStatus === "resolved" || metaStatus === "reopen";
+    const hasUserText = typeof rawContent === "string" && rawContent.trim() !== "";
+    const hasResolved = (status) => status === "approved" || parentNote?.status === "approved";
+    const menuItems2 = [
+      {
+        id: "edit",
+        title: (0, import_i18n359.__)("Edit"),
+        isEligible: ({ status }) => (!isResolutionNote || hasUserText) && !hasResolved(status),
+        onClick: () => setActionState("edit")
+      },
+      {
+        id: "reopen",
+        title: (0, import_i18n359._x)("Reopen", "Reopen note"),
+        isEligible: ({ status }) => canResolve && hasResolved(status),
+        onClick: () => onEditNote(note, { status: "hold" })
+      },
+      {
+        id: "delete",
+        title: (0, import_i18n359.__)("Delete"),
+        isEligible: ({ status }) => canResolve || !isResolutionNote && !hasResolved(status),
+        onClick: () => setActionState("delete")
+      }
+    ];
+    const availableItems = menuItems2.filter(
+      (item) => item.isEligible(note)
+    );
+    const deleteConfirmMessage = note.parent === 0 ? (0, import_i18n359.__)(
+      "Are you sure you want to delete this note? This will also delete all of this note's replies."
+    ) : (0, import_i18n359.__)("Are you sure you want to delete this reply?");
+    const handleCancel = () => {
+      setActionState(null);
+      actionButtonRef.current?.focus();
+    };
+    let body;
+    if (actionState === "edit") {
+      body = /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+        NoteForm,
+        {
+          onSubmit: async (value) => {
+            const saved = await onEditNote(note, {
+              content: value
+            });
+            if (saved) {
+              handleCancel();
+            }
+            return saved;
+          },
+          onCancel: handleCancel,
+          note,
+          labels: {
+            submit: (0, import_i18n359._x)("Update", "verb"),
+            input: (0, import_i18n359.sprintf)(
+              // translators: %1$s: note identifier, %2$s: author name.
+              (0, import_i18n359.__)("Edit note %1$s by %2$s"),
+              note.id,
+              note.author_name
+            )
+          }
+        }
+      );
+    } else {
+      let content;
+      if (isResolutionNote) {
+        const actionText = note.meta._wp_note_status === "resolved" ? (0, import_i18n359.__)("Marked as resolved") : (0, import_i18n359.__)("Reopened");
+        const raw = note?.content?.raw;
+        content = raw && typeof raw === "string" && raw.trim() !== "" ? (0, import_i18n359.sprintf)(
+          // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: note text.
+          (0, import_i18n359.__)("%1$s: %2$s"),
+          actionText,
+          raw
+        ) : actionText;
+      } else {
+        content = note?.content?.rendered;
+      }
+      body = /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+        "div",
+        {
+          ref: commentRef,
+          className: clsx_default("editor-collab-sidebar-panel__note-content", {
+            "editor-collab-sidebar-panel__resolution-text": isResolutionNote,
+            "is-collapsed": !isExpanded
+          }),
+          dangerouslySetInnerHTML: { __html: content ?? "" }
+        }
+      );
+    }
+    const actions2 = isSelected2 ? /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(import_jsx_runtime673.Fragment, { children: [
+      canResolve && onResolve && /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+        import_components267.Button,
+        {
+          label: (0, import_i18n359._x)("Resolve", "Mark note as resolved"),
+          size: "small",
+          icon: published_default,
+          disabled: note.status === "approved",
+          accessibleWhenDisabled: note.status === "approved",
+          onClick: onResolve
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+        NoteActionsMenu,
+        {
+          items: availableItems,
+          buttonRef: actionButtonRef
+        }
+      )
+    ] }) : null;
+    return /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(
+      NoteCard,
+      {
+        note,
+        actions: actions2,
+        role: note.parent !== 0 ? "treeitem" : void 0,
+        children: [
+          body,
+          actionState === "delete" && /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+            import_components267.__experimentalConfirmDialog,
+            {
+              isOpen: true,
+              onConfirm: () => {
+                onDeleteNote(note);
+                setActionState(null);
+              },
+              onCancel: handleCancel,
+              confirmButtonText: (0, import_i18n359.__)("Delete"),
+              children: deleteConfirmMessage
+            }
+          ),
+          isOverflowing && "edit" !== actionState && /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+            Button5,
+            {
+              className: "editor-collab-sidebar-panel__show-more-button",
+              variant: "unstyled",
+              size: "small",
+              onClick: () => setIsExpanded(!isExpanded),
+              children: !isExpanded ? (0, import_i18n359.__)("Show more") : (0, import_i18n359.__)("Show less")
+            }
+          )
+        ]
+      }
+    );
+  }
+
+  // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
+  var import_jsx_runtime674 = __toESM(require_jsx_runtime(), 1);
+  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor104.privateApis);
+  function NoteReply({ note, onEditNote, onAddReply, onCancel }) {
+    const { initialValue, setDraft } = useNoteDraft(note.id);
+    return /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(NoteCard, { role: "treeitem", children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+      NoteForm,
+      {
+        onSubmit: (inputComment) => {
+          if ("approved" === note.status) {
+            return onEditNote(note, {
+              status: "hold",
+              content: inputComment
+            });
+          }
+          return onAddReply({
+            content: inputComment,
+            parent: note.id
+          });
+        },
+        onCancel: (event) => {
+          setDraft("");
+          onCancel(event);
+        },
+        initialValue,
+        onChange: setDraft,
+        labels: {
+          submit: "approved" === note.status ? (0, import_i18n360.__)("Reopen & Reply") : (0, import_i18n360.__)("Reply"),
+          input: (0, import_i18n360.sprintf)(
+            // translators: %1$s: note identifier, %2$s: author name
+            (0, import_i18n360.__)("Reply to note %1$s by %2$s"),
+            note.id,
+            note.author_name
+          ),
+          placeholder: (0, import_i18n360.__)("Reply or @ mention")
+        }
+      }
+    ) });
+  }
+  function NoteThread({
+    note,
+    onEditNote,
+    onAddReply,
+    onDeleteNote,
+    isSelected: isSelected2,
+    sidebarRef,
+    floating,
+    onKeyDown
+  }) {
+    const isFloating = !!floating;
+    const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
+      (0, import_data264.useDispatch)(import_block_editor104.store)
+    );
+    const { selectNote: selectNote2 } = unlock((0, import_data264.useDispatch)(store));
+    const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data264.useSelect)(store));
+    const relatedBlockElement = useBlockElement2(note.blockClientId);
+    const debouncedToggleBlockHighlight = (0, import_compose103.useDebounce)(
+      toggleBlockHighlight,
+      50
+    );
+    const floatingRef = (0, import_element437.useRef)(null);
+    const isKeyboardTabbingRef = (0, import_element437.useRef)(false);
+    const [hasFocus2, setHasFocus] = (0, import_element437.useState)(false);
+    const registerThread = floating?.registerThread;
+    const unregisterThread = floating?.unregisterThread;
+    (0, import_element437.useEffect)(() => {
+      const floatingEl = floatingRef.current;
+      if (floatingEl && registerThread) {
+        registerThread(note.id, relatedBlockElement, floatingEl);
+      }
+      return () => unregisterThread?.(note.id);
+    }, [relatedBlockElement, note.id, registerThread, unregisterThread]);
+    (0, import_element437.useEffect)(() => {
+      if (!isSelected2 || note.id === "new") {
+        return;
+      }
+      scrollNoteThreadIntoView(note.id, sidebarRef.current);
+    }, [isSelected2, floating?.y, floating?.height, note.id, sidebarRef]);
+    const focusOutside = (0, import_compose103.__experimentalUseFocusOutside)((event) => {
+      setHasFocus(false);
+      const isNoteFocused2 = event.relatedTarget?.closest(
+        ".editor-collab-sidebar-panel__thread"
+      );
+      if (isNoteFocused2 && !isKeyboardTabbingRef.current) {
+        return;
+      }
+      if (!isNoteFocused2) {
+        debouncedToggleBlockHighlight.cancel();
+        toggleBlockHighlight(note.blockClientId, false);
+      }
+      if (getSelectedNote2() === note.id) {
+        onDeselectNote();
+      }
+    });
+    function onMouseEnter() {
+      debouncedToggleBlockHighlight(note.blockClientId, true);
+    }
+    function onMouseLeave() {
+      debouncedToggleBlockHighlight(note.blockClientId, false);
+    }
+    function onFocus(event) {
+      focusOutside.onFocus(event);
+      setHasFocus(true);
+      debouncedToggleBlockHighlight.cancel();
+      toggleBlockHighlight(note.blockClientId, true);
+    }
+    function onSelectNote() {
+      if (isSelected2) {
+        return;
+      }
+      selectNote2(note.id);
+      focusNoteThread(note.id, sidebarRef.current);
+      toggleBlockSpotlight(note.blockClientId, true);
+      if (!!note.blockClientId) {
+        selectBlock2(note.blockClientId, null);
+      }
+    }
+    function onDeselectNote() {
+      selectNote2(void 0);
+      toggleBlockSpotlight(note.blockClientId, false);
+    }
+    function handleResolve() {
+      onEditNote(note, { status: "approved" });
+      onDeselectNote();
+      if (isFloating) {
+        relatedBlockElement?.focus();
+      } else {
+        focusNoteThread(note.id, sidebarRef.current);
+      }
+    }
+    const allReplies = note?.reply || [];
+    const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : void 0;
+    const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
+    const noteExcerpt = getNoteExcerpt(
+      (0, import_dom41.__unstableStripHTML)(note.content?.rendered),
+      10
+    );
+    const ariaLabel = !!note.blockClientId ? (0, import_i18n360.sprintf)(
+      // translators: %s: note excerpt
+      (0, import_i18n360.__)("Note: %s"),
+      noteExcerpt
+    ) : (0, import_i18n360.sprintf)(
+      // translators: %s: note excerpt
+      (0, import_i18n360.__)("Original block deleted. Note: %s"),
+      noteExcerpt
+    );
+    if (isFloating && note.id === "new") {
+      return /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+        AddNote,
+        {
+          clientId: note.blockClientId,
+          onSubmit: onAddReply,
+          sidebarRef,
+          floating: { y: floating.y, ref: floatingRef }
+        },
+        note.blockClientId
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime674.jsxs)(
+      FloatingContainer,
+      {
+        floating: isFloating ? { y: floating.y, ref: floatingRef } : void 0,
+        className: clsx_default("editor-collab-sidebar-panel__thread", {
+          "is-selected": isSelected2,
+          "has-focus": hasFocus2
+        }),
+        id: `note-thread-${note.id}`,
+        gap: "md",
+        onClick: onSelectNote,
+        onMouseEnter,
+        onMouseLeave,
+        ...focusOutside,
+        onFocus,
+        onKeyUp: (event) => {
+          if (event.key === "Tab") {
+            isKeyboardTabbingRef.current = false;
+          }
+        },
+        onKeyDown: (event) => {
+          if (event.key === "Tab") {
+            isKeyboardTabbingRef.current = true;
+          } else {
+            onKeyDown(event);
+          }
+        },
+        tabIndex: 0,
+        role: "treeitem",
+        "aria-label": ariaLabel,
+        "aria-expanded": isSelected2,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            import_components268.Button,
+            {
+              className: "editor-collab-sidebar-panel__skip-to-note",
+              variant: "secondary",
+              size: "compact",
+              onClick: () => {
+                focusNoteThread(
+                  note.id,
+                  sidebarRef.current,
+                  '[role="textbox"]'
+                );
+              },
+              children: (0, import_i18n360.__)("Add new reply")
+            }
+          ),
+          !note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)("p", { className: "editor-collab-sidebar-panel__deleted-block-notice", children: (0, import_i18n360.__)("Original block deleted.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            Note,
+            {
+              note,
+              isSelected: isSelected2,
+              onEditNote,
+              onDeleteNote,
+              onResolve: handleResolve
+            }
+          ),
+          isSelected2 && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            Note,
+            {
+              note: reply,
+              parentNote: note,
+              isSelected: isSelected2,
+              onEditNote,
+              onDeleteNote
+            },
+            reply.id
+          )),
+          !isSelected2 && restReplies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            Stack,
+            {
+              direction: "row",
+              align: "center",
+              justify: "space-between",
+              className: "editor-collab-sidebar-panel__more-reply-separator",
+              children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+                import_components268.Button,
+                {
+                  size: "compact",
+                  variant: "tertiary",
+                  className: "editor-collab-sidebar-panel__more-reply-button",
+                  onClick: (event) => {
+                    event.stopPropagation();
+                    onSelectNote();
+                  },
+                  children: (0, import_i18n360.sprintf)(
+                    // translators: %s: number of replies.
+                    (0, import_i18n360._n)(
+                      "%s more reply",
+                      "%s more replies",
+                      restReplies.length
+                    ),
+                    restReplies.length
+                  )
+                }
+              )
+            }
+          ),
+          !isSelected2 && lastReply && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            Note,
+            {
+              note: lastReply,
+              parentNote: note,
+              isSelected: false,
+              onEditNote,
+              onDeleteNote
+            }
+          ),
+          isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            NoteReply,
+            {
+              note,
+              onEditNote,
+              onAddReply,
+              onCancel: (event) => {
+                event.stopPropagation();
+                onDeselectNote();
+                focusNoteThread(note.id, sidebarRef.current);
+              }
+            }
+          ),
+          !!note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            import_components268.Button,
+            {
+              className: "editor-collab-sidebar-panel__skip-to-block",
+              variant: "secondary",
+              size: "compact",
+              onClick: (event) => {
+                event.stopPropagation();
+                relatedBlockElement?.focus();
+              },
+              children: (0, import_i18n360.__)("Back to block")
+            }
+          )
+        ]
+      }
+    );
   }
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
@@ -125799,7 +125826,8 @@ ${content}
               clientId: selectedBlockClientId,
               onSubmit: onAddReply,
               sidebarRef
-            }
+            },
+            selectedBlockClientId
           ),
           threads.map((thread, index3) => /* @__PURE__ */ (0, import_jsx_runtime675.jsxs)(import_element438.Fragment, { children: [
             index3 === firstResolvedIndex && /* @__PURE__ */ (0, import_jsx_runtime675.jsx)(
@@ -126137,7 +126165,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_jsx_runtime679 = __toESM(require_jsx_runtime(), 1);
-  function NotesSidebar({ postId: postId2 }) {
+  function NotesSidebar({ postId: postId2, drafts }) {
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data269.useSelect)(store3);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data269.useDispatch)(store3);
     const { toggleBlockSpotlight, selectBlock: selectBlock2 } = unlock(
@@ -126263,7 +126291,7 @@ ${content}
           header: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)("h2", { className: "interface-complementary-area-header__title", children: (0, import_i18n365.__)("All notes") }),
           icon: comment_default,
           closeLabel: (0, import_i18n365.__)("Close Notes"),
-          children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(Notes, { notes, sidebarRef })
+          children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(NoteDraftsContext.Provider, { value: drafts, children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(Notes, { notes, sidebarRef }) })
         }
       ),
       showFloatingNotes && /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(CanvasMargin.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(
@@ -126274,19 +126302,20 @@ ${content}
           className: clsx_default("editor-collab-sidebar-overlay", {
             "is-minimized": notesDisplayMode === "minimized"
           }),
-          children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(NoteDraftsContext.Provider, { value: drafts, children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(
             Notes,
             {
               notes: unresolvedNotes,
               sidebarRef,
               isFloating: true
             }
-          )
+          ) })
         }
       ) })
     ] });
   }
   function NotesSidebarContainer() {
+    const [drafts] = (0, import_element442.useState)(() => /* @__PURE__ */ new Map());
     const { postId: postId2, editorMode, revisionsMode } = (0, import_data269.useSelect)((select9) => {
       const { getCurrentPostId: getCurrentPostId2, getEditorMode: getEditorMode2, isRevisionsMode: isRevisionsMode2 } = unlock(
         select9(store)
@@ -126303,7 +126332,7 @@ ${content}
     if (editorMode === "text" || revisionsMode) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(NotesSidebar, { postId: postId2 }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(NotesSidebar, { postId: postId2, drafts }) });
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
