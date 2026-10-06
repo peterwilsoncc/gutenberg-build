@@ -40308,6 +40308,7 @@ function Filter({
     import_components24.Dropdown,
     {
       defaultOpen: openedFilter === filter.field,
+      className: "dataviews-filters__summary-chip-dropdown",
       contentClassName: "dataviews-filters__summary-popover",
       popoverProps: { placement: "bottom-start", role: "dialog" },
       onClose: () => {
@@ -40634,9 +40635,8 @@ function Filters({ className }) {
       direction: "row",
       justify: "flex-start",
       gap: "sm",
-      style: { width: "fit-content" },
       wrap: "wrap",
-      className,
+      className: clsx_default("dataviews-filters__summary", className),
       children: filterComponents
     }
   );

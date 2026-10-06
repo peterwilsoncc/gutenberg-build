@@ -1622,9 +1622,18 @@ button.font-library__upload-area {
   white-space: nowrap;
 }
 
+.dataviews-filters__summary {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.dataviews-filters__summary-chip-dropdown {
+  min-width: 0;
+}
+
 .dataviews-filters__summary-chip-container {
   position: relative;
-  white-space: pre-wrap;
+  white-space: pre;
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip {
@@ -1671,8 +1680,13 @@ button.font-library__upload-area {
   box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
-.dataviews-filters__summary-chip-container .dataviews-filters__summary-chip .dataviews-filters-__summary-filter-text-name {
+.dataviews-filters__summary-chip-container .dataviews-filters__summary-chip .dataviews-filters__summary-filter-text-name {
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
+}
+
+.dataviews-filters__summary-chip-container .dataviews-filters__summary-chip .dataviews-filters__summary-filter-text-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip-remove {
