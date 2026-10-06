@@ -34568,6 +34568,10 @@ ${url}
         gradients: true
       },
       shadow: true,
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       layout: {
         allowSwitching: false,
         allowInheriting: false,

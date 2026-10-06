@@ -3100,6 +3100,10 @@ return array(
 				'gradients' => true
 			),
 			'shadow' => true,
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'layout' => array(
 				'allowSwitching' => false,
 				'allowInheriting' => false,
