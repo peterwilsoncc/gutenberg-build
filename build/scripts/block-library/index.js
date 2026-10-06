@@ -83890,6 +83890,7 @@ ${text}
         __experimentalTextTransform: true,
         __experimentalTextDecoration: true,
         __experimentalWritingMode: true,
+        fitText: true,
         __experimentalDefaultControls: {
           fontSize: true
         }

@@ -13,3 +13,7 @@ pre.wp-block-verse {
 :where(pre.wp-block-verse) {
   font-family: inherit;
 }
+
+pre.wp-block-verse.has-fit-text {
+  white-space: pre !important;
+}

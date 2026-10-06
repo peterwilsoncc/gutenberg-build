@@ -9848,6 +9848,7 @@ return array(
 				'__experimentalTextTransform' => true,
 				'__experimentalTextDecoration' => true,
 				'__experimentalWritingMode' => true,
+				'fitText' => true,
 				'__experimentalDefaultControls' => array(
 					'fontSize' => true
 				)
