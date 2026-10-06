@@ -60926,6 +60926,10 @@ ${text}
           text: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       spacing: {
         margin: true,
         padding: true
