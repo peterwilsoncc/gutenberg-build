@@ -52224,6 +52224,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_components39.Dropdown,
       {
         defaultOpen: openedFilter === filter.field,
+        className: "dataviews-filters__summary-chip-dropdown",
         contentClassName: "dataviews-filters__summary-popover",
         popoverProps: { placement: "bottom-start", role: "dialog" },
         onClose: () => {
@@ -52550,9 +52551,8 @@ If there's a particular need for this, please submit a feature request at https:
         direction: "row",
         justify: "flex-start",
         gap: "sm",
-        style: { width: "fit-content" },
         wrap: "wrap",
-        className,
+        className: clsx_default("dataviews-filters__summary", className),
         children: filterComponents
       }
     );
