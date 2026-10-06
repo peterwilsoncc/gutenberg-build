@@ -78,7 +78,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe, getSnapshot) {
-        didWarnOld18Alpha || void 0 === React101.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React107.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot();
@@ -88,7 +88,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState39({
+        cachedValue = useState40({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -126,8 +126,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React101 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState39 = React101.useState, useEffect29 = React101.useEffect, useLayoutEffect5 = React101.useLayoutEffect, useDebugValue2 = React101.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React101.useSyncExternalStore ? React101.useSyncExternalStore : shim;
+      var React107 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState40 = React107.useState, useEffect29 = React107.useEffect, useLayoutEffect5 = React107.useLayoutEffect, useDebugValue2 = React107.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React107.useSyncExternalStore ? React107.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -154,14 +154,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React101 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef47 = React101.useRef, useEffect29 = React101.useEffect, useMemo50 = React101.useMemo, useDebugValue2 = React101.useDebugValue;
+      var React107 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef47 = React107.useRef, useEffect29 = React107.useEffect, useMemo51 = React107.useMemo, useDebugValue2 = React107.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef47(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo50(
+        instRef = useMemo51(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -5938,8 +5938,8 @@ function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) 
   }
   return rectToClientRect(rect);
 }
-function getClippingElementAncestors(element, cache) {
-  const cachedResult = cache.get(element);
+function getClippingElementAncestors(element, cache2) {
+  const cachedResult = cache2.get(element);
   if (cachedResult) {
     return cachedResult;
   }
@@ -5959,7 +5959,7 @@ function getClippingElementAncestors(element, cache) {
     }
     currentNode = getParentNode(currentNode);
   }
-  cache.set(element, result);
+  cache2.set(element, result);
   return result;
 }
 function getClippingRect(_ref) {
@@ -6259,12 +6259,12 @@ var flip2 = flip;
 var size2 = size;
 var limitShift2 = limitShift;
 var computePosition2 = (reference, floating, options) => {
-  const cache = /* @__PURE__ */ new Map();
+  const cache2 = /* @__PURE__ */ new Map();
   const mergedOptions = options != null ? options : {};
   const platformWithCache = {
     ...platform2,
     ...mergedOptions.platform,
-    _c: cache
+    _c: cache2
   };
   return computePosition(reference, floating, {
     ...mergedOptions,
@@ -7046,11 +7046,11 @@ var ReactStore = class extends Store {
       }
     }, [store, key, controlled, isControlled]);
     if (true) {
-      const cache = this.controlledValues ??= /* @__PURE__ */ new Map();
-      if (!cache.has(key)) {
-        cache.set(key, isControlled);
+      const cache2 = this.controlledValues ??= /* @__PURE__ */ new Map();
+      if (!cache2.has(key)) {
+        cache2.set(key, isControlled);
       }
-      const previouslyControlled = cache.get(key);
+      const previouslyControlled = cache2.get(key);
       if (previouslyControlled !== void 0 && previouslyControlled !== isControlled) {
         console.error(`A component is changing the ${isControlled ? "" : "un"}controlled state of ${key.toString()} to be ${isControlled ? "un" : ""}controlled. Elements should not switch from uncontrolled to controlled (or vice versa).`);
       }
@@ -9475,6 +9475,17 @@ function useOpenInteractionType(open2) {
   }), [openMethod, triggerProps]);
 }
 
+// node_modules/.store/@base-ui/utils@0.4.0-2qEQfYdsIQQbaY7ieU-7vQ/node_modules/@base-ui/utils/stringifyLocale.mjs
+function stringifyLocale(locale) {
+  if (Array.isArray(locale)) {
+    return locale.map((value) => stringifyLocale(value)).join(",");
+  }
+  if (locale == null) {
+    return "";
+  }
+  return String(locale);
+}
+
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
 var React43 = __toESM(require_react(), 1);
 var DirectionContext = /* @__PURE__ */ React43.createContext(void 0);
@@ -10060,6 +10071,18 @@ function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, refer
     setTouchOpenShouldLockScroll(viewportWidth > 0 && popupWidth2 > 0 && popupWidth2 >= viewportWidth - VIEWPORT_WIDTH_TOLERANCE_PX);
   }, [enabled, touchOpen, positionerElement]);
   useScrollLock(enabled && (!touchOpen || touchOpenShouldLockScroll), referenceElement);
+}
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/utils/useRegisteredLabelId.mjs
+function useRegisteredLabelId(idProp, setLabelId) {
+  const id = useBaseUiId(idProp);
+  useIsoLayoutEffect(() => {
+    setLabelId(id);
+    return () => {
+      setLabelId((currentId) => currentId === id ? void 0 : currentId);
+    };
+  }, [id, setLabelId]);
+  return id;
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/context-menu/root/ContextMenuRootContext.mjs
@@ -12951,6 +12974,38 @@ function createMenuHandle() {
   return new MenuHandle();
 }
 
+// node_modules/.store/@base-ui/utils@0.4.0-2qEQfYdsIQQbaY7ieU-7vQ/node_modules/@base-ui/utils/clamp.mjs
+function clamp2(val, min2 = Number.MIN_SAFE_INTEGER, max2 = Number.MAX_SAFE_INTEGER) {
+  return Math.max(min2, Math.min(val, max2));
+}
+
+// node_modules/.store/@base-ui/utils@0.4.0-2qEQfYdsIQQbaY7ieU-7vQ/node_modules/@base-ui/utils/formatNumber.mjs
+var cache = /* @__PURE__ */ new Map();
+function getFormatter(locale, options) {
+  const optionsString = JSON.stringify({
+    locale: stringifyLocale(locale),
+    options
+  });
+  const cachedFormatter = cache.get(optionsString);
+  if (cachedFormatter) {
+    return cachedFormatter;
+  }
+  const formatter = new Intl.NumberFormat(locale, options);
+  cache.set(optionsString, formatter);
+  return formatter;
+}
+function formatNumber(value, locale, options) {
+  if (value == null) {
+    return "";
+  }
+  return getFormatter(locale, options).format(value);
+}
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/utils/valueToPercent.mjs
+function valueToPercent(value, min2, max2) {
+  return (value - min2) * 100 / (max2 - min2);
+}
+
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
 var React87 = __toESM(require_react(), 1);
 var ReactDOM8 = __toESM(require_react_dom(), 1);
@@ -12982,9 +13037,242 @@ var FloatingPortalLite = /* @__PURE__ */ React87.forwardRef(function FloatingPor
 });
 if (true) FloatingPortalLite.displayName = "FloatingPortalLite";
 
-// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/index.parts.mjs
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/index.parts.mjs
 var index_parts_exports2 = {};
 __export(index_parts_exports2, {
+  Indicator: () => ProgressIndicator,
+  Label: () => ProgressLabel,
+  Root: () => ProgressRoot,
+  Track: () => ProgressTrack,
+  Value: () => ProgressValue
+});
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/root/ProgressRoot.mjs
+var React89 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/root/ProgressRootContext.mjs
+var React88 = __toESM(require_react(), 1);
+var ProgressRootContext = /* @__PURE__ */ React88.createContext(void 0);
+if (true) ProgressRootContext.displayName = "ProgressRootContext";
+function useProgressRootContext() {
+  const context = React88.useContext(ProgressRootContext);
+  if (context === void 0) {
+    throw new Error(true ? "Base UI: ProgressRootContext is missing. Progress parts must be placed within <Progress.Root>." : formatErrorMessage_default(51));
+  }
+  return context;
+}
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/root/ProgressRootDataAttributes.mjs
+var complete = "data-complete";
+var indeterminate = "data-indeterminate";
+var progressing = "data-progressing";
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/root/stateAttributesMapping.mjs
+var progressStateAttributesMapping = {
+  status(value) {
+    if (value === "progressing") {
+      return {
+        [progressing]: ""
+      };
+    }
+    if (value === "complete") {
+      return {
+        [complete]: ""
+      };
+    }
+    if (value === "indeterminate") {
+      return {
+        [indeterminate]: ""
+      };
+    }
+    return null;
+  }
+};
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/root/ProgressRoot.mjs
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+var ProgressRoot = /* @__PURE__ */ React89.forwardRef(function ProgressRoot2(componentProps, forwardedRef) {
+  const {
+    format,
+    getAriaValueText,
+    locale,
+    max: max2 = 100,
+    min: min2 = 0,
+    value,
+    render,
+    className,
+    children,
+    style,
+    ...elementProps
+  } = componentProps;
+  const [labelId, setLabelId] = React89.useState();
+  let status = "indeterminate";
+  let percentageValue = null;
+  let clampedValue = null;
+  let formattedValue = "";
+  let defaultAriaValueText = "indeterminate progress";
+  if (value != null && Number.isFinite(value)) {
+    const rawPercentage = valueToPercent(value, min2, max2);
+    percentageValue = clamp2(Number.isNaN(rawPercentage) ? 0 : rawPercentage, 0, 100);
+    clampedValue = clamp2(value, min2, max2);
+    status = clampedValue === max2 ? "complete" : "progressing";
+    formattedValue = format ? formatNumber(clampedValue, locale, format) : formatNumber(percentageValue / 100, locale, {
+      style: "percent"
+    });
+    defaultAriaValueText = formattedValue;
+  }
+  const state = React89.useMemo(() => ({
+    status
+  }), [status]);
+  const defaultProps = {
+    "aria-labelledby": labelId,
+    "aria-valuemax": max2,
+    "aria-valuemin": min2,
+    "aria-valuenow": clampedValue ?? void 0,
+    "aria-valuetext": getAriaValueText ? getAriaValueText(formattedValue, value) : defaultAriaValueText,
+    role: "progressbar",
+    children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(React89.Fragment, {
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", {
+        role: "presentation",
+        style: visuallyHidden,
+        children: "x"
+      })]
+    })
+  };
+  const contextValue = React89.useMemo(() => ({
+    formattedValue,
+    percentageValue,
+    setLabelId,
+    state,
+    value
+  }), [formattedValue, percentageValue, setLabelId, state, value]);
+  const element = useRenderElement("div", componentProps, {
+    state,
+    ref: forwardedRef,
+    props: [defaultProps, elementProps],
+    stateAttributesMapping: progressStateAttributesMapping
+  });
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProgressRootContext.Provider, {
+    value: contextValue,
+    children: element
+  });
+});
+if (true) ProgressRoot.displayName = "ProgressRoot";
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/track/ProgressTrack.mjs
+var React90 = __toESM(require_react(), 1);
+var ProgressTrack = /* @__PURE__ */ React90.forwardRef(function ProgressTrack2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    ...elementProps
+  } = componentProps;
+  const {
+    state
+  } = useProgressRootContext();
+  const element = useRenderElement("div", componentProps, {
+    state,
+    ref: forwardedRef,
+    props: elementProps,
+    stateAttributesMapping: progressStateAttributesMapping
+  });
+  return element;
+});
+if (true) ProgressTrack.displayName = "ProgressTrack";
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/indicator/ProgressIndicator.mjs
+var React91 = __toESM(require_react(), 1);
+var ProgressIndicator = /* @__PURE__ */ React91.forwardRef(function ProgressIndicator2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    ...elementProps
+  } = componentProps;
+  const {
+    percentageValue,
+    state
+  } = useProgressRootContext();
+  const indicatorStyle = percentageValue == null ? {} : {
+    insetInlineStart: 0,
+    height: "inherit",
+    width: `${percentageValue}%`
+  };
+  const element = useRenderElement("div", componentProps, {
+    state,
+    ref: forwardedRef,
+    props: [{
+      style: indicatorStyle
+    }, elementProps],
+    stateAttributesMapping: progressStateAttributesMapping
+  });
+  return element;
+});
+if (true) ProgressIndicator.displayName = "ProgressIndicator";
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/value/ProgressValue.mjs
+var React92 = __toESM(require_react(), 1);
+var ProgressValue = /* @__PURE__ */ React92.forwardRef(function ProgressValue2(componentProps, forwardedRef) {
+  const {
+    className,
+    render,
+    children,
+    style,
+    ...elementProps
+  } = componentProps;
+  const {
+    value,
+    formattedValue,
+    state
+  } = useProgressRootContext();
+  const indeterminate2 = state.status === "indeterminate";
+  const formattedValueArg = indeterminate2 ? "indeterminate" : formattedValue;
+  const formattedValueDisplay = indeterminate2 ? null : formattedValue;
+  const element = useRenderElement("span", componentProps, {
+    state,
+    ref: forwardedRef,
+    props: [{
+      "aria-hidden": true,
+      children: typeof children === "function" ? children(formattedValueArg, value) : formattedValueDisplay
+    }, elementProps],
+    stateAttributesMapping: progressStateAttributesMapping
+  });
+  return element;
+});
+if (true) ProgressValue.displayName = "ProgressValue";
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/progress/label/ProgressLabel.mjs
+var React93 = __toESM(require_react(), 1);
+var ProgressLabel = /* @__PURE__ */ React93.forwardRef(function ProgressLabel2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    id: idProp,
+    ...elementProps
+  } = componentProps;
+  const {
+    setLabelId,
+    state
+  } = useProgressRootContext();
+  const id = useRegisteredLabelId(idProp, setLabelId);
+  const element = useRenderElement("span", componentProps, {
+    state,
+    ref: forwardedRef,
+    props: [{
+      id,
+      role: "presentation"
+    }, elementProps],
+    stateAttributesMapping: progressStateAttributesMapping
+  });
+  return element;
+});
+if (true) ProgressLabel.displayName = "ProgressLabel";
+
+// node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/index.parts.mjs
+var index_parts_exports3 = {};
+__export(index_parts_exports3, {
   Arrow: () => TooltipArrow,
   Handle: () => TooltipHandle,
   Popup: () => TooltipPopup,
@@ -12998,14 +13286,14 @@ __export(index_parts_exports2, {
 });
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-var React90 = __toESM(require_react(), 1);
+var React96 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
-var React88 = __toESM(require_react(), 1);
-var TooltipRootContext = /* @__PURE__ */ React88.createContext(void 0);
+var React94 = __toESM(require_react(), 1);
+var TooltipRootContext = /* @__PURE__ */ React94.createContext(void 0);
 if (true) TooltipRootContext.displayName = "TooltipRootContext";
 function useTooltipRootContext(optional) {
-  const context = React88.useContext(TooltipRootContext);
+  const context = React94.useContext(TooltipRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: TooltipRootContext is missing. Tooltip parts must be placed within <Tooltip.Root>." : formatErrorMessage_default(72));
   }
@@ -13013,7 +13301,7 @@ function useTooltipRootContext(optional) {
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
-var React89 = __toESM(require_react(), 1);
+var React95 = __toESM(require_react(), 1);
 var selectors3 = {
   ...popupStoreSelectors,
   disabled: (state) => state.disabled,
@@ -13069,7 +13357,7 @@ function createInitialState2(initialState, triggerElements, floatingId, nested =
 }
 function createInitialContext2(triggerElements) {
   return {
-    popupRef: /* @__PURE__ */ React89.createRef(),
+    popupRef: /* @__PURE__ */ React95.createRef(),
     onOpenChange: void 0,
     onOpenChangeComplete: void 0,
     triggerElements
@@ -13077,7 +13365,7 @@ function createInitialContext2(triggerElements) {
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
     disabled: disabled2 = false,
@@ -13123,7 +13411,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const isInstantPhase = store.useState("isInstantPhase");
   const instantType = store.useState("instantType");
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
-  const previousInstantTypeRef = React90.useRef(null);
+  const previousInstantTypeRef = React96.useRef(null);
   useIsoLayoutEffect(() => {
     if (openState && disabled2) {
       store.setOpen(false, createChangeEventDetails(reason_parts_exports.disabled));
@@ -13147,17 +13435,17 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
       }
     }
   }, [store, activeTriggerId, open2]);
-  React90.useImperativeHandle(actionsRef, () => ({
+  React96.useImperativeHandle(actionsRef, () => ({
     unmount: forceUnmount,
     close: () => store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction))
   }), [forceUnmount, store]);
   const shouldRenderInteractions = open2 || mounted || !disabled2 && trackCursorAxis !== "none";
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(TooltipRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(TooltipRootContext.Provider, {
     value: store,
-    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(PopupHandleAttachment, {
+    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(PopupHandleAttachment, {
       handle,
       store
-    }), shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(TooltipInteractions, {
+    }), shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TooltipInteractions, {
       store,
       disabled: disabled2,
       trackCursorAxis
@@ -13181,7 +13469,7 @@ function TooltipInteractions({
     enabled: !disabled2 && trackCursorAxis !== "none",
     axis: trackCursorAxis === "none" ? void 0 : trackCursorAxis
   });
-  const triggerProps = React90.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
+  const triggerProps = React96.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
   usePopupInteractionProps(store, {
     activeTriggerProps: triggerProps,
     inactiveTriggerProps: triggerProps,
@@ -13191,14 +13479,14 @@ function TooltipInteractions({
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
-var React92 = __toESM(require_react(), 1);
+var React98 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
-var React91 = __toESM(require_react(), 1);
-var TooltipProviderContext = /* @__PURE__ */ React91.createContext(void 0);
+var React97 = __toESM(require_react(), 1);
+var TooltipProviderContext = /* @__PURE__ */ React97.createContext(void 0);
 if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
 function useTooltipProviderContext() {
-  return React91.useContext(TooltipProviderContext);
+  return React97.useContext(TooltipProviderContext);
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/utils/constants.mjs
@@ -13258,7 +13546,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const isTriggerActive = store.useState("isTriggerActive", thisTriggerId);
   const isOpenedByThisTrigger = store.useState("isOpenedByTrigger", thisTriggerId);
   const floatingRootContext = store.useState("floatingRootContext");
-  const triggerElementRef = React92.useRef(null);
+  const triggerElementRef = React98.useRef(null);
   const closeDelayWithDefault = closeDelay ?? 0;
   const {
     registerTrigger,
@@ -13284,9 +13572,9 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const disabledRef = useValueAsRef(disabled2);
   const trackCursorAxis = store.useState("trackCursorAxis");
   const disableHoverablePopup = store.useState("disableHoverablePopup");
-  const isNestedTriggerHoveredRef = React92.useRef(false);
+  const isNestedTriggerHoveredRef = React98.useRef(false);
   const nestedTriggerOpenTimeout = useTimeout();
-  const pointerTypeRef = React92.useRef(void 0);
+  const pointerTypeRef = React98.useRef(void 0);
   function getOpenDelay() {
     if (hasProvider && activeIdRef.current != null) {
       return 0;
@@ -13412,14 +13700,14 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
 if (true) TooltipTrigger.displayName = "TooltipTrigger";
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-var React94 = __toESM(require_react(), 1);
+var React100 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
-var React93 = __toESM(require_react(), 1);
-var TooltipPortalContext = /* @__PURE__ */ React93.createContext(void 0);
+var React99 = __toESM(require_react(), 1);
+var TooltipPortalContext = /* @__PURE__ */ React99.createContext(void 0);
 if (true) TooltipPortalContext.displayName = "TooltipPortalContext";
 function useTooltipPortalContext() {
-  const value = React93.useContext(TooltipPortalContext);
+  const value = React99.useContext(TooltipPortalContext);
   if (value === void 0) {
     throw new Error(true ? "Base UI: <Tooltip.Portal> is missing." : formatErrorMessage_default(70));
   }
@@ -13427,8 +13715,8 @@ function useTooltipPortalContext() {
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
-var TooltipPortal = /* @__PURE__ */ React94.forwardRef(function TooltipPortal2(props, forwardedRef) {
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var TooltipPortal = /* @__PURE__ */ React100.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
     keepMounted = false,
     ...portalProps
@@ -13439,9 +13727,9 @@ var TooltipPortal = /* @__PURE__ */ React94.forwardRef(function TooltipPortal2(p
   if (!shouldRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TooltipPortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(TooltipPortalContext.Provider, {
     value: keepMounted,
-    children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(FloatingPortalLite, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(FloatingPortalLite, {
       ref: forwardedRef,
       ...portalProps
     })
@@ -13450,14 +13738,14 @@ var TooltipPortal = /* @__PURE__ */ React94.forwardRef(function TooltipPortal2(p
 if (true) TooltipPortal.displayName = "TooltipPortal";
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-var React96 = __toESM(require_react(), 1);
+var React102 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
-var React95 = __toESM(require_react(), 1);
-var TooltipPositionerContext = /* @__PURE__ */ React95.createContext(void 0);
+var React101 = __toESM(require_react(), 1);
+var TooltipPositionerContext = /* @__PURE__ */ React101.createContext(void 0);
 if (true) TooltipPositionerContext.displayName = "TooltipPositionerContext";
 function useTooltipPositionerContext() {
-  const context = React95.useContext(TooltipPositionerContext);
+  const context = React101.useContext(TooltipPositionerContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: TooltipPositionerContext is missing. TooltipPositioner parts must be placed within <Tooltip.Positioner>." : formatErrorMessage_default(71));
   }
@@ -13465,8 +13753,8 @@ function useTooltipPositionerContext() {
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-var TooltipPositioner = /* @__PURE__ */ React96.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var TooltipPositioner = /* @__PURE__ */ React102.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13513,7 +13801,7 @@ var TooltipPositioner = /* @__PURE__ */ React96.forwardRef(function TooltipPosit
     collisionAvoidance,
     adaptiveOrigin: adaptiveOrigin2
   });
-  const state = React96.useMemo(() => ({
+  const state = React102.useMemo(() => ({
     open: open2,
     side: positioning.side,
     align: positioning.align,
@@ -13528,7 +13816,7 @@ var TooltipPositioner = /* @__PURE__ */ React96.forwardRef(function TooltipPosit
     hidden: !mounted,
     inert: !open2 || trackCursorAxis === "both" || disableHoverablePopup
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(TooltipPositionerContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(TooltipPositionerContext.Provider, {
     value: positioning,
     children: element
   });
@@ -13536,8 +13824,8 @@ var TooltipPositioner = /* @__PURE__ */ React96.forwardRef(function TooltipPosit
 if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
-var React97 = __toESM(require_react(), 1);
-var TooltipPopup = /* @__PURE__ */ React97.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
+var React103 = __toESM(require_react(), 1);
+var TooltipPopup = /* @__PURE__ */ React103.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13588,8 +13876,8 @@ var TooltipPopup = /* @__PURE__ */ React97.forwardRef(function TooltipPopup2(com
 if (true) TooltipPopup.displayName = "TooltipPopup";
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
-var React98 = __toESM(require_react(), 1);
-var TooltipArrow = /* @__PURE__ */ React98.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
+var React104 = __toESM(require_react(), 1);
+var TooltipArrow = /* @__PURE__ */ React104.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13627,21 +13915,21 @@ var TooltipArrow = /* @__PURE__ */ React98.forwardRef(function TooltipArrow2(com
 if (true) TooltipArrow.displayName = "TooltipArrow";
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
-var React99 = __toESM(require_react(), 1);
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var React105 = __toESM(require_react(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
   const {
     delay,
     closeDelay,
     timeout = 400
   } = props;
-  const delayValue = React99.useMemo(() => ({
+  const delayValue = React105.useMemo(() => ({
     open: delay,
     close: closeDelay
   }), [delay, closeDelay]);
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(TooltipProviderContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(TooltipProviderContext.Provider, {
     value: delay,
-    children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(FloatingDelayGroup, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(FloatingDelayGroup, {
       delay: delayValue,
       timeoutMs: timeout,
       children: props.children
@@ -13651,8 +13939,8 @@ var TooltipProvider = function TooltipProvider2(props) {
 if (true) TooltipProvider.displayName = "TooltipProvider";
 
 // node_modules/.store/@base-ui/react@1.8.0-k8_Fr9oqWfi4oZcjN-3jUA/node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
-var React100 = __toESM(require_react(), 1);
-var TooltipViewport = /* @__PURE__ */ React100.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
+var React106 = __toESM(require_react(), 1);
+var TooltipViewport = /* @__PURE__ */ React106.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13995,11 +14283,11 @@ function getWpCompatOverlaySlot() {
 }
 
 // packages/ui/build-module/tooltip/portal.mjs
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
 var Portal = (0, import_element15.forwardRef)(
   function TooltipPortal3({ container, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-      index_parts_exports2.Portal,
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+      index_parts_exports3.Portal,
       {
         container: container ?? getWpCompatOverlaySlot(),
         ...restProps,
@@ -14011,7 +14299,7 @@ var Portal = (0, import_element15.forwardRef)(
 
 // packages/ui/build-module/tooltip/positioner.mjs
 var import_element16 = __toESM(require_element(), 1);
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
 function getRuntime3() {
   const globalScope = globalThis;
@@ -14102,8 +14390,8 @@ if (typeof process === "undefined" || true) {
 var style_default2 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var Positioner = (0, import_element16.forwardRef)(
   function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-      index_parts_exports2.Positioner,
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+      index_parts_exports3.Positioner,
       {
         ref,
         align,
@@ -14154,7 +14442,7 @@ function getThemeProvider() {
 var ThemeProvider = getThemeProvider();
 
 // packages/ui/build-module/tooltip/popup.mjs
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE4 = "data-wp-hash";
 function getRuntime4() {
   const globalScope = globalThis;
@@ -14241,8 +14529,8 @@ if (typeof process === "undefined" || true) {
 var style_default3 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup = (0, import_element18.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-    index_parts_exports2.Popup,
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    index_parts_exports3.Popup,
     {
       ref,
       className: clsx_default(style_default3.popup, className),
@@ -14252,44 +14540,44 @@ var Popup = (0, import_element18.forwardRef)(function TooltipPopup3({ portal, po
   ) });
   const positionedPopup = renderSlotWithChildren(
     positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Positioner, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Positioner, {}),
     popupContent
   );
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Portal, {}), positionedPopup);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Portal, {}), positionedPopup);
 });
 
 // packages/ui/build-module/tooltip/trigger.mjs
 var import_element19 = __toESM(require_element(), 1);
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 var Trigger = (0, import_element19.forwardRef)(
   function TooltipTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(index_parts_exports2.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(index_parts_exports3.Trigger, { ref, ...props });
   }
 );
 
 // packages/ui/build-module/utils/direction-provider.mjs
 var import_i18n = __toESM(require_i18n(), 1);
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 function DirectionProvider3({ children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(DirectionProvider, { direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr", children });
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(DirectionProvider, { direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr", children });
 }
 
 // packages/ui/build-module/tooltip/root.mjs
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
 function Root(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(index_parts_exports2.Root, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(index_parts_exports3.Root, { ...props }) });
 }
 
 // packages/ui/build-module/tooltip/provider.mjs
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
 function Provider({ ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(index_parts_exports2.Provider, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(index_parts_exports3.Provider, { ...props });
 }
 
 // packages/ui/build-module/link/link.mjs
 var import_element20 = __toESM(require_element(), 1);
 var import_i18n2 = __toESM(require_i18n(), 1);
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
 function getRuntime5() {
   const globalScope = globalThis;
@@ -14413,9 +14701,9 @@ var Link = (0, import_element20.forwardRef)(
           className
         ),
         target: target ?? (openInNewTab ? "_blank" : void 0),
-        children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, { children: [
           children,
-          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
             "span",
             {
               className: style_default4["link-icon"],
@@ -14480,54 +14768,54 @@ var icon_default = (0, import_element21.forwardRef)(
 
 // packages/icons/build-module/library/check.mjs
 var import_primitives = __toESM(require_primitives(), 1);
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-var check_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives.Path, { d: "M7 12L10 15L17 8", vectorEffect: "non-scaling-stroke" }) });
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var check_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives.Path, { d: "M7 12L10 15L17 8", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/chevron-left.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
-var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives2.Path, { d: "M14 6.5L9 12L14 17.5", vectorEffect: "non-scaling-stroke" }) });
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives2.Path, { d: "M14 6.5L9 12L14 17.5", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/chevron-right-small.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives3.Path, { d: "M10.5 8.5L13.5 12L10.5 15.5", vectorEffect: "non-scaling-stroke" }) });
+var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives3.Path, { d: "M10.5 8.5L13.5 12L10.5 15.5", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/chevron-right.mjs
 var import_primitives4 = __toESM(require_primitives(), 1);
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
-var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives4.Path, { d: "M10 6.5L15 12L10 17.5", vectorEffect: "non-scaling-stroke" }) });
+var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives4.Path, { d: "M10 6.5L15 12L10 17.5", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/more-vertical.mjs
 var import_primitives5 = __toESM(require_primitives(), 1);
-var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
-var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-  /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives5.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives5.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives5.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives5.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", vectorEffect: "non-scaling-stroke" }),
-  /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives5.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", vectorEffect: "non-scaling-stroke" }),
-  /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives5.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", vectorEffect: "non-scaling-stroke" })
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives5.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives5.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives5.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives5.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", vectorEffect: "non-scaling-stroke" }),
+  /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives5.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", vectorEffect: "non-scaling-stroke" }),
+  /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives5.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", vectorEffect: "non-scaling-stroke" })
 ] });
 
 // packages/icons/build-module/library/next.mjs
 var import_primitives6 = __toESM(require_primitives(), 1);
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
-var next_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives6.Path, { d: "M7 17.5L12 12L7 6.5M13 17.5L18 12L13 6.5", vectorEffect: "non-scaling-stroke" }) });
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var next_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives6.Path, { d: "M7 17.5L12 12L7 6.5M13 17.5L18 12L13 6.5", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/previous.mjs
 var import_primitives7 = __toESM(require_primitives(), 1);
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
-var previous_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives7.Path, { d: "M17 6.5L12 12L17 17.5M11 6.5L6 12L11 17.5", vectorEffect: "non-scaling-stroke" }) });
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var previous_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives7.Path, { d: "M17 6.5L12 12L17 17.5M11 6.5L6 12L11 17.5", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/ui/build-module/icon/icon.mjs
 var import_element22 = __toESM(require_element(), 1);
 var import_primitives8 = __toESM(require_primitives(), 1);
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
 var Icon = (0, import_element22.forwardRef)(
   function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
     const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
       import_primitives8.SVG,
       {
         ref,
@@ -14666,7 +14954,7 @@ var VisuallyHidden = (0, import_element24.forwardRef)(
 );
 
 // packages/ui/build-module/utils/keyboard-shortcut.mjs
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 function useKeyboardShortcutProps({
   "aria-describedby": ariaDescribedBy,
   "aria-keyshortcuts": ariaKeyShortcuts,
@@ -14684,12 +14972,12 @@ function useKeyboardShortcutProps({
   };
 }
 var KeyboardShortcutDescription = (0, import_element25.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     VisuallyHidden,
     {
       id: descriptionId,
       "aria-hidden": "true",
-      render: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { ref }),
+      render: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { ref }),
       children: (0, import_i18n3.sprintf)(
         /* translators: %s: keyboard shortcut. */
         (0, import_i18n3.__)("Keyboard shortcut: %s"),
@@ -14699,16 +14987,16 @@ var KeyboardShortcutDescription = (0, import_element25.forwardRef)(function Unfo
   );
 });
 var KeyboardShortcutDisplay = (0, import_element25.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
 });
 
 // packages/ui/build-module/utils/item-popup/item-content.mjs
 var import_element26 = __toESM(require_element(), 1);
 var VALIDATION_ENABLED = true;
-function parseItemContent(children, { Label, Description, validationMessage }) {
+function parseItemContent(children, { Label: Label2, Description, validationMessage }) {
   const childArray = import_element26.Children.toArray(children);
   const [label, ...descriptions] = childArray;
-  const hasLabel = (0, import_element26.isValidElement)(label) && label.type === Label;
+  const hasLabel = (0, import_element26.isValidElement)(label) && label.type === Label2;
   const descriptionElements = descriptions.filter(
     (description) => (0, import_element26.isValidElement)(description) && description.type === Description
   );
@@ -14745,12 +15033,12 @@ function useItemContent(children, components, {
     ])
   ).join(" ");
   let descriptionIndex = 0;
-  const { Label, Description, descriptionValidationToken } = components;
+  const { Label: Label2, Description, descriptionValidationToken } = components;
   const contentChildren = import_element26.Children.map(children, (child) => {
     if (!(0, import_element26.isValidElement)(child)) {
       return child;
     }
-    if (child.type === Label) {
+    if (child.type === Label2) {
       return child.props.id === resolvedLabelId ? child : (0, import_element26.cloneElement)(child, { id: resolvedLabelId });
     }
     if (child.type !== Description) {
@@ -14781,7 +15069,7 @@ function useItemContent(children, components, {
 
 // packages/ui/build-module/menu/item-description.mjs
 var import_element27 = __toESM(require_element(), 1);
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
 function getRuntime7() {
   const globalScope = globalThis;
@@ -14875,7 +15163,7 @@ var ItemDescription = (0, import_element27.forwardRef)(
         "Menu.ItemDescription: Missing direct menu item parent. Render <Menu.ItemDescription> as a direct child of a menu item."
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
       Text,
       {
         ref,
@@ -14890,7 +15178,7 @@ var ItemDescription = (0, import_element27.forwardRef)(
 
 // packages/ui/build-module/menu/item-label.mjs
 var import_element28 = __toESM(require_element(), 1);
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
 function getRuntime8() {
   const globalScope = globalThis;
@@ -14978,7 +15266,7 @@ var style_default7 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_
 var ItemLabel = (0, import_element28.forwardRef)(
   function MenuItemLabel({ children, className, id, ...props }, ref) {
     const itemContentContext = useMenuItemContentContext();
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(
       Text,
       {
         ref,
@@ -14996,7 +15284,7 @@ var ItemLabel = (0, import_element28.forwardRef)(
 );
 
 // packages/ui/build-module/menu/item.mjs
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
 function getRuntime9() {
   const globalScope = globalThis;
@@ -15150,8 +15438,8 @@ function ItemContent({
     (child) => child !== ""
   );
   const [label, ...descriptions] = import_element29.Children.toArray(children);
-  return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(import_jsx_runtime44.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(import_jsx_runtime45.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(
       "span",
       {
         className: clsx_default(
@@ -15160,7 +15448,7 @@ function ItemContent({
         ),
         children: [
           label,
-          hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+          hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
             Text,
             {
               variant: "body-sm",
@@ -15168,21 +15456,21 @@ function ItemContent({
               children: suffix
             }
           ),
-          shortcut && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+          shortcut && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
             Text,
             {
               variant: "body-sm",
               className: style_default8["item-shortcut"],
-              children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(KeyboardShortcutDisplay, { shortcut })
+              children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(KeyboardShortcutDisplay, { shortcut })
             }
           ),
-          hasTrailing && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: style_default8["item-trailing"], children: trailing })
+          hasTrailing && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: style_default8["item-trailing"], children: trailing })
         ]
       }
     ),
-    descriptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: style_default8["item-descriptions"], children: descriptions }),
-    hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { "aria-hidden": "true", className: style_default8["item-prefix"], children: prefix }),
-    shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+    descriptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: style_default8["item-descriptions"], children: descriptions }),
+    hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { "aria-hidden": "true", className: style_default8["item-prefix"], children: prefix }),
+    shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
       KeyboardShortcutDescription,
       {
         descriptionId: shortcutDescriptionId,
@@ -15215,7 +15503,7 @@ var Item = (0, import_element29.forwardRef)(function MenuItem3({
     "aria-labelledby": ariaLabelledBy,
     shortcut
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
     index_parts_exports.Item,
     {
       ref,
@@ -15227,7 +15515,7 @@ var Item = (0, import_element29.forwardRef)(function MenuItem3({
         className
       ),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
         ItemContent,
         {
           prefix,
@@ -15242,7 +15530,7 @@ var Item = (0, import_element29.forwardRef)(function MenuItem3({
 });
 
 // packages/ui/build-module/menu/checkbox-item.mjs
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
 function getRuntime10() {
   const globalScope = globalThis;
@@ -15360,7 +15648,7 @@ var CheckboxItem = (0, import_element30.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
       index_parts_exports.CheckboxItem,
       {
         ref,
@@ -15373,12 +15661,12 @@ var CheckboxItem = (0, import_element30.forwardRef)(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
             index_parts_exports.CheckboxItemIndicator,
             {
               keepMounted: true,
               className: style_default9["item-selection-indicator"],
-              children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
                 Icon,
                 {
                   icon: check_default,
@@ -15389,7 +15677,7 @@ var CheckboxItem = (0, import_element30.forwardRef)(
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
             ItemContent,
             {
               prefix,
@@ -15407,7 +15695,7 @@ var CheckboxItem = (0, import_element30.forwardRef)(
 
 // packages/ui/build-module/menu/group.mjs
 var import_element31 = __toESM(require_element(), 1);
-var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
 function getRuntime11() {
   const globalScope = globalThis;
@@ -15499,7 +15787,7 @@ var Group = (0, import_element31.forwardRef)(function MenuGroup3({ className, ..
       "Menu.Group: Cannot be nested inside Menu.RadioGroup. Remove Menu.Group and put Menu.GroupLabel and Menu.RadioItem directly inside Menu.RadioGroup."
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(MenuGroupContext2.Provider, { value: "group", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(MenuGroupContext2.Provider, { value: "group", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
     index_parts_exports.Group,
     {
       ref,
@@ -15511,7 +15799,7 @@ var Group = (0, import_element31.forwardRef)(function MenuGroup3({ className, ..
 
 // packages/ui/build-module/menu/group-label.mjs
 var import_element32 = __toESM(require_element(), 1);
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
 function getRuntime12() {
   const globalScope = globalThis;
@@ -15598,7 +15886,7 @@ if (typeof process === "undefined" || true) {
 var style_default11 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var GroupLabel = (0, import_element32.forwardRef)(
   function MenuGroupLabel3({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
       index_parts_exports.GroupLabel,
       {
         ref,
@@ -15612,7 +15900,7 @@ var GroupLabel = (0, import_element32.forwardRef)(
 // packages/ui/build-module/menu/link-item.mjs
 var import_element33 = __toESM(require_element(), 1);
 var import_i18n4 = __toESM(require_i18n(), 1);
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
 function getRuntime13() {
   const globalScope = globalThis;
@@ -15721,7 +16009,7 @@ var LinkItem = (0, import_element33.forwardRef)(function MenuLinkItem3({
   ...props
 }, ref) {
   const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
-  const externalLinkIndicator = shouldShowNewTabIndicator ? /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+  const externalLinkIndicator = shouldShowNewTabIndicator ? /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
     "span",
     {
       className: style_default12["external-link-indicator"],
@@ -15745,7 +16033,7 @@ var LinkItem = (0, import_element33.forwardRef)(function MenuLinkItem3({
     labelTrailing: externalLinkIndicator,
     shortcut
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
     index_parts_exports.LinkItem,
     {
       ref,
@@ -15759,7 +16047,7 @@ var LinkItem = (0, import_element33.forwardRef)(function MenuLinkItem3({
         style_default12.item,
         className
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
         ItemContent,
         {
           prefix,
@@ -15778,9 +16066,9 @@ var import_element36 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/menu/portal.mjs
 var import_element34 = __toESM(require_element(), 1);
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
 var Portal2 = (0, import_element34.forwardRef)(function MenuPortal3({ container, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
     index_parts_exports.Portal,
     {
       ref,
@@ -15802,7 +16090,7 @@ var ITEM_POPUP_POSITIONER_PROPS = {
 };
 
 // packages/ui/build-module/menu/positioner.mjs
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
 function getRuntime14() {
   const globalScope = globalThis;
@@ -15993,7 +16281,7 @@ var Positioner2 = (0, import_element35.forwardRef)(
       props.disableAnchorTracking,
       submenuTriggerRef
     ]);
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
       index_parts_exports.Positioner,
       {
         ...defaultProps,
@@ -16012,7 +16300,7 @@ var Positioner2 = (0, import_element35.forwardRef)(
 );
 
 // packages/ui/build-module/menu/popup.mjs
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
 function getRuntime15() {
   const globalScope = globalThis;
@@ -16099,7 +16387,7 @@ if (typeof process === "undefined" || true) {
 var style_default14 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var Popup2 = (0, import_element36.forwardRef)(function MenuPopup3({ children, className, portal, positioner, ...props }, ref) {
   const { isSubmenu } = useMenuContext();
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
     index_parts_exports.Popup,
     {
       ref,
@@ -16109,7 +16397,7 @@ var Popup2 = (0, import_element36.forwardRef)(function MenuPopup3({ children, cl
         className
       ),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
         "div",
         {
           className: style_default14.list,
@@ -16120,15 +16408,15 @@ var Popup2 = (0, import_element36.forwardRef)(function MenuPopup3({ children, cl
   );
   const positionedPopup = renderSlotWithChildren(
     positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Positioner2, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Positioner2, {}),
     popupContent
   );
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Portal2, {}), positionedPopup);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Portal2, {}), positionedPopup);
 });
 
 // packages/ui/build-module/menu/prefix-icon.mjs
 var import_element37 = __toESM(require_element(), 1);
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
 function getRuntime16() {
   const globalScope = globalThis;
@@ -16215,7 +16503,7 @@ if (typeof process === "undefined" || true) {
 var style_default15 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var PrefixIcon = (0, import_element37.forwardRef)(
   function MenuPrefixIcon({ className, size: size4 = 16, style, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
       Icon,
       {
         ...props,
@@ -16234,7 +16522,7 @@ PrefixIcon.displayName = "Menu.PrefixIcon";
 
 // packages/ui/build-module/menu/radio-group.mjs
 var import_element38 = __toESM(require_element(), 1);
-var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
 function getRuntime17() {
   const globalScope = globalThis;
@@ -16327,7 +16615,7 @@ var RadioGroup = (0, import_element38.forwardRef)(
         "Menu.RadioGroup: Cannot be nested inside Menu.Group. Move Menu.RadioGroup outside Menu.Group and put its Menu.GroupLabel inside Menu.RadioGroup."
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(MenuGroupContext2.Provider, { value: "radio-group", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(MenuGroupContext2.Provider, { value: "radio-group", children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
       index_parts_exports.RadioGroup,
       {
         ref,
@@ -16341,7 +16629,7 @@ var RadioGroup = (0, import_element38.forwardRef)(
 // packages/ui/build-module/menu/radio-item.mjs
 var import_element39 = __toESM(require_element(), 1);
 var import_primitives9 = __toESM(require_primitives(), 1);
-var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
 function getRuntime18() {
   const globalScope = globalThis;
@@ -16434,7 +16722,7 @@ if (typeof process === "undefined" || true) {
   registerStyle18("5e71ea1d52", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-sm,320px);--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}._33f07ab17005471d__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText;--_gcd-a-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid Highlight;--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._99c5bd141cbf516f__checkbox-selection-icon{translate:0 1px}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._64924ecabf65a5d6__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.a836378335a4cbf1__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}.af879698ede76757__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._5c211f9edfe0ed66__has-prefix{grid-column:content-start/content-end}}._76f3e69cf2228139__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}.af879698ede76757__item-content>._091406749ed93e6e__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}.af879698ede76757__item-content>._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing,.af879698ede76757__item-content>._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._06be17a91bf434a0__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._5ed41da4abcf8958__item-label+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default17 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
-var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives9.Circle, { cx: 12, cy: 12, r: 3 }) });
+var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives9.Circle, { cx: 12, cy: 12, r: 3 }) });
 var RadioItem = (0, import_element39.forwardRef)(
   function MenuRadioItem3({
     children,
@@ -16460,7 +16748,7 @@ var RadioItem = (0, import_element39.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(
       index_parts_exports.RadioItem,
       {
         ref,
@@ -16473,12 +16761,12 @@ var RadioItem = (0, import_element39.forwardRef)(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
             index_parts_exports.RadioItemIndicator,
             {
               keepMounted: true,
               className: style_default17["item-selection-indicator"],
-              children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
                 Icon,
                 {
                   icon: radioCheck,
@@ -16488,7 +16776,7 @@ var RadioItem = (0, import_element39.forwardRef)(
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
             ItemContent,
             {
               prefix,
@@ -16654,7 +16942,7 @@ function useIframeDismissalBridge({
 }
 
 // packages/ui/build-module/menu/root.mjs
-var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
 function Root2(props) {
   const { onOpenChange } = props;
   const handleOpenChange = (nextOpen, eventDetails) => {
@@ -16676,12 +16964,12 @@ function Root2(props) {
     onOpenChange: handleOpenChange,
     open: props.open
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(index_parts_exports.Root, { ...props, ...iframeDismissalProps }) }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(index_parts_exports.Root, { ...props, ...iframeDismissalProps }) }) }) });
 }
 
 // packages/ui/build-module/menu/separator.mjs
 var import_element41 = __toESM(require_element(), 1);
-var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
 function getRuntime19() {
   const globalScope = globalThis;
@@ -16768,7 +17056,7 @@ if (typeof process === "undefined" || true) {
 var style_default18 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var Separator2 = (0, import_element41.forwardRef)(
   function MenuSeparator({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
       index_parts_exports.Separator,
       {
         ref,
@@ -16781,16 +17069,16 @@ var Separator2 = (0, import_element41.forwardRef)(
 
 // packages/ui/build-module/menu/submenu-root.mjs
 var import_element42 = __toESM(require_element(), 1);
-var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 function SubmenuRoot(props) {
   const submenuTriggerRef = (0, import_element42.useRef)(null);
-  return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(MenuContext.Provider, { value: { isSubmenu: true, submenuTriggerRef }, children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(index_parts_exports.SubmenuRoot, { ...props }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(MenuContext.Provider, { value: { isSubmenu: true, submenuTriggerRef }, children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(index_parts_exports.SubmenuRoot, { ...props }) }) });
 }
 
 // packages/ui/build-module/menu/submenu-trigger.mjs
 var import_element43 = __toESM(require_element(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
-var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
 function getRuntime20() {
   const globalScope = globalThis;
@@ -16910,7 +17198,7 @@ var SubmenuTrigger = (0, import_element43.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
       index_parts_exports.SubmenuTrigger,
       {
         ref: mergedRef,
@@ -16922,14 +17210,14 @@ var SubmenuTrigger = (0, import_element43.forwardRef)(
           className
         ),
         ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
           ItemContent,
           {
             prefix,
             shortcut,
             shortcutDescriptionId,
             suffix,
-            trailing: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+            trailing: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
               Icon,
               {
                 className: style_default19["submenu-chevron"],
@@ -16948,10 +17236,10 @@ var SubmenuTrigger = (0, import_element43.forwardRef)(
 
 // packages/ui/build-module/menu/trigger.mjs
 var import_element44 = __toESM(require_element(), 1);
-var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 var Trigger2 = (0, import_element44.forwardRef)(
   function MenuTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(index_parts_exports.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(index_parts_exports.Trigger, { ref, ...props });
   }
 );
 
@@ -17071,8 +17359,20 @@ var Stack = (0, import_element45.forwardRef)(
   }
 );
 
-// packages/ui/build-module/skeleton/skeleton.mjs
+// packages/ui/build-module/progress/index.mjs
+var progress_exports = {};
+__export(progress_exports, {
+  Indicator: () => Indicator,
+  Label: () => Label,
+  Root: () => Root3,
+  Track: () => Track,
+  Value: () => Value
+});
+
+// packages/ui/build-module/progress/root.mjs
 var import_element46 = __toESM(require_element(), 1);
+var import_i18n5 = __toESM(require_i18n(), 1);
+var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
 function getRuntime22() {
   const globalScope = globalThis;
@@ -17158,56 +17458,30 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default9 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle22("ed2c39ec90", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b20cc1690085c2f0__skeleton{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);display:block;@media (forced-colors:active){border:var(--wpds-border-width-xs,1px) solid CanvasText}}._9b143194fdb45f93__pulse{@media not (prefers-reduced-motion){animation:e2b9fe0690281bc8__skeleton-pulse 1.5s ease-in-out infinite}}@keyframes e2b9fe0690281bc8__skeleton-pulse{0%,to{opacity:1}50%{opacity:.4}}}}");
+  registerStyle22("4fcc1f90de", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0c8146c357ee3082__root{width:160px}._94b93b4b54f86af8__label,.d444d83093168104__value{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.d444d83093168104__value{font-variant-numeric:tabular-nums}.f08088bb628044ff__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);height:1.5px;overflow:hidden;position:relative;width:100%;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid CanvasText;outline-offset:var(--wpds-border-width-xs,1px)}}._288dbe846a740467__indicator{background-color:currentColor;border-radius:inherit;color:var(--wpds-color-background-thumb-neutral,#1e1e1e);height:100%;inset-block-start:0;position:absolute;@media not (prefers-reduced-motion){transition:width var(--wpds-motion-duration-xl,.4s) ease-in-out}&[data-indeterminate]{animation:_412bd854b144d653__progress-slide 1.5s ease-in-out infinite;transition:none;width:50%;@media (prefers-reduced-motion:reduce){animation-duration:3s;animation-timing-function:steps(4)}}}@media (forced-colors:active){._288dbe846a740467__indicator{background-color:CanvasText;forced-color-adjust:none}}@keyframes _412bd854b144d653__progress-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}}}");
 }
-var style_default21 = { "skeleton": "b20cc1690085c2f0__skeleton", "pulse": "_9b143194fdb45f93__pulse", "skeleton-pulse": "e2b9fe0690281bc8__skeleton-pulse" };
-var Skeleton = (0, import_element46.forwardRef)(
-  function UnforwardedSkeleton({ render, ...props }, ref) {
-    return useRender({
-      render,
+var style_default21 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
+var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+var Root3 = (0, import_element46.forwardRef)(function ProgressRoot3({ className, render = DEFAULT_RENDER, ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+    index_parts_exports2.Root,
+    {
       ref,
-      props: mergeProps(
-        {
-          className: clsx_default(
-            style_default21.skeleton,
-            style_default21.pulse,
-            resets_default9["box-sizing"]
-          ),
-          // Decorative by default; consumers mark the loading
-          // region with aria-busy / role="status".
-          "aria-hidden": true
-        },
-        props
-      )
-    });
-  }
-);
+      render,
+      getAriaValueText: (formattedValue) => formattedValue || (0, import_i18n5.__)("In progress"),
+      className: clsx_default(
+        resets_default9["box-sizing"],
+        style_default21.root,
+        className
+      ),
+      ...props
+    }
+  );
+});
 
-// packages/admin-ui/build-module/navigable-region/index.mjs
+// packages/ui/build-module/progress/track.mjs
 var import_element47 = __toESM(require_element(), 1);
-var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element47.forwardRef)(
-  ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
-      Tag,
-      {
-        ref,
-        className: clsx_default("admin-ui-navigable-region", className),
-        "aria-label": ariaLabel,
-        role: "region",
-        tabIndex: "-1",
-        ...props,
-        children
-      }
-    );
-  }
-);
-NavigableRegion.displayName = "NavigableRegion";
-var navigable_region_default = NavigableRegion;
-
-// packages/admin-ui/build-module/navigation/index.mjs
-var import_i18n5 = __toESM(require_i18n(), 1);
-var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
 function getRuntime23() {
   const globalScope = globalThis;
@@ -17289,73 +17563,31 @@ function registerStyle23(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle23("72ef022400", ".bfb5a2dd8cceebd3__list{--focus-ring-size:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);list-style:none;margin:calc(var(--focus-ring-size)*-1);overflow-x:auto;padding:var(--focus-ring-size);scroll-padding:var(--focus-ring-size)}.a4759b4cb2c8bd92__li{flex-shrink:0}._07da506d3f2d9afe__item{align-items:center;color:var(--wpds-color-foreground-interactive-neutral-weak,#707070);display:flex;font-weight:var(--wpds-typography-font-weight-default,400);min-block-size:44px;min-inline-size:44px;text-decoration:none}._07da506d3f2d9afe__item:hover,._07da506d3f2d9afe__item[aria-current=page]{color:var(--wpds-color-foreground-interactive-neutral-weak-active,#1e1e1e)}._07da506d3f2d9afe__item[aria-current=page]{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+  registerStyle23("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
-var style_default22 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd92__li", "item": "_07da506d3f2d9afe__item" };
-var Navigation = ({
-  items,
-  currentHref,
-  ariaLabel = (0, import_i18n5.__)("Sections"),
-  linkComponent,
-  className
-}) => {
-  if (!items.length) {
-    return null;
-  }
-  const LinkComponent = linkComponent ?? "a";
-  if (true) {
-    const invalidItem = items.find(
-      (item) => typeof item.href !== "string"
-    );
-    if (invalidItem) {
-      throw new Error(
-        `Navigation: item "${invalidItem.label}" is missing an \`href\` prop.`
-      );
-    }
-    const duplicate = items.find(
-      (item, index2) => items.findIndex((other) => other.href === item.href) !== index2
-    );
-    if (duplicate) {
-      throw new Error(
-        `Navigation: duplicate \`href\` "${duplicate.href}". Each item must have a unique \`href\` so a single item receives \`aria-current="page"\`.`
-      );
-    }
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-    Stack,
+var resets_default10 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
+  registerStyle23("4fcc1f90de", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0c8146c357ee3082__root{width:160px}._94b93b4b54f86af8__label,.d444d83093168104__value{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.d444d83093168104__value{font-variant-numeric:tabular-nums}.f08088bb628044ff__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);height:1.5px;overflow:hidden;position:relative;width:100%;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid CanvasText;outline-offset:var(--wpds-border-width-xs,1px)}}._288dbe846a740467__indicator{background-color:currentColor;border-radius:inherit;color:var(--wpds-color-background-thumb-neutral,#1e1e1e);height:100%;inset-block-start:0;position:absolute;@media not (prefers-reduced-motion){transition:width var(--wpds-motion-duration-xl,.4s) ease-in-out}&[data-indeterminate]{animation:_412bd854b144d653__progress-slide 1.5s ease-in-out infinite;transition:none;width:50%;@media (prefers-reduced-motion:reduce){animation-duration:3s;animation-timing-function:steps(4)}}}@media (forced-colors:active){._288dbe846a740467__indicator{background-color:CanvasText;forced-color-adjust:none}}@keyframes _412bd854b144d653__progress-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}}}");
+}
+var style_default22 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
+var Track = (0, import_element47.forwardRef)(function ProgressTrack3({ className, ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
+    index_parts_exports2.Track,
     {
-      render: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("ul", { role: "list" }),
-      direction: "row",
-      align: "center",
-      gap: "md",
-      className: style_default22.list,
-      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("li", { className: style_default22.li, children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-        Text,
-        {
-          variant: "body-md",
-          className: style_default22.item,
-          render: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-            Link,
-            {
-              variant: "unstyled",
-              "aria-current": item.href === currentHref ? "page" : void 0,
-              render: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(LinkComponent, { href: item.href })
-            }
-          ),
-          children: item.label
-        }
-      ) }, item.href))
+      ref,
+      className: clsx_default(
+        resets_default10["box-sizing"],
+        style_default22.track,
+        className
+      ),
+      ...props
     }
-  ) });
-};
-var navigation_default = Navigation;
+  );
+});
 
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
-var import_components = __toESM(require_components(), 1);
-var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
-
-// packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/progress/indicator.mjs
+var import_element48 = __toESM(require_element(), 1);
+var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
 function getRuntime24() {
   const globalScope = globalThis;
@@ -17437,115 +17669,34 @@ function registerStyle24(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle24("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle24("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
-var style_default23 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-lockup": "_8bcd33103b451f30__header-lockup", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
-function Header({
-  headingLevel = 1,
-  breadcrumbs,
-  badges,
-  visual,
-  title,
-  subTitle,
-  actions,
-  navigation,
-  components,
-  showSidebarToggle = true
-}) {
-  const HeadingTag = `h${headingLevel}`;
-  const hasNavigation = !!navigation?.items?.length;
-  return /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(
-    Stack,
-    {
-      direction: "column",
-      className: clsx_default(
-        style_default23.header,
-        hasNavigation && style_default23["has-navigation"]
-      ),
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(
-          Stack,
-          {
-            className: style_default23["header-content"],
-            direction: "row",
-            gap: "sm",
-            justify: "space-between",
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(
-                Stack,
-                {
-                  direction: "row",
-                  gap: "sm",
-                  align: "center",
-                  justify: "start",
-                  className: style_default23["header-lockup"],
-                  children: [
-                    showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
-                      SidebarToggleSlot,
-                      {
-                        bubblesVirtually: true,
-                        className: style_default23["sidebar-toggle-slot"]
-                      }
-                    ),
-                    visual && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
-                      "div",
-                      {
-                        className: style_default23["header-visual"],
-                        "aria-hidden": "true",
-                        children: visual
-                      }
-                    ),
-                    title && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
-                      Text,
-                      {
-                        className: style_default23["header-title"],
-                        render: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(HeadingTag, {}),
-                        variant: "heading-lg",
-                        children: title
-                      }
-                    ),
-                    breadcrumbs,
-                    badges
-                  ]
-                }
-              ),
-              actions && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
-                Stack,
-                {
-                  align: "center",
-                  className: style_default23["header-actions"],
-                  direction: "row",
-                  gap: "sm",
-                  children: actions
-                }
-              )
-            ]
-          }
-        ),
-        subTitle && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
-          Text,
-          {
-            render: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)("p", {}),
-            variant: "body-md",
-            className: style_default23["header-subtitle"],
-            children: subTitle
-          }
-        ),
-        hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
-          navigation_default,
-          {
-            ...navigation,
-            linkComponent: components?.link,
-            className: style_default23["header-navigation"]
-          }
-        )
-      ]
-    }
-  );
+var resets_default11 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
+  registerStyle24("4fcc1f90de", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0c8146c357ee3082__root{width:160px}._94b93b4b54f86af8__label,.d444d83093168104__value{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.d444d83093168104__value{font-variant-numeric:tabular-nums}.f08088bb628044ff__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);height:1.5px;overflow:hidden;position:relative;width:100%;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid CanvasText;outline-offset:var(--wpds-border-width-xs,1px)}}._288dbe846a740467__indicator{background-color:currentColor;border-radius:inherit;color:var(--wpds-color-background-thumb-neutral,#1e1e1e);height:100%;inset-block-start:0;position:absolute;@media not (prefers-reduced-motion){transition:width var(--wpds-motion-duration-xl,.4s) ease-in-out}&[data-indeterminate]{animation:_412bd854b144d653__progress-slide 1.5s ease-in-out infinite;transition:none;width:50%;@media (prefers-reduced-motion:reduce){animation-duration:3s;animation-timing-function:steps(4)}}}@media (forced-colors:active){._288dbe846a740467__indicator{background-color:CanvasText;forced-color-adjust:none}}@keyframes _412bd854b144d653__progress-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}}}");
 }
+var style_default23 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
+var Indicator = (0, import_element48.forwardRef)(
+  function ProgressIndicator3({ color, className, style, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+      index_parts_exports2.Indicator,
+      {
+        ref,
+        style: color === void 0 ? style : { ...style, color },
+        className: clsx_default(
+          resets_default11["box-sizing"],
+          style_default23.indicator,
+          className
+        ),
+        ...props
+      }
+    );
+  }
+);
 
-// packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/progress/label.mjs
+var import_element49 = __toESM(require_element(), 1);
+var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
 function getRuntime25() {
   const globalScope = globalThis;
@@ -17627,9 +17778,681 @@ function registerStyle25(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle25("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle25("4fcc1f90de", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0c8146c357ee3082__root{width:160px}._94b93b4b54f86af8__label,.d444d83093168104__value{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.d444d83093168104__value{font-variant-numeric:tabular-nums}.f08088bb628044ff__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);height:1.5px;overflow:hidden;position:relative;width:100%;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid CanvasText;outline-offset:var(--wpds-border-width-xs,1px)}}._288dbe846a740467__indicator{background-color:currentColor;border-radius:inherit;color:var(--wpds-color-background-thumb-neutral,#1e1e1e);height:100%;inset-block-start:0;position:absolute;@media not (prefers-reduced-motion){transition:width var(--wpds-motion-duration-xl,.4s) ease-in-out}&[data-indeterminate]{animation:_412bd854b144d653__progress-slide 1.5s ease-in-out infinite;transition:none;width:50%;@media (prefers-reduced-motion:reduce){animation-duration:3s;animation-timing-function:steps(4)}}}@media (forced-colors:active){._288dbe846a740467__indicator{background-color:CanvasText;forced-color-adjust:none}}@keyframes _412bd854b144d653__progress-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}}}");
 }
-var style_default24 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-lockup": "_8bcd33103b451f30__header-lockup", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+var style_default24 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
+var DEFAULT_RENDER2 = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(Text, {});
+var Label = (0, import_element49.forwardRef)(function ProgressLabel3({ className, render = DEFAULT_RENDER2, ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+    index_parts_exports2.Label,
+    {
+      ref,
+      render,
+      className: clsx_default(style_default24.label, className),
+      ...props
+    }
+  );
+});
+
+// packages/ui/build-module/progress/value.mjs
+var import_element50 = __toESM(require_element(), 1);
+var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
+function getRuntime26() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument26(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash26(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE26}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE26) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle26(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime26();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash26(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE26, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument26(targetDocument) {
+  const runtime = getRuntime26();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle26(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle26(hash, css) {
+  const runtime = getRuntime26();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle26(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle26("4fcc1f90de", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0c8146c357ee3082__root{width:160px}._94b93b4b54f86af8__label,.d444d83093168104__value{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.d444d83093168104__value{font-variant-numeric:tabular-nums}.f08088bb628044ff__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);height:1.5px;overflow:hidden;position:relative;width:100%;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid CanvasText;outline-offset:var(--wpds-border-width-xs,1px)}}._288dbe846a740467__indicator{background-color:currentColor;border-radius:inherit;color:var(--wpds-color-background-thumb-neutral,#1e1e1e);height:100%;inset-block-start:0;position:absolute;@media not (prefers-reduced-motion){transition:width var(--wpds-motion-duration-xl,.4s) ease-in-out}&[data-indeterminate]{animation:_412bd854b144d653__progress-slide 1.5s ease-in-out infinite;transition:none;width:50%;@media (prefers-reduced-motion:reduce){animation-duration:3s;animation-timing-function:steps(4)}}}@media (forced-colors:active){._288dbe846a740467__indicator{background-color:CanvasText;forced-color-adjust:none}}@keyframes _412bd854b144d653__progress-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}}}");
+}
+var style_default25 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
+var DEFAULT_RENDER3 = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(Text, {});
+var Value = (0, import_element50.forwardRef)(function ProgressValue3({ className, render = DEFAULT_RENDER3, ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
+    index_parts_exports2.Value,
+    {
+      ref,
+      render,
+      className: clsx_default(style_default25.value, className),
+      ...props
+    }
+  );
+});
+
+// packages/ui/build-module/skeleton/skeleton.mjs
+var import_element51 = __toESM(require_element(), 1);
+var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
+function getRuntime27() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument27(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash27(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE27}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE27) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle27(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime27();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash27(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE27, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument27(targetDocument) {
+  const runtime = getRuntime27();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle27(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle27(hash, css) {
+  const runtime = getRuntime27();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle27(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle27("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+}
+var resets_default12 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
+  registerStyle27("ed2c39ec90", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b20cc1690085c2f0__skeleton{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);display:block;@media (forced-colors:active){border:var(--wpds-border-width-xs,1px) solid CanvasText}}._9b143194fdb45f93__pulse{@media not (prefers-reduced-motion){animation:e2b9fe0690281bc8__skeleton-pulse 1.5s ease-in-out infinite}}@keyframes e2b9fe0690281bc8__skeleton-pulse{0%,to{opacity:1}50%{opacity:.4}}}}");
+}
+var style_default26 = { "skeleton": "b20cc1690085c2f0__skeleton", "pulse": "_9b143194fdb45f93__pulse", "skeleton-pulse": "e2b9fe0690281bc8__skeleton-pulse" };
+var Skeleton = (0, import_element51.forwardRef)(
+  function UnforwardedSkeleton({ render, ...props }, ref) {
+    return useRender({
+      render,
+      ref,
+      props: mergeProps(
+        {
+          className: clsx_default(
+            style_default26.skeleton,
+            style_default26.pulse,
+            resets_default12["box-sizing"]
+          ),
+          // Decorative by default; consumers mark the loading
+          // region with aria-busy / role="status".
+          "aria-hidden": true
+        },
+        props
+      )
+    });
+  }
+);
+
+// packages/admin-ui/build-module/navigable-region/index.mjs
+var import_element52 = __toESM(require_element(), 1);
+var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+var NavigableRegion = (0, import_element52.forwardRef)(
+  ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+      Tag,
+      {
+        ref,
+        className: clsx_default("admin-ui-navigable-region", className),
+        "aria-label": ariaLabel,
+        role: "region",
+        tabIndex: "-1",
+        ...props,
+        children
+      }
+    );
+  }
+);
+NavigableRegion.displayName = "NavigableRegion";
+var navigable_region_default = NavigableRegion;
+
+// packages/admin-ui/build-module/navigation/index.mjs
+var import_i18n6 = __toESM(require_i18n(), 1);
+var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
+function getRuntime28() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument28(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash28(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE28}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE28) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle28(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime28();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash28(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE28, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument28(targetDocument) {
+  const runtime = getRuntime28();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle28(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle28(hash, css) {
+  const runtime = getRuntime28();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle28(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle28("72ef022400", ".bfb5a2dd8cceebd3__list{--focus-ring-size:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);list-style:none;margin:calc(var(--focus-ring-size)*-1);overflow-x:auto;padding:var(--focus-ring-size);scroll-padding:var(--focus-ring-size)}.a4759b4cb2c8bd92__li{flex-shrink:0}._07da506d3f2d9afe__item{align-items:center;color:var(--wpds-color-foreground-interactive-neutral-weak,#707070);display:flex;font-weight:var(--wpds-typography-font-weight-default,400);min-block-size:44px;min-inline-size:44px;text-decoration:none}._07da506d3f2d9afe__item:hover,._07da506d3f2d9afe__item[aria-current=page]{color:var(--wpds-color-foreground-interactive-neutral-weak-active,#1e1e1e)}._07da506d3f2d9afe__item[aria-current=page]{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+}
+var style_default27 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd92__li", "item": "_07da506d3f2d9afe__item" };
+var Navigation = ({
+  items,
+  currentHref,
+  ariaLabel = (0, import_i18n6.__)("Sections"),
+  linkComponent,
+  className
+}) => {
+  if (!items.length) {
+    return null;
+  }
+  const LinkComponent = linkComponent ?? "a";
+  if (true) {
+    const invalidItem = items.find(
+      (item) => typeof item.href !== "string"
+    );
+    if (invalidItem) {
+      throw new Error(
+        `Navigation: item "${invalidItem.label}" is missing an \`href\` prop.`
+      );
+    }
+    const duplicate = items.find(
+      (item, index2) => items.findIndex((other) => other.href === item.href) !== index2
+    );
+    if (duplicate) {
+      throw new Error(
+        `Navigation: duplicate \`href\` "${duplicate.href}". Each item must have a unique \`href\` so a single item receives \`aria-current="page"\`.`
+      );
+    }
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+    Stack,
+    {
+      render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("ul", { role: "list" }),
+      direction: "row",
+      align: "center",
+      gap: "md",
+      className: style_default27.list,
+      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("li", { className: style_default27.li, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+        Text,
+        {
+          variant: "body-md",
+          className: style_default27.item,
+          render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+            Link,
+            {
+              variant: "unstyled",
+              "aria-current": item.href === currentHref ? "page" : void 0,
+              render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(LinkComponent, { href: item.href })
+            }
+          ),
+          children: item.label
+        }
+      ) }, item.href))
+    }
+  ) });
+};
+var navigation_default = Navigation;
+
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
+var import_components = __toESM(require_components(), 1);
+var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
+
+// packages/admin-ui/build-module/page/header.mjs
+var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
+function getRuntime29() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument29(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash29(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE29}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE29) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle29(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime29();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash29(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE29, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument29(targetDocument) {
+  const runtime = getRuntime29();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle29(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle29(hash, css) {
+  const runtime = getRuntime29();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle29(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle29("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+}
+var style_default28 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-lockup": "_8bcd33103b451f30__header-lockup", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+function Header({
+  headingLevel = 1,
+  breadcrumbs,
+  badges,
+  visual,
+  title,
+  subTitle,
+  actions,
+  navigation,
+  components,
+  showSidebarToggle = true
+}) {
+  const HeadingTag = `h${headingLevel}`;
+  const hasNavigation = !!navigation?.items?.length;
+  return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+    Stack,
+    {
+      direction: "column",
+      className: clsx_default(
+        style_default28.header,
+        hasNavigation && style_default28["has-navigation"]
+      ),
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+          Stack,
+          {
+            className: style_default28["header-content"],
+            direction: "row",
+            gap: "sm",
+            justify: "space-between",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+                Stack,
+                {
+                  direction: "row",
+                  gap: "sm",
+                  align: "center",
+                  justify: "start",
+                  className: style_default28["header-lockup"],
+                  children: [
+                    showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                      SidebarToggleSlot,
+                      {
+                        bubblesVirtually: true,
+                        className: style_default28["sidebar-toggle-slot"]
+                      }
+                    ),
+                    visual && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                      "div",
+                      {
+                        className: style_default28["header-visual"],
+                        "aria-hidden": "true",
+                        children: visual
+                      }
+                    ),
+                    title && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                      Text,
+                      {
+                        className: style_default28["header-title"],
+                        render: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(HeadingTag, {}),
+                        variant: "heading-lg",
+                        children: title
+                      }
+                    ),
+                    breadcrumbs,
+                    badges
+                  ]
+                }
+              ),
+              actions && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                Stack,
+                {
+                  align: "center",
+                  className: style_default28["header-actions"],
+                  direction: "row",
+                  gap: "sm",
+                  children: actions
+                }
+              )
+            ]
+          }
+        ),
+        subTitle && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+          Text,
+          {
+            render: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("p", {}),
+            variant: "body-md",
+            className: style_default28["header-subtitle"],
+            children: subTitle
+          }
+        ),
+        hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+          navigation_default,
+          {
+            ...navigation,
+            linkComponent: components?.link,
+            className: style_default28["header-navigation"]
+          }
+        )
+      ]
+    }
+  );
+}
+
+// packages/admin-ui/build-module/page/index.mjs
+var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
+function getRuntime30() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument30(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash30(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE30}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE30) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle30(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime30();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash30(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE30, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument30(targetDocument) {
+  const runtime = getRuntime30();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle30(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle30(hash, css) {
+  const runtime = getRuntime30();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle30(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle30("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+}
+var style_default29 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-lockup": "_8bcd33103b451f30__header-lockup", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Page({
   headingLevel,
   breadcrumbs,
@@ -17646,10 +18469,10 @@ function Page({
   hasPadding = false,
   showSidebarToggle = true
 }) {
-  const classes = clsx_default(style_default24.page, className);
+  const classes = clsx_default(style_default29.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime63.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual || !!navigation?.items?.length) && /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual || !!navigation?.items?.length) && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
       Header,
       {
         headingLevel,
@@ -17664,12 +18487,12 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
       "div",
       {
         className: clsx_default(
-          style_default24.content,
-          style_default24["has-padding"]
+          style_default29.content,
+          style_default29["has-padding"]
         ),
         children
       }
@@ -17680,19 +18503,19 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/font-list/stage.tsx
-var import_i18n55 = __toESM(require_i18n());
+var import_i18n56 = __toESM(require_i18n());
 var import_components56 = __toESM(require_components());
 var import_editor = __toESM(require_editor());
 var import_core_data12 = __toESM(require_core_data());
 var import_data13 = __toESM(require_data());
-var import_element82 = __toESM(require_element());
+var import_element87 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
 var import_components55 = __toESM(require_components(), 1);
 var import_blocks5 = __toESM(require_blocks(), 1);
 var import_data12 = __toESM(require_data(), 1);
 var import_block_editor14 = __toESM(require_block_editor(), 1);
-var import_element81 = __toESM(require_element(), 1);
+var import_element86 = __toESM(require_element(), 1);
 var import_compose9 = __toESM(require_compose(), 1);
 
 // packages/global-styles-engine/build-module/utils/object.mjs
@@ -19107,11 +19930,11 @@ lock2(privateApis, {
 });
 
 // packages/global-styles-ui/build-module/provider.mjs
-var import_element49 = __toESM(require_element(), 1);
+var import_element54 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/context.mjs
-var import_element48 = __toESM(require_element(), 1);
-var GlobalStylesContext = (0, import_element48.createContext)({
+var import_element53 = __toESM(require_element(), 1);
+var GlobalStylesContext = (0, import_element53.createContext)({
   user: { styles: {}, settings: {} },
   base: { styles: {}, settings: {} },
   merged: { styles: {}, settings: {} },
@@ -19121,7 +19944,7 @@ var GlobalStylesContext = (0, import_element48.createContext)({
 });
 
 // packages/global-styles-ui/build-module/provider.mjs
-var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
 function GlobalStylesProvider({
   children,
   value,
@@ -19129,10 +19952,10 @@ function GlobalStylesProvider({
   onChange,
   fontLibraryEnabled
 }) {
-  const merged = (0, import_element49.useMemo)(() => {
+  const merged = (0, import_element54.useMemo)(() => {
     return mergeGlobalStyles(baseValue, value);
   }, [baseValue, value]);
-  const contextValue = (0, import_element49.useMemo)(
+  const contextValue = (0, import_element54.useMemo)(
     () => ({
       user: value,
       base: baseValue,
@@ -19142,22 +19965,22 @@ function GlobalStylesProvider({
     }),
     [value, baseValue, merged, onChange, fontLibraryEnabled]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(GlobalStylesContext.Provider, { value: contextValue, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(GlobalStylesContext.Provider, { value: contextValue, children });
 }
 
 // packages/global-styles-ui/build-module/screen-root.mjs
 var import_components8 = __toESM(require_components(), 1);
-var import_i18n10 = __toESM(require_i18n(), 1);
+var import_i18n11 = __toESM(require_i18n(), 1);
 var import_data2 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 
 // packages/global-styles-ui/build-module/icon-with-current-color.mjs
-var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
 function IconWithCurrentColor({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
     icon_default,
     {
       className: clsx_default(
@@ -19171,37 +19994,37 @@ function IconWithCurrentColor({
 
 // packages/global-styles-ui/build-module/navigation-button.mjs
 var import_components2 = __toESM(require_components(), 1);
-var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
 function GenericNavigationButton({
   icon,
   children,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(import_components2.__experimentalItem, { ...props, children: [
-    icon && /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(import_components2.__experimentalHStack, { justify: "flex-start", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(IconWithCurrentColor, { icon, size: 24 }),
-      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_components2.FlexItem, { children })
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components2.__experimentalItem, { ...props, children: [
+    icon && /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components2.__experimentalHStack, { justify: "flex-start", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(IconWithCurrentColor, { icon, size: 24 }),
+      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components2.FlexItem, { children })
     ] }),
     !icon && children
   ] });
 }
 function NavigationButtonAsItem(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_components2.Navigator.Button, { as: GenericNavigationButton, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components2.Navigator.Button, { as: GenericNavigationButton, ...props });
 }
 
 // packages/global-styles-ui/build-module/root-menu.mjs
 var import_components3 = __toESM(require_components(), 1);
-var import_i18n8 = __toESM(require_i18n(), 1);
+var import_i18n9 = __toESM(require_i18n(), 1);
 var import_block_editor = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/hooks.mjs
-var import_element50 = __toESM(require_element(), 1);
+var import_element55 = __toESM(require_element(), 1);
 var import_data = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
-var import_i18n7 = __toESM(require_i18n(), 1);
+var import_i18n8 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/utils.mjs
-var import_i18n6 = __toESM(require_i18n(), 1);
+var import_i18n7 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/lock-unlock.mjs
 var import_private_apis4 = __toESM(require_private_apis(), 1);
@@ -19214,41 +20037,41 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis4.__dangerousOptIn
 var { getViewportBreakpoints: getViewportBreakpoints2 } = unlock3(privateApis);
 var VALID_ELEMENT_STATES = {
   link: [
-    { value: ":link", label: (0, import_i18n6.__)("Link") },
-    { value: ":any-link", label: (0, import_i18n6.__)("Any Link") },
-    { value: ":visited", label: (0, import_i18n6.__)("Visited") },
-    { value: ":hover", label: (0, import_i18n6.__)("Hover") },
-    { value: ":focus", label: (0, import_i18n6.__)("Focus") },
-    { value: ":focus-visible", label: (0, import_i18n6.__)("Focus-visible") },
-    { value: ":active", label: (0, import_i18n6.__)("Active") }
+    { value: ":link", label: (0, import_i18n7.__)("Link") },
+    { value: ":any-link", label: (0, import_i18n7.__)("Any Link") },
+    { value: ":visited", label: (0, import_i18n7.__)("Visited") },
+    { value: ":hover", label: (0, import_i18n7.__)("Hover") },
+    { value: ":focus", label: (0, import_i18n7.__)("Focus") },
+    { value: ":focus-visible", label: (0, import_i18n7.__)("Focus-visible") },
+    { value: ":active", label: (0, import_i18n7.__)("Active") }
   ],
   button: [
-    { value: ":link", label: (0, import_i18n6.__)("Link") },
-    { value: ":any-link", label: (0, import_i18n6.__)("Any Link") },
-    { value: ":visited", label: (0, import_i18n6.__)("Visited") },
-    { value: ":hover", label: (0, import_i18n6.__)("Hover") },
-    { value: ":focus", label: (0, import_i18n6.__)("Focus") },
-    { value: ":focus-visible", label: (0, import_i18n6.__)("Focus-visible") },
-    { value: ":active", label: (0, import_i18n6.__)("Active") }
+    { value: ":link", label: (0, import_i18n7.__)("Link") },
+    { value: ":any-link", label: (0, import_i18n7.__)("Any Link") },
+    { value: ":visited", label: (0, import_i18n7.__)("Visited") },
+    { value: ":hover", label: (0, import_i18n7.__)("Hover") },
+    { value: ":focus", label: (0, import_i18n7.__)("Focus") },
+    { value: ":focus-visible", label: (0, import_i18n7.__)("Focus-visible") },
+    { value: ":active", label: (0, import_i18n7.__)("Active") }
   ]
 };
 var VALID_BLOCK_STATES = {
   "core/button": [
-    { value: ":hover", label: (0, import_i18n6.__)("Hover") },
-    { value: ":focus", label: (0, import_i18n6.__)("Focus") },
-    { value: ":focus-visible", label: (0, import_i18n6.__)("Focus-visible") },
-    { value: ":active", label: (0, import_i18n6.__)("Active") }
+    { value: ":hover", label: (0, import_i18n7.__)("Hover") },
+    { value: ":focus", label: (0, import_i18n7.__)("Focus") },
+    { value: ":focus-visible", label: (0, import_i18n7.__)("Focus-visible") },
+    { value: ":active", label: (0, import_i18n7.__)("Active") }
   ],
   "core/navigation-link": [
-    { value: ":hover", label: (0, import_i18n6.__)("Hover") },
-    { value: ":focus", label: (0, import_i18n6.__)("Focus") },
-    { value: ":focus-visible", label: (0, import_i18n6.__)("Focus-visible") },
-    { value: ":active", label: (0, import_i18n6.__)("Active") }
+    { value: ":hover", label: (0, import_i18n7.__)("Hover") },
+    { value: ":focus", label: (0, import_i18n7.__)("Focus") },
+    { value: ":focus-visible", label: (0, import_i18n7.__)("Focus-visible") },
+    { value: ":active", label: (0, import_i18n7.__)("Active") }
   ]
 };
 var RESPONSIVE_STATES = [
-  { value: "@tablet", label: (0, import_i18n6.__)("Tablet") },
-  { value: "@mobile", label: (0, import_i18n6.__)("Mobile") }
+  { value: "@tablet", label: (0, import_i18n7.__)("Tablet") },
+  { value: "@mobile", label: (0, import_i18n7.__)("Mobile") }
 ];
 function removePropertiesFromObject(object, properties) {
   if (!properties?.length) {
@@ -19334,7 +20157,7 @@ function getFontFamilies(themeJson) {
 
 // packages/global-styles-ui/build-module/hooks.mjs
 function useStyle(path, blockName, readFrom = "merged", shouldDecodeEncode = true, state) {
-  const { user, base, merged, onChange } = (0, import_element50.useContext)(GlobalStylesContext);
+  const { user, base, merged, onChange } = (0, import_element55.useContext)(GlobalStylesContext);
   const statePathParts = state?.split(".").filter(Boolean) ?? [];
   const pseudoSelectorState = statePathParts.find(
     (value) => value.startsWith(":")
@@ -19347,7 +20170,7 @@ function useStyle(path, blockName, readFrom = "merged", shouldDecodeEncode = tru
   } else if (readFrom === "user") {
     sourceValue = user;
   }
-  const styleValue = (0, import_element50.useMemo)(() => {
+  const styleValue = (0, import_element55.useMemo)(() => {
     const rawValue = getStyle(
       sourceValue,
       stylePath,
@@ -19365,7 +20188,7 @@ function useStyle(path, blockName, readFrom = "merged", shouldDecodeEncode = tru
     shouldDecodeEncode,
     pseudoSelectorState
   ]);
-  const setStyleValue = (0, import_element50.useCallback)(
+  const setStyleValue = (0, import_element55.useCallback)(
     (newValue) => {
       let valueToSet = newValue;
       if (pseudoSelectorState) {
@@ -19393,18 +20216,18 @@ function useStyle(path, blockName, readFrom = "merged", shouldDecodeEncode = tru
   return [styleValue, setStyleValue];
 }
 function useSetting(path, blockName, readFrom = "merged") {
-  const { user, base, merged, onChange } = (0, import_element50.useContext)(GlobalStylesContext);
+  const { user, base, merged, onChange } = (0, import_element55.useContext)(GlobalStylesContext);
   let sourceValue = merged;
   if (readFrom === "base") {
     sourceValue = base;
   } else if (readFrom === "user") {
     sourceValue = user;
   }
-  const settingValue = (0, import_element50.useMemo)(
+  const settingValue = (0, import_element55.useMemo)(
     () => getSetting(sourceValue, path, blockName),
     [sourceValue, path, blockName]
   );
-  const setSettingValue = (0, import_element50.useCallback)(
+  const setSettingValue = (0, import_element55.useCallback)(
     (newValue) => {
       const newGlobalStyles = setSetting(
         user,
@@ -19424,7 +20247,7 @@ function hasThemeVariation({
   settings,
   styles
 }) {
-  return title === (0, import_i18n7.__)("Default") || Object.keys(settings || {}).length > 0 || Object.keys(styles || {}).length > 0;
+  return title === (0, import_i18n8.__)("Default") || Object.keys(settings || {}).length > 0 || Object.keys(styles || {}).length > 0;
 }
 function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
   const { variationsFromTheme } = (0, import_data.useSelect)((select) => {
@@ -19435,14 +20258,14 @@ function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
       variationsFromTheme: _variationsFromTheme || EMPTY_ARRAY2
     };
   }, []);
-  const { user: userVariation } = (0, import_element50.useContext)(GlobalStylesContext);
-  return (0, import_element50.useMemo)(() => {
+  const { user: userVariation } = (0, import_element55.useContext)(GlobalStylesContext);
+  return (0, import_element55.useMemo)(() => {
     const clonedUserVariation = structuredClone(userVariation);
     const userVariationWithoutProperties = removePropertiesFromObject(
       clonedUserVariation,
       properties
     );
-    userVariationWithoutProperties.title = (0, import_i18n7.__)("Default");
+    userVariationWithoutProperties.title = (0, import_i18n8.__)("Default");
     const variationsWithPropertiesAndBase = variationsFromTheme.filter((variation) => {
       return isVariationWithProperties(variation, properties);
     }).map((variation) => {
@@ -19460,7 +20283,7 @@ function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
 }
 
 // packages/global-styles-ui/build-module/root-menu.mjs
-var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel,
   useHasTypographyPanel,
@@ -19506,9 +20329,9 @@ function useStylesPreviewColors() {
 }
 
 // packages/global-styles-ui/build-module/typography-example.mjs
-var import_element51 = __toESM(require_element(), 1);
+var import_element56 = __toESM(require_element(), 1);
 var import_components4 = __toESM(require_components(), 1);
-var import_i18n9 = __toESM(require_i18n(), 1);
+var import_i18n10 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/font-library/utils/preview-styles.mjs
 function findNearest(input, numbers) {
@@ -19603,12 +20426,12 @@ function getFacePreviewStyle(face) {
 }
 
 // packages/global-styles-ui/build-module/typography-example.mjs
-var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 function PreviewTypography({
   fontSize,
   variation
 }) {
-  const { base } = (0, import_element51.useContext)(GlobalStylesContext);
+  const { base } = (0, import_element56.useContext)(GlobalStylesContext);
   let config = base;
   if (variation) {
     config = { ...base, ...variation };
@@ -19625,7 +20448,7 @@ function PreviewTypography({
     bodyPreviewStyle.fontSize = fontSize;
     headingPreviewStyle.fontSize = fontSize;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
     import_components4.__unstableMotion.div,
     {
       animate: {
@@ -19645,8 +20468,8 @@ function PreviewTypography({
         lineHeight: 1
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("span", { style: headingPreviewStyle, children: (0, import_i18n9._x)("A", "Uppercase letter A") }),
-        /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("span", { style: bodyPreviewStyle, children: (0, import_i18n9._x)("a", "Lowercase letter A") })
+        /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { style: headingPreviewStyle, children: (0, import_i18n10._x)("A", "Uppercase letter A") }),
+        /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { style: bodyPreviewStyle, children: (0, import_i18n10._x)("a", "Lowercase letter A") })
       ]
     }
   );
@@ -19654,14 +20477,14 @@ function PreviewTypography({
 
 // packages/global-styles-ui/build-module/highlighted-colors.mjs
 var import_components5 = __toESM(require_components(), 1);
-var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 function HighlightedColors({
   normalizedColorSwatchSize,
   ratio
 }) {
   const { highlightedColors } = useStylesPreviewColors();
   const scaledSwatchSize = normalizedColorSwatchSize * ratio;
-  return highlightedColors.map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+  return highlightedColors.map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
     import_components5.__unstableMotion.div,
     {
       style: {
@@ -19689,8 +20512,8 @@ function HighlightedColors({
 // packages/global-styles-ui/build-module/preview-wrapper.mjs
 var import_components6 = __toESM(require_components(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
-var import_element52 = __toESM(require_element(), 1);
-var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+var import_element57 = __toESM(require_element(), 1);
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 var normalizedWidth = 248;
 var normalizedHeight = 152;
 var THROTTLE_OPTIONS = {
@@ -19706,21 +20529,21 @@ function PreviewWrapper({
   const [backgroundColor = "white"] = useStyle("color.background");
   const [gradientValue] = useStyle("color.gradient");
   const disableMotion = (0, import_compose3.useReducedMotion)();
-  const [isHovered, setIsHovered] = (0, import_element52.useState)(false);
+  const [isHovered, setIsHovered] = (0, import_element57.useState)(false);
   const [containerResizeListener, { width }] = (0, import_compose3.useResizeObserver)();
-  const [throttledWidth, setThrottledWidthState] = (0, import_element52.useState)(width);
-  const [ratioState, setRatioState] = (0, import_element52.useState)();
+  const [throttledWidth, setThrottledWidthState] = (0, import_element57.useState)(width);
+  const [ratioState, setRatioState] = (0, import_element57.useState)();
   const setThrottledWidth = (0, import_compose3.useThrottle)(
     setThrottledWidthState,
     250,
     THROTTLE_OPTIONS
   );
-  (0, import_element52.useLayoutEffect)(() => {
+  (0, import_element57.useLayoutEffect)(() => {
     if (width) {
       setThrottledWidth(width);
     }
   }, [width, setThrottledWidth]);
-  (0, import_element52.useLayoutEffect)(() => {
+  (0, import_element57.useLayoutEffect)(() => {
     const newRatio = throttledWidth ? throttledWidth / normalizedWidth : 1;
     const ratioDiff = newRatio - (ratioState || 0);
     const isRatioDiffBigEnough = Math.abs(ratioDiff) > 0.1;
@@ -19731,10 +20554,10 @@ function PreviewWrapper({
   const fallbackRatio = width ? width / normalizedWidth : 1;
   const ratio = ratioState ? ratioState : fallbackRatio;
   const isReady = !!width;
-  return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_jsx_runtime70.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", { style: { position: "relative" }, children: containerResizeListener }),
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(import_jsx_runtime76.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)("div", { style: { position: "relative" }, children: containerResizeListener }),
     !isReady && // Match the preview aspect ratio so layout doesn't jump once width is measured.
-    /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       Skeleton,
       {
         className: "global-styles-ui-preview__wrapper",
@@ -19743,7 +20566,7 @@ function PreviewWrapper({
         }
       }
     ),
-    isReady && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+    isReady && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       "div",
       {
         className: clsx_default("global-styles-ui-preview__wrapper", {
@@ -19755,7 +20578,7 @@ function PreviewWrapper({
         onMouseEnter: () => setIsHovered(true),
         onMouseLeave: () => setIsHovered(false),
         tabIndex: -1,
-        children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
           import_components6.__unstableMotion.div,
           {
             style: {
@@ -19777,7 +20600,7 @@ function PreviewWrapper({
 var preview_wrapper_default = PreviewWrapper;
 
 // packages/global-styles-ui/build-module/preview-styles.mjs
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var firstFrameVariants = {
   start: {
     scale: 1,
@@ -19827,14 +20650,14 @@ function PreviewStyles({
     "elements.h1.color.text"
   );
   const { paletteColors } = useStylesPreviewColors();
-  return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
     preview_wrapper_default,
     {
       label,
       isFocused,
       withHoverView,
       children: [
-        ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+        ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
           import_components7.__unstableMotion.div,
           {
             variants: firstFrameVariants,
@@ -19842,7 +20665,7 @@ function PreviewStyles({
               height: "100%",
               overflow: "hidden"
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
               import_components7.__experimentalHStack,
               {
                 spacing: 10 * ratio,
@@ -19852,14 +20675,14 @@ function PreviewStyles({
                   overflow: "hidden"
                 },
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
                     PreviewTypography,
                     {
                       fontSize: 65 * ratio,
                       variation
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(import_components7.__experimentalVStack, { spacing: 4 * ratio, children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_components7.__experimentalVStack, { spacing: 4 * ratio, children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
                     HighlightedColors,
                     {
                       normalizedColorSwatchSize: 32,
@@ -19872,7 +20695,7 @@ function PreviewStyles({
           },
           key
         ),
-        ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+        ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
           import_components7.__unstableMotion.div,
           {
             variants: withHoverView ? midFrameVariants : void 0,
@@ -19885,7 +20708,7 @@ function PreviewStyles({
               filter: "blur(60px)",
               opacity: 0.1
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
               import_components7.__experimentalHStack,
               {
                 spacing: 0,
@@ -19894,7 +20717,7 @@ function PreviewStyles({
                   height: "100%",
                   overflow: "hidden"
                 },
-                children: paletteColors.slice(0, 4).map(({ color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+                children: paletteColors.slice(0, 4).map(({ color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
                   "div",
                   {
                     style: {
@@ -19910,7 +20733,7 @@ function PreviewStyles({
           },
           key
         ),
-        ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+        ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
           import_components7.__unstableMotion.div,
           {
             variants: secondFrameVariants,
@@ -19921,7 +20744,7 @@ function PreviewStyles({
               position: "absolute",
               top: 0
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
               import_components7.__experimentalVStack,
               {
                 spacing: 3 * ratio,
@@ -19932,7 +20755,7 @@ function PreviewStyles({
                   padding: 10 * ratio,
                   boxSizing: "border-box"
                 },
-                children: label && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+                children: label && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
                   "div",
                   {
                     style: {
@@ -19958,14 +20781,14 @@ function PreviewStyles({
 var preview_styles_default = PreviewStyles;
 
 // packages/global-styles-ui/build-module/screen-root.mjs
-var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
 var import_blocks2 = __toESM(require_blocks(), 1);
-var import_i18n12 = __toESM(require_i18n(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
 var import_components11 = __toESM(require_components(), 1);
 var import_data4 = __toESM(require_data(), 1);
-var import_element53 = __toESM(require_element(), 1);
+var import_element58 = __toESM(require_element(), 1);
 var import_block_editor3 = __toESM(require_block_editor(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 import { speak } from "@wordpress/a11y";
@@ -19974,7 +20797,7 @@ import { speak } from "@wordpress/a11y";
 var import_blocks = __toESM(require_blocks(), 1);
 var import_data3 = __toESM(require_data(), 1);
 var import_components9 = __toESM(require_components(), 1);
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 function getFilteredBlockStyles(blockStyles, variations) {
   return blockStyles?.filter(
     (style) => style.source === "block" || variations.includes(style.name)
@@ -19995,13 +20818,13 @@ function useBlockVariations(name2) {
 
 // packages/global-styles-ui/build-module/screen-header.mjs
 var import_components10 = __toESM(require_components(), 1);
-var import_i18n11 = __toESM(require_i18n(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
 var import_block_editor2 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 var { StateControl, StateControlBadges } = unlock3(import_block_editor2.privateApis);
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel: useHasDimensionsPanel2,
   useHasTypographyPanel: useHasTypographyPanel2,
@@ -20061,22 +20884,22 @@ function BlockMenuItem({ block, isCustomized }) {
   if (!hasBlockMenuItem) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
     NavigationButtonAsItem,
     {
       path: "/blocks/" + encodeURIComponent(block.name),
-      children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(import_components11.__experimentalHStack, { justify: "flex-start", spacing: 2, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_components11.__experimentalHStack, { justify: "flex-start", spacing: 2, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
           import_block_editor3.BlockIcon,
           {
             className: "global-styles-ui-block-types-item__icon",
             icon: block.icon
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components11.FlexItem, { children: block.title }),
-        isCustomized && /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(import_jsx_runtime75.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(VisuallyHidden, { children: (0, import_i18n12.__)("Has custom styles") }),
-          /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components11.FlexItem, { children: block.title }),
+        isCustomized && /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_jsx_runtime81.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(VisuallyHidden, { children: (0, import_i18n13.__)("Has custom styles") }),
+          /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
             "span",
             {
               "aria-hidden": "true",
@@ -20092,8 +20915,8 @@ function EmptyBlockList({
   filterValue,
   styleFilter
 }) {
-  const label = "customized" === styleFilter && !filterValue ? (0, import_i18n12.__)("You haven't customized any blocks yet.") : (0, import_i18n12.__)("No blocks found.");
-  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+  const label = "customized" === styleFilter && !filterValue ? (0, import_i18n13.__)("You haven't customized any blocks yet.") : (0, import_i18n13.__)("No blocks found.");
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
     import_components11.__experimentalText,
     {
       align: "center",
@@ -20106,8 +20929,8 @@ function EmptyBlockList({
 function BlockList({ filterValue, styleFilter }) {
   const sortedBlockTypes = useSortedBlockTypes();
   const debouncedSpeak = (0, import_compose4.useDebounce)(speak, 500);
-  const { user } = (0, import_element53.useContext)(GlobalStylesContext);
-  const customizedBlockNames = (0, import_element53.useMemo)(() => {
+  const { user } = (0, import_element58.useContext)(GlobalStylesContext);
+  const customizedBlockNames = (0, import_element58.useMemo)(() => {
     const names = /* @__PURE__ */ new Set();
     const blockNames = [
       ...Object.keys(user?.styles?.blocks ?? {}),
@@ -20127,33 +20950,33 @@ function BlockList({ filterValue, styleFilter }) {
   const filteredBlockTypes = styleFilter === "customized" ? searchedBlockTypes.filter(
     (blockType) => customizedBlockNames.has(blockType.name)
   ) : searchedBlockTypes;
-  const blockTypesListRef = (0, import_element53.useRef)(null);
+  const blockTypesListRef = (0, import_element58.useRef)(null);
   const hasResults = filteredBlockTypes.length > 0;
-  (0, import_element53.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     if (!filterValue && styleFilter === "all") {
       return;
     }
     const count = hasResults ? blockTypesListRef.current?.childElementCount || 0 : 0;
-    const resultsFoundMessage = (0, import_i18n12.sprintf)(
+    const resultsFoundMessage = (0, import_i18n13.sprintf)(
       /* translators: %d: number of results. */
-      (0, import_i18n12._n)("%d result found.", "%d results found.", count),
+      (0, import_i18n13._n)("%d result found.", "%d results found.", count),
       count
     );
     debouncedSpeak(resultsFoundMessage, "polite");
   }, [filterValue, styleFilter, hasResults, debouncedSpeak]);
-  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
     "div",
     {
       ref: blockTypesListRef,
       className: "global-styles-ui-block-types-item-list",
       role: "list",
-      children: filteredBlockTypes.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      children: filteredBlockTypes.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
         EmptyBlockList,
         {
           filterValue,
           styleFilter
         }
-      ) : filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      ) : filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
         BlockMenuItem,
         {
           block,
@@ -20164,36 +20987,36 @@ function BlockList({ filterValue, styleFilter }) {
     }
   );
 }
-var MemoizedBlockList = (0, import_element53.memo)(BlockList);
+var MemoizedBlockList = (0, import_element58.memo)(BlockList);
 
 // packages/global-styles-ui/build-module/screen-block.mjs
 var import_blocks4 = __toESM(require_blocks(), 1);
 var import_block_editor5 = __toESM(require_block_editor(), 1);
-var import_element55 = __toESM(require_element(), 1);
+var import_element60 = __toESM(require_element(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_core_data3 = __toESM(require_core_data(), 1);
 var import_components14 = __toESM(require_components(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/block-preview-panel.mjs
 var import_block_editor4 = __toESM(require_block_editor(), 1);
 var import_blocks3 = __toESM(require_blocks(), 1);
 var import_components12 = __toESM(require_components(), 1);
-var import_element54 = __toESM(require_element(), 1);
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+var import_element59 = __toESM(require_element(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 var { getViewportBreakpoints: getViewportBreakpoints3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels2 } = unlock3(
   privateApis
 );
 
 // packages/global-styles-ui/build-module/subtitle.mjs
 var import_components13 = __toESM(require_components(), 1);
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
 function Subtitle({ children, level = 2 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_components13.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components13.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
 }
 
 // packages/global-styles-ui/build-module/screen-block.mjs
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel: useHasDimensionsPanel3,
   useHasTypographyPanel: useHasTypographyPanel3,
@@ -20214,36 +21037,36 @@ var {
 } = unlock3(import_block_editor5.privateApis);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
-var import_i18n28 = __toESM(require_i18n(), 1);
-var import_element67 = __toESM(require_element(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
+var import_element72 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-body.mjs
 var import_components15 = __toESM(require_components(), 1);
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/typography-elements.mjs
-var import_i18n14 = __toESM(require_i18n(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
 var import_components16 = __toESM(require_components(), 1);
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/variations/variations-typography.mjs
 var import_components18 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/preview-typography.mjs
 var import_components17 = __toESM(require_components(), 1);
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 var StylesPreviewTypography = ({
   variation,
   isFocused,
   withHoverView
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
     preview_wrapper_default,
     {
       label: variation.title,
       isFocused,
       withHoverView,
-      children: ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+      children: ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
         import_components17.__experimentalHStack,
         {
           spacing: 10 * ratio,
@@ -20252,7 +21075,7 @@ var StylesPreviewTypography = ({
             height: "100%",
             overflow: "hidden"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
             PreviewTypography,
             {
               variation,
@@ -20268,10 +21091,10 @@ var StylesPreviewTypography = ({
 var preview_typography_default = StylesPreviewTypography;
 
 // packages/global-styles-ui/build-module/variations/variation.mjs
-var import_element56 = __toESM(require_element(), 1);
+var import_element61 = __toESM(require_element(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
-var import_i18n15 = __toESM(require_i18n(), 1);
-var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 function Variation({
   variation,
   children,
@@ -20279,13 +21102,13 @@ function Variation({
   properties,
   showTooltip = false
 }) {
-  const [isFocused, setIsFocused] = (0, import_element56.useState)(false);
+  const [isFocused, setIsFocused] = (0, import_element61.useState)(false);
   const {
     base,
     user,
     onChange: setUserConfig
-  } = (0, import_element56.useContext)(GlobalStylesContext);
-  const context = (0, import_element56.useMemo)(() => {
+  } = (0, import_element61.useContext)(GlobalStylesContext);
+  const context = (0, import_element61.useMemo)(() => {
     let merged = mergeGlobalStyles(base, variation);
     if (properties) {
       merged = filterObjectByProperties(merged, properties);
@@ -20305,20 +21128,20 @@ function Variation({
       selectVariation();
     }
   };
-  const isActive = (0, import_element56.useMemo)(
+  const isActive = (0, import_element61.useMemo)(
     () => areGlobalStylesEqual(user, variation),
     [user, variation]
   );
   let label = variation?.title;
   if (variation?.description) {
-    label = (0, import_i18n15.sprintf)(
+    label = (0, import_i18n16.sprintf)(
       /* translators: 1: variation title. 2: variation description. */
-      (0, import_i18n15._x)("%1$s (%2$s)", "variation label"),
+      (0, import_i18n16._x)("%1$s (%2$s)", "variation label"),
       variation?.title,
       variation?.description
     );
   }
-  const content = /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+  const content = /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
     "div",
     {
       className: clsx_default("global-styles-ui-variations_item", {
@@ -20332,7 +21155,7 @@ function Variation({
       "aria-current": isActive,
       onFocus: () => setIsFocused(true),
       onBlur: () => setIsFocused(false),
-      children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
         "div",
         {
           className: clsx_default("global-styles-ui-variations_item-preview", {
@@ -20343,14 +21166,14 @@ function Variation({
       )
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(tooltip_exports.Trigger, { render: content }),
-    /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(tooltip_exports.Popup, { children: variation?.title })
+  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(tooltip_exports.Trigger, { render: content }),
+    /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(tooltip_exports.Popup, { children: variation?.title })
   ] }) : content });
 }
 
 // packages/global-styles-ui/build-module/variations/variations-typography.mjs
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 var propertiesToFilter = ["typography"];
 function TypographyVariations({
   title,
@@ -20360,9 +21183,9 @@ function TypographyVariations({
   if (typographyVariations?.length <= 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(import_components18.__experimentalVStack, { spacing: 3, children: [
-    title && /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(Subtitle, { level: 3, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(import_components18.__experimentalVStack, { spacing: 3, children: [
+    title && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Subtitle, { level: 3, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
       import_components18.__experimentalGrid,
       {
         columns: 3,
@@ -20370,13 +21193,13 @@ function TypographyVariations({
         className: "global-styles-ui-style-variations-container",
         children: typographyVariations.map(
           (variation, index2) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
               Variation,
               {
                 variation,
                 properties: propertiesToFilter,
                 showTooltip: true,
-                children: () => /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+                children: () => /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
                   preview_typography_default,
                   {
                     variation
@@ -20393,15 +21216,15 @@ function TypographyVariations({
 }
 
 // packages/global-styles-ui/build-module/font-families.mjs
-var import_i18n25 = __toESM(require_i18n(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
 var import_components28 = __toESM(require_components(), 1);
-var import_element66 = __toESM(require_element(), 1);
+var import_element71 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-library/context.mjs
-var import_element57 = __toESM(require_element(), 1);
+var import_element62 = __toESM(require_element(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_core_data5 = __toESM(require_core_data(), 1);
-var import_i18n17 = __toESM(require_i18n(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/font-library/api.mjs
 var import_api_fetch = __toESM(require_api_fetch(), 1);
@@ -20523,22 +21346,22 @@ function kebabCase(str) {
 }
 
 // packages/global-styles-ui/build-module/font-library/utils/constants.mjs
-var import_i18n16 = __toESM(require_i18n(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
 var ALLOWED_FILE_EXTENSIONS = ["otf", "ttf", "woff", "woff2"];
 var FONT_WEIGHTS = {
-  100: (0, import_i18n16._x)("Thin", "font weight"),
-  200: (0, import_i18n16._x)("Extra-light", "font weight"),
-  300: (0, import_i18n16._x)("Light", "font weight"),
-  400: (0, import_i18n16._x)("Normal", "font weight"),
-  500: (0, import_i18n16._x)("Medium", "font weight"),
-  600: (0, import_i18n16._x)("Semi-bold", "font weight"),
-  700: (0, import_i18n16._x)("Bold", "font weight"),
-  800: (0, import_i18n16._x)("Extra-bold", "font weight"),
-  900: (0, import_i18n16._x)("Black", "font weight")
+  100: (0, import_i18n17._x)("Thin", "font weight"),
+  200: (0, import_i18n17._x)("Extra-light", "font weight"),
+  300: (0, import_i18n17._x)("Light", "font weight"),
+  400: (0, import_i18n17._x)("Normal", "font weight"),
+  500: (0, import_i18n17._x)("Medium", "font weight"),
+  600: (0, import_i18n17._x)("Semi-bold", "font weight"),
+  700: (0, import_i18n17._x)("Bold", "font weight"),
+  800: (0, import_i18n17._x)("Extra-bold", "font weight"),
+  900: (0, import_i18n17._x)("Black", "font weight")
 };
 var FONT_STYLES = {
-  normal: (0, import_i18n16._x)("Normal", "font style"),
-  italic: (0, import_i18n16._x)("Italic", "font style")
+  normal: (0, import_i18n17._x)("Normal", "font style"),
+  italic: (0, import_i18n17._x)("Italic", "font style")
 };
 
 // packages/global-styles-ui/build-module/font-library/utils/index.mjs
@@ -20816,8 +21639,8 @@ function toggleFont(font2, face, initialfonts = []) {
 }
 
 // packages/global-styles-ui/build-module/font-library/context.mjs
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
-var FontLibraryContext = (0, import_element57.createContext)(
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var FontLibraryContext = (0, import_element62.createContext)(
   {}
 );
 FontLibraryContext.displayName = "FontLibraryContext";
@@ -20834,7 +21657,7 @@ function FontLibraryProvider({ children }) {
     globalStylesId ?? 0,
     { enabled: globalStylesId !== void 0 }
   );
-  const [isInstalling, setIsInstalling] = (0, import_element57.useState)(false);
+  const [isInstalling, setIsInstalling] = (0, import_element62.useState)(false);
   const { records: libraryPosts = [], isResolving: isResolvingLibrary } = (0, import_core_data5.useEntityRecords)(
     "postType",
     "wp_font_family",
@@ -20864,12 +21687,12 @@ function FontLibraryProvider({ children }) {
     );
     await saveEntityRecord("root", "globalStyles", finalGlobalStyles);
   };
-  const [modalTabOpen, setModalTabOpen] = (0, import_element57.useState)("");
-  const [libraryFontSelected, setLibraryFontSelected] = (0, import_element57.useState)(void 0);
+  const [modalTabOpen, setModalTabOpen] = (0, import_element62.useState)("");
+  const [libraryFontSelected, setLibraryFontSelected] = (0, import_element62.useState)(void 0);
   const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f) => setUIValuesNeeded(f, { source: "theme" })).sort((a, b) => a.name.localeCompare(b.name)) : [];
   const customFonts = fontFamilies?.custom ? fontFamilies.custom.map((f) => setUIValuesNeeded(f, { source: "custom" })).sort((a, b) => a.name.localeCompare(b.name)) : [];
   const baseCustomFonts = libraryFonts ? libraryFonts.map((f) => setUIValuesNeeded(f, { source: "custom" })).sort((a, b) => a.name.localeCompare(b.name)) : [];
-  (0, import_element57.useEffect)(() => {
+  (0, import_element62.useEffect)(() => {
     if (!modalTabOpen) {
       setLibraryFontSelected(void 0);
     }
@@ -20886,7 +21709,7 @@ function FontLibraryProvider({ children }) {
       source: font2.source
     });
   };
-  const [loadedFontUrls] = (0, import_element57.useState)(/* @__PURE__ */ new Set());
+  const [loadedFontUrls] = (0, import_element62.useState)(/* @__PURE__ */ new Set());
   const getAvailableFontsOutline = (availableFontFamilies) => {
     const outline = availableFontFamilies.reduce(
       (acc, font2) => {
@@ -21014,7 +21837,7 @@ function FontLibraryProvider({ children }) {
         await saveFontFamilies(activeFonts);
       }
       if (installationErrorMessages.length > 0) {
-        const installError = new Error((0, import_i18n17.__)("There was an error installing fonts."));
+        const installError = new Error((0, import_i18n18.__)("There was an error installing fonts."));
         installError.installationErrors = installationErrorMessages;
         throw installError;
       }
@@ -21024,7 +21847,7 @@ function FontLibraryProvider({ children }) {
   }
   async function uninstallFontFamily(fontFamilyToUninstall) {
     if (!fontFamilyToUninstall?.id) {
-      throw new Error((0, import_i18n17.__)("Font family to uninstall is not defined."));
+      throw new Error((0, import_i18n18.__)("Font family to uninstall is not defined."));
     }
     try {
       await deleteEntityRecord(
@@ -21129,7 +21952,7 @@ function FontLibraryProvider({ children }) {
     loadFontFaceInBrowser(fontFace, src, "document");
     loadedFontUrls.add(src);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
     FontLibraryContext.Provider,
     {
       value: {
@@ -21157,7 +21980,7 @@ function FontLibraryProvider({ children }) {
 var context_default = FontLibraryProvider;
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-var import_i18n23 = __toESM(require_i18n(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
 var import_components26 = __toESM(require_components(), 1);
 var import_core_data8 = __toESM(require_core_data(), 1);
 var import_data8 = __toESM(require_data(), 1);
@@ -21166,17 +21989,17 @@ var import_data8 = __toESM(require_data(), 1);
 var import_components21 = __toESM(require_components(), 1);
 var import_core_data6 = __toESM(require_core_data(), 1);
 var import_data7 = __toESM(require_data(), 1);
-var import_element61 = __toESM(require_element(), 1);
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_element66 = __toESM(require_element(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-card.mjs
-var import_i18n18 = __toESM(require_i18n(), 1);
-var import_element59 = __toESM(require_element(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
+var import_element64 = __toESM(require_element(), 1);
 var import_components19 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-demo.mjs
-var import_element58 = __toESM(require_element(), 1);
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+var import_element63 = __toESM(require_element(), 1);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 var loadedPreviews = /* @__PURE__ */ new Set();
 function getPreviewUrl(fontFace) {
   if (fontFace.preview) {
@@ -21203,7 +22026,7 @@ function getDisplayFontFace(font2) {
   };
 }
 function FontDemo({ font: font2, text }) {
-  const ref = (0, import_element58.useRef)(null);
+  const ref = (0, import_element63.useRef)(null);
   const fontFace = getDisplayFontFace(font2);
   const style = getFamilyPreviewStyle(font2);
   text = text || ("name" in font2 ? font2.name : "");
@@ -21212,10 +22035,10 @@ function FontDemo({ font: font2, text }) {
   const isPreviewImage = Boolean(
     previewUrl && /\.(png|jpg|jpeg|gif|svg)$/i.test(previewUrl)
   );
-  const [isIntersecting, setIsIntersecting] = (0, import_element58.useState)(false);
-  const [isFontLoaded, setIsFontLoaded] = (0, import_element58.useState)(false);
-  const [resolvedUrl, setResolvedUrl] = (0, import_element58.useState)();
-  const { loadFontFaceAsset } = (0, import_element58.useContext)(FontLibraryContext);
+  const [isIntersecting, setIsIntersecting] = (0, import_element63.useState)(false);
+  const [isFontLoaded, setIsFontLoaded] = (0, import_element63.useState)(false);
+  const [resolvedUrl, setResolvedUrl] = (0, import_element63.useState)();
+  const { loadFontFaceAsset } = (0, import_element63.useContext)(FontLibraryContext);
   const isAssetLoaded = isPreviewImage ? !!previewUrl && (loadedPreviews.has(previewUrl) || resolvedUrl === previewUrl) : isFontLoaded;
   const estimatedImageWidth = Math.min(
     Math.max(text.length * 12, 48),
@@ -21229,7 +22052,7 @@ function FontDemo({ font: font2, text }) {
     ...style,
     ...faceStyles
   };
-  (0, import_element58.useEffect)(() => {
+  (0, import_element63.useEffect)(() => {
     if (isPreviewImage) {
       return;
     }
@@ -21241,7 +22064,7 @@ function FontDemo({ font: font2, text }) {
     }
     return () => observer.disconnect();
   }, [isPreviewImage]);
-  (0, import_element58.useEffect)(() => {
+  (0, import_element63.useEffect)(() => {
     const loadAsset = async () => {
       if (isIntersecting && !isPreviewImage) {
         if (fontFace.src) {
@@ -21252,15 +22075,15 @@ function FontDemo({ font: font2, text }) {
     };
     loadAsset();
   }, [fontFace, isIntersecting, loadFontFaceAsset, isPreviewImage]);
-  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)("div", { ref, className: "font-library__font-demo", children: isPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(import_jsx_runtime85.Fragment, { children: [
-    !isAssetLoaded && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("div", { ref, className: "font-library__font-demo", children: isPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_jsx_runtime91.Fragment, { children: [
+    !isAssetLoaded && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
       Skeleton,
       {
         className: "font-library__font-variant-demo-skeleton",
         style: { width: estimatedImageWidth }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
       "img",
       {
         src: previewUrl,
@@ -21279,7 +22102,7 @@ function FontDemo({ font: font2, text }) {
         )
       }
     )
-  ] }) : /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+  ] }) : /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
     "span",
     {
       style: textDemoStyle,
@@ -21291,7 +22114,7 @@ function FontDemo({ font: font2, text }) {
 var font_demo_default = FontDemo;
 
 // packages/global-styles-ui/build-module/font-library/font-card.mjs
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 function FontCard({
   font: font2,
   onClick,
@@ -21304,13 +22127,13 @@ function FontCard({
     cursor: !!onClick ? "pointer" : "default"
   };
   const navigator2 = (0, import_components19.useNavigator)();
-  const ref = (0, import_element59.useRef)(null);
-  (0, import_element59.useEffect)(() => {
+  const ref = (0, import_element64.useRef)(null);
+  (0, import_element64.useEffect)(() => {
     if (shouldFocus) {
       ref.current?.focus();
     }
   }, [shouldFocus]);
-  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
     import_components19.Button,
     {
       ref,
@@ -21323,19 +22146,19 @@ function FontCard({
       },
       style,
       className: "font-library__font-card",
-      children: /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(import_components19.Flex, { justify: "space-between", wrap: false, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(font_demo_default, { font: font2 }),
-        /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(import_components19.Flex, { justify: "flex-end", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components19.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components19.__experimentalText, { className: "font-library__font-card__count", children: variantsText || (0, import_i18n18.sprintf)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(import_components19.Flex, { justify: "space-between", wrap: false, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(font_demo_default, { font: font2 }),
+        /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(import_components19.Flex, { justify: "flex-end", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components19.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components19.__experimentalText, { className: "font-library__font-card__count", children: variantsText || (0, import_i18n19.sprintf)(
             /* translators: %d: Number of font variants. */
-            (0, import_i18n18._n)(
+            (0, import_i18n19._n)(
               "%d variant",
               "%d variants",
               variantsCount
             ),
             variantsCount
           ) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components19.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(icon_default, { icon: (0, import_i18n18.isRTL)() ? chevron_left_default : chevron_right_default }) })
+          /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components19.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(icon_default, { icon: (0, import_i18n19.isRTL)() ? chevron_left_default : chevron_right_default }) })
         ] })
       ] })
     }
@@ -21344,14 +22167,14 @@ function FontCard({
 var font_card_default = FontCard;
 
 // packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
-var import_element60 = __toESM(require_element(), 1);
+var import_element65 = __toESM(require_element(), 1);
 var import_components20 = __toESM(require_components(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 function LibraryFontVariant({
   face,
   font: font2
 }) {
-  const { isFontActivated, toggleActivateFont } = (0, import_element60.useContext)(FontLibraryContext);
+  const { isFontActivated, toggleActivateFont } = (0, import_element65.useContext)(FontLibraryContext);
   const isInstalled = (font2?.fontFace?.length ?? 0) > 0 ? isFontActivated(
     font2.slug,
     face.fontStyle,
@@ -21366,9 +22189,9 @@ function LibraryFontVariant({
     toggleActivateFont(font2);
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
-  const checkboxId = (0, import_element60.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_components20.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+  const checkboxId = (0, import_element65.useId)();
+  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(import_components20.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
       import_components20.CheckboxControl,
       {
         checked: isInstalled,
@@ -21376,7 +22199,7 @@ function LibraryFontVariant({
         id: checkboxId
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
       font_demo_default,
       {
         font: face,
@@ -21422,7 +22245,7 @@ function sortFontFaces(faces) {
 }
 
 // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 function getFontFamiliesKey(fontFamilies) {
   if (!fontFamilies) {
     return "";
@@ -21448,11 +22271,11 @@ function InstalledFonts() {
     isInstalling,
     saveFontFamilies,
     getFontFacesActivated
-  } = (0, import_element61.useContext)(FontLibraryContext);
+  } = (0, import_element66.useContext)(FontLibraryContext);
   const [fontFamilies, setFontFamilies] = useSetting("typography.fontFamilies");
-  const [lastSelectedFontSlug, setLastSelectedFontSlug] = (0, import_element61.useState)(void 0);
-  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = (0, import_element61.useState)(false);
-  const [notice, setNotice] = (0, import_element61.useState)(null);
+  const [lastSelectedFontSlug, setLastSelectedFontSlug] = (0, import_element66.useState)(void 0);
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = (0, import_element66.useState)(false);
+  const [notice, setNotice] = (0, import_element66.useState)(null);
   const [baseFontFamilies] = useSetting("typography.fontFamilies", void 0, "base");
   const globalStylesId = (0, import_data7.useSelect)((select) => {
     const { __experimentalGetCurrentGlobalStylesId } = select(import_core_data6.store);
@@ -21466,7 +22289,7 @@ function InstalledFonts() {
   );
   const editedFontFamilies = globalStyles?.edits?.settings?.typography?.fontFamilies;
   const savedFontFamilies = globalStyles?.record?.settings?.typography?.fontFamilies;
-  const fontFamiliesHasChanges = (0, import_element61.useMemo)(() => {
+  const fontFamiliesHasChanges = (0, import_element66.useMemo)(() => {
     if (editedFontFamilies === void 0) {
       return false;
     }
@@ -21499,14 +22322,14 @@ function InstalledFonts() {
       await saveFontFamilies(fontFamilies);
       setNotice({
         type: "success",
-        message: (0, import_i18n19.__)("Font family updated successfully.")
+        message: (0, import_i18n20.__)("Font family updated successfully.")
       });
     } catch (error2) {
       setNotice({
         type: "error",
-        message: (0, import_i18n19.sprintf)(
+        message: (0, import_i18n20.sprintf)(
           /* translators: %s: error message */
-          (0, import_i18n19.__)("There was an error updating the font family. %s"),
+          (0, import_i18n20.__)("There was an error updating the font family. %s"),
           error2.message
         )
       });
@@ -21533,14 +22356,14 @@ function InstalledFonts() {
       font2.slug,
       font2.source
     ).length;
-    return (0, import_i18n19.sprintf)(
+    return (0, import_i18n20.sprintf)(
       /* translators: 1: Active font variants, 2: Total font variants. */
-      (0, import_i18n19.__)("%1$d of %2$d active"),
+      (0, import_i18n20.__)("%1$d of %2$d active"),
       variantsActive,
       variantsInstalled
     );
   };
-  (0, import_element61.useEffect)(() => {
+  (0, import_element66.useEffect)(() => {
     handleSetLibraryFontSelected(libraryFontSelected);
   }, []);
   const activeFontsCount = libraryFontSelected ? getFontFacesActivated(
@@ -21578,16 +22401,23 @@ function InstalledFonts() {
     }
   };
   const hasFonts = baseThemeFonts.length > 0 || baseCustomFonts.length > 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.ProgressBar, {}) }),
-    !isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_jsx_runtime88.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+      progress_exports.Root,
+      {
+        value: null,
+        "aria-label": (0, import_i18n20.__)("Loading fonts"),
+        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(progress_exports.Indicator, {}) })
+      }
+    ) }),
+    !isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_jsx_runtime94.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(
         import_components21.Navigator,
         {
           initialPath: libraryFontSelected ? "/fontFamily" : "/",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_components21.__experimentalVStack, { spacing: "8", children: [
-              notice && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalVStack, { spacing: "8", children: [
+              notice && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                 import_components21.Notice,
                 {
                   status: notice.type,
@@ -21595,23 +22425,23 @@ function InstalledFonts() {
                   children: notice.message
                 }
               ),
-              !hasFonts && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.__experimentalText, { as: "p", children: (0, import_i18n19.__)("No fonts installed.") }),
-              baseThemeFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_components21.__experimentalVStack, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("h2", {
+              !hasFonts && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalText, { as: "p", children: (0, import_i18n20.__)("No fonts installed.") }),
+              baseThemeFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalVStack, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)("h2", {
                   className: "font-library__fonts-title",
                   /* translators: Heading for a list of fonts provided by the theme. */
-                  children: (0, import_i18n19._x)("Theme", "font source")
+                  children: (0, import_i18n20._x)("Theme", "font source")
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
-                    children: baseThemeFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                    children: baseThemeFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                           font_card_default,
                           {
                             font: font2,
@@ -21634,22 +22464,22 @@ function InstalledFonts() {
                   }
                 )
               ] }),
-              baseCustomFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_components21.__experimentalVStack, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("h2", {
+              baseCustomFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalVStack, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)("h2", {
                   className: "font-library__fonts-title",
                   /* translators: Heading for a list of fonts installed by the user. */
-                  children: (0, import_i18n19._x)("Custom", "font source")
+                  children: (0, import_i18n20._x)("Custom", "font source")
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
-                    children: baseCustomFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                    children: baseCustomFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                           font_card_default,
                           {
                             font: font2,
@@ -21673,8 +22503,8 @@ function InstalledFonts() {
                 )
               ] })
             ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_components21.Navigator.Screen, { path: "/fontFamily", children: [
-              libraryFontSelected && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.Navigator.Screen, { path: "/fontFamily", children: [
+              libraryFontSelected && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                 ConfirmDeleteDialog,
                 {
                   font: libraryFontSelected,
@@ -21685,11 +22515,11 @@ function InstalledFonts() {
                   handleSetLibraryFontSelected
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_components21.Flex, { justify: "flex-start", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.Flex, { justify: "flex-start", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   import_components21.Navigator.BackButton,
                   {
-                    icon: (0, import_i18n19.isRTL)() ? chevron_right_default : chevron_left_default,
+                    icon: (0, import_i18n20.isRTL)() ? chevron_right_default : chevron_left_default,
                     size: "small",
                     onClick: () => {
                       setLastSelectedFontSlug(
@@ -21700,10 +22530,10 @@ function InstalledFonts() {
                       );
                       setNotice(null);
                     },
-                    label: (0, import_i18n19.__)("Back")
+                    label: (0, import_i18n20.__)("Back")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   import_components21.__experimentalHeading,
                   {
                     level: 2,
@@ -21713,9 +22543,9 @@ function InstalledFonts() {
                   }
                 )
               ] }),
-              notice && /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_jsx_runtime88.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.__experimentalSpacer, { margin: 1 }),
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+              notice && /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_jsx_runtime94.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 1 }),
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   import_components21.Notice,
                   {
                     status: notice.type,
@@ -21723,37 +22553,37 @@ function InstalledFonts() {
                     children: notice.message
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.__experimentalSpacer, { margin: 1 })
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 1 })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.__experimentalText, { children: (0, import_i18n19.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalText, { children: (0, import_i18n20.__)(
                 "Choose font variants. Keep in mind that too many variants could make your site slower."
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_components21.__experimentalVStack, { spacing: 0, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalVStack, { spacing: 0, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   import_components21.CheckboxControl,
                   {
                     className: "font-library__select-all",
-                    label: (0, import_i18n19.__)("Select all"),
+                    label: (0, import_i18n20.__)("Select all"),
                     checked: isSelectAllChecked,
                     onChange: toggleSelectAll,
                     indeterminate: isIndeterminate
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.__experimentalSpacer, { margin: 8 }),
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 8 }),
+                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
                     children: libraryFontSelected && getFontFacesToDisplay(
                       libraryFontSelected
-                    ).map((face, i) => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                    ).map((face, i) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                           library_font_variant_default,
                           {
                             font: libraryFontSelected,
@@ -21771,19 +22601,26 @@ function InstalledFonts() {
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_components21.__experimentalHStack, { justify: "flex-end", className: "font-library__footer", children: [
-        isInstalling && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components21.ProgressBar, {}),
-        shouldDisplayDeleteButton && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalHStack, { justify: "flex-end", className: "font-library__footer", children: [
+        isInstalling && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+          progress_exports.Root,
+          {
+            value: null,
+            "aria-label": (0, import_i18n20.__)("Installing fonts"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(progress_exports.Indicator, {}) })
+          }
+        ),
+        shouldDisplayDeleteButton && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
           import_components21.Button,
           {
             __next40pxDefaultSize: true,
             isDestructive: true,
             variant: "tertiary",
             onClick: handleUninstallClick,
-            children: (0, import_i18n19.__)("Delete")
+            children: (0, import_i18n20.__)("Delete")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
           import_components21.Button,
           {
             __next40pxDefaultSize: true,
@@ -21791,7 +22628,7 @@ function InstalledFonts() {
             onClick: handleUpdate,
             disabled: !fontFamiliesHasChanges,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n19.__)("Update")
+            children: (0, import_i18n20.__)("Update")
           }
         )
       ] })
@@ -21816,30 +22653,30 @@ function ConfirmDeleteDialog({
       handleSetLibraryFontSelected(void 0);
       setNotice({
         type: "success",
-        message: (0, import_i18n19.__)("Font family uninstalled successfully.")
+        message: (0, import_i18n20.__)("Font family uninstalled successfully.")
       });
     } catch (error2) {
       setNotice({
         type: "error",
-        message: (0, import_i18n19.__)("There was an error uninstalling the font family.") + error2.message
+        message: (0, import_i18n20.__)("There was an error uninstalling the font family.") + error2.message
       });
     }
   };
   const handleCancelUninstall = () => {
     setIsOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
     import_components21.__experimentalConfirmDialog,
     {
       isOpen,
-      cancelButtonText: (0, import_i18n19.__)("Cancel"),
-      confirmButtonText: (0, import_i18n19.__)("Delete"),
+      cancelButtonText: (0, import_i18n20.__)("Cancel"),
+      confirmButtonText: (0, import_i18n20.__)("Delete"),
       onCancel: handleCancelUninstall,
       onConfirm: handleConfirmUninstall,
       size: "medium",
-      children: font2 && (0, import_i18n19.sprintf)(
+      children: font2 && (0, import_i18n20.sprintf)(
         /* translators: %s: Name of the font. */
-        (0, import_i18n19.__)(
+        (0, import_i18n20.__)(
           'Are you sure you want to delete "%s" font and all its variants and assets?'
         ),
         font2.name
@@ -21850,10 +22687,10 @@ function ConfirmDeleteDialog({
 var installed_fonts_default = InstalledFonts;
 
 // packages/global-styles-ui/build-module/font-library/font-collection.mjs
-var import_element63 = __toESM(require_element(), 1);
+var import_element68 = __toESM(require_element(), 1);
 var import_components24 = __toESM(require_components(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
-var import_i18n21 = __toESM(require_i18n(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
 var import_core_data7 = __toESM(require_core_data(), 1);
 
 // packages/global-styles-ui/build-module/font-library/utils/filter-fonts.mjs
@@ -21897,9 +22734,9 @@ function isFontFontFaceInOutline(slug, face, outline) {
 }
 
 // packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.mjs
-var import_i18n20 = __toESM(require_i18n(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
 var import_components22 = __toESM(require_components(), 1);
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 function GoogleFontsConfirmDialog() {
   const handleConfirm = () => {
     window.localStorage.setItem(
@@ -21908,24 +22745,24 @@ function GoogleFontsConfirmDialog() {
     );
     window.dispatchEvent(new Event("storage"));
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)("div", { className: "font-library__google-fonts-confirm", children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components22.Card, { children: /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(import_components22.CardBody, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components22.__experimentalHeading, { level: 2, children: (0, import_i18n20.__)("Connect to Google Fonts") }),
-    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components22.__experimentalSpacer, { margin: 6 }),
-    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components22.__experimentalText, { as: "p", children: (0, import_i18n20.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("div", { className: "font-library__google-fonts-confirm", children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.Card, { children: /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(import_components22.CardBody, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalHeading, { level: 2, children: (0, import_i18n21.__)("Connect to Google Fonts") }),
+    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalSpacer, { margin: 6 }),
+    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalText, { as: "p", children: (0, import_i18n21.__)(
       "To install fonts from Google you must give permission to connect directly to Google servers. The fonts you install will be downloaded from Google and stored on your site. Your site will then use these locally-hosted fonts."
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components22.__experimentalSpacer, { margin: 3 }),
-    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components22.__experimentalText, { as: "p", children: (0, import_i18n20.__)(
+    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalSpacer, { margin: 3 }),
+    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalText, { as: "p", children: (0, import_i18n21.__)(
       "You can alternatively upload files directly on the Upload tab."
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components22.__experimentalSpacer, { margin: 6 }),
-    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalSpacer, { margin: 6 }),
+    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
       import_components22.Button,
       {
         __next40pxDefaultSize: true,
         variant: "primary",
         onClick: handleConfirm,
-        children: (0, import_i18n20.__)("Allow access to Google Fonts")
+        children: (0, import_i18n21.__)("Allow access to Google Fonts")
       }
     )
   ] }) }) });
@@ -21933,9 +22770,9 @@ function GoogleFontsConfirmDialog() {
 var google_fonts_confirm_dialog_default = GoogleFontsConfirmDialog;
 
 // packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
-var import_element62 = __toESM(require_element(), 1);
+var import_element67 = __toESM(require_element(), 1);
 var import_components23 = __toESM(require_components(), 1);
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function CollectionFontVariant({
   face,
   font: font2,
@@ -21950,9 +22787,9 @@ function CollectionFontVariant({
     handleToggleVariant(font2);
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
-  const checkboxId = (0, import_element62.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(import_components23.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+  const checkboxId = (0, import_element67.useId)();
+  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(import_components23.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       import_components23.CheckboxControl,
       {
         checked: selected,
@@ -21960,7 +22797,7 @@ function CollectionFontVariant({
         id: checkboxId
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime90.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       font_demo_default,
       {
         font: face,
@@ -21973,10 +22810,10 @@ function CollectionFontVariant({
 var collection_font_variant_default = CollectionFontVariant;
 
 // packages/global-styles-ui/build-module/font-library/font-collection.mjs
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_CATEGORY = {
   slug: "all",
-  name: (0, import_i18n21._x)("All", "font categories")
+  name: (0, import_i18n22._x)("All", "font categories")
 };
 var LOCAL_STORAGE_ITEM = "wp-font-library-google-fonts-permission";
 var MIN_WINDOW_HEIGHT = 500;
@@ -21985,22 +22822,22 @@ function FontCollection({ slug }) {
   const getGoogleFontsPermissionFromStorage = () => {
     return window.localStorage.getItem(LOCAL_STORAGE_ITEM) === "true";
   };
-  const [selectedFont, setSelectedFont] = (0, import_element63.useState)(
+  const [selectedFont, setSelectedFont] = (0, import_element68.useState)(
     null
   );
-  const [lastSelectedFontSlug, setLastSelectedFontSlug] = (0, import_element63.useState)(void 0);
-  const [notice, setNotice] = (0, import_element63.useState)(null);
-  const [fontsToInstall, setFontsToInstall] = (0, import_element63.useState)(
+  const [lastSelectedFontSlug, setLastSelectedFontSlug] = (0, import_element68.useState)(void 0);
+  const [notice, setNotice] = (0, import_element68.useState)(null);
+  const [fontsToInstall, setFontsToInstall] = (0, import_element68.useState)(
     []
   );
-  const [page, setPage] = (0, import_element63.useState)(1);
-  const [filters, setFilters] = (0, import_element63.useState)({});
-  const [renderConfirmDialog, setRenderConfirmDialog] = (0, import_element63.useState)(
+  const [page, setPage] = (0, import_element68.useState)(1);
+  const [filters, setFilters] = (0, import_element68.useState)({});
+  const [renderConfirmDialog, setRenderConfirmDialog] = (0, import_element68.useState)(
     requiresPermission && !getGoogleFontsPermissionFromStorage()
   );
-  const { installFonts, isInstalling } = (0, import_element63.useContext)(FontLibraryContext);
+  const { installFonts, isInstalling } = (0, import_element68.useContext)(FontLibraryContext);
   const { record: selectedCollection, isResolving: isLoading } = (0, import_core_data7.useEntityRecord)("root", "fontCollection", slug);
-  (0, import_element63.useEffect)(() => {
+  (0, import_element68.useEffect)(() => {
     const handleStorage = () => {
       setRenderConfirmDialog(
         requiresPermission && !getGoogleFontsPermissionFromStorage()
@@ -22014,19 +22851,19 @@ function FontCollection({ slug }) {
     window.localStorage.setItem(LOCAL_STORAGE_ITEM, "false");
     window.dispatchEvent(new Event("storage"));
   };
-  (0, import_element63.useEffect)(() => {
+  (0, import_element68.useEffect)(() => {
     setSelectedFont(null);
   }, [slug]);
-  (0, import_element63.useEffect)(() => {
+  (0, import_element68.useEffect)(() => {
     setFontsToInstall([]);
   }, [selectedFont]);
-  const collectionFonts = (0, import_element63.useMemo)(
+  const collectionFonts = (0, import_element68.useMemo)(
     () => selectedCollection?.font_families ?? [],
     [selectedCollection]
   );
   const collectionCategories = selectedCollection?.categories ?? [];
   const categories = [DEFAULT_CATEGORY, ...collectionCategories];
-  const fonts = (0, import_element63.useMemo)(
+  const fonts = (0, import_element68.useMemo)(
     () => filterFonts(collectionFonts, filters),
     [collectionFonts, filters]
   );
@@ -22085,7 +22922,7 @@ function FontCollection({ slug }) {
     } catch {
       setNotice({
         type: "error",
-        message: (0, import_i18n21.__)(
+        message: (0, import_i18n22.__)(
           "Error installing the fonts, could not be downloaded."
         )
       });
@@ -22095,7 +22932,7 @@ function FontCollection({ slug }) {
       await installFonts([fontFamily]);
       setNotice({
         type: "success",
-        message: (0, import_i18n21.__)("Fonts were installed successfully.")
+        message: (0, import_i18n22.__)("Fonts were installed successfully.")
       });
     } catch (error2) {
       setNotice({
@@ -22121,75 +22958,82 @@ function FontCollection({ slug }) {
     return sortFontFaces(fontFamily.fontFace);
   };
   if (renderConfirmDialog) {
-    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(google_fonts_confirm_dialog_default, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(google_fonts_confirm_dialog_default, {});
   }
   const showActions = slug === "google-fonts" && !renderConfirmDialog && !selectedFont;
-  return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    isLoading && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.ProgressBar, {}) }),
-    !isLoading && selectedCollection && /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_jsx_runtime91.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    isLoading && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+      progress_exports.Root,
+      {
+        value: null,
+        "aria-label": (0, import_i18n22.__)("Loading fonts"),
+        children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(progress_exports.Indicator, {}) })
+      }
+    ) }),
+    !isLoading && selectedCollection && /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
         import_components24.Navigator,
         {
           initialPath: "/",
           className: "font-library__tabpanel-layout",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_components24.Navigator.Screen, { path: "/", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_components24.__experimentalHStack, { justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_components24.__experimentalVStack, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
-                  /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalText, { children: selectedCollection.description })
+            /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.Navigator.Screen, { path: "/", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.__experimentalHStack, { justify: "space-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.__experimentalVStack, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
+                  /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalText, { children: selectedCollection.description })
                 ] }),
-                showActions && /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(menu_exports.Root, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                showActions && /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(menu_exports.Root, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                     menu_exports.Trigger,
                     {
-                      render: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                      render: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                         import_components24.Button,
                         {
                           size: "small",
                           icon: more_vertical_default,
-                          label: (0, import_i18n21.__)("Actions")
+                          label: (0, import_i18n22.__)("Actions")
                         }
                       )
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                     menu_exports.Popup,
                     {
-                      positioner: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                      positioner: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                         menu_exports.Positioner,
                         {
                           side: "bottom",
                           align: "end"
                         }
                       ),
-                      children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(menu_exports.Item, { onClick: revokeAccess, children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n21.__)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(menu_exports.Item, { onClick: revokeAccess, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n22.__)(
                         "Revoke access to Google Fonts"
                       ) }) })
                     }
                   )
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_components24.__experimentalHStack, { spacing: 4, justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.__experimentalHStack, { spacing: 4, justify: "space-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                   import_components24.SearchControl,
                   {
                     className: "font-library__search",
                     value: filters.search,
-                    placeholder: (0, import_i18n21.__)("Font name\u2026"),
-                    label: (0, import_i18n21.__)("Search"),
+                    placeholder: (0, import_i18n22.__)("Font name\u2026"),
+                    label: (0, import_i18n22.__)("Search"),
                     onChange: debouncedUpdateSearchInput,
                     hideLabelFromVision: false
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                   import_components24.SelectControl,
                   {
-                    label: (0, import_i18n21.__)("Category"),
+                    label: (0, import_i18n22.__)("Category"),
                     value: filters.category,
                     onChange: handleCategoryFilter,
-                    children: categories && categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                    children: categories && categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                       "option",
                       {
                         value: category.slug,
@@ -22200,20 +23044,20 @@ function FontCollection({ slug }) {
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              !!selectedCollection?.font_families?.length && !fonts.length && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalText, { children: (0, import_i18n21.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
+              !!selectedCollection?.font_families?.length && !fonts.length && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalText, { children: (0, import_i18n22.__)(
                 "No fonts found. Try with a different search term."
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("div", { className: "font-library__fonts-grid__main", children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "font-library__fonts-grid__main", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                 "ul",
                 {
                   role: "list",
                   className: "font-library__fonts-list",
-                  children: items.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                  children: items.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                     "li",
                     {
                       className: "font-library__fonts-list-item",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                         font_card_default,
                         {
                           font: font2.font_family_settings,
@@ -22232,12 +23076,12 @@ function FontCollection({ slug }) {
                 }
               ) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_components24.Navigator.Screen, { path: "/fontFamily", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_components24.Flex, { justify: "flex-start", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.Navigator.Screen, { path: "/fontFamily", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.Flex, { justify: "flex-start", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                   import_components24.Navigator.BackButton,
                   {
-                    icon: (0, import_i18n21.isRTL)() ? chevron_right_default : chevron_left_default,
+                    icon: (0, import_i18n22.isRTL)() ? chevron_right_default : chevron_left_default,
                     size: "small",
                     onClick: () => {
                       setLastSelectedFontSlug(
@@ -22246,10 +23090,10 @@ function FontCollection({ slug }) {
                       setSelectedFont(null);
                       setNotice(null);
                     },
-                    label: (0, import_i18n21.__)("Back")
+                    label: (0, import_i18n22.__)("Back")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                   import_components24.__experimentalHeading,
                   {
                     level: 2,
@@ -22259,9 +23103,9 @@ function FontCollection({ slug }) {
                   }
                 )
               ] }),
-              notice && /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_jsx_runtime91.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalSpacer, { margin: 1 }),
-                /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+              notice && /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 1 }),
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                   import_components24.Notice,
                   {
                     status: notice.type,
@@ -22269,32 +23113,32 @@ function FontCollection({ slug }) {
                     children: notice.message
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalSpacer, { margin: 1 })
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 1 })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalText, { children: (0, import_i18n21.__)("Select font variants to install.") }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalText, { children: (0, import_i18n22.__)("Select font variants to install.") }),
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                 import_components24.CheckboxControl,
                 {
                   className: "font-library__select-all",
-                  label: (0, import_i18n21.__)("Select all"),
+                  label: (0, import_i18n22.__)("Select all"),
                   checked: isSelectAllChecked,
                   onChange: toggleSelectAll,
                   indeterminate: isIndeterminate
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                 "ul",
                 {
                   role: "list",
                   className: "font-library__fonts-list",
                   children: selectedFont && getSortedFontFaces(selectedFont).map(
-                    (face, i) => /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                    (face, i) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                           collection_font_variant_default,
                           {
                             font: selectedFont,
@@ -22314,17 +23158,17 @@ function FontCollection({ slug }) {
                   )
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components24.__experimentalSpacer, { margin: 16 })
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 16 })
             ] })
           ]
         }
       ),
-      selectedFont && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+      selectedFont && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
         import_components24.Flex,
         {
           justify: "flex-end",
           className: "font-library__footer",
-          children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
             import_components24.Button,
             {
               __next40pxDefaultSize: true,
@@ -22333,12 +23177,12 @@ function FontCollection({ slug }) {
               isBusy: isInstalling,
               disabled: fontsToInstall.length === 0 || isInstalling,
               accessibleWhenDisabled: true,
-              children: (0, import_i18n21.__)("Install")
+              children: (0, import_i18n22.__)("Install")
             }
           )
         }
       ),
-      !selectedFont && /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(
+      !selectedFont && /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
         import_components24.__experimentalHStack,
         {
           expanded: false,
@@ -22346,17 +23190,17 @@ function FontCollection({ slug }) {
           justify: "end",
           spacing: 6,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
               import_components24.__experimentalHStack,
               {
                 justify: "flex-start",
                 expanded: false,
                 spacing: 1,
                 className: "font-library__page-selection",
-                children: (0, import_element63.createInterpolateElement)(
-                  (0, import_i18n21.sprintf)(
+                children: (0, import_element68.createInterpolateElement)(
+                  (0, import_i18n22.sprintf)(
                     // translators: 1: Current page number, 2: Total number of pages.
-                    (0, import_i18n21._x)(
+                    (0, import_i18n22._x)(
                       "<div>Page</div>%1$s<div>of %2$d</div>",
                       "paging"
                     ),
@@ -22364,12 +23208,12 @@ function FontCollection({ slug }) {
                     totalPages
                   ),
                   {
-                    div: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("div", { "aria-hidden": true }),
+                    div: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { "aria-hidden": true }),
                     // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
-                    CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                    CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                       import_components24.SelectControl,
                       {
-                        "aria-label": (0, import_i18n21.__)(
+                        "aria-label": (0, import_i18n22.__)(
                           "Current page"
                         ),
                         value: page.toString(),
@@ -22392,28 +23236,28 @@ function FontCollection({ slug }) {
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_components24.__experimentalHStack, { expanded: false, spacing: 1, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.__experimentalHStack, { expanded: false, spacing: 1, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                 import_components24.Button,
                 {
                   onClick: () => setPage(page - 1),
                   disabled: page === 1,
                   accessibleWhenDisabled: true,
-                  label: (0, import_i18n21.__)("Previous page"),
-                  icon: (0, import_i18n21.isRTL)() ? next_default : previous_default,
+                  label: (0, import_i18n22.__)("Previous page"),
+                  icon: (0, import_i18n22.isRTL)() ? next_default : previous_default,
                   showTooltip: true,
                   size: "compact",
                   tooltipPosition: "top"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                 import_components24.Button,
                 {
                   onClick: () => setPage(page + 1),
                   disabled: page === totalPages,
                   accessibleWhenDisabled: true,
-                  label: (0, import_i18n21.__)("Next page"),
-                  icon: (0, import_i18n21.isRTL)() ? previous_default : next_default,
+                  label: (0, import_i18n22.__)("Next page"),
+                  icon: (0, import_i18n22.isRTL)() ? previous_default : next_default,
                   showTooltip: true,
                   size: "compact",
                   tooltipPosition: "top"
@@ -22429,9 +23273,9 @@ function FontCollection({ slug }) {
 var font_collection_default = FontCollection;
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
-var import_i18n22 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 var import_components25 = __toESM(require_components(), 1);
-var import_element64 = __toESM(require_element(), 1);
+var import_element69 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
 var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
@@ -26249,12 +27093,12 @@ var inflate_default = (function() {
           var STR_APPLY_UIA_OK = true;
           try {
             String.fromCharCode.apply(null, [0]);
-          } catch (__49) {
+          } catch (__50) {
             STR_APPLY_OK = false;
           }
           try {
             String.fromCharCode.apply(null, new Uint8Array(1));
-          } catch (__49) {
+          } catch (__50) {
             STR_APPLY_UIA_OK = false;
           }
           var _utf8len = new utils.Buf8(256);
@@ -32486,11 +33330,11 @@ function makeFamiliesFromFaces(fontFaces) {
 }
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 function UploadFonts() {
-  const { installFonts } = (0, import_element64.useContext)(FontLibraryContext);
-  const [isUploading, setIsUploading] = (0, import_element64.useState)(false);
-  const [notice, setNotice] = (0, import_element64.useState)(null);
+  const { installFonts } = (0, import_element69.useContext)(FontLibraryContext);
+  const [isUploading, setIsUploading] = (0, import_element69.useState)(false);
+  const [notice, setNotice] = (0, import_element69.useState)(null);
   const handleDropZone = (files) => {
     handleFilesUpload(files);
   };
@@ -32526,7 +33370,7 @@ function UploadFonts() {
     if (allowedFiles.length > 0) {
       loadFiles(allowedFiles);
     } else {
-      const message = hasInvalidFiles ? (0, import_i18n22.__)("Sorry, you are not allowed to upload this file type.") : (0, import_i18n22.__)("No fonts found to install.");
+      const message = hasInvalidFiles ? (0, import_i18n23.__)("Sorry, you are not allowed to upload this file type.") : (0, import_i18n23.__)("No fonts found to install.");
       setNotice({
         type: "error",
         message
@@ -32596,7 +33440,7 @@ function UploadFonts() {
       await installFonts(fontFamilies);
       setNotice({
         type: "success",
-        message: (0, import_i18n22.__)("Fonts were installed successfully.")
+        message: (0, import_i18n23.__)("Fonts were installed successfully.")
       });
     } catch (error2) {
       const typedError = error2;
@@ -32608,10 +33452,10 @@ function UploadFonts() {
     }
     setIsUploading(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components25.DropZone, { onFilesDrop: handleDropZone }),
-    /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(import_components25.__experimentalVStack, { className: "font-library__local-fonts", justify: "start", children: [
-      notice && /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components25.DropZone, { onFilesDrop: handleDropZone }),
+    /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_components25.__experimentalVStack, { className: "font-library__local-fonts", justify: "start", children: [
+      notice && /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
         import_components25.Notice,
         {
           status: notice.type,
@@ -32619,12 +33463,19 @@ function UploadFonts() {
           onRemove: () => setNotice(null),
           children: [
             notice.message,
-            notice.errors && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("ul", { children: notice.errors.map((error2, index2) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("li", { children: error2 }, index2)) })
+            notice.errors && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("ul", { children: notice.errors.map((error2, index2) => /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("li", { children: error2 }, index2)) })
           ]
         }
       ),
-      isUploading && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components25.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { className: "font-library__upload-area", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components25.ProgressBar, {}) }) }),
-      !isUploading && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+      isUploading && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components25.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { className: "font-library__upload-area", children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+        progress_exports.Root,
+        {
+          value: null,
+          "aria-label": (0, import_i18n23.__)("Uploading fonts"),
+          children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(progress_exports.Indicator, {}) })
+        }
+      ) }) }),
+      !isUploading && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
         import_components25.FormFileUpload,
         {
           accept: ALLOWED_FILE_EXTENSIONS.map(
@@ -32632,18 +33483,18 @@ function UploadFonts() {
           ).join(","),
           multiple: true,
           onChange: onFilesUpload,
-          render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+          render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
             import_components25.Button,
             {
               __next40pxDefaultSize: true,
               className: "font-library__upload-area",
               onClick: openFileDialog,
-              children: (0, import_i18n22.__)("Upload font")
+              children: (0, import_i18n23.__)("Upload font")
             }
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components25.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n22.__)(
+      /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components25.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n23.__)(
         "Uploaded fonts appear in your library and can be used in your theme. Supported formats: .ttf, .otf, .woff, and .woff2."
       ) })
     ] })
@@ -32652,123 +33503,123 @@ function UploadFonts() {
 var upload_fonts_default = UploadFonts;
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 var { Tabs } = unlock3(import_components26.privateApis);
 var DEFAULT_TAB = {
   id: "installed-fonts",
-  title: (0, import_i18n23._x)("Library", "Font library")
+  title: (0, import_i18n24._x)("Library", "Font library")
 };
 var UPLOAD_TAB = {
   id: "upload-fonts",
-  title: (0, import_i18n23._x)("Upload", "noun")
+  title: (0, import_i18n24._x)("Upload", "noun")
 };
 
 // packages/global-styles-ui/build-module/font-family-item.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 var import_components27 = __toESM(require_components(), 1);
-var import_element65 = __toESM(require_element(), 1);
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var import_element70 = __toESM(require_element(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-families.mjs
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
-var import_i18n26 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 var import_components29 = __toESM(require_components(), 1);
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/text-shadows.mjs
-var import_i18n27 = __toESM(require_i18n(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
 var import_components30 = __toESM(require_components(), 1);
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-typography-element.mjs
-var import_i18n29 = __toESM(require_i18n(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
 var import_components31 = __toESM(require_components(), 1);
-var import_element68 = __toESM(require_element(), 1);
+var import_element73 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/typography-panel.mjs
 var import_block_editor6 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock3(import_block_editor6.privateApis);
 
 // packages/global-styles-ui/build-module/typography-preview.mjs
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-typography-element.mjs
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 var elements = {
   text: {
-    description: (0, import_i18n29.__)("Manage the fonts used on the site."),
-    title: (0, import_i18n29.__)("Text")
+    description: (0, import_i18n30.__)("Manage the fonts used on the site."),
+    title: (0, import_i18n30.__)("Text")
   },
   link: {
-    description: (0, import_i18n29.__)("Manage the fonts and typography used on the links."),
-    title: (0, import_i18n29.__)("Links")
+    description: (0, import_i18n30.__)("Manage the fonts and typography used on the links."),
+    title: (0, import_i18n30.__)("Links")
   },
   heading: {
-    description: (0, import_i18n29.__)("Manage the fonts and typography used on headings."),
-    title: (0, import_i18n29.__)("Headings")
+    description: (0, import_i18n30.__)("Manage the fonts and typography used on headings."),
+    title: (0, import_i18n30.__)("Headings")
   },
   caption: {
-    description: (0, import_i18n29.__)("Manage the fonts and typography used on captions."),
-    title: (0, import_i18n29.__)("Captions")
+    description: (0, import_i18n30.__)("Manage the fonts and typography used on captions."),
+    title: (0, import_i18n30.__)("Captions")
   },
   cite: {
-    description: (0, import_i18n29.__)("Manage the fonts and typography used on citations."),
-    title: (0, import_i18n29.__)("Citations")
+    description: (0, import_i18n30.__)("Manage the fonts and typography used on citations."),
+    title: (0, import_i18n30.__)("Citations")
   },
   button: {
-    description: (0, import_i18n29.__)("Manage the fonts and typography used on buttons."),
-    title: (0, import_i18n29.__)("Buttons")
+    description: (0, import_i18n30.__)("Manage the fonts and typography used on buttons."),
+    title: (0, import_i18n30.__)("Buttons")
   },
   textInput: {
-    description: (0, import_i18n29.__)("Manage the fonts and typography used on inputs."),
-    title: (0, import_i18n29.__)("Inputs")
+    description: (0, import_i18n30.__)("Manage the fonts and typography used on inputs."),
+    title: (0, import_i18n30.__)("Inputs")
   },
   select: {
-    description: (0, import_i18n29.__)("Manage the fonts and typography used on selects."),
-    title: (0, import_i18n29.__)("Selects")
+    description: (0, import_i18n30.__)("Manage the fonts and typography used on selects."),
+    title: (0, import_i18n30.__)("Selects")
   }
 };
 
 // packages/global-styles-ui/build-module/screen-colors.mjs
-var import_i18n31 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 var import_components33 = __toESM(require_components(), 1);
 var import_block_editor7 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/palette.mjs
 var import_components32 = __toESM(require_components(), 1);
-var import_i18n30 = __toESM(require_i18n(), 1);
-var import_element69 = __toESM(require_element(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
+var import_element74 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/palette.mjs
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-colors.mjs
-var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock3(
   import_block_editor7.privateApis
 );
 var ADDITIONAL_ELEMENTS = [
-  { name: "cite", label: (0, import_i18n31.__)("Citations") },
-  { name: "textInput", label: (0, import_i18n31.__)("Inputs") },
-  { name: "select", label: (0, import_i18n31.__)("Selects") }
+  { name: "cite", label: (0, import_i18n32.__)("Citations") },
+  { name: "textInput", label: (0, import_i18n32.__)("Inputs") },
+  { name: "select", label: (0, import_i18n32.__)("Selects") }
 ];
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/color-palette-panel.mjs
 var import_compose6 = __toESM(require_compose(), 1);
 var import_components36 = __toESM(require_components(), 1);
-var import_i18n32 = __toESM(require_i18n(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/variations/variations-color.mjs
 var import_components35 = __toESM(require_components(), 1);
@@ -32777,10 +33628,10 @@ var import_components35 = __toESM(require_components(), 1);
 var import_components34 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/preset-colors.mjs
-var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
 function PresetColors() {
   const { paletteColors } = useStylesPreviewColors();
-  return paletteColors.slice(0, 4).map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+  return paletteColors.slice(0, 4).map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
     "div",
     {
       style: {
@@ -32794,7 +33645,7 @@ function PresetColors() {
 }
 
 // packages/global-styles-ui/build-module/preview-colors.mjs
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 var firstFrameVariants2 = {
   start: {
     scale: 1,
@@ -32810,13 +33661,13 @@ var StylesPreviewColors = ({
   isFocused,
   withHoverView
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
     preview_wrapper_default,
     {
       label,
       isFocused,
       withHoverView,
-      children: ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+      children: ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
         import_components34.__unstableMotion.div,
         {
           variants: firstFrameVariants2,
@@ -32824,7 +33675,7 @@ var StylesPreviewColors = ({
             height: "100%",
             overflow: "hidden"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
             import_components34.__experimentalHStack,
             {
               spacing: 0,
@@ -32833,7 +33684,7 @@ var StylesPreviewColors = ({
                 height: "100%",
                 overflow: "hidden"
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(PresetColors, {})
+              children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(PresetColors, {})
             }
           )
         },
@@ -32845,7 +33696,7 @@ var StylesPreviewColors = ({
 var preview_colors_default = StylesPreviewColors;
 
 // packages/global-styles-ui/build-module/variations/variations-color.mjs
-var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 var propertiesToFilter2 = ["color"];
 function ColorVariations({
   title,
@@ -32855,16 +33706,16 @@ function ColorVariations({
   if (colorVariations?.length <= 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(import_components35.__experimentalVStack, { spacing: 3, children: [
-    title && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(Subtitle, { level: 3, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components35.__experimentalGrid, { gap, children: colorVariations.map((variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components35.__experimentalVStack, { spacing: 3, children: [
+    title && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Subtitle, { level: 3, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components35.__experimentalGrid, { gap, children: colorVariations.map((variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
       Variation,
       {
         variation,
         isPill: true,
         properties: propertiesToFilter2,
         showTooltip: true,
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(preview_colors_default, {})
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(preview_colors_default, {})
       },
       index2
     )) })
@@ -32872,130 +33723,130 @@ function ColorVariations({
 }
 
 // packages/global-styles-ui/build-module/color-palette-panel.mjs
-var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
 var import_compose7 = __toESM(require_compose(), 1);
 var import_components37 = __toESM(require_components(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
-var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
+var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/duotone-palette-panel.mjs
 var import_compose8 = __toESM(require_compose(), 1);
-var import_element70 = __toESM(require_element(), 1);
+var import_element75 = __toESM(require_element(), 1);
 var import_components38 = __toESM(require_components(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
-var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
+var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
-var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-background.mjs
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 var import_block_editor9 = __toESM(require_block_editor(), 1);
 var import_components39 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/background-panel.mjs
 var import_block_editor8 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 var { BackgroundPanel: StylesBackgroundPanel2 } = unlock3(
   import_block_editor8.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-background.mjs
-var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock3(import_block_editor9.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_components41 = __toESM(require_components(), 1);
-var import_i18n38 = __toESM(require_i18n(), 1);
-var import_element71 = __toESM(require_element(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
+var import_element76 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-reset-dialog.mjs
 var import_components40 = __toESM(require_components(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
-var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
+var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
-var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
-var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
 var import_components45 = __toESM(require_components(), 1);
-var import_i18n42 = __toESM(require_i18n(), 1);
-var import_element73 = __toESM(require_element(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
+var import_element78 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
 var import_components42 = __toESM(require_components(), 1);
-var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
 var import_components43 = __toESM(require_components(), 1);
-var import_i18n40 = __toESM(require_i18n(), 1);
-var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
+var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/rename-dialog.mjs
 var import_components44 = __toESM(require_components(), 1);
-var import_i18n41 = __toESM(require_i18n(), 1);
-var import_element72 = __toESM(require_element(), 1);
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
+var import_element77 = __toESM(require_element(), 1);
+var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
-var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-shadows.mjs
-var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows.mjs
-var import_i18n43 = __toESM(require_i18n(), 1);
-var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
+var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows-edit.mjs
 var import_components46 = __toESM(require_components(), 1);
-var import_i18n44 = __toESM(require_i18n(), 1);
-var import_element74 = __toESM(require_element(), 1);
-var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
+var import_element79 = __toESM(require_element(), 1);
+var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_i18n45 = __toESM(require_i18n(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
 var import_block_editor11 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/dimensions-panel.mjs
 var import_block_editor10 = __toESM(require_block_editor(), 1);
-var import_element75 = __toESM(require_element(), 1);
-var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var import_element80 = __toESM(require_element(), 1);
+var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock3(import_block_editor10.privateApis);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock3(
   import_block_editor11.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
 var import_components49 = __toESM(require_components(), 1);
-var import_i18n48 = __toESM(require_i18n(), 1);
+var import_i18n49 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_i18n47 = __toESM(require_i18n(), 1);
+var import_i18n48 = __toESM(require_i18n(), 1);
 var import_components48 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-container.mjs
 var import_core_data9 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
-var import_element76 = __toESM(require_element(), 1);
+var import_element81 = __toESM(require_element(), 1);
 var import_components47 = __toESM(require_components(), 1);
-var import_i18n46 = __toESM(require_i18n(), 1);
-var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var import_i18n47 = __toESM(require_i18n(), 1);
+var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 function StyleVariationsContainer({
   gap = 2
 }) {
-  const { user } = (0, import_element76.useContext)(GlobalStylesContext);
+  const { user } = (0, import_element81.useContext)(GlobalStylesContext);
   const userStyles = user?.styles;
   const variations = (0, import_data9.useSelect)((select) => {
     const result = select(
@@ -33011,10 +33862,10 @@ function StyleVariationsContainer({
       ]);
     }
   );
-  const themeVariations = (0, import_element76.useMemo)(() => {
+  const themeVariations = (0, import_element81.useMemo)(() => {
     const withEmptyVariation = [
       {
-        title: (0, import_i18n46.__)("Default"),
+        title: (0, import_i18n47.__)("Default"),
         settings: {},
         styles: {}
       },
@@ -33057,14 +33908,14 @@ function StyleVariationsContainer({
   if (!fullStyleVariations || fullStyleVariations.length < 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     import_components47.__experimentalGrid,
     {
       columns: 2,
       className: "global-styles-ui-style-variations-container",
       gap,
       children: themeVariations.map(
-        (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           preview_styles_default,
           {
             label: variation?.title,
@@ -33080,67 +33931,67 @@ function StyleVariationsContainer({
 var style_variations_container_default = StyleVariationsContainer;
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
-var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-css.mjs
-var import_i18n49 = __toESM(require_i18n(), 1);
+var import_i18n50 = __toESM(require_i18n(), 1);
 var import_components50 = __toESM(require_components(), 1);
 var import_block_editor12 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
 var { AdvancedPanel: StylesAdvancedPanel2 } = unlock3(import_block_editor12.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_i18n51 = __toESM(require_i18n(), 1);
+var import_i18n52 = __toESM(require_i18n(), 1);
 var import_components51 = __toESM(require_components(), 1);
-var import_element79 = __toESM(require_element(), 1);
+var import_element84 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
 var import_data10 = __toESM(require_data(), 1);
 var import_core_data10 = __toESM(require_core_data(), 1);
-var import_element77 = __toESM(require_element(), 1);
+var import_element82 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/revisions-list.mjs
-var import_i18n50 = __toESM(require_i18n(), 1);
+var import_i18n51 = __toESM(require_i18n(), 1);
 var import_date = __toESM(require_date(), 1);
 var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data11 = __toESM(require_data(), 1);
-var import_element78 = __toESM(require_element(), 1);
-var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var import_element83 = __toESM(require_element(), 1);
+var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
-var import_i18n52 = __toESM(require_i18n(), 1);
+var import_i18n53 = __toESM(require_i18n(), 1);
 var import_components52 = __toESM(require_components(), 1);
-var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_i18n54 = __toESM(require_i18n(), 1);
+var import_i18n55 = __toESM(require_i18n(), 1);
 var import_components54 = __toESM(require_components(), 1);
-var import_element80 = __toESM(require_element(), 1);
+var import_element85 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor13 = __toESM(require_block_editor(), 1);
-var import_i18n53 = __toESM(require_i18n(), 1);
-var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
+var import_i18n54 = __toESM(require_i18n(), 1);
+var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/size-control/index.mjs
 var import_components53 = __toESM(require_components(), 1);
-var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/with-global-styles-provider.mjs
-var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
 function withGlobalStylesProvider(Component) {
   return function WrappedComponent({
     value,
@@ -33148,13 +33999,13 @@ function withGlobalStylesProvider(Component) {
     onChange,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
       GlobalStylesProvider,
       {
         value,
         baseValue,
         onChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(Component, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(Component, { ...props })
       }
     );
   };
@@ -33170,7 +34021,7 @@ var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
 // packages/global-styles-ui/build-module/font-library/font-library.mjs
-var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 function FontLibrary({
   value,
   baseValue,
@@ -33180,21 +34031,21 @@ function FontLibrary({
   let content;
   switch (activeTab) {
     case "upload-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(upload_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(upload_fonts_default, {});
       break;
     case "installed-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(installed_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(installed_fonts_default, {});
       break;
     default:
-      content = /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(font_collection_default, { slug: activeTab });
+      content = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(font_collection_default, { slug: activeTab });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
     GlobalStylesProvider,
     {
       value,
       baseValue,
       onChange,
-      children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(context_default, { children: content })
+      children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(context_default, { children: content })
     }
   );
 }
@@ -33215,14 +34066,14 @@ if (typeof document !== "undefined" && (typeof process === "undefined" || true) 
 }
 
 // routes/font-list/stage.tsx
-var import_jsx_runtime139 = __toESM(require_jsx_runtime());
+var import_jsx_runtime145 = __toESM(require_jsx_runtime());
 var { Tabs: Tabs2 } = unlock4(import_components56.privateApis);
 var { useGlobalStyles } = unlock4(import_editor.privateApis);
 function FontLibraryPage() {
   const { records: collections = [] } = (0, import_core_data12.useEntityRecords)("root", "fontCollection", {
     _fields: "slug,name,description"
   });
-  const [activeTab, setActiveTab] = (0, import_element82.useState)("installed-fonts");
+  const [activeTab, setActiveTab] = (0, import_element87.useState)("installed-fonts");
   const { base, user, setUser, isReady } = useGlobalStyles();
   const canUserCreate = (0, import_data13.useSelect)((select) => {
     return select(import_core_data12.store).canUser("create", {
@@ -33236,35 +34087,35 @@ function FontLibraryPage() {
   const tabs = [
     {
       id: "installed-fonts",
-      title: (0, import_i18n55._x)("Library", "Font library")
+      title: (0, import_i18n56._x)("Library", "Font library")
     }
   ];
   if (canUserCreate) {
     tabs.push({
       id: "upload-fonts",
-      title: (0, import_i18n55._x)("Upload", "noun")
+      title: (0, import_i18n56._x)("Upload", "noun")
     });
     tabs.push(
       ...(collections || []).map(({ slug, name: name2 }) => ({
         id: slug,
-        title: collections && collections.length === 1 && slug === "google-fonts" ? (0, import_i18n55.__)("Install Fonts") : name2
+        title: collections && collections.length === 1 && slug === "google-fonts" ? (0, import_i18n56.__)("Install Fonts") : name2
       }))
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(page_default, { title: (0, import_i18n55.__)("Fonts"), className: "font-library-page", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className: "font-library-page__content", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(page_default, { title: (0, import_i18n56.__)("Fonts"), className: "font-library-page", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { className: "font-library-page__content", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
     Tabs2,
     {
       selectedTabId: activeTab,
       onSelect: (tabId) => setActiveTab(tabId),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className: "font-library-page__tablist", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(Tabs2.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(Tabs2.Tab, { tabId: id, children: title }, id)) }) }),
-        tabs.map(({ id }) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { className: "font-library-page__tablist", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Tabs2.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Tabs2.Tab, { tabId: id, children: title }, id)) }) }),
+        tabs.map(({ id }) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
           Tabs2.TabPanel,
           {
             tabId: id,
             focusable: false,
             className: "font-library-page__tab-panel",
-            children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
               FontLibrary,
               {
                 value: user,
@@ -33281,7 +34132,7 @@ function FontLibraryPage() {
   ) }) });
 }
 function Stage() {
-  return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(FontLibraryPage, {});
+  return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(FontLibraryPage, {});
 }
 var stage = Stage;
 export {
