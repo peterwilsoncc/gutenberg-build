@@ -41560,6 +41560,10 @@ ${text}
           link: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       html: false,
       spacing: {
         margin: true,
