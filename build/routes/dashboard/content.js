@@ -42107,9 +42107,9 @@ var useAutocompleteGridContext = () => (0, import_element126.useContext)(Autocom
 
 // packages/ui/build-module/form/primitives/autocomplete/root.mjs
 var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
-function Root11(props) {
+var Root11 = function Root22(props) {
   return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(AutocompleteGridContext.Provider, { value: Boolean(props.grid), children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(index_parts_exports2.Root, { ...props }) }) });
-}
+};
 
 // packages/ui/build-module/form/primitives/autocomplete/row.mjs
 var import_element127 = __toESM(require_element(), 1);
