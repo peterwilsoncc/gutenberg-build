@@ -30696,6 +30696,10 @@ ${url}
         margin: true,
         padding: true
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       color: {
         gradients: true,
         link: true,
