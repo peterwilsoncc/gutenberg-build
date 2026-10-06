@@ -259,6 +259,13 @@ var require_components = __commonJS({
   }
 });
 
+// package-external:@wordpress/block-editor
+var require_block_editor = __commonJS({
+  "package-external:@wordpress/block-editor"(exports, module) {
+    module.exports = window.wp.blockEditor;
+  }
+});
+
 // package-external:@wordpress/editor
 var require_editor = __commonJS({
   "package-external:@wordpress/editor"(exports, module) {
@@ -305,13 +312,6 @@ var require_url = __commonJS({
 var require_blocks = __commonJS({
   "package-external:@wordpress/blocks"(exports, module) {
     module.exports = window.wp.blocks;
-  }
-});
-
-// package-external:@wordpress/block-editor
-var require_block_editor = __commonJS({
-  "package-external:@wordpress/block-editor"(exports, module) {
-    module.exports = window.wp.blockEditor;
   }
 });
 
@@ -10326,6 +10326,7 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/styles/stage.tsx
+var import_block_editor = __toESM(require_block_editor());
 var import_i18n6 = __toESM(require_i18n());
 var import_editor = __toESM(require_editor());
 var import_compose = __toESM(require_compose());
@@ -10439,6 +10440,11 @@ if (typeof document !== "undefined" && (typeof process === "undefined" || true) 
 // routes/styles/stage.tsx
 var import_jsx_runtime27 = __toESM(require_jsx_runtime());
 var { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock2(import_editor.privateApis);
+var { ToolsPanelPopoverPropsContext } = unlock2(import_block_editor.privateApis);
+var TOOLS_PANEL_POPOVER_PROPS = {
+  dropdown: { placement: "right-start", offset: 32 },
+  item: { placement: "right-start", offset: 32, shift: true }
+};
 function Stage() {
   const navigate = useNavigate();
   const search = useSearch({ strict: false });
@@ -10556,11 +10562,17 @@ function Stage() {
       title: isPreviewingTheme ? getPreviewTitle(themeName) : (0, import_i18n6.__)("Styles"),
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "routes-styles__content", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-          GlobalStylesUIWrapper,
+          ToolsPanelPopoverPropsContext.Provider,
           {
-            path: section,
-            onPathChange: onChangeSection,
-            settings: editorSettings
+            value: TOOLS_PANEL_POPOVER_PROPS,
+            children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+              GlobalStylesUIWrapper,
+              {
+                path: section,
+                onPathChange: onChangeSection,
+                settings: editorSettings
+              }
+            )
           }
         ) }),
         isActivatePanelOpen && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
@@ -10596,7 +10608,7 @@ import { useEditorAssets, useEditorSettings as useEditorSettings2 } from "@wordp
 var import_components56 = __toESM(require_components(), 1);
 var import_blocks5 = __toESM(require_blocks(), 1);
 var import_data13 = __toESM(require_data(), 1);
-var import_block_editor14 = __toESM(require_block_editor(), 1);
+var import_block_editor15 = __toESM(require_block_editor(), 1);
 var import_element57 = __toESM(require_element(), 1);
 var import_compose8 = __toESM(require_compose(), 1);
 
@@ -12097,7 +12109,7 @@ function NavigationButtonAsItem(props) {
 // packages/global-styles-ui/build-module/root-menu.mjs
 var import_components4 = __toESM(require_components(), 1);
 var import_i18n9 = __toESM(require_i18n(), 1);
-var import_block_editor = __toESM(require_block_editor(), 1);
+var import_block_editor2 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/hooks.mjs
 var import_element26 = __toESM(require_element(), 1);
@@ -12372,7 +12384,7 @@ var {
   useHasColorPanel,
   useSettingsForBlockElement,
   useHasBackgroundPanel
-} = unlock4(import_block_editor.privateApis);
+} = unlock4(import_block_editor2.privateApis);
 
 // packages/global-styles-ui/build-module/preview-styles.mjs
 var import_components8 = __toESM(require_components(), 1);
@@ -12850,7 +12862,7 @@ var import_i18n13 = __toESM(require_i18n(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_element29 = __toESM(require_element(), 1);
-var import_block_editor3 = __toESM(require_block_editor(), 1);
+var import_block_editor4 = __toESM(require_block_editor(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 import { speak } from "@wordpress/a11y";
 
@@ -12880,9 +12892,9 @@ function useBlockVariations(name2) {
 // packages/global-styles-ui/build-module/screen-header.mjs
 var import_components11 = __toESM(require_components(), 1);
 var import_i18n12 = __toESM(require_i18n(), 1);
-var import_block_editor2 = __toESM(require_block_editor(), 1);
+var import_block_editor3 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
-var { StateControl, StateControlBadges } = unlock4(import_block_editor2.privateApis);
+var { StateControl, StateControlBadges } = unlock4(import_block_editor3.privateApis);
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
 var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
@@ -12894,7 +12906,7 @@ var {
   useHasColorPanel: useHasColorPanel2,
   useHasBackgroundPanel: useHasBackgroundPanel2,
   searchItems
-} = unlock4(import_block_editor3.privateApis);
+} = unlock4(import_block_editor4.privateApis);
 function hasAnyValue(value) {
   if (value === void 0 || value === null) {
     return false;
@@ -12951,7 +12963,7 @@ function BlockMenuItem({ block, isCustomized }) {
       path: "/blocks/" + encodeURIComponent(block.name),
       children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_components12.__experimentalHStack, { justify: "flex-start", spacing: 2, children: [
         /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-          import_block_editor3.BlockIcon,
+          import_block_editor4.BlockIcon,
           {
             className: "global-styles-ui-block-types-item__icon",
             icon: block.icon
@@ -13052,7 +13064,7 @@ var MemoizedBlockList = (0, import_element29.memo)(BlockList);
 
 // packages/global-styles-ui/build-module/screen-block.mjs
 var import_blocks4 = __toESM(require_blocks(), 1);
-var import_block_editor5 = __toESM(require_block_editor(), 1);
+var import_block_editor6 = __toESM(require_block_editor(), 1);
 var import_element31 = __toESM(require_element(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_core_data5 = __toESM(require_core_data(), 1);
@@ -13060,7 +13072,7 @@ var import_components15 = __toESM(require_components(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/block-preview-panel.mjs
-var import_block_editor4 = __toESM(require_block_editor(), 1);
+var import_block_editor5 = __toESM(require_block_editor(), 1);
 var import_blocks3 = __toESM(require_blocks(), 1);
 var import_components13 = __toESM(require_components(), 1);
 var import_element30 = __toESM(require_element(), 1);
@@ -13095,7 +13107,7 @@ var {
   FiltersPanel: StylesFiltersPanel,
   ImageSettingsPanel,
   AdvancedPanel: StylesAdvancedPanel
-} = unlock4(import_block_editor5.privateApis);
+} = unlock4(import_block_editor6.privateApis);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
 var import_i18n29 = __toESM(require_i18n(), 1);
@@ -23456,9 +23468,9 @@ var import_components32 = __toESM(require_components(), 1);
 var import_element44 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/typography-panel.mjs
-var import_block_editor6 = __toESM(require_block_editor(), 1);
+var import_block_editor7 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock4(import_block_editor6.privateApis);
+var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock4(import_block_editor7.privateApis);
 
 // packages/global-styles-ui/build-module/typography-preview.mjs
 var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
@@ -23503,7 +23515,7 @@ var elements = {
 // packages/global-styles-ui/build-module/screen-colors.mjs
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_components34 = __toESM(require_components(), 1);
-var import_block_editor7 = __toESM(require_block_editor(), 1);
+var import_block_editor8 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/palette.mjs
 var import_components33 = __toESM(require_components(), 1);
@@ -23519,7 +23531,7 @@ var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
 // packages/global-styles-ui/build-module/screen-colors.mjs
 var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock4(
-  import_block_editor7.privateApis
+  import_block_editor8.privateApis
 );
 var ADDITIONAL_ELEMENTS = [
   { name: "cite", label: (0, import_i18n32.__)("Citations") },
@@ -23657,19 +23669,19 @@ var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-background.mjs
 var import_i18n37 = __toESM(require_i18n(), 1);
-var import_block_editor9 = __toESM(require_block_editor(), 1);
+var import_block_editor10 = __toESM(require_block_editor(), 1);
 var import_components40 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/background-panel.mjs
-var import_block_editor8 = __toESM(require_block_editor(), 1);
+var import_block_editor9 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 var { BackgroundPanel: StylesBackgroundPanel2 } = unlock4(
-  import_block_editor8.privateApis
+  import_block_editor9.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-background.mjs
 var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock4(import_block_editor9.privateApis);
+var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock4(import_block_editor10.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_i18n40 = __toESM(require_i18n(), 1);
@@ -23728,18 +23740,18 @@ var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
 var import_i18n46 = __toESM(require_i18n(), 1);
-var import_block_editor11 = __toESM(require_block_editor(), 1);
+var import_block_editor12 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/dimensions-panel.mjs
-var import_block_editor10 = __toESM(require_block_editor(), 1);
+var import_block_editor11 = __toESM(require_block_editor(), 1);
 var import_element51 = __toESM(require_element(), 1);
 var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock4(import_block_editor10.privateApis);
+var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock4(import_block_editor11.privateApis);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock4(
-  import_block_editor11.privateApis
+  import_block_editor12.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
@@ -23853,9 +23865,9 @@ var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 // packages/global-styles-ui/build-module/screen-css.mjs
 var import_i18n50 = __toESM(require_i18n(), 1);
 var import_components51 = __toESM(require_components(), 1);
-var import_block_editor12 = __toESM(require_block_editor(), 1);
+var import_block_editor13 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var { AdvancedPanel: StylesAdvancedPanel2 } = unlock4(import_block_editor12.privateApis);
+var { AdvancedPanel: StylesAdvancedPanel2 } = unlock4(import_block_editor13.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
 var import_i18n52 = __toESM(require_i18n(), 1);
@@ -24017,7 +24029,7 @@ var import_components55 = __toESM(require_components(), 1);
 var import_element56 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
-var import_block_editor13 = __toESM(require_block_editor(), 1);
+var import_block_editor14 = __toESM(require_block_editor(), 1);
 var import_i18n54 = __toESM(require_i18n(), 1);
 var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 

@@ -72912,12 +72912,18 @@ If there's a particular need for this, please submit a feature request at https:
   var import_router19 = __toESM(require_router(), 1);
   var import_editor21 = __toESM(require_editor(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
+  var import_block_editor20 = __toESM(require_block_editor(), 1);
   var import_data57 = __toESM(require_data(), 1);
   var import_components128 = __toESM(require_components(), 1);
   var import_url14 = __toESM(require_url(), 1);
   var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
   var { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock(import_editor21.privateApis);
   var { useLocation: useLocation19, useHistory: useHistory13 } = unlock(import_router19.privateApis);
+  var { ToolsPanelPopoverPropsContext } = unlock(import_block_editor20.privateApis);
+  var TOOLS_PANEL_POPOVER_PROPS = {
+    dropdown: { placement: "right-start", offset: 32 },
+    item: { placement: "right-start", offset: 32, shift: true }
+  };
   var GlobalStylesPageActions = ({
     isStyleBookOpened,
     setIsStyleBookOpened,
@@ -72992,11 +72998,17 @@ If there's a particular need for this, please submit a feature request at https:
         title: (0, import_i18n140.__)("Styles"),
         headingLevel: 2,
         children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("div", { className: "edit-site-styles__content", children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
-          GlobalStylesUIWrapper,
+          ToolsPanelPopoverPropsContext.Provider,
           {
-            path: section,
-            onPathChange: onChangeSection,
-            settings: settings2
+            value: TOOLS_PANEL_POPOVER_PROPS,
+            children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
+              GlobalStylesUIWrapper,
+              {
+                path: section,
+                onPathChange: onChangeSection,
+                settings: settings2
+              }
+            )
           }
         ) })
       }
@@ -73250,12 +73262,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/navigation-menu-editor.mjs
   var import_element239 = __toESM(require_element(), 1);
   var import_data60 = __toESM(require_data(), 1);
-  var import_block_editor22 = __toESM(require_block_editor(), 1);
+  var import_block_editor23 = __toESM(require_block_editor(), 1);
   var import_blocks10 = __toESM(require_blocks(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.mjs
-  var import_block_editor21 = __toESM(require_block_editor(), 1);
+  var import_block_editor22 = __toESM(require_block_editor(), 1);
   var import_data59 = __toESM(require_data(), 1);
   var import_blocks9 = __toESM(require_blocks(), 1);
   var import_element238 = __toESM(require_element(), 1);
@@ -73267,7 +73279,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data58 = __toESM(require_data(), 1);
   var import_element237 = __toESM(require_element(), 1);
   var import_i18n144 = __toESM(require_i18n(), 1);
-  var import_block_editor20 = __toESM(require_block_editor(), 1);
+  var import_block_editor21 = __toESM(require_block_editor(), 1);
   var import_router22 = __toESM(require_router(), 1);
   var import_jsx_runtime374 = __toESM(require_jsx_runtime(), 1);
   var POPOVER_PROPS2 = {
@@ -73279,20 +73291,20 @@ If there's a particular need for this, please submit a feature request at https:
     const history = useHistory16();
     const { path } = useLocation21();
     const { clientId } = props;
-    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data58.useDispatch)(import_block_editor20.store);
+    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data58.useDispatch)(import_block_editor21.store);
     const removeLabel = (0, import_i18n144.sprintf)(
       /* translators: %s: block name */
       (0, import_i18n144.__)("Remove %s"),
-      (0, import_block_editor20.BlockTitle)({ clientId, maximumLength: 25 })
+      (0, import_block_editor21.BlockTitle)({ clientId, maximumLength: 25 })
     );
     const goToLabel = (0, import_i18n144.sprintf)(
       /* translators: %s: block name */
       (0, import_i18n144.__)("Go to %s"),
-      (0, import_block_editor20.BlockTitle)({ clientId, maximumLength: 25 })
+      (0, import_block_editor21.BlockTitle)({ clientId, maximumLength: 25 })
     );
     const { rootClientId, blockName, attributes } = (0, import_data58.useSelect)(
       (select4) => {
-        const { getBlockRootClientId, getBlockName, getBlockAttributes } = select4(import_block_editor20.store);
+        const { getBlockRootClientId, getBlockName, getBlockAttributes } = select4(import_block_editor21.store);
         return {
           rootClientId: getBlockRootClientId(clientId),
           blockName: getBlockName(clientId),
@@ -73377,7 +73389,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.mjs
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
-  var { PrivateListView } = unlock(import_block_editor21.privateApis);
+  var { PrivateListView } = unlock(import_block_editor22.privateApis);
   var { NavigationLinkUI } = unlock(import_block_library.privateApis);
   var MAX_PAGE_COUNT = 100;
   var PAGES_QUERY = [
@@ -73401,7 +73413,7 @@ If there's a particular need for this, please submit a feature request at https:
           getBlockName,
           getBlockCount,
           getBlockOrder
-        } = select4(import_block_editor21.store);
+        } = select4(import_block_editor22.store);
         const { isResolving } = select4(import_core_data36.store);
         const blockClientIds = getBlockOrder(rootClientId);
         const hasOnlyPageListBlock = blockClientIds.length === 1 && getBlockName(blockClientIds[0]) === "core/page-list";
@@ -73419,7 +73431,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [rootClientId]
     );
-    const { replaceBlock, __unstableMarkNextChangeAsNotPersistent } = (0, import_data59.useDispatch)(import_block_editor21.store);
+    const { replaceBlock, __unstableMarkNextChangeAsNotPersistent } = (0, import_data59.useDispatch)(import_block_editor22.store);
     const offCanvasOnselect = (0, import_element238.useCallback)(
       (block) => {
         if (block.name === "core/navigation-link" && !block.attributes.url) {
@@ -73444,7 +73456,7 @@ If there's a particular need for this, please submit a feature request at https:
           isExpanded: true
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime375.jsx)("div", { className: "edit-site-sidebar-navigation-screen-navigation-menus__helper-block-editor", children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_block_editor21.BlockList, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime375.jsx)("div", { className: "edit-site-sidebar-navigation-screen-navigation-menus__helper-block-editor", children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_block_editor22.BlockList, {}) })
     ] });
   }
 
@@ -73475,7 +73487,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-      import_block_editor22.BlockEditorProvider,
+      import_block_editor23.BlockEditorProvider,
       {
         settings: settings2,
         value: blocks,
@@ -74038,9 +74050,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element241 = __toESM(require_element(), 1);
 
   // packages/edit-site/build-module/components/page-patterns/search-items.mjs
-  var import_block_editor23 = __toESM(require_block_editor(), 1);
+  var import_block_editor24 = __toESM(require_block_editor(), 1);
   var { SEARCH_RANK, searchItems: searchAndRankItems } = unlock(
-    import_block_editor23.privateApis
+    import_block_editor24.privateApis
   );
   var getName = (item) => {
     if (item.type === PATTERN_TYPES.user) {
@@ -74555,7 +74567,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_element250 = __toESM(require_element(), 1);
-  var import_block_editor26 = __toESM(require_block_editor(), 1);
+  var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
   var import_editor29 = __toESM(require_editor(), 1);
   var import_router29 = __toESM(require_router(), 1);
@@ -74566,10 +74578,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data46 = __toESM(require_core_data(), 1);
   var import_data68 = __toESM(require_data(), 1);
   var import_element244 = __toESM(require_element(), 1);
-  var import_block_editor24 = __toESM(require_block_editor(), 1);
+  var import_block_editor25 = __toESM(require_block_editor(), 1);
   var import_editor26 = __toESM(require_editor(), 1);
   var { useGlobalStyles: useGlobalStyles4 } = unlock(import_editor26.privateApis);
-  var { globalStylesDataKey } = unlock(import_block_editor24.privateApis);
+  var { globalStylesDataKey } = unlock(import_block_editor25.privateApis);
   function usePatternSettings() {
     const { merged: mergedConfig } = useGlobalStyles4();
     const storedSettings = (0, import_data68.useSelect)((select4) => {
@@ -75037,7 +75049,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/fields.mjs
   var import_i18n157 = __toESM(require_i18n(), 1);
   var import_element249 = __toESM(require_element(), 1);
-  var import_block_editor25 = __toESM(require_block_editor(), 1);
+  var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_editor28 = __toESM(require_editor(), 1);
   var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
@@ -75062,8 +75074,8 @@ If there's a particular need for this, please submit a feature request at https:
         children: [
           isEmpty2 && isTemplatePart2 && (0, import_i18n157.__)("Empty template part"),
           isEmpty2 && !isTemplatePart2 && (0, import_i18n157.__)("Empty pattern"),
-          !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_block_editor25.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-            import_block_editor25.BlockPreview,
+          !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_block_editor26.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+            import_block_editor26.BlockPreview,
             {
               blocks,
               viewportWidth: item.viewportWidth
@@ -75083,7 +75095,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_jsx_runtime389 = __toESM(require_jsx_runtime(), 1);
-  var { ExperimentalBlockEditorProvider } = unlock(import_block_editor26.privateApis);
+  var { ExperimentalBlockEditorProvider } = unlock(import_block_editor27.privateApis);
   var { usePostActions, usePostFields } = unlock(import_editor29.privateApis);
   var { useLocation: useLocation26, useHistory: useHistory21 } = unlock(import_router29.privateApis);
   var EMPTY_ARRAY11 = [];
@@ -76686,7 +76698,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n164 = __toESM(require_i18n(), 1);
   var import_element255 = __toESM(require_element(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
-  var import_block_editor27 = __toESM(require_block_editor(), 1);
+  var import_block_editor28 = __toESM(require_block_editor(), 1);
   var import_editor32 = __toESM(require_editor(), 1);
   var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
   var { useStyle: useStyle5 } = unlock(import_editor32.privateApis);
@@ -76704,7 +76716,7 @@ If there's a particular need for this, please submit a feature request at https:
         style: { backgroundColor },
         children: [
           isEmpty2 && (0, import_i18n164.__)("Empty template"),
-          !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(import_block_editor27.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(import_block_editor27.BlockPreview, { blocks }) })
+          !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(import_block_editor28.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(import_block_editor28.BlockPreview, { blocks }) })
         ]
       }
     ) });
