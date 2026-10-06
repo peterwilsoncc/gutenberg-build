@@ -29402,7 +29402,8 @@ async function fetchExperiments() {
     label: schema.title ?? id,
     description: schema.description ?? "",
     group: schema.group ?? "other",
-    groupLabel: schema.group_label ?? ""
+    groupLabel: schema.group_label ?? "",
+    defaultValue: schema.default ?? false
   }));
 }
 
@@ -29429,7 +29430,7 @@ function ExperimentsPage() {
   const settings = (0, import_element102.useMemo)(() => {
     const combined = {};
     for (const exp of experiments ?? []) {
-      combined[exp.id] = false;
+      combined[exp.id] = exp.defaultValue;
     }
     for (const [key, value] of Object.entries(gutenbergExperiments)) {
       combined[key] = Boolean(value);
