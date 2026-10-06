@@ -7869,6 +7869,10 @@ return array(
 					'margin' => false
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'shadow' => true,
 			'background' => array(
 				'backgroundImage' => true,
