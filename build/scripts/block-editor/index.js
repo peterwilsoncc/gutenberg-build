@@ -106030,7 +106030,36 @@ var wp;
 
   // packages/block-editor/build-module/hooks/state-utils.mjs
   var import_blocks120 = __toESM(require_blocks(), 1);
-  function buildScopedBlockSelector(baseSelector, blockSelector, suffix = "") {
+  function getStateSelectorAncestor(selector3, name) {
+    const match2 = name && selector3.match(/^\.(wp-block-[-_a-zA-Z0-9]+)/);
+    if (!match2 || match2[1] === (0, import_blocks120.getBlockDefaultClassName)(name)) {
+      return "";
+    }
+    let ancestorLength = 0;
+    let nextCompound = "";
+    let depth = 0;
+    for (let i = 0; i < selector3.length; i++) {
+      const char = selector3[i];
+      if (char === "(" || char === "[") {
+        depth++;
+      } else if ((char === ")" || char === "]") && depth > 0) {
+        depth--;
+      } else if (depth === 0 && /[\s>+~]/.test(char)) {
+        if (ancestorLength) {
+          break;
+        }
+        ancestorLength = i + selector3.slice(i).match(/^[\s>+~]*/)[0].length;
+        i = ancestorLength - 1;
+      } else if (depth === 0 && ancestorLength) {
+        nextCompound += char;
+      }
+    }
+    if (!nextCompound || nextCompound.includes(".wp-block-")) {
+      return "";
+    }
+    return selector3.slice(0, ancestorLength);
+  }
+  function buildScopedBlockSelector(baseSelector, blockSelector, suffix = "", name) {
     if (typeof blockSelector !== "string" || !blockSelector) {
       return splitSelectorList(baseSelector).map((selector3) => `${selector3.trim()}${suffix}`).join(", ");
     }
@@ -106045,15 +106074,17 @@ var wp;
     }
     return selectors6.map((selector3) => {
       selector3 = selector3.trim();
+      const ancestor = getStateSelectorAncestor(selector3, name);
+      selector3 = selector3.slice(ancestor.length);
       const match2 = selector3.match(/^([.#]?[-_a-zA-Z0-9]+|\[[^\]]+\])/);
       if (match2) {
         return baseSelectors.map(
-          (base) => `${base.trim()}${selector3.slice(
+          (base) => `${ancestor}${base.trim()}${selector3.slice(
             match2[0].length
           )}${suffix}`
         ).join(", ");
       }
-      return baseSelectors.map((base) => `${base.trim()}${suffix}`).join(", ");
+      return baseSelectors.map((base) => `${ancestor}${base.trim()}${suffix}`).join(", ");
     }).join(", ");
   }
 
@@ -106235,7 +106266,12 @@ var wp;
     const rules = getStateStyleGroups(stateStyles, name).map(
       ({ selector: blockSelector, style }) => getStateStylesCSS(
         style,
-        buildScopedBlockSelector(baseSelector, blockSelector, state)
+        buildScopedBlockSelector(
+          baseSelector,
+          blockSelector,
+          state,
+          name
+        )
       )
     ).filter(Boolean);
     return rules.length ? rules.join("\n") : void 0;
