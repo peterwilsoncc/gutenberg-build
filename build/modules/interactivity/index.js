@@ -2060,43 +2060,39 @@ var resolve = (path, namespace) => {
     }
   }
 };
-var getEvaluate = ({ scope }) => (
-  // TODO: When removing the temporarily remaining `value( ...args )` call below, remove the `...args` parameter too.
-  ((entry, ...args) => {
-    let { value: path, namespace } = entry;
-    if (typeof path !== "string") {
-      throw new Error("The `value` prop should be a string path");
-    }
-    const hasNegationOperator = path[0] === "!" && !!(path = path.slice(1));
-    setScope(scope);
-    const value = resolve(path, namespace);
-    if (typeof value === "function") {
-      if (hasNegationOperator) {
-        warn(
-          "Using a function with a negation operator is deprecated and will stop working in WordPress 6.9. Please use derived state instead."
-        );
-        const functionResult = !value(...args);
-        resetScope();
-        return functionResult;
-      }
+var getEvaluate = ({ scope }) => (entry) => {
+  let { value: path, namespace } = entry;
+  if (typeof path !== "string") {
+    throw new Error("The `value` prop should be a string path");
+  }
+  const hasNegationOperator = path[0] === "!" && !!(path = path.slice(1));
+  setScope(scope);
+  const value = resolve(path, namespace);
+  if (typeof value === "function") {
+    if (hasNegationOperator) {
+      warn(
+        `The value of "${path}" is a function and cannot be negated. Please use derived state instead.`
+      );
       resetScope();
-      const wrappedFunction = (...functionArgs) => {
-        setScope(scope);
-        const functionResult = value(...functionArgs);
-        resetScope();
-        return functionResult;
-      };
-      if (value.sync) {
-        const syncAwareFunction = wrappedFunction;
-        syncAwareFunction.sync = true;
-      }
-      return wrappedFunction;
+      return void 0;
     }
-    const result = value;
     resetScope();
-    return hasNegationOperator && value !== PENDING_GETTER ? !result : result;
-  })
-);
+    const wrappedFunction = (...functionArgs) => {
+      setScope(scope);
+      const functionResult = value(...functionArgs);
+      resetScope();
+      return functionResult;
+    };
+    if (value.sync) {
+      const syncAwareFunction = wrappedFunction;
+      syncAwareFunction.sync = true;
+    }
+    return wrappedFunction;
+  }
+  const result = value;
+  resetScope();
+  return hasNegationOperator && value !== PENDING_GETTER ? !result : result;
+};
 var getPriorityLevels = (directives) => {
   const byPriority = Object.keys(directives).reduce((obj, name) => {
     if (directiveCallbacks[name]) {
@@ -2175,10 +2171,20 @@ l.vnode = (vnode) => {
 };
 
 // packages/interactivity/build-module/directives/utils/warnings.mjs
-var warnUniqueIdWithTwoHyphens = (prefix, suffix, uniqueId) => {
+var warnSuffixNotSupported = (prefix, suffix) => {
   if (true) {
     warn(
-      `The usage of data-wp-${prefix}--${suffix}${uniqueId ? `--${uniqueId}` : ""} (two hyphens for unique ID) is deprecated and will stop working in WordPress 7.1. Please use data-wp-${prefix}${uniqueId ? `--${suffix}---${uniqueId}` : `---${suffix}`} (three hyphens for unique ID) from now on.`
+      `Suffixes for the data-wp-${prefix} directive are not supported. Ignoring the directive with suffix "${suffix}".`
+    );
+  }
+};
+var warnEventNameWithTwoHyphens = (prefix, eventName) => {
+  if (true) {
+    const [event, ...rest] = eventName.split("--");
+    warn(
+      `The data-wp-${prefix}--${eventName} directive listens for an event named "${eventName}". Two-hyphen unique IDs are no longer supported. If you meant to add a unique ID, please use data-wp-${prefix}--${event}---${rest.join(
+        "--"
+      )} instead.`
     );
   }
 };
@@ -2563,36 +2569,14 @@ directive(
   }
 );
 
-// packages/interactivity/build-module/directives/ignore.mjs
-init_preact_module();
-directive(
-  "ignore",
-  ({
-    element: {
-      type: Type,
-      props: { innerHTML, ...rest }
-    }
-  }) => {
-    if (true) {
-      warn(
-        "The data-wp-ignore directive is deprecated and will be removed in version 7.0."
-      );
-    }
-    const cached = T2(() => innerHTML, []);
-    return k(Type, {
-      dangerouslySetInnerHTML: { __html: cached },
-      ...rest
-    });
-  }
-);
-
 // packages/interactivity/build-module/directives/init.mjs
 directive("init", ({ directives: { init }, evaluate }) => {
   init.forEach((entry) => {
-    if (true) {
-      if (entry.suffix) {
-        warnUniqueIdWithTwoHyphens("init", entry.suffix);
+    if (entry.suffix !== null) {
+      if (true) {
+        warnSuffixNotSupported("init", entry.suffix);
       }
+      return;
     }
     useInit(() => {
       let start;
@@ -2665,14 +2649,12 @@ function wrapEventAsync(event) {
 var getGlobalEventDirective = (type) => {
   return ({ directives, evaluate }) => {
     directives[`on-${type}`].filter(isNonDefaultDirectiveSuffix).forEach((entry) => {
-      const suffixParts = entry.suffix.split("--", 2);
-      const eventName = suffixParts[0];
+      const eventName = entry.suffix;
       if (true) {
-        if (suffixParts[1]) {
-          warnUniqueIdWithTwoHyphens(
+        if (eventName.includes("--")) {
+          warnEventNameWithTwoHyphens(
             `on-${type}`,
-            suffixParts[0],
-            suffixParts[1]
+            eventName
           );
         }
       }
@@ -2720,20 +2702,16 @@ var getGlobalAsyncEventDirective = (type) => {
 directive("on", ({ directives: { on }, element, evaluate }) => {
   const events = /* @__PURE__ */ new Map();
   on.filter(isNonDefaultDirectiveSuffix).forEach((entry) => {
-    const suffixParts = entry.suffix.split("--", 2);
+    const eventType = entry.suffix;
     if (true) {
-      if (suffixParts[1]) {
-        warnUniqueIdWithTwoHyphens(
-          "on",
-          suffixParts[0],
-          suffixParts[1]
-        );
+      if (eventType.includes("--")) {
+        warnEventNameWithTwoHyphens("on", eventType);
       }
     }
-    if (!events.has(suffixParts[0])) {
-      events.set(suffixParts[0], /* @__PURE__ */ new Set());
+    if (!events.has(eventType)) {
+      events.set(eventType, /* @__PURE__ */ new Set());
     }
-    events.get(suffixParts[0]).add(entry);
+    events.get(eventType).add(entry);
   });
   events.forEach((entries, eventType) => {
     const existingHandler = element.props[`on${eventType}`];
@@ -2823,9 +2801,7 @@ directive(
     }
     if (entry.suffix) {
       if (true) {
-        warn(
-          `Suffixes for the data-wp-router-region directive are not supported. Ignoring the directive with suffix "${entry.suffix}".`
-        );
+        warnSuffixNotSupported("router-region", entry.suffix);
       }
       return;
     }
@@ -2857,10 +2833,11 @@ directive(
 // packages/interactivity/build-module/directives/run.mjs
 directive("run", ({ directives: { run }, evaluate }) => {
   run.forEach((entry) => {
-    if (true) {
-      if (entry.suffix) {
-        warnUniqueIdWithTwoHyphens("run", entry.suffix);
+    if (entry.suffix !== null) {
+      if (true) {
+        warnSuffixNotSupported("run", entry.suffix);
       }
+      return;
     }
     let result = evaluate(entry);
     if (typeof result === "function") {
@@ -2961,10 +2938,11 @@ directive("text", ({ directives: { text }, element, evaluate }) => {
 // packages/interactivity/build-module/directives/watch.mjs
 directive("watch", ({ directives: { watch: watch2 }, evaluate }) => {
   watch2.forEach((entry) => {
-    if (true) {
-      if (entry.suffix) {
-        warnUniqueIdWithTwoHyphens("watch", entry.suffix);
+    if (entry.suffix !== null) {
+      if (true) {
+        warnSuffixNotSupported("watch", entry.suffix);
       }
+      return;
     }
     useWatch(() => {
       let start;
@@ -3078,26 +3056,28 @@ function toVdom(root) {
     const props = {};
     const children = [];
     const directives = [];
-    let ignore = false;
     let island = false;
     for (let i6 = 0; i6 < attributes.length; i6++) {
       const attributeName = attributes[i6].name;
       const attributeValue = attributes[i6].value;
       if (attributeName[directivePrefix.length] && attributeName.slice(0, directivePrefix.length) === directivePrefix) {
-        if (attributeName === "data-wp-ignore") {
-          ignore = true;
-        } else {
-          const { namespace, value } = parseDirectiveValue(attributeValue);
-          if (attributeName === "data-wp-interactive") {
-            island = true;
-            const islandNamespace = (
-              // eslint-disable-next-line no-nested-ternary
-              typeof value === "string" ? value : typeof value?.namespace === "string" ? value.namespace : null
+        if (true) {
+          if (attributeName === "data-wp-ignore") {
+            warn(
+              "The data-wp-ignore directive has been removed. The element and its descendants are now hydrated like any other element. Please remove the attribute."
             );
-            namespaces.push(islandNamespace);
-          } else {
-            directives.push([attributeName, namespace, value]);
           }
+        }
+        const { namespace, value } = parseDirectiveValue(attributeValue);
+        if (attributeName === "data-wp-interactive") {
+          island = true;
+          const islandNamespace = (
+            // eslint-disable-next-line no-nested-ternary
+            typeof value === "string" ? value : typeof value?.namespace === "string" ? value.namespace : null
+          );
+          namespaces.push(islandNamespace);
+        } else {
+          directives.push([attributeName, namespace, value]);
         }
       } else if (attributeName === "ref") {
         continue;
@@ -3107,15 +3087,6 @@ function toVdom(root) {
       } else {
         props[attributeName] = attributeValue;
       }
-    }
-    if (ignore && !island) {
-      return [
-        k(localName, {
-          ...props,
-          innerHTML: elementNode.innerHTML,
-          __directives: { ignore: true }
-        })
-      ];
     }
     if (island) {
       hydratedIslands.add(elementNode);
