@@ -124211,12 +124211,9 @@ ${content}
         return;
       }
       setIsSubmitting(true);
-      const submitted = inputComment;
-      const result = await onSubmit(submitted);
+      const result = await onSubmit(inputComment);
       if (result) {
-        setInputComment(
-          (current) => current === submitted ? "" : current
-        );
+        setInputComment("");
       }
       setIsSubmitting(false);
     }
@@ -124251,6 +124248,7 @@ ${content}
               hideLabelFromVision: true,
               value: inputComment,
               onChange: setInputComment,
+              disabled: isSubmitting,
               placeholder: labels?.placeholder,
               allowedFormats: ALLOWED_NOTE_FORMATS,
               completers: NOTE_COMPLETERS,

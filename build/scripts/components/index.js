@@ -68704,6 +68704,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         "aria-required": required || void 0,
         ref: mergedRefs,
         contentEditable: !disabled2,
+        tabIndex: disabled2 ? -1 : void 0,
         suppressContentEditableWarning: true,
         ...additionalProps,
         ...controlProps
