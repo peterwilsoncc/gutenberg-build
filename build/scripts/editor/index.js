@@ -71987,16 +71987,18 @@ If there's a particular need for this, please submit a feature request at https:
     isOpen: false,
     id: null,
     onUpdate: null,
+    onUndo: null,
     onClose: null
   };
   function reducer(state2 = DEFAULT_STATE, action) {
     switch (action.type) {
       case "OPEN_MEDIA_EDITOR_MODAL": {
-        const { id, onUpdate, onClose } = action;
+        const { id, onUpdate, onUndo, onClose } = action;
         return {
           isOpen: true,
           id,
           onUpdate,
+          onUndo,
           onClose
         };
       }
@@ -72015,12 +72017,14 @@ If there's a particular need for this, please submit a feature request at https:
   function openMediaEditorModal({
     id,
     onUpdate,
+    onUndo,
     onClose
   }) {
     return {
       type: "OPEN_MEDIA_EDITOR_MODAL",
       id,
       onUpdate: onUpdate ?? null,
+      onUndo: onUndo ?? null,
       onClose: onClose ?? null
     };
   }
@@ -72033,6 +72037,7 @@ If there's a particular need for this, please submit a feature request at https:
   __export(selectors_exports2, {
     getId: () => getId,
     getOnClose: () => getOnClose,
+    getOnUndo: () => getOnUndo,
     getOnUpdate: () => getOnUpdate,
     isOpen: () => isOpen
   });
@@ -72044,6 +72049,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function getOnUpdate(state2) {
     return state2.onUpdate;
+  }
+  function getOnUndo(state2) {
+    return state2.onUndo;
   }
   function getOnClose(state2) {
     return state2.onClose;
@@ -76653,7 +76661,7 @@ If there's a particular need for this, please submit a feature request at https:
     const mediaWidth = Number(media?.media_details?.width);
     const mediaHeight = Number(media?.media_details?.height);
     (0, import_element248.useEffect)(() => {
-      if (cropperImage || !mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
+      if (!mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
         return;
       }
       setSourceImage({
@@ -76661,7 +76669,7 @@ If there's a particular need for this, please submit a feature request at https:
         naturalWidth: mediaWidth,
         naturalHeight: mediaHeight
       });
-    }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setSourceImage]);
+    }, [mediaUrl, mediaWidth, mediaHeight, setSourceImage]);
     const isImage = mediaType.type === "image";
     (0, import_element248.useEffect)(() => {
       if (!mediaUrl || !isImage) {
@@ -77650,7 +77658,8 @@ If there's a particular need for this, please submit a feature request at https:
     id,
     isImage,
     media,
-    onSaved
+    onSaved,
+    replacementSource
   }) {
     const registry = (0, import_data41.useRegistry)();
     const {
@@ -77666,7 +77675,10 @@ If there's a particular need for this, please submit a feature request at https:
       try {
         let saved;
         const modifiers = getCropModifiers(session);
-        const previous = modifiers.length > 0 && media ? {
+        const targetId = replacementSource?.id ?? id;
+        const targetUrl = replacementSource?.url ?? media?.source_url;
+        const targetMedia = replacementSource?.media ?? media;
+        const previous = (modifiers.length > 0 || replacementSource) && media ? {
           id,
           url: media.source_url
         } : void 0;
@@ -77674,14 +77686,17 @@ If there's a particular need for this, please submit a feature request at https:
           const pendingEdits = registry.select(import_core_data32.store).getEntityRecordNonTransientEdits(
             "postType",
             "attachment",
-            id
+            targetId
           );
-          const metadataEdits = getMetadataEdits(pendingEdits, media);
+          const metadataEdits = getMetadataEdits(
+            pendingEdits,
+            targetMedia
+          );
           saved = await (0, import_api_fetch2.default)({
-            path: `/wp/v2/media/${id}/edit`,
+            path: `/wp/v2/media/${targetId}/edit`,
             method: "POST",
             data: {
-              src: media?.source_url,
+              src: targetUrl,
               modifiers,
               ...metadataEdits
             }
@@ -77695,17 +77710,23 @@ If there's a particular need for this, please submit a feature request at https:
               true
             );
           }
+        } else if (replacementSource && !registry.select(import_core_data32.store).hasEditsForEntityRecord(
+          "postType",
+          "attachment",
+          targetId
+        )) {
+          saved = replacementSource.media;
         } else {
           saved = await saveEditedEntityRecord(
             "postType",
             "attachment",
-            id,
+            targetId,
             { throwOnError: true }
           );
         }
-        const next = saved ?? media;
-        if (next && next.id !== id) {
-          clearEntityRecordEdits("postType", "attachment", id);
+        const next = saved ?? targetMedia;
+        if (next && next.id !== targetId) {
+          clearEntityRecordEdits("postType", "attachment", targetId);
         }
         if (next && next.id) {
           if (next.id === id) {
@@ -77748,6 +77769,7 @@ If there's a particular need for this, please submit a feature request at https:
       receiveEntityRecords,
       registry,
       removeAllNotices,
+      replacementSource,
       saveEditedEntityRecord,
       session
     ]);
@@ -77817,7 +77839,17 @@ If there's a particular need for this, please submit a feature request at https:
     return context;
   }
   function HeaderActions({ showCloseButton = false }) {
-    const { isImage, isSaving, onCancel, isWide, activePanel, onTogglePanel } = useMediaEditorFrameContext();
+    const {
+      isImage,
+      isSaving,
+      onCancel,
+      isWide,
+      activePanel,
+      onTogglePanel,
+      canRestoreOriginal,
+      isSourceReplaced,
+      onRestoreOriginal
+    } = useMediaEditorFrameContext();
     const isPanelOpen = !!activePanel;
     const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element255.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(
@@ -77828,15 +77860,6 @@ If there's a particular need for this, please submit a feature request at https:
         align: "center",
         gap: "sm",
         children: [
-          isImage && /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
-            import_components85.Button,
-            {
-              size: "compact",
-              icon: keyboard_default,
-              label: (0, import_i18n156.__)("Keyboard shortcuts"),
-              onClick: () => setIsShortcutsModalOpen(true)
-            }
-          ),
           /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
             import_components85.Button,
             {
@@ -77846,6 +77869,44 @@ If there's a particular need for this, please submit a feature request at https:
               isPressed: isPanelOpen,
               "aria-expanded": isWide ? isPanelOpen : void 0,
               onClick: onTogglePanel
+            }
+          ),
+          isImage && /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+            import_components85.DropdownMenu,
+            {
+              icon: more_vertical_default,
+              label: (0, import_i18n156.__)("More options"),
+              toggleProps: { size: "compact" },
+              children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(import_jsx_runtime397.Fragment, { children: [
+                canRestoreOriginal && /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components85.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+                  import_components85.MenuItem,
+                  {
+                    icon: backup_default,
+                    iconPosition: "left",
+                    disabled: isSourceReplaced || isSaving,
+                    info: (0, import_i18n156.__)(
+                      "Discards unsaved changes and loads the original image."
+                    ),
+                    onClick: () => {
+                      onRestoreOriginal();
+                      closeMenu();
+                    },
+                    children: (0, import_i18n156.__)("Restore original image")
+                  }
+                ) }),
+                /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components85.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+                  import_components85.MenuItem,
+                  {
+                    icon: keyboard_default,
+                    iconPosition: "left",
+                    onClick: () => {
+                      setIsShortcutsModalOpen(true);
+                      closeMenu();
+                    },
+                    children: (0, import_i18n156.__)("Keyboard shortcuts")
+                  }
+                ) })
+              ] })
             }
           ),
           showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
@@ -78022,40 +78083,20 @@ If there's a particular need for this, please submit a feature request at https:
       setActivePanel((open3) => open3 ? null : lastPanelRef.current);
     }, []);
     const layout = isWide ? "wide" : "narrow";
-    const { media, hasEdits } = (0, import_data42.useSelect)(
-      (select9) => {
-        const {
-          getEditedEntityRecord,
-          getEntityRecord,
-          hasEditsForEntityRecord
-        } = select9(import_core_data33.store);
-        getEntityRecord(
-          "postType",
-          "attachment",
-          id,
-          ATTACHMENT_EMBED_QUERY
-        );
-        return {
-          media: getEditedEntityRecord(
-            "postType",
-            "attachment",
-            id
-          ),
-          hasEdits: hasEditsForEntityRecord(
-            "postType",
-            "attachment",
-            id
-          )
-        };
-      },
+    const sourceMedia = (0, import_data42.useSelect)(
+      (select9) => select9(import_core_data33.store).getEntityRecord(
+        "postType",
+        "attachment",
+        id
+      ),
       [id]
     );
-    const hasChanges = session.hasOutputEdits || hasEdits;
     const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data42.useDispatch)(import_core_data33.store);
     const { removeAllNotices } = (0, import_data42.useDispatch)(import_notices15.store);
     const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element255.useState)(false);
     const [isPlacementActive, setIsPlacementActive] = (0, import_element255.useState)(false);
     const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element255.useState)(false);
+    const [isSourceReplaced, setIsSourceReplaced] = (0, import_element255.useState)(false);
     const placementControlTimerRef = (0, import_element255.useRef)();
     const signalPlacementControlInteraction = (0, import_element255.useCallback)(() => {
       setIsPlacementActive(true);
@@ -78079,15 +78120,73 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element255.useEffect)(() => {
       setIsPlacementActive(false);
       setIsCanvasGestureActive(false);
+      setIsSourceReplaced(false);
     }, [id]);
+    const originalId = sourceMedia?.edit_root;
+    const originalRecord = (0, import_data42.useSelect)(
+      (select9) => originalId ? select9(import_core_data33.store).getEntityRecord(
+        "postType",
+        "attachment",
+        originalId
+      ) : void 0,
+      [originalId]
+    );
+    const originalWidth = Number(originalRecord?.media_details?.width);
+    const originalHeight = Number(originalRecord?.media_details?.height);
+    const originalUrl = originalRecord?.source_url;
+    const originalSource = originalId && originalRecord && typeof originalUrl === "string" && originalUrl.length > 0 && Number.isFinite(originalWidth) && originalWidth > 0 && Number.isFinite(originalHeight) && originalHeight > 0 ? {
+      id: originalId,
+      url: originalUrl,
+      media: originalRecord
+    } : void 0;
+    const canRestoreOriginal = !!originalSource;
+    const replacementSource = isSourceReplaced && originalSource ? {
+      id: originalSource.id,
+      url: originalSource.url,
+      media: originalSource.media
+    } : void 0;
+    const activeId = replacementSource?.id ?? id;
+    const { media, hasEdits } = (0, import_data42.useSelect)(
+      (select9) => {
+        const {
+          getEditedEntityRecord,
+          getEntityRecord,
+          hasEditsForEntityRecord
+        } = select9(import_core_data33.store);
+        getEntityRecord(
+          "postType",
+          "attachment",
+          activeId,
+          ATTACHMENT_EMBED_QUERY
+        );
+        return {
+          media: getEditedEntityRecord(
+            "postType",
+            "attachment",
+            activeId
+          ),
+          hasEdits: hasEditsForEntityRecord(
+            "postType",
+            "attachment",
+            activeId
+          )
+        };
+      },
+      [activeId]
+    );
     (0, import_element255.useEffect)(() => {
       invalidateResolution("getEntityRecord", [
         "postType",
         "attachment",
-        id,
+        activeId,
         ATTACHMENT_EMBED_QUERY
       ]);
-    }, [id, invalidateResolution]);
+    }, [activeId, invalidateResolution]);
+    const handleRestoreOriginal = (0, import_element255.useCallback)(() => {
+      clearEntityRecordEdits("postType", "attachment", id);
+      setIsSourceReplaced(true);
+    }, [clearEntityRecordEdits, id]);
+    const hasChanges = session.hasOutputEdits || hasEdits || isSourceReplaced;
     const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
     const isImage = !!media && mediaType === "image";
     (0, import_element255.useEffect)(() => {
@@ -78112,18 +78211,20 @@ If there's a particular need for this, please submit a feature request at https:
       session,
       id,
       isImage,
-      media,
-      onSaved
+      media: sourceMedia,
+      onSaved,
+      replacementSource
     });
     const handleChange = (updates) => {
       if (isSaving) {
         return;
       }
-      editEntityRecord("postType", "attachment", id, updates);
+      editEntityRecord("postType", "attachment", activeId, updates);
     };
     const discardAndClose = () => {
       removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
-      clearEntityRecordEdits("postType", "attachment", id);
+      clearEntityRecordEdits("postType", "attachment", activeId);
+      setIsSourceReplaced(false);
       onClose?.();
     };
     const handleRequestClose = () => {
@@ -78306,7 +78407,10 @@ If there's a particular need for this, please submit a feature request at https:
       onTogglePanel: togglePanel,
       onCancel: handleRequestClose,
       onSave: saveMediaEditor,
-      onReset: resetCropOptions
+      onReset: resetCropOptions,
+      canRestoreOriginal,
+      isSourceReplaced,
+      onRestoreOriginal: handleRestoreOriginal
     };
     return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(MediaEditorFrameContext.Provider, { value: contextValue, children: renderFrame({
       children,
@@ -78348,15 +78452,19 @@ If there's a particular need for this, please submit a feature request at https:
     fields: fields2 = [],
     aspectRatioPresets
   }) {
-    const { isModalOpen, id, onUpdate, onClose } = (0, import_data43.useSelect)((select9) => {
-      const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2, getOnClose: getOnClose2 } = select9(store2);
-      return {
-        isModalOpen: isOpen2(),
-        id: getId2(),
-        onUpdate: getOnUpdate2(),
-        onClose: getOnClose2()
-      };
-    }, []);
+    const { isModalOpen, id, onUpdate, onUndo, onClose } = (0, import_data43.useSelect)(
+      (select9) => {
+        const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2, getOnUndo: getOnUndo2, getOnClose: getOnClose2 } = select9(store2);
+        return {
+          isModalOpen: isOpen2(),
+          id: getId2(),
+          onUpdate: getOnUpdate2(),
+          onUndo: getOnUndo2(),
+          onClose: getOnClose2()
+        };
+      },
+      []
+    );
     const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data43.useDispatch)(store2);
     const { createSuccessNotice } = (0, import_data43.useDispatch)(import_notices16.store);
     if (!isModalOpen || !id) {
@@ -78396,6 +78504,10 @@ If there's a particular need for this, please submit a feature request at https:
                 {
                   label: (0, import_i18n157.__)("Undo"),
                   onClick: () => {
+                    if (onUndo) {
+                      onUndo();
+                      return;
+                    }
                     onUpdate({
                       id: previous.id,
                       url: previous.url
@@ -97642,7 +97754,12 @@ If there's a particular need for this, please submit a feature request at https:
           );
         },
         [mediaEditKey]: hasUploadPermissions ? editMediaEntity : void 0,
-        [openMediaEditorModalKey]: ({ id, onUpdate, onClose }) => openMediaEditorModal2({ id, onUpdate, onClose }),
+        [openMediaEditorModalKey]: ({
+          id,
+          onUpdate,
+          onUndo,
+          onClose
+        }) => openMediaEditorModal2({ id, onUpdate, onUndo, onClose }),
         mediaUpload: hasUploadPermissions ? mediaUpload : void 0,
         [mediaUploadOnSuccessKey]: hasUploadPermissions ? mediaUploadOnSuccess : void 0,
         mediaSideload: hasUploadPermissions ? media_sideload_default : void 0,

@@ -27444,10 +27444,17 @@ var wp;
       if (!id || !openMediaEditorModal) {
         return;
       }
+      const previousImage = { id, url: propsRef.current.attributes.url };
+      let isUndone = false;
       openMediaEditorModal({
         id,
         onClose: () => {
           editMediaButtonRef.current?.focus();
+        },
+        onUndo: () => {
+          isUndone = true;
+          setIsSwappingMedia(false);
+          setAttributes(previousImage);
         },
         onUpdate: async ({ id: newId, url: newUrl }) => {
           if (typeof newId !== "number") {
@@ -27464,6 +27471,9 @@ var wp;
           };
           if (newUrl) {
             const averageBackgroundColor = await getMediaColor(newUrl);
+            if (isUndone) {
+              return;
+            }
             const {
               attributes: currentAttrs,
               overlayColor: currentOverlay
@@ -39273,7 +39283,7 @@ ${text}
     onClose,
     onUrlChange
   }) {
-    const { id, url, alt, caption, sizeSlug, linkDestination } = attributes2;
+    const { id, url, alt, caption, sizeSlug, linkDestination, href } = attributes2;
     const registry = (0, import_data49.useRegistry)();
     const openMediaEditorModal = (0, import_data49.useSelect)(
       (select10) => select10(import_block_editor106.store).getSettings()[openMediaEditorModalKey2],
@@ -39285,11 +39295,11 @@ ${text}
       alt,
       caption: caption?.toString(),
       sizeSlug,
-      linkDestination
+      linkDestination,
+      href
     });
     const mediaEditorMetadataBaselineRef = (0, import_element74.useRef)();
     const mediaEditorMetadataSyncRequestRef = (0, import_element74.useRef)(0);
-    const mediaEditorUndoMetadataRef = (0, import_element74.useRef)();
     (0, import_element74.useEffect)(() => {
       blockAttributesRef.current = {
         id,
@@ -39297,9 +39307,10 @@ ${text}
         alt,
         caption: caption?.toString(),
         sizeSlug,
-        linkDestination
+        linkDestination,
+        href
       };
-    }, [alt, caption, id, linkDestination, sizeSlug, url]);
+    }, [alt, caption, href, id, linkDestination, sizeSlug, url]);
     const getCachedAttachmentRecord = (0, import_element74.useCallback)(
       (attachmentId) => registry.select(import_core_data26.store).getEditedEntityRecord(
         "postType",
@@ -39336,19 +39347,19 @@ ${text}
       [registry, resolveAttachmentRecord]
     );
     const handleMediaUpdate = (0, import_element74.useCallback)(
-      async ({ id: newId, url: newUrl }) => {
+      async ({ id: newId, url: newUrl }, undoState) => {
         if (typeof newId !== "number") {
           return;
         }
         const originalAttachment = mediaEditorMetadataBaselineRef.current;
         mediaEditorMetadataBaselineRef.current = void 0;
-        const undoMetadata = mediaEditorUndoMetadataRef.current;
-        mediaEditorUndoMetadataRef.current = void 0;
         const syncRequest = ++mediaEditorMetadataSyncRequestRef.current;
         const nextAttributes = {};
         const currentBlockAttributes = blockAttributesRef.current;
         const isNewAttachment = newId !== currentBlockAttributes.id;
         if (isNewAttachment) {
+          undoState.undoAttributes.id = currentBlockAttributes.id;
+          undoState.undoAttributes.url = currentBlockAttributes.url;
           nextAttributes.id = newId;
           nextAttributes.url = newUrl ?? currentBlockAttributes.url;
           if (nextAttributes.url !== currentBlockAttributes.url) {
@@ -39362,7 +39373,7 @@ ${text}
         }
         if (originalAttachment || isNewAttachment) {
           const resolvedAttachment = await resolveFreshAttachmentRecord(newId);
-          if (syncRequest !== mediaEditorMetadataSyncRequestRef.current) {
+          if (undoState.isUndone || syncRequest !== mediaEditorMetadataSyncRequestRef.current) {
             return;
           }
           const attachmentRecord = resolvedAttachment ?? getCachedAttachmentRecord(newId);
@@ -39378,19 +39389,6 @@ ${text}
                 nextAttributes,
                 resolvedMetadataAttributes
               );
-              if (isNewAttachment) {
-                mediaEditorUndoMetadataRef.current = {
-                  id: currentBlockAttributes.id,
-                  attributes: Object.fromEntries(
-                    Object.keys(
-                      resolvedMetadataAttributes
-                    ).map((key) => [
-                      key,
-                      latestBlockAttributes[key]
-                    ])
-                  )
-                };
-              }
             }
           }
           if (isNewAttachment) {
@@ -39406,10 +39404,12 @@ ${text}
             }
           }
         }
-        if (undoMetadata?.id === newId) {
-          Object.assign(nextAttributes, undoMetadata.attributes);
-        }
         if (Object.keys(nextAttributes).length) {
+          for (const key of Object.keys(nextAttributes)) {
+            if (!Object.hasOwn(undoState.undoAttributes, key)) {
+              undoState.undoAttributes[key] = blockAttributesRef.current[key];
+            }
+          }
           blockAttributesRef.current = {
             ...blockAttributesRef.current,
             ...nextAttributes
@@ -39428,7 +39428,6 @@ ${text}
       if (!id || !openMediaEditorModal) {
         return;
       }
-      mediaEditorUndoMetadataRef.current = void 0;
       const cachedAttachmentRecord = getCachedAttachmentRecord(id);
       const fallbackAttachmentRecord = getAttachmentFallbackForEmptyBlockMetadata(
         blockAttributesRef.current
@@ -39437,9 +39436,22 @@ ${text}
         cachedAttachmentRecord
       ) ? void 0 : await resolveAttachmentRecord(id);
       mediaEditorMetadataBaselineRef.current = resolvedAttachmentRecord || (hasKnownAttachmentMetadata(cachedAttachmentRecord) ? cachedAttachmentRecord : fallbackAttachmentRecord) || cachedAttachmentRecord;
+      const undoState = { undoAttributes: {}, isUndone: false };
       openMediaEditorModal({
         id,
-        onUpdate: handleMediaUpdate,
+        onUpdate: (updated) => handleMediaUpdate(updated, undoState),
+        onUndo: () => {
+          undoState.isUndone = true;
+          const { undoAttributes } = undoState;
+          if (Object.hasOwn(undoAttributes, "url")) {
+            onUrlChange?.(undoAttributes.url);
+          }
+          blockAttributesRef.current = {
+            ...blockAttributesRef.current,
+            ...undoAttributes
+          };
+          setAttributes(undoAttributes);
+        },
         onClose
       });
     }, [
@@ -39447,8 +39459,10 @@ ${text}
       handleMediaUpdate,
       id,
       onClose,
+      onUrlChange,
       openMediaEditorModal,
-      resolveAttachmentRecord
+      resolveAttachmentRecord,
+      setAttributes
     ]);
     return id && openMediaEditorModal ? openImageMediaEditorModal : void 0;
   }
