@@ -41583,6 +41583,12 @@ ${text}
         margin: true,
         padding: true
       },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      },
       shadow: true,
       typography: {
         fontSize: true,
