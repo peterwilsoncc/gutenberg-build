@@ -15248,7 +15248,7 @@ var wp;
   }
   var getSelectedBlockStyleState = (0, import_data5.createSelector)(
     (state, clientId) => {
-      const perBlockState = state.selectedBlockStyleState?.clientId === clientId ? state.selectedBlockStyleState.value ?? DEFAULT_BLOCK_STYLE_STATE : DEFAULT_BLOCK_STYLE_STATE;
+      const perBlockState = clientId && state.selectedBlockStyleState?.clientId === clientId ? state.selectedBlockStyleState?.value ?? DEFAULT_BLOCK_STYLE_STATE : DEFAULT_BLOCK_STYLE_STATE;
       return {
         ...perBlockState,
         // The viewport is tracked globally, so inject it here. This way
@@ -79773,7 +79773,7 @@ var wp;
       const _areSelectedBlocksHiddenOnViewport = selectedBlockClientIds.length > 0 && selectedBlockClientIds.every(
         (id) => isBlockHiddenAtViewport2(id, _currentDeviceType)
       );
-      const _isEditingResponsiveStyleState = isResponsiveEditing3() && hasViewportBlockStyleState(
+      const _isEditingResponsiveStyleState = !!selectedBlockClientId && isResponsiveEditing3() && hasViewportBlockStyleState(
         getSelectedBlockStyleState2(selectedBlockClientId)
       );
       return {
@@ -101044,9 +101044,7 @@ var wp;
         hasBlockStyles: _hasBlockStyles,
         editedContentOnlySection: getEditedContentOnlySection2(),
         blockEditingMode: getBlockEditingMode2(_renderedBlockClientId),
-        selectedBlockStyleState: getSelectedBlockStyleState2(
-          _renderedBlockClientId
-        ),
+        selectedBlockStyleState: _renderedBlockClientId ? getSelectedBlockStyleState2(_renderedBlockClientId) : void 0,
         showStateOnCanvas: isSelectedBlockStyleStateShownOnCanvas2(
           _renderedBlockClientId
         ),
