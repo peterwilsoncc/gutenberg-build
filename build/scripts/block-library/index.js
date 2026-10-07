@@ -46544,6 +46544,11 @@ ${text}
       anchor: true,
       align: ["wide", "full"],
       html: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       __experimentalBorder: {
         color: true,
         radius: true,
