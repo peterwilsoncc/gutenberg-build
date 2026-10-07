@@ -120058,9 +120058,10 @@ ${content}
   function getCanvasMarginCSS(isCompact) {
     const tiers = isCompact ? [COMPACT_TIER] : [COMPACT_TIER, FULL_TIER];
     const roomProperty = '@property --wp-editor-canvas-min-height{syntax:"<length>";inherits:false;initial-value:0px;}';
-    return roomProperty + tiers.map(
-      ({ minCanvasWidth, width }) => `@media (min-width:${minCanvasWidth}px){:root{padding-inline-end:${width}px;min-height:var(--wp-editor-canvas-min-height,0);}body{overflow-x:clip;}:root::after{content:"";position:fixed;inset-block:0;inset-inline-end:${width - 1}px;width:1px;background:color-mix(in srgb,currentColor 10%,transparent);pointer-events:none;}}`
-    ).join("");
+    return roomProperty + tiers.map(({ minCanvasWidth, width }) => {
+      const divider = `body::before{content:"";position:fixed;inset-block:0;inset-inline-end:${width - 1}px;width:1px;background:color-mix(in srgb,currentColor 10%,transparent);pointer-events:none;}`;
+      return `@media (min-width:${minCanvasWidth}px){:root{padding-inline-end:${width}px;min-height:var(--wp-editor-canvas-min-height,0);}body{overflow-x:clip;}${divider}}`;
+    }).join("");
   }
 
   // packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.mjs

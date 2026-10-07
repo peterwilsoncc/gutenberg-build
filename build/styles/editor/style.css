@@ -5772,7 +5772,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   }
 }
 .editor-collab-sidebar-overlay .editor-collab-sidebar-panel {
-  border-left: 0;
   overflow-y: auto;
   overflow-anchor: none;
   scrollbar-width: none;
@@ -5798,7 +5797,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   padding: 16px 16px 24px;
   height: 100%;
   overflow: hidden;
-  border-left: 1px solid color-mix(in srgb, currentColor 10%, transparent);
 }
 
 .editor-collab-sidebar-panel__thread,
