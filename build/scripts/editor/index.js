@@ -43865,6 +43865,7 @@ var wp;
     emptyContent = (0, import_i18n20.__)("No results found."),
     statusContent,
     items,
+    onValueChange,
     chipsContent,
     searchPlaceholder = (0, import_i18n20.__)("Search"),
     popupWidth: popupWidth2,
@@ -43884,6 +43885,13 @@ var wp;
         multiple: true,
         disabled: disabled2,
         ...restProps,
+        onValueChange: (value, eventDetails) => {
+          if (eventDetails.reason === "escape-key") {
+            eventDetails.cancel();
+            return;
+          }
+          onValueChange?.(value, eventDetails);
+        },
         readOnly: void 0,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(InputGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(Value, { children: (value) => {
