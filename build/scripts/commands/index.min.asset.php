@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('react', 'react-dom', 'react-jsx-runtime', 'wp-components', 'wp-data', 'wp-element', 'wp-i18n', 'wp-keyboard-shortcuts', 'wp-keycodes', 'wp-preferences', 'wp-primitives', 'wp-private-apis'), 'version' => '04d0192e1e3319b2e3ae');
+<?php return array('dependencies' => array('react', 'react-dom', 'react-jsx-runtime', 'wp-components', 'wp-data', 'wp-element', 'wp-i18n', 'wp-keyboard-shortcuts', 'wp-keycodes', 'wp-preferences', 'wp-primitives', 'wp-private-apis'), 'version' => '0f782aaf1624cdb1148e');
