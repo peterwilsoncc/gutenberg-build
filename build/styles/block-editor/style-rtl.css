@@ -1008,12 +1008,12 @@ iframe[name=editor-canvas] {
   .block-editor-block-mover:not(.is-horizontal) .block-editor-block-mover__move-button-container {
     flex-direction: column;
   }
-  .block-editor-block-mover:not(.is-horizontal) .block-editor-block-mover__move-button-container > * {
+  .block-editor-block-mover:not(.is-horizontal) .block-editor-block-mover__move-button-container > .block-editor-block-mover-button {
     height: 20px;
     width: 100%;
     min-width: 0 !important;
   }
-  .block-editor-block-mover:not(.is-horizontal) .block-editor-block-mover__move-button-container > *::before {
+  .block-editor-block-mover:not(.is-horizontal) .block-editor-block-mover__move-button-container > .block-editor-block-mover-button::before {
     height: calc(100% - 4px);
   }
   .block-editor-block-mover:not(.is-horizontal) .block-editor-block-mover__move-button-container .block-editor-block-mover-button.is-up-button svg {
@@ -1027,7 +1027,7 @@ iframe[name=editor-canvas] {
   .block-editor-block-mover.is-horizontal .block-editor-block-mover__move-button-container {
     width: 48px;
   }
-  .block-editor-block-mover.is-horizontal .block-editor-block-mover__move-button-container > * {
+  .block-editor-block-mover.is-horizontal .block-editor-block-mover__move-button-container > .block-editor-block-mover-button {
     width: 24px;
     min-width: 0 !important;
     overflow: hidden;
