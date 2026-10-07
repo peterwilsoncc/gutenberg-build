@@ -102939,14 +102939,21 @@ If there's a particular need for this, please submit a feature request at https:
     const [isModalOpen, setIsModalOpen] = (0, import_element318.useState)(false);
     const { replaceBlocks: replaceBlocks2 } = (0, import_data86.useDispatch)(import_block_editor31.store);
     const { createSuccessNotice } = (0, import_data86.useDispatch)(import_notices18.store);
-    const { isBlockBasedTheme, canCreate } = (0, import_data86.useSelect)((select9) => {
-      return {
-        isBlockBasedTheme: select9(import_core_data58.store).getCurrentTheme()?.is_block_theme,
-        canCreate: select9(import_block_editor31.store).canInsertBlockType(
-          "core/template-part"
-        )
-      };
-    }, []);
+    const clientId = clientIds?.[0];
+    const { isBlockBasedTheme, canCreate } = (0, import_data86.useSelect)(
+      (select9) => {
+        const { getBlockRootClientId: getBlockRootClientId2, canInsertBlockType: canInsertBlockType2 } = select9(import_block_editor31.store);
+        const rootClientId = clientId ? getBlockRootClientId2(clientId) : void 0;
+        return {
+          isBlockBasedTheme: select9(import_core_data58.store).getCurrentTheme()?.is_block_theme,
+          canCreate: canInsertBlockType2(
+            "core/template-part",
+            rootClientId
+          )
+        };
+      },
+      [clientId]
+    );
     if (!isBlockBasedTheme || !canCreate) {
       return null;
     }
