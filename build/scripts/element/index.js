@@ -325,9 +325,13 @@ var wp;
     createPortal,
     flushSync,
     /* eslint-disable react/no-deprecated */
+    // @ts-expect-error Removed from @types/react-dom; still present at runtime.
     findDOMNode,
+    // @ts-expect-error Removed from @types/react-dom; still present at runtime.
     render,
+    // @ts-expect-error Removed from @types/react-dom; still present at runtime.
     hydrate,
+    // @ts-expect-error Removed from @types/react-dom; still present at runtime.
     unmountComponentAtNode
     /* eslint-enable react/no-deprecated */
   } = ReactDOM;
@@ -844,8 +848,9 @@ var wp;
       case Provider.$$typeof:
         return renderChildren(props.children, props.value, legacyContext);
       case Consumer.$$typeof:
+        const contextValue = context !== void 0 ? context : (type._context || type)._currentValue;
         return renderElement(
-          props.children(context || type._currentValue),
+          props.children(contextValue),
           context,
           legacyContext
         );
