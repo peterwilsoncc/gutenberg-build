@@ -1000,8 +1000,13 @@ input.components-combobox-control__input[type=text]:focus {
   top: 16px;
   display: flex;
 }
+.components-custom-gradient-picker__gradient-bar .components-custom-gradient-picker__insert-point-dropdown::before,
+.components-custom-gradient-picker__gradient-bar .components-custom-gradient-picker__control-point-button::before {
+  content: "";
+  position: absolute;
+  inset: -16px 0;
+}
 .components-custom-gradient-picker__gradient-bar .components-custom-gradient-picker__insert-point-dropdown {
-  position: relative;
   height: inherit;
   width: inherit;
   min-width: 16px !important;
