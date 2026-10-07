@@ -64564,6 +64564,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         return;
       }
       contentDocument.open();
+      try {
+        contentDocument.defaultView?.history.replaceState(null, "", window.location.href);
+      } catch {
+      }
       contentDocument.write(buildSandBoxDocument({
         html,
         title,
