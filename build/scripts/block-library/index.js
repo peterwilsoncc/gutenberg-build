@@ -16896,6 +16896,7 @@ var wp;
     const colorProps = (0, import_block_editor21.__experimentalUseColorProps)(attributes2);
     const spacingProps = (0, import_block_editor21.__experimentalGetSpacingClassesAndStyles)(attributes2);
     const shadowProps = (0, import_block_editor21.__experimentalGetShadowClassesAndStyles)(attributes2);
+    const backgroundProps = (0, import_block_editor21.useBackgroundProps)(attributes2);
     const dimensionsProps = (0, import_block_editor21.__experimentalGetDimensionsClassesAndStyles)(attributes2);
     const ref = (0, import_element38.useRef)();
     const richTextRef = (0, import_element38.useRef)();
@@ -17054,6 +17055,7 @@ var wp;
                 className,
                 "wp-block-button__link",
                 colorProps.className,
+                backgroundProps.className,
                 borderProps.className,
                 typographyProps.className,
                 {
@@ -17067,6 +17069,7 @@ var wp;
               style: {
                 ...borderProps.style,
                 ...colorProps.style,
+                ...backgroundProps.style,
                 ...spacingProps.style,
                 ...shadowProps.style,
                 ...typographyProps.style,
@@ -17243,6 +17246,12 @@ var wp;
       splitting: true,
       align: false,
       alignWide: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalSkipSerialization: true
+      },
       color: {
         __experimentalSkipSerialization: true,
         gradients: true,

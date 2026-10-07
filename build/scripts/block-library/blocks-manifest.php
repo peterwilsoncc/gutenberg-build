@@ -818,6 +818,12 @@ return array(
 			'splitting' => true,
 			'align' => false,
 			'alignWide' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalSkipSerialization' => true
+			),
 			'color' => array(
 				'__experimentalSkipSerialization' => true,
 				'gradients' => true,
