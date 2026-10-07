@@ -81717,7 +81717,7 @@ ${text}
             return false;
           }
         }
-        return true;
+        return canInsert;
       }
     );
     return initBlock({ name: name108, metadata: block_default107, settings: settings107 });
