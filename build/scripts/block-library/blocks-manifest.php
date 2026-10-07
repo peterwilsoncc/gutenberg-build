@@ -3822,6 +3822,12 @@ return array(
 				'margin' => true,
 				'padding' => true
 			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true
+			),
 			'shadow' => true,
 			'typography' => array(
 				'fontSize' => true,
