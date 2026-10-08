@@ -4141,6 +4141,14 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   min-height: 100px;
 }
 
+.block-editor-inserter__tip kbd {
+  padding: 0 4px;
+  border: 1px solid var(--wpds-color-stroke-surface-neutral-strong, #8d8d8d);
+  border-radius: var(--wpds-border-radius-xs, 1px);
+  font-family: var(--wpds-typography-font-family-mono, "Menlo", "Consolas", monaco, monospace);
+  white-space: nowrap;
+}
+
 .block-editor-inserter {
   display: inline-block;
   background: none;
@@ -4340,8 +4348,8 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   padding-bottom: 4px;
 }
 
-.block-editor-inserter__insertable-blocks-at-selection {
-  border-bottom: 1px solid #e0e0e0;
+.block-editor-inserter__insertable-blocks-at-selection:not(:empty) + .block-editor-inserter__all-blocks:not(:empty) {
+  border-top: 1px solid #e0e0e0;
 }
 
 .block-editor-inserter__media-tabs-container,

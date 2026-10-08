@@ -65777,11 +65777,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var text_highlight_default = TextHighlight;
 
   // packages/components/build-module/tip/index.mjs
+  var import_deprecated30 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
   function Tip(props) {
     const {
       children
     } = props;
+    (0, import_deprecated30.default)("wp.components.Tip", {
+      since: "7.2",
+      version: "7.4",
+      alternative: "Notice from @wordpress/ui"
+    });
     return /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)("div", {
       className: "components-tip",
       children: [/* @__PURE__ */ (0, import_jsx_runtime306.jsx)(icon_default2, {
@@ -65861,7 +65867,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar/index.mjs
   var import_element214 = __toESM(require_element(), 1);
-  var import_deprecated30 = __toESM(require_deprecated(), 1);
+  var import_deprecated31 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/toolbar/toolbar-group/index.mjs
   var import_element212 = __toESM(require_element(), 1);
@@ -66144,7 +66150,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [isVariantDefined]);
     if (!label) {
-      (0, import_deprecated30.default)("Using Toolbar without label prop", {
+      (0, import_deprecated31.default)("Using Toolbar without label prop", {
         since: "5.6",
         alternative: "ToolbarGroup component",
         link: "https://developer.wordpress.org/block-editor/components/toolbar/"
@@ -67538,13 +67544,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/isolated-event-container/index.mjs
   var import_element227 = __toESM(require_element(), 1);
-  var import_deprecated31 = __toESM(require_deprecated(), 1);
+  var import_deprecated32 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
   var IsolatedEventContainer = (0, import_element227.forwardRef)((props, ref) => {
-    (0, import_deprecated31.default)("wp.components.IsolatedEventContainer", {
+    (0, import_deprecated32.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("div", {
@@ -67556,7 +67562,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var isolated_event_container_default = IsolatedEventContainer;
 
   // packages/components/build-module/z-stack/component.mjs
-  var import_deprecated32 = __toESM(require_deprecated(), 1);
+  var import_deprecated33 = __toESM(require_deprecated(), 1);
   var import_element228 = __toESM(require_element(), 1);
   var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE87 = "data-wp-hash";
@@ -67639,7 +67645,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
   var style_module_default66 = { "z-stack": "_5b8fef2247903a5f__z-stack", "child": "_585cd0b86fd70a54__child", "layered": "_93dbda3c809633d5__layered" };
   function UnconnectedZStack(props, forwardedRef) {
-    (0, import_deprecated32.default)("wp.components.__experimentalZStack", {
+    (0, import_deprecated33.default)("wp.components.__experimentalZStack", {
       since: "7.2",
       version: "7.4",
       alternative: "your own CSS"
@@ -67868,7 +67874,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
   var import_element232 = __toESM(require_element(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
-  var import_deprecated33 = __toESM(require_deprecated(), 1);
+  var import_deprecated34 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element232.Component || typeof object === "function";
@@ -67901,7 +67907,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Provider3 = ({
     children
   }) => {
-    (0, import_deprecated33.default)("wp.components.FocusReturnProvider component", {
+    (0, import_deprecated34.default)("wp.components.FocusReturnProvider component", {
       since: "5.7",
       hint: "This provider is not used anymore. You can just remove it from your codebase"
     });
@@ -67980,7 +67986,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "withSpokenMessages");
 
   // packages/components/build-module/private-apis.mjs
-  var import_deprecated37 = __toESM(require_deprecated(), 1);
+  var import_deprecated38 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/menu/index.mjs
   var import_element247 = __toESM(require_element(), 1);
@@ -68967,7 +68973,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/badge/index.mjs
-  var import_deprecated34 = __toESM(require_deprecated(), 1);
+  var import_deprecated35 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
   function contextBasedIcon(intent = "default") {
     switch (intent) {
@@ -68989,7 +68995,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     children,
     ...props
   }) {
-    (0, import_deprecated34.default)("wp.components.privateApis.Badge", {
+    (0, import_deprecated35.default)("wp.components.privateApis.Badge", {
       since: "7.2",
       alternative: "Badge from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -69021,7 +69027,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
   var import_element254 = __toESM(require_element(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
-  var import_deprecated35 = __toESM(require_deprecated(), 1);
+  var import_deprecated36 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
@@ -69029,7 +69035,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated35.default)("wp.components.privateApis.ValidatedInputControl", {
+    (0, import_deprecated36.default)("wp.components.privateApis.ValidatedInputControl", {
       since: "7.2",
       alternative: "ValidatedInputControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -69234,7 +69240,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element257 = __toESM(require_element(), 1);
   var import_compose91 = __toESM(require_compose(), 1);
-  var import_deprecated36 = __toESM(require_deprecated(), 1);
+  var import_deprecated37 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
@@ -69242,7 +69248,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated36.default)("wp.components.privateApis.ValidatedTextareaControl", {
+    (0, import_deprecated37.default)("wp.components.privateApis.ValidatedTextareaControl", {
       since: "7.2",
       alternative: "ValidatedTextareaControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -69273,7 +69279,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     Tabs,
     // Retained for older bundled consumers. Check compatibility before removal.
     get Menu() {
-      (0, import_deprecated37.default)("`privateApis.Menu` from `@wordpress/components`", {
+      (0, import_deprecated38.default)("`privateApis.Menu` from `@wordpress/components`", {
         since: "7.2",
         version: "7.3",
         alternative: "`DropdownMenu` from `@wordpress/components`",
