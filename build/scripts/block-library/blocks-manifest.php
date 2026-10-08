@@ -5451,6 +5451,10 @@ return array(
 					'width' => true
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'interactivity' => true,
 			'shadow' => true,
 			'spacing' => array(
