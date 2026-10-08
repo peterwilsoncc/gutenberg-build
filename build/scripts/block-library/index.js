@@ -79735,6 +79735,7 @@ ${text}
     __unstableLayoutClassNames: layoutClassNames
   }) {
     const { ariaLabel } = attributes2;
+    const backgroundProps = (0, import_block_editor260.useBackgroundProps)(attributes2);
     const colorProps = (0, import_block_editor260.__experimentalUseColorProps)(attributes2);
     const borderProps = (0, import_block_editor260.__experimentalUseBorderProps)(attributes2);
     const spacingProps = (0, import_block_editor260.__experimentalGetSpacingClassesAndStyles)(attributes2);
@@ -79822,8 +79823,13 @@ ${text}
       // support to add its container classes to.
       className: layoutClassNames
     });
-    const buttonClassName = clsx_default(colorProps.className, borderProps.className);
+    const buttonClassName = clsx_default(
+      backgroundProps.className,
+      colorProps.className,
+      borderProps.className
+    );
     const buttonStyle = {
+      ...backgroundProps.style,
       ...colorProps.style,
       ...borderProps.style,
       ...spacingProps.style,
@@ -79906,12 +79912,18 @@ ${text}
     const blockProps = import_block_editor261.useBlockProps.save({
       role: "tablist"
     });
+    const backgroundProps = (0, import_block_editor261.getBackgroundClassesAndStyles)(attributes2);
     const colorProps = (0, import_block_editor261.__experimentalGetColorClassesAndStyles)(attributes2);
     const borderProps = (0, import_block_editor261.__experimentalGetBorderClassesAndStyles)(attributes2);
     const spacingProps = (0, import_block_editor261.__experimentalGetSpacingClassesAndStyles)(attributes2);
     const shadowProps = (0, import_block_editor261.__experimentalGetShadowClassesAndStyles)(attributes2);
-    const buttonClassName = clsx_default(colorProps.className, borderProps.className);
+    const buttonClassName = clsx_default(
+      backgroundProps.className,
+      colorProps.className,
+      borderProps.className
+    );
     const buttonStyle = {
+      ...backgroundProps.style,
       ...colorProps.style,
       ...borderProps.style,
       ...spacingProps.style,
@@ -79962,6 +79974,12 @@ ${text}
       ariaLabel: true,
       visibility: false,
       lock: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalSkipSerialization: true
+      },
       color: {
         background: true,
         text: true,
@@ -80005,6 +80023,7 @@ ${text}
       }
     },
     selectors: {
+      background: ".wp-block-tab-list button",
       border: ".wp-block-tab-list button",
       shadow: ".wp-block-tab-list button",
       color: {
