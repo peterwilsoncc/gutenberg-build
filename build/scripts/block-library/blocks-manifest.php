@@ -6580,6 +6580,10 @@ return array(
 					'margin' => false
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			),

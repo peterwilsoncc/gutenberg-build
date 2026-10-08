@@ -63986,6 +63986,10 @@ ${text}
           margin: false
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       interactivity: {
         clientNavigation: true
       },
