@@ -8662,6 +8662,12 @@ return array(
 			'ariaLabel' => true,
 			'visibility' => false,
 			'lock' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalSkipSerialization' => true
+			),
 			'color' => array(
 				'background' => true,
 				'text' => true,
@@ -8707,6 +8713,7 @@ return array(
 			)
 		),
 		'selectors' => array(
+			'background' => '.wp-block-tab-list button',
 			'border' => '.wp-block-tab-list button',
 			'shadow' => '.wp-block-tab-list button',
 			'color' => array(
