@@ -56677,6 +56677,10 @@ ${text}
           width: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       interactivity: true,
       shadow: true,
       spacing: {
