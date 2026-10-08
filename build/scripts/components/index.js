@@ -51931,22 +51931,32 @@ This message will only show in development mode. It won't appear in production. 
     }
     element.querySelectorAll("iframe").forEach(callback);
   }
+  function getNodeDocument(node2) {
+    return node2?.nodeType === Node.DOCUMENT_NODE ? node2 : node2?.ownerDocument ?? null;
+  }
   function isInsideCurrentPopup(event, trigger) {
-    const target = event.target;
-    const targetElement = target?.nodeType === Node.ELEMENT_NODE ? target : target?.parentElement;
     const popupId = trigger.getAttribute("aria-controls");
-    if (!targetElement || !popupId) {
+    if (!popupId) {
       return false;
     }
-    const popup = targetElement.ownerDocument.getElementById(popupId);
-    if (!popup) {
-      return false;
+    let target = event.target;
+    while (target) {
+      const targetDocument = getNodeDocument(target);
+      const targetElement = target.nodeType === Node.ELEMENT_NODE ? target : target.parentElement;
+      const popup = targetDocument?.getElementById(popupId);
+      if (popup && targetElement) {
+        const rootOwnerId = popup.getAttribute("data-rootownerid");
+        if (!rootOwnerId) {
+          return popup.contains(targetElement);
+        }
+        return targetElement.closest("[data-rootownerid]")?.getAttribute("data-rootownerid") === rootOwnerId;
+      }
+      if (targetDocument === trigger.ownerDocument) {
+        break;
+      }
+      target = targetDocument?.defaultView?.frameElement ?? null;
     }
-    const rootOwnerId = popup.getAttribute("data-rootownerid");
-    if (!rootOwnerId) {
-      return popup.contains(targetElement);
-    }
-    return targetElement.closest("[data-rootownerid]")?.getAttribute("data-rootownerid") === rootOwnerId;
+    return false;
   }
   function useCloseOnIframePointerDown({
     enabled,
