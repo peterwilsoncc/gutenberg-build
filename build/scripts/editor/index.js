@@ -115973,7 +115973,7 @@ ${content}
       if (String(getSelectedNote2()) === String(noteId)) {
         return;
       }
-      selectNote2(Number(noteId));
+      selectNote2(noteId === "new" ? noteId : Number(noteId));
     }, [
       isActive,
       noteId,
@@ -116013,8 +116013,8 @@ ${content}
   var back_button_default = BackButton;
 
   // packages/editor/build-module/components/editor/index.mjs
-  var import_data273 = __toESM(require_data(), 1);
-  var import_core_data151 = __toESM(require_core_data(), 1);
+  var import_data274 = __toESM(require_data(), 1);
+  var import_core_data152 = __toESM(require_core_data(), 1);
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n370 = __toESM(require_i18n(), 1);
 
@@ -117373,7 +117373,6 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/utils.mjs
   var import_i18n312 = __toESM(require_i18n(), 1);
   var import_rich_text6 = __toESM(require_rich_text(), 1);
-  var import_dom36 = __toESM(require_dom(), 1);
   function sanitizeNoteContent(str3) {
     return str3.trim();
   }
@@ -117493,28 +117492,7 @@ ${content}
     );
     return `mark.wp-note[data-id="${escapedId}"]`;
   }
-  function getSelectionRect(blockEl) {
-    const selection = blockEl.ownerDocument.defaultView?.getSelection();
-    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
-      return null;
-    }
-    const range = selection.getRangeAt(0);
-    if (range.collapsed) {
-      return null;
-    }
-    if (!blockEl.contains(range.commonAncestorContainer)) {
-      return null;
-    }
-    const rect = (0, import_dom36.getRectangleFromRange)(range);
-    if (!rect || rect.width === 0 && rect.height === 0) {
-      return null;
-    }
-    return rect;
-  }
   function getNoteAnchorRect(noteId, blockEl) {
-    if (noteId === "new") {
-      return getSelectionRect(blockEl) ?? blockEl.getBoundingClientRect();
-    }
     let anchor = blockEl.querySelector(getNoteMarkerSelector(noteId)) ?? blockEl;
     while (anchor.checkVisibility?.() === false) {
       const parentBlock = anchor.parentElement?.closest("[data-block]");
@@ -119605,7 +119583,7 @@ ${content}
   var import_block_editor79 = __toESM(require_block_editor(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
   var import_data211 = __toESM(require_data(), 1);
-  var import_dom37 = __toESM(require_dom(), 1);
+  var import_dom36 = __toESM(require_dom(), 1);
   var import_element404 = __toESM(require_element(), 1);
   var import_i18n318 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
@@ -119669,7 +119647,7 @@ ${content}
         closeListView();
         return;
       }
-      const target = tab === "list-view" && import_dom37.focus.tabbable.find(listViewRef.current)[0] || import_dom37.focus.tabbable.find(tabsRef.current)[0];
+      const target = tab === "list-view" && import_dom36.focus.tabbable.find(listViewRef.current)[0] || import_dom36.focus.tabbable.find(tabsRef.current)[0];
       target?.focus();
     });
     return (
@@ -121925,7 +121903,7 @@ ${content}
   var import_data233 = __toESM(require_data(), 1);
   var import_element421 = __toESM(require_element(), 1);
   var import_i18n333 = __toESM(require_i18n(), 1);
-  var import_dom38 = __toESM(require_dom(), 1);
+  var import_dom37 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/post-actions/index.mjs
   var import_data232 = __toESM(require_data(), 1);
@@ -122526,7 +122504,7 @@ ${content}
         labels?.name
       );
     } else if (postTitle) {
-      title = (0, import_dom38.__unstableStripHTML)(postTitle);
+      title = (0, import_dom37.__unstableStripHTML)(postTitle);
     }
     return /* @__PURE__ */ (0, import_jsx_runtime646.jsxs)(import_components249.__experimentalVStack, { spacing: 1, className: "editor-post-card-panel", children: [
       /* @__PURE__ */ (0, import_jsx_runtime646.jsxs)(
@@ -124547,7 +124525,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n366 = __toESM(require_i18n(), 1);
-  var import_data269 = __toESM(require_data(), 1);
+  var import_data270 = __toESM(require_data(), 1);
   var import_element447 = __toESM(require_element(), 1);
   var import_compose105 = __toESM(require_compose(), 1);
   var import_components272 = __toESM(require_components(), 1);
@@ -124567,7 +124545,7 @@ ${content}
   var import_compose103 = __toESM(require_compose(), 1);
   var import_i18n361 = __toESM(require_i18n(), 1);
   var import_data264 = __toESM(require_data(), 1);
-  var import_dom41 = __toESM(require_dom(), 1);
+  var import_dom40 = __toESM(require_dom(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
@@ -124715,7 +124693,7 @@ ${content}
   var import_i18n357 = __toESM(require_i18n(), 1);
   var import_compose100 = __toESM(require_compose(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
-  var import_dom39 = __toESM(require_dom(), 1);
+  var import_dom38 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
   var import_element436 = __toESM(require_element(), 1);
@@ -125095,7 +125073,7 @@ ${content}
       onChange?.(value);
     }
     const inputId = (0, import_compose100.useInstanceId)(NoteForm, "comment-input");
-    const trimmedPlainText = sanitizeNoteContent((0, import_dom39.__unstableStripHTML)(inputComment));
+    const trimmedPlainText = sanitizeNoteContent((0, import_dom38.__unstableStripHTML)(inputComment));
     const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
     async function submit() {
       if (isDisabled) {
@@ -125226,7 +125204,7 @@ ${content}
   var import_html_entities36 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/board-store.mjs
-  var import_dom40 = __toESM(require_dom(), 1);
+  var import_dom39 = __toESM(require_dom(), 1);
   var EMPTY_SNAPSHOT = {
     heights: {},
     anchorRects: {},
@@ -125313,7 +125291,7 @@ ${content}
         return;
       }
       rootEl = nextRootEl;
-      canvas = rootEl ? (0, import_dom40.getScrollContainer)(rootEl) : null;
+      canvas = rootEl ? (0, import_dom39.getScrollContainer)(rootEl) : null;
       frameEl = rootEl?.ownerDocument.defaultView?.frameElement ?? null;
       if (observer) {
         disconnect();
@@ -125525,10 +125503,42 @@ ${content}
       updateBlockAttributes2(clientId, attributes);
       __unstableMarkLastChangeAsPersistent();
     };
+    const removeNoteMarker = (clientId, noteId) => {
+      const removed = removeInlineNote(
+        getBlockAttributes2(clientId),
+        noteId
+      );
+      if (removed) {
+        updateNoteAnchor(clientId, {
+          [removed.attributeKey]: removed.value
+        });
+      }
+    };
+    const onDiscard = (clientId) => removeNoteMarker(clientId, "new");
+    const onStart = (clientId) => {
+      const selection = readInlineSelection(
+        getSelectionStart,
+        getSelectionEnd
+      );
+      if (selection?.clientId !== clientId) {
+        return;
+      }
+      onDiscard(clientId);
+      const wrapped = wrapInlineNote(
+        getBlockAttributes2(clientId)?.[selection.attributeKey],
+        "new",
+        selection.start,
+        selection.end
+      );
+      if (wrapped) {
+        updateNoteAnchor(clientId, {
+          [selection.attributeKey]: wrapped
+        });
+      }
+    };
     const onCreate = async ({ content, parent }) => {
       try {
-        const inlineSelection = !parent ? readInlineSelection(getSelectionStart, getSelectionEnd) : null;
-        const clientId = !parent ? inlineSelection?.clientId || getSelectedBlockClientId2() : null;
+        const clientId = !parent ? getSelectedBlockClientId2() : null;
         const savedRecord = await saveEntityRecord(
           "root",
           "comment",
@@ -125551,16 +125561,14 @@ ${content}
           const newAttributes = {
             metadata: cleanEmptyObject3(updatedMetadata)
           };
-          if (inlineSelection) {
-            const wrapped = wrapInlineNote(
-              attributes?.[inlineSelection.attributeKey],
+          const draft = removeInlineNote(attributes, "new");
+          if (draft) {
+            newAttributes[draft.attributeKey] = wrapInlineNote(
+              draft.value,
               savedRecord.id,
-              inlineSelection.start,
-              inlineSelection.end
+              draft.start,
+              draft.end
             );
-            if (wrapped) {
-              newAttributes[inlineSelection.attributeKey] = wrapped;
-            }
           }
           updateNoteAnchor(clientId, newAttributes);
         }
@@ -125611,14 +125619,8 @@ ${content}
               throwOnError: true
             }
           );
-          const removed = status === "approved" && note.blockClientId && removeInlineNote(
-            getBlockAttributes2(note.blockClientId),
-            id
-          );
-          if (removed) {
-            updateNoteAnchor(note.blockClientId, {
-              [removed.attributeKey]: removed.value
-            });
+          if (status === "approved" && note.blockClientId) {
+            removeNoteMarker(note.blockClientId, id);
           }
           (0, import_a11y17.speak)(
             status === "approved" ? (0, import_i18n358.__)("Note marked as resolved.") : (0, import_i18n358.__)("Note reopened.")
@@ -125741,7 +125743,7 @@ ${content}
         onError(error2);
       }
     };
-    return { onCreate, onEdit, onDelete };
+    return { onStart, onDiscard, onCreate, onEdit, onDelete };
   }
   function useNoteDraft(key) {
     const drafts = (0, import_element439.useContext)(NoteDraftsContext);
@@ -125756,27 +125758,20 @@ ${content}
     const hasDraft = () => drafts.has(key);
     return { initialValue, setDraft, hasDraft };
   }
-  function useNoteSelection({ notes, sidebarRef }) {
+  function useNoteSelection({ notes, drafts, onDiscard }) {
     const registry = (0, import_data262.useRegistry)();
-    const drafts = (0, import_element439.useContext)(NoteDraftsContext);
     const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store));
     const selectedBlockClientId = (0, import_data262.useSelect)(
       (select9) => select9(import_block_editor102.store).getSelectedBlockClientId(),
       []
     );
-    const { selectedNote: selectedNote2, noteFocused } = (0, import_data262.useSelect)((select9) => {
-      const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
-        select9(store)
-      );
-      return {
-        selectedNote: getSelectedNote2(),
-        noteFocused: isNoteFocused2()
-      };
-    }, []);
-    const syncWithBlock = (0, import_compose101.useEvent)((clientId) => {
+    const syncWithBlock = (0, import_compose101.useEvent)((clientId, previousClientId) => {
       const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
         registry.select(store)
       );
+      if (getSelectedNote2() === "new" && previousClientId && !drafts.has(previousClientId)) {
+        onDiscard(previousClientId);
+      }
       if (isNoteFocused2()) {
         return;
       }
@@ -125789,13 +125784,26 @@ ${content}
       selectNote2(pickPrimaryNote(blockThreads)?.id ?? draftNoteId);
     });
     const prevBlockIdRef = (0, import_element439.useRef)(selectedBlockClientId);
-    (0, import_element439.useEffect)(() => {
+    (0, import_element439.useLayoutEffect)(() => {
       if (prevBlockIdRef.current === selectedBlockClientId) {
         return;
       }
+      const previousClientId = prevBlockIdRef.current;
       prevBlockIdRef.current = selectedBlockClientId;
-      syncWithBlock(selectedBlockClientId);
+      syncWithBlock(selectedBlockClientId, previousClientId);
     }, [selectedBlockClientId, syncWithBlock]);
+  }
+  function useNoteFocus({ sidebarRef }) {
+    const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store));
+    const { selectedNote: selectedNote2, noteFocused } = (0, import_data262.useSelect)((select9) => {
+      const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
+        select9(store)
+      );
+      return {
+        selectedNote: getSelectedNote2(),
+        noteFocused: isNoteFocused2()
+      };
+    }, []);
     (0, import_element439.useEffect)(() => {
       if (!noteFocused || !selectedNote2) {
         return;
@@ -125956,7 +125964,13 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_jsx_runtime678 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement } = unlock(import_block_editor103.privateApis);
-  function AddNote({ clientId, onSubmit, sidebarRef, floating }) {
+  function AddNote({
+    clientId,
+    onSubmit,
+    onDiscard,
+    sidebarRef,
+    floating
+  }) {
     const blockElement = useBlockElement(clientId);
     const { toggleBlockSpotlight } = unlock((0, import_data263.useDispatch)(import_block_editor103.store));
     const { selectNote: selectNote2 } = unlock((0, import_data263.useDispatch)(store));
@@ -125973,12 +125987,14 @@ ${content}
         return;
       }
       if (getSelectedNote2() === "new" && !hasDraft()) {
+        onDiscard(clientId);
         toggleBlockSpotlight(clientId, false);
         selectNote2(void 0);
       }
     });
     const unselectNote = () => {
       setDraft("");
+      onDiscard(clientId);
       selectNote2(void 0);
       blockElement?.focus();
       toggleBlockSpotlight(clientId, false);
@@ -126279,6 +126295,7 @@ ${content}
     note,
     onEditNote,
     onAddReply,
+    onDiscard,
     onDeleteNote,
     isSelected: isSelected2,
     sidebarRef,
@@ -126370,7 +126387,7 @@ ${content}
     const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : void 0;
     const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
     const noteExcerpt = getNoteExcerpt(
-      (0, import_dom41.__unstableStripHTML)(note.content?.rendered),
+      (0, import_dom40.__unstableStripHTML)(note.content?.rendered),
       10
     );
     const ariaLabel = !!note.blockClientId ? (0, import_i18n361.sprintf)(
@@ -126388,6 +126405,7 @@ ${content}
         {
           clientId: note.blockClientId,
           onSubmit: onAddReply,
+          onDiscard,
           sidebarRef,
           floating: { y: floating.y, ref: floatingRef }
         },
@@ -126541,6 +126559,7 @@ ${content}
   function Notes({ notes, sidebarRef, isFloating = false }) {
     const {
       onCreate: onAddReply,
+      onDiscard,
       onEdit: onEditNote,
       onDelete
     } = useNoteActions();
@@ -126548,6 +126567,7 @@ ${content}
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data265.useDispatch)(import_block_editor105.store)
     );
+    useNoteFocus({ sidebarRef });
     const { selectedBlockClientId, orderedBlockIds } = (0, import_data265.useSelect)(
       (select9) => {
         const { getSelectedBlockClientId: getSelectedBlockClientId2, getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select9(import_block_editor105.store);
@@ -126562,7 +126582,6 @@ ${content}
       (select9) => unlock(select9(store)).getSelectedNote(),
       []
     );
-    useNoteSelection({ notes, sidebarRef });
     const relatedBlockElement = useBlockElement3(selectedBlockClientId);
     const threads = (0, import_element443.useMemo)(() => {
       if (!isFloating || selectedNote2 !== "new") {
@@ -126682,6 +126701,7 @@ ${content}
             {
               clientId: selectedBlockClientId,
               onSubmit: onAddReply,
+              onDiscard,
               sidebarRef
             },
             selectedBlockClientId
@@ -126703,6 +126723,7 @@ ${content}
               {
                 note: thread,
                 onAddReply,
+                onDiscard,
                 onDeleteNote: handleDelete,
                 onEditNote,
                 isSelected: selectedNote2 === thread.id,
@@ -126987,7 +127008,9 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/note-highlight-styles.mjs
   var import_element446 = __toESM(require_element(), 1);
+  var import_data269 = __toESM(require_data(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
+  var import_core_data149 = __toESM(require_core_data(), 1);
   var REST_ALPHA = "40";
   var ACTIVE_ALPHA = "80";
   var BASE_RESET = "mark.wp-note{background-color:transparent;color:inherit;}";
@@ -127012,9 +127035,16 @@ ${content}
     return rules.join("");
   }
   function NoteHighlightStyles({ threads, selectedId }) {
+    const currentUserId = (0, import_data269.useSelect)(
+      (select9) => select9(import_core_data149.store).getCurrentUser()?.id,
+      []
+    );
     const css = (0, import_element446.useMemo)(
-      () => buildHighlightCss(threads, selectedId),
-      [threads, selectedId]
+      () => buildHighlightCss(
+        [...threads, { id: "new", author: currentUserId }],
+        selectedId
+      ),
+      [threads, selectedId, currentUserId]
     );
     (0, import_block_editor109.useStyleOverride)({ id: "core-note-highlights", css });
     return null;
@@ -127023,15 +127053,10 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_jsx_runtime685 = __toESM(require_jsx_runtime(), 1);
   function NotesSidebar({ postId: postId2, drafts }) {
-    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data269.useSelect)(store3);
-    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data269.useDispatch)(store3);
-    const { toggleBlockSpotlight, selectBlock: selectBlock2 } = unlock(
-      (0, import_data269.useDispatch)(import_block_editor110.store)
-    );
-    const { selectNote: selectNote2 } = unlock((0, import_data269.useDispatch)(store));
-    const isLargeViewport = (0, import_compose105.useViewportMatch)("medium");
     const sidebarRef = (0, import_element447.useRef)(null);
-    const { clientId, noteId, isClassicBlock } = (0, import_data269.useSelect)((select9) => {
+    const isLargeViewport = (0, import_compose105.useViewportMatch)("medium");
+    const { ref: canvasMarginRef } = (0, import_components272.__experimentalUseSlot)(CanvasMargin.name);
+    const { clientId, noteId, isClassicBlock } = (0, import_data270.useSelect)((select9) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor110.store);
       const _clientId = getSelectedBlockClientId2();
       return {
@@ -127040,26 +127065,30 @@ ${content}
         isClassicBlock: _clientId ? getBlockName2(_clientId) === "core/freeform" : false
       };
     }, []);
-    const blockNoteIds = getNoteIdsFromMetadata({ noteId });
-    const { isDistractionFree, notesDisplayMode } = (0, import_data269.useSelect)((select9) => {
+    const { notesDisplayMode, selectedNoteId, isAllNotesSidebarOpen } = (0, import_data270.useSelect)((select9) => {
       const { get } = select9(import_preferences34.store);
       return {
-        isDistractionFree: get("core", "distractionFree"),
-        notesDisplayMode: get("core", "notesDisplayMode")
+        notesDisplayMode: get("core", "notesDisplayMode"),
+        selectedNoteId: unlock(
+          select9(store)
+        ).getSelectedNote(),
+        isAllNotesSidebarOpen: select9(store3).getActiveComplementaryArea(
+          "core"
+        ) === ALL_NOTES_SIDEBAR
       };
     }, []);
-    const areNotesHidden = notesDisplayMode === "hidden";
-    const { set: setPreference } = (0, import_data269.useDispatch)(import_preferences34.store);
-    const selectedNoteId = (0, import_data269.useSelect)(
-      (select9) => unlock(select9(store)).getSelectedNote(),
-      []
-    );
+    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data270.useSelect)(store3);
     const { notes, unresolvedNotes } = useNoteThreads(postId2);
-    const isAllNotesSidebarOpen = (0, import_data269.useSelect)(
-      (select9) => select9(store3).getActiveComplementaryArea("core") === ALL_NOTES_SIDEBAR,
-      []
+    const { onStart, onDiscard } = useNoteActions();
+    useNoteSelection({ notes, drafts, onDiscard });
+    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data270.useDispatch)(store3);
+    const { set: setPreference } = (0, import_data270.useDispatch)(import_preferences34.store);
+    const { toggleBlockSpotlight, selectBlock: selectBlock2 } = unlock(
+      (0, import_data270.useDispatch)(import_block_editor110.store)
     );
-    const { ref: canvasMarginRef } = (0, import_components272.__experimentalUseSlot)(CanvasMargin.name);
+    const { selectNote: selectNote2 } = unlock((0, import_data270.useDispatch)(store));
+    const blockNoteIds = getNoteIdsFromMetadata({ noteId });
+    const areNotesHidden = notesDisplayMode === "hidden";
     const showAllNotesSidebar = notes.length > 0 || !isLargeViewport || isAllNotesSidebarOpen;
     const hasFloatingNotes = isLargeViewport && (unresolvedNotes.length > 0 || selectedNoteId !== void 0);
     const showFloatingNotes = hasFloatingNotes && !areNotesHidden && !isAllNotesSidebarOpen;
@@ -127072,6 +127101,9 @@ ${content}
         enableComplementaryArea2("core", ALL_NOTES_SIDEBAR);
       } else if (areNotesHidden && getActiveComplementaryArea2("core") !== ALL_NOTES_SIDEBAR) {
         setPreference("core", "notesDisplayMode", "full");
+      }
+      if (targetNoteId === "new") {
+        onStart(targetClientId);
       }
       selectBlock2(targetClientId, null);
       toggleBlockSpotlight(targetClientId, true);
@@ -127102,14 +127134,11 @@ ${content}
         addNewNoteForBlock(clientId);
       },
       {
-        isDisabled: isDistractionFree || isClassicBlock || !clientId
+        isDisabled: isClassicBlock || !clientId
       }
     );
     const currentThreads = blockNoteIds.length > 0 ? notes.filter((thread) => blockNoteIds.includes(thread.id)) : [];
     const currentThread = pickPrimaryNote(currentThreads);
-    if (isDistractionFree) {
-      return /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(AddNoteMenuItem, { isDistractionFree: true });
-    }
     return /* @__PURE__ */ (0, import_jsx_runtime685.jsxs)(import_jsx_runtime685.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(
         NoteHighlightStyles,
@@ -127173,41 +127202,48 @@ ${content}
   }
   function NotesSidebarContainer() {
     const [drafts] = (0, import_element447.useState)(() => /* @__PURE__ */ new Map());
-    const { postId: postId2, editorMode, revisionsMode } = (0, import_data269.useSelect)((select9) => {
-      const { getCurrentPostId: getCurrentPostId2, getEditorMode: getEditorMode2, isRevisionsMode: isRevisionsMode2 } = unlock(
-        select9(store)
-      );
-      return {
-        postId: getCurrentPostId2(),
-        editorMode: getEditorMode2(),
-        revisionsMode: isRevisionsMode2()
-      };
-    }, []);
+    const { postId: postId2, editorMode, revisionsMode, isDistractionFree } = (0, import_data270.useSelect)(
+      (select9) => {
+        const { getCurrentPostId: getCurrentPostId2, getEditorMode: getEditorMode2, isRevisionsMode: isRevisionsMode2 } = unlock(
+          select9(store)
+        );
+        return {
+          postId: getCurrentPostId2(),
+          editorMode: getEditorMode2(),
+          revisionsMode: isRevisionsMode2(),
+          isDistractionFree: select9(import_preferences34.store).get(
+            "core",
+            "distractionFree"
+          )
+        };
+      },
+      []
+    );
     if (!postId2 || typeof postId2 !== "number") {
       return null;
     }
     if (editorMode === "text" || revisionsMode) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(NotesSidebar, { postId: postId2, drafts }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: isDistractionFree ? /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(AddNoteMenuItem, { isDistractionFree: true }) : /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(NotesSidebar, { postId: postId2, drafts }) });
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
   var import_components275 = __toESM(require_components(), 1);
   var import_i18n369 = __toESM(require_i18n(), 1);
-  var import_data272 = __toESM(require_data(), 1);
+  var import_data273 = __toESM(require_data(), 1);
   var import_element448 = __toESM(require_element(), 1);
   var import_preferences37 = __toESM(require_preferences(), 1);
   var import_compose106 = __toESM(require_compose(), 1);
-  var import_core_data150 = __toESM(require_core_data(), 1);
+  var import_core_data151 = __toESM(require_core_data(), 1);
   var import_block_editor111 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
   var import_components273 = __toESM(require_components(), 1);
-  var import_data270 = __toESM(require_data(), 1);
+  var import_data271 = __toESM(require_data(), 1);
   var import_i18n367 = __toESM(require_i18n(), 1);
   var import_preferences35 = __toESM(require_preferences(), 1);
-  var import_core_data149 = __toESM(require_core_data(), 1);
+  var import_core_data150 = __toESM(require_core_data(), 1);
   var import_jsx_runtime686 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesActionMenu({
     hideWelcomeGuide = false,
@@ -127218,9 +127254,9 @@ ${content}
     const onReset = () => {
       setUser({ styles: {}, settings: {} });
     };
-    const { toggle } = (0, import_data270.useDispatch)(import_preferences35.store);
-    const { canEditCSS } = (0, import_data270.useSelect)((select9) => {
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data149.store);
+    const { toggle } = (0, import_data271.useDispatch)(import_preferences35.store);
+    const { canEditCSS } = (0, import_data271.useSelect)((select9) => {
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data150.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
@@ -127268,7 +127304,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
-  var import_data271 = __toESM(require_data(), 1);
+  var import_data272 = __toESM(require_data(), 1);
   var import_components274 = __toESM(require_components(), 1);
   var import_i18n368 = __toESM(require_i18n(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
@@ -127291,8 +127327,8 @@ ${content}
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_jsx_runtime688 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideStyles() {
-    const { toggle } = (0, import_data271.useDispatch)(import_preferences36.store);
-    const { isActive, isStylesOpen } = (0, import_data271.useSelect)((select9) => {
+    const { toggle } = (0, import_data272.useDispatch)(import_preferences36.store);
+    const { isActive, isStylesOpen } = (0, import_data272.useSelect)((select9) => {
       const sidebar = select9(store3).getActiveComplementaryArea("core");
       return {
         isActive: !!select9(import_preferences36.store).get(
@@ -127406,7 +127442,7 @@ ${content}
       editorSettings: editorSettings2,
       styleStateViewport,
       isDistractionFree
-    } = (0, import_data272.useSelect)((select9) => {
+    } = (0, import_data273.useSelect)((select9) => {
       const { get } = select9(import_preferences37.store);
       const { getActiveComplementaryArea: getActiveComplementaryArea2 } = select9(store3);
       const {
@@ -127418,7 +127454,7 @@ ${content}
       const _isVisualEditorMode = "visual" === getEditorMode2();
       const _showListViewByDefault = get("core", "showListViewByDefault");
       const _isDistractionFree = get("core", "distractionFree");
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data150.store);
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data151.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
@@ -127436,7 +127472,7 @@ ${content}
       };
     }, []);
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
-      (0, import_data272.useDispatch)(store)
+      (0, import_data273.useDispatch)(store)
     );
     const isMobileViewport = (0, import_compose106.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
@@ -127458,7 +127494,7 @@ ${content}
         resetStylesNavigation2();
       }
     }, [shouldResetNavigation, resetStylesNavigation2]);
-    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data272.useDispatch)(store);
+    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data273.useDispatch)(store);
     const toggleRevisions = () => {
       setIsListViewOpened2(false);
       if (isRevisionsOpened || isRevisionsStyleBookOpened) {
@@ -127579,7 +127615,7 @@ ${content}
       error: error2,
       isBlockTheme,
       showGlobalStyles
-    } = (0, import_data273.useSelect)(
+    } = (0, import_data274.useSelect)(
       (select9) => {
         const {
           getEntityRecord,
@@ -127588,7 +127624,7 @@ ${content}
           getCurrentTheme,
           __experimentalGetCurrentGlobalStylesId,
           canUser
-        } = select9(import_core_data151.store);
+        } = select9(import_core_data152.store);
         const { getRenderingMode: getRenderingMode2, getCurrentPostType: getCurrentPostType2 } = select9(store);
         const postArgs = ["postType", postType2, postId2];
         const currentRenderingMode = getRenderingMode2();
@@ -127662,20 +127698,20 @@ ${content}
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n372 = __toESM(require_i18n(), 1);
   var import_compose107 = __toESM(require_compose(), 1);
-  var import_data276 = __toESM(require_data(), 1);
+  var import_data277 = __toESM(require_data(), 1);
   var import_element450 = __toESM(require_element(), 1);
   var import_preferences40 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
-  var import_data274 = __toESM(require_data(), 1);
+  var import_data275 = __toESM(require_data(), 1);
   var import_preferences38 = __toESM(require_preferences(), 1);
   var import_jsx_runtime691 = __toESM(require_jsx_runtime(), 1);
   var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences38.privateApis);
   function EnablePublishSidebarOption(props) {
-    const isChecked = (0, import_data274.useSelect)((select9) => {
+    const isChecked = (0, import_data275.useSelect)((select9) => {
       return select9(store).isPublishSidebarEnabled();
     }, []);
-    const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data274.useDispatch)(store);
+    const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data275.useDispatch)(store);
     return /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(
       PreferenceBaseOption2,
       {
@@ -127687,7 +127723,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/block-visibility/index.mjs
-  var import_data275 = __toESM(require_data(), 1);
+  var import_data276 = __toESM(require_data(), 1);
   var import_preferences39 = __toESM(require_preferences(), 1);
   var import_blocks39 = __toESM(require_blocks(), 1);
   var import_element449 = __toESM(require_element(), 1);
@@ -127699,13 +127735,13 @@ ${content}
   var EMPTY_ARRAY20 = [];
   function BlockVisibility() {
     const { showBlockTypes: showBlockTypes2, hideBlockTypes: hideBlockTypes2 } = unlock(
-      (0, import_data275.useDispatch)(store)
+      (0, import_data276.useDispatch)(store)
     );
     const {
       blockTypes,
       allowedBlockTypes: _allowedBlockTypes,
       hiddenBlockTypes: _hiddenBlockTypes
-    } = (0, import_data275.useSelect)((select9) => {
+    } = (0, import_data276.useSelect)((select9) => {
       return {
         blockTypes: select9(import_blocks39.store).getBlockTypes(),
         allowedBlockTypes: select9(store).getEditorSettings().allowedBlockTypes,
@@ -127794,10 +127830,10 @@ ${content}
     PreferenceToggleControl
   } = unlock(import_preferences40.privateApis);
   function EditorPreferencesModal({ extraSections = {} }) {
-    const isActive = (0, import_data276.useSelect)((select9) => {
+    const isActive = (0, import_data277.useSelect)((select9) => {
       return select9(store3).isModalActive("editor/preferences");
     }, []);
-    const { closeModal: closeModal2 } = (0, import_data276.useDispatch)(store3);
+    const { closeModal: closeModal2 } = (0, import_data277.useDispatch)(store3);
     if (!isActive) {
       return null;
     }
@@ -127805,7 +127841,7 @@ ${content}
   }
   function PreferencesModalContents({ extraSections = {} }) {
     const isLargeViewport = (0, import_compose107.useViewportMatch)("medium");
-    const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data276.useSelect)(
+    const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data277.useSelect)(
       (select9) => {
         const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select9(store));
         const { get } = select9(import_preferences40.store);
@@ -127818,8 +127854,8 @@ ${content}
       },
       [isLargeViewport]
     );
-    const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data276.useDispatch)(store);
-    const { set: setPreference } = (0, import_data276.useDispatch)(import_preferences40.store);
+    const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data277.useDispatch)(store);
+    const { set: setPreference } = (0, import_data277.useDispatch)(import_preferences40.store);
     const sections = (0, import_element450.useMemo)(
       () => [
         {
@@ -128201,21 +128237,21 @@ ${content}
   // packages/editor/build-module/components/site-export/index.mjs
   var import_i18n373 = __toESM(require_i18n(), 1);
   var import_api_fetch10 = __toESM(require_api_fetch(), 1);
-  var import_data277 = __toESM(require_data(), 1);
+  var import_data278 = __toESM(require_data(), 1);
   var import_blob4 = __toESM(require_blob(), 1);
-  var import_core_data152 = __toESM(require_core_data(), 1);
+  var import_core_data153 = __toESM(require_core_data(), 1);
   var import_notices38 = __toESM(require_notices(), 1);
   var import_jsx_runtime694 = __toESM(require_jsx_runtime(), 1);
   function SiteExport() {
-    const canExport = (0, import_data277.useSelect)((select9) => {
+    const canExport = (0, import_data278.useSelect)((select9) => {
       const postType2 = select9(store).getCurrentPostType();
       if (postType2 !== TEMPLATE_POST_TYPE && postType2 !== TEMPLATE_PART_POST_TYPE) {
         return false;
       }
-      const targetHints = select9(import_core_data152.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
+      const targetHints = select9(import_core_data153.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
       return !!targetHints.allow?.includes("GET");
     }, []);
-    const { createErrorNotice } = (0, import_data277.useDispatch)(import_notices38.store);
+    const { createErrorNotice } = (0, import_data278.useDispatch)(import_notices38.store);
     if (!canExport) {
       return null;
     }
@@ -128337,7 +128373,7 @@ ${content}
 
   // packages/editor/build-module/bindings/post-data.mjs
   var import_i18n374 = __toESM(require_i18n(), 1);
-  var import_core_data153 = __toESM(require_core_data(), 1);
+  var import_core_data154 = __toESM(require_core_data(), 1);
   var import_block_editor114 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES = [
     "core/navigation-link",
@@ -128375,7 +128411,7 @@ ${content}
         postId2 = context?.postId;
         postType2 = context?.postType;
       }
-      const { getEditedEntityRecord } = select9(import_core_data153.store);
+      const { getEditedEntityRecord } = select9(import_core_data154.store);
       const entityDataValues = getEditedEntityRecord(
         "postType",
         postType2,
@@ -128406,7 +128442,7 @@ ${content}
       Object.values(bindings).forEach(({ args, newValue }) => {
         newData[args.field] = newValue;
       });
-      dispatch9(import_core_data153.store).editEntityRecord(
+      dispatch9(import_core_data154.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -128426,7 +128462,7 @@ ${content}
       if (!context?.postType) {
         return false;
       }
-      const canUserEdit = select9(import_core_data153.store).canUser("update", {
+      const canUserEdit = select9(import_core_data154.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
         id: context?.postId
@@ -128449,9 +128485,9 @@ ${content}
   };
 
   // packages/editor/build-module/bindings/post-meta.mjs
-  var import_core_data154 = __toESM(require_core_data(), 1);
+  var import_core_data155 = __toESM(require_core_data(), 1);
   function getPostMetaFields(select9, context) {
-    const { getRegisteredPostMeta } = unlock(select9(import_core_data154.store));
+    const { getRegisteredPostMeta } = unlock(select9(import_core_data155.store));
     const registeredFields = getRegisteredPostMeta(context?.postType);
     const metaFields = [];
     Object.entries(registeredFields).forEach(([key, props]) => {
@@ -128478,7 +128514,7 @@ ${content}
     if (!context?.postId) {
       return metaField.default || metaField.label || args.key;
     }
-    const { getEditedEntityRecord } = select9(import_core_data154.store);
+    const { getEditedEntityRecord } = select9(import_core_data155.store);
     const entityMetaValues = getEditedEntityRecord(
       "postType",
       context?.postType,
@@ -128504,7 +128540,7 @@ ${content}
       Object.values(bindings).forEach(({ args, newValue }) => {
         newMeta[args.key] = newValue;
       });
-      dispatch9(import_core_data154.store).editEntityRecord(
+      dispatch9(import_core_data155.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -128531,7 +128567,7 @@ ${content}
       if (areCustomFieldsEnabled) {
         return false;
       }
-      const canUserEdit = select9(import_core_data154.store).canUser("update", {
+      const canUserEdit = select9(import_core_data155.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
         id: context?.postId
@@ -128553,7 +128589,7 @@ ${content}
 
   // packages/editor/build-module/bindings/term-data.mjs
   var import_i18n375 = __toESM(require_i18n(), 1);
-  var import_core_data155 = __toESM(require_core_data(), 1);
+  var import_core_data156 = __toESM(require_core_data(), 1);
   var import_block_editor115 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES2 = [
     "core/navigation-link",
@@ -128600,7 +128636,7 @@ ${content}
     name: "core/term-data",
     usesContext: ["taxonomy", "termId", "termData"],
     getValues({ select: select9, context, bindings, clientId }) {
-      const { getEntityRecord } = select9(import_core_data155.store);
+      const { getEntityRecord } = select9(import_core_data156.store);
       const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor115.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
@@ -128690,7 +128726,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
-  var import_data278 = __toESM(require_data(), 1);
+  var import_data279 = __toESM(require_data(), 1);
   var import_element451 = __toESM(require_element(), 1);
   var import_i18n376 = __toESM(require_i18n(), 1);
   var import_a11y19 = __toESM(require_a11y(), 1);
@@ -128721,7 +128757,7 @@ ${content}
   );
   var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime695.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime695.jsx)(import_components278.Icon, { icon: check_default }) });
   function UploadProgressSnackbar() {
-    const { items, csmFailureCount } = (0, import_data278.useSelect)((select9) => {
+    const { items, csmFailureCount } = (0, import_data279.useSelect)((select9) => {
       const { getItems } = select9(import_upload_media3.store);
       const { getFailureCount: getFailureCount2 } = unlock(select9(import_upload_media3.store));
       return {
@@ -128739,7 +128775,7 @@ ${content}
     const remaining = csmRemaining + trackedRemaining;
     const sessionTotal = csmRemaining + (tracker ? tracker.total : 0);
     const peakRef = (0, import_element451.useRef)(0);
-    const { createNotice, removeNotice } = (0, import_data278.useDispatch)(import_notices39.store);
+    const { createNotice, removeNotice } = (0, import_data279.useDispatch)(import_notices39.store);
     const dismissedRef = (0, import_element451.useRef)(false);
     const wasUploadingRef = (0, import_element451.useRef)(false);
     const failuresAtStartRef = (0, import_element451.useRef)(0);
@@ -128889,10 +128925,10 @@ ${content}
   });
 
   // packages/editor/build-module/dataviews/api.mjs
-  var import_data279 = __toESM(require_data(), 1);
+  var import_data280 = __toESM(require_data(), 1);
   function registerEntityAction2(kind, name2, config2) {
     const { registerEntityAction: _registerEntityAction } = unlock(
-      (0, import_data279.dispatch)(store)
+      (0, import_data280.dispatch)(store)
     );
     if (true) {
       _registerEntityAction(kind, name2, config2);
@@ -128900,7 +128936,7 @@ ${content}
   }
   function unregisterEntityAction2(kind, name2, actionId) {
     const { unregisterEntityAction: _unregisterEntityAction } = unlock(
-      (0, import_data279.dispatch)(store)
+      (0, import_data280.dispatch)(store)
     );
     if (true) {
       _unregisterEntityAction(kind, name2, actionId);
@@ -128908,7 +128944,7 @@ ${content}
   }
   function registerEntityField2(kind, name2, config2) {
     const { registerEntityField: _registerEntityField } = unlock(
-      (0, import_data279.dispatch)(store)
+      (0, import_data280.dispatch)(store)
     );
     if (true) {
       _registerEntityField(kind, name2, config2);
@@ -128916,7 +128952,7 @@ ${content}
   }
   function unregisterEntityField2(kind, name2, fieldId) {
     const { unregisterEntityField: _unregisterEntityField } = unlock(
-      (0, import_data279.dispatch)(store)
+      (0, import_data280.dispatch)(store)
     );
     if (true) {
       _unregisterEntityField(kind, name2, fieldId);
