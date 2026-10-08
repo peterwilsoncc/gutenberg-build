@@ -71174,6 +71174,7 @@ ${text}
         __experimentalTextTransform: true,
         __experimentalTextDecoration: true,
         __experimentalLetterSpacing: true,
+        __experimentalWritingMode: true,
         __experimentalDefaultControls: {
           fontSize: true
         }

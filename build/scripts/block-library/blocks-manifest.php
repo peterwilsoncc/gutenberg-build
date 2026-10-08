@@ -7708,6 +7708,7 @@ return array(
 				'__experimentalTextTransform' => true,
 				'__experimentalTextDecoration' => true,
 				'__experimentalLetterSpacing' => true,
+				'__experimentalWritingMode' => true,
 				'__experimentalDefaultControls' => array(
 					'fontSize' => true
 				)
