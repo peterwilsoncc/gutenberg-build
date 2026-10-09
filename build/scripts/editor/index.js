@@ -117411,18 +117411,15 @@ ${content}
     if (noteId === void 0 || noteId === null) {
       return null;
     }
-    let html = null;
+    let formats;
     if (value instanceof import_rich_text6.RichTextData) {
-      html = value.toHTMLString();
-    } else if (typeof value === "string") {
-      html = value;
-    }
-    if (!html || html.indexOf("wp-note") === -1) {
+      formats = value.formats;
+    } else if (typeof value === "string" && value.includes("wp-note")) {
+      formats = (0, import_rich_text6.create)({ html: value }).formats;
+    } else {
       return null;
     }
     const target = String(noteId);
-    const record = (0, import_rich_text6.create)({ html });
-    const formats = record.formats;
     let start2 = -1;
     for (let i2 = 0; i2 < formats.length; i2++) {
       const stack = formats[i2];
@@ -117545,38 +117542,36 @@ ${content}
       return null;
     }
     const record = applyNoteFormat(
-      (0, import_rich_text6.create)({ html: value.toHTMLString() }),
+      (0, import_rich_text6.create)({ html: value }),
       { type: NOTE_FORMAT_NAME, attributes: { "data-id": String(id) } },
       start2,
       end
     );
-    return import_rich_text6.RichTextData.fromHTMLString(
-      new import_rich_text6.RichTextData(record).toHTMLString()
-    );
+    return new import_rich_text6.RichTextData(record);
   }
   function removeNoteFormat(value, noteId) {
     if (!(value instanceof import_rich_text6.RichTextData)) {
       return null;
     }
     const target = String(noteId);
-    const record = (0, import_rich_text6.create)({ html: value.toHTMLString() });
+    const record = (0, import_rich_text6.create)({ html: value });
     let changed = false;
-    const formats = record.formats.map((stack) => {
-      if (!stack) {
-        return stack;
-      }
+    const formats = record.formats.slice();
+    formats.forEach((stack, index3) => {
       const filtered = stack.filter(
         (format7) => !(format7.type === NOTE_FORMAT_NAME && format7.attributes?.["data-id"] === target)
       );
       if (filtered.length === stack.length) {
-        return stack;
+        return;
       }
       changed = true;
-      return filtered.length ? filtered : void 0;
+      if (filtered.length) {
+        formats[index3] = filtered;
+      } else {
+        delete formats[index3];
+      }
     });
-    return changed ? import_rich_text6.RichTextData.fromHTMLString(
-      new import_rich_text6.RichTextData({ ...record, formats }).toHTMLString()
-    ) : null;
+    return changed ? new import_rich_text6.RichTextData({ ...record, formats }) : null;
   }
   function removeInlineNote(attributes, noteId) {
     const found = findNoteInBlock(attributes, noteId);
