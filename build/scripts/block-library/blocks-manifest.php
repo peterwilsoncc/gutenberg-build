@@ -5300,6 +5300,11 @@ return array(
 			'splitting' => true,
 			'anchor' => true,
 			'className' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'__experimentalBorder' => array(
 				'color' => true,
 				'radius' => true,

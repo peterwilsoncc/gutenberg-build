@@ -72713,6 +72713,11 @@ ${text}
       splitting: true,
       anchor: true,
       className: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       __experimentalBorder: {
         color: true,
         radius: true,
