@@ -3541,6 +3541,9 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
+			'shadow' => array(
+				'__experimentalSkipSerialization' => true
+			),
 			'__experimentalBorder' => array(
 				'color' => true,
 				'radius' => true,
@@ -3578,6 +3581,7 @@ return array(
 		'selectors' => array(
 			'root' => '.wp-block-icon svg',
 			'css' => '.wp-block-icon',
+			'shadow' => '.wp-block-icon svg',
 			'spacing' => array(
 				'margin' => '.wp-block-icon'
 			)
