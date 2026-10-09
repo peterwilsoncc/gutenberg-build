@@ -9059,6 +9059,9 @@ return array(
 				)
 			),
 			'typography' => array(
+				'__experimentalSkipSerialization' => array(
+					'textAlign'
+				),
 				'fontSize' => true,
 				'lineHeight' => true,
 				'__experimentalFontFamily' => true,
@@ -9067,6 +9070,7 @@ return array(
 				'__experimentalLetterSpacing' => true,
 				'__experimentalTextTransform' => true,
 				'__experimentalTextDecoration' => true,
+				'textAlign' => true,
 				'__experimentalDefaultControls' => array(
 					'fontSize' => true
 				)

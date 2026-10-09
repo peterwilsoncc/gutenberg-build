@@ -94462,6 +94462,7 @@ ${text}
     const [selectedCell, setSelectedCell] = (0, import_element199.useState)();
     const colorProps = (0, import_block_editor254.__experimentalUseColorProps)(attributes2);
     const borderProps = (0, import_block_editor254.__experimentalUseBorderProps)(attributes2);
+    const textAlign = attributes2?.style?.typography?.textAlign;
     const blockEditingMode = (0, import_block_editor254.useBlockEditingMode)();
     const tableRef = (0, import_element199.useRef)();
     const [hasTableCreated, setHasTableCreated] = (0, import_element199.useState)(false);
@@ -94770,6 +94771,7 @@ ${text}
             borderProps.className,
             {
               "has-fixed-layout": hasFixedLayout,
+              [`has-text-align-${textAlign}`]: textAlign,
               // This is required in the editor only to overcome
               // the fact the editor rewrites individual border
               // widths into a shorthand format.
@@ -95069,6 +95071,7 @@ ${text}
         }
       },
       typography: {
+        __experimentalSkipSerialization: ["textAlign"],
         fontSize: true,
         lineHeight: true,
         __experimentalFontFamily: true,
@@ -95077,6 +95080,7 @@ ${text}
         __experimentalLetterSpacing: true,
         __experimentalTextTransform: true,
         __experimentalTextDecoration: true,
+        textAlign: true,
         __experimentalDefaultControls: {
           fontSize: true
         }
@@ -95116,15 +95120,17 @@ ${text}
   var import_block_editor255 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime593 = __toESM(require_jsx_runtime(), 1);
   function save46({ attributes: attributes2 }) {
-    const { hasFixedLayout, head, body, foot, caption } = attributes2;
+    const { hasFixedLayout, head, body, foot, caption, style: style2 } = attributes2;
     const isEmpty = !head.length && !body.length && !foot.length;
     if (isEmpty) {
       return null;
     }
     const colorProps = (0, import_block_editor255.__experimentalGetColorClassesAndStyles)(attributes2);
     const borderProps = (0, import_block_editor255.__experimentalGetBorderClassesAndStyles)(attributes2);
+    const textAlign = style2?.typography?.textAlign;
     const classes = clsx_default(colorProps.className, borderProps.className, {
-      "has-fixed-layout": hasFixedLayout
+      "has-fixed-layout": hasFixedLayout,
+      [`has-text-align-${textAlign}`]: textAlign
     });
     const hasCaption = !import_block_editor255.RichText.isEmpty(caption);
     const Section = ({ type, rows }) => {
