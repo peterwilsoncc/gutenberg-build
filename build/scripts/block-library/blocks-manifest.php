@@ -2499,7 +2499,8 @@ return array(
 				'enableContrastChecker' => false
 			),
 			'dimensions' => array(
-				'aspectRatio' => true
+				'aspectRatio' => true,
+				'minWidth' => true
 			),
 			'typography' => array(
 				'fontSize' => true,
