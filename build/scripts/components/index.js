@@ -27948,6 +27948,9 @@ This message will only show in development mode. It won't appear in production. 
         event,
         target
       } = dragProps2;
+      if (event.pointerType === "touch" || event.type.startsWith("touch")) {
+        return;
+      }
       dragProps2.event = {
         ...dragProps2.event,
         target
