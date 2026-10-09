@@ -1,4 +1,5 @@
 (function() {
+"use strict";
 var wp;
 (wp ||= {}).preferencesPersistence = (() => {
   var __create = Object.create;
@@ -108,8 +109,8 @@ var wp;
       const localData = JSON.parse(
         localStorage.getItem(localStorageRestoreKey)
       );
-      const serverTimestamp = Date.parse(serverData?._modified) || 0;
-      const localTimestamp = Date.parse(localData?._modified) || 0;
+      const serverTimestamp = Date.parse(serverData?._modified ?? "") || 0;
+      const localTimestamp = Date.parse(localData?._modified ?? "") || 0;
       if (serverData && serverTimestamp >= localTimestamp) {
         cache = serverData;
       } else if (localData) {
@@ -492,13 +493,19 @@ var wp;
     const localData = JSON.parse(
       window.localStorage.getItem(localStorageRestoreKey)
     );
-    const serverModified = Date.parse(serverData && serverData._modified) || 0;
-    const localModified = Date.parse(localData && localData._modified) || 0;
+    const serverModified = Date.parse(
+      serverData && serverData._modified
+    ) || 0;
+    const localModified = Date.parse(localData?._modified ?? "") || 0;
     let preloadedData;
     if (serverData && serverModified >= localModified) {
-      preloadedData = convertPreferencesPackageData(serverData);
+      preloadedData = convertPreferencesPackageData(
+        serverData
+      );
     } else if (localData) {
-      preloadedData = convertPreferencesPackageData(localData);
+      preloadedData = convertPreferencesPackageData(
+        localData
+      );
     } else {
       preloadedData = convertLegacyLocalStorageData(userId);
     }
