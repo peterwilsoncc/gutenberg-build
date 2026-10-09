@@ -1742,9 +1742,9 @@ input.components-combobox-control__input[type=text]:focus {
 }
 .is-focusing-regions.is-distraction-free .interface-interface-skeleton__header .edit-post-header,
 .is-focusing-regions .interface-interface-skeleton__sidebar .editor-layout__toggle-sidebar-panel,
-.is-focusing-regions .interface-interface-skeleton__actions .editor-layout__toggle-publish-panel,
-.is-focusing-regions .interface-interface-skeleton__actions .editor-layout__toggle-entities-saved-states-panel,
-.is-focusing-regions .editor-post-publish-panel {
+.is-focusing-regions .interface-interface-skeleton__actions:focus .editor-layout__toggle-publish-panel,
+.is-focusing-regions .interface-interface-skeleton__actions:focus .editor-layout__toggle-entities-saved-states-panel,
+.is-focusing-regions .interface-interface-skeleton__actions:focus .editor-post-publish-panel {
   outline-color: var(--wp-admin-theme-color);
   outline-style: solid;
   outline-width: calc(2 * var(--wp-admin-border-width-focus) / var(--wp-block-editor-iframe-zoom-out-scale, 1));
