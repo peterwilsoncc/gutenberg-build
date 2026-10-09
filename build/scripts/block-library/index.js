@@ -59814,6 +59814,10 @@ ${text}
           text: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       spacing: {
         margin: true,
         padding: true,
@@ -59833,6 +59837,7 @@ ${text}
     },
     selectors: {
       border: ".wp-block-list:not(.wp-block-list .wp-block-list)",
+      dimensions: ".wp-block-list:not(.wp-block-list .wp-block-list)",
       shadow: ".wp-block-list:not(.wp-block-list .wp-block-list)"
     },
     editorStyle: "wp-block-list-editor",

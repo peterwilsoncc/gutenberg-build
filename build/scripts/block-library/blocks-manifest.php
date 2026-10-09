@@ -4107,6 +4107,10 @@ return array(
 					'text' => true
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,
@@ -4126,6 +4130,7 @@ return array(
 		),
 		'selectors' => array(
 			'border' => '.wp-block-list:not(.wp-block-list .wp-block-list)',
+			'dimensions' => '.wp-block-list:not(.wp-block-list .wp-block-list)',
 			'shadow' => '.wp-block-list:not(.wp-block-list .wp-block-list)'
 		),
 		'editorStyle' => 'wp-block-list-editor',
