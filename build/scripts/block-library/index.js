@@ -72921,6 +72921,15 @@ ${text}
     supports: {
       anchor: true,
       align: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       color: {
         gradients: true,
         link: true,
