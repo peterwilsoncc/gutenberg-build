@@ -776,7 +776,10 @@ var wp;
       text: ""
     };
   }
-  function toFormat({ tagName, attributes }) {
+  function toFormat({
+    tagName,
+    attributes
+  }) {
     let formatType;
     if (attributes && attributes.class) {
       formatType = (0, import_data5.select)(store).getFormatTypeForClassName(
@@ -845,9 +848,10 @@ var wp;
     /**
      * Create a RichTextData instance from an HTML element.
      *
-     * @param {HTMLElement}                    htmlElement The HTML element to create the instance from.
-     * @param {{preserveWhiteSpace?: boolean}} options     Options.
-     * @return {RichTextData} The RichTextData instance.
+     * @param htmlElement                The HTML element to create the instance from.
+     * @param options                    Options.
+     * @param options.preserveWhiteSpace Whether to preserve white space.
+     * @return The RichTextData instance.
      */
     static fromHTMLElement(htmlElement, options = {}) {
       const { preserveWhiteSpace = false } = options;
@@ -869,11 +873,17 @@ var wp;
     /**
      * Convert the rich text value to an HTML string.
      *
-     * @param {{preserveWhiteSpace?: boolean}} options Options.
-     * @return {string} The HTML string.
+     * @param options                    Options.
+     * @param options.preserveWhiteSpace Whether to preserve white space.
+     * @return The HTML string.
      */
-    toHTMLString({ preserveWhiteSpace } = {}) {
-      return this.originalHTML || toHTMLString({ value: this.#value, preserveWhiteSpace });
+    toHTMLString({
+      preserveWhiteSpace
+    } = {}) {
+      return this.originalHTML || toHTMLString({
+        value: this.#value,
+        preserveWhiteSpace
+      });
     }
     valueOf() {
       return this.toHTMLString();
@@ -1029,7 +1039,11 @@ var wp;
       ""
     );
   }
-  function createFromElement({ element, range, isEditableTree }) {
+  function createFromElement({
+    element,
+    range,
+    isEditableTree
+  }) {
     const accumulator = createEmptyValue();
     if (!element) {
       return accumulator;
@@ -1085,7 +1099,11 @@ var wp;
             {
               type: tagName,
               attributes: {
-                "data-rich-text-script": node.getAttribute("data-rich-text-script") || encodeURIComponent(node.innerHTML)
+                "data-rich-text-script": node.getAttribute(
+                  "data-rich-text-script"
+                ) || encodeURIComponent(
+                  node.innerHTML
+                )
               }
             }
           ],
@@ -1238,81 +1256,81 @@ var wp;
   // packages/rich-text/build-module/register-format-type.mjs
   var import_data6 = __toESM(require_data(), 1);
   function registerFormatType(name, settings) {
-    settings = {
+    const formatType = {
       name,
       ...settings
     };
-    if (typeof settings.name !== "string") {
+    if (typeof formatType.name !== "string") {
       window.console.error("Format names must be strings.");
       return;
     }
-    if (!/^[a-z][a-z0-9-]*\/[a-z][a-z0-9-]*$/.test(settings.name)) {
+    if (!/^[a-z][a-z0-9-]*\/[a-z][a-z0-9-]*$/.test(formatType.name)) {
       window.console.error(
         "Format names must contain a namespace prefix, include only lowercase alphanumeric characters or dashes, and start with a letter. Example: my-plugin/my-custom-format"
       );
       return;
     }
-    if ((0, import_data6.select)(store).getFormatType(settings.name)) {
+    if ((0, import_data6.select)(store).getFormatType(formatType.name)) {
       window.console.error(
-        'Format "' + settings.name + '" is already registered.'
+        'Format "' + formatType.name + '" is already registered.'
       );
       return;
     }
-    if (typeof settings.tagName !== "string" || settings.tagName === "") {
+    if (typeof formatType.tagName !== "string" || formatType.tagName === "") {
       window.console.error("Format tag names must be a string.");
       return;
     }
-    if ((typeof settings.className !== "string" || settings.className === "") && settings.className !== null) {
+    if ((typeof formatType.className !== "string" || formatType.className === "") && formatType.className !== null) {
       window.console.error(
         "Format class names must be a string, or null to handle bare elements."
       );
       return;
     }
-    if (!/^[_a-zA-Z]+[a-zA-Z0-9_-]*$/.test(settings.className)) {
+    if (formatType.className !== null && !/^[_a-zA-Z]+[a-zA-Z0-9_-]*$/.test(formatType.className)) {
       window.console.error(
         "A class name must begin with a letter, followed by any number of hyphens, underscores, letters, or numbers."
       );
       return;
     }
-    if (settings.className === null) {
+    if (formatType.className === null) {
       const formatTypeForBareElement = (0, import_data6.select)(
         store
-      ).getFormatTypeForBareElement(settings.tagName);
+      ).getFormatTypeForBareElement(formatType.tagName);
       if (formatTypeForBareElement && formatTypeForBareElement.name !== "core/unknown") {
         window.console.error(
-          `Format "${formatTypeForBareElement.name}" is already registered to handle bare tag name "${settings.tagName}".`
+          `Format "${formatTypeForBareElement.name}" is already registered to handle bare tag name "${formatType.tagName}".`
         );
         return;
       }
     } else {
       const formatTypeForClassName = (0, import_data6.select)(
         store
-      ).getFormatTypeForClassName(settings.className);
+      ).getFormatTypeForClassName(formatType.className);
       if (formatTypeForClassName) {
         window.console.error(
-          `Format "${formatTypeForClassName.name}" is already registered to handle class name "${settings.className}".`
+          `Format "${formatTypeForClassName.name}" is already registered to handle class name "${formatType.className}".`
         );
         return;
       }
     }
-    if (!("title" in settings) || settings.title === "") {
+    if (!("title" in formatType) || formatType.title === "") {
       window.console.error(
-        'The format "' + settings.name + '" must have a title.'
+        'The format "' + formatType.name + '" must have a title.'
       );
       return;
     }
-    if ("keywords" in settings && settings.keywords.length > 3) {
+    if ("keywords" in formatType && formatType.keywords.length > 3) {
       window.console.error(
-        'The format "' + settings.name + '" can have a maximum of 3 keywords.'
+        'The format "' + formatType.name + '" can have a maximum of 3 keywords.'
       );
       return;
     }
-    if (typeof settings.title !== "string") {
+    if (typeof formatType.title !== "string") {
       window.console.error("Format titles must be strings.");
       return;
     }
-    (0, import_data6.dispatch)(store).addFormatTypes(settings);
-    return settings;
+    (0, import_data6.dispatch)(store).addFormatTypes(formatType);
+    return formatType;
   }
 
   // packages/rich-text/build-module/remove-format.mjs
@@ -2096,9 +2114,8 @@ var wp;
       registries.set(ownerDocument, byEvent);
     }
     const key = capture ? `${eventType}:capture` : eventType;
-    let elements = byEvent.get(key);
-    if (!elements) {
-      elements = /* @__PURE__ */ new WeakMap();
+    const elements = byEvent.get(key) ?? /* @__PURE__ */ new WeakMap();
+    if (!byEvent.has(key)) {
       byEvent.set(key, elements);
       subscribeDelegatedListener3(
         ownerDocument,
