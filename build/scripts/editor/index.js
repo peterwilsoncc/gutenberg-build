@@ -7521,392 +7521,19 @@ var wp;
   var import_data7 = __toESM(require_data(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
 
-  // packages/ui/build-module/badge/badge.mjs
-  var import_element20 = __toESM(require_element(), 1);
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
-  var React = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
-  var loggedMessages;
-  if (true) {
-    loggedMessages = /* @__PURE__ */ new Set();
-  }
-  function createLogOnce(severity, prefix2) {
-    return function logOnce(...messages) {
-      if (true) {
-        const message2 = messages.join(" ");
-        const output = prefix2 ? `${prefix2}: ${message2}` : message2;
-        const key = `${severity}:${output}`;
-        if (!loggedMessages.has(key)) {
-          loggedMessages.add(key);
-          if (severity === "warn") {
-            console.warn(output);
-          } else {
-            console.error(output);
-          }
-        }
-      }
-    };
-  }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
-  var error = createLogOnce("error", "Base UI");
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
-  function useControlled({
-    controlled,
-    default: defaultProp,
-    name: name2,
-    state: state2 = "value"
-  }) {
-    const {
-      current: isControlled
-    } = React.useRef(controlled !== void 0);
-    const [valueState, setValue] = React.useState(defaultProp);
-    const value = isControlled && controlled !== void 0 ? controlled : valueState;
-    if (true) {
-      React.useEffect(() => {
-        if (isControlled !== (controlled !== void 0)) {
-          error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state2} state of ${name2} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name2} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
-        }
-      }, [state2, name2, controlled]);
-      const {
-        current: defaultValue2
-      } = React.useRef(defaultProp);
-      React.useEffect(() => {
-        if (!isControlled && serializeToDevModeString(defaultValue2) !== serializeToDevModeString(defaultProp)) {
-          error([`A component is changing the default ${state2} state of an uncontrolled ${name2} after being initialized. To suppress this warning opt to use a controlled ${name2}.`].join("\n"));
-        }
-      }, [defaultProp]);
-    }
-    const setValueIfUncontrolled = React.useCallback((newValue) => {
-      if (!isControlled) {
-        setValue(newValue);
-      }
-    }, []);
-    return [value, setValueIfUncontrolled];
-  }
-  function serializeToDevModeString(input) {
-    let nextId2 = 0;
-    const seen = /* @__PURE__ */ new WeakMap();
-    try {
-      const result = JSON.stringify(input, function replacer(key, value) {
-        if (key === "_owner" && this != null && typeof this === "object" && "$$typeof" in this) {
-          return void 0;
-        }
-        if (typeof value === "bigint") {
-          return `__bigint__:${value}`;
-        }
-        if (value !== null && typeof value === "object") {
-          const id = seen.get(value);
-          if (id !== void 0) {
-            return `__object__:${id}`;
-          }
-          seen.set(value, nextId2);
-          nextId2 += 1;
-        }
-        return value;
-      });
-      return result ?? `__top__:${typeof input}`;
-    } catch {
-      return "__unserializable__";
-    }
-  }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
-  var React2 = __toESM(require_react(), 1);
-  var SafeReact = {
-    ...React2
-  };
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
+  var React4 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useRefWithInit.mjs
-  var React3 = __toESM(require_react(), 1);
+  var React = __toESM(require_react(), 1);
   var UNINITIALIZED = {};
   function useRefWithInit(init2, initArg) {
-    const ref = React3.useRef(UNINITIALIZED);
+    const ref = React.useRef(UNINITIALIZED);
     if (ref.current === UNINITIALIZED) {
       ref.current = init2(initArg);
     }
     return ref;
   }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
-  var useInsertionEffect = SafeReact.useInsertionEffect;
-  var useSafeInsertionEffect = (
-    // React 17 doesn't have useInsertionEffect.
-    useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
-    useInsertionEffect !== SafeReact.useLayoutEffect ? useInsertionEffect : (fn) => fn()
-  );
-  function useStableCallback(callback) {
-    const stable = useRefWithInit(createStableCallback).current;
-    stable.next = callback;
-    useSafeInsertionEffect(stable.effect);
-    return stable.trampoline;
-  }
-  function createStableCallback() {
-    const stable = {
-      next: void 0,
-      callback: assertNotCalled,
-      trampoline: (...args) => stable.callback?.(...args),
-      effect: () => {
-        stable.callback = stable.next;
-      }
-    };
-    return stable;
-  }
-  function assertNotCalled() {
-    if (true) {
-      throw (
-        /* minify-error-disabled */
-        new Error("Base UI: Cannot call an event handler while rendering.")
-      );
-    }
-  }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
-  var warn = createLogOnce("warn", "Base UI");
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
-  function NOOP() {
-  }
-  var EMPTY_ARRAY3 = Object.freeze([]);
-  var EMPTY_OBJECT2 = Object.freeze({});
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
-  var React6 = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-  var React4 = __toESM(require_react(), 1);
-  var noop = () => {
-  };
-  var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
-  var React5 = __toESM(require_react(), 1);
-  var CompositeListContext = /* @__PURE__ */ React5.createContext({
-    register: () => {
-    },
-    unregister: () => {
-    },
-    subscribeMapChange: () => () => {
-    },
-    nextIndexRef: {
-      current: 0
-    }
-  });
-  if (true) CompositeListContext.displayName = "CompositeListContext";
-  function useCompositeListContext() {
-    return React5.useContext(CompositeListContext);
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
-  var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
-  function CompositeList(props) {
-    const {
-      children,
-      elementsRef,
-      labelsRef,
-      onMapChange: onMapChangeProp
-    } = props;
-    const onMapChange = useStableCallback(onMapChangeProp);
-    const [, setMapTick] = React6.useState(false);
-    const listeners2 = useRefWithInit(createListeners).current;
-    const map = useRefWithInit(createMap).current;
-    const nextIndexRef = React6.useRef(0);
-    const isDirtyRef = React6.useRef(true);
-    const itemsRef = React6.useRef(null);
-    const mutationObserverRef = React6.useRef(null);
-    const scheduleMapUpdate = useStableCallback(() => {
-      if (isDirtyRef.current) {
-        return;
-      }
-      isDirtyRef.current = true;
-      setMapTick((tick) => !tick);
-    });
-    const register5 = useStableCallback((node, registration) => {
-      map.set(node, registration);
-      scheduleMapUpdate();
-    });
-    const unregister = useStableCallback((node) => {
-      map.delete(node);
-      scheduleMapUpdate();
-    });
-    const syncRefs = useStableCallback((items) => {
-      const nextMap = /* @__PURE__ */ new Map();
-      elementsRef.current.length = 0;
-      if (labelsRef) {
-        labelsRef.current.length = 0;
-      }
-      items.forEach((item) => {
-        nextMap.set(item.element, {
-          ...item.registration.metadata ?? {},
-          index: item.index
-        });
-        elementsRef.current[item.index] = item.element;
-        if (labelsRef) {
-          labelsRef.current[item.index] = item.registration.label !== void 0 ? item.registration.label : item.registration.textRef?.current?.textContent ?? item.element.textContent;
-        }
-      });
-      nextIndexRef.current = elementsRef.current.length;
-      return nextMap;
-    });
-    function observe(sortedNodes) {
-      mutationObserverRef.current?.disconnect();
-      mutationObserverRef.current = null;
-      if (typeof MutationObserver !== "function" || sortedNodes.length < 2) {
-        return;
-      }
-      const mutationObserver = new MutationObserver((entries) => {
-        if (!hasMovedNode(entries)) {
-          return;
-        }
-        let previousConnectedNode = null;
-        for (const node of sortedNodes) {
-          if (!node.isConnected) {
-            continue;
-          }
-          if (previousConnectedNode && sortByDocumentPosition(previousConnectedNode, node) > 0) {
-            mutationObserver.disconnect();
-            scheduleMapUpdate();
-            return;
-          }
-          previousConnectedNode = node;
-        }
-      });
-      mutationObserverRef.current = mutationObserver;
-      const roots = /* @__PURE__ */ new Set();
-      for (let i2 = 1; i2 < sortedNodes.length; i2 += 1) {
-        const root = getCommonAncestor(sortedNodes[i2 - 1], sortedNodes[i2]);
-        if (root) {
-          roots.add(root);
-        }
-      }
-      roots.forEach((root) => mutationObserver.observe(root, {
-        childList: true
-      }));
-    }
-    const flush2 = useStableCallback(() => {
-      const [items, automaticNodes] = getCompositeListSnapshot(map);
-      const nextMap = syncRefs(items);
-      const previousItems = itemsRef.current;
-      const changed = !previousItems || previousItems.length !== items.length || items.some((item, index3) => {
-        const previousItem = previousItems[index3];
-        return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
-      });
-      observe(automaticNodes);
-      itemsRef.current = items;
-      isDirtyRef.current = false;
-      if (!changed) {
-        return;
-      }
-      listeners2.forEach((listener) => listener(nextMap));
-      onMapChange(nextMap);
-    });
-    useIsoLayoutEffect(() => {
-      if (!isDirtyRef.current && itemsRef.current) {
-        syncRefs(itemsRef.current);
-      }
-      return () => {
-        elementsRef.current = [];
-        if (labelsRef) {
-          labelsRef.current = [];
-        }
-      };
-    }, [elementsRef, labelsRef, syncRefs]);
-    useIsoLayoutEffect(() => {
-      if (isDirtyRef.current) {
-        flush2();
-      }
-    });
-    useIsoLayoutEffect(() => {
-      return () => {
-        mutationObserverRef.current?.disconnect();
-        isDirtyRef.current = true;
-      };
-    }, []);
-    const subscribeMapChange = useStableCallback((fn) => {
-      listeners2.add(fn);
-      return () => {
-        listeners2.delete(fn);
-      };
-    });
-    const contextValue = React6.useMemo(() => ({
-      register: register5,
-      unregister,
-      subscribeMapChange,
-      nextIndexRef
-    }), [register5, unregister, subscribeMapChange, nextIndexRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(CompositeListContext.Provider, {
-      value: contextValue,
-      children
-    });
-  }
-  function createMap() {
-    return /* @__PURE__ */ new Map();
-  }
-  function createListeners() {
-    return /* @__PURE__ */ new Set();
-  }
-  function getCompositeListSnapshot(map) {
-    const reservedIndices = /* @__PURE__ */ new Set();
-    const items = [];
-    const automaticItems = [];
-    map.forEach((registration, node) => {
-      if (!node.isConnected) {
-        return;
-      }
-      const index3 = registration.index;
-      const item = {
-        index: index3 ?? -1,
-        element: node,
-        registration
-      };
-      if (index3 === null) {
-        automaticItems.push(item);
-      } else if (index3 >= 0) {
-        reservedIndices.add(index3);
-        items.push(item);
-      }
-    });
-    let nextAutomaticIndex = 0;
-    automaticItems.sort((a2, b2) => sortByDocumentPosition(a2.element, b2.element));
-    automaticItems.forEach((item) => {
-      while (reservedIndices.has(nextAutomaticIndex)) {
-        nextAutomaticIndex += 1;
-      }
-      item.index = nextAutomaticIndex;
-      items.push(item);
-      nextAutomaticIndex += 1;
-    });
-    if (reservedIndices.size > 0) {
-      items.sort((a2, b2) => a2.index - b2.index);
-    }
-    return [items, automaticItems.map((item) => item.element)];
-  }
-  function getCommonAncestor(firstNode, lastNode) {
-    let ancestor = firstNode.parentElement;
-    while (ancestor && !ancestor.contains(lastNode)) {
-      ancestor = ancestor.parentElement;
-    }
-    return ancestor;
-  }
-  function hasMovedNode(entries) {
-    for (const entry of entries) {
-      for (let i2 = 0; i2 < entry.removedNodes.length; i2 += 1) {
-        if (entry.removedNodes[i2].isConnected) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-  function sortByDocumentPosition(a2, b2) {
-    return a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
-  var React9 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useMergedRefs.mjs
   function useMergedRefs(a2, b2, c6, d2) {
@@ -7998,18 +7625,18 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
-  var React8 = __toESM(require_react(), 1);
+  var React3 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/reactVersion.mjs
-  var React7 = __toESM(require_react(), 1);
-  var majorVersion = parseInt(React7.version, 10);
+  var React2 = __toESM(require_react(), 1);
+  var majorVersion = parseInt(React2.version, 10);
   function isReactVersionAtLeast(reactVersionToCheck) {
     return majorVersion >= reactVersionToCheck;
   }
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
   function getReactElementRef(element) {
-    if (!/* @__PURE__ */ React8.isValidElement(element)) {
+    if (!/* @__PURE__ */ React3.isValidElement(element)) {
       return null;
     }
     const reactElement = element;
@@ -8033,6 +7660,38 @@ var wp;
     }
     return void 0;
   }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
+  var loggedMessages;
+  if (true) {
+    loggedMessages = /* @__PURE__ */ new Set();
+  }
+  function createLogOnce(severity, prefix2) {
+    return function logOnce(...messages) {
+      if (true) {
+        const message2 = messages.join(" ");
+        const output = prefix2 ? `${prefix2}: ${message2}` : message2;
+        const key = `${severity}:${output}`;
+        if (!loggedMessages.has(key)) {
+          loggedMessages.add(key);
+          if (severity === "warn") {
+            console.warn(output);
+          } else {
+            console.error(output);
+          }
+        }
+      }
+    };
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
+  var warn = createLogOnce("warn", "Base UI");
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
+  function NOOP() {
+  }
+  var EMPTY_ARRAY3 = Object.freeze([]);
+  var EMPTY_OBJECT2 = Object.freeze({});
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
   function getStateAttributesProps(state2, customMapping) {
@@ -8284,8 +7943,8 @@ var wp;
     if (render5?.$$typeof !== REACT_LAZY_TYPE) {
       return render5;
     }
-    const unwrapped = React9.Children.toArray(render5)[0];
-    return /* @__PURE__ */ React9.isValidElement(unwrapped) ? unwrapped : render5;
+    const unwrapped = React4.Children.toArray(render5)[0];
+    return /* @__PURE__ */ React4.isValidElement(unwrapped) ? unwrapped : render5;
   }
   function evaluateRenderProp(element, render5, props, state2) {
     if (render5) {
@@ -8298,11 +7957,11 @@ var wp;
       const mergedProps = mergeProps(props, render5.props);
       mergedProps.ref = props.ref;
       if (true) {
-        if (!/* @__PURE__ */ React9.isValidElement(render5)) {
+        if (!/* @__PURE__ */ React4.isValidElement(render5)) {
           throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
         }
       }
-      return /* @__PURE__ */ React9.cloneElement(render5, mergedProps);
+      return /* @__PURE__ */ React4.cloneElement(render5, mergedProps);
     }
     if (element) {
       if (typeof element === "string") {
@@ -8339,16 +7998,696 @@ var wp;
         key: props.key
       });
     }
-    return /* @__PURE__ */ React9.createElement(Tag, props);
+    return /* @__PURE__ */ React4.createElement(Tag, props);
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
+  var React5 = __toESM(require_react(), 1);
+  var SafeReact = {
+    ...React5
+  };
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
+  var useInsertionEffect = SafeReact.useInsertionEffect;
+  var useSafeInsertionEffect = (
+    // React 17 doesn't have useInsertionEffect.
+    useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
+    useInsertionEffect !== SafeReact.useLayoutEffect ? useInsertionEffect : (fn) => fn()
+  );
+  function useStableCallback(callback) {
+    const stable = useRefWithInit(createStableCallback).current;
+    stable.next = callback;
+    useSafeInsertionEffect(stable.effect);
+    return stable.trampoline;
+  }
+  function createStableCallback() {
+    const stable = {
+      next: void 0,
+      callback: assertNotCalled,
+      trampoline: (...args) => stable.callback?.(...args),
+      effect: () => {
+        stable.callback = stable.next;
+      }
+    };
+    return stable;
+  }
+  function assertNotCalled() {
+    if (true) {
+      throw (
+        /* minify-error-disabled */
+        new Error("Base UI: Cannot call an event handler while rendering.")
+      );
+    }
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+  var React6 = __toESM(require_react(), 1);
+  var noop = () => {
+  };
+  var useIsoLayoutEffect = typeof document !== "undefined" ? React6.useLayoutEffect : noop;
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+  var React8 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+  var ReactDOM = __toESM(require_react_dom(), 1);
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useOnMount.mjs
+  var React7 = __toESM(require_react(), 1);
+  function useOnMount(fn) {
+    React7.useEffect(fn, EMPTY_ARRAY3);
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useAnimationFrame.mjs
+  var EMPTY = null;
+  var LAST_RAF = globalThis.requestAnimationFrame;
+  var Scheduler = class {
+    /* This implementation uses an array as a backing data-structure for frame callbacks.
+     * It allows `O(1)` callback cancelling by inserting a `null` in the array, though it
+     * never calls the native `cancelAnimationFrame` if there are no frames left. This can
+     * be much more efficient if there is a call pattern that alterns as
+     * "request-cancel-request-cancel-…".
+     * But in the case of "request-request-…-cancel-cancel-…", it leaves the final animation
+     * frame to run anyway. We turn that frame into a `O(1)` no-op via `callbacksCount`. */
+    callbacks = [];
+    callbacksCount = 0;
+    nextId = 1;
+    startId = 1;
+    isScheduled = false;
+    tick = (timestamp) => {
+      this.isScheduled = false;
+      const currentCallbacks = this.callbacks;
+      const currentCallbacksCount = this.callbacksCount;
+      this.callbacks = [];
+      this.callbacksCount = 0;
+      this.startId = this.nextId;
+      if (currentCallbacksCount > 0) {
+        for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
+          currentCallbacks[i2]?.(timestamp);
+        }
+      }
+    };
+    request(fn) {
+      const id = this.nextId;
+      this.nextId += 1;
+      this.callbacks.push(fn);
+      this.callbacksCount += 1;
+      const didRAFChange = LAST_RAF !== requestAnimationFrame && (LAST_RAF = requestAnimationFrame, true);
+      if (!this.isScheduled || didRAFChange) {
+        requestAnimationFrame(this.tick);
+        this.isScheduled = true;
+      }
+      return id;
+    }
+    cancel(id) {
+      const index3 = id - this.startId;
+      if (index3 < 0 || index3 >= this.callbacks.length) {
+        return;
+      }
+      if (this.callbacks[index3] === null) {
+        return;
+      }
+      this.callbacks[index3] = null;
+      this.callbacksCount -= 1;
+    }
+  };
+  var scheduler = new Scheduler();
+  var AnimationFrame = class _AnimationFrame {
+    static create() {
+      return new _AnimationFrame();
+    }
+    static request(fn) {
+      return scheduler.request(fn);
+    }
+    static cancel(id) {
+      return scheduler.cancel(id);
+    }
+    currentId = EMPTY;
+    /**
+     * Executes `fn` after `delay`, clearing any previously scheduled call.
+     */
+    request(fn) {
+      this.cancel();
+      this.currentId = scheduler.request(() => {
+        this.currentId = EMPTY;
+        fn();
+      });
+    }
+    cancel = () => {
+      if (this.currentId !== EMPTY) {
+        scheduler.cancel(this.currentId);
+        this.currentId = EMPTY;
+      }
+    };
+    disposeEffect = () => {
+      return this.cancel;
+    };
+  };
+  function useAnimationFrame() {
+    const timeout = useRefWithInit(AnimationFrame.create).current;
+    useOnMount(timeout.disposeEffect);
+    return timeout;
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveRef.mjs
+  function resolveRef(maybeRef) {
+    if (maybeRef == null) {
+      return maybeRef;
+    }
+    return "current" in maybeRef ? maybeRef.current : maybeRef;
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+  var TransitionStatusDataAttributes_exports = {};
+  __export(TransitionStatusDataAttributes_exports, {
+    endingStyle: () => endingStyle,
+    startingStyle: () => startingStyle
+  });
+  var startingStyle = "data-starting-style";
+  var endingStyle = "data-ending-style";
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+  var pendingCallbacks = null;
+  function flushBeforePaint(fn) {
+    if (!pendingCallbacks) {
+      const callbacks = [];
+      pendingCallbacks = callbacks;
+      queueMicrotask(() => {
+        pendingCallbacks = null;
+        ReactDOM.flushSync(() => {
+          for (const callback of callbacks) {
+            callback();
+          }
+        });
+      });
+    }
+    pendingCallbacks.push(fn);
+  }
+  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch2 = false) {
+    const frame = useAnimationFrame();
+    return useStableCallback((fnToExecute, signal = null) => {
+      frame.cancel();
+      const element = resolveRef(elementOrRef);
+      if (element == null) {
+        return;
+      }
+      const resolvedElement = element;
+      const done = () => {
+        if (!batch2) {
+          ReactDOM.flushSync(fnToExecute);
+          return;
+        }
+        flushBeforePaint(() => {
+          if (!signal?.aborted) {
+            fnToExecute();
+          }
+        });
+      };
+      if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
+        fnToExecute();
+        return;
+      }
+      function exec() {
+        Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+          if (!signal?.aborted) {
+            done();
+          }
+        }, () => {
+          if (signal?.aborted) {
+            return;
+          }
+          const currentAnimations = resolvedElement.getAnimations();
+          if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+            exec();
+            return;
+          }
+          done();
+        });
+      }
+      if (waitForStartingStyleRemoved) {
+        const startingStyleAttribute = startingStyle;
+        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+          frame.request(exec);
+          return;
+        }
+        const attributeObserver = new MutationObserver(() => {
+          if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+            attributeObserver.disconnect();
+            exec();
+          }
+        });
+        attributeObserver.observe(resolvedElement, {
+          attributes: true,
+          attributeFilter: [startingStyleAttribute]
+        });
+        signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
+          once: true
+        });
+        return;
+      }
+      frame.request(exec);
+    });
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+  function useOpenChangeComplete(parameters) {
+    const {
+      enabled = true,
+      open: open3,
+      ref,
+      batch: batch2 = false,
+      onComplete: onCompleteParam
+    } = parameters;
+    const onComplete = useStableCallback(onCompleteParam);
+    const runOnceAnimationsFinish = useAnimationsFinished(ref, open3, batch2);
+    React8.useEffect(() => {
+      if (!enabled) {
+        return void 0;
+      }
+      const abortController = new AbortController();
+      runOnceAnimationsFinish(onComplete, abortController.signal);
+      return () => {
+        abortController.abort();
+      };
+    }, [enabled, open3, onComplete, runOnceAnimationsFinish]);
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
+  var STARTING_HOOK = {
+    [startingStyle]: ""
+  };
+  var ENDING_HOOK = {
+    [endingStyle]: ""
+  };
+  var transitionStatusMapping = {
+    transitionStatus(value) {
+      if (value === "starting") {
+        return STARTING_HOOK;
+      }
+      if (value === "ending") {
+        return ENDING_HOOK;
+      }
+      return null;
+    }
+  };
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+  var React9 = __toESM(require_react(), 1);
+  function useTransitionStatus(open3, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
+    const [transitionStatus, setTransitionStatus] = React9.useState(open3 && enableIdleState ? "idle" : void 0);
+    const [mounted, setMounted] = React9.useState(open3 && !animateInitialOpen);
+    if (open3 && !mounted) {
+      setMounted(true);
+      setTransitionStatus("starting");
+    }
+    if (!open3 && mounted && transitionStatus !== "ending" && !deferEndingState) {
+      setTransitionStatus("ending");
+    }
+    if (!open3 && !mounted && transitionStatus === "ending") {
+      setTransitionStatus(void 0);
+    }
+    useIsoLayoutEffect(() => {
+      if (!open3 && mounted && transitionStatus !== "ending" && deferEndingState) {
+        const frame = AnimationFrame.request(() => {
+          setTransitionStatus("ending");
+        });
+        return () => {
+          AnimationFrame.cancel(frame);
+        };
+      }
+      return void 0;
+    }, [open3, mounted, transitionStatus, deferEndingState]);
+    useIsoLayoutEffect(() => {
+      if (!open3 || enableIdleState) {
+        return void 0;
+      }
+      const frame = AnimationFrame.request(() => {
+        setTransitionStatus(void 0);
+      });
+      return () => {
+        AnimationFrame.cancel(frame);
+      };
+    }, [enableIdleState, open3]);
+    useIsoLayoutEffect(() => {
+      if (!open3 || !enableIdleState) {
+        return void 0;
+      }
+      if (open3 && mounted && transitionStatus !== "idle") {
+        setTransitionStatus("starting");
+      }
+      const frame = AnimationFrame.request(() => {
+        setTransitionStatus("idle");
+      });
+      return () => {
+        AnimationFrame.cancel(frame);
+      };
+    }, [enableIdleState, open3, mounted, transitionStatus]);
+    return {
+      mounted,
+      setMounted,
+      transitionStatus
+    };
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useTimeout.mjs
+  var EMPTY2 = 0;
+  var Timeout = class _Timeout {
+    static create() {
+      return new _Timeout();
+    }
+    currentId = EMPTY2;
+    /**
+     * Executes `fn` after `delay`, clearing any previously scheduled call.
+     */
+    start(delay, fn) {
+      this.clear();
+      this.currentId = setTimeout(() => {
+        this.currentId = EMPTY2;
+        fn();
+      }, delay);
+    }
+    isStarted() {
+      return this.currentId !== EMPTY2;
+    }
+    clear = () => {
+      if (this.currentId !== EMPTY2) {
+        clearTimeout(this.currentId);
+        this.currentId = EMPTY2;
+      }
+    };
+    disposeEffect = () => {
+      return this.clear;
+    };
+  };
+  function useTimeout() {
+    const timeout = useRefWithInit(Timeout.create).current;
+    useOnMount(timeout.disposeEffect);
+    return timeout;
+  }
+
+  // packages/ui/build-module/badge/badge.mjs
+  var import_element20 = __toESM(require_element(), 1);
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+  var React10 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
+  var error = createLogOnce("error", "Base UI");
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+  function useControlled({
+    controlled,
+    default: defaultProp,
+    name: name2,
+    state: state2 = "value"
+  }) {
+    const {
+      current: isControlled
+    } = React10.useRef(controlled !== void 0);
+    const [valueState, setValue] = React10.useState(defaultProp);
+    const value = isControlled && controlled !== void 0 ? controlled : valueState;
+    if (true) {
+      React10.useEffect(() => {
+        if (isControlled !== (controlled !== void 0)) {
+          error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state2} state of ${name2} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name2} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
+        }
+      }, [state2, name2, controlled]);
+      const {
+        current: defaultValue2
+      } = React10.useRef(defaultProp);
+      React10.useEffect(() => {
+        if (!isControlled && serializeToDevModeString(defaultValue2) !== serializeToDevModeString(defaultProp)) {
+          error([`A component is changing the default ${state2} state of an uncontrolled ${name2} after being initialized. To suppress this warning opt to use a controlled ${name2}.`].join("\n"));
+        }
+      }, [defaultProp]);
+    }
+    const setValueIfUncontrolled = React10.useCallback((newValue) => {
+      if (!isControlled) {
+        setValue(newValue);
+      }
+    }, []);
+    return [value, setValueIfUncontrolled];
+  }
+  function serializeToDevModeString(input) {
+    let nextId2 = 0;
+    const seen = /* @__PURE__ */ new WeakMap();
+    try {
+      const result = JSON.stringify(input, function replacer(key, value) {
+        if (key === "_owner" && this != null && typeof this === "object" && "$$typeof" in this) {
+          return void 0;
+        }
+        if (typeof value === "bigint") {
+          return `__bigint__:${value}`;
+        }
+        if (value !== null && typeof value === "object") {
+          const id = seen.get(value);
+          if (id !== void 0) {
+            return `__object__:${id}`;
+          }
+          seen.set(value, nextId2);
+          nextId2 += 1;
+        }
+        return value;
+      });
+      return result ?? `__top__:${typeof input}`;
+    } catch {
+      return "__unserializable__";
+    }
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+  var React12 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
+  var React11 = __toESM(require_react(), 1);
+  var CompositeListContext = /* @__PURE__ */ React11.createContext({
+    register: () => {
+    },
+    unregister: () => {
+    },
+    subscribeMapChange: () => () => {
+    },
+    nextIndexRef: {
+      current: 0
+    }
+  });
+  if (true) CompositeListContext.displayName = "CompositeListContext";
+  function useCompositeListContext() {
+    return React11.useContext(CompositeListContext);
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+  var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+  function CompositeList(props) {
+    const {
+      children,
+      elementsRef,
+      labelsRef,
+      onMapChange: onMapChangeProp
+    } = props;
+    const onMapChange = useStableCallback(onMapChangeProp);
+    const [, setMapTick] = React12.useState(false);
+    const listeners2 = useRefWithInit(createListeners).current;
+    const map = useRefWithInit(createMap).current;
+    const nextIndexRef = React12.useRef(0);
+    const isDirtyRef = React12.useRef(true);
+    const itemsRef = React12.useRef(null);
+    const mutationObserverRef = React12.useRef(null);
+    const scheduleMapUpdate = useStableCallback(() => {
+      if (isDirtyRef.current) {
+        return;
+      }
+      isDirtyRef.current = true;
+      setMapTick((tick) => !tick);
+    });
+    const register5 = useStableCallback((node, registration) => {
+      map.set(node, registration);
+      scheduleMapUpdate();
+    });
+    const unregister = useStableCallback((node) => {
+      map.delete(node);
+      scheduleMapUpdate();
+    });
+    const syncRefs = useStableCallback((items) => {
+      const nextMap = /* @__PURE__ */ new Map();
+      elementsRef.current.length = 0;
+      if (labelsRef) {
+        labelsRef.current.length = 0;
+      }
+      items.forEach((item) => {
+        nextMap.set(item.element, {
+          ...item.registration.metadata ?? {},
+          index: item.index
+        });
+        elementsRef.current[item.index] = item.element;
+        if (labelsRef) {
+          labelsRef.current[item.index] = item.registration.label !== void 0 ? item.registration.label : item.registration.textRef?.current?.textContent ?? item.element.textContent;
+        }
+      });
+      nextIndexRef.current = elementsRef.current.length;
+      return nextMap;
+    });
+    function observe(sortedNodes) {
+      mutationObserverRef.current?.disconnect();
+      mutationObserverRef.current = null;
+      if (typeof MutationObserver !== "function" || sortedNodes.length < 2) {
+        return;
+      }
+      const mutationObserver = new MutationObserver((entries) => {
+        if (!hasMovedNode(entries)) {
+          return;
+        }
+        let previousConnectedNode = null;
+        for (const node of sortedNodes) {
+          if (!node.isConnected) {
+            continue;
+          }
+          if (previousConnectedNode && sortByDocumentPosition(previousConnectedNode, node) > 0) {
+            mutationObserver.disconnect();
+            scheduleMapUpdate();
+            return;
+          }
+          previousConnectedNode = node;
+        }
+      });
+      mutationObserverRef.current = mutationObserver;
+      const roots = /* @__PURE__ */ new Set();
+      for (let i2 = 1; i2 < sortedNodes.length; i2 += 1) {
+        const root = getCommonAncestor(sortedNodes[i2 - 1], sortedNodes[i2]);
+        if (root) {
+          roots.add(root);
+        }
+      }
+      roots.forEach((root) => mutationObserver.observe(root, {
+        childList: true
+      }));
+    }
+    const flush2 = useStableCallback(() => {
+      const [items, automaticNodes] = getCompositeListSnapshot(map);
+      const nextMap = syncRefs(items);
+      const previousItems = itemsRef.current;
+      const changed = !previousItems || previousItems.length !== items.length || items.some((item, index3) => {
+        const previousItem = previousItems[index3];
+        return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
+      });
+      observe(automaticNodes);
+      itemsRef.current = items;
+      isDirtyRef.current = false;
+      if (!changed) {
+        return;
+      }
+      listeners2.forEach((listener) => listener(nextMap));
+      onMapChange(nextMap);
+    });
+    useIsoLayoutEffect(() => {
+      if (!isDirtyRef.current && itemsRef.current) {
+        syncRefs(itemsRef.current);
+      }
+      return () => {
+        elementsRef.current = [];
+        if (labelsRef) {
+          labelsRef.current = [];
+        }
+      };
+    }, [elementsRef, labelsRef, syncRefs]);
+    useIsoLayoutEffect(() => {
+      if (isDirtyRef.current) {
+        flush2();
+      }
+    });
+    useIsoLayoutEffect(() => {
+      return () => {
+        mutationObserverRef.current?.disconnect();
+        isDirtyRef.current = true;
+      };
+    }, []);
+    const subscribeMapChange = useStableCallback((fn) => {
+      listeners2.add(fn);
+      return () => {
+        listeners2.delete(fn);
+      };
+    });
+    const contextValue = React12.useMemo(() => ({
+      register: register5,
+      unregister,
+      subscribeMapChange,
+      nextIndexRef
+    }), [register5, unregister, subscribeMapChange, nextIndexRef]);
+    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(CompositeListContext.Provider, {
+      value: contextValue,
+      children
+    });
+  }
+  function createMap() {
+    return /* @__PURE__ */ new Map();
+  }
+  function createListeners() {
+    return /* @__PURE__ */ new Set();
+  }
+  function getCompositeListSnapshot(map) {
+    const reservedIndices = /* @__PURE__ */ new Set();
+    const items = [];
+    const automaticItems = [];
+    map.forEach((registration, node) => {
+      if (!node.isConnected) {
+        return;
+      }
+      const index3 = registration.index;
+      const item = {
+        index: index3 ?? -1,
+        element: node,
+        registration
+      };
+      if (index3 === null) {
+        automaticItems.push(item);
+      } else if (index3 >= 0) {
+        reservedIndices.add(index3);
+        items.push(item);
+      }
+    });
+    let nextAutomaticIndex = 0;
+    automaticItems.sort((a2, b2) => sortByDocumentPosition(a2.element, b2.element));
+    automaticItems.forEach((item) => {
+      while (reservedIndices.has(nextAutomaticIndex)) {
+        nextAutomaticIndex += 1;
+      }
+      item.index = nextAutomaticIndex;
+      items.push(item);
+      nextAutomaticIndex += 1;
+    });
+    if (reservedIndices.size > 0) {
+      items.sort((a2, b2) => a2.index - b2.index);
+    }
+    return [items, automaticItems.map((item) => item.element)];
+  }
+  function getCommonAncestor(firstNode, lastNode) {
+    let ancestor = firstNode.parentElement;
+    while (ancestor && !ancestor.contains(lastNode)) {
+      ancestor = ancestor.parentElement;
+    }
+    return ancestor;
+  }
+  function hasMovedNode(entries) {
+    for (const entry of entries) {
+      for (let i2 = 0; i2 < entry.removedNodes.length; i2 += 1) {
+        if (entry.removedNodes[i2].isConnected) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  function sortByDocumentPosition(a2, b2) {
+    return a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
   }
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useId.mjs
-  var React10 = __toESM(require_react(), 1);
+  var React13 = __toESM(require_react(), 1);
   var globalId = 0;
   function useGlobalId(idOverride, prefix2 = "mui") {
-    const [defaultId, setDefaultId] = React10.useState(idOverride);
+    const [defaultId, setDefaultId] = React13.useState(idOverride);
     const id = idOverride || defaultId;
-    React10.useEffect(() => {
+    React13.useEffect(() => {
       if (defaultId == null) {
         globalId += 1;
         setDefaultId(`${prefix2}-${globalId}`);
@@ -8371,7 +8710,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
-  var React13 = __toESM(require_react(), 1);
+  var React14 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/reason-parts.mjs
   var reason_parts_exports = {};
@@ -8483,163 +8822,6 @@ var wp;
     return details;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  var React12 = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useOnMount.mjs
-  var React11 = __toESM(require_react(), 1);
-  function useOnMount(fn) {
-    React11.useEffect(fn, EMPTY_ARRAY3);
-  }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useAnimationFrame.mjs
-  var EMPTY = null;
-  var LAST_RAF = globalThis.requestAnimationFrame;
-  var Scheduler = class {
-    /* This implementation uses an array as a backing data-structure for frame callbacks.
-     * It allows `O(1)` callback cancelling by inserting a `null` in the array, though it
-     * never calls the native `cancelAnimationFrame` if there are no frames left. This can
-     * be much more efficient if there is a call pattern that alterns as
-     * "request-cancel-request-cancel-…".
-     * But in the case of "request-request-…-cancel-cancel-…", it leaves the final animation
-     * frame to run anyway. We turn that frame into a `O(1)` no-op via `callbacksCount`. */
-    callbacks = [];
-    callbacksCount = 0;
-    nextId = 1;
-    startId = 1;
-    isScheduled = false;
-    tick = (timestamp) => {
-      this.isScheduled = false;
-      const currentCallbacks = this.callbacks;
-      const currentCallbacksCount = this.callbacksCount;
-      this.callbacks = [];
-      this.callbacksCount = 0;
-      this.startId = this.nextId;
-      if (currentCallbacksCount > 0) {
-        for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
-          currentCallbacks[i2]?.(timestamp);
-        }
-      }
-    };
-    request(fn) {
-      const id = this.nextId;
-      this.nextId += 1;
-      this.callbacks.push(fn);
-      this.callbacksCount += 1;
-      const didRAFChange = LAST_RAF !== requestAnimationFrame && (LAST_RAF = requestAnimationFrame, true);
-      if (!this.isScheduled || didRAFChange) {
-        requestAnimationFrame(this.tick);
-        this.isScheduled = true;
-      }
-      return id;
-    }
-    cancel(id) {
-      const index3 = id - this.startId;
-      if (index3 < 0 || index3 >= this.callbacks.length) {
-        return;
-      }
-      if (this.callbacks[index3] === null) {
-        return;
-      }
-      this.callbacks[index3] = null;
-      this.callbacksCount -= 1;
-    }
-  };
-  var scheduler = new Scheduler();
-  var AnimationFrame = class _AnimationFrame {
-    static create() {
-      return new _AnimationFrame();
-    }
-    static request(fn) {
-      return scheduler.request(fn);
-    }
-    static cancel(id) {
-      return scheduler.cancel(id);
-    }
-    currentId = EMPTY;
-    /**
-     * Executes `fn` after `delay`, clearing any previously scheduled call.
-     */
-    request(fn) {
-      this.cancel();
-      this.currentId = scheduler.request(() => {
-        this.currentId = EMPTY;
-        fn();
-      });
-    }
-    cancel = () => {
-      if (this.currentId !== EMPTY) {
-        scheduler.cancel(this.currentId);
-        this.currentId = EMPTY;
-      }
-    };
-    disposeEffect = () => {
-      return this.cancel;
-    };
-  };
-  function useAnimationFrame() {
-    const timeout = useRefWithInit(AnimationFrame.create).current;
-    useOnMount(timeout.disposeEffect);
-    return timeout;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  function useTransitionStatus(open3, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
-    const [transitionStatus, setTransitionStatus] = React12.useState(open3 && enableIdleState ? "idle" : void 0);
-    const [mounted, setMounted] = React12.useState(open3 && !animateInitialOpen);
-    if (open3 && !mounted) {
-      setMounted(true);
-      setTransitionStatus("starting");
-    }
-    if (!open3 && mounted && transitionStatus !== "ending" && !deferEndingState) {
-      setTransitionStatus("ending");
-    }
-    if (!open3 && !mounted && transitionStatus === "ending") {
-      setTransitionStatus(void 0);
-    }
-    useIsoLayoutEffect(() => {
-      if (!open3 && mounted && transitionStatus !== "ending" && deferEndingState) {
-        const frame = AnimationFrame.request(() => {
-          setTransitionStatus("ending");
-        });
-        return () => {
-          AnimationFrame.cancel(frame);
-        };
-      }
-      return void 0;
-    }, [open3, mounted, transitionStatus, deferEndingState]);
-    useIsoLayoutEffect(() => {
-      if (!open3 || enableIdleState) {
-        return void 0;
-      }
-      const frame = AnimationFrame.request(() => {
-        setTransitionStatus(void 0);
-      });
-      return () => {
-        AnimationFrame.cancel(frame);
-      };
-    }, [enableIdleState, open3]);
-    useIsoLayoutEffect(() => {
-      if (!open3 || !enableIdleState) {
-        return void 0;
-      }
-      if (open3 && mounted && transitionStatus !== "idle") {
-        setTransitionStatus("starting");
-      }
-      const frame = AnimationFrame.request(() => {
-        setTransitionStatus("idle");
-      });
-      return () => {
-        AnimationFrame.cancel(frame);
-      };
-    }, [enableIdleState, open3, mounted, transitionStatus]);
-    return {
-      mounted,
-      setMounted,
-      transitionStatus
-    };
-  }
-
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
   function useCollapsibleRoot(parameters) {
     const {
@@ -8660,7 +8842,7 @@ var wp;
       transitionStatus
     } = useTransitionStatus(open3, true, true);
     const defaultPanelId = useBaseUiId();
-    const [registeredPanelId, setPanelIdState] = React13.useState();
+    const [registeredPanelId, setPanelIdState] = React14.useState();
     const panelId = registeredPanelId === null ? void 0 : registeredPanelId ?? defaultPanelId;
     const handleTrigger = useStableCallback((event) => {
       const nextOpen = !open3;
@@ -8671,7 +8853,7 @@ var wp;
       }
       setOpen(nextOpen);
     });
-    return React13.useMemo(() => ({
+    return React14.useMemo(() => ({
       defaultPanelId,
       disabled: disabled2,
       handleTrigger,
@@ -8686,11 +8868,11 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/root/CollapsibleRootContext.mjs
-  var React14 = __toESM(require_react(), 1);
-  var CollapsibleRootContext = /* @__PURE__ */ React14.createContext(void 0);
+  var React15 = __toESM(require_react(), 1);
+  var CollapsibleRootContext = /* @__PURE__ */ React15.createContext(void 0);
   if (true) CollapsibleRootContext.displayName = "CollapsibleRootContext";
   function useCollapsibleRootContext() {
-    const context = React14.useContext(CollapsibleRootContext);
+    const context = React15.useContext(CollapsibleRootContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: CollapsibleRootContext is missing. Collapsible parts must be placed within <Collapsible.Root>." : formatErrorMessage_default(15));
     }
@@ -8698,7 +8880,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
-  var React15 = __toESM(require_react(), 1);
+  var React16 = __toESM(require_react(), 1);
   function useCompositeListItem(params = {}) {
     const {
       guess,
@@ -8713,8 +8895,8 @@ var wp;
       subscribeMapChange,
       nextIndexRef
     } = useCompositeListContext();
-    const indexRef = React15.useRef(-1);
-    const [internalIndex, setInternalIndex] = React15.useState(externalIndex == null && guess ? () => {
+    const indexRef = React16.useRef(-1);
+    const [internalIndex, setInternalIndex] = React16.useState(externalIndex == null && guess ? () => {
       if (indexRef.current === -1) {
         const newIndex = nextIndexRef.current;
         nextIndexRef.current += 1;
@@ -8723,8 +8905,8 @@ var wp;
       return indexRef.current;
     } : -1);
     const index3 = externalIndex ?? internalIndex;
-    const componentRef = React15.useRef(null);
-    const ref = React15.useCallback((node) => {
+    const componentRef = React16.useRef(null);
+    const ref = React16.useCallback((node) => {
       const previousNode = componentRef.current;
       if (previousNode) {
         unregister(previousNode);
@@ -8755,34 +8937,6 @@ var wp;
       index: index3
     };
   }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
-  var TransitionStatusDataAttributes_exports = {};
-  __export(TransitionStatusDataAttributes_exports, {
-    endingStyle: () => endingStyle,
-    startingStyle: () => startingStyle
-  });
-  var startingStyle = "data-starting-style";
-  var endingStyle = "data-ending-style";
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
-  var STARTING_HOOK = {
-    [startingStyle]: ""
-  };
-  var ENDING_HOOK = {
-    [endingStyle]: ""
-  };
-  var transitionStatusMapping = {
-    transitionStatus(value) {
-      if (value === "starting") {
-        return STARTING_HOOK;
-      }
-      if (value === "ending") {
-        return ENDING_HOOK;
-      }
-      return null;
-    }
-  };
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelDataAttributes.mjs
   var open = "data-open";
@@ -8820,7 +8974,7 @@ var wp;
   };
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/use-button/useButton.mjs
-  var React18 = __toESM(require_react(), 1);
+  var React19 = __toESM(require_react(), 1);
 
   // node_modules/.store/@floating-ui/utils@0.2.12-gOxTzMf36nCrbeHpEew-rw/node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
   function hasWindow() {
@@ -8979,11 +9133,11 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-  var React16 = __toESM(require_react(), 1);
-  var CompositeRootContext = /* @__PURE__ */ React16.createContext(void 0);
+  var React17 = __toESM(require_react(), 1);
+  var CompositeRootContext = /* @__PURE__ */ React17.createContext(void 0);
   if (true) CompositeRootContext.displayName = "CompositeRootContext";
   function useCompositeRootContext(optional = false) {
-    const context = React16.useContext(CompositeRootContext);
+    const context = React17.useContext(CompositeRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
     }
@@ -8991,7 +9145,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-  var React17 = __toESM(require_react(), 1);
+  var React18 = __toESM(require_react(), 1);
   function useFocusableWhenDisabled(parameters) {
     const {
       focusableWhenDisabled,
@@ -9002,7 +9156,7 @@ var wp;
     } = parameters;
     const isFocusableComposite = composite && focusableWhenDisabled !== false;
     const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-    const props = React17.useMemo(() => {
+    const props = React18.useMemo(() => {
       const additionalProps = {
         // allow Tabbing away from focusableWhenDisabled elements
         onKeyDown(event) {
@@ -9060,7 +9214,7 @@ var wp;
       native: isNativeButton = true,
       composite: compositeProp
     } = parameters;
-    const elementRef = React18.useRef(null);
+    const elementRef = React19.useRef(null);
     const compositeRootContext = useCompositeRootContext(true);
     const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
     const {
@@ -9073,7 +9227,7 @@ var wp;
       isNativeButton
     });
     if (true) {
-      React18.useEffect(() => {
+      React19.useEffect(() => {
         if (!elementRef.current) {
           return;
         }
@@ -9091,7 +9245,7 @@ var wp;
         }
       }, [isNativeButton]);
     }
-    const updateDisabled = React18.useCallback(() => {
+    const updateDisabled = React19.useCallback(() => {
       const element = elementRef.current;
       if (!isButtonElement(element)) {
         return;
@@ -9101,7 +9255,7 @@ var wp;
       }
     }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
     useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-    const getButtonProps = React18.useCallback((externalProps = {}) => {
+    const getButtonProps = React19.useCallback((externalProps = {}) => {
       const {
         onClick: externalOnClick,
         onMouseDown: externalOnMouseDown,
@@ -9241,126 +9395,6 @@ var wp;
       }
     };
     return latest;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-  var React19 = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-  var ReactDOM = __toESM(require_react_dom(), 1);
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveRef.mjs
-  function resolveRef(maybeRef) {
-    if (maybeRef == null) {
-      return maybeRef;
-    }
-    return "current" in maybeRef ? maybeRef.current : maybeRef;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-  var pendingCallbacks = null;
-  function flushBeforePaint(fn) {
-    if (!pendingCallbacks) {
-      const callbacks = [];
-      pendingCallbacks = callbacks;
-      queueMicrotask(() => {
-        pendingCallbacks = null;
-        ReactDOM.flushSync(() => {
-          for (const callback of callbacks) {
-            callback();
-          }
-        });
-      });
-    }
-    pendingCallbacks.push(fn);
-  }
-  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch2 = false) {
-    const frame = useAnimationFrame();
-    return useStableCallback((fnToExecute, signal = null) => {
-      frame.cancel();
-      const element = resolveRef(elementOrRef);
-      if (element == null) {
-        return;
-      }
-      const resolvedElement = element;
-      const done = () => {
-        if (!batch2) {
-          ReactDOM.flushSync(fnToExecute);
-          return;
-        }
-        flushBeforePaint(() => {
-          if (!signal?.aborted) {
-            fnToExecute();
-          }
-        });
-      };
-      if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
-        fnToExecute();
-        return;
-      }
-      function exec() {
-        Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
-          if (!signal?.aborted) {
-            done();
-          }
-        }, () => {
-          if (signal?.aborted) {
-            return;
-          }
-          const currentAnimations = resolvedElement.getAnimations();
-          if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
-            exec();
-            return;
-          }
-          done();
-        });
-      }
-      if (waitForStartingStyleRemoved) {
-        const startingStyleAttribute = startingStyle;
-        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-          frame.request(exec);
-          return;
-        }
-        const attributeObserver = new MutationObserver(() => {
-          if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-            attributeObserver.disconnect();
-            exec();
-          }
-        });
-        attributeObserver.observe(resolvedElement, {
-          attributes: true,
-          attributeFilter: [startingStyleAttribute]
-        });
-        signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
-          once: true
-        });
-        return;
-      }
-      frame.request(exec);
-    });
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-  function useOpenChangeComplete(parameters) {
-    const {
-      enabled = true,
-      open: open3,
-      ref,
-      batch: batch2 = false,
-      onComplete: onCompleteParam
-    } = parameters;
-    const onComplete = useStableCallback(onCompleteParam);
-    const runOnceAnimationsFinish = useAnimationsFinished(ref, open3, batch2);
-    React19.useEffect(() => {
-      if (!enabled) {
-        return void 0;
-      }
-      const abortController = new AbortController();
-      runOnceAnimationsFinish(onComplete, abortController.signal);
-      return () => {
-        abortController.abort();
-      };
-    }, [enabled, open3, onComplete, runOnceAnimationsFinish]);
   }
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
@@ -9752,42 +9786,6 @@ var wp;
     iOS: () => iOS
   });
   var iOS = "@supports (-webkit-touch-callout: none)";
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useTimeout.mjs
-  var EMPTY2 = 0;
-  var Timeout = class _Timeout {
-    static create() {
-      return new _Timeout();
-    }
-    currentId = EMPTY2;
-    /**
-     * Executes `fn` after `delay`, clearing any previously scheduled call.
-     */
-    start(delay, fn) {
-      this.clear();
-      this.currentId = setTimeout(() => {
-        this.currentId = EMPTY2;
-        fn();
-      }, delay);
-    }
-    isStarted() {
-      return this.currentId !== EMPTY2;
-    }
-    clear = () => {
-      if (this.currentId !== EMPTY2) {
-        clearTimeout(this.currentId);
-        this.currentId = EMPTY2;
-      }
-    };
-    disposeEffect = () => {
-      return this.clear;
-    };
-  };
-  function useTimeout() {
-    const timeout = useRefWithInit(Timeout.create).current;
-    useOnMount(timeout.disposeEffect);
-    return timeout;
-  }
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useScrollLock.mjs
   var originalHtmlStyles = {};

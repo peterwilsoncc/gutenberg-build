@@ -35,13 +35,6 @@ var require_i18n = __commonJS({
   }
 });
 
-// package-external:@wordpress/element
-var require_element = __commonJS({
-  "package-external:@wordpress/element"(exports, module) {
-    module.exports = window.wp.element;
-  }
-});
-
 // vendor-external:react
 var require_react = __commonJS({
   "vendor-external:react"(exports, module) {
@@ -60,6 +53,13 @@ var require_jsx_runtime = __commonJS({
 var require_react_dom = __commonJS({
   "vendor-external:react-dom"(exports, module) {
     module.exports = window.ReactDOM;
+  }
+});
+
+// package-external:@wordpress/element
+var require_element = __commonJS({
+  "package-external:@wordpress/element"(exports, module) {
+    module.exports = window.wp.element;
   }
 });
 
@@ -447,182 +447,19 @@ var require_api_fetch = __commonJS({
   }
 });
 
-// node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
-function r(e) {
-  var t, f, n = "";
-  if ("string" == typeof e || "number" == typeof e) n += e;
-  else if ("object" == typeof e) if (Array.isArray(e)) {
-    var o = e.length;
-    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-  } else for (f in e) e[f] && (n && (n += " "), n += f);
-  return n;
-}
-function clsx() {
-  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
-  return n;
-}
-var clsx_default = clsx;
-
-// packages/ui/build-module/badge/badge.mjs
-var import_element11 = __toESM(require_element(), 1);
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
-var React = __toESM(require_react(), 1);
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
-var loggedMessages;
-if (true) {
-  loggedMessages = /* @__PURE__ */ new Set();
-}
-function createLogOnce(severity, prefix) {
-  return function logOnce(...messages) {
-    if (true) {
-      const message2 = messages.join(" ");
-      const output = prefix ? `${prefix}: ${message2}` : message2;
-      const key = `${severity}:${output}`;
-      if (!loggedMessages.has(key)) {
-        loggedMessages.add(key);
-        if (severity === "warn") {
-          console.warn(output);
-        } else {
-          console.error(output);
-        }
-      }
-    }
-  };
-}
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
-var error = createLogOnce("error", "Base UI");
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
-function useControlled({
-  controlled,
-  default: defaultProp,
-  name,
-  state = "value"
-}) {
-  const {
-    current: isControlled
-  } = React.useRef(controlled !== void 0);
-  const [valueState, setValue] = React.useState(defaultProp);
-  const value = isControlled && controlled !== void 0 ? controlled : valueState;
-  if (true) {
-    React.useEffect(() => {
-      if (isControlled !== (controlled !== void 0)) {
-        error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
-      }
-    }, [state, name, controlled]);
-    const {
-      current: defaultValue
-    } = React.useRef(defaultProp);
-    React.useEffect(() => {
-      if (!isControlled && serializeToDevModeString(defaultValue) !== serializeToDevModeString(defaultProp)) {
-        error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
-      }
-    }, [defaultProp]);
-  }
-  const setValueIfUncontrolled = React.useCallback((newValue) => {
-    if (!isControlled) {
-      setValue(newValue);
-    }
-  }, []);
-  return [value, setValueIfUncontrolled];
-}
-function serializeToDevModeString(input) {
-  let nextId = 0;
-  const seen = /* @__PURE__ */ new WeakMap();
-  try {
-    const result = JSON.stringify(input, function replacer(key, value) {
-      if (key === "_owner" && this != null && typeof this === "object" && "$$typeof" in this) {
-        return void 0;
-      }
-      if (typeof value === "bigint") {
-        return `__bigint__:${value}`;
-      }
-      if (value !== null && typeof value === "object") {
-        const id = seen.get(value);
-        if (id !== void 0) {
-          return `__object__:${id}`;
-        }
-        seen.set(value, nextId);
-        nextId += 1;
-      }
-      return value;
-    });
-    return result ?? `__top__:${typeof input}`;
-  } catch {
-    return "__unserializable__";
-  }
-}
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
-var React2 = __toESM(require_react(), 1);
-var SafeReact = {
-  ...React2
-};
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
+var React4 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useRefWithInit.mjs
-var React3 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React3.useRef(UNINITIALIZED);
+  const ref = React.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
   return ref;
 }
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
-var useInsertionEffect = SafeReact.useInsertionEffect;
-var useSafeInsertionEffect = (
-  // React 17 doesn't have useInsertionEffect.
-  useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
-  useInsertionEffect !== SafeReact.useLayoutEffect ? useInsertionEffect : (fn) => fn()
-);
-function useStableCallback(callback) {
-  const stable = useRefWithInit(createStableCallback).current;
-  stable.next = callback;
-  useSafeInsertionEffect(stable.effect);
-  return stable.trampoline;
-}
-function createStableCallback() {
-  const stable = {
-    next: void 0,
-    callback: assertNotCalled,
-    trampoline: (...args) => stable.callback?.(...args),
-    effect: () => {
-      stable.callback = stable.next;
-    }
-  };
-  return stable;
-}
-function assertNotCalled() {
-  if (true) {
-    throw (
-      /* minify-error-disabled */
-      new Error("Base UI: Cannot call an event handler while rendering.")
-    );
-  }
-}
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
-var warn = createLogOnce("warn", "Base UI");
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
-function NOOP() {
-}
-var EMPTY_ARRAY = Object.freeze([]);
-var EMPTY_OBJECT = Object.freeze({});
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-var React4 = __toESM(require_react(), 1);
-var noop = () => {
-};
-var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
-var React7 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useMergedRefs.mjs
 function useMergedRefs(a, b, c2, d) {
@@ -714,18 +551,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
-var React6 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/reactVersion.mjs
-var React5 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React5.version, 10);
+var React2 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React2.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React6.isValidElement(element)) {
+  if (!/* @__PURE__ */ React3.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -749,6 +586,38 @@ function mergeObjects(a, b) {
   }
   return void 0;
 }
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
+var loggedMessages;
+if (true) {
+  loggedMessages = /* @__PURE__ */ new Set();
+}
+function createLogOnce(severity, prefix) {
+  return function logOnce(...messages) {
+    if (true) {
+      const message2 = messages.join(" ");
+      const output = prefix ? `${prefix}: ${message2}` : message2;
+      const key = `${severity}:${output}`;
+      if (!loggedMessages.has(key)) {
+        loggedMessages.add(key);
+        if (severity === "warn") {
+          console.warn(output);
+        } else {
+          console.error(output);
+        }
+      }
+    }
+  };
+}
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
+var warn = createLogOnce("warn", "Base UI");
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
+function NOOP() {
+}
+var EMPTY_ARRAY = Object.freeze([]);
+var EMPTY_OBJECT = Object.freeze({});
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
 function getStateAttributesProps(state, customMapping) {
@@ -1000,8 +869,8 @@ function unwrapLazyRenderProp(render4) {
   if (render4?.$$typeof !== REACT_LAZY_TYPE) {
     return render4;
   }
-  const unwrapped = React7.Children.toArray(render4)[0];
-  return /* @__PURE__ */ React7.isValidElement(unwrapped) ? unwrapped : render4;
+  const unwrapped = React4.Children.toArray(render4)[0];
+  return /* @__PURE__ */ React4.isValidElement(unwrapped) ? unwrapped : render4;
 }
 function evaluateRenderProp(element, render4, props, state) {
   if (render4) {
@@ -1014,11 +883,11 @@ function evaluateRenderProp(element, render4, props, state) {
     const mergedProps = mergeProps(props, render4.props);
     mergedProps.ref = props.ref;
     if (true) {
-      if (!/* @__PURE__ */ React7.isValidElement(render4)) {
+      if (!/* @__PURE__ */ React4.isValidElement(render4)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React7.cloneElement(render4, mergedProps);
+    return /* @__PURE__ */ React4.cloneElement(render4, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -1055,16 +924,486 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React7.createElement(Tag, props);
+  return /* @__PURE__ */ React4.createElement(Tag, props);
+}
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
+var React5 = __toESM(require_react(), 1);
+var SafeReact = {
+  ...React5
+};
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
+var useInsertionEffect = SafeReact.useInsertionEffect;
+var useSafeInsertionEffect = (
+  // React 17 doesn't have useInsertionEffect.
+  useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
+  useInsertionEffect !== SafeReact.useLayoutEffect ? useInsertionEffect : (fn) => fn()
+);
+function useStableCallback(callback) {
+  const stable = useRefWithInit(createStableCallback).current;
+  stable.next = callback;
+  useSafeInsertionEffect(stable.effect);
+  return stable.trampoline;
+}
+function createStableCallback() {
+  const stable = {
+    next: void 0,
+    callback: assertNotCalled,
+    trampoline: (...args) => stable.callback?.(...args),
+    effect: () => {
+      stable.callback = stable.next;
+    }
+  };
+  return stable;
+}
+function assertNotCalled() {
+  if (true) {
+    throw (
+      /* minify-error-disabled */
+      new Error("Base UI: Cannot call an event handler while rendering.")
+    );
+  }
+}
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+var React6 = __toESM(require_react(), 1);
+var noop = () => {
+};
+var useIsoLayoutEffect = typeof document !== "undefined" ? React6.useLayoutEffect : noop;
+
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+var React8 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+var ReactDOM = __toESM(require_react_dom(), 1);
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useOnMount.mjs
+var React7 = __toESM(require_react(), 1);
+function useOnMount(fn) {
+  React7.useEffect(fn, EMPTY_ARRAY);
+}
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useAnimationFrame.mjs
+var EMPTY = null;
+var LAST_RAF = globalThis.requestAnimationFrame;
+var Scheduler = class {
+  /* This implementation uses an array as a backing data-structure for frame callbacks.
+   * It allows `O(1)` callback cancelling by inserting a `null` in the array, though it
+   * never calls the native `cancelAnimationFrame` if there are no frames left. This can
+   * be much more efficient if there is a call pattern that alterns as
+   * "request-cancel-request-cancel-…".
+   * But in the case of "request-request-…-cancel-cancel-…", it leaves the final animation
+   * frame to run anyway. We turn that frame into a `O(1)` no-op via `callbacksCount`. */
+  callbacks = [];
+  callbacksCount = 0;
+  nextId = 1;
+  startId = 1;
+  isScheduled = false;
+  tick = (timestamp) => {
+    this.isScheduled = false;
+    const currentCallbacks = this.callbacks;
+    const currentCallbacksCount = this.callbacksCount;
+    this.callbacks = [];
+    this.callbacksCount = 0;
+    this.startId = this.nextId;
+    if (currentCallbacksCount > 0) {
+      for (let i = 0; i < currentCallbacks.length; i += 1) {
+        currentCallbacks[i]?.(timestamp);
+      }
+    }
+  };
+  request(fn) {
+    const id = this.nextId;
+    this.nextId += 1;
+    this.callbacks.push(fn);
+    this.callbacksCount += 1;
+    const didRAFChange = LAST_RAF !== requestAnimationFrame && (LAST_RAF = requestAnimationFrame, true);
+    if (!this.isScheduled || didRAFChange) {
+      requestAnimationFrame(this.tick);
+      this.isScheduled = true;
+    }
+    return id;
+  }
+  cancel(id) {
+    const index2 = id - this.startId;
+    if (index2 < 0 || index2 >= this.callbacks.length) {
+      return;
+    }
+    if (this.callbacks[index2] === null) {
+      return;
+    }
+    this.callbacks[index2] = null;
+    this.callbacksCount -= 1;
+  }
+};
+var scheduler = new Scheduler();
+var AnimationFrame = class _AnimationFrame {
+  static create() {
+    return new _AnimationFrame();
+  }
+  static request(fn) {
+    return scheduler.request(fn);
+  }
+  static cancel(id) {
+    return scheduler.cancel(id);
+  }
+  currentId = EMPTY;
+  /**
+   * Executes `fn` after `delay`, clearing any previously scheduled call.
+   */
+  request(fn) {
+    this.cancel();
+    this.currentId = scheduler.request(() => {
+      this.currentId = EMPTY;
+      fn();
+    });
+  }
+  cancel = () => {
+    if (this.currentId !== EMPTY) {
+      scheduler.cancel(this.currentId);
+      this.currentId = EMPTY;
+    }
+  };
+  disposeEffect = () => {
+    return this.cancel;
+  };
+};
+function useAnimationFrame() {
+  const timeout = useRefWithInit(AnimationFrame.create).current;
+  useOnMount(timeout.disposeEffect);
+  return timeout;
+}
+
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveRef.mjs
+function resolveRef(maybeRef) {
+  if (maybeRef == null) {
+    return maybeRef;
+  }
+  return "current" in maybeRef ? maybeRef.current : maybeRef;
+}
+
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+var TransitionStatusDataAttributes_exports = {};
+__export(TransitionStatusDataAttributes_exports, {
+  endingStyle: () => endingStyle,
+  startingStyle: () => startingStyle
+});
+var startingStyle = "data-starting-style";
+var endingStyle = "data-ending-style";
+
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+var pendingCallbacks = null;
+function flushBeforePaint(fn) {
+  if (!pendingCallbacks) {
+    const callbacks = [];
+    pendingCallbacks = callbacks;
+    queueMicrotask(() => {
+      pendingCallbacks = null;
+      ReactDOM.flushSync(() => {
+        for (const callback of callbacks) {
+          callback();
+        }
+      });
+    });
+  }
+  pendingCallbacks.push(fn);
+}
+function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch = false) {
+  const frame = useAnimationFrame();
+  return useStableCallback((fnToExecute, signal = null) => {
+    frame.cancel();
+    const element = resolveRef(elementOrRef);
+    if (element == null) {
+      return;
+    }
+    const resolvedElement = element;
+    const done = () => {
+      if (!batch) {
+        ReactDOM.flushSync(fnToExecute);
+        return;
+      }
+      flushBeforePaint(() => {
+        if (!signal?.aborted) {
+          fnToExecute();
+        }
+      });
+    };
+    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
+      fnToExecute();
+      return;
+    }
+    function exec() {
+      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+        if (!signal?.aborted) {
+          done();
+        }
+      }, () => {
+        if (signal?.aborted) {
+          return;
+        }
+        const currentAnimations = resolvedElement.getAnimations();
+        if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+          exec();
+          return;
+        }
+        done();
+      });
+    }
+    if (waitForStartingStyleRemoved) {
+      const startingStyleAttribute = startingStyle;
+      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+        frame.request(exec);
+        return;
+      }
+      const attributeObserver = new MutationObserver(() => {
+        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+          attributeObserver.disconnect();
+          exec();
+        }
+      });
+      attributeObserver.observe(resolvedElement, {
+        attributes: true,
+        attributeFilter: [startingStyleAttribute]
+      });
+      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
+        once: true
+      });
+      return;
+    }
+    frame.request(exec);
+  });
+}
+
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+function useOpenChangeComplete(parameters) {
+  const {
+    enabled = true,
+    open: open3,
+    ref,
+    batch = false,
+    onComplete: onCompleteParam
+  } = parameters;
+  const onComplete = useStableCallback(onCompleteParam);
+  const runOnceAnimationsFinish = useAnimationsFinished(ref, open3, batch);
+  React8.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    const abortController = new AbortController();
+    runOnceAnimationsFinish(onComplete, abortController.signal);
+    return () => {
+      abortController.abort();
+    };
+  }, [enabled, open3, onComplete, runOnceAnimationsFinish]);
+}
+
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
+var STARTING_HOOK = {
+  [startingStyle]: ""
+};
+var ENDING_HOOK = {
+  [endingStyle]: ""
+};
+var transitionStatusMapping = {
+  transitionStatus(value) {
+    if (value === "starting") {
+      return STARTING_HOOK;
+    }
+    if (value === "ending") {
+      return ENDING_HOOK;
+    }
+    return null;
+  }
+};
+
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+var React9 = __toESM(require_react(), 1);
+function useTransitionStatus(open3, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
+  const [transitionStatus, setTransitionStatus] = React9.useState(open3 && enableIdleState ? "idle" : void 0);
+  const [mounted, setMounted] = React9.useState(open3 && !animateInitialOpen);
+  if (open3 && !mounted) {
+    setMounted(true);
+    setTransitionStatus("starting");
+  }
+  if (!open3 && mounted && transitionStatus !== "ending" && !deferEndingState) {
+    setTransitionStatus("ending");
+  }
+  if (!open3 && !mounted && transitionStatus === "ending") {
+    setTransitionStatus(void 0);
+  }
+  useIsoLayoutEffect(() => {
+    if (!open3 && mounted && transitionStatus !== "ending" && deferEndingState) {
+      const frame = AnimationFrame.request(() => {
+        setTransitionStatus("ending");
+      });
+      return () => {
+        AnimationFrame.cancel(frame);
+      };
+    }
+    return void 0;
+  }, [open3, mounted, transitionStatus, deferEndingState]);
+  useIsoLayoutEffect(() => {
+    if (!open3 || enableIdleState) {
+      return void 0;
+    }
+    const frame = AnimationFrame.request(() => {
+      setTransitionStatus(void 0);
+    });
+    return () => {
+      AnimationFrame.cancel(frame);
+    };
+  }, [enableIdleState, open3]);
+  useIsoLayoutEffect(() => {
+    if (!open3 || !enableIdleState) {
+      return void 0;
+    }
+    if (open3 && mounted && transitionStatus !== "idle") {
+      setTransitionStatus("starting");
+    }
+    const frame = AnimationFrame.request(() => {
+      setTransitionStatus("idle");
+    });
+    return () => {
+      AnimationFrame.cancel(frame);
+    };
+  }, [enableIdleState, open3, mounted, transitionStatus]);
+  return {
+    mounted,
+    setMounted,
+    transitionStatus
+  };
+}
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useTimeout.mjs
+var EMPTY2 = 0;
+var Timeout = class _Timeout {
+  static create() {
+    return new _Timeout();
+  }
+  currentId = EMPTY2;
+  /**
+   * Executes `fn` after `delay`, clearing any previously scheduled call.
+   */
+  start(delay, fn) {
+    this.clear();
+    this.currentId = setTimeout(() => {
+      this.currentId = EMPTY2;
+      fn();
+    }, delay);
+  }
+  isStarted() {
+    return this.currentId !== EMPTY2;
+  }
+  clear = () => {
+    if (this.currentId !== EMPTY2) {
+      clearTimeout(this.currentId);
+      this.currentId = EMPTY2;
+    }
+  };
+  disposeEffect = () => {
+    return this.clear;
+  };
+};
+function useTimeout() {
+  const timeout = useRefWithInit(Timeout.create).current;
+  useOnMount(timeout.disposeEffect);
+  return timeout;
+}
+
+// node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
+function r(e) {
+  var t, f, n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;
+  else if ("object" == typeof e) if (Array.isArray(e)) {
+    var o = e.length;
+    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
+}
+function clsx() {
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+  return n;
+}
+var clsx_default = clsx;
+
+// packages/ui/build-module/badge/badge.mjs
+var import_element11 = __toESM(require_element(), 1);
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+var React10 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
+var error = createLogOnce("error", "Base UI");
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+function useControlled({
+  controlled,
+  default: defaultProp,
+  name,
+  state = "value"
+}) {
+  const {
+    current: isControlled
+  } = React10.useRef(controlled !== void 0);
+  const [valueState, setValue] = React10.useState(defaultProp);
+  const value = isControlled && controlled !== void 0 ? controlled : valueState;
+  if (true) {
+    React10.useEffect(() => {
+      if (isControlled !== (controlled !== void 0)) {
+        error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
+      }
+    }, [state, name, controlled]);
+    const {
+      current: defaultValue
+    } = React10.useRef(defaultProp);
+    React10.useEffect(() => {
+      if (!isControlled && serializeToDevModeString(defaultValue) !== serializeToDevModeString(defaultProp)) {
+        error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
+      }
+    }, [defaultProp]);
+  }
+  const setValueIfUncontrolled = React10.useCallback((newValue) => {
+    if (!isControlled) {
+      setValue(newValue);
+    }
+  }, []);
+  return [value, setValueIfUncontrolled];
+}
+function serializeToDevModeString(input) {
+  let nextId = 0;
+  const seen = /* @__PURE__ */ new WeakMap();
+  try {
+    const result = JSON.stringify(input, function replacer(key, value) {
+      if (key === "_owner" && this != null && typeof this === "object" && "$$typeof" in this) {
+        return void 0;
+      }
+      if (typeof value === "bigint") {
+        return `__bigint__:${value}`;
+      }
+      if (value !== null && typeof value === "object") {
+        const id = seen.get(value);
+        if (id !== void 0) {
+          return `__object__:${id}`;
+        }
+        seen.set(value, nextId);
+        nextId += 1;
+      }
+      return value;
+    });
+    return result ?? `__top__:${typeof input}`;
+  } catch {
+    return "__unserializable__";
+  }
 }
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useId.mjs
-var React8 = __toESM(require_react(), 1);
+var React11 = __toESM(require_react(), 1);
 var globalId = 0;
 function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React8.useState(idOverride);
+  const [defaultId, setDefaultId] = React11.useState(idOverride);
   const id = idOverride || defaultId;
-  React8.useEffect(() => {
+  React11.useEffect(() => {
     if (defaultId == null) {
       globalId += 1;
       setDefaultId(`${prefix}-${globalId}`);
@@ -1087,7 +1426,7 @@ function useBaseUiId(idOverride) {
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
-var React11 = __toESM(require_react(), 1);
+var React12 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/reason-parts.mjs
 var reason_parts_exports = {};
@@ -1190,163 +1529,6 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
   return details;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-var React10 = __toESM(require_react(), 1);
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useOnMount.mjs
-var React9 = __toESM(require_react(), 1);
-function useOnMount(fn) {
-  React9.useEffect(fn, EMPTY_ARRAY);
-}
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useAnimationFrame.mjs
-var EMPTY = null;
-var LAST_RAF = globalThis.requestAnimationFrame;
-var Scheduler = class {
-  /* This implementation uses an array as a backing data-structure for frame callbacks.
-   * It allows `O(1)` callback cancelling by inserting a `null` in the array, though it
-   * never calls the native `cancelAnimationFrame` if there are no frames left. This can
-   * be much more efficient if there is a call pattern that alterns as
-   * "request-cancel-request-cancel-…".
-   * But in the case of "request-request-…-cancel-cancel-…", it leaves the final animation
-   * frame to run anyway. We turn that frame into a `O(1)` no-op via `callbacksCount`. */
-  callbacks = [];
-  callbacksCount = 0;
-  nextId = 1;
-  startId = 1;
-  isScheduled = false;
-  tick = (timestamp) => {
-    this.isScheduled = false;
-    const currentCallbacks = this.callbacks;
-    const currentCallbacksCount = this.callbacksCount;
-    this.callbacks = [];
-    this.callbacksCount = 0;
-    this.startId = this.nextId;
-    if (currentCallbacksCount > 0) {
-      for (let i = 0; i < currentCallbacks.length; i += 1) {
-        currentCallbacks[i]?.(timestamp);
-      }
-    }
-  };
-  request(fn) {
-    const id = this.nextId;
-    this.nextId += 1;
-    this.callbacks.push(fn);
-    this.callbacksCount += 1;
-    const didRAFChange = LAST_RAF !== requestAnimationFrame && (LAST_RAF = requestAnimationFrame, true);
-    if (!this.isScheduled || didRAFChange) {
-      requestAnimationFrame(this.tick);
-      this.isScheduled = true;
-    }
-    return id;
-  }
-  cancel(id) {
-    const index2 = id - this.startId;
-    if (index2 < 0 || index2 >= this.callbacks.length) {
-      return;
-    }
-    if (this.callbacks[index2] === null) {
-      return;
-    }
-    this.callbacks[index2] = null;
-    this.callbacksCount -= 1;
-  }
-};
-var scheduler = new Scheduler();
-var AnimationFrame = class _AnimationFrame {
-  static create() {
-    return new _AnimationFrame();
-  }
-  static request(fn) {
-    return scheduler.request(fn);
-  }
-  static cancel(id) {
-    return scheduler.cancel(id);
-  }
-  currentId = EMPTY;
-  /**
-   * Executes `fn` after `delay`, clearing any previously scheduled call.
-   */
-  request(fn) {
-    this.cancel();
-    this.currentId = scheduler.request(() => {
-      this.currentId = EMPTY;
-      fn();
-    });
-  }
-  cancel = () => {
-    if (this.currentId !== EMPTY) {
-      scheduler.cancel(this.currentId);
-      this.currentId = EMPTY;
-    }
-  };
-  disposeEffect = () => {
-    return this.cancel;
-  };
-};
-function useAnimationFrame() {
-  const timeout = useRefWithInit(AnimationFrame.create).current;
-  useOnMount(timeout.disposeEffect);
-  return timeout;
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-function useTransitionStatus(open3, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
-  const [transitionStatus, setTransitionStatus] = React10.useState(open3 && enableIdleState ? "idle" : void 0);
-  const [mounted, setMounted] = React10.useState(open3 && !animateInitialOpen);
-  if (open3 && !mounted) {
-    setMounted(true);
-    setTransitionStatus("starting");
-  }
-  if (!open3 && mounted && transitionStatus !== "ending" && !deferEndingState) {
-    setTransitionStatus("ending");
-  }
-  if (!open3 && !mounted && transitionStatus === "ending") {
-    setTransitionStatus(void 0);
-  }
-  useIsoLayoutEffect(() => {
-    if (!open3 && mounted && transitionStatus !== "ending" && deferEndingState) {
-      const frame = AnimationFrame.request(() => {
-        setTransitionStatus("ending");
-      });
-      return () => {
-        AnimationFrame.cancel(frame);
-      };
-    }
-    return void 0;
-  }, [open3, mounted, transitionStatus, deferEndingState]);
-  useIsoLayoutEffect(() => {
-    if (!open3 || enableIdleState) {
-      return void 0;
-    }
-    const frame = AnimationFrame.request(() => {
-      setTransitionStatus(void 0);
-    });
-    return () => {
-      AnimationFrame.cancel(frame);
-    };
-  }, [enableIdleState, open3]);
-  useIsoLayoutEffect(() => {
-    if (!open3 || !enableIdleState) {
-      return void 0;
-    }
-    if (open3 && mounted && transitionStatus !== "idle") {
-      setTransitionStatus("starting");
-    }
-    const frame = AnimationFrame.request(() => {
-      setTransitionStatus("idle");
-    });
-    return () => {
-      AnimationFrame.cancel(frame);
-    };
-  }, [enableIdleState, open3, mounted, transitionStatus]);
-  return {
-    mounted,
-    setMounted,
-    transitionStatus
-  };
-}
-
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
 function useCollapsibleRoot(parameters) {
   const {
@@ -1367,7 +1549,7 @@ function useCollapsibleRoot(parameters) {
     transitionStatus
   } = useTransitionStatus(open3, true, true);
   const defaultPanelId = useBaseUiId();
-  const [registeredPanelId, setPanelIdState] = React11.useState();
+  const [registeredPanelId, setPanelIdState] = React12.useState();
   const panelId = registeredPanelId === null ? void 0 : registeredPanelId ?? defaultPanelId;
   const handleTrigger = useStableCallback((event) => {
     const nextOpen = !open3;
@@ -1378,7 +1560,7 @@ function useCollapsibleRoot(parameters) {
     }
     setOpen(nextOpen);
   });
-  return React11.useMemo(() => ({
+  return React12.useMemo(() => ({
     defaultPanelId,
     disabled: disabled2,
     handleTrigger,
@@ -1393,44 +1575,16 @@ function useCollapsibleRoot(parameters) {
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/root/CollapsibleRootContext.mjs
-var React12 = __toESM(require_react(), 1);
-var CollapsibleRootContext = /* @__PURE__ */ React12.createContext(void 0);
+var React13 = __toESM(require_react(), 1);
+var CollapsibleRootContext = /* @__PURE__ */ React13.createContext(void 0);
 if (true) CollapsibleRootContext.displayName = "CollapsibleRootContext";
 function useCollapsibleRootContext() {
-  const context = React12.useContext(CollapsibleRootContext);
+  const context = React13.useContext(CollapsibleRootContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: CollapsibleRootContext is missing. Collapsible parts must be placed within <Collapsible.Root>." : formatErrorMessage_default(15));
   }
   return context;
 }
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
-var TransitionStatusDataAttributes_exports = {};
-__export(TransitionStatusDataAttributes_exports, {
-  endingStyle: () => endingStyle,
-  startingStyle: () => startingStyle
-});
-var startingStyle = "data-starting-style";
-var endingStyle = "data-ending-style";
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
-var STARTING_HOOK = {
-  [startingStyle]: ""
-};
-var ENDING_HOOK = {
-  [endingStyle]: ""
-};
-var transitionStatusMapping = {
-  transitionStatus(value) {
-    if (value === "starting") {
-      return STARTING_HOOK;
-    }
-    if (value === "ending") {
-      return ENDING_HOOK;
-    }
-    return null;
-  }
-};
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelDataAttributes.mjs
 var open = "data-open";
@@ -1468,7 +1622,7 @@ var collapsibleOpenStateMapping = {
 };
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/use-button/useButton.mjs
-var React15 = __toESM(require_react(), 1);
+var React16 = __toESM(require_react(), 1);
 
 // node_modules/.store/@floating-ui/utils@0.2.12-gOxTzMf36nCrbeHpEew-rw/node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
 function hasWindow() {
@@ -1627,11 +1781,11 @@ function getFrameElement(win) {
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-var React13 = __toESM(require_react(), 1);
-var CompositeRootContext = /* @__PURE__ */ React13.createContext(void 0);
+var React14 = __toESM(require_react(), 1);
+var CompositeRootContext = /* @__PURE__ */ React14.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
 function useCompositeRootContext(optional = false) {
-  const context = React13.useContext(CompositeRootContext);
+  const context = React14.useContext(CompositeRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
   }
@@ -1639,7 +1793,7 @@ function useCompositeRootContext(optional = false) {
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-var React14 = __toESM(require_react(), 1);
+var React15 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
     focusableWhenDisabled,
@@ -1650,7 +1804,7 @@ function useFocusableWhenDisabled(parameters) {
   } = parameters;
   const isFocusableComposite = composite && focusableWhenDisabled !== false;
   const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-  const props = React14.useMemo(() => {
+  const props = React15.useMemo(() => {
     const additionalProps = {
       // allow Tabbing away from focusableWhenDisabled elements
       onKeyDown(event) {
@@ -1708,7 +1862,7 @@ function useButton(parameters = {}) {
     native: isNativeButton = true,
     composite: compositeProp
   } = parameters;
-  const elementRef = React15.useRef(null);
+  const elementRef = React16.useRef(null);
   const compositeRootContext = useCompositeRootContext(true);
   const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
   const {
@@ -1721,7 +1875,7 @@ function useButton(parameters = {}) {
     isNativeButton
   });
   if (true) {
-    React15.useEffect(() => {
+    React16.useEffect(() => {
       if (!elementRef.current) {
         return;
       }
@@ -1739,7 +1893,7 @@ function useButton(parameters = {}) {
       }
     }, [isNativeButton]);
   }
-  const updateDisabled = React15.useCallback(() => {
+  const updateDisabled = React16.useCallback(() => {
     const element = elementRef.current;
     if (!isButtonElement(element)) {
       return;
@@ -1749,7 +1903,7 @@ function useButton(parameters = {}) {
     }
   }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
   useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-  const getButtonProps = React15.useCallback((externalProps = {}) => {
+  const getButtonProps = React16.useCallback((externalProps = {}) => {
     const {
       onClick: externalOnClick,
       onMouseDown: externalOnMouseDown,
@@ -1889,126 +2043,6 @@ function createLatestRef(value) {
     }
   };
   return latest;
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-var React16 = __toESM(require_react(), 1);
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-var ReactDOM = __toESM(require_react_dom(), 1);
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveRef.mjs
-function resolveRef(maybeRef) {
-  if (maybeRef == null) {
-    return maybeRef;
-  }
-  return "current" in maybeRef ? maybeRef.current : maybeRef;
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-var pendingCallbacks = null;
-function flushBeforePaint(fn) {
-  if (!pendingCallbacks) {
-    const callbacks = [];
-    pendingCallbacks = callbacks;
-    queueMicrotask(() => {
-      pendingCallbacks = null;
-      ReactDOM.flushSync(() => {
-        for (const callback of callbacks) {
-          callback();
-        }
-      });
-    });
-  }
-  pendingCallbacks.push(fn);
-}
-function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch = false) {
-  const frame = useAnimationFrame();
-  return useStableCallback((fnToExecute, signal = null) => {
-    frame.cancel();
-    const element = resolveRef(elementOrRef);
-    if (element == null) {
-      return;
-    }
-    const resolvedElement = element;
-    const done = () => {
-      if (!batch) {
-        ReactDOM.flushSync(fnToExecute);
-        return;
-      }
-      flushBeforePaint(() => {
-        if (!signal?.aborted) {
-          fnToExecute();
-        }
-      });
-    };
-    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
-      fnToExecute();
-      return;
-    }
-    function exec() {
-      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
-        if (!signal?.aborted) {
-          done();
-        }
-      }, () => {
-        if (signal?.aborted) {
-          return;
-        }
-        const currentAnimations = resolvedElement.getAnimations();
-        if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
-          exec();
-          return;
-        }
-        done();
-      });
-    }
-    if (waitForStartingStyleRemoved) {
-      const startingStyleAttribute = startingStyle;
-      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-        frame.request(exec);
-        return;
-      }
-      const attributeObserver = new MutationObserver(() => {
-        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-          attributeObserver.disconnect();
-          exec();
-        }
-      });
-      attributeObserver.observe(resolvedElement, {
-        attributes: true,
-        attributeFilter: [startingStyleAttribute]
-      });
-      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
-        once: true
-      });
-      return;
-    }
-    frame.request(exec);
-  });
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-function useOpenChangeComplete(parameters) {
-  const {
-    enabled = true,
-    open: open3,
-    ref,
-    batch = false,
-    onComplete: onCompleteParam
-  } = parameters;
-  const onComplete = useStableCallback(onCompleteParam);
-  const runOnceAnimationsFinish = useAnimationsFinished(ref, open3, batch);
-  React16.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    const abortController = new AbortController();
-    runOnceAnimationsFinish(onComplete, abortController.signal);
-    return () => {
-      abortController.abort();
-    };
-  }, [enabled, open3, onComplete, runOnceAnimationsFinish]);
 }
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
@@ -2400,42 +2434,6 @@ __export(media_query_exports, {
   iOS: () => iOS
 });
 var iOS = "@supports (-webkit-touch-callout: none)";
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useTimeout.mjs
-var EMPTY2 = 0;
-var Timeout = class _Timeout {
-  static create() {
-    return new _Timeout();
-  }
-  currentId = EMPTY2;
-  /**
-   * Executes `fn` after `delay`, clearing any previously scheduled call.
-   */
-  start(delay, fn) {
-    this.clear();
-    this.currentId = setTimeout(() => {
-      this.currentId = EMPTY2;
-      fn();
-    }, delay);
-  }
-  isStarted() {
-    return this.currentId !== EMPTY2;
-  }
-  clear = () => {
-    if (this.currentId !== EMPTY2) {
-      clearTimeout(this.currentId);
-      this.currentId = EMPTY2;
-    }
-  };
-  disposeEffect = () => {
-    return this.clear;
-  };
-};
-function useTimeout() {
-  const timeout = useRefWithInit(Timeout.create).current;
-  useOnMount(timeout.disposeEffect);
-  return timeout;
-}
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
 var React18 = __toESM(require_react(), 1);

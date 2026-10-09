@@ -39437,389 +39437,19 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n41 = __toESM(require_i18n(), 1);
   var import_compose46 = __toESM(require_compose(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
-  var React11 = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
-  var loggedMessages;
-  if (true) {
-    loggedMessages = /* @__PURE__ */ new Set();
-  }
-  function createLogOnce(severity, prefix2) {
-    return function logOnce(...messages) {
-      if (true) {
-        const message = messages.join(" ");
-        const output = prefix2 ? `${prefix2}: ${message}` : message;
-        const key = `${severity}:${output}`;
-        if (!loggedMessages.has(key)) {
-          loggedMessages.add(key);
-          if (severity === "warn") {
-            console.warn(output);
-          } else {
-            console.error(output);
-          }
-        }
-      }
-    };
-  }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
-  var error = createLogOnce("error", "Base UI");
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
-  function useControlled({
-    controlled,
-    default: defaultProp,
-    name,
-    state = "value"
-  }) {
-    const {
-      current: isControlled
-    } = React11.useRef(controlled !== void 0);
-    const [valueState, setValue] = React11.useState(defaultProp);
-    const value = isControlled && controlled !== void 0 ? controlled : valueState;
-    if (true) {
-      React11.useEffect(() => {
-        if (isControlled !== (controlled !== void 0)) {
-          error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
-        }
-      }, [state, name, controlled]);
-      const {
-        current: defaultValue2
-      } = React11.useRef(defaultProp);
-      React11.useEffect(() => {
-        if (!isControlled && serializeToDevModeString(defaultValue2) !== serializeToDevModeString(defaultProp)) {
-          error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
-        }
-      }, [defaultProp]);
-    }
-    const setValueIfUncontrolled = React11.useCallback((newValue) => {
-      if (!isControlled) {
-        setValue(newValue);
-      }
-    }, []);
-    return [value, setValueIfUncontrolled];
-  }
-  function serializeToDevModeString(input) {
-    let nextId = 0;
-    const seen = /* @__PURE__ */ new WeakMap();
-    try {
-      const result = JSON.stringify(input, function replacer(key, value) {
-        if (key === "_owner" && this != null && typeof this === "object" && "$$typeof" in this) {
-          return void 0;
-        }
-        if (typeof value === "bigint") {
-          return `__bigint__:${value}`;
-        }
-        if (value !== null && typeof value === "object") {
-          const id3 = seen.get(value);
-          if (id3 !== void 0) {
-            return `__object__:${id3}`;
-          }
-          seen.set(value, nextId);
-          nextId += 1;
-        }
-        return value;
-      });
-      return result ?? `__top__:${typeof input}`;
-    } catch {
-      return "__unserializable__";
-    }
-  }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
-  var React12 = __toESM(require_react(), 1);
-  var SafeReact = {
-    ...React12
-  };
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
+  var React14 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useRefWithInit.mjs
-  var React13 = __toESM(require_react(), 1);
+  var React11 = __toESM(require_react(), 1);
   var UNINITIALIZED = {};
   function useRefWithInit(init2, initArg) {
-    const ref = React13.useRef(UNINITIALIZED);
+    const ref = React11.useRef(UNINITIALIZED);
     if (ref.current === UNINITIALIZED) {
       ref.current = init2(initArg);
     }
     return ref;
   }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
-  var useInsertionEffect5 = SafeReact.useInsertionEffect;
-  var useSafeInsertionEffect = (
-    // React 17 doesn't have useInsertionEffect.
-    useInsertionEffect5 && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
-    useInsertionEffect5 !== SafeReact.useLayoutEffect ? useInsertionEffect5 : (fn) => fn()
-  );
-  function useStableCallback(callback) {
-    const stable = useRefWithInit(createStableCallback).current;
-    stable.next = callback;
-    useSafeInsertionEffect(stable.effect);
-    return stable.trampoline;
-  }
-  function createStableCallback() {
-    const stable = {
-      next: void 0,
-      callback: assertNotCalled,
-      trampoline: (...args) => stable.callback?.(...args),
-      effect: () => {
-        stable.callback = stable.next;
-      }
-    };
-    return stable;
-  }
-  function assertNotCalled() {
-    if (true) {
-      throw (
-        /* minify-error-disabled */
-        new Error("Base UI: Cannot call an event handler while rendering.")
-      );
-    }
-  }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
-  var warn4 = createLogOnce("warn", "Base UI");
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
-  function NOOP() {
-  }
-  var EMPTY_ARRAY = Object.freeze([]);
-  var EMPTY_OBJECT = Object.freeze({});
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
-  var React16 = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-  var React14 = __toESM(require_react(), 1);
-  var noop12 = () => {
-  };
-  var useIsoLayoutEffect = typeof document !== "undefined" ? React14.useLayoutEffect : noop12;
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
-  var React15 = __toESM(require_react(), 1);
-  var CompositeListContext = /* @__PURE__ */ React15.createContext({
-    register: () => {
-    },
-    unregister: () => {
-    },
-    subscribeMapChange: () => () => {
-    },
-    nextIndexRef: {
-      current: 0
-    }
-  });
-  if (true) CompositeListContext.displayName = "CompositeListContext";
-  function useCompositeListContext() {
-    return React15.useContext(CompositeListContext);
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
-  var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
-  function CompositeList(props) {
-    const {
-      children,
-      elementsRef,
-      labelsRef,
-      onMapChange: onMapChangeProp
-    } = props;
-    const onMapChange = useStableCallback(onMapChangeProp);
-    const [, setMapTick] = React16.useState(false);
-    const listeners = useRefWithInit(createListeners).current;
-    const map = useRefWithInit(createMap).current;
-    const nextIndexRef = React16.useRef(0);
-    const isDirtyRef = React16.useRef(true);
-    const itemsRef = React16.useRef(null);
-    const mutationObserverRef = React16.useRef(null);
-    const scheduleMapUpdate = useStableCallback(() => {
-      if (isDirtyRef.current) {
-        return;
-      }
-      isDirtyRef.current = true;
-      setMapTick((tick) => !tick);
-    });
-    const register2 = useStableCallback((node2, registration) => {
-      map.set(node2, registration);
-      scheduleMapUpdate();
-    });
-    const unregister = useStableCallback((node2) => {
-      map.delete(node2);
-      scheduleMapUpdate();
-    });
-    const syncRefs = useStableCallback((items) => {
-      const nextMap = /* @__PURE__ */ new Map();
-      elementsRef.current.length = 0;
-      if (labelsRef) {
-        labelsRef.current.length = 0;
-      }
-      items.forEach((item) => {
-        nextMap.set(item.element, {
-          ...item.registration.metadata ?? {},
-          index: item.index
-        });
-        elementsRef.current[item.index] = item.element;
-        if (labelsRef) {
-          labelsRef.current[item.index] = item.registration.label !== void 0 ? item.registration.label : item.registration.textRef?.current?.textContent ?? item.element.textContent;
-        }
-      });
-      nextIndexRef.current = elementsRef.current.length;
-      return nextMap;
-    });
-    function observe(sortedNodes) {
-      mutationObserverRef.current?.disconnect();
-      mutationObserverRef.current = null;
-      if (typeof MutationObserver !== "function" || sortedNodes.length < 2) {
-        return;
-      }
-      const mutationObserver = new MutationObserver((entries) => {
-        if (!hasMovedNode(entries)) {
-          return;
-        }
-        let previousConnectedNode = null;
-        for (const node2 of sortedNodes) {
-          if (!node2.isConnected) {
-            continue;
-          }
-          if (previousConnectedNode && sortByDocumentPosition(previousConnectedNode, node2) > 0) {
-            mutationObserver.disconnect();
-            scheduleMapUpdate();
-            return;
-          }
-          previousConnectedNode = node2;
-        }
-      });
-      mutationObserverRef.current = mutationObserver;
-      const roots = /* @__PURE__ */ new Set();
-      for (let i2 = 1; i2 < sortedNodes.length; i2 += 1) {
-        const root = getCommonAncestor(sortedNodes[i2 - 1], sortedNodes[i2]);
-        if (root) {
-          roots.add(root);
-        }
-      }
-      roots.forEach((root) => mutationObserver.observe(root, {
-        childList: true
-      }));
-    }
-    const flush2 = useStableCallback(() => {
-      const [items, automaticNodes] = getCompositeListSnapshot(map);
-      const nextMap = syncRefs(items);
-      const previousItems = itemsRef.current;
-      const changed = !previousItems || previousItems.length !== items.length || items.some((item, index2) => {
-        const previousItem = previousItems[index2];
-        return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
-      });
-      observe(automaticNodes);
-      itemsRef.current = items;
-      isDirtyRef.current = false;
-      if (!changed) {
-        return;
-      }
-      listeners.forEach((listener) => listener(nextMap));
-      onMapChange(nextMap);
-    });
-    useIsoLayoutEffect(() => {
-      if (!isDirtyRef.current && itemsRef.current) {
-        syncRefs(itemsRef.current);
-      }
-      return () => {
-        elementsRef.current = [];
-        if (labelsRef) {
-          labelsRef.current = [];
-        }
-      };
-    }, [elementsRef, labelsRef, syncRefs]);
-    useIsoLayoutEffect(() => {
-      if (isDirtyRef.current) {
-        flush2();
-      }
-    });
-    useIsoLayoutEffect(() => {
-      return () => {
-        mutationObserverRef.current?.disconnect();
-        isDirtyRef.current = true;
-      };
-    }, []);
-    const subscribeMapChange = useStableCallback((fn) => {
-      listeners.add(fn);
-      return () => {
-        listeners.delete(fn);
-      };
-    });
-    const contextValue = React16.useMemo(() => ({
-      register: register2,
-      unregister,
-      subscribeMapChange,
-      nextIndexRef
-    }), [register2, unregister, subscribeMapChange, nextIndexRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(CompositeListContext.Provider, {
-      value: contextValue,
-      children
-    });
-  }
-  function createMap() {
-    return /* @__PURE__ */ new Map();
-  }
-  function createListeners() {
-    return /* @__PURE__ */ new Set();
-  }
-  function getCompositeListSnapshot(map) {
-    const reservedIndices = /* @__PURE__ */ new Set();
-    const items = [];
-    const automaticItems = [];
-    map.forEach((registration, node2) => {
-      if (!node2.isConnected) {
-        return;
-      }
-      const index2 = registration.index;
-      const item = {
-        index: index2 ?? -1,
-        element: node2,
-        registration
-      };
-      if (index2 === null) {
-        automaticItems.push(item);
-      } else if (index2 >= 0) {
-        reservedIndices.add(index2);
-        items.push(item);
-      }
-    });
-    let nextAutomaticIndex = 0;
-    automaticItems.sort((a2, b2) => sortByDocumentPosition(a2.element, b2.element));
-    automaticItems.forEach((item) => {
-      while (reservedIndices.has(nextAutomaticIndex)) {
-        nextAutomaticIndex += 1;
-      }
-      item.index = nextAutomaticIndex;
-      items.push(item);
-      nextAutomaticIndex += 1;
-    });
-    if (reservedIndices.size > 0) {
-      items.sort((a2, b2) => a2.index - b2.index);
-    }
-    return [items, automaticItems.map((item) => item.element)];
-  }
-  function getCommonAncestor(firstNode, lastNode) {
-    let ancestor = firstNode.parentElement;
-    while (ancestor && !ancestor.contains(lastNode)) {
-      ancestor = ancestor.parentElement;
-    }
-    return ancestor;
-  }
-  function hasMovedNode(entries) {
-    for (const entry of entries) {
-      for (let i2 = 0; i2 < entry.removedNodes.length; i2 += 1) {
-        if (entry.removedNodes[i2].isConnected) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-  function sortByDocumentPosition(a2, b2) {
-    return a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
-  var React19 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useMergedRefs.mjs
   function useMergedRefs(a2, b2, c3, d2) {
@@ -39911,18 +39541,18 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
-  var React18 = __toESM(require_react(), 1);
+  var React13 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/reactVersion.mjs
-  var React17 = __toESM(require_react(), 1);
-  var majorVersion = parseInt(React17.version, 10);
+  var React12 = __toESM(require_react(), 1);
+  var majorVersion = parseInt(React12.version, 10);
   function isReactVersionAtLeast(reactVersionToCheck) {
     return majorVersion >= reactVersionToCheck;
   }
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
   function getReactElementRef(element) {
-    if (!/* @__PURE__ */ React18.isValidElement(element)) {
+    if (!/* @__PURE__ */ React13.isValidElement(element)) {
       return null;
     }
     const reactElement = element;
@@ -39946,6 +39576,38 @@ This message will only show in development mode. It won't appear in production. 
     }
     return void 0;
   }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
+  var loggedMessages;
+  if (true) {
+    loggedMessages = /* @__PURE__ */ new Set();
+  }
+  function createLogOnce(severity, prefix2) {
+    return function logOnce(...messages) {
+      if (true) {
+        const message = messages.join(" ");
+        const output = prefix2 ? `${prefix2}: ${message}` : message;
+        const key = `${severity}:${output}`;
+        if (!loggedMessages.has(key)) {
+          loggedMessages.add(key);
+          if (severity === "warn") {
+            console.warn(output);
+          } else {
+            console.error(output);
+          }
+        }
+      }
+    };
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
+  var warn4 = createLogOnce("warn", "Base UI");
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
+  function NOOP() {
+  }
+  var EMPTY_ARRAY = Object.freeze([]);
+  var EMPTY_OBJECT = Object.freeze({});
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
   function getStateAttributesProps(state, customMapping) {
@@ -40197,8 +39859,8 @@ This message will only show in development mode. It won't appear in production. 
     if (render?.$$typeof !== REACT_LAZY_TYPE) {
       return render;
     }
-    const unwrapped = React19.Children.toArray(render)[0];
-    return /* @__PURE__ */ React19.isValidElement(unwrapped) ? unwrapped : render;
+    const unwrapped = React14.Children.toArray(render)[0];
+    return /* @__PURE__ */ React14.isValidElement(unwrapped) ? unwrapped : render;
   }
   function evaluateRenderProp(element, render, props, state) {
     if (render) {
@@ -40211,11 +39873,11 @@ This message will only show in development mode. It won't appear in production. 
       const mergedProps = mergeProps2(props, render.props);
       mergedProps.ref = props.ref;
       if (true) {
-        if (!/* @__PURE__ */ React19.isValidElement(render)) {
+        if (!/* @__PURE__ */ React14.isValidElement(render)) {
           throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
         }
       }
-      return /* @__PURE__ */ React19.cloneElement(render, mergedProps);
+      return /* @__PURE__ */ React14.cloneElement(render, mergedProps);
     }
     if (element) {
       if (typeof element === "string") {
@@ -40252,16 +39914,688 @@ This message will only show in development mode. It won't appear in production. 
         key: props.key
       });
     }
-    return /* @__PURE__ */ React19.createElement(Tag, props);
+    return /* @__PURE__ */ React14.createElement(Tag, props);
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
+  var React15 = __toESM(require_react(), 1);
+  var SafeReact = {
+    ...React15
+  };
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
+  var useInsertionEffect5 = SafeReact.useInsertionEffect;
+  var useSafeInsertionEffect = (
+    // React 17 doesn't have useInsertionEffect.
+    useInsertionEffect5 && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
+    useInsertionEffect5 !== SafeReact.useLayoutEffect ? useInsertionEffect5 : (fn) => fn()
+  );
+  function useStableCallback(callback) {
+    const stable = useRefWithInit(createStableCallback).current;
+    stable.next = callback;
+    useSafeInsertionEffect(stable.effect);
+    return stable.trampoline;
+  }
+  function createStableCallback() {
+    const stable = {
+      next: void 0,
+      callback: assertNotCalled,
+      trampoline: (...args) => stable.callback?.(...args),
+      effect: () => {
+        stable.callback = stable.next;
+      }
+    };
+    return stable;
+  }
+  function assertNotCalled() {
+    if (true) {
+      throw (
+        /* minify-error-disabled */
+        new Error("Base UI: Cannot call an event handler while rendering.")
+      );
+    }
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+  var React16 = __toESM(require_react(), 1);
+  var noop12 = () => {
+  };
+  var useIsoLayoutEffect = typeof document !== "undefined" ? React16.useLayoutEffect : noop12;
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+  var React18 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+  var ReactDOM2 = __toESM(require_react_dom(), 1);
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useOnMount.mjs
+  var React17 = __toESM(require_react(), 1);
+  function useOnMount(fn) {
+    React17.useEffect(fn, EMPTY_ARRAY);
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useAnimationFrame.mjs
+  var EMPTY = null;
+  var LAST_RAF = globalThis.requestAnimationFrame;
+  var Scheduler = class {
+    /* This implementation uses an array as a backing data-structure for frame callbacks.
+     * It allows `O(1)` callback cancelling by inserting a `null` in the array, though it
+     * never calls the native `cancelAnimationFrame` if there are no frames left. This can
+     * be much more efficient if there is a call pattern that alterns as
+     * "request-cancel-request-cancel-…".
+     * But in the case of "request-request-…-cancel-cancel-…", it leaves the final animation
+     * frame to run anyway. We turn that frame into a `O(1)` no-op via `callbacksCount`. */
+    callbacks = [];
+    callbacksCount = 0;
+    nextId = 1;
+    startId = 1;
+    isScheduled = false;
+    tick = (timestamp) => {
+      this.isScheduled = false;
+      const currentCallbacks = this.callbacks;
+      const currentCallbacksCount = this.callbacksCount;
+      this.callbacks = [];
+      this.callbacksCount = 0;
+      this.startId = this.nextId;
+      if (currentCallbacksCount > 0) {
+        for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
+          currentCallbacks[i2]?.(timestamp);
+        }
+      }
+    };
+    request(fn) {
+      const id3 = this.nextId;
+      this.nextId += 1;
+      this.callbacks.push(fn);
+      this.callbacksCount += 1;
+      const didRAFChange = LAST_RAF !== requestAnimationFrame && (LAST_RAF = requestAnimationFrame, true);
+      if (!this.isScheduled || didRAFChange) {
+        requestAnimationFrame(this.tick);
+        this.isScheduled = true;
+      }
+      return id3;
+    }
+    cancel(id3) {
+      const index2 = id3 - this.startId;
+      if (index2 < 0 || index2 >= this.callbacks.length) {
+        return;
+      }
+      if (this.callbacks[index2] === null) {
+        return;
+      }
+      this.callbacks[index2] = null;
+      this.callbacksCount -= 1;
+    }
+  };
+  var scheduler = new Scheduler();
+  var AnimationFrame = class _AnimationFrame {
+    static create() {
+      return new _AnimationFrame();
+    }
+    static request(fn) {
+      return scheduler.request(fn);
+    }
+    static cancel(id3) {
+      return scheduler.cancel(id3);
+    }
+    currentId = EMPTY;
+    /**
+     * Executes `fn` after `delay`, clearing any previously scheduled call.
+     */
+    request(fn) {
+      this.cancel();
+      this.currentId = scheduler.request(() => {
+        this.currentId = EMPTY;
+        fn();
+      });
+    }
+    cancel = () => {
+      if (this.currentId !== EMPTY) {
+        scheduler.cancel(this.currentId);
+        this.currentId = EMPTY;
+      }
+    };
+    disposeEffect = () => {
+      return this.cancel;
+    };
+  };
+  function useAnimationFrame() {
+    const timeout = useRefWithInit(AnimationFrame.create).current;
+    useOnMount(timeout.disposeEffect);
+    return timeout;
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveRef.mjs
+  function resolveRef(maybeRef) {
+    if (maybeRef == null) {
+      return maybeRef;
+    }
+    return "current" in maybeRef ? maybeRef.current : maybeRef;
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+  var startingStyle = "data-starting-style";
+  var endingStyle = "data-ending-style";
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+  var pendingCallbacks = null;
+  function flushBeforePaint(fn) {
+    if (!pendingCallbacks) {
+      const callbacks = [];
+      pendingCallbacks = callbacks;
+      queueMicrotask(() => {
+        pendingCallbacks = null;
+        ReactDOM2.flushSync(() => {
+          for (const callback of callbacks) {
+            callback();
+          }
+        });
+      });
+    }
+    pendingCallbacks.push(fn);
+  }
+  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch2 = false) {
+    const frame2 = useAnimationFrame();
+    return useStableCallback((fnToExecute, signal = null) => {
+      frame2.cancel();
+      const element = resolveRef(elementOrRef);
+      if (element == null) {
+        return;
+      }
+      const resolvedElement = element;
+      const done = () => {
+        if (!batch2) {
+          ReactDOM2.flushSync(fnToExecute);
+          return;
+        }
+        flushBeforePaint(() => {
+          if (!signal?.aborted) {
+            fnToExecute();
+          }
+        });
+      };
+      if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
+        fnToExecute();
+        return;
+      }
+      function exec() {
+        Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+          if (!signal?.aborted) {
+            done();
+          }
+        }, () => {
+          if (signal?.aborted) {
+            return;
+          }
+          const currentAnimations = resolvedElement.getAnimations();
+          if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+            exec();
+            return;
+          }
+          done();
+        });
+      }
+      if (waitForStartingStyleRemoved) {
+        const startingStyleAttribute = startingStyle;
+        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+          frame2.request(exec);
+          return;
+        }
+        const attributeObserver = new MutationObserver(() => {
+          if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+            attributeObserver.disconnect();
+            exec();
+          }
+        });
+        attributeObserver.observe(resolvedElement, {
+          attributes: true,
+          attributeFilter: [startingStyleAttribute]
+        });
+        signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
+          once: true
+        });
+        return;
+      }
+      frame2.request(exec);
+    });
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+  function useOpenChangeComplete(parameters) {
+    const {
+      enabled = true,
+      open: open2,
+      ref,
+      batch: batch2 = false,
+      onComplete: onCompleteParam
+    } = parameters;
+    const onComplete = useStableCallback(onCompleteParam);
+    const runOnceAnimationsFinish = useAnimationsFinished(ref, open2, batch2);
+    React18.useEffect(() => {
+      if (!enabled) {
+        return void 0;
+      }
+      const abortController = new AbortController();
+      runOnceAnimationsFinish(onComplete, abortController.signal);
+      return () => {
+        abortController.abort();
+      };
+    }, [enabled, open2, onComplete, runOnceAnimationsFinish]);
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
+  var STARTING_HOOK = {
+    [startingStyle]: ""
+  };
+  var ENDING_HOOK = {
+    [endingStyle]: ""
+  };
+  var transitionStatusMapping = {
+    transitionStatus(value) {
+      if (value === "starting") {
+        return STARTING_HOOK;
+      }
+      if (value === "ending") {
+        return ENDING_HOOK;
+      }
+      return null;
+    }
+  };
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+  var React19 = __toESM(require_react(), 1);
+  function useTransitionStatus(open2, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
+    const [transitionStatus, setTransitionStatus] = React19.useState(open2 && enableIdleState ? "idle" : void 0);
+    const [mounted, setMounted] = React19.useState(open2 && !animateInitialOpen);
+    if (open2 && !mounted) {
+      setMounted(true);
+      setTransitionStatus("starting");
+    }
+    if (!open2 && mounted && transitionStatus !== "ending" && !deferEndingState) {
+      setTransitionStatus("ending");
+    }
+    if (!open2 && !mounted && transitionStatus === "ending") {
+      setTransitionStatus(void 0);
+    }
+    useIsoLayoutEffect(() => {
+      if (!open2 && mounted && transitionStatus !== "ending" && deferEndingState) {
+        const frame2 = AnimationFrame.request(() => {
+          setTransitionStatus("ending");
+        });
+        return () => {
+          AnimationFrame.cancel(frame2);
+        };
+      }
+      return void 0;
+    }, [open2, mounted, transitionStatus, deferEndingState]);
+    useIsoLayoutEffect(() => {
+      if (!open2 || enableIdleState) {
+        return void 0;
+      }
+      const frame2 = AnimationFrame.request(() => {
+        setTransitionStatus(void 0);
+      });
+      return () => {
+        AnimationFrame.cancel(frame2);
+      };
+    }, [enableIdleState, open2]);
+    useIsoLayoutEffect(() => {
+      if (!open2 || !enableIdleState) {
+        return void 0;
+      }
+      if (open2 && mounted && transitionStatus !== "idle") {
+        setTransitionStatus("starting");
+      }
+      const frame2 = AnimationFrame.request(() => {
+        setTransitionStatus("idle");
+      });
+      return () => {
+        AnimationFrame.cancel(frame2);
+      };
+    }, [enableIdleState, open2, mounted, transitionStatus]);
+    return {
+      mounted,
+      setMounted,
+      transitionStatus
+    };
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useTimeout.mjs
+  var EMPTY2 = 0;
+  var Timeout = class _Timeout {
+    static create() {
+      return new _Timeout();
+    }
+    currentId = EMPTY2;
+    /**
+     * Executes `fn` after `delay`, clearing any previously scheduled call.
+     */
+    start(delay2, fn) {
+      this.clear();
+      this.currentId = setTimeout(() => {
+        this.currentId = EMPTY2;
+        fn();
+      }, delay2);
+    }
+    isStarted() {
+      return this.currentId !== EMPTY2;
+    }
+    clear = () => {
+      if (this.currentId !== EMPTY2) {
+        clearTimeout(this.currentId);
+        this.currentId = EMPTY2;
+      }
+    };
+    disposeEffect = () => {
+      return this.clear;
+    };
+  };
+  function useTimeout() {
+    const timeout = useRefWithInit(Timeout.create).current;
+    useOnMount(timeout.disposeEffect);
+    return timeout;
+  }
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+  var React20 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
+  var error = createLogOnce("error", "Base UI");
+
+  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+  function useControlled({
+    controlled,
+    default: defaultProp,
+    name,
+    state = "value"
+  }) {
+    const {
+      current: isControlled
+    } = React20.useRef(controlled !== void 0);
+    const [valueState, setValue] = React20.useState(defaultProp);
+    const value = isControlled && controlled !== void 0 ? controlled : valueState;
+    if (true) {
+      React20.useEffect(() => {
+        if (isControlled !== (controlled !== void 0)) {
+          error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
+        }
+      }, [state, name, controlled]);
+      const {
+        current: defaultValue2
+      } = React20.useRef(defaultProp);
+      React20.useEffect(() => {
+        if (!isControlled && serializeToDevModeString(defaultValue2) !== serializeToDevModeString(defaultProp)) {
+          error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
+        }
+      }, [defaultProp]);
+    }
+    const setValueIfUncontrolled = React20.useCallback((newValue) => {
+      if (!isControlled) {
+        setValue(newValue);
+      }
+    }, []);
+    return [value, setValueIfUncontrolled];
+  }
+  function serializeToDevModeString(input) {
+    let nextId = 0;
+    const seen = /* @__PURE__ */ new WeakMap();
+    try {
+      const result = JSON.stringify(input, function replacer(key, value) {
+        if (key === "_owner" && this != null && typeof this === "object" && "$$typeof" in this) {
+          return void 0;
+        }
+        if (typeof value === "bigint") {
+          return `__bigint__:${value}`;
+        }
+        if (value !== null && typeof value === "object") {
+          const id3 = seen.get(value);
+          if (id3 !== void 0) {
+            return `__object__:${id3}`;
+          }
+          seen.set(value, nextId);
+          nextId += 1;
+        }
+        return value;
+      });
+      return result ?? `__top__:${typeof input}`;
+    } catch {
+      return "__unserializable__";
+    }
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+  var React22 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
+  var React21 = __toESM(require_react(), 1);
+  var CompositeListContext = /* @__PURE__ */ React21.createContext({
+    register: () => {
+    },
+    unregister: () => {
+    },
+    subscribeMapChange: () => () => {
+    },
+    nextIndexRef: {
+      current: 0
+    }
+  });
+  if (true) CompositeListContext.displayName = "CompositeListContext";
+  function useCompositeListContext() {
+    return React21.useContext(CompositeListContext);
+  }
+
+  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+  var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
+  function CompositeList(props) {
+    const {
+      children,
+      elementsRef,
+      labelsRef,
+      onMapChange: onMapChangeProp
+    } = props;
+    const onMapChange = useStableCallback(onMapChangeProp);
+    const [, setMapTick] = React22.useState(false);
+    const listeners = useRefWithInit(createListeners).current;
+    const map = useRefWithInit(createMap).current;
+    const nextIndexRef = React22.useRef(0);
+    const isDirtyRef = React22.useRef(true);
+    const itemsRef = React22.useRef(null);
+    const mutationObserverRef = React22.useRef(null);
+    const scheduleMapUpdate = useStableCallback(() => {
+      if (isDirtyRef.current) {
+        return;
+      }
+      isDirtyRef.current = true;
+      setMapTick((tick) => !tick);
+    });
+    const register2 = useStableCallback((node2, registration) => {
+      map.set(node2, registration);
+      scheduleMapUpdate();
+    });
+    const unregister = useStableCallback((node2) => {
+      map.delete(node2);
+      scheduleMapUpdate();
+    });
+    const syncRefs = useStableCallback((items) => {
+      const nextMap = /* @__PURE__ */ new Map();
+      elementsRef.current.length = 0;
+      if (labelsRef) {
+        labelsRef.current.length = 0;
+      }
+      items.forEach((item) => {
+        nextMap.set(item.element, {
+          ...item.registration.metadata ?? {},
+          index: item.index
+        });
+        elementsRef.current[item.index] = item.element;
+        if (labelsRef) {
+          labelsRef.current[item.index] = item.registration.label !== void 0 ? item.registration.label : item.registration.textRef?.current?.textContent ?? item.element.textContent;
+        }
+      });
+      nextIndexRef.current = elementsRef.current.length;
+      return nextMap;
+    });
+    function observe(sortedNodes) {
+      mutationObserverRef.current?.disconnect();
+      mutationObserverRef.current = null;
+      if (typeof MutationObserver !== "function" || sortedNodes.length < 2) {
+        return;
+      }
+      const mutationObserver = new MutationObserver((entries) => {
+        if (!hasMovedNode(entries)) {
+          return;
+        }
+        let previousConnectedNode = null;
+        for (const node2 of sortedNodes) {
+          if (!node2.isConnected) {
+            continue;
+          }
+          if (previousConnectedNode && sortByDocumentPosition(previousConnectedNode, node2) > 0) {
+            mutationObserver.disconnect();
+            scheduleMapUpdate();
+            return;
+          }
+          previousConnectedNode = node2;
+        }
+      });
+      mutationObserverRef.current = mutationObserver;
+      const roots = /* @__PURE__ */ new Set();
+      for (let i2 = 1; i2 < sortedNodes.length; i2 += 1) {
+        const root = getCommonAncestor(sortedNodes[i2 - 1], sortedNodes[i2]);
+        if (root) {
+          roots.add(root);
+        }
+      }
+      roots.forEach((root) => mutationObserver.observe(root, {
+        childList: true
+      }));
+    }
+    const flush2 = useStableCallback(() => {
+      const [items, automaticNodes] = getCompositeListSnapshot(map);
+      const nextMap = syncRefs(items);
+      const previousItems = itemsRef.current;
+      const changed = !previousItems || previousItems.length !== items.length || items.some((item, index2) => {
+        const previousItem = previousItems[index2];
+        return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
+      });
+      observe(automaticNodes);
+      itemsRef.current = items;
+      isDirtyRef.current = false;
+      if (!changed) {
+        return;
+      }
+      listeners.forEach((listener) => listener(nextMap));
+      onMapChange(nextMap);
+    });
+    useIsoLayoutEffect(() => {
+      if (!isDirtyRef.current && itemsRef.current) {
+        syncRefs(itemsRef.current);
+      }
+      return () => {
+        elementsRef.current = [];
+        if (labelsRef) {
+          labelsRef.current = [];
+        }
+      };
+    }, [elementsRef, labelsRef, syncRefs]);
+    useIsoLayoutEffect(() => {
+      if (isDirtyRef.current) {
+        flush2();
+      }
+    });
+    useIsoLayoutEffect(() => {
+      return () => {
+        mutationObserverRef.current?.disconnect();
+        isDirtyRef.current = true;
+      };
+    }, []);
+    const subscribeMapChange = useStableCallback((fn) => {
+      listeners.add(fn);
+      return () => {
+        listeners.delete(fn);
+      };
+    });
+    const contextValue = React22.useMemo(() => ({
+      register: register2,
+      unregister,
+      subscribeMapChange,
+      nextIndexRef
+    }), [register2, unregister, subscribeMapChange, nextIndexRef]);
+    return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(CompositeListContext.Provider, {
+      value: contextValue,
+      children
+    });
+  }
+  function createMap() {
+    return /* @__PURE__ */ new Map();
+  }
+  function createListeners() {
+    return /* @__PURE__ */ new Set();
+  }
+  function getCompositeListSnapshot(map) {
+    const reservedIndices = /* @__PURE__ */ new Set();
+    const items = [];
+    const automaticItems = [];
+    map.forEach((registration, node2) => {
+      if (!node2.isConnected) {
+        return;
+      }
+      const index2 = registration.index;
+      const item = {
+        index: index2 ?? -1,
+        element: node2,
+        registration
+      };
+      if (index2 === null) {
+        automaticItems.push(item);
+      } else if (index2 >= 0) {
+        reservedIndices.add(index2);
+        items.push(item);
+      }
+    });
+    let nextAutomaticIndex = 0;
+    automaticItems.sort((a2, b2) => sortByDocumentPosition(a2.element, b2.element));
+    automaticItems.forEach((item) => {
+      while (reservedIndices.has(nextAutomaticIndex)) {
+        nextAutomaticIndex += 1;
+      }
+      item.index = nextAutomaticIndex;
+      items.push(item);
+      nextAutomaticIndex += 1;
+    });
+    if (reservedIndices.size > 0) {
+      items.sort((a2, b2) => a2.index - b2.index);
+    }
+    return [items, automaticItems.map((item) => item.element)];
+  }
+  function getCommonAncestor(firstNode, lastNode) {
+    let ancestor = firstNode.parentElement;
+    while (ancestor && !ancestor.contains(lastNode)) {
+      ancestor = ancestor.parentElement;
+    }
+    return ancestor;
+  }
+  function hasMovedNode(entries) {
+    for (const entry of entries) {
+      for (let i2 = 0; i2 < entry.removedNodes.length; i2 += 1) {
+        if (entry.removedNodes[i2].isConnected) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  function sortByDocumentPosition(a2, b2) {
+    return a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
   }
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useId.mjs
-  var React20 = __toESM(require_react(), 1);
+  var React23 = __toESM(require_react(), 1);
   var globalId = 0;
   function useGlobalId(idOverride, prefix2 = "mui") {
-    const [defaultId, setDefaultId] = React20.useState(idOverride);
+    const [defaultId, setDefaultId] = React23.useState(idOverride);
     const id3 = idOverride || defaultId;
-    React20.useEffect(() => {
+    React23.useEffect(() => {
       if (defaultId == null) {
         globalId += 1;
         setDefaultId(`${prefix2}-${globalId}`);
@@ -40384,165 +40718,8 @@ This message will only show in development mode. It won't appear in production. 
     return details;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  var React22 = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useOnMount.mjs
-  var React21 = __toESM(require_react(), 1);
-  function useOnMount(fn) {
-    React21.useEffect(fn, EMPTY_ARRAY);
-  }
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useAnimationFrame.mjs
-  var EMPTY = null;
-  var LAST_RAF = globalThis.requestAnimationFrame;
-  var Scheduler = class {
-    /* This implementation uses an array as a backing data-structure for frame callbacks.
-     * It allows `O(1)` callback cancelling by inserting a `null` in the array, though it
-     * never calls the native `cancelAnimationFrame` if there are no frames left. This can
-     * be much more efficient if there is a call pattern that alterns as
-     * "request-cancel-request-cancel-…".
-     * But in the case of "request-request-…-cancel-cancel-…", it leaves the final animation
-     * frame to run anyway. We turn that frame into a `O(1)` no-op via `callbacksCount`. */
-    callbacks = [];
-    callbacksCount = 0;
-    nextId = 1;
-    startId = 1;
-    isScheduled = false;
-    tick = (timestamp) => {
-      this.isScheduled = false;
-      const currentCallbacks = this.callbacks;
-      const currentCallbacksCount = this.callbacksCount;
-      this.callbacks = [];
-      this.callbacksCount = 0;
-      this.startId = this.nextId;
-      if (currentCallbacksCount > 0) {
-        for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
-          currentCallbacks[i2]?.(timestamp);
-        }
-      }
-    };
-    request(fn) {
-      const id3 = this.nextId;
-      this.nextId += 1;
-      this.callbacks.push(fn);
-      this.callbacksCount += 1;
-      const didRAFChange = LAST_RAF !== requestAnimationFrame && (LAST_RAF = requestAnimationFrame, true);
-      if (!this.isScheduled || didRAFChange) {
-        requestAnimationFrame(this.tick);
-        this.isScheduled = true;
-      }
-      return id3;
-    }
-    cancel(id3) {
-      const index2 = id3 - this.startId;
-      if (index2 < 0 || index2 >= this.callbacks.length) {
-        return;
-      }
-      if (this.callbacks[index2] === null) {
-        return;
-      }
-      this.callbacks[index2] = null;
-      this.callbacksCount -= 1;
-    }
-  };
-  var scheduler = new Scheduler();
-  var AnimationFrame = class _AnimationFrame {
-    static create() {
-      return new _AnimationFrame();
-    }
-    static request(fn) {
-      return scheduler.request(fn);
-    }
-    static cancel(id3) {
-      return scheduler.cancel(id3);
-    }
-    currentId = EMPTY;
-    /**
-     * Executes `fn` after `delay`, clearing any previously scheduled call.
-     */
-    request(fn) {
-      this.cancel();
-      this.currentId = scheduler.request(() => {
-        this.currentId = EMPTY;
-        fn();
-      });
-    }
-    cancel = () => {
-      if (this.currentId !== EMPTY) {
-        scheduler.cancel(this.currentId);
-        this.currentId = EMPTY;
-      }
-    };
-    disposeEffect = () => {
-      return this.cancel;
-    };
-  };
-  function useAnimationFrame() {
-    const timeout = useRefWithInit(AnimationFrame.create).current;
-    useOnMount(timeout.disposeEffect);
-    return timeout;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  function useTransitionStatus(open2, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
-    const [transitionStatus, setTransitionStatus] = React22.useState(open2 && enableIdleState ? "idle" : void 0);
-    const [mounted, setMounted] = React22.useState(open2 && !animateInitialOpen);
-    if (open2 && !mounted) {
-      setMounted(true);
-      setTransitionStatus("starting");
-    }
-    if (!open2 && mounted && transitionStatus !== "ending" && !deferEndingState) {
-      setTransitionStatus("ending");
-    }
-    if (!open2 && !mounted && transitionStatus === "ending") {
-      setTransitionStatus(void 0);
-    }
-    useIsoLayoutEffect(() => {
-      if (!open2 && mounted && transitionStatus !== "ending" && deferEndingState) {
-        const frame2 = AnimationFrame.request(() => {
-          setTransitionStatus("ending");
-        });
-        return () => {
-          AnimationFrame.cancel(frame2);
-        };
-      }
-      return void 0;
-    }, [open2, mounted, transitionStatus, deferEndingState]);
-    useIsoLayoutEffect(() => {
-      if (!open2 || enableIdleState) {
-        return void 0;
-      }
-      const frame2 = AnimationFrame.request(() => {
-        setTransitionStatus(void 0);
-      });
-      return () => {
-        AnimationFrame.cancel(frame2);
-      };
-    }, [enableIdleState, open2]);
-    useIsoLayoutEffect(() => {
-      if (!open2 || !enableIdleState) {
-        return void 0;
-      }
-      if (open2 && mounted && transitionStatus !== "idle") {
-        setTransitionStatus("starting");
-      }
-      const frame2 = AnimationFrame.request(() => {
-        setTransitionStatus("idle");
-      });
-      return () => {
-        AnimationFrame.cancel(frame2);
-      };
-    }, [enableIdleState, open2, mounted, transitionStatus]);
-    return {
-      mounted,
-      setMounted,
-      transitionStatus
-    };
-  }
-
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
-  var React23 = __toESM(require_react(), 1);
+  var React24 = __toESM(require_react(), 1);
   function useCompositeListItem(params = {}) {
     const {
       guess,
@@ -40557,8 +40734,8 @@ This message will only show in development mode. It won't appear in production. 
       subscribeMapChange,
       nextIndexRef
     } = useCompositeListContext();
-    const indexRef = React23.useRef(-1);
-    const [internalIndex, setInternalIndex] = React23.useState(externalIndex == null && guess ? () => {
+    const indexRef = React24.useRef(-1);
+    const [internalIndex, setInternalIndex] = React24.useState(externalIndex == null && guess ? () => {
       if (indexRef.current === -1) {
         const newIndex = nextIndexRef.current;
         nextIndexRef.current += 1;
@@ -40567,8 +40744,8 @@ This message will only show in development mode. It won't appear in production. 
       return indexRef.current;
     } : -1);
     const index2 = externalIndex ?? internalIndex;
-    const componentRef = React23.useRef(null);
-    const ref = React23.useCallback((node2) => {
+    const componentRef = React24.useRef(null);
+    const ref = React24.useCallback((node2) => {
       const previousNode = componentRef.current;
       if (previousNode) {
         unregister(previousNode);
@@ -40600,38 +40777,15 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
-  var startingStyle = "data-starting-style";
-  var endingStyle = "data-ending-style";
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
-  var STARTING_HOOK = {
-    [startingStyle]: ""
-  };
-  var ENDING_HOOK = {
-    [endingStyle]: ""
-  };
-  var transitionStatusMapping = {
-    transitionStatus(value) {
-      if (value === "starting") {
-        return STARTING_HOOK;
-      }
-      if (value === "ending") {
-        return ENDING_HOOK;
-      }
-      return null;
-    }
-  };
-
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/use-button/useButton.mjs
-  var React26 = __toESM(require_react(), 1);
+  var React27 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-  var React24 = __toESM(require_react(), 1);
-  var CompositeRootContext = /* @__PURE__ */ React24.createContext(void 0);
+  var React25 = __toESM(require_react(), 1);
+  var CompositeRootContext = /* @__PURE__ */ React25.createContext(void 0);
   if (true) CompositeRootContext.displayName = "CompositeRootContext";
   function useCompositeRootContext(optional = false) {
-    const context = React24.useContext(CompositeRootContext);
+    const context = React25.useContext(CompositeRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
     }
@@ -40639,7 +40793,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-  var React25 = __toESM(require_react(), 1);
+  var React26 = __toESM(require_react(), 1);
   function useFocusableWhenDisabled(parameters) {
     const {
       focusableWhenDisabled,
@@ -40650,7 +40804,7 @@ This message will only show in development mode. It won't appear in production. 
     } = parameters;
     const isFocusableComposite = composite && focusableWhenDisabled !== false;
     const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-    const props = React25.useMemo(() => {
+    const props = React26.useMemo(() => {
       const additionalProps = {
         // allow Tabbing away from focusableWhenDisabled elements
         onKeyDown(event) {
@@ -40708,7 +40862,7 @@ This message will only show in development mode. It won't appear in production. 
       native: isNativeButton = true,
       composite: compositeProp
     } = parameters;
-    const elementRef = React26.useRef(null);
+    const elementRef = React27.useRef(null);
     const compositeRootContext = useCompositeRootContext(true);
     const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
     const {
@@ -40721,7 +40875,7 @@ This message will only show in development mode. It won't appear in production. 
       isNativeButton
     });
     if (true) {
-      React26.useEffect(() => {
+      React27.useEffect(() => {
         if (!elementRef.current) {
           return;
         }
@@ -40739,7 +40893,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       }, [isNativeButton]);
     }
-    const updateDisabled = React26.useCallback(() => {
+    const updateDisabled = React27.useCallback(() => {
       const element = elementRef.current;
       if (!isButtonElement(element)) {
         return;
@@ -40749,7 +40903,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
     useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-    const getButtonProps = React26.useCallback((externalProps = {}) => {
+    const getButtonProps = React27.useCallback((externalProps = {}) => {
       const {
         onClick: externalOnClick,
         onMouseDown: externalOnMouseDown,
@@ -40888,126 +41042,6 @@ This message will only show in development mode. It won't appear in production. 
     return latest;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-  var React27 = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-  var ReactDOM2 = __toESM(require_react_dom(), 1);
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveRef.mjs
-  function resolveRef(maybeRef) {
-    if (maybeRef == null) {
-      return maybeRef;
-    }
-    return "current" in maybeRef ? maybeRef.current : maybeRef;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-  var pendingCallbacks = null;
-  function flushBeforePaint(fn) {
-    if (!pendingCallbacks) {
-      const callbacks = [];
-      pendingCallbacks = callbacks;
-      queueMicrotask(() => {
-        pendingCallbacks = null;
-        ReactDOM2.flushSync(() => {
-          for (const callback of callbacks) {
-            callback();
-          }
-        });
-      });
-    }
-    pendingCallbacks.push(fn);
-  }
-  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch2 = false) {
-    const frame2 = useAnimationFrame();
-    return useStableCallback((fnToExecute, signal = null) => {
-      frame2.cancel();
-      const element = resolveRef(elementOrRef);
-      if (element == null) {
-        return;
-      }
-      const resolvedElement = element;
-      const done = () => {
-        if (!batch2) {
-          ReactDOM2.flushSync(fnToExecute);
-          return;
-        }
-        flushBeforePaint(() => {
-          if (!signal?.aborted) {
-            fnToExecute();
-          }
-        });
-      };
-      if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
-        fnToExecute();
-        return;
-      }
-      function exec() {
-        Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
-          if (!signal?.aborted) {
-            done();
-          }
-        }, () => {
-          if (signal?.aborted) {
-            return;
-          }
-          const currentAnimations = resolvedElement.getAnimations();
-          if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
-            exec();
-            return;
-          }
-          done();
-        });
-      }
-      if (waitForStartingStyleRemoved) {
-        const startingStyleAttribute = startingStyle;
-        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-          frame2.request(exec);
-          return;
-        }
-        const attributeObserver = new MutationObserver(() => {
-          if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-            attributeObserver.disconnect();
-            exec();
-          }
-        });
-        attributeObserver.observe(resolvedElement, {
-          attributes: true,
-          attributeFilter: [startingStyleAttribute]
-        });
-        signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
-          once: true
-        });
-        return;
-      }
-      frame2.request(exec);
-    });
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-  function useOpenChangeComplete(parameters) {
-    const {
-      enabled = true,
-      open: open2,
-      ref,
-      batch: batch2 = false,
-      onComplete: onCompleteParam
-    } = parameters;
-    const onComplete = useStableCallback(onCompleteParam);
-    const runOnceAnimationsFinish = useAnimationsFinished(ref, open2, batch2);
-    React27.useEffect(() => {
-      if (!enabled) {
-        return void 0;
-      }
-      const abortController = new AbortController();
-      runOnceAnimationsFinish(onComplete, abortController.signal);
-      return () => {
-        abortController.abort();
-      };
-    }, [enabled, open2, onComplete, runOnceAnimationsFinish]);
-  }
-
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/parts.mjs
   var parts_exports = {};
   __export(parts_exports, {
@@ -41105,42 +41139,6 @@ This message will only show in development mode. It won't appear in production. 
     iOS: () => iOS
   });
   var iOS = "@supports (-webkit-touch-callout: none)";
-
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useTimeout.mjs
-  var EMPTY2 = 0;
-  var Timeout = class _Timeout {
-    static create() {
-      return new _Timeout();
-    }
-    currentId = EMPTY2;
-    /**
-     * Executes `fn` after `delay`, clearing any previously scheduled call.
-     */
-    start(delay2, fn) {
-      this.clear();
-      this.currentId = setTimeout(() => {
-        this.currentId = EMPTY2;
-        fn();
-      }, delay2);
-    }
-    isStarted() {
-      return this.currentId !== EMPTY2;
-    }
-    clear = () => {
-      if (this.currentId !== EMPTY2) {
-        clearTimeout(this.currentId);
-        this.currentId = EMPTY2;
-      }
-    };
-    disposeEffect = () => {
-      return this.clear;
-    };
-  };
-  function useTimeout() {
-    const timeout = useRefWithInit(Timeout.create).current;
-    useOnMount(timeout.disposeEffect);
-    return timeout;
-  }
 
   // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useScrollLock.mjs
   var originalHtmlStyles = {};
