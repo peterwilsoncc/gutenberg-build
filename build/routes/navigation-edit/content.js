@@ -52,17 +52,17 @@ var require_jsx_runtime = __commonJS({
   }
 });
 
-// package-external:@wordpress/private-apis
-var require_private_apis = __commonJS({
-  "package-external:@wordpress/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
-  }
-});
-
 // package-external:@wordpress/primitives
 var require_primitives = __commonJS({
   "package-external:@wordpress/primitives"(exports, module) {
     module.exports = window.wp.primitives;
+  }
+});
+
+// package-external:@wordpress/private-apis
+var require_private_apis = __commonJS({
+  "package-external:@wordpress/private-apis"(exports, module) {
+    module.exports = window.wp.privateApis;
   }
 });
 
@@ -724,10 +724,32 @@ var Text = (0, import_element.forwardRef)(
   }
 );
 
+// packages/icons/build-module/library/chevron-down.mjs
+var import_primitives = __toESM(require_primitives(), 1);
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M7 11L12 15L17 11" }) });
+
+// packages/icons/build-module/library/chevron-up.mjs
+var import_primitives2 = __toESM(require_primitives(), 1);
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.Path, { d: "M7 13L12 9L17 13" }) });
+
+// packages/icons/build-module/library/more-vertical.mjs
+var import_primitives3 = __toESM(require_primitives(), 1);
+var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z" }),
+  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z" }),
+  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z" })
+] });
+
 // packages/ui/build-module/link/link.mjs
 var import_element2 = __toESM(require_element(), 1);
 var import_i18n = __toESM(require_i18n(), 1);
-var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
 function getRuntime2() {
   const globalScope = globalThis;
@@ -851,9 +873,9 @@ var Link = (0, import_element2.forwardRef)(
           className
         ),
         target: target ?? (openInNewTab ? "_blank" : void 0),
-        children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
           children,
-          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
             "span",
             {
               className: style_default2["link-icon"],
@@ -870,28 +892,6 @@ var Link = (0, import_element2.forwardRef)(
     return element;
   }
 );
-
-// packages/icons/build-module/library/chevron-down.mjs
-var import_primitives = __toESM(require_primitives(), 1);
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives.Path, { d: "M7 11L12 15L17 11" }) });
-
-// packages/icons/build-module/library/chevron-up.mjs
-var import_primitives2 = __toESM(require_primitives(), 1);
-var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives2.Path, { d: "M7 13L12 9L17 13" }) });
-
-// packages/icons/build-module/library/more-vertical.mjs
-var import_primitives3 = __toESM(require_primitives(), 1);
-var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z" }),
-  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z" }),
-  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z" })
-] });
 
 // packages/ui/build-module/stack/stack.mjs
 var import_element3 = __toESM(require_element(), 1);

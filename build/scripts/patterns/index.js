@@ -109,17 +109,17 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/primitives
-  var require_primitives = __commonJS({
-    "package-external:@wordpress/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
-    }
-  });
-
   // package-external:@wordpress/a11y
   var require_a11y = __commonJS({
     "package-external:@wordpress/a11y"(exports, module) {
       module.exports = window.wp.a11y;
+    }
+  });
+
+  // package-external:@wordpress/primitives
+  var require_primitives = __commonJS({
+    "package-external:@wordpress/primitives"(exports, module) {
+      module.exports = window.wp.primitives;
     }
   });
 
