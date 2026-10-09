@@ -2279,8 +2279,21 @@ return array(
 			),
 			'interactivity' => array(
 				'clientNavigation' => true
+			),
+			'spacing' => array(
+				'padding' => true,
+				'__experimentalDefaultControls' => array(
+					'padding' => false
+				)
+			),
+			'__experimentalBorder' => array(
+				'radius' => true,
+				'color' => true,
+				'width' => true,
+				'style' => true
 			)
-		)
+		),
+		'style' => 'wp-block-comments-pagination-previous'
 	),
 	'comments-title' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
