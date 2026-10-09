@@ -7269,6 +7269,14 @@ var wp;
   var import_url3 = __toESM(require_url(), 1);
   var import_i18n4 = __toESM(require_i18n(), 1);
 
+  // packages/fields/build-module/fields/utils.mjs
+  function hasActionLink(item, action) {
+    if (!item._links) {
+      return true;
+    }
+    return !!item._links[action];
+  }
+
   // packages/fields/build-module/fields/slug/utils.mjs
   var import_url2 = __toESM(require_url(), 1);
 
@@ -7326,7 +7334,7 @@ var wp;
     );
     const permalinkPrefix = prefix2;
     const permalinkSuffix = suffix;
-    const isEditable = PERMALINK_POSTNAME_REGEX2.test(permalinkTemplate);
+    const isEditable = PERMALINK_POSTNAME_REGEX2.test(permalinkTemplate) && hasActionLink(data, "wp:action-publish");
     const originalSlugRef = (0, import_element2.useRef)(slug);
     const slugToDisplay = slug || originalSlugRef.current;
     const permalink = isEditable ? `${permalinkPrefix}${slugToDisplay}${permalinkSuffix}` : (0, import_url3.safeDecodeURIComponent)(data.link || "");
@@ -7407,7 +7415,7 @@ var wp;
       !isEditable && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
         import_components.ExternalLink,
         {
-          className: "fields-controls__slug-help",
+          className: "fields-controls__slug-help-link",
           href: permalink,
           children: permalink
         }
@@ -50832,14 +50840,6 @@ var wp;
   // packages/fields/build-module/fields/password/index.mjs
   var import_i18n41 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/utils.mjs
-  function hasActionLink(item, action) {
-    if (!item._links) {
-      return true;
-    }
-    return !!item._links[action];
-  }
-
   // packages/fields/build-module/fields/password/edit.mjs
   var import_components8 = __toESM(require_components(), 1);
   var import_element139 = __toESM(require_element(), 1);
@@ -50976,6 +50976,8 @@ var wp;
     getValue: ({ item }) => item.status === "auto-draft" ? "draft" : item.status,
     render: status_view_default,
     Edit: "radio",
+    // A user who can't publish can't change the status either.
+    isDisabled: ({ item }) => !hasActionLink(item, "wp:action-publish"),
     enableSorting: false,
     filterBy: {
       operators: [OPERATOR_IS_ANY]
