@@ -124928,6 +124928,7 @@ ${content}
 
   // packages/editor/build-module/components/editor-interface/index.mjs
   var import_jsx_runtime663 = __toESM(require_jsx_runtime(), 1);
+  var { blockToolbarShowPlaceholderKey } = unlock(import_block_editor88.privateApis);
   var interfaceLabels = {
     /* translators: accessibility text for the editor top bar landmark region. */
     header: (0, import_i18n330.__)("Editor top bar"),
@@ -125094,7 +125095,15 @@ ${content}
                 autoFocus
               }
             ),
-            !isPreviewMode && !isLargeViewport && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime663.jsx)(import_block_editor88.BlockToolbar, { hideDragHandle: true }),
+            !isPreviewMode && !isLargeViewport && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime663.jsx)(
+              import_block_editor88.BlockToolbar,
+              {
+                hideDragHandle: true,
+                ...{
+                  [blockToolbarShowPlaceholderKey]: true
+                }
+              }
+            ),
             (isPreviewMode || mode === "visual") && /* @__PURE__ */ (0, import_jsx_runtime663.jsx)(
               visual_editor_default,
               {

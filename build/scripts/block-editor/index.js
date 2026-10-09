@@ -75956,6 +75956,7 @@ var wp;
         [clientIds]
       );
       const blocksCount = normalizedClientIds.length;
+      const hasBlocks = !!normalizedClientIds[0];
       const isMobileViewport = (0, import_compose76.useViewportMatch)("small", "<");
       const {
         blockType,
@@ -75987,7 +75988,7 @@ var wp;
           const { orientation: blockListOrientation } = getBlockListSettings2(blockRootClientId) || {};
           return {
             blockType: block ? (0, import_blocks54.getBlockType)(block.name) : null,
-            isDisabled: direction === "up" ? isFirstBlock : isLastBlock,
+            isDisabled: !firstClientId || (direction === "up" ? isFirstBlock : isLastBlock),
             rootClientId: blockRootClientId,
             firstIndex: firstBlockIndex,
             isFirst: isFirstBlock,
@@ -76023,7 +76024,7 @@ var wp;
               orientation
             ),
             tooltipPosition: !isMobileViewport && direction === "down" && orientation === "vertical" ? "bottom" : "top",
-            "aria-describedby": descriptionId,
+            "aria-describedby": hasBlocks ? descriptionId : void 0,
             ...props,
             onClick: isDisabled ? null : onClick,
             disabled: isDisabled,
@@ -76031,7 +76032,7 @@ var wp;
             shortcut: import_keycodes11.displayShortcut.secondary(keyCharacter)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(VisuallyHidden, { id: descriptionId, children: (0, import_i18n84.sprintf)(
+        hasBlocks && /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(VisuallyHidden, { id: descriptionId, children: (0, import_i18n84.sprintf)(
           // translators: 1: Description of the block movement. 2: Keyboard shortcut.
           (0, import_i18n84.__)("%1$s (%2$s)"),
           getBlockMoverDescription(
@@ -76095,7 +76096,8 @@ var wp;
       },
       [clientIds]
     );
-    if (!canMove || isFirst && isLast && !rootClientId || hideDragHandle && isManualGrid) {
+    const hasBlocks = !Array.isArray(clientIds) || clientIds.length > 0;
+    if (hasBlocks && (!canMove || isFirst && isLast && !rootClientId || hideDragHandle && isManualGrid)) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(
@@ -76759,7 +76761,7 @@ var wp;
     children,
     __experimentalUpdateSelection: updateSelection
   }) {
-    const { getDefaultBlockName: getDefaultBlockName8, getGroupingBlockName } = (0, import_data97.useSelect)(import_blocks59.store);
+    const { getDefaultBlockName: getDefaultBlockName9, getGroupingBlockName } = (0, import_data97.useSelect)(import_blocks59.store);
     const selected = (0, import_data97.useSelect)(
       (select3) => {
         const {
@@ -76772,7 +76774,7 @@ var wp;
         const blocks2 = getBlocksByClientId22(clientIds);
         const rootClientId = getBlockRootClientId2(clientIds[0]);
         const canInsertDefaultBlock = canInsertBlockType2(
-          getDefaultBlockName8(),
+          getDefaultBlockName9(),
           rootClientId
         );
         const directInsertBlock = rootClientId ? getDirectInsertBlock2(rootClientId) : null;
@@ -76789,7 +76791,7 @@ var wp;
           })
         };
       },
-      [clientIds, getDefaultBlockName8]
+      [clientIds, getDefaultBlockName9]
     );
     const { getBlocksByClientId: getBlocksByClientId2, getBlocks: getBlocks2 } = (0, import_data97.useSelect)(store);
     const { canRemove, canInsertBlock, canCopyStyles, canDuplicate } = selected;
@@ -78091,7 +78093,11 @@ var wp;
         block_settings_dropdown_default,
         {
           clientIds,
-          toggleProps,
+          toggleProps: clientIds.length ? toggleProps : {
+            ...toggleProps,
+            disabled: true,
+            accessibleWhenDisabled: true
+          },
           ...props
         }
       ) })
@@ -79578,6 +79584,9 @@ var wp;
   // packages/block-editor/build-module/components/block-toolbar/block-toolbar-icon.mjs
   var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
   function getBlockIconVariant({ select: select3, clientIds }) {
+    if (!clientIds.length) {
+      return "default";
+    }
     const {
       getBlockName: getBlockName2,
       getBlockAttributes: getBlockAttributes3,
@@ -79624,6 +79633,9 @@ var wp;
     return "default";
   }
   function getBlockIcon({ select: select3, clientIds }) {
+    if (!clientIds.length) {
+      return (0, import_blocks77.getBlockType)((0, import_blocks77.getDefaultBlockName)())?.icon;
+    }
     const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, getBlock: getBlock2, isSectionBlock: isSectionBlock2 } = unlock(select3(store));
     const _isSingleBlock = clientIds.length === 1;
     const firstClientId = clientIds[0];
@@ -79670,7 +79682,10 @@ var wp;
     });
     const isSingleBlock = clientIds.length === 1;
     const showBlockTitle = isSingleBlock && isSynced && !showIconLabels;
-    const label = isSingleBlock ? blockTitle : (0, import_i18n110.__)("Multiple blocks selected");
+    let label = isSingleBlock ? blockTitle : (0, import_i18n110.__)("Multiple blocks selected");
+    if (!clientIds.length) {
+      label = (0, import_blocks77.getBlockType)((0, import_blocks77.getDefaultBlockName)())?.title;
+    }
     const text = showBlockTitle && blockTitle ? blockTitle : void 0;
     const BlockIconElement = /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
       block_icon_default,
@@ -79731,7 +79746,8 @@ var wp;
     focusOnMount,
     __experimentalInitialIndex,
     __experimentalOnIndexChange,
-    variant = "unstyled"
+    variant = "unstyled",
+    showPlaceholder = false
   }) {
     const {
       blockClientId,
@@ -79790,7 +79806,7 @@ var wp;
       const isVisual = selectedBlockClientIds.every(
         (id) => getBlockMode2(id) === "visual"
       );
-      const _isUsingBindings = selectedBlockClientIds.every(
+      const _isUsingBindings = selectedBlockClientIds.length > 0 && selectedBlockClientIds.every(
         (clientId) => !!getBlockAttributes3(clientId)?.metadata?.bindings
       );
       const _hasTemplateLock = selectedBlockClientIds.some(
@@ -79840,13 +79856,15 @@ var wp;
     });
     const isLargeViewport = !(0, import_compose81.useViewportMatch)("medium", "<");
     const hasBlockToolbar = useHasBlockToolbar();
-    if (!hasBlockToolbar) {
+    const isPlaceholder = showPlaceholder && !blockClientIds.length;
+    if (!hasBlockToolbar && !isPlaceholder) {
       return null;
     }
     const isMultiToolbar = blockClientIds.length > 1;
     const isSynced = (0, import_blocks78.isReusableBlock)(blockType) || (0, import_blocks78.isTemplatePart)(blockType);
     const classes = clsx_default("block-editor-block-contextual-toolbar", {
-      "has-parent": showParentSelector
+      "has-parent": showParentSelector,
+      "is-placeholder": isPlaceholder
     });
     const innerClasses = clsx_default("block-editor-block-toolbar", {
       "is-synced": isSynced,
@@ -79856,6 +79874,7 @@ var wp;
       NavigableToolbar,
       {
         focusEditorOnEscape: true,
+        shouldUseKeyboardFocusShortcut: !isPlaceholder,
         className: classes,
         "aria-label": (0, import_i18n111.__)("Block tools"),
         variant: variant === "toolbar" ? void 0 : variant,
@@ -79864,7 +79883,7 @@ var wp;
         __experimentalOnIndexChange,
         children: /* @__PURE__ */ (0, import_jsx_runtime398.jsxs)("div", { ref: toolbarWrapperRef, className: innerClasses, children: [
           showParentSelector && !isMultiToolbar && isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(BlockParentSelector, {}),
-          (shouldShowVisualToolbar || isMultiToolbar) && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)("div", { ref: nodeRef, ...showHoveredOrFocusedGestures, children: /* @__PURE__ */ (0, import_jsx_runtime398.jsxs)(import_components107.ToolbarGroup, { className: "block-editor-block-toolbar__block-controls", children: [
+          (shouldShowVisualToolbar || isMultiToolbar || isPlaceholder) && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)("div", { ref: nodeRef, ...showHoveredOrFocusedGestures, children: /* @__PURE__ */ (0, import_jsx_runtime398.jsxs)(import_components107.ToolbarGroup, { className: "block-editor-block-toolbar__block-controls", children: [
             /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
               BlockToolbarIcon,
               {
@@ -79872,13 +79891,13 @@ var wp;
                 isSynced
               }
             ),
-            isDefaultEditingMode && showBlockVisibilityButton && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
+            !isPlaceholder && isDefaultEditingMode && showBlockVisibilityButton && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
               BlockVisibilityViewportToolbar,
               {
                 clientIds: blockClientIds
               }
             ),
-            !isMultiToolbar && isDefaultEditingMode && showLockButtons && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
+            !isPlaceholder && !isMultiToolbar && isDefaultEditingMode && showLockButtons && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
               BlockLockToolbar,
               {
                 clientId: blockClientId
@@ -79893,7 +79912,7 @@ var wp;
             )
           ] }) }),
           !areSelectedBlocksHiddenOnViewport && !hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && showGroupButtons && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(toolbar_default, {}),
-          !isMultiToolbar && canEdit && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(EditSectionButton, { clientId: blockClientIds[0] }),
+          !isPlaceholder && !isMultiToolbar && canEdit && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(EditSectionButton, { clientId: blockClientIds[0] }),
           !areSelectedBlocksHiddenOnViewport && showShuffleButton && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(ChangeDesign, { clientId: blockClientIds[0] }),
           !areSelectedBlocksHiddenOnViewport && showSwitchSectionStyleButton && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(switch_section_style_default, { clientId: blockClientIds[0] }),
           !areSelectedBlocksHiddenOnViewport && shouldShowVisualToolbar && /* @__PURE__ */ (0, import_jsx_runtime398.jsxs)(import_jsx_runtime398.Fragment, { children: [
@@ -79948,12 +79967,15 @@ var wp;
       toolbarKey
     );
   }
-  function BlockToolbar({ hideDragHandle, variant }) {
+  var showPlaceholderKey = /* @__PURE__ */ Symbol("showPlaceholder");
+  function BlockToolbar(props) {
+    const { hideDragHandle, variant } = props;
     return /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
       PrivateBlockToolbar,
       {
         hideDragHandle,
         variant,
+        showPlaceholder: !!props[showPlaceholderKey],
         focusOnMount: void 0,
         __experimentalInitialIndex: void 0,
         __experimentalOnIndexChange: void 0
@@ -80669,7 +80691,7 @@ var wp;
       isBlockHiddenAnywhere: isBlockHiddenAnywhere2
     } = unlock((0, import_data128.useSelect)(store));
     const { getBlockEditingMode: getBlockEditingMode2 } = (0, import_data128.useSelect)(store);
-    const { getDefaultBlockName: getDefaultBlockName8, getGroupingBlockName } = (0, import_data128.useSelect)(import_blocks81.store);
+    const { getDefaultBlockName: getDefaultBlockName9, getGroupingBlockName } = (0, import_data128.useSelect)(import_blocks81.store);
     const blocks2 = getBlocksByClientId2(clientIds);
     const blockEditorDispatch = (0, import_data128.useDispatch)(store);
     const {
@@ -80706,7 +80728,7 @@ var wp;
     const { showViewportModal: showViewportModal2 } = unlock(blockEditorDispatch);
     const rootClientId = getBlockRootClientId2(clientIds[0]);
     const canInsertDefaultBlock = canInsertBlockType2(
-      getDefaultBlockName8(),
+      getDefaultBlockName9(),
       rootClientId
     );
     const canDuplicate = blocks2.every((block) => {
@@ -117291,6 +117313,7 @@ var wp;
     ResizableBoxPopover,
     InspectorControlsLastItem: last_item_default,
     useHasBlockToolbar,
+    blockToolbarShowPlaceholderKey: showPlaceholderKey,
     cleanEmptyObject,
     isDefaultBlockStyleState: isDefaultBlockStyleState2,
     usePrivateStyleOverride,
