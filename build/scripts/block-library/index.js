@@ -99070,6 +99070,11 @@ ${text}
       align: ["wide", "full"],
       html: false,
       layout: true,
+      spacing: {
+        padding: true,
+        margin: true,
+        blockGap: true
+      },
       interactivity: true
     }
   };
