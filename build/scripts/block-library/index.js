@@ -44170,7 +44170,8 @@ var wp;
         enableContrastChecker: false
       },
       dimensions: {
-        aspectRatio: true
+        aspectRatio: true,
+        minWidth: true
       },
       typography: {
         fontSize: true,
