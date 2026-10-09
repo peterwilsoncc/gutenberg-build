@@ -13550,7 +13550,7 @@ var wp;
     };
   };
   function orderBy(items, field, order = "asc") {
-    return items.concat().sort(comparator(field, order));
+    return items.toSorted(comparator(field, order));
   }
 
   // packages/block-editor/build-module/store/selectors.mjs

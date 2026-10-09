@@ -49758,7 +49758,7 @@ ${url}
         getSortKey(block, media, orderby)
       ])
     );
-    return [...blocks].sort((a, b) => {
+    return blocks.toSorted((a, b) => {
       const keyA = keys.get(a);
       const keyB = keys.get(b);
       if (keyA === void 0 || keyB === void 0) {
@@ -65493,7 +65493,7 @@ ${text}
   }
   function mapMenuItemsToBlocks(menuItems, level = 0) {
     let mapping = {};
-    const sortedItems = [...menuItems].sort(
+    const sortedItems = menuItems.toSorted(
       (a, b) => a.menu_order - b.menu_order
     );
     const innerBlocks = sortedItems.map((menuItem) => {
@@ -75045,7 +75045,7 @@ ${text}
     }, [currentTrackClientId, setCurrentTrackClientId, tracks]);
     const onChangeOrder = (0, import_element166.useCallback)(
       (trackOrder) => {
-        const sortedBlocks = [...innerBlockTracks].sort((a, b) => {
+        const sortedBlocks = innerBlockTracks.toSorted((a, b) => {
           const titleA = a.attributes.title || "";
           const titleB = b.attributes.title || "";
           if (trackOrder === "asc") {

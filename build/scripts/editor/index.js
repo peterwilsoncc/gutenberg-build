@@ -111539,7 +111539,7 @@ ${content}
         const query = {
           ...DEFAULT_QUERY3,
           // Sort ids so reordering alone doesn't produce a new query key and re-fetch.
-          include: _termIds?.length ? [..._termIds].sort((a2, b2) => a2 - b2).join(",") : void 0,
+          include: _termIds?.length ? _termIds.toSorted((a2, b2) => a2 - b2).join(",") : void 0,
           per_page: -1
         };
         return {
@@ -117683,7 +117683,7 @@ ${content}
     scrollTop = 0
   }) {
     const offsets = {};
-    const orderedThreads = [...threads].sort(
+    const orderedThreads = threads.toSorted(
       (a2, b2) => (blockRects[a2.id]?.top ?? Number.MAX_VALUE) - (blockRects[b2.id]?.top ?? Number.MAX_VALUE)
     );
     const anchorIndex = Math.max(
@@ -119331,7 +119331,7 @@ ${content}
       (c6) => !c6.isMe
     );
     const collaboratorsForList = (0, import_element400.useMemo)(() => {
-      return [...activeCollaborators].sort((a2, b2) => {
+      return activeCollaborators.toSorted((a2, b2) => {
         if (a2.isMe && !b2.isMe) {
           return -1;
         }
@@ -123174,7 +123174,7 @@ ${content}
     fields: fields2
   }) {
     const fieldList = Array.isArray(fields2) ? fields2 : fields2?.split(",");
-    const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+    const fieldsKey = fieldList ? fieldList.toSorted().join(",") : void 0;
     return (0, import_data243.useSelect)(
       (select9) => {
         return unlock7(select9(import_core_data139.store)).getViewConfig(
