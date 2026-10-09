@@ -53953,6 +53953,7 @@ ${text}
       }
     });
     const borderProps = (0, import_block_editor104.__experimentalUseBorderProps)(attributes2);
+    const shadowProps = (0, import_block_editor104.__experimentalGetShadowClassesAndStyles)(attributes2);
     const dimensionsProps = (0, import_block_editor104.getDimensionsClassesAndStyles)(attributes2);
     const selectedIcon = (0, import_data48.useSelect)(
       (select10) => {
@@ -54104,6 +54105,7 @@ ${text}
             style: {
               ...colorProps.style,
               ...borderProps.style,
+              ...shadowProps.style,
               ...spacingProps.style,
               ...dimensionsProps.style,
               ...rotationStyle
@@ -54121,6 +54123,7 @@ ${text}
           ),
           style: {
             ...borderProps.style,
+            ...shadowProps.style,
             ...spacingProps.style,
             ...dimensionsProps.style,
             ...rotationStyle,
@@ -54188,6 +54191,9 @@ ${text}
       interactivity: {
         clientNavigation: true
       },
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
       __experimentalBorder: {
         color: true,
         radius: true,
@@ -54221,6 +54227,7 @@ ${text}
     selectors: {
       root: ".wp-block-icon svg",
       css: ".wp-block-icon",
+      shadow: ".wp-block-icon svg",
       spacing: {
         margin: ".wp-block-icon"
       }
