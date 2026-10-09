@@ -3930,6 +3930,9 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 .block-editor-block-toolbar .components-button.block-editor-block-toolbar__block-icon-button[aria-disabled=true]:hover {
   color: #1e1e1e;
 }
+.is-placeholder .block-editor-block-toolbar .components-button.block-editor-block-toolbar__block-icon-button[aria-disabled=true], .is-placeholder .block-editor-block-toolbar .components-button.block-editor-block-toolbar__block-icon-button[aria-disabled=true]:hover {
+  color: #949494;
+}
 .block-editor-block-toolbar.is-synced .block-editor-block-toolbar__block-icon, .block-editor-block-toolbar.is-connected .block-editor-block-toolbar__block-icon {
   color: var(--wp-block-synced-color);
 }
