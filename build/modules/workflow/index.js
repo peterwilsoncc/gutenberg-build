@@ -19101,8 +19101,8 @@ function WorkflowMenu() {
   const [isOpen, setIsOpen] = (0, import_element50.useState)(false);
   const [abilityOutput, setAbilityOutput] = (0, import_element50.useState)(null);
   const [isExecuting, setIsExecuting] = (0, import_element50.useState)(false);
-  const containerRef = (0, import_element50.useRef)();
-  const inputRef = (0, import_element50.useRef)();
+  const containerRef = (0, import_element50.useRef)(null);
+  const inputRef = (0, import_element50.useRef)(null);
   const abilities = (0, import_data.useSelect)((select) => {
     const allAbilities = select(abilitiesStore).getAbilities();
     return allAbilities || EMPTY_ARRAY2;
@@ -19139,17 +19139,13 @@ function WorkflowMenu() {
   }, [registerShortcut]);
   (0, import_keyboard_shortcuts.useShortcut)(
     "core/workflows",
-    /** @type {React.KeyboardEventHandler} */
     (0, import_keycodes.withIgnoreIMEEvents)((event) => {
       if (event.defaultPrevented) {
         return;
       }
       event.preventDefault();
       setIsOpen(!isOpen);
-    }),
-    {
-      bindGlobal: true
-    }
+    })
   );
   (0, import_element50.useEffect)(() => {
     if (isOpen) {
