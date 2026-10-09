@@ -54999,7 +54999,7 @@ If there's a particular need for this, please submit a feature request at https:
     config: config2,
     validity
   }) {
-    const { prefix: prefix2, suffix } = config2 || {};
+    const { prefix: prefix2, prefixPadding, suffix, suffixPadding } = config2 || {};
     return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
       ValidatedText,
       {
@@ -55010,8 +55010,8 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           markWhenOptional,
           validity,
-          prefix: prefix2 ? (0, import_element172.createElement)(prefix2) : void 0,
-          suffix: suffix ? (0, import_element172.createElement)(suffix) : void 0
+          prefix: prefix2 ? /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(InputLayout2.Slot, { padding: prefixPadding, children: typeof prefix2 === "string" ? prefix2 : (0, import_element172.createElement)(prefix2) }) : void 0,
+          suffix: suffix ? /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(InputLayout2.Slot, { padding: suffixPadding, children: typeof suffix === "string" ? suffix : (0, import_element172.createElement)(suffix) }) : void 0
         }
       }
     );
