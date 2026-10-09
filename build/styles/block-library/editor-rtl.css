@@ -2009,8 +2009,8 @@ body.editor-styles-wrapper .wp-block-navigation__responsive-container.is-menu-op
   padding: 8px 12px;
 }
 
-.block-editor-block-list__block[data-type="core/paragraph"].has-drop-cap:focus {
-  min-height: auto !important;
+:root :where(.block-editor-block-list__block[data-type="core/paragraph"].has-drop-cap:focus) {
+  min-height: auto;
 }
 
 .block-editor-block-list__block[data-empty=true] [data-rich-text-placeholder] {
