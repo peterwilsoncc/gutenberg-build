@@ -1039,31 +1039,10 @@ var Text = (0, import_element.forwardRef)(
   }
 );
 
-// packages/ui/build-module/icon/icon.mjs
-var import_element2 = __toESM(require_element(), 1);
-var import_primitives2 = __toESM(require_primitives(), 1);
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element2.forwardRef)(
-  function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
-    const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-      import_primitives2.SVG,
-      {
-        ref,
-        ...icon.props,
-        ...restProps,
-        ...mergedStyle ? { style: mergedStyle } : {},
-        width: size,
-        height: size
-      }
-    );
-  }
-);
-
 // packages/ui/build-module/button/button.mjs
-var import_element3 = __toESM(require_element(), 1);
+var import_element2 = __toESM(require_element(), 1);
 var import_i18n = __toESM(require_i18n(), 1);
-var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 import { speak } from "@wordpress/a11y";
 var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
 function getRuntime2() {
@@ -1161,7 +1140,7 @@ if (typeof process === "undefined" || true) {
   registerStyle2("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
 }
 var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-var Button3 = (0, import_element3.forwardRef)(
+var Button3 = (0, import_element2.forwardRef)(
   function UnforwardedButton({
     tone = "brand",
     variant = "solid",
@@ -1185,12 +1164,12 @@ var Button3 = (0, import_element3.forwardRef)(
       loading && style_default2["is-loading"],
       className
     );
-    (0, import_element3.useEffect)(() => {
+    (0, import_element2.useEffect)(() => {
       if (loading && loadingAnnouncement) {
         speak(loadingAnnouncement);
       }
     }, [loading, loadingAnnouncement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       Button,
       {
         ref,
@@ -1206,6 +1185,29 @@ var Button3 = (0, import_element3.forwardRef)(
 
 // packages/ui/build-module/button/icon.mjs
 var import_element4 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/icon/icon.mjs
+var import_element3 = __toESM(require_element(), 1);
+var import_primitives2 = __toESM(require_primitives(), 1);
+var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var Icon = (0, import_element3.forwardRef)(
+  function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+    const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+      import_primitives2.SVG,
+      {
+        ref,
+        ...icon.props,
+        ...restProps,
+        ...mergedStyle ? { style: mergedStyle } : {},
+        width: size,
+        height: size
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/button/icon.mjs
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
 function getRuntime3() {
