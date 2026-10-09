@@ -61876,7 +61876,7 @@ function Text2({
   config,
   validity
 }) {
-  const { prefix, suffix } = config || {};
+  const { prefix, prefixPadding, suffix, suffixPadding } = config || {};
   return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
     ValidatedText,
     {
@@ -61887,8 +61887,8 @@ function Text2({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        prefix: prefix ? (0, import_element231.createElement)(prefix) : void 0,
-        suffix: suffix ? (0, import_element231.createElement)(suffix) : void 0
+        prefix: prefix ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(InputLayout2.Slot, { padding: prefixPadding, children: typeof prefix === "string" ? prefix : (0, import_element231.createElement)(prefix) }) : void 0,
+        suffix: suffix ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(InputLayout2.Slot, { padding: suffixPadding, children: typeof suffix === "string" ? suffix : (0, import_element231.createElement)(suffix) }) : void 0
       }
     }
   );
