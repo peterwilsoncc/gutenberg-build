@@ -267,6 +267,13 @@ var require_keycodes = __commonJS({
   }
 });
 
+// package-external:@wordpress/html-entities
+var require_html_entities = __commonJS({
+  "package-external:@wordpress/html-entities"(exports, module) {
+    module.exports = window.wp.htmlEntities;
+  }
+});
+
 // packages/workflow/build-module/index.mjs
 var import_element51 = __toESM(require_element(), 1);
 
@@ -19081,12 +19088,37 @@ function Value(props) {
 // packages/workflow/build-module/components/workflow-menu.mjs
 var import_data = __toESM(require_data(), 1);
 var import_element50 = __toESM(require_element(), 1);
-var import_i18n5 = __toESM(require_i18n(), 1);
+var import_i18n6 = __toESM(require_i18n(), 1);
 var import_components = __toESM(require_components(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
 import { executeAbility, store as abilitiesStore } from "@wordpress/abilities";
+
+// packages/workflow/build-module/utils/get-error-message.mjs
+var import_html_entities = __toESM(require_html_entities(), 1);
+var import_i18n5 = __toESM(require_i18n(), 1);
+function getErrorMessage(error2) {
+  let message = "";
+  if (typeof error2 === "object" && error2 !== null) {
+    if ("message" in error2 && typeof error2.message === "string") {
+      message = error2.message;
+    }
+    if (!message && "name" in error2 && typeof error2.name === "string") {
+      message = error2.name;
+    }
+  } else if (error2 !== null && error2 !== void 0) {
+    message = String(error2);
+  }
+  if (!message) {
+    return (0, import_i18n5.__)(
+      "This ability couldn’t run. Check the browser console for details."
+    );
+  }
+  return (0, import_html_entities.decodeEntities)(message);
+}
+
+// packages/workflow/build-module/components/workflow-menu.mjs
+var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='715ff4efd0']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "715ff4efd0");
@@ -19094,11 +19126,43 @@ if (typeof document !== "undefined" && (typeof process === "undefined" || true) 
   document.head.appendChild(style);
 }
 var EMPTY_ARRAY2 = [];
-var inputLabel = (0, import_i18n5.__)("Run abilities and workflows");
+var inputLabel = (0, import_i18n6.__)("Run abilities and workflows");
 function WorkflowMenu() {
   const { registerShortcut } = (0, import_data.useDispatch)(import_keyboard_shortcuts.store);
-  const [search, setSearch] = (0, import_element50.useState)("");
   const [isOpen, setIsOpen] = (0, import_element50.useState)(false);
+  (0, import_element50.useEffect)(() => {
+    registerShortcut({
+      name: "core/workflows",
+      category: "global",
+      description: (0, import_i18n6.__)("Open the workflow palette."),
+      keyCombination: {
+        modifier: "primary",
+        character: "j"
+      }
+    });
+  }, [registerShortcut]);
+  (0, import_keyboard_shortcuts.useShortcut)(
+    "core/workflows",
+    (0, import_keycodes.withIgnoreIMEEvents)((event) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+      event.preventDefault();
+      setIsOpen((open2) => !open2);
+    })
+  );
+  (0, import_element50.useEffect)(() => {
+    if (isOpen) {
+      import("@wordpress/core-abilities");
+    }
+  }, [isOpen]);
+  if (!isOpen) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(WorkflowPalette, { onClose: () => setIsOpen(false) });
+}
+function WorkflowPalette({ onClose }) {
+  const [search, setSearch] = (0, import_element50.useState)("");
   const [abilityOutput, setAbilityOutput] = (0, import_element50.useState)(null);
   const [isExecuting, setIsExecuting] = (0, import_element50.useState)(false);
   const containerRef = (0, import_element50.useRef)(null);
@@ -19113,7 +19177,7 @@ function WorkflowMenu() {
     }
     const searchLower = search.toLowerCase();
     return abilities.filter(
-      (ability) => ability.label?.toLowerCase().includes(searchLower) || ability.name?.toLowerCase().includes(searchLower)
+      (ability) => ability.label.toLowerCase().includes(searchLower) || ability.name.toLowerCase().includes(searchLower)
     );
   }, [abilities, search]);
   (0, import_element50.useEffect)(() => {
@@ -19122,42 +19186,10 @@ function WorkflowMenu() {
     }
   }, [abilityOutput]);
   (0, import_element50.useEffect)(() => {
-    if (isOpen && !abilityOutput) {
+    if (!abilityOutput) {
       inputRef.current?.focus();
     }
-  }, [isOpen, abilityOutput]);
-  (0, import_element50.useEffect)(() => {
-    registerShortcut({
-      name: "core/workflows",
-      category: "global",
-      description: (0, import_i18n5.__)("Open the workflow palette."),
-      keyCombination: {
-        modifier: "primary",
-        character: "j"
-      }
-    });
-  }, [registerShortcut]);
-  (0, import_keyboard_shortcuts.useShortcut)(
-    "core/workflows",
-    (0, import_keycodes.withIgnoreIMEEvents)((event) => {
-      if (event.defaultPrevented) {
-        return;
-      }
-      event.preventDefault();
-      setIsOpen(!isOpen);
-    })
-  );
-  (0, import_element50.useEffect)(() => {
-    if (isOpen) {
-      import("@wordpress/core-abilities");
-    }
-  }, [isOpen]);
-  const closeAndReset = () => {
-    setSearch("");
-    setIsOpen(false);
-    setAbilityOutput(null);
-    setIsExecuting(false);
-  };
+  }, [abilityOutput]);
   const goBack = () => {
     setAbilityOutput(null);
     setIsExecuting(false);
@@ -19165,22 +19197,19 @@ function WorkflowMenu() {
   };
   const handleExecuteAbility = async (ability) => {
     setIsExecuting(true);
+    const details = {
+      name: ability.name,
+      label: ability.label || ability.name,
+      description: ability.description || ""
+    };
     try {
       const result = await executeAbility(ability.name);
-      setAbilityOutput({
-        name: ability.name,
-        label: ability?.label || ability.name,
-        description: ability?.description || "",
-        success: true,
-        data: result
-      });
+      setAbilityOutput({ ...details, success: true, data: result });
     } catch (error2) {
       setAbilityOutput({
-        name: ability.name,
-        label: ability?.label || ability.name,
-        description: ability?.description || "",
+        ...details,
         success: false,
-        error: error2.message || String(error2)
+        error: getErrorMessage(error2)
       });
     } finally {
       setIsExecuting(false);
@@ -19193,9 +19222,6 @@ function WorkflowMenu() {
       goBack();
     }
   };
-  if (!isOpen) {
-    return null;
-  }
   const items = isExecuting ? EMPTY_ARRAY2 : filteredAbilities;
   const showEmpty = !isExecuting && !!search && !filteredAbilities.length;
   return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
@@ -19203,9 +19229,9 @@ function WorkflowMenu() {
     {
       className: "workflows-workflow-menu",
       overlayClassName: "workflows-workflow-menu__overlay",
-      onRequestClose: abilityOutput ? goBack : closeAndReset,
+      onRequestClose: abilityOutput ? goBack : onClose,
       __experimentalHideHeader: true,
-      contentLabel: (0, import_i18n5.__)("Workflow palette"),
+      contentLabel: (0, import_i18n6.__)("Workflow palette"),
       children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
         "div",
         {
@@ -19250,7 +19276,7 @@ function WorkflowMenu() {
                           Icon,
                           {
                             icon: search_default,
-                            style: (0, import_i18n5.isRTL)() ? void 0 : {
+                            style: (0, import_i18n6.isRTL)() ? void 0 : {
                               transform: "scaleX(-1)"
                             }
                           }
@@ -19259,13 +19285,13 @@ function WorkflowMenu() {
                     )
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Status, { className: "workflows-workflow-menu__executing", children: isExecuting ? (0, import_i18n5.__)("Executing ability…") : null }),
-                /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Empty, { className: "workflows-workflow-menu__empty", children: showEmpty ? (0, import_i18n5.__)("No results found.") : null }),
+                /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Status, { className: "workflows-workflow-menu__executing", children: isExecuting ? (0, import_i18n6.__)("Executing ability…") : null }),
+                /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Empty, { className: "workflows-workflow-menu__empty", children: showEmpty ? (0, import_i18n6.__)("No results found.") : null }),
                 /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
                   autocomplete_exports.List,
                   {
                     className: "workflows-workflow-menu__list",
-                    "aria-label": (0, import_i18n5.__)("Workflow suggestions"),
+                    "aria-label": (0, import_i18n6.__)("Workflow suggestions"),
                     children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.ListBody, { className: "workflows-workflow-menu__list-body", children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
                       autocomplete_exports.Item,
                       {
