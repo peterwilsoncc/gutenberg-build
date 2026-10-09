@@ -436,13 +436,16 @@ var wp;
     return getScrollContainer(node.parentNode, direction);
   }
 
+  // packages/dom/build-module/dom/is-element.mjs
+  function isElement(node) {
+    return !!node && node.nodeType === node.ELEMENT_NODE;
+  }
+
   // packages/dom/build-module/dom/get-offset-parent.mjs
   function getOffsetParent(node) {
-    let closestElement;
-    while (closestElement = node.parentNode) {
-      if (closestElement.nodeType === closestElement.ELEMENT_NODE) {
-        break;
-      }
+    let closestElement = node.parentNode;
+    while (closestElement && !isElement(closestElement)) {
+      closestElement = closestElement.parentNode;
     }
     if (!closestElement) {
       return null;
@@ -979,11 +982,6 @@ var wp;
   function isTextContent(node) {
     const tag = node.nodeName.toLowerCase();
     return textContentSchema.hasOwnProperty(tag) || tag === "span";
-  }
-
-  // packages/dom/build-module/dom/is-element.mjs
-  function isElement(node) {
-    return !!node && node.nodeType === node.ELEMENT_NODE;
   }
 
   // packages/dom/build-module/dom/clean-node-list.mjs
