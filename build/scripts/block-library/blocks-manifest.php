@@ -2492,6 +2492,8 @@ return array(
 			'color' => array(
 				'heading' => true,
 				'text' => true,
+				'link' => true,
+				'button' => true,
 				'background' => false,
 				'__experimentalSkipSerialization' => array(
 					'gradients'
