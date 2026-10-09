@@ -102,113 +102,19 @@ var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primi
 var import_url = __toESM(require_url());
 var import_components = __toESM(require_components());
 
-// node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
-function r(e) {
-  var t, f, n = "";
-  if ("string" == typeof e || "number" == typeof e) n += e;
-  else if ("object" == typeof e) if (Array.isArray(e)) {
-    var o = e.length;
-    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-  } else for (f in e) e[f] && (n && (n += " "), n += f);
-  return n;
-}
-function clsx() {
-  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
-  return n;
-}
-var clsx_default = clsx;
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
-var loggedMessages;
-if (true) {
-  loggedMessages = /* @__PURE__ */ new Set();
-}
-function createLogOnce(severity, prefix) {
-  return function logOnce(...messages) {
-    if (true) {
-      const message = messages.join(" ");
-      const output = prefix ? `${prefix}: ${message}` : message;
-      const key = `${severity}:${output}`;
-      if (!loggedMessages.has(key)) {
-        loggedMessages.add(key);
-        if (severity === "warn") {
-          console.warn(output);
-        } else {
-          console.error(output);
-        }
-      }
-    }
-  };
-}
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
-var error = createLogOnce("error", "Base UI");
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
-var React = __toESM(require_react(), 1);
-var SafeReact = {
-  ...React
-};
+// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
+var React4 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useRefWithInit.mjs
-var React2 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React2.useRef(UNINITIALIZED);
+  const ref = React.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
   return ref;
 }
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
-var useInsertionEffect = SafeReact.useInsertionEffect;
-var useSafeInsertionEffect = (
-  // React 17 doesn't have useInsertionEffect.
-  useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
-  useInsertionEffect !== SafeReact.useLayoutEffect ? useInsertionEffect : (fn) => fn()
-);
-function useStableCallback(callback) {
-  const stable = useRefWithInit(createStableCallback).current;
-  stable.next = callback;
-  useSafeInsertionEffect(stable.effect);
-  return stable.trampoline;
-}
-function createStableCallback() {
-  const stable = {
-    next: void 0,
-    callback: assertNotCalled,
-    trampoline: (...args) => stable.callback?.(...args),
-    effect: () => {
-      stable.callback = stable.next;
-    }
-  };
-  return stable;
-}
-function assertNotCalled() {
-  if (true) {
-    throw (
-      /* minify-error-disabled */
-      new Error("Base UI: Cannot call an event handler while rendering.")
-    );
-  }
-}
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
-var warn = createLogOnce("warn", "Base UI");
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
-var EMPTY_ARRAY = Object.freeze([]);
-var EMPTY_OBJECT = Object.freeze({});
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-var React3 = __toESM(require_react(), 1);
-var noop = () => {
-};
-var useIsoLayoutEffect = typeof document !== "undefined" ? React3.useLayoutEffect : noop;
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
-var React6 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useMergedRefs.mjs
 function useMergedRefs(a, b, c, d) {
@@ -300,18 +206,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
-var React5 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/reactVersion.mjs
-var React4 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React4.version, 10);
+var React2 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React2.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React5.isValidElement(element)) {
+  if (!/* @__PURE__ */ React3.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -335,6 +241,36 @@ function mergeObjects(a, b) {
   }
   return void 0;
 }
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
+var loggedMessages;
+if (true) {
+  loggedMessages = /* @__PURE__ */ new Set();
+}
+function createLogOnce(severity, prefix) {
+  return function logOnce(...messages) {
+    if (true) {
+      const message = messages.join(" ");
+      const output = prefix ? `${prefix}: ${message}` : message;
+      const key = `${severity}:${output}`;
+      if (!loggedMessages.has(key)) {
+        loggedMessages.add(key);
+        if (severity === "warn") {
+          console.warn(output);
+        } else {
+          console.error(output);
+        }
+      }
+    }
+  };
+}
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
+var warn = createLogOnce("warn", "Base UI");
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
+var EMPTY_ARRAY = Object.freeze([]);
+var EMPTY_OBJECT = Object.freeze({});
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
 function getStateAttributesProps(state, customMapping) {
@@ -586,8 +522,8 @@ function unwrapLazyRenderProp(render) {
   if (render?.$$typeof !== REACT_LAZY_TYPE) {
     return render;
   }
-  const unwrapped = React6.Children.toArray(render)[0];
-  return /* @__PURE__ */ React6.isValidElement(unwrapped) ? unwrapped : render;
+  const unwrapped = React4.Children.toArray(render)[0];
+  return /* @__PURE__ */ React4.isValidElement(unwrapped) ? unwrapped : render;
 }
 function evaluateRenderProp(element, render, props, state) {
   if (render) {
@@ -600,11 +536,11 @@ function evaluateRenderProp(element, render, props, state) {
     const mergedProps = mergeProps(props, render.props);
     mergedProps.ref = props.ref;
     if (true) {
-      if (!/* @__PURE__ */ React6.isValidElement(render)) {
+      if (!/* @__PURE__ */ React4.isValidElement(render)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React6.cloneElement(render, mergedProps);
+    return /* @__PURE__ */ React4.cloneElement(render, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -641,8 +577,72 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React6.createElement(Tag, props);
+  return /* @__PURE__ */ React4.createElement(Tag, props);
 }
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
+var React5 = __toESM(require_react(), 1);
+var SafeReact = {
+  ...React5
+};
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
+var useInsertionEffect = SafeReact.useInsertionEffect;
+var useSafeInsertionEffect = (
+  // React 17 doesn't have useInsertionEffect.
+  useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
+  useInsertionEffect !== SafeReact.useLayoutEffect ? useInsertionEffect : (fn) => fn()
+);
+function useStableCallback(callback) {
+  const stable = useRefWithInit(createStableCallback).current;
+  stable.next = callback;
+  useSafeInsertionEffect(stable.effect);
+  return stable.trampoline;
+}
+function createStableCallback() {
+  const stable = {
+    next: void 0,
+    callback: assertNotCalled,
+    trampoline: (...args) => stable.callback?.(...args),
+    effect: () => {
+      stable.callback = stable.next;
+    }
+  };
+  return stable;
+}
+function assertNotCalled() {
+  if (true) {
+    throw (
+      /* minify-error-disabled */
+      new Error("Base UI: Cannot call an event handler while rendering.")
+    );
+  }
+}
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+var React6 = __toESM(require_react(), 1);
+var noop = () => {
+};
+var useIsoLayoutEffect = typeof document !== "undefined" ? React6.useLayoutEffect : noop;
+
+// node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
+function r(e) {
+  var t, f, n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;
+  else if ("object" == typeof e) if (Array.isArray(e)) {
+    var o = e.length;
+    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
+}
+function clsx() {
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+  return n;
+}
+var clsx_default = clsx;
+
+// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
+var error = createLogOnce("error", "Base UI");
 
 // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/use-button/useButton.mjs
 var React9 = __toESM(require_react(), 1);
