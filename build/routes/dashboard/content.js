@@ -38087,8 +38087,15 @@ var Stack = (0, import_element77.forwardRef)(
 var import_element78 = __toESM(require_element(), 1);
 var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
 var Portal3 = (0, import_element78.forwardRef)(
-  function AlertDialogPortal(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(index_parts_exports.Portal, { ref, ...props });
+  function AlertDialogPortal({ container, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+      index_parts_exports.Portal,
+      {
+        ref,
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
+        ...props
+      }
+    );
   }
 );
 
