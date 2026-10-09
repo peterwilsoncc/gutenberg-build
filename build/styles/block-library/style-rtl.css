@@ -671,6 +671,10 @@
   justify-content: center;
 }
 
+.wp-block-comments-pagination-next {
+  box-sizing: border-box;
+}
+
 .wp-block-comment-template {
   box-sizing: border-box;
   margin-bottom: 0;

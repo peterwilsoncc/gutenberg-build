@@ -38920,8 +38920,21 @@ var wp;
       },
       interactivity: {
         clientNavigation: true
+      },
+      spacing: {
+        padding: true,
+        __experimentalDefaultControls: {
+          padding: false
+        }
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
       }
-    }
+    },
+    style: "wp-block-comments-pagination-next"
   };
 
   // packages/block-library/build-module/comments-pagination-next/edit.mjs
