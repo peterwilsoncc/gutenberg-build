@@ -1,4 +1,5 @@
 (function() {
+"use strict";
 var wp;
 (wp ||= {}).commands = (() => {
   var __create = Object.create;
@@ -3222,7 +3223,9 @@ var wp;
         )
       };
     }, []);
-    const [resolvedMap, setResolvedMap] = (0, import_element2.useState)(() => /* @__PURE__ */ new Map());
+    const [resolvedMap, setResolvedMap] = (0, import_element2.useState)(
+      () => /* @__PURE__ */ new Map()
+    );
     const onResolved = (0, import_element2.useCallback)((loaderName, cmds) => {
       setResolvedMap((prev) => {
         const prevCmds = prev.get(loaderName);
@@ -3257,7 +3260,7 @@ var wp;
         }
       });
     }
-    const commands2 = recentNames.map((n) => allByName.get(n)).filter(Boolean);
+    const commands2 = recentNames.map((n) => allByName.get(n)).filter((c) => !!c);
     return { commands: commands2, loaders, recentSet, onResolved };
   }
 
@@ -3278,10 +3281,16 @@ var wp;
   function isValidIcon(icon) {
     return !!icon && (typeof icon === "string" || (0, import_element3.isValidElement)(icon) || typeof icon === "function" || icon instanceof import_element3.Component);
   }
-  function CommandItem({ command, search, category, valuePrefix }) {
+  function CommandItem({
+    command,
+    search,
+    category,
+    valuePrefix
+  }) {
     const { close: close2 } = (0, import_data5.useDispatch)(store);
     const commandCategory = category ?? command.category;
-    const icon = command.icon ?? CATEGORY_FALLBACK_ICONS[commandCategory];
+    const categoryLabel = commandCategory ? CATEGORY_LABELS[commandCategory] : void 0;
+    const icon = command.icon ?? (commandCategory ? CATEGORY_FALLBACK_ICONS[commandCategory] : void 0);
     const label = command.searchLabel ?? command.label;
     const value = valuePrefix ? `${valuePrefix}${command.name}` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
@@ -3310,7 +3319,7 @@ var wp;
                   highlight: search
                 }
               ) }),
-              CATEGORY_LABELS[commandCategory] && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "commands-command-menu__item-category", children: CATEGORY_LABELS[commandCategory] })
+              categoryLabel && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "commands-command-menu__item-category", children: categoryLabel })
             ]
           }
         )
@@ -3318,7 +3327,13 @@ var wp;
       command.name
     );
   }
-  function CommandMenuLoader({ name, search, hook, category, valuePrefix }) {
+  function CommandMenuLoader({
+    name,
+    search,
+    hook,
+    category,
+    valuePrefix
+  }) {
     const { setLoaderLoading: setLoaderLoading2 } = unlock((0, import_data5.useDispatch)(store));
     const { isLoading: loading, commands: commands2 = [] } = hook({ search }) ?? {};
     (0, import_element3.useEffect)(() => {
@@ -3338,7 +3353,10 @@ var wp;
       command.name
     )) });
   }
-  function CommandMenuLoaderWrapper({ hook, ...props }) {
+  function CommandMenuLoaderWrapper({
+    hook,
+    ...props
+  }) {
     const currentLoaderRef = (0, import_element3.useRef)(hook);
     const [key, setKey] = (0, import_element3.useState)(0);
     (0, import_element3.useEffect)(() => {
@@ -3356,7 +3374,12 @@ var wp;
       key
     );
   }
-  function CommandList({ search, commands: commands2, loaders, valuePrefix }) {
+  function CommandList({
+    search,
+    commands: commands2,
+    loaders,
+    valuePrefix
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
       commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
         CommandItem,
@@ -3380,7 +3403,12 @@ var wp;
       ))
     ] });
   }
-  function RecentLoaderRunner({ hook, name, filterNames, onResolved }) {
+  function RecentLoaderRunner({
+    hook,
+    name,
+    filterNames,
+    onResolved
+  }) {
     useLoaderCollector(hook, name, filterNames, onResolved);
     return null;
   }
@@ -3451,7 +3479,7 @@ var wp;
     ] });
   }
   function CommandInput({ search, setSearch }) {
-    const commandMenuInput = (0, import_element3.useRef)();
+    const commandMenuInput = (0, import_element3.useRef)(null);
     const _value = P((state) => state.value);
     const selectedItemId = _value ? `${ITEM_ID_PREFIX}${_value}` : null;
     (0, import_element3.useEffect)(() => {
@@ -3464,7 +3492,7 @@ var wp;
         value: search,
         onValueChange: setSearch,
         placeholder: inputLabel,
-        "aria-activedescendant": selectedItemId
+        "aria-activedescendant": selectedItemId ?? void 0
       }
     );
   }
@@ -3492,7 +3520,6 @@ var wp;
     }, [registerShortcut]);
     (0, import_keyboard_shortcuts.useShortcut)(
       "core/commands",
-      /** @type {React.KeyboardEventHandler} */
       (0, import_keycodes.withIgnoreIMEEvents)((event) => {
         if (event.defaultPrevented) {
           return;
@@ -3503,17 +3530,14 @@ var wp;
         } else {
           open2();
         }
-      }),
-      {
-        bindGlobal: true
-      }
+      })
     );
     const closeAndReset = () => {
       setSearch("");
       close2();
     };
     if (!paletteIsOpen) {
-      return false;
+      return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
       import_components.Modal,
