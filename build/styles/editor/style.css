@@ -4763,6 +4763,12 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex-grow: 0;
 }
 
+.fields-field__page-title-badge {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .fields-field__pattern-title span:first-child {
   flex: 1;
 }
