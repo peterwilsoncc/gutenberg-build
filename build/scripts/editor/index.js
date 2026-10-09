@@ -46530,7 +46530,7 @@ var wp;
     } else if (item.id === privacyPolicyPageId) {
       badge = (0, import_i18n24.__)("Privacy Policy Page");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(BaseTitleView, { item, className: "fields-field__page-title", children: badge && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Badge, { children: badge }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(BaseTitleView, { item, className: "fields-field__page-title", children: badge && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Badge, { className: "fields-field__page-title-badge", children: badge }) });
   }
 
   // packages/fields/build-module/fields/page-title/index.mjs
