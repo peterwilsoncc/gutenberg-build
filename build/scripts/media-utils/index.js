@@ -46573,9 +46573,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!validEntries.length) {
         return featuredMedia.source_url;
       }
-      const sorted = [...validEntries].sort(
-        (a, b) => a.width - b.width
-      );
+      const sorted = validEntries.toSorted((a, b) => a.width - b.width);
       const match2 = sorted.find((s) => s.width >= targetWidth);
       if (match2) {
         return match2.source_url;

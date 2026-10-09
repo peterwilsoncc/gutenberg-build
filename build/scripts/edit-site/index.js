@@ -60669,7 +60669,7 @@ If there's a particular need for this, please submit a feature request at https:
     fields: fields2
   }) {
     const fieldList = Array.isArray(fields2) ? fields2 : fields2?.split(",");
-    const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+    const fieldsKey = fieldList ? fieldList.toSorted().join(",") : void 0;
     return (0, import_data42.useSelect)(
       (select4) => {
         return unlock5(select4(import_core_data23.store)).getViewConfig(

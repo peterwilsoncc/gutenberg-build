@@ -3391,19 +3391,9 @@ var wp;
     return [...blockTypesByNameAndVariation.values()];
   }
   function findTransform(transforms, predicate) {
-    const hooks = (0, import_hooks2.createHooks)();
-    for (let i = 0; i < transforms.length; i++) {
-      const candidate = transforms[i];
-      if (predicate(candidate)) {
-        hooks.addFilter(
-          "transform",
-          "transform/" + i.toString(),
-          (result) => result ? result : candidate,
-          candidate.priority
-        );
-      }
-    }
-    return hooks.applyFilters("transform", null);
+    const priority = (t2) => t2.priority ?? 10;
+    const candidates = transforms.filter((t2) => predicate(t2)).toSorted((t1, t2) => priority(t1) - priority(t2));
+    return candidates.length > 0 ? candidates[0] : null;
   }
   function getBlockTransforms(direction, blockTypeOrName) {
     if (blockTypeOrName === void 0) {

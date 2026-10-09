@@ -1185,7 +1185,7 @@ function useViewConfig({
   fields
 }) {
   const fieldList = Array.isArray(fields) ? fields : fields?.split(",");
-  const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+  const fieldsKey = fieldList ? fieldList.toSorted().join(",") : void 0;
   return (0, import_data3.useSelect)(
     (select2) => {
       return unlock(select2(import_core_data.store)).getViewConfig(
