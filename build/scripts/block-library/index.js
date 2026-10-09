@@ -88890,6 +88890,10 @@ ${text}
     supports: {
       anchor: true,
       align: ["left", "center", "right"],
+      background: {
+        gradient: true,
+        __experimentalSkipSerialization: true
+      },
       color: {
         gradients: true,
         __experimentalSkipSerialization: true,
@@ -88935,6 +88939,7 @@ ${text}
     style: "wp-block-search",
     selectors: {
       color: ".wp-block-search .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input",
+      background: ".wp-block-search .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input",
       border: ".wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper"
     }
   };
@@ -89029,6 +89034,7 @@ ${text}
       };
     }
     const colorProps = (0, import_block_editor230.__experimentalUseColorProps)(attributes2);
+    const backgroundProps = (0, import_block_editor230.useBackgroundProps)(attributes2);
     const [fluidTypographySettings, layout] = (0, import_block_editor230.useSettings)(
       "typography.fluid",
       "layout"
@@ -89097,11 +89103,13 @@ ${text}
       const textFieldClasses = clsx_default(
         "wp-block-search__input",
         hasNoButton ? colorProps.className : void 0,
+        hasNoButton ? backgroundProps.className : void 0,
         isButtonPositionInside ? void 0 : borderProps.className,
         typographyProps.className
       );
       const textFieldStyles = {
         ...hasNoButton ? colorProps.style : {},
+        ...hasNoButton ? backgroundProps.style : {},
         ...isButtonPositionInside ? {
           borderRadius: borderProps.style?.borderRadius,
           borderTopLeftRadius: borderProps.style?.borderTopLeftRadius,
@@ -89130,6 +89138,7 @@ ${text}
       const buttonClasses = clsx_default(
         "wp-block-search__button",
         colorProps.className,
+        backgroundProps.className,
         typographyProps.className,
         isButtonPositionInside ? void 0 : borderProps.className,
         buttonUseIcon ? "has-icon" : void 0,
@@ -89137,6 +89146,7 @@ ${text}
       );
       const buttonStyles = {
         ...colorProps.style,
+        ...backgroundProps.style,
         ...typographyProps.style,
         ...isButtonPositionInside ? {
           borderRadius: borderProps.style?.borderRadius,
