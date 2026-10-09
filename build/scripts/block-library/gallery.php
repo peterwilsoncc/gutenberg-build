@@ -469,6 +469,11 @@ function gutenberg_block_core_gallery_render_dynamic_image( $attachment_id, $att
  * @return string The content of the block being rendered.
  */
 function gutenberg_block_core_gallery_render( $attributes, $content, $block ) {
+	/*
+	 * Reads global styles once per request. gutenberg_get_global_styles() has no cache
+	 * of its own, so without this static each gallery would merge the theme.json
+	 * data again wherever the resolver does not cache the merged result.
+	 */
 	static $global_styles = null;
 
 	// Gallery blocks created before layout variations existed do not have an
