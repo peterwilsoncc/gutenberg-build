@@ -5284,6 +5284,9 @@ var wp;
     ],
     supports: {
       anchor: true,
+      background: {
+        gradient: true
+      },
       color: {
         background: true,
         gradients: true
