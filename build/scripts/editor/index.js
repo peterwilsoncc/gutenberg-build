@@ -105589,9 +105589,15 @@ If there's a particular need for this, please submit a feature request at https:
         }
       })
     }));
+    const colorExamples = getColorExamples(colors2);
+    const overviewBlockExamples = getOverviewBlockExamples(colors2);
     const isHeadingBlockRegistered = !!(0, import_blocks22.getBlockType)("core/heading");
     if (!isHeadingBlockRegistered) {
-      return nonHeadingBlockExamples;
+      return [
+        ...colorExamples,
+        ...nonHeadingBlockExamples,
+        ...overviewBlockExamples
+      ];
     }
     const headingsExample = {
       name: "core/heading",
@@ -105608,8 +105614,6 @@ If there's a particular need for this, please submit a feature request at https:
         });
       })
     };
-    const colorExamples = getColorExamples(colors2);
-    const overviewBlockExamples = getOverviewBlockExamples(colors2);
     return [
       headingsExample,
       ...colorExamples,
