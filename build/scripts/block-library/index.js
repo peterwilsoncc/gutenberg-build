@@ -44165,6 +44165,8 @@ var wp;
       color: {
         heading: true,
         text: true,
+        link: true,
+        button: true,
         background: false,
         __experimentalSkipSerialization: ["gradients"],
         enableContrastChecker: false
