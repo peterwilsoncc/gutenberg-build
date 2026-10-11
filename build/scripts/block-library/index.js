@@ -94551,6 +94551,7 @@ ${text}
     const [selectedCell, setSelectedCell] = (0, import_element199.useState)();
     const colorProps = (0, import_block_editor254.__experimentalUseColorProps)(attributes2);
     const borderProps = (0, import_block_editor254.__experimentalUseBorderProps)(attributes2);
+    const backgroundProps = (0, import_block_editor254.useBackgroundProps)(attributes2);
     const textAlign = attributes2?.style?.typography?.textAlign;
     const blockEditingMode = (0, import_block_editor254.useBlockEditingMode)();
     const tableRef = (0, import_element199.useRef)();
@@ -94858,6 +94859,7 @@ ${text}
           className: clsx_default(
             colorProps.className,
             borderProps.className,
+            backgroundProps.className,
             {
               "has-fixed-layout": hasFixedLayout,
               [`has-text-align-${textAlign}`]: textAlign,
@@ -94869,7 +94871,11 @@ ${text}
               )
             }
           ),
-          style: { ...colorProps.style, ...borderProps.style },
+          style: {
+            ...colorProps.style,
+            ...borderProps.style,
+            ...backgroundProps.style
+          },
           children: renderedSections
         }
       ),
@@ -95143,6 +95149,10 @@ ${text}
     supports: {
       anchor: true,
       align: true,
+      background: {
+        __experimentalSkipSerialization: true,
+        gradient: true
+      },
       color: {
         __experimentalSkipSerialization: true,
         gradients: true,
@@ -95216,11 +95226,17 @@ ${text}
     }
     const colorProps = (0, import_block_editor255.__experimentalGetColorClassesAndStyles)(attributes2);
     const borderProps = (0, import_block_editor255.__experimentalGetBorderClassesAndStyles)(attributes2);
+    const backgroundProps = (0, import_block_editor255.getBackgroundClassesAndStyles)(attributes2);
     const textAlign = style2?.typography?.textAlign;
-    const classes = clsx_default(colorProps.className, borderProps.className, {
-      "has-fixed-layout": hasFixedLayout,
-      [`has-text-align-${textAlign}`]: textAlign
-    });
+    const classes = clsx_default(
+      colorProps.className,
+      borderProps.className,
+      backgroundProps.className,
+      {
+        "has-fixed-layout": hasFixedLayout,
+        [`has-text-align-${textAlign}`]: textAlign
+      }
+    );
     const hasCaption = !import_block_editor255.RichText.isEmpty(caption);
     const Section = ({ type, rows }) => {
       if (!rows.length) {
@@ -95260,7 +95276,11 @@ ${text}
         "table",
         {
           className: classes === "" ? void 0 : classes,
-          style: { ...colorProps.style, ...borderProps.style },
+          style: {
+            ...colorProps.style,
+            ...borderProps.style,
+            ...backgroundProps.style
+          },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(Section, { type: "head", rows: head }),
             /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(Section, { type: "body", rows: body }),

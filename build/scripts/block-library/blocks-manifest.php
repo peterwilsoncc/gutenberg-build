@@ -9123,6 +9123,10 @@ return array(
 		'supports' => array(
 			'anchor' => true,
 			'align' => true,
+			'background' => array(
+				'__experimentalSkipSerialization' => true,
+				'gradient' => true
+			),
 			'color' => array(
 				'__experimentalSkipSerialization' => true,
 				'gradients' => true,
