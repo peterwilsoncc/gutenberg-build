@@ -6552,6 +6552,11 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
+			'dimensions' => array(
+				'__experimentalSkipSerialization' => true,
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'spacing' => array(
 				'__experimentalSkipSerialization' => true,
 				'margin' => true,
@@ -6577,6 +6582,7 @@ return array(
 		),
 		'selectors' => array(
 			'border' => '.wp-block-post-navigation-link:not(:empty)',
+			'dimensions' => '.wp-block-post-navigation-link:not(:empty)',
 			'shadow' => '.wp-block-post-navigation-link:not(:empty)',
 			'spacing' => '.wp-block-post-navigation-link:not(:empty)'
 		),
