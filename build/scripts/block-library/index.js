@@ -54258,7 +54258,13 @@ ${text}
       },
       dimensions: {
         width: true,
-        __experimentalSkipSerialization: ["width"],
+        minWidth: true,
+        minHeight: true,
+        __experimentalSkipSerialization: [
+          "width",
+          "minWidth",
+          "minHeight"
+        ],
         __experimentalDefaultControls: {
           width: true
         }

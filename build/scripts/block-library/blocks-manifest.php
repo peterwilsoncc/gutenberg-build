@@ -3612,8 +3612,12 @@ return array(
 			),
 			'dimensions' => array(
 				'width' => true,
+				'minWidth' => true,
+				'minHeight' => true,
 				'__experimentalSkipSerialization' => array(
-					'width'
+					'width',
+					'minWidth',
+					'minHeight'
 				),
 				'__experimentalDefaultControls' => array(
 					'width' => true
