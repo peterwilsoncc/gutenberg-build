@@ -10119,9 +10119,15 @@ return array(
 			),
 			'shadow' => array(
 				'__experimentalSkipSerialization' => true
+			),
+			'dimensions' => array(
+				'minWidth' => true,
+				'minHeight' => true,
+				'__experimentalSkipSerialization' => true
 			)
 		),
 		'selectors' => array(
+			'dimensions' => '.wp-block-video video',
 			'shadow' => '.wp-block-video video',
 			'filter' => array(
 				'duotone' => '.wp-block-video video'

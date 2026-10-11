@@ -100741,9 +100741,15 @@ ${text}
       },
       shadow: {
         __experimentalSkipSerialization: true
+      },
+      dimensions: {
+        minWidth: true,
+        minHeight: true,
+        __experimentalSkipSerialization: true
       }
     },
     selectors: {
+      dimensions: ".wp-block-video video",
       shadow: ".wp-block-video video",
       filter: {
         duotone: ".wp-block-video video"
@@ -101347,6 +101353,7 @@ ${text}
     const aspectRatio = width && height ? `${width} / ${height}` : void 0;
     const videoStyle = {
       ...aspectRatio && { aspectRatio },
+      ...(0, import_block_editor289.__experimentalGetDimensionsClassesAndStyles)(attributes2).style,
       ...(0, import_block_editor289.__experimentalGetShadowClassesAndStyles)(attributes2).style
     };
     const [temporaryURL, setTemporaryURL] = (0, import_element217.useState)(attributes2.blob);
@@ -101573,6 +101580,7 @@ ${text}
     const aspectRatio = width && height ? `${width} / ${height}` : void 0;
     const videoStyle = {
       ...aspectRatio && { aspectRatio },
+      ...(0, import_block_editor290.__experimentalGetDimensionsClassesAndStyles)(attributes2).style,
       ...(0, import_block_editor290.__experimentalGetShadowClassesAndStyles)(attributes2).style
     };
     return /* @__PURE__ */ (0, import_jsx_runtime640.jsxs)("figure", { ...import_block_editor290.useBlockProps.save(), children: [
