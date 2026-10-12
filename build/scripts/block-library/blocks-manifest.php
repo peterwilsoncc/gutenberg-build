@@ -3572,6 +3572,12 @@ return array(
 				'center',
 				'right'
 			),
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalSkipSerialization' => true
+			),
 			'html' => false,
 			'color' => array(
 				'__experimentalSkipSerialization' => true,

@@ -53985,6 +53985,7 @@ ${text}
       [context, isSelected, metadata?.bindings?.icon]
     );
     const colorProps = (0, import_block_editor104.__experimentalUseColorProps)(attributes2);
+    const backgroundProps = (0, import_block_editor104.useBackgroundProps)(attributes2);
     const spacingProps = (0, import_block_editor104.__experimentalGetSpacingClassesAndStyles)({
       style: {
         spacing: {
@@ -54137,6 +54138,7 @@ ${text}
           wrapperProps: {
             className: clsx_default(
               colorProps.className,
+              backgroundProps.className,
               borderProps.className,
               spacingProps.className,
               dimensionsProps.className,
@@ -54144,6 +54146,7 @@ ${text}
             ),
             style: {
               ...colorProps.style,
+              ...backgroundProps.style,
               ...borderProps.style,
               ...shadowProps.style,
               ...spacingProps.style,
@@ -54220,6 +54223,12 @@ ${text}
         __experimentalSkipSerialization: true
       },
       align: ["left", "center", "right"],
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalSkipSerialization: true
+      },
       html: false,
       color: {
         __experimentalSkipSerialization: true,
