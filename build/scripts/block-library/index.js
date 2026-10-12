@@ -5187,6 +5187,7 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
             import_block_editor6.RichText,
             {
+              identifier: "title",
               withoutInteractiveFormatting: true,
               disableLineBreaks: true,
               tagName: "span",
