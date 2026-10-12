@@ -80329,6 +80329,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-editor/build-module/state/use-media-editor-state.mjs
   var import_element263 = __toESM(require_element(), 1);
 
+  // packages/media-editor/build-module/state/composite-reducer.mjs
+  var import_es64 = __toESM(require_es6(), 1);
+
   // packages/media-editor/build-module/state/types.mjs
   var DEFAULT_CROP_OPTIONS = {
     aspectRatioValue: "0"
@@ -80363,6 +80366,7 @@ If there's a particular need for this, please submit a feature request at https:
           payload: newCropRect
         });
         return {
+          ...state2,
           cropper: nextCropper,
           cropOptions: nextCropOptions
         };
@@ -80375,6 +80379,21 @@ If there's a particular need for this, please submit a feature request at https:
           ...state2,
           cropOptions: { ...DEFAULT_CROP_OPTIONS }
         };
+      }
+      case "SET_EDIT": {
+        const { name: name2, value } = action.payload;
+        if (value === void 0) {
+          if (!Object.hasOwn(state2.edits, name2)) {
+            return state2;
+          }
+          const edits = { ...state2.edits };
+          delete edits[name2];
+          return { ...state2, edits };
+        }
+        if ((0, import_es64.default)(state2.edits[name2], value)) {
+          return state2;
+        }
+        return { ...state2, edits: { ...state2.edits, [name2]: value } };
       }
       case "RESTORE_SNAPSHOT":
         return action.payload;
@@ -80394,12 +80413,13 @@ If there's a particular need for this, please submit a feature request at https:
     if (a2 === b2) {
       return true;
     }
-    return areCropperStatesEqual(a2.cropper, b2.cropper) && a2.cropOptions.aspectRatioValue === b2.cropOptions.aspectRatioValue;
+    return areCropperStatesEqual(a2.cropper, b2.cropper) && a2.cropOptions.aspectRatioValue === b2.cropOptions.aspectRatioValue && (0, import_es64.default)(a2.edits, b2.edits);
   }
   function buildInitialMediaEditorState(cropper) {
     return {
       cropper,
-      cropOptions: { ...DEFAULT_CROP_OPTIONS }
+      cropOptions: { ...DEFAULT_CROP_OPTIONS },
+      edits: {}
     };
   }
 
@@ -80542,6 +80562,15 @@ If there's a particular need for this, please submit a feature request at https:
     const resetCropOptions = (0, import_element263.useCallback)(() => {
       dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
     }, [dispatchWithHistory]);
+    const setEdit = (0, import_element263.useCallback)(
+      (name2, value) => {
+        dispatchWithHistory({
+          type: "SET_EDIT",
+          payload: { name: name2, value }
+        });
+      },
+      [dispatchWithHistory]
+    );
     const undo2 = (0, import_element263.useCallback)(() => {
       endGesture();
       const prev = historyRef.current[historyRef.current.length - 1];
@@ -80629,6 +80658,8 @@ If there's a particular need for this, please submit a feature request at https:
         cropOptions: state2.cropOptions,
         setAspectRatioValue,
         resetCropOptions,
+        edits: state2.edits,
+        setEdit,
         setSourceImage,
         isDirty,
         // Only geometry changes the saved image so far.
@@ -80645,6 +80676,8 @@ If there's a particular need for this, please submit a feature request at https:
         state2.cropOptions,
         setAspectRatioValue,
         resetCropOptions,
+        state2.edits,
+        setEdit,
         setSourceImage,
         isDirty,
         isCropperDirty,

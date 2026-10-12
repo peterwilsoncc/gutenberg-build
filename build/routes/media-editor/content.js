@@ -46529,6 +46529,9 @@ var Cropper = (0, import_element153.forwardRef)(
 // packages/media-editor/build-module/state/use-media-editor-state.mjs
 var import_element154 = __toESM(require_element(), 1);
 
+// packages/media-editor/build-module/state/composite-reducer.mjs
+var import_es62 = __toESM(require_es6(), 1);
+
 // packages/media-editor/build-module/state/types.mjs
 var DEFAULT_CROP_OPTIONS = {
   aspectRatioValue: "0"
@@ -46563,6 +46566,7 @@ function mediaEditorReducer(state, action) {
         payload: newCropRect
       });
       return {
+        ...state,
         cropper: nextCropper,
         cropOptions: nextCropOptions
       };
@@ -46575,6 +46579,21 @@ function mediaEditorReducer(state, action) {
         ...state,
         cropOptions: { ...DEFAULT_CROP_OPTIONS }
       };
+    }
+    case "SET_EDIT": {
+      const { name, value } = action.payload;
+      if (value === void 0) {
+        if (!Object.hasOwn(state.edits, name)) {
+          return state;
+        }
+        const edits = { ...state.edits };
+        delete edits[name];
+        return { ...state, edits };
+      }
+      if ((0, import_es62.default)(state.edits[name], value)) {
+        return state;
+      }
+      return { ...state, edits: { ...state.edits, [name]: value } };
     }
     case "RESTORE_SNAPSHOT":
       return action.payload;
@@ -46594,12 +46613,13 @@ function areMediaEditorStatesEqual(a, b) {
   if (a === b) {
     return true;
   }
-  return areCropperStatesEqual(a.cropper, b.cropper) && a.cropOptions.aspectRatioValue === b.cropOptions.aspectRatioValue;
+  return areCropperStatesEqual(a.cropper, b.cropper) && a.cropOptions.aspectRatioValue === b.cropOptions.aspectRatioValue && (0, import_es62.default)(a.edits, b.edits);
 }
 function buildInitialMediaEditorState(cropper) {
   return {
     cropper,
-    cropOptions: { ...DEFAULT_CROP_OPTIONS }
+    cropOptions: { ...DEFAULT_CROP_OPTIONS },
+    edits: {}
   };
 }
 
@@ -46742,6 +46762,15 @@ function useMediaEditorState() {
   const resetCropOptions = (0, import_element154.useCallback)(() => {
     dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
   }, [dispatchWithHistory]);
+  const setEdit = (0, import_element154.useCallback)(
+    (name, value) => {
+      dispatchWithHistory({
+        type: "SET_EDIT",
+        payload: { name, value }
+      });
+    },
+    [dispatchWithHistory]
+  );
   const undo = (0, import_element154.useCallback)(() => {
     endGesture();
     const prev = historyRef.current[historyRef.current.length - 1];
@@ -46829,6 +46858,8 @@ function useMediaEditorState() {
       cropOptions: state.cropOptions,
       setAspectRatioValue,
       resetCropOptions,
+      edits: state.edits,
+      setEdit,
       setSourceImage,
       isDirty,
       // Only geometry changes the saved image so far.
@@ -46845,6 +46876,8 @@ function useMediaEditorState() {
       state.cropOptions,
       setAspectRatioValue,
       resetCropOptions,
+      state.edits,
+      setEdit,
       setSourceImage,
       isDirty,
       isCropperDirty,
