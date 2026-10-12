@@ -1500,7 +1500,7 @@ var updateButtonWidthDeclarations = (featureDeclarations, settings) => {
 var getFeatureDeclarations = (selectors, styles) => {
   const declarations = {};
   Object.entries(selectors).forEach(([feature, selector]) => {
-    if (feature === "root" || !styles?.[feature]) {
+    if (feature === "root" || feature === "css" || !styles?.[feature]) {
       return;
     }
     const isShorthand = typeof selector === "string";
@@ -1868,6 +1868,9 @@ var getNodesWithStyles = (tree, blockSelectors) => {
         responsiveMediaQueries
       );
       const typedNode = node;
+      if (typedNode?.css) {
+        blockStyles.css = typedNode.css;
+      }
       const variationNodesToAdd = [];
       const variationStyleNodesToAdd = [];
       if (typedNode?.variations) {
@@ -2066,7 +2069,7 @@ function resolveFeatureSelector(featureSelectors, featureKey, fallback) {
   if (typeof feature === "string") {
     return feature;
   }
-  if (typeof feature === "object" && feature.root) {
+  if (feature && typeof feature === "object" && typeof feature.root === "string") {
     return feature.root;
   }
   return fallback;
@@ -2232,10 +2235,22 @@ function renderStylesNode(node, {
     ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
   }
   if (styles?.css) {
-    ruleset += processCSSNesting(
-      styles.css,
-      `:root :where(${effectiveSelector})`
-    );
+    const cssFeatureSelector = featureSelectors && typeof featureSelectors === "object" ? featureSelectors.css : void 0;
+    let resolvedCssSelector;
+    if (typeof cssFeatureSelector === "string") {
+      resolvedCssSelector = cssFeatureSelector;
+    } else if (cssFeatureSelector && typeof cssFeatureSelector === "object" && "root" in cssFeatureSelector && typeof cssFeatureSelector.root === "string") {
+      resolvedCssSelector = cssFeatureSelector.root;
+    }
+    if (resolvedCssSelector && variationName) {
+      resolvedCssSelector = getBlockStyleVariationFeatureSelector(
+        variationName,
+        resolvedCssSelector
+      );
+    }
+    const cssBaseSelector = resolvedCssSelector ?? selector;
+    const cssSelector = selectorSuffix ? appendToSelector(cssBaseSelector, selectorSuffix) : cssBaseSelector;
+    ruleset += processCSSNesting(styles.css, cssSelector);
   }
   if (mediaQuery && ruleset) {
     return `${mediaQuery}{${ruleset}}`;
@@ -2514,24 +2529,6 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
       isGlobalStyles: true
     }
   ];
-  blocks.forEach((blockType) => {
-    const blockStyles = updatedConfig?.styles?.blocks?.[blockType.name];
-    if (blockStyles?.css) {
-      const { featureSelectors } = blockSelectors[blockType.name];
-      const cssFeatureSelector = typeof featureSelectors === "object" ? featureSelectors?.css : void 0;
-      let resolvedCssSelector;
-      if (typeof cssFeatureSelector === "string") {
-        resolvedCssSelector = cssFeatureSelector;
-      } else if (typeof cssFeatureSelector === "object") {
-        resolvedCssSelector = cssFeatureSelector?.root;
-      }
-      const selector = resolvedCssSelector ?? blockSelectors[blockType.name].selector;
-      styles.push({
-        css: processCSSNesting(blockStyles.css, selector),
-        isGlobalStyles: true
-      });
-    }
-  });
   return [styles, updatedConfig.settings];
 }
 

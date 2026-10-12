@@ -38701,7 +38701,7 @@ var wp;
   var getFeatureDeclarations = (selectors4, styles) => {
     const declarations = {};
     Object.entries(selectors4).forEach(([feature, selector2]) => {
-      if (feature === "root" || !styles?.[feature]) {
+      if (feature === "root" || feature === "css" || !styles?.[feature]) {
         return;
       }
       const isShorthand = typeof selector2 === "string";
@@ -39069,6 +39069,9 @@ var wp;
           responsiveMediaQueries
         );
         const typedNode = node;
+        if (typedNode?.css) {
+          blockStyles.css = typedNode.css;
+        }
         const variationNodesToAdd = [];
         const variationStyleNodesToAdd = [];
         if (typedNode?.variations) {
@@ -39267,7 +39270,7 @@ var wp;
     if (typeof feature === "string") {
       return feature;
     }
-    if (typeof feature === "object" && feature.root) {
+    if (feature && typeof feature === "object" && typeof feature.root === "string") {
       return feature.root;
     }
     return fallback;
@@ -39433,10 +39436,22 @@ var wp;
       ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
     }
     if (styles?.css) {
-      ruleset += processCSSNesting(
-        styles.css,
-        `:root :where(${effectiveSelector})`
-      );
+      const cssFeatureSelector = featureSelectors && typeof featureSelectors === "object" ? featureSelectors.css : void 0;
+      let resolvedCssSelector;
+      if (typeof cssFeatureSelector === "string") {
+        resolvedCssSelector = cssFeatureSelector;
+      } else if (cssFeatureSelector && typeof cssFeatureSelector === "object" && "root" in cssFeatureSelector && typeof cssFeatureSelector.root === "string") {
+        resolvedCssSelector = cssFeatureSelector.root;
+      }
+      if (resolvedCssSelector && variationName) {
+        resolvedCssSelector = getBlockStyleVariationFeatureSelector(
+          variationName,
+          resolvedCssSelector
+        );
+      }
+      const cssBaseSelector = resolvedCssSelector ?? selector2;
+      const cssSelector = selectorSuffix ? appendToSelector(cssBaseSelector, selectorSuffix) : cssBaseSelector;
+      ruleset += processCSSNesting(styles.css, cssSelector);
     }
     if (mediaQuery && ruleset) {
       return `${mediaQuery}{${ruleset}}`;
@@ -39715,24 +39730,6 @@ var wp;
         isGlobalStyles: true
       }
     ];
-    blocks.forEach((blockType) => {
-      const blockStyles = updatedConfig?.styles?.blocks?.[blockType.name];
-      if (blockStyles?.css) {
-        const { featureSelectors } = blockSelectors[blockType.name];
-        const cssFeatureSelector = typeof featureSelectors === "object" ? featureSelectors?.css : void 0;
-        let resolvedCssSelector;
-        if (typeof cssFeatureSelector === "string") {
-          resolvedCssSelector = cssFeatureSelector;
-        } else if (typeof cssFeatureSelector === "object") {
-          resolvedCssSelector = cssFeatureSelector?.root;
-        }
-        const selector2 = resolvedCssSelector ?? blockSelectors[blockType.name].selector;
-        styles.push({
-          css: processCSSNesting(blockStyles.css, selector2),
-          isGlobalStyles: true
-        });
-      }
-    });
     return [styles, updatedConfig.settings];
   }
 
