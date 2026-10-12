@@ -52829,9 +52829,12 @@ ${url}
   var variations_default8 = variations8;
 
   // packages/block-library/build-module/heading/index.mjs
+  var { editableRootKey } = unlock2(import_blocks30.privateApis);
   var { name: name36 } = block_default36;
   var settings36 = {
     icon: heading_default,
+    // Opt into the editing host behaviour privately, like the paragraph.
+    [editableRootKey]: true,
     example: {
       attributes: {
         content: (0, import_i18n91.__)("Code is Poetry"),
@@ -61056,12 +61059,12 @@ ${text}
   var transforms_default16 = transforms15;
 
   // packages/block-library/build-module/list-item/index.mjs
-  var { editableRootKey } = unlock2(import_blocks44.privateApis);
+  var { editableRootKey: editableRootKey2 } = unlock2(import_blocks44.privateApis);
   var { name: name45 } = block_default45;
   var settings45 = {
     icon: list_item_default,
     // Opt into the editing host behaviour privately, like the paragraph.
-    [editableRootKey]: true,
+    [editableRootKey2]: true,
     edit: ListItemEdit,
     save: save25,
     merge(attributes2, attributesToMerge) {
@@ -72954,13 +72957,13 @@ ${text}
   var transforms_default22 = transforms21;
 
   // packages/block-library/build-module/paragraph/index.mjs
-  var { editableRootKey: editableRootKey2 } = unlock2(import_blocks68.privateApis);
+  var { editableRootKey: editableRootKey3 } = unlock2(import_blocks68.privateApis);
   var { name: name59 } = block_default58;
   var settings58 = {
     icon: paragraph_default,
     // Opt into the editing host behaviour privately. It's a Symbol setting
     // rather than a public `supports` key so it stays an internal detail.
-    [editableRootKey2]: true,
+    [editableRootKey3]: true,
     example: {
       attributes: {
         content: (0, import_i18n163.__)(
