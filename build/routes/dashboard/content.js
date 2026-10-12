@@ -45028,6 +45028,17 @@ var Trigger7 = (0, import_element158.forwardRef)(
   }
 );
 
+// packages/ui/build-module/utils/use-enable-wp-compat-overlay-slot.mjs
+function useEnableWpCompatOverlaySlot() {
+  if (typeof window === "undefined") {
+    return;
+  }
+  const internalWindow = window;
+  if (internalWindow.__wpUiCompatOverlaySlotEnabled !== true) {
+    internalWindow.__wpUiCompatOverlaySlotEnabled = true;
+  }
+}
+
 // packages/admin-ui/build-module/breadcrumbs/index.mjs
 var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE89 = "data-wp-hash";
@@ -64346,6 +64357,7 @@ function DataViewsPicker({
   empty,
   onReset
 }) {
+  useEnableWpCompatOverlaySlot();
   const { data: displayData, setVisibleEntries } = useData({
     view,
     data,

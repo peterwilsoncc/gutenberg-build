@@ -29318,6 +29318,17 @@ var wp;
     );
   });
 
+  // packages/ui/build-module/utils/use-enable-wp-compat-overlay-slot.mjs
+  function useEnableWpCompatOverlaySlot() {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const internalWindow = window;
+    if (internalWindow.__wpUiCompatOverlaySlotEnabled !== true) {
+      internalWindow.__wpUiCompatOverlaySlotEnabled = true;
+    }
+  }
+
   // packages/dataviews/build-module/components/dataviews-context/index.mjs
   var import_element74 = __toESM(require_element(), 1);
 
@@ -45677,6 +45688,7 @@ If there's a particular need for this, please submit a feature request at https:
     empty,
     onReset
   }) {
+    useEnableWpCompatOverlaySlot();
     const { data: displayData, setVisibleEntries } = useData({
       view,
       data,

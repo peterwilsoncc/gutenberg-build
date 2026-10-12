@@ -28418,6 +28418,17 @@ var ValidatedTextareaControl = (0, import_element72.forwardRef)(function Unforwa
   );
 });
 
+// packages/ui/build-module/utils/use-enable-wp-compat-overlay-slot.mjs
+function useEnableWpCompatOverlaySlot() {
+  if (typeof window === "undefined") {
+    return;
+  }
+  const internalWindow = window;
+  if (internalWindow.__wpUiCompatOverlaySlotEnabled !== true) {
+    internalWindow.__wpUiCompatOverlaySlotEnabled = true;
+  }
+}
+
 // packages/admin-ui/build-module/breadcrumbs/index.mjs
 var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE39 = "data-wp-hash";
@@ -45543,6 +45554,7 @@ function DataViews({
   empty,
   onReset
 }) {
+  useEnableWpCompatOverlaySlot();
   const [selectionState, setSelectionState] = (0, import_element143.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
