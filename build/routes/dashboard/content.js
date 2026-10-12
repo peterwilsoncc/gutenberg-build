@@ -27210,7 +27210,7 @@ var Portal = (0, import_element33.forwardRef)(function MenuPortal3({ container, 
     index_parts_exports4.Portal,
     {
       ref,
-      container: container ?? getWpCompatOverlaySlot(),
+      container: container === void 0 ? getWpCompatOverlaySlot() : container,
       ...props
     }
   );
@@ -28420,7 +28420,7 @@ var Portal2 = (0, import_element44.forwardRef)(
     return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
       index_parts_exports9.Portal,
       {
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...restProps,
         ref
       }
@@ -41919,7 +41919,7 @@ var Portal6 = (0, import_element123.forwardRef)(
     return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
       index_parts_exports2.Portal,
       {
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...restProps,
         ref
       }
@@ -44637,7 +44637,7 @@ var Portal7 = (0, import_element154.forwardRef)(
     return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
       index_parts_exports8.Portal,
       {
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...restProps,
         ref
       }

@@ -16767,7 +16767,7 @@ var Portal = (0, import_element24.forwardRef)(
     return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
       index_parts_exports3.Portal,
       {
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...restProps,
         ref
       }
@@ -18618,7 +18618,7 @@ var Portal2 = (0, import_element43.forwardRef)(
     return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
       index_parts_exports.Portal,
       {
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...restProps,
         ref
       }

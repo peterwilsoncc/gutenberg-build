@@ -19608,7 +19608,7 @@ var wp;
       index_parts_exports2.Portal,
       {
         ref,
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...props
       }
     );
@@ -20818,7 +20818,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
         index_parts_exports5.Portal,
         {
-          container: container ?? getWpCompatOverlaySlot(),
+          container: container === void 0 ? getWpCompatOverlaySlot() : container,
           ...restProps,
           ref
         }

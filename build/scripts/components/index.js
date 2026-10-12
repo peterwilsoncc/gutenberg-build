@@ -51683,7 +51683,7 @@ This message will only show in development mode. It won't appear in production. 
       index_parts_exports.Portal,
       {
         ref,
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...props
       }
     );

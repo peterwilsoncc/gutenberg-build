@@ -8985,7 +8985,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         index_parts_exports.Portal,
         {
-          container: container ?? getWpCompatOverlaySlot(),
+          container: container === void 0 ? getWpCompatOverlaySlot() : container,
           ...restProps,
           ref
         }

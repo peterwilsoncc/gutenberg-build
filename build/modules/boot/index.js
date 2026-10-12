@@ -9084,7 +9084,7 @@ var Portal = (0, import_element15.forwardRef)(
     return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       index_parts_exports.Portal,
       {
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...restProps,
         ref
       }

@@ -32230,7 +32230,7 @@ var wp;
       index_parts_exports3.Portal,
       {
         ref,
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...props
       }
     );
@@ -33440,7 +33440,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
         index_parts_exports8.Portal,
         {
-          container: container ?? getWpCompatOverlaySlot(),
+          container: container === void 0 ? getWpCompatOverlaySlot() : container,
           ...restProps,
           ref
         }
@@ -44492,7 +44492,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
         index_parts_exports2.Portal,
         {
-          container: container ?? getWpCompatOverlaySlot(),
+          container: container === void 0 ? getWpCompatOverlaySlot() : container,
           ...restProps,
           ref
         }
@@ -46222,7 +46222,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
       index_parts_exports6.Portal,
       {
-        container: container ?? getWpCompatOverlaySlot(),
+        container: container === void 0 ? getWpCompatOverlaySlot() : container,
         ...restProps,
         ref
       }
