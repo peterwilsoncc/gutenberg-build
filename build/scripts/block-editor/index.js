@@ -1023,15 +1023,15 @@ var wp;
     }
   });
 
-  // (disabled):node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/terminal-highlight
+  // (disabled):node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/terminal-highlight
   var require_terminal_highlight = __commonJS({
-    "(disabled):node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/terminal-highlight"() {
+    "(disabled):node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/terminal-highlight"() {
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/css-syntax-error.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/css-syntax-error.js
   var require_css_syntax_error = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/css-syntax-error.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/css-syntax-error.js"(exports, module) {
       "use strict";
       var pico = require_picocolors_browser();
       var terminalHighlight = require_terminal_highlight();
@@ -1126,18 +1126,11 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/stringifier.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/stringifier.js
   var require_stringifier = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/stringifier.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/stringifier.js"(exports, module) {
       "use strict";
-      var STYLE_TAG = /(<)(\/?style\b)/gi;
-      var COMMENT_OPEN = /(<)(!--)/g;
       var AT_NAME_END = /[\t\n\f\r "#'()/;[\\\]{}]/;
-      function escapeHTMLInCSS(str) {
-        if (typeof str !== "string") return str;
-        if (!str.includes("<")) return str;
-        return str.replace(STYLE_TAG, "\\3c $2").replace(COMMENT_OPEN, "\\3c $2");
-      }
       var DEFAULT_RAW = {
         after: "\n",
         beforeClose: "\n",
@@ -1169,7 +1162,7 @@ var wp;
       function isCustomProperty(node) {
         if (!node.prop.startsWith("--")) return false;
         let before = node.raws.before;
-        return typeof before === "undefined" || !/\S$/.test(before);
+        return typeof before === "undefined" || !/[^\s;]$/.test(before);
       }
       function pushBody(str, stack, node) {
         let nodes = node.nodes;
@@ -1195,14 +1188,14 @@ var wp;
       }
       function pushBlock(str, stack, node, start2) {
         let between = str.raw(node, "between", "beforeOpen");
-        str.builder(escapeHTMLInCSS(start2 + between) + "{", node, "start");
+        str.builder(start2 + between + "{", node, "start");
         let hasNodes = node.nodes && node.nodes.length;
         let close = () => {
           let after = hasNodes ? str.raw(node, "after") : str.raw(node, "after", "emptyBody");
-          if (after) str.builder(escapeHTMLInCSS(after));
+          if (after) str.builder(after);
           str.builder("}", node, "end");
           if (node.type === "rule" && node.raws.ownSemicolon) {
-            str.builder(escapeHTMLInCSS(node.raws.ownSemicolon), node, "end");
+            str.builder(node.raws.ownSemicolon, node, "end");
           }
         };
         if (hasNodes) {
@@ -1222,7 +1215,7 @@ var wp;
             this.block(node, start2);
           } else {
             let end = (node.raws.between || "") + (semicolon ? ";" : "");
-            this.builder(escapeHTMLInCSS(start2 + end), node);
+            this.builder(start2 + end, node);
           }
         }
         beforeAfter(node, detect) {
@@ -1252,7 +1245,7 @@ var wp;
         }
         block(node, start2) {
           let between = this.raw(node, "between", "beforeOpen");
-          this.builder(escapeHTMLInCSS(start2 + between) + "{", node, "start");
+          this.builder(start2 + between + "{", node, "start");
           let after;
           if (node.nodes && node.nodes.length) {
             this.body(node);
@@ -1260,7 +1253,7 @@ var wp;
           } else {
             after = this.raw(node, "after", "emptyBody");
           }
-          if (after) this.builder(escapeHTMLInCSS(after));
+          if (after) this.builder(after);
           this.builder("}", node, "end");
         }
         body(node) {
@@ -1279,7 +1272,7 @@ var wp;
             let child = entry.node;
             let before = this.raw(child, "before");
             if (before) {
-              this.builder(entry.document ? before : escapeHTMLInCSS(before));
+              this.builder(before);
             }
             if (expandable && child.type === "rule") {
               pushBlock(this, stack, child, this.rawValue(child, "selector"));
@@ -1293,7 +1286,7 @@ var wp;
         comment(node) {
           let left = this.raw(node, "left", "commentLeft");
           let right = this.raw(node, "right", "commentRight");
-          this.builder(escapeHTMLInCSS("/*" + left + node.text + right + "*/"), node);
+          this.builder("/*" + left + node.text + right + "*/", node);
         }
         decl(node, semicolon) {
           let raws = node.raws;
@@ -1303,7 +1296,7 @@ var wp;
             string += raws.important || " !important";
           }
           if (semicolon) string += ";";
-          this.builder(escapeHTMLInCSS(string), node);
+          this.builder(string, node);
         }
         document(node) {
           this.body(node);
@@ -1480,20 +1473,19 @@ var wp;
           return value;
         }
         root(node) {
-          if (node.source && node.source.input.hasBOM) {
+          let inDocument = node.parent && node.parent.type === "document";
+          if (!inDocument && node.source && node.source.input.hasBOM) {
             this.builder("\uFEFF", node, "start");
           }
           this.body(node);
           if (node.raws.after) {
-            let after = node.raws.after;
-            let isDocument = node.parent && node.parent.type === "document";
-            this.builder(isDocument ? after : escapeHTMLInCSS(after));
+            this.builder(node.raws.after);
           }
         }
         rule(node) {
           this.block(node, this.rawValue(node, "selector"));
           if (node.raws.ownSemicolon) {
-            this.builder(escapeHTMLInCSS(node.raws.ownSemicolon), node, "end");
+            this.builder(node.raws.ownSemicolon, node, "end");
           }
         }
         stringify(node, semicolon) {
@@ -1510,32 +1502,78 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/stringify.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/stringify.js
   var require_stringify = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/stringify.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/stringify.js"(exports, module) {
       "use strict";
       var Stringifier = require_stringifier();
+      var STYLE_TAG = /(<)(\/?style\b)/gi;
+      var COMMENT_OPEN = /(<)(!--)/g;
+      function escapeHTMLInCSS(str) {
+        if (!str.includes("<")) return str;
+        return str.replace(STYLE_TAG, "\\3c $2").replace(COMMENT_OPEN, "\\3c $2");
+      }
+      var SafeStringifier = class extends Stringifier {
+        escapeHTML(node, print) {
+          let builder = this.builder;
+          let chunks, css;
+          this.builder = (str, child, type) => {
+            if (chunks) {
+              css += str;
+              chunks.push(str, child, type);
+            } else if (str.includes("<")) {
+              css = str;
+              chunks = [str, child, type];
+            } else {
+              builder(str, child, type);
+            }
+          };
+          print();
+          this.builder = builder;
+          if (!chunks) return;
+          let escaped = escapeHTMLInCSS(css);
+          if (escaped === css) {
+            for (let i = 0; i < chunks.length; i += 3) {
+              builder(chunks[i], chunks[i + 1], chunks[i + 2]);
+            }
+          } else {
+            builder(escaped, node);
+          }
+        }
+        root(node) {
+          if (node.parent && node.parent.type === "document") {
+            this.escapeHTML(node, () => this.body(node));
+            if (node.raws.after) this.builder(node.raws.after);
+          } else {
+            this.escapeHTML(node, () => super.root(node));
+          }
+        }
+      };
       function stringify2(node, builder) {
-        let str = new Stringifier(builder);
-        str.stringify(node);
+        let str = new SafeStringifier(builder);
+        if (node.type === "root" || node.type === "document") {
+          str.stringify(node);
+        } else {
+          str.escapeHTML(node, () => str.stringify(node));
+        }
       }
       module.exports = stringify2;
       stringify2.default = stringify2;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/symbols.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/symbols.js
   var require_symbols = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/symbols.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/symbols.js"(exports, module) {
       "use strict";
       module.exports.isClean = /* @__PURE__ */ Symbol("isClean");
       module.exports.my = /* @__PURE__ */ Symbol("my");
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/node.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/node.js
   var require_node = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/node.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/node.js"(exports, module) {
       "use strict";
       var CssSyntaxError2 = require_css_syntax_error();
       var Stringifier = require_stringifier();
@@ -1948,9 +1986,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/comment.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/comment.js
   var require_comment = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/comment.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/comment.js"(exports, module) {
       "use strict";
       var Node2 = require_node();
       var Comment = class extends Node2 {
@@ -1964,9 +2002,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/declaration.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/declaration.js
   var require_declaration = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/declaration.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/declaration.js"(exports, module) {
       "use strict";
       var Node2 = require_node();
       var Declaration = class extends Node2 {
@@ -1986,9 +2024,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/container.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/container.js
   var require_container = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/container.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/container.js"(exports, module) {
       "use strict";
       var Comment = require_comment();
       var Declaration = require_declaration();
@@ -2408,9 +2446,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/document.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/document.js
   var require_document = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/document.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/document.js"(exports, module) {
       "use strict";
       var Container = require_container();
       var LazyResult;
@@ -2444,9 +2482,9 @@ var wp;
     }
   });
 
-  // (disabled):node_modules/.store/source-map-js@1.2.1-FpYUGYGDLmDEUPF6SfQAGg/node_modules/source-map-js/source-map.js
+  // (disabled):node_modules/.store/source-map-js@1.2.2-Wl9Hm2tEVXeK59YfikwNiA/node_modules/source-map-js/source-map.js
   var require_source_map = __commonJS({
-    "(disabled):node_modules/.store/source-map-js@1.2.1-FpYUGYGDLmDEUPF6SfQAGg/node_modules/source-map-js/source-map.js"() {
+    "(disabled):node_modules/.store/source-map-js@1.2.2-Wl9Hm2tEVXeK59YfikwNiA/node_modules/source-map-js/source-map.js"() {
     }
   });
 
@@ -2456,9 +2494,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/nanoid@3.3.18-iC5TmsPHLgfY_SS39tPU7w/node_modules/nanoid/non-secure/index.cjs
+  // node_modules/.store/nanoid@3.3.20-_aoX9Kd-GoypVSNO-zW6GQ/node_modules/nanoid/non-secure/index.cjs
   var require_non_secure = __commonJS({
-    "node_modules/.store/nanoid@3.3.18-iC5TmsPHLgfY_SS39tPU7w/node_modules/nanoid/non-secure/index.cjs"(exports, module) {
+    "node_modules/.store/nanoid@3.3.20-_aoX9Kd-GoypVSNO-zW6GQ/node_modules/nanoid/non-secure/index.cjs"(exports, module) {
       var urlAlphabet = "useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";
       var customAlphabet = (alphabet, defaultSize = 21) => {
         return (size4 = defaultSize) => {
@@ -2488,9 +2526,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/previous-map.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/previous-map.js
   var require_previous_map = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/previous-map.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/previous-map.js"(exports, module) {
       "use strict";
       var { existsSync, readFileSync, realpathSync } = require_fs();
       var { dirname, isAbsolute, join, relative, sep } = require_path();
@@ -2633,9 +2671,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/input.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/input.js
   var require_input = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/input.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/input.js"(exports, module) {
       "use strict";
       var { nanoid } = require_non_secure();
       var { isAbsolute, resolve } = require_path();
@@ -2867,9 +2905,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/map-generator.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/map-generator.js
   var require_map_generator = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/map-generator.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/map-generator.js"(exports, module) {
       "use strict";
       var { dirname, relative, resolve, sep } = require_path();
       var { SourceMapConsumer, SourceMapGenerator } = require_source_map();
@@ -2934,15 +2972,19 @@ var wp;
             }
           } else if (this.css) {
             let annotation = "/*# sourceMappingURL=";
+            let css = "";
+            let cursor = 0;
             let startIndex;
-            while ((startIndex = this.css.lastIndexOf(annotation)) !== -1) {
+            while ((startIndex = this.css.indexOf(annotation, cursor)) !== -1) {
               let endIndex = this.css.indexOf("*/", startIndex + annotation.length);
               if (endIndex === -1) break;
-              while (startIndex > 0 && this.css[startIndex - 1] === "\n") {
+              while (startIndex > cursor && this.css[startIndex - 1] === "\n") {
                 startIndex--;
               }
-              this.css = this.css.slice(0, startIndex) + this.css.slice(endIndex + 2);
+              css += this.css.slice(cursor, startIndex);
+              cursor = endIndex + 2;
             }
+            if (cursor > 0) this.css = css + this.css.slice(cursor);
           }
         }
         generate() {
@@ -3193,9 +3235,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/at-rule.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/at-rule.js
   var require_at_rule = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/at-rule.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/at-rule.js"(exports, module) {
       "use strict";
       var Container = require_container();
       var AtRule = class extends Container {
@@ -3218,9 +3260,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/root.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/root.js
   var require_root = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/root.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/root.js"(exports, module) {
       "use strict";
       var Container = require_container();
       var LazyResult;
@@ -3280,9 +3322,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/list.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/list.js
   var require_list = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/list.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/list.js"(exports, module) {
       "use strict";
       var list = {
         comma(string) {
@@ -3301,7 +3343,18 @@ var wp;
           let inQuote = false;
           let prevQuote = "";
           let escape = false;
-          for (let letter of string) {
+          let inComment = false;
+          for (let i = 0; i < string.length; i++) {
+            let letter = string[i];
+            if (inComment) {
+              current += letter;
+              if (letter === "*" && string[i + 1] === "/") {
+                current += "/";
+                i += 1;
+                inComment = false;
+              }
+              continue;
+            }
             if (escape) {
               escape = false;
             } else if (letter === "\\") {
@@ -3313,6 +3366,11 @@ var wp;
             } else if (letter === '"' || letter === "'") {
               inQuote = true;
               prevQuote = letter;
+            } else if (letter === "/" && string[i + 1] === "*") {
+              current += "/*";
+              i += 1;
+              inComment = true;
+              continue;
             } else if (letter === "(") {
               func += 1;
             } else if (letter === ")") {
@@ -3339,9 +3397,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/rule.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/rule.js
   var require_rule = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/rule.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/rule.js"(exports, module) {
       "use strict";
       var Container = require_container();
       var list = require_list();
@@ -3366,9 +3424,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/tokenize.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/tokenize.js
   var require_tokenize = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/tokenize.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/tokenize.js"(exports, module) {
       "use strict";
       var SINGLE_QUOTE = "'".charCodeAt(0);
       var DOUBLE_QUOTE = '"'.charCodeAt(0);
@@ -3585,9 +3643,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/parser.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/parser.js
   var require_parser = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/parser.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/parser.js"(exports, module) {
       "use strict";
       var AtRule = require_at_rule();
       var Comment = require_comment();
@@ -4012,6 +4070,7 @@ var wp;
           let token, type;
           let length = tokens.length;
           let value = "";
+          let last = "";
           let clean = true;
           let next, prev;
           for (let i = 0; i < length; i += 1) {
@@ -4023,16 +4082,18 @@ var wp;
               prev = tokens[i - 1] ? tokens[i - 1][0] : "empty";
               next = tokens[i + 1] ? tokens[i + 1][0] : "empty";
               if (!SAFE_COMMENT_NEIGHBOR[prev] && !SAFE_COMMENT_NEIGHBOR[next]) {
-                if (value.slice(-1) === ",") {
+                if (last === ",") {
                   clean = false;
                 } else {
                   value += token[1];
+                  last = token[1].slice(-1);
                 }
               } else {
                 clean = false;
               }
             } else {
               value += token[1];
+              last = token[1].slice(-1);
             }
           }
           if (!clean) {
@@ -4125,9 +4186,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/parse.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/parse.js
   var require_parse = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/parse.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/parse.js"(exports, module) {
       "use strict";
       var Container = require_container();
       var Input4 = require_input();
@@ -4159,9 +4220,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/warning.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/warning.js
   var require_warning2 = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/warning.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/warning.js"(exports, module) {
       "use strict";
       var Container = require_container();
       var { my } = require_symbols();
@@ -4200,9 +4261,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/result.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/result.js
   var require_result = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/result.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/result.js"(exports, module) {
       "use strict";
       var Warning2 = require_warning2();
       var Result = class {
@@ -4239,9 +4300,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/warn-once.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/warn-once.js
   var require_warn_once = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/warn-once.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/warn-once.js"(exports, module) {
       "use strict";
       var printed = {};
       module.exports = function warnOnce(message2) {
@@ -4254,9 +4315,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/lazy-result.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/lazy-result.js
   var require_lazy_result = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/lazy-result.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/lazy-result.js"(exports, module) {
       "use strict";
       var Container = require_container();
       var Document = require_document();
@@ -4781,9 +4842,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/no-work-result.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/no-work-result.js
   var require_no_work_result = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/no-work-result.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/no-work-result.js"(exports, module) {
       "use strict";
       var MapGenerator = require_map_generator();
       var parse5 = require_parse();
@@ -4896,9 +4957,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/processor.js
+  // node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/processor.js
   var require_processor = __commonJS({
-    "node_modules/.store/postcss@8.5.28-nfGTCx087XYBeTijFWJICA/node_modules/postcss/lib/processor.js"(exports, module) {
+    "node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/processor.js"(exports, module) {
       "use strict";
       var Document = require_document();
       var LazyResult = require_lazy_result();
@@ -4906,7 +4967,7 @@ var wp;
       var Root13 = require_root();
       var Processor2 = class {
         constructor(plugins = []) {
-          this.version = "8.5.28";
+          this.version = "8.5.29";
           this.plugins = this.normalize(plugins);
         }
         normalize(plugins) {
@@ -4954,9 +5015,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss-prefix-selector@1.16.1-3ao3uRnDWO5S-RPRYm6unA/node_modules/postcss-prefix-selector/index.js
+  // node_modules/.store/postcss-prefix-selector@1.16.1-Q6C0Q1lE41AuBakt6TCFPQ/node_modules/postcss-prefix-selector/index.js
   var require_postcss_prefix_selector = __commonJS({
-    "node_modules/.store/postcss-prefix-selector@1.16.1-3ao3uRnDWO5S-RPRYm6unA/node_modules/postcss-prefix-selector/index.js"(exports, module) {
+    "node_modules/.store/postcss-prefix-selector@1.16.1-Q6C0Q1lE41AuBakt6TCFPQ/node_modules/postcss-prefix-selector/index.js"(exports, module) {
       module.exports = function postcssPrefixSelector(options) {
         const prefix2 = options.prefix;
         const prefixWithSpace = /\s+$/.test(prefix2) ? prefix2 : `${prefix2} `;
@@ -5445,9 +5506,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/postcss-urlrebase@1.4.0-1tdykCOF5IfFkju3jm_hyA/node_modules/postcss-urlrebase/index.js
+  // node_modules/.store/postcss-urlrebase@1.4.0-EWLXmgQSMRus-HCasjY2NA/node_modules/postcss-urlrebase/index.js
   var require_postcss_urlrebase = __commonJS({
-    "node_modules/.store/postcss-urlrebase@1.4.0-1tdykCOF5IfFkju3jm_hyA/node_modules/postcss-urlrebase/index.js"(exports, module) {
+    "node_modules/.store/postcss-urlrebase@1.4.0-EWLXmgQSMRus-HCasjY2NA/node_modules/postcss-urlrebase/index.js"(exports, module) {
       var CSSValueParser = require_lib();
       module.exports = (opts) => {
         const DEFAULTS = {
