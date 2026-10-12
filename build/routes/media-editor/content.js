@@ -46389,20 +46389,10 @@ function CropperInner({
       willChange
     };
   }
-  const setContainerRef = (0, import_element153.useCallback)(
-    (element) => {
-      if (typeof ref === "function") {
-        ref(element);
-      } else if (ref) {
-        ref.current = element;
-      }
-    },
-    [ref]
-  );
   return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
     "div",
     {
-      ref: setContainerRef,
+      ref,
       className: clsx_default(
         "wp-media-editor-image-editor",
         isDragging && "wp-media-editor-image-editor--dragging",

@@ -80280,20 +80280,10 @@ If there's a particular need for this, please submit a feature request at https:
         willChange
       };
     }
-    const setContainerRef = (0, import_element262.useCallback)(
-      (element) => {
-        if (typeof ref === "function") {
-          ref(element);
-        } else if (ref) {
-          ref.current = element;
-        }
-      },
-      [ref]
-    );
     return /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
       "div",
       {
-        ref: setContainerRef,
+        ref,
         className: clsx_default(
           "wp-media-editor-image-editor",
           isDragging && "wp-media-editor-image-editor--dragging",
