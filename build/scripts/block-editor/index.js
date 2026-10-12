@@ -78250,7 +78250,9 @@ var wp;
       initialAccessibleToolbarState
     );
     const determineIsAccessibleToolbar = (0, import_element237.useCallback)(() => {
-      const tabbables = import_dom63.focus.tabbable.find(toolbarRef.current);
+      const tabbables = import_dom63.focus.tabbable.find(toolbarRef.current).filter(
+        (element) => !element.hasAttribute("data-base-ui-focus-guard")
+      );
       if (tabbables.length === 0) {
         return;
       }
