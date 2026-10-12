@@ -88968,6 +88968,9 @@ ${text}
           width: true
         }
       },
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
       spacing: {
         margin: true,
         padding: true
@@ -88979,7 +88982,8 @@ ${text}
     selectors: {
       color: ".wp-block-search .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input",
       background: ".wp-block-search .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input",
-      border: ".wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper"
+      border: ".wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper",
+      shadow: ".wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper"
     }
   };
 
@@ -89074,6 +89078,7 @@ ${text}
     }
     const colorProps = (0, import_block_editor230.__experimentalUseColorProps)(attributes2);
     const backgroundProps = (0, import_block_editor230.useBackgroundProps)(attributes2);
+    const shadowProps = (0, import_block_editor230.__experimentalGetShadowClassesAndStyles)(attributes2);
     const [fluidTypographySettings, layout] = (0, import_block_editor230.useSettings)(
       "typography.fluid",
       "layout"
@@ -89155,7 +89160,7 @@ ${text}
           borderTopRightRadius: borderProps.style?.borderTopRightRadius,
           borderBottomLeftRadius: borderProps.style?.borderBottomLeftRadius,
           borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
-        } : borderProps.style,
+        } : { ...borderProps.style, ...shadowProps.style },
         ...typographyProps.style,
         textDecoration: void 0
       };
@@ -89193,7 +89198,7 @@ ${text}
           borderTopRightRadius: borderProps.style?.borderTopRightRadius,
           borderBottomLeftRadius: borderProps.style?.borderBottomLeftRadius,
           borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
-        } : borderProps.style
+        } : { ...borderProps.style, ...shadowProps.style }
       };
       return /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_jsx_runtime519.Fragment, { children: [
         buttonUseIcon && /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
@@ -89407,7 +89412,7 @@ ${text}
     const isNonZeroBorderRadius = (radius) => radius !== void 0 && parseInt(radius, 10) !== 0;
     const padBorderRadius = (radius) => isNonZeroBorderRadius(radius) ? `calc(${radius} + ${DEFAULT_INNER_PADDING})` : void 0;
     const getWrapperStyles = () => {
-      const styles = isButtonPositionInside ? borderProps.style : {
+      const styles = isButtonPositionInside ? { ...borderProps.style, ...shadowProps.style } : {
         borderRadius: borderProps.style?.borderRadius,
         borderTopLeftRadius: borderProps.style?.borderTopLeftRadius,
         borderTopRightRadius: borderProps.style?.borderTopRightRadius,
