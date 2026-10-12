@@ -99890,6 +99890,8 @@ ${text}
       color: {
         gradients: true,
         link: true,
+        heading: true,
+        button: true,
         __experimentalDefaultControls: {
           background: true,
           text: true

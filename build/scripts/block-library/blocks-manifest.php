@@ -9777,6 +9777,8 @@ return array(
 			'color' => array(
 				'gradients' => true,
 				'link' => true,
+				'heading' => true,
+				'button' => true,
 				'__experimentalDefaultControls' => array(
 					'background' => true,
 					'text' => true
