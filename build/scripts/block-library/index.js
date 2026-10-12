@@ -2584,14 +2584,14 @@ var wp;
           return x3 === y2 && (0 !== x3 || 1 / x3 === 1 / y2) || x3 !== x3 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React136 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef88 = React136.useRef, useEffect81 = React136.useEffect, useMemo83 = React136.useMemo, useDebugValue2 = React136.useDebugValue;
+        var React136 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef88 = React136.useRef, useEffect81 = React136.useEffect, useMemo84 = React136.useMemo, useDebugValue2 = React136.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot2, getServerSnapshot2, selector, isEqual) {
           var instRef = useRef88(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo83(
+          instRef = useMemo84(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -53739,15 +53739,45 @@ ${text}
   var import_compose25 = __toESM(require_compose(), 1);
   var import_element117 = __toESM(require_element(), 1);
   var import_dom36 = __toESM(require_dom(), 1);
+
+  // packages/block-library/build-module/icon/components/custom-inserter/utils.mjs
+  function groupIconsByCollection(icons, collections) {
+    const groups = new Map(
+      collections.map(({ slug, label }) => [
+        slug,
+        { slug, label, icons: [] }
+      ])
+    );
+    icons.forEach((icon2) => {
+      groups.get(icon2.collection)?.icons.push(icon2);
+    });
+    return [...groups.values()].filter((group) => group.icons.length);
+  }
+
+  // packages/block-library/build-module/icon/components/custom-inserter/icon-grid.mjs
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
   var BATCH_SIZE = 20;
-  function IconGrid({ icons, onChange, value }) {
-    const shownIcons = (0, import_compose25.useAsyncList)(icons, {
+  function IconGrid({ icons, onChange, value, collections }) {
+    const instanceId = (0, import_compose25.useInstanceId)(
+      IconGrid,
+      "wp-block-icon__inserter-grid"
+    );
+    const { groups, orderedIcons } = (0, import_element117.useMemo)(() => {
+      if (!icons?.length || !collections) {
+        return { groups: null, orderedIcons: icons };
+      }
+      const iconGroups = groupIconsByCollection(icons, collections);
+      return {
+        groups: iconGroups,
+        orderedIcons: iconGroups.flatMap((group) => group.icons)
+      };
+    }, [icons, collections]);
+    const shownIcons = (0, import_compose25.useAsyncList)(orderedIcons, {
       step: BATCH_SIZE
     });
     const selectedIconRef = (0, import_element117.useRef)();
-    const selectedIndex = icons?.findIndex((icon2) => icon2.name === value) ?? -1;
-    const isReadyToScroll = selectedIndex >= 0 && (shownIcons.length >= selectedIndex + BATCH_SIZE || shownIcons.length === icons.length);
+    const selectedIndex = orderedIcons?.findIndex((icon2) => icon2.name === value) ?? -1;
+    const isReadyToScroll = selectedIndex >= 0 && (shownIcons.length >= selectedIndex + BATCH_SIZE || shownIcons.length === orderedIcons.length);
     (0, import_element117.useLayoutEffect)(() => {
       const node = selectedIconRef.current;
       if (!isReadyToScroll || !node) {
@@ -53758,30 +53788,59 @@ ${text}
       }
       node.scrollIntoView({ block: "center" });
     }, [isReadyToScroll]);
-    return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { className: "wp-block-icon__inserter-grid", children: !icons?.length ? /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { className: "wp-block-icon__inserter-grid-no-results", children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("p", { children: (0, import_i18n98.__)("No results found.") }) }) : /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
-      "div",
+    const renderIcons = (iconsToRender) => /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { className: "wp-block-icon__inserter-grid-icons-list", children: iconsToRender.map((icon2) => /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
+      import_components51.Button,
       {
-        className: "wp-block-icon__inserter-grid-icons-list",
-        "aria-label": (0, import_i18n98.__)("Icon library"),
-        children: shownIcons.map((icon2) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
-            import_components51.Button,
-            {
-              ref: icon2.name === value ? selectedIconRef : void 0,
-              className: "wp-block-icon__inserter-grid-icons-list-item",
-              onClick: () => onChange(icon2.name),
-              variant: icon2.name === value ? "primary" : void 0,
-              __next40pxDefaultSize: true,
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-icon", children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(html_renderer_default, { html: icon2.content }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-title", children: icon2.label })
-              ]
-            },
-            icon2.name
-          );
-        })
-      }
-    ) });
+        ref: icon2.name === value ? selectedIconRef : void 0,
+        className: "wp-block-icon__inserter-grid-icons-list-item",
+        onClick: () => onChange(icon2.name),
+        variant: icon2.name === value ? "primary" : void 0,
+        __next40pxDefaultSize: true,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-icon", children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(html_renderer_default, { html: icon2.content }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-title", children: icon2.label })
+        ]
+      },
+      icon2.name
+    )) });
+    const renderGroups = () => {
+      let offset4 = 0;
+      return groups.map((group) => {
+        const start = offset4;
+        offset4 += group.icons.length;
+        const shownGroupIcons = group.icons.slice(
+          0,
+          Math.max(0, shownIcons.length - start)
+        );
+        if (!shownGroupIcons.length) {
+          return null;
+        }
+        const headingId = `${instanceId}-${group.slug}`;
+        return /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
+          "div",
+          {
+            role: "group",
+            "aria-labelledby": headingId,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
+                "h2",
+                {
+                  id: headingId,
+                  className: "wp-block-icon__inserter-grid-group-title",
+                  children: group.label
+                }
+              ),
+              renderIcons(shownGroupIcons)
+            ]
+          },
+          group.slug
+        );
+      });
+    };
+    if (!icons?.length) {
+      return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { className: "wp-block-icon__inserter-grid", children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { className: "wp-block-icon__inserter-grid-no-results", children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("p", { children: (0, import_i18n98.__)("No results found.") }) }) });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { className: "wp-block-icon__inserter-grid", children: groups ? renderGroups() : renderIcons(shownIcons) });
   }
 
   // packages/block-library/build-module/utils/search-patterns.mjs
@@ -53908,7 +53967,8 @@ ${text}
                       {
                         icons: filteredIcons,
                         onChange,
-                        value
+                        value,
+                        collections: collectionSlug === "" && collections?.length > 1 ? collections : void 0
                       }
                     )
                   },
