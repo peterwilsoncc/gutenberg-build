@@ -900,7 +900,7 @@ var wp;
   // packages/block-directory/build-module/plugins/inserter-menu-downloadable-blocks-panel/index.mjs
   var import_block_editor3 = __toESM(require_block_editor(), 1);
   var import_compose = __toESM(require_compose(), 1);
-  var import_element34 = __toESM(require_element(), 1);
+  var import_element35 = __toESM(require_element(), 1);
 
   // packages/block-directory/build-module/components/downloadable-blocks-panel/index.mjs
   var import_i18n13 = __toESM(require_i18n(), 1);
@@ -934,7 +934,7 @@ var wp;
   // packages/block-directory/build-module/components/downloadable-block-list-item/index.mjs
   var import_i18n9 = __toESM(require_i18n(), 1);
   var import_components = __toESM(require_components(), 1);
-  var import_element32 = __toESM(require_element(), 1);
+  var import_element33 = __toESM(require_element(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
   var import_blocks3 = __toESM(require_blocks(), 1);
   var import_data6 = __toESM(require_data(), 1);
@@ -9562,8 +9562,11 @@ var wp;
 
   // packages/ui/build-module/button/button.mjs
   var import_a11y = __toESM(require_a11y(), 1);
-  var import_element12 = __toESM(require_element(), 1);
+  var import_element13 = __toESM(require_element(), 1);
   var import_i18n2 = __toESM(require_i18n(), 1);
+
+  // packages/ui/build-module/spinner/spinner.mjs
+  var import_element12 = __toESM(require_element(), 1);
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
   function getRuntime2() {
@@ -9646,90 +9649,37 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle2("effc4e3032", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);left:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
+    registerStyle2("bc09fb824f", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator{fill:transparent;stroke:currentColor;stroke-width:var(--wpds-border-width-sm,2px);stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_02322d973909703c__spinner-spin 1.4s linear infinite both}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
   }
-  var style_default2 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
-  if (typeof process === "undefined" || true) {
-    registerStyle2("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-  }
-  var resets_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof process === "undefined" || true) {
-    registerStyle2("7c3267f794", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-  }
-  var focus_module_default = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-  if (typeof process === "undefined" || true) {
-    registerStyle2("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
-  }
-  var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-  var Button3 = (0, import_element12.forwardRef)(
-    function UnforwardedButton({
-      tone = "brand",
-      variant = "solid",
-      size: size4 = "default",
-      className,
-      focusableWhenDisabled = true,
-      disabled: disabled2,
-      loading,
-      loadingAnnouncement = (0, import_i18n2.__)("Loading"),
-      children,
-      ...props
-    }, ref) {
-      const mergedClassName = clsx_default(
-        global_css_defense_default2.button,
-        resets_default["box-sizing"],
-        focus_module_default["outset-ring--focus-except-active"],
-        variant !== "unstyled" && style_default2.button,
-        style_default2[`is-${tone}`],
-        style_default2[`is-${variant}`],
-        style_default2[`is-${size4}`],
-        loading && style_default2["is-loading"],
-        className
-      );
-      (0, import_element12.useEffect)(() => {
-        if (loading && loadingAnnouncement) {
-          (0, import_a11y.speak)(loadingAnnouncement);
-        }
-      }, [loading, loadingAnnouncement]);
+  var style_default2 = { "spinner": "ab4d64c07c0ba587__spinner", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
+  var Spinner = (0, import_element12.forwardRef)(
+    function UnforwardedSpinner({ className, color, style, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-        Button,
+        "svg",
         {
-          ref,
-          className: mergedClassName,
-          focusableWhenDisabled,
-          disabled: disabled2 ?? loading,
+          className: clsx_default(style_default2.spinner, className),
+          style: color === void 0 ? style : { ...style, color },
+          viewBox: "0 0 100 100",
+          xmlns: "http://www.w3.org/2000/svg",
+          role: "presentation",
+          focusable: "false",
           ...props,
-          children
-        }
-      );
-    }
-  );
-
-  // packages/ui/build-module/button/icon.mjs
-  var import_element14 = __toESM(require_element(), 1);
-
-  // packages/ui/build-module/icon/icon.mjs
-  var import_element13 = __toESM(require_element(), 1);
-  var import_primitives = __toESM(require_primitives(), 1);
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  var Icon = (0, import_element13.forwardRef)(
-    function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
-      const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-        import_primitives.SVG,
-        {
           ref,
-          ...icon.props,
-          ...restProps,
-          ...mergedStyle ? { style: mergedStyle } : {},
-          width: size4,
-          height: size4
+          children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            "path",
+            {
+              className: style_default2.indicator,
+              d: "m 50 0 a 50 50 0 0 1 0 100",
+              vectorEffect: "non-scaling-stroke"
+            }
+          )
         }
       );
     }
   );
 
-  // packages/ui/build-module/button/icon.mjs
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/button/button.mjs
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
   function getRuntime3() {
     const globalScope = globalThis;
@@ -9811,110 +9761,93 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle3("effc4e3032", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);left:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
+    registerStyle3("7d9151d891", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._1322fe375ff021a3__spinner){opacity:0}}}@layer compositions{._1322fe375ff021a3__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}');
   }
-  var style_default3 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
-  var ButtonIcon = (0, import_element14.forwardRef)(
-    function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
-        Icon,
+  var style_default3 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "spinner": "_1322fe375ff021a3__spinner" };
+  if (typeof process === "undefined" || true) {
+    registerStyle3("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+  }
+  var resets_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  if (typeof process === "undefined" || true) {
+    registerStyle3("7c3267f794", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  }
+  var focus_module_default = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+  if (typeof process === "undefined" || true) {
+    registerStyle3("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
+  }
+  var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
+  var Button3 = (0, import_element13.forwardRef)(
+    function UnforwardedButton({
+      tone = "brand",
+      variant = "solid",
+      size: size4 = "default",
+      className,
+      focusableWhenDisabled = true,
+      disabled: disabled2,
+      loading,
+      loadingAnnouncement = (0, import_i18n2.__)("Loading"),
+      children,
+      ...props
+    }, ref) {
+      const mergedClassName = clsx_default(
+        global_css_defense_default2.button,
+        resets_default["box-sizing"],
+        focus_module_default["outset-ring--focus-except-active"],
+        variant !== "unstyled" && style_default3.button,
+        style_default3[`is-${tone}`],
+        style_default3[`is-${variant}`],
+        style_default3[`is-${size4}`],
+        loading && style_default3["is-loading"],
+        className
+      );
+      (0, import_element13.useEffect)(() => {
+        if (loading && loadingAnnouncement) {
+          (0, import_a11y.speak)(loadingAnnouncement);
+        }
+      }, [loading, loadingAnnouncement]);
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+        Button,
         {
           ref,
-          icon,
-          className: clsx_default(style_default3.icon, className),
-          size: 24,
-          ...props
+          className: mergedClassName,
+          focusableWhenDisabled,
+          disabled: disabled2 ?? loading,
+          ...props,
+          children: [
+            children,
+            loading && variant !== "unstyled" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Spinner, { className: style_default3.spinner })
+          ]
         }
       );
     }
   );
 
-  // packages/ui/build-module/button/index.mjs
-  ButtonIcon.displayName = "Button.Icon";
-  var Button4 = Object.assign(Button3, {
-    /**
-     * An icon component specifically designed to work well when rendered inside
-     * a `Button` component.
-     */
-    Icon: ButtonIcon
-  });
-
-  // packages/icons/build-module/icon/index.mjs
+  // packages/ui/build-module/button/icon.mjs
   var import_element15 = __toESM(require_element(), 1);
-  var icon_default = (0, import_element15.forwardRef)(
-    ({ icon, size: size4 = 24, style, ...props }, ref) => {
-      const intrinsicStyle = icon.props.style;
-      const mergedStyle = intrinsicStyle || style ? { ...intrinsicStyle, ...style } : void 0;
-      return (0, import_element15.cloneElement)(icon, {
-        width: size4,
-        height: size4,
-        ...props,
-        // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
-        // stroke-based icons) is preserved unless the consumer overrides
-        // the same property explicitly.
-        ...mergedStyle ? { style: mergedStyle } : {},
-        ref
-      });
+
+  // packages/ui/build-module/icon/icon.mjs
+  var import_element14 = __toESM(require_element(), 1);
+  var import_primitives = __toESM(require_primitives(), 1);
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  var Icon = (0, import_element14.forwardRef)(
+    function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
+      const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        import_primitives.SVG,
+        {
+          ref,
+          ...icon.props,
+          ...restProps,
+          ...mergedStyle ? { style: mergedStyle } : {},
+          width: size4,
+          height: size4
+        }
+      );
     }
   );
 
-  // packages/icons/build-module/library/caution.mjs
-  var import_primitives2 = __toESM(require_primitives(), 1);
+  // packages/ui/build-module/button/icon.mjs
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  var caution_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives2.Path, { d: "M12 8L12 13M12 14.5L12 16M4.75 12C4.75 7.99593 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12Z", strokeLinejoin: "round" }) });
-
-  // packages/icons/build-module/library/close-small.mjs
-  var import_primitives3 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives3.Path, { d: "M7.75 16.25L16.25 7.75M16.25 16.25L7.75 7.75" }) });
-
-  // packages/icons/build-module/library/error.mjs
-  var import_primitives4 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-  var error_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives4.Path, { d: "M12 9L12 14M12 15.5V17M11.1284 5.04947L3.83827 18.0097C3.46331 18.6763 3.94502 19.5 4.70985 19.5H19.2902C20.055 19.5 20.5367 18.6763 20.1617 18.0097L12.8716 5.04947C12.4893 4.36982 11.5107 4.36982 11.1284 5.04947Z" }) });
-
-  // packages/icons/build-module/library/info.mjs
-  var import_primitives5 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  var info_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives5.Path, { d: "M12 16V11M12 9.5V8M19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12C4.75 7.99594 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12Z", strokeLinejoin: "round" }) });
-
-  // packages/icons/build-module/library/published.mjs
-  var import_primitives6 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
-  var published_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives6.Path, { d: "M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z", strokeLinejoin: "round" }),
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives6.Path, { d: "M9 12L11 14L15 10" })
-  ] });
-
-  // packages/icons/build-module/library/star-empty.mjs
-  var import_primitives7 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-  var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives7.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z" }) });
-
-  // packages/icons/build-module/library/star-filled.mjs
-  var import_primitives8 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
-  var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives8.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", fill: "currentColor" }) });
-
-  // packages/icons/build-module/library/star-half.mjs
-  var import_primitives9 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
-  var star_half_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives9.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z" }),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives9.Path, { d: "M11.4653 15.4048C11.7941 15.232 12 14.8912 12 14.5197V5.71576L10.3894 8.97924C10.2437 9.27438 9.96215 9.47895 9.63644 9.52628L6.03497 10.0496L8.64102 12.5899C8.8767 12.8196 8.98425 13.1506 8.92861 13.475L8.31341 17.0619L11.4653 15.4048Z", fill: "currentColor", stroke: "none" })
-  ] });
-
-  // packages/icons/build-module/library/tip.mjs
-  var import_primitives10 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-  var tip_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives10.Path, { d: "M8 18.25L16 18.25M10 21.25H14M18 9C18 12.3137 15.3137 15 12 15C8.68629 15 6 12.3137 6 9C6 5.68629 8.68629 3 12 3C15.3137 3 18 5.68629 18 9Z" }) });
-
-  // packages/ui/build-module/utils/keyboard-shortcut.mjs
-  var import_element17 = __toESM(require_element(), 1);
-  var import_i18n3 = __toESM(require_i18n(), 1);
-
-  // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-  var import_element16 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE4 = "data-wp-hash";
   function getRuntime4() {
     const globalScope = globalThis;
@@ -9996,74 +9929,110 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle4("15abcab4d0", ".f37b9e2e191ebd66__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+    registerStyle4("7d9151d891", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._1322fe375ff021a3__spinner){opacity:0}}}@layer compositions{._1322fe375ff021a3__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}');
   }
-  var style_default4 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-  var VisuallyHidden = (0, import_element16.forwardRef)(
-    function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
-      const element = useRender({
-        render,
-        ref,
-        props: mergeProps(
-          { className: style_default4["visually-hidden"] },
-          restProps,
-          {
-            // @ts-expect-error Arbitrary data-* attributes aren't indexable on the typed div props. Kept hardcoded so consumers can't change or remove it.
-            "data-visually-hidden": ""
-          }
-        )
-      });
-      return element;
+  var style_default4 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "spinner": "_1322fe375ff021a3__spinner" };
+  var ButtonIcon = (0, import_element15.forwardRef)(
+    function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+        Icon,
+        {
+          ref,
+          icon,
+          className: clsx_default(style_default4.icon, className),
+          size: 24,
+          ...props
+        }
+      );
     }
   );
 
-  // packages/ui/build-module/utils/keyboard-shortcut.mjs
+  // packages/ui/build-module/button/index.mjs
+  ButtonIcon.displayName = "Button.Icon";
+  var Button4 = Object.assign(Button3, {
+    /**
+     * An icon component specifically designed to work well when rendered inside
+     * a `Button` component.
+     */
+    Icon: ButtonIcon
+  });
+
+  // packages/icons/build-module/icon/index.mjs
+  var import_element16 = __toESM(require_element(), 1);
+  var icon_default = (0, import_element16.forwardRef)(
+    ({ icon, size: size4 = 24, style, ...props }, ref) => {
+      const intrinsicStyle = icon.props.style;
+      const mergedStyle = intrinsicStyle || style ? { ...intrinsicStyle, ...style } : void 0;
+      return (0, import_element16.cloneElement)(icon, {
+        width: size4,
+        height: size4,
+        ...props,
+        // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
+        // stroke-based icons) is preserved unless the consumer overrides
+        // the same property explicitly.
+        ...mergedStyle ? { style: mergedStyle } : {},
+        ref
+      });
+    }
+  );
+
+  // packages/icons/build-module/library/caution.mjs
+  var import_primitives2 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  var caution_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives2.Path, { d: "M12 8L12 13M12 14.5L12 16M4.75 12C4.75 7.99593 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12Z", strokeLinejoin: "round" }) });
+
+  // packages/icons/build-module/library/close-small.mjs
+  var import_primitives3 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives3.Path, { d: "M7.75 16.25L16.25 7.75M16.25 16.25L7.75 7.75" }) });
+
+  // packages/icons/build-module/library/error.mjs
+  var import_primitives4 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+  var error_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives4.Path, { d: "M12 9L12 14M12 15.5V17M11.1284 5.04947L3.83827 18.0097C3.46331 18.6763 3.94502 19.5 4.70985 19.5H19.2902C20.055 19.5 20.5367 18.6763 20.1617 18.0097L12.8716 5.04947C12.4893 4.36982 11.5107 4.36982 11.1284 5.04947Z" }) });
+
+  // packages/icons/build-module/library/info.mjs
+  var import_primitives5 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  var info_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives5.Path, { d: "M12 16V11M12 9.5V8M19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12C4.75 7.99594 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12Z", strokeLinejoin: "round" }) });
+
+  // packages/icons/build-module/library/published.mjs
+  var import_primitives6 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  var published_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives6.Path, { d: "M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z", strokeLinejoin: "round" }),
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives6.Path, { d: "M9 12L11 14L15 10" })
+  ] });
+
+  // packages/icons/build-module/library/star-empty.mjs
+  var import_primitives7 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+  var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives7.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z" }) });
+
+  // packages/icons/build-module/library/star-filled.mjs
+  var import_primitives8 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+  var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives8.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", fill: "currentColor" }) });
+
+  // packages/icons/build-module/library/star-half.mjs
+  var import_primitives9 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+  var star_half_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives9.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z" }),
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives9.Path, { d: "M11.4653 15.4048C11.7941 15.232 12 14.8912 12 14.5197V5.71576L10.3894 8.97924C10.2437 9.27438 9.96215 9.47895 9.63644 9.52628L6.03497 10.0496L8.64102 12.5899C8.8767 12.8196 8.98425 13.1506 8.92861 13.475L8.31341 17.0619L11.4653 15.4048Z", fill: "currentColor", stroke: "none" })
+  ] });
+
+  // packages/icons/build-module/library/tip.mjs
+  var import_primitives10 = __toESM(require_primitives(), 1);
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-  function useKeyboardShortcutProps({
-    "aria-describedby": ariaDescribedBy,
-    "aria-keyshortcuts": ariaKeyShortcuts,
-    shortcut
-  }) {
-    const generatedDescriptionId = (0, import_element17.useId)();
-    const descriptionId = shortcut ? generatedDescriptionId : void 0;
-    const describedBy = [ariaDescribedBy, descriptionId].filter(Boolean).join(" ");
-    return {
-      descriptionId,
-      targetProps: {
-        "aria-describedby": describedBy || void 0,
-        "aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
-      }
-    };
-  }
-  var KeyboardShortcutDescription = (0, import_element17.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-      VisuallyHidden,
-      {
-        id: descriptionId,
-        "aria-hidden": "true",
-        render: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { ref }),
-        children: (0, import_i18n3.sprintf)(
-          /* translators: %s: keyboard shortcut. */
-          (0, import_i18n3.__)("Keyboard shortcut: %s"),
-          shortcut.label ?? shortcut.ariaKeyShortcut
-        )
-      }
-    );
-  });
-  var KeyboardShortcutDisplay = (0, import_element17.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
-  });
+  var tip_default = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives10.Path, { d: "M8 18.25L16 18.25M10 21.25H14M18 9C18 12.3137 15.3137 15 12 15C8.68629 15 6 12.3137 6 9C6 5.68629 8.68629 3 12 3C15.3137 3 18 5.68629 18 9Z" }) });
 
-  // packages/ui/build-module/utils/render-slot-with-children.mjs
+  // packages/ui/build-module/utils/keyboard-shortcut.mjs
   var import_element18 = __toESM(require_element(), 1);
-  function renderSlotWithChildren(slot, defaultSlot, children) {
-    return (0, import_element18.cloneElement)(
-      slot ?? defaultSlot,
-      { children }
-    );
-  }
+  var import_i18n3 = __toESM(require_i18n(), 1);
 
-  // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+  // packages/ui/build-module/visually-hidden/visually-hidden.mjs
+  var import_element17 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
   function getRuntime5() {
     const globalScope = globalThis;
@@ -10145,104 +10114,74 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle5("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
+    registerStyle5("15abcab4d0", ".f37b9e2e191ebd66__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
   }
-  var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
-  var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-  function resolveOwnerDocument() {
-    return typeof document === "undefined" ? null : document;
-  }
-  function isInWordPressEnvironment() {
-    let topWp;
-    try {
-      topWp = window.top?.wp;
-    } catch {
-    }
-    const wp = topWp ?? window.wp;
-    return typeof wp?.components === "object" && wp.components !== null;
-  }
-  var cachedSlot = null;
-  function ensureSlotIsAccessible(element) {
-    element.setAttribute("aria-hidden", "false");
-    return element;
-  }
-  function createSlot(ownerDocument2) {
-    const element = ownerDocument2.createElement("div");
-    element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-    if (wp_compat_overlay_slot_default.slot) {
-      element.classList.add(wp_compat_overlay_slot_default.slot);
-    }
-    ownerDocument2.body.appendChild(element);
-    return element;
-  }
-  function getWpCompatOverlaySlot() {
-    if (typeof window === "undefined") {
-      return void 0;
-    }
-    if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
-      return void 0;
-    }
-    const ownerDocument2 = resolveOwnerDocument();
-    if (!ownerDocument2 || !ownerDocument2.body) {
-      return void 0;
-    }
-    if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
-      return ensureSlotIsAccessible(cachedSlot);
-    }
-    const existing = ownerDocument2.querySelector(
-      `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
-    );
-    if (existing instanceof HTMLDivElement) {
-      cachedSlot = ensureSlotIsAccessible(existing);
-      return cachedSlot;
-    }
-    if (cachedSlot?.isConnected) {
-      cachedSlot.remove();
-    }
-    cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
-    return cachedSlot;
-  }
-
-  // packages/ui/build-module/utils/direction-provider.mjs
-  var import_i18n4 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
-  function DirectionProvider3({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DirectionProvider, { direction: (0, import_i18n4.isRTL)() ? "rtl" : "ltr", children });
-  }
-
-  // packages/ui/build-module/tooltip/index.mjs
-  var tooltip_exports = {};
-  __export(tooltip_exports, {
-    Popup: () => Popup,
-    Portal: () => Portal,
-    Positioner: () => Positioner,
-    Provider: () => Provider,
-    Root: () => Root,
-    Trigger: () => Trigger
-  });
-
-  // packages/ui/build-module/tooltip/popup.mjs
-  var import_element21 = __toESM(require_element(), 1);
-
-  // packages/ui/build-module/tooltip/portal.mjs
-  var import_element19 = __toESM(require_element(), 1);
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
-  var Portal = (0, import_element19.forwardRef)(
-    function TooltipPortal3({ container, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-        index_parts_exports.Portal,
-        {
-          container: container === void 0 ? getWpCompatOverlaySlot() : container,
-          ...restProps,
-          ref
-        }
-      );
+  var style_default5 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
+  var VisuallyHidden = (0, import_element17.forwardRef)(
+    function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
+      const element = useRender({
+        render,
+        ref,
+        props: mergeProps(
+          { className: style_default5["visually-hidden"] },
+          restProps,
+          {
+            // @ts-expect-error Arbitrary data-* attributes aren't indexable on the typed div props. Kept hardcoded so consumers can't change or remove it.
+            "data-visually-hidden": ""
+          }
+        )
+      });
+      return element;
     }
   );
 
-  // packages/ui/build-module/tooltip/positioner.mjs
-  var import_element20 = __toESM(require_element(), 1);
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/utils/keyboard-shortcut.mjs
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+  function useKeyboardShortcutProps({
+    "aria-describedby": ariaDescribedBy,
+    "aria-keyshortcuts": ariaKeyShortcuts,
+    shortcut
+  }) {
+    const generatedDescriptionId = (0, import_element18.useId)();
+    const descriptionId = shortcut ? generatedDescriptionId : void 0;
+    const describedBy = [ariaDescribedBy, descriptionId].filter(Boolean).join(" ");
+    return {
+      descriptionId,
+      targetProps: {
+        "aria-describedby": describedBy || void 0,
+        "aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
+      }
+    };
+  }
+  var KeyboardShortcutDescription = (0, import_element18.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+      VisuallyHidden,
+      {
+        id: descriptionId,
+        "aria-hidden": "true",
+        render: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { ref }),
+        children: (0, import_i18n3.sprintf)(
+          /* translators: %s: keyboard shortcut. */
+          (0, import_i18n3.__)("Keyboard shortcut: %s"),
+          shortcut.label ?? shortcut.ariaKeyShortcut
+        )
+      }
+    );
+  });
+  var KeyboardShortcutDisplay = (0, import_element18.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
+  });
+
+  // packages/ui/build-module/utils/render-slot-with-children.mjs
+  var import_element19 = __toESM(require_element(), 1);
+  function renderSlotWithChildren(slot, defaultSlot, children) {
+    return (0, import_element19.cloneElement)(
+      slot ?? defaultSlot,
+      { children }
+    );
+  }
+
+  // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
   var STYLE_HASH_ATTRIBUTE6 = "data-wp-hash";
   function getRuntime6() {
     const globalScope = globalThis;
@@ -10324,61 +10263,103 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle6("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+    registerStyle6("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
   }
-  var resets_default2 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof process === "undefined" || true) {
-    registerStyle6("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
+  var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
+  var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+  function resolveOwnerDocument() {
+    return typeof document === "undefined" ? null : document;
   }
-  var style_default5 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-  var Positioner = (0, import_element20.forwardRef)(
-    function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+  function isInWordPressEnvironment() {
+    let topWp;
+    try {
+      topWp = window.top?.wp;
+    } catch {
+    }
+    const wp = topWp ?? window.wp;
+    return typeof wp?.components === "object" && wp.components !== null;
+  }
+  var cachedSlot = null;
+  function ensureSlotIsAccessible(element) {
+    element.setAttribute("aria-hidden", "false");
+    return element;
+  }
+  function createSlot(ownerDocument2) {
+    const element = ownerDocument2.createElement("div");
+    element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+    if (wp_compat_overlay_slot_default.slot) {
+      element.classList.add(wp_compat_overlay_slot_default.slot);
+    }
+    ownerDocument2.body.appendChild(element);
+    return element;
+  }
+  function getWpCompatOverlaySlot() {
+    if (typeof window === "undefined") {
+      return void 0;
+    }
+    if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
+      return void 0;
+    }
+    const ownerDocument2 = resolveOwnerDocument();
+    if (!ownerDocument2 || !ownerDocument2.body) {
+      return void 0;
+    }
+    if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
+      return ensureSlotIsAccessible(cachedSlot);
+    }
+    const existing = ownerDocument2.querySelector(
+      `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
+    );
+    if (existing instanceof HTMLDivElement) {
+      cachedSlot = ensureSlotIsAccessible(existing);
+      return cachedSlot;
+    }
+    if (cachedSlot?.isConnected) {
+      cachedSlot.remove();
+    }
+    cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
+    return cachedSlot;
+  }
+
+  // packages/ui/build-module/utils/direction-provider.mjs
+  var import_i18n4 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+  function DirectionProvider3({ children }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DirectionProvider, { direction: (0, import_i18n4.isRTL)() ? "rtl" : "ltr", children });
+  }
+
+  // packages/ui/build-module/tooltip/index.mjs
+  var tooltip_exports = {};
+  __export(tooltip_exports, {
+    Popup: () => Popup,
+    Portal: () => Portal,
+    Positioner: () => Positioner,
+    Provider: () => Provider,
+    Root: () => Root,
+    Trigger: () => Trigger
+  });
+
+  // packages/ui/build-module/tooltip/popup.mjs
+  var import_element22 = __toESM(require_element(), 1);
+
+  // packages/ui/build-module/tooltip/portal.mjs
+  var import_element20 = __toESM(require_element(), 1);
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+  var Portal = (0, import_element20.forwardRef)(
+    function TooltipPortal3({ container, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-        index_parts_exports.Positioner,
+        index_parts_exports.Portal,
         {
-          ref,
-          align,
-          side,
-          sideOffset,
-          ...props,
-          className: clsx_default(
-            resets_default2["box-sizing"],
-            style_default5.positioner,
-            className
-          )
+          container: container === void 0 ? getWpCompatOverlaySlot() : container,
+          ...restProps,
+          ref
         }
       );
     }
   );
 
-  // packages/ui/build-module/utils/theme-provider.mjs
-  var theme = __toESM(require_theme(), 1);
-
-  // packages/ui/build-module/lock-unlock.mjs
-  var import_private_apis = __toESM(require_private_apis(), 1);
-  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/ui"
-  );
-
-  // packages/ui/build-module/utils/theme-provider.mjs
-  function getThemeProvider() {
-    const themePackage = theme;
-    if (themePackage.ThemeProvider) {
-      return themePackage.ThemeProvider;
-    }
-    if (!themePackage.privateApis) {
-      throw new Error(
-        "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
-      );
-    }
-    return unlock(
-      themePackage.privateApis
-    ).ThemeProvider;
-  }
-  var ThemeProvider = getThemeProvider();
-
-  // packages/ui/build-module/tooltip/popup.mjs
+  // packages/ui/build-module/tooltip/positioner.mjs
+  var import_element21 = __toESM(require_element(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
   function getRuntime7() {
@@ -10461,53 +10442,62 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
+    registerStyle7("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+  }
+  var resets_default2 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  if (typeof process === "undefined" || true) {
     registerStyle7("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
   var style_default6 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-  var POPUP_COLOR = { background: "#1e1e1e" };
-  var Popup = (0, import_element21.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-      index_parts_exports.Popup,
-      {
-        ref,
-        className: clsx_default(style_default6.popup, className),
-        ...props,
-        children
-      }
-    ) });
-    const positionedPopup = renderSlotWithChildren(
-      positioner,
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Positioner, {}),
-      popupContent
-    );
-    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Portal, {}), positionedPopup);
-  });
-
-  // packages/ui/build-module/tooltip/trigger.mjs
-  var import_element22 = __toESM(require_element(), 1);
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
-  var Trigger = (0, import_element22.forwardRef)(
-    function TooltipTrigger3(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(index_parts_exports.Trigger, { ref, ...props });
+  var Positioner = (0, import_element21.forwardRef)(
+    function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+        index_parts_exports.Positioner,
+        {
+          ref,
+          align,
+          side,
+          sideOffset,
+          ...props,
+          className: clsx_default(
+            resets_default2["box-sizing"],
+            style_default6.positioner,
+            className
+          )
+        }
+      );
     }
   );
 
-  // packages/ui/build-module/tooltip/root.mjs
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-  function Root(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(index_parts_exports.Root, { ...props }) });
-  }
+  // packages/ui/build-module/utils/theme-provider.mjs
+  var theme = __toESM(require_theme(), 1);
 
-  // packages/ui/build-module/tooltip/provider.mjs
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
-  function Provider({ ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(index_parts_exports.Provider, { ...props });
-  }
+  // packages/ui/build-module/lock-unlock.mjs
+  var import_private_apis = __toESM(require_private_apis(), 1);
+  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/ui"
+  );
 
-  // packages/ui/build-module/link/link.mjs
-  var import_element23 = __toESM(require_element(), 1);
-  var import_i18n5 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/utils/theme-provider.mjs
+  function getThemeProvider() {
+    const themePackage = theme;
+    if (themePackage.ThemeProvider) {
+      return themePackage.ThemeProvider;
+    }
+    if (!themePackage.privateApis) {
+      throw new Error(
+        "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
+      );
+    }
+    return unlock(
+      themePackage.privateApis
+    ).ThemeProvider;
+  }
+  var ThemeProvider = getThemeProvider();
+
+  // packages/ui/build-module/tooltip/popup.mjs
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
   function getRuntime8() {
     const globalScope = globalThis;
@@ -10589,70 +10579,52 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle8("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+    registerStyle8("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
-  var resets_default3 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof process === "undefined" || true) {
-    registerStyle8("7c3267f794", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-  }
-  var focus_module_default2 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-  if (typeof process === "undefined" || true) {
-    registerStyle8("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
-  }
-  var style_default7 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
-  if (typeof process === "undefined" || true) {
-    registerStyle8("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
-  }
-  var global_css_defense_default3 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-  var Link = (0, import_element23.forwardRef)(
-    function UnforwardedLink({
-      children,
-      variant = "default",
-      tone = "brand",
-      openInNewTab = false,
-      target,
-      render,
-      className,
-      ...props
-    }, ref) {
-      const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
-      const element = useRender({
-        render,
-        defaultTagName: "a",
+  var style_default7 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+  var POPUP_COLOR = { background: "#1e1e1e" };
+  var Popup = (0, import_element22.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+      index_parts_exports.Popup,
+      {
         ref,
-        props: mergeProps(props, {
-          className: clsx_default(
-            global_css_defense_default3.a,
-            resets_default3["box-sizing"],
-            focus_module_default2["outset-ring--focus-except-active"],
-            variant !== "unstyled" && style_default7.link,
-            variant !== "unstyled" && style_default7[`is-${tone}`],
-            variant === "unstyled" && style_default7["is-unstyled"],
-            className
-          ),
-          target: target ?? (openInNewTab ? "_blank" : void 0),
-          children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
-            children,
-            shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-              "span",
-              {
-                className: style_default7["link-icon"],
-                role: "img",
-                "aria-label": (
-                  /* translators: accessibility text appended to link text */
-                  (0, import_i18n5.__)("(opens in a new tab)")
-                )
-              }
-            )
-          ] })
-        })
-      });
-      return element;
+        className: clsx_default(style_default7.popup, className),
+        ...props,
+        children
+      }
+    ) });
+    const positionedPopup = renderSlotWithChildren(
+      positioner,
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Positioner, {}),
+      popupContent
+    );
+    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Portal, {}), positionedPopup);
+  });
+
+  // packages/ui/build-module/tooltip/trigger.mjs
+  var import_element23 = __toESM(require_element(), 1);
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+  var Trigger = (0, import_element23.forwardRef)(
+    function TooltipTrigger3(props, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(index_parts_exports.Trigger, { ref, ...props });
     }
   );
 
-  // packages/ui/build-module/icon-button/icon-button.mjs
+  // packages/ui/build-module/tooltip/root.mjs
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+  function Root(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(index_parts_exports.Root, { ...props }) });
+  }
+
+  // packages/ui/build-module/tooltip/provider.mjs
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+  function Provider({ ...props }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(index_parts_exports.Provider, { ...props });
+  }
+
+  // packages/ui/build-module/link/link.mjs
   var import_element24 = __toESM(require_element(), 1);
+  var import_i18n5 = __toESM(require_i18n(), 1);
   var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
   function getRuntime9() {
@@ -10735,85 +10707,69 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle9("c5cdafb1bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._28cfdc260e755391__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}.f1c70d719989a85a__icon{margin:-1px}}}");
+    registerStyle9("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
   }
-  var style_default8 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
-  var IconButton = (0, import_element24.forwardRef)(
-    function UnforwardedIconButton({
-      label,
+  var resets_default3 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  if (typeof process === "undefined" || true) {
+    registerStyle9("7c3267f794", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  }
+  var focus_module_default2 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+  if (typeof process === "undefined" || true) {
+    registerStyle9("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
+  }
+  var style_default8 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
+  if (typeof process === "undefined" || true) {
+    registerStyle9("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
+  }
+  var global_css_defense_default3 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
+  var Link = (0, import_element24.forwardRef)(
+    function UnforwardedLink({
+      children,
+      variant = "default",
+      tone = "brand",
+      openInNewTab = false,
+      target,
+      render,
       className,
-      // Prevent accidental forwarding of `children`
-      children: _children,
-      disabled: disabled2,
-      focusableWhenDisabled = true,
-      icon,
-      size: size4,
-      shortcut,
-      positioner,
-      "aria-describedby": ariaDescribedBy,
-      "aria-keyshortcuts": ariaKeyShortcuts,
-      ...restProps
+      ...props
     }, ref) {
-      const classes = clsx_default(style_default8["icon-button"], className);
-      const { descriptionId, targetProps } = useKeyboardShortcutProps({
-        "aria-describedby": ariaDescribedBy,
-        "aria-keyshortcuts": ariaKeyShortcuts,
-        shortcut
-      });
-      return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(Root, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
-          Trigger,
-          {
-            ref,
-            ...targetProps,
-            disabled: disabled2 && !focusableWhenDisabled,
-            render: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-              Button4,
+      const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+      const element = useRender({
+        render,
+        defaultTagName: "a",
+        ref,
+        props: mergeProps(props, {
+          className: clsx_default(
+            global_css_defense_default3.a,
+            resets_default3["box-sizing"],
+            focus_module_default2["outset-ring--focus-except-active"],
+            variant !== "unstyled" && style_default8.link,
+            variant !== "unstyled" && style_default8[`is-${tone}`],
+            variant === "unstyled" && style_default8["is-unstyled"],
+            className
+          ),
+          target: target ?? (openInNewTab ? "_blank" : void 0),
+          children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, { children: [
+            children,
+            shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+              "span",
               {
-                ...restProps,
-                size: size4,
-                "aria-label": label,
-                disabled: disabled2,
-                focusableWhenDisabled
+                className: style_default8["link-icon"],
+                role: "img",
+                "aria-label": (
+                  /* translators: accessibility text appended to link text */
+                  (0, import_i18n5.__)("(opens in a new tab)")
+                )
               }
-            ),
-            className: classes,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Icon, { icon, size: 24, className: style_default8.icon }),
-              shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-                KeyboardShortcutDescription,
-                {
-                  descriptionId,
-                  shortcut
-                }
-              )
-            ]
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(Popup, { positioner, children: [
-          label,
-          shortcut && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, { children: [
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(KeyboardShortcutDisplay, { shortcut })
+            )
           ] })
-        ] })
-      ] });
+        })
+      });
+      return element;
     }
   );
 
-  // packages/ui/build-module/notice/index.mjs
-  var notice_exports = {};
-  __export(notice_exports, {
-    ActionButton: () => ActionButton,
-    ActionLink: () => ActionLink,
-    Actions: () => Actions,
-    CloseIconButton: () => CloseIconButton,
-    Description: () => Description,
-    Root: () => Root2,
-    Title: () => Title
-  });
-
-  // packages/ui/build-module/notice/root.mjs
+  // packages/ui/build-module/icon-button/icon-button.mjs
   var import_element25 = __toESM(require_element(), 1);
   var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
@@ -10897,52 +10853,85 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle10("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+    registerStyle10("c5cdafb1bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._28cfdc260e755391__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}.f1c70d719989a85a__icon{margin:-1px}}}");
   }
-  var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof process === "undefined" || true) {
-    registerStyle10("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
-  }
-  var style_default9 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var icons = {
-    neutral: null,
-    info: info_default,
-    warning: caution_default,
-    success: published_default,
-    error: error_default
-  };
-  var Root2 = (0, import_element25.forwardRef)(function Notice({ intent = "neutral", children, icon, render, ...restProps }, ref) {
-    const iconElement = icon === null ? null : icon ?? icons[intent];
-    const mergedClassName = clsx_default(
-      style_default9.notice,
-      style_default9[`is-${intent}`],
-      resets_default4["box-sizing"]
-    );
-    const element = useRender({
-      defaultTagName: "div",
-      render,
-      ref,
-      props: mergeProps(
-        {
-          className: mergedClassName,
-          children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_jsx_runtime34.Fragment, { children: [
-            children,
-            iconElement && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
-              Icon,
+  var style_default9 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
+  var IconButton = (0, import_element25.forwardRef)(
+    function UnforwardedIconButton({
+      label,
+      className,
+      // Prevent accidental forwarding of `children`
+      children: _children,
+      disabled: disabled2,
+      focusableWhenDisabled = true,
+      icon,
+      size: size4,
+      shortcut,
+      positioner,
+      "aria-describedby": ariaDescribedBy,
+      "aria-keyshortcuts": ariaKeyShortcuts,
+      ...restProps
+    }, ref) {
+      const classes = clsx_default(style_default9["icon-button"], className);
+      const { descriptionId, targetProps } = useKeyboardShortcutProps({
+        "aria-describedby": ariaDescribedBy,
+        "aria-keyshortcuts": ariaKeyShortcuts,
+        shortcut
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(Root, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
+          Trigger,
+          {
+            ref,
+            ...targetProps,
+            disabled: disabled2 && !focusableWhenDisabled,
+            render: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+              Button4,
               {
-                className: style_default9.icon,
-                icon: iconElement
+                ...restProps,
+                size: size4,
+                "aria-label": label,
+                disabled: disabled2,
+                focusableWhenDisabled
               }
-            )
+            ),
+            className: classes,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Icon, { icon, size: 24, className: style_default9.icon }),
+              shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+                KeyboardShortcutDescription,
+                {
+                  descriptionId,
+                  shortcut
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(Popup, { positioner, children: [
+          label,
+          shortcut && /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_jsx_runtime34.Fragment, { children: [
+            " ",
+            /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(KeyboardShortcutDisplay, { shortcut })
           ] })
-        },
-        restProps
-      )
-    });
-    return element;
+        ] })
+      ] });
+    }
+  );
+
+  // packages/ui/build-module/notice/index.mjs
+  var notice_exports = {};
+  __export(notice_exports, {
+    ActionButton: () => ActionButton,
+    ActionLink: () => ActionLink,
+    Actions: () => Actions,
+    CloseIconButton: () => CloseIconButton,
+    Description: () => Description,
+    Root: () => Root2,
+    Title: () => Title
   });
 
-  // packages/ui/build-module/notice/title.mjs
+  // packages/ui/build-module/notice/root.mjs
   var import_element26 = __toESM(require_element(), 1);
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
@@ -11026,24 +11015,52 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
+    registerStyle11("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+  }
+  var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  if (typeof process === "undefined" || true) {
     registerStyle11("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default10 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var Title = (0, import_element26.forwardRef)(
-    function NoticeTitle({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-        Text,
+  var icons = {
+    neutral: null,
+    info: info_default,
+    warning: caution_default,
+    success: published_default,
+    error: error_default
+  };
+  var Root2 = (0, import_element26.forwardRef)(function Notice({ intent = "neutral", children, icon, render, ...restProps }, ref) {
+    const iconElement = icon === null ? null : icon ?? icons[intent];
+    const mergedClassName = clsx_default(
+      style_default10.notice,
+      style_default10[`is-${intent}`],
+      resets_default4["box-sizing"]
+    );
+    const element = useRender({
+      defaultTagName: "div",
+      render,
+      ref,
+      props: mergeProps(
         {
-          ref,
-          variant: "heading-md",
-          className: clsx_default(style_default10.title, className),
-          ...props
-        }
-      );
-    }
-  );
+          className: mergedClassName,
+          children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_jsx_runtime35.Fragment, { children: [
+            children,
+            iconElement && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+              Icon,
+              {
+                className: style_default10.icon,
+                icon: iconElement
+              }
+            )
+          ] })
+        },
+        restProps
+      )
+    });
+    return element;
+  });
 
-  // packages/ui/build-module/notice/description.mjs
+  // packages/ui/build-module/notice/title.mjs
   var import_element27 = __toESM(require_element(), 1);
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
@@ -11130,22 +11147,23 @@ var wp;
     registerStyle12("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default11 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var Description = (0, import_element27.forwardRef)(
-    function NoticeDescription({ className, ...props }, ref) {
+  var Title = (0, import_element27.forwardRef)(
+    function NoticeTitle({ className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
         Text,
         {
           ref,
-          variant: "body-md",
-          className: clsx_default(style_default11.description, className),
+          variant: "heading-md",
+          className: clsx_default(style_default11.title, className),
           ...props
         }
       );
     }
   );
 
-  // packages/ui/build-module/notice/actions.mjs
+  // packages/ui/build-module/notice/description.mjs
   var import_element28 = __toESM(require_element(), 1);
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
   function getRuntime13() {
     const globalScope = globalThis;
@@ -11230,27 +11248,22 @@ var wp;
     registerStyle13("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default12 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var Actions = (0, import_element28.forwardRef)(
-    function NoticeActions({ render, ...props }, ref) {
-      const element = useRender({
-        defaultTagName: "div",
-        render,
-        ref,
-        props: mergeProps(
-          {
-            className: style_default12.actions
-          },
-          props
-        )
-      });
-      return element;
+  var Description = (0, import_element28.forwardRef)(
+    function NoticeDescription({ className, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+        Text,
+        {
+          ref,
+          variant: "body-md",
+          className: clsx_default(style_default12.description, className),
+          ...props
+        }
+      );
     }
   );
 
-  // packages/ui/build-module/notice/close-icon-button.mjs
+  // packages/ui/build-module/notice/actions.mjs
   var import_element29 = __toESM(require_element(), 1);
-  var import_i18n6 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
   function getRuntime14() {
     const globalScope = globalThis;
@@ -11335,24 +11348,26 @@ var wp;
     registerStyle14("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default13 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var CloseIconButton = (0, import_element29.forwardRef)(function NoticeCloseIconButton({ className, icon = close_small_default, label = (0, import_i18n6.__)("Dismiss"), ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-      IconButton,
-      {
-        ...props,
+  var Actions = (0, import_element29.forwardRef)(
+    function NoticeActions({ render, ...props }, ref) {
+      const element = useRender({
+        defaultTagName: "div",
+        render,
         ref,
-        className: clsx_default(style_default13["close-icon"], className),
-        variant: "minimal",
-        size: "small",
-        tone: "neutral",
-        icon,
-        label
-      }
-    );
-  });
+        props: mergeProps(
+          {
+            className: style_default13.actions
+          },
+          props
+        )
+      });
+      return element;
+    }
+  );
 
-  // packages/ui/build-module/notice/action-button.mjs
+  // packages/ui/build-module/notice/close-icon-button.mjs
   var import_element30 = __toESM(require_element(), 1);
+  var import_i18n6 = __toESM(require_i18n(), 1);
   var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
   function getRuntime15() {
@@ -11438,29 +11453,23 @@ var wp;
     registerStyle15("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default14 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var ActionButton = (0, import_element30.forwardRef)(
-    function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
-      const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
-      return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
-        Button4,
-        {
-          ...props,
-          ...loadingProps,
-          ref,
-          size: "compact",
-          tone: "neutral",
-          variant,
-          className: clsx_default(
-            style_default14["action-button"],
-            style_default14[`is-action-button-${variant}`],
-            className
-          )
-        }
-      );
-    }
-  );
+  var CloseIconButton = (0, import_element30.forwardRef)(function NoticeCloseIconButton({ className, icon = close_small_default, label = (0, import_i18n6.__)("Dismiss"), ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      IconButton,
+      {
+        ...props,
+        ref,
+        className: clsx_default(style_default14["close-icon"], className),
+        variant: "minimal",
+        size: "small",
+        tone: "neutral",
+        icon,
+        label
+      }
+    );
+  });
 
-  // packages/ui/build-module/notice/action-link.mjs
+  // packages/ui/build-module/notice/action-button.mjs
   var import_element31 = __toESM(require_element(), 1);
   var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
@@ -11547,16 +11556,125 @@ var wp;
     registerStyle16("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default15 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var ActionLink = (0, import_element31.forwardRef)(
-    function NoticeActionLink({ className, render, ...props }, ref) {
+  var ActionButton = (0, import_element31.forwardRef)(
+    function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
+      const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
       return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        Button4,
+        {
+          ...props,
+          ...loadingProps,
+          ref,
+          size: "compact",
+          tone: "neutral",
+          variant,
+          className: clsx_default(
+            style_default15["action-button"],
+            style_default15[`is-action-button-${variant}`],
+            className
+          )
+        }
+      );
+    }
+  );
+
+  // packages/ui/build-module/notice/action-link.mjs
+  var import_element32 = __toESM(require_element(), 1);
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
+  function getRuntime17() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument17(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash17(targetDocument, hash) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE17}]`
+    )) {
+      if (style.getAttribute(STYLE_HASH_ATTRIBUTE17) === hash) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle17(targetDocument, hash, css) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime17();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash)) {
+      return;
+    }
+    if (documentContainsStyleHash17(targetDocument, hash)) {
+      injectedStyles.add(hash);
+      return;
+    }
+    const style = targetDocument.createElement("style");
+    style.setAttribute(STYLE_HASH_ATTRIBUTE17, hash);
+    style.appendChild(targetDocument.createTextNode(css));
+    targetDocument.head.appendChild(style);
+    injectedStyles.add(hash);
+  }
+  function registerDocument17(targetDocument) {
+    const runtime = getRuntime17();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash, css] of runtime.styles) {
+      injectStyle17(targetDocument, hash, css);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle17(hash, css) {
+    const runtime = getRuntime17();
+    runtime.styles.set(hash, css);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle17(targetDocument, hash, css);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle17("2e53930a41", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
+  }
+  var style_default16 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
+  var ActionLink = (0, import_element32.forwardRef)(
+    function NoticeActionLink({ className, render, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         Text,
         {
           ref,
-          className: clsx_default(style_default15["action-link"], className),
+          className: clsx_default(style_default16["action-link"], className),
           ...props,
           variant: "body-md",
-          render: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Link, { tone: "neutral", variant: "default", render })
+          render: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Link, { tone: "neutral", variant: "default", render })
         }
       );
     }
@@ -11564,13 +11682,13 @@ var wp;
 
   // packages/block-directory/build-module/components/block-ratings/stars.mjs
   var import_i18n7 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   function Stars({ rating }) {
     const stars = Math.round(rating / 0.5) * 0.5;
     const fullStarCount = Math.floor(rating);
     const halfStarCount = Math.ceil(rating - fullStarCount);
     const emptyStarCount = 5 - (fullStarCount + halfStarCount);
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
       "span",
       {
         "aria-label": (0, import_i18n7.sprintf)(
@@ -11579,7 +11697,7 @@ var wp;
           stars
         ),
         children: [
-          Array.from({ length: fullStarCount }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+          Array.from({ length: fullStarCount }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
             icon_default,
             {
               className: "block-directory-block-ratings__star-full",
@@ -11588,7 +11706,7 @@ var wp;
             },
             `full_stars_${i}`
           )),
-          Array.from({ length: halfStarCount }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+          Array.from({ length: halfStarCount }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
             icon_default,
             {
               className: "block-directory-block-ratings__star-half-full",
@@ -11597,7 +11715,7 @@ var wp;
             },
             `half_stars_${i}`
           )),
-          Array.from({ length: emptyStarCount }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+          Array.from({ length: emptyStarCount }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
             icon_default,
             {
               className: "block-directory-block-ratings__star-empty",
@@ -11613,23 +11731,23 @@ var wp;
   var stars_default = Stars;
 
   // packages/block-directory/build-module/components/block-ratings/index.mjs
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
-  var BlockRatings = ({ rating }) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "block-directory-block-ratings", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(stars_default, { rating }) });
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+  var BlockRatings = ({ rating }) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "block-directory-block-ratings", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(stars_default, { rating }) });
   var block_ratings_default = BlockRatings;
 
   // packages/block-directory/build-module/components/downloadable-block-icon/index.mjs
   var import_block_editor2 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
   function DownloadableBlockIcon({ icon }) {
     const className = "block-directory-downloadable-block-icon";
-    return icon.match(/\.(jpeg|jpg|gif|png|svg)(?:\?.*)?$/) !== null ? /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("img", { className, src: icon, alt: "" }) : /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_block_editor2.BlockIcon, { className, icon, showColors: true });
+    return icon.match(/\.(jpeg|jpg|gif|png|svg)(?:\?.*)?$/) !== null ? /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("img", { className, src: icon, alt: "" }) : /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_block_editor2.BlockIcon, { className, icon, showColors: true });
   }
   var downloadable_block_icon_default = DownloadableBlockIcon;
 
   // packages/block-directory/build-module/components/downloadable-block-notice/index.mjs
   var import_i18n8 = __toESM(require_i18n(), 1);
   var import_data5 = __toESM(require_data(), 1);
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var DownloadableBlockNotice = ({ block }) => {
     const errorNotice = (0, import_data5.useSelect)(
       (select) => select(store).getErrorNoticeForBlock(block.id),
@@ -11638,7 +11756,7 @@ var wp;
     if (!errorNotice) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "block-directory-downloadable-block-notice", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "block-directory-downloadable-block-notice__content", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "block-directory-downloadable-block-notice", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "block-directory-downloadable-block-notice__content", children: [
       errorNotice.message,
       errorNotice.isFatal ? " " + (0, import_i18n8.__)("Try reloading the page.") : null
     ] }) });
@@ -11646,7 +11764,7 @@ var wp;
   var downloadable_block_notice_default = DownloadableBlockNotice;
 
   // packages/block-directory/build-module/components/downloadable-block-list-item/index.mjs
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
   function getDownloadableBlockLabel({ title, rating, ratingCount }, { hasNotice, isInstalled, isInstalling: isInstalling2 }) {
     const stars = Math.round(rating / 0.5) * 0.5;
     if (!isInstalled && hasNotice) {
@@ -11716,11 +11834,11 @@ var wp;
       isInstalled,
       isInstalling: isInstalling2
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(tooltip_exports.Root, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(tooltip_exports.Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
         tooltip_exports.Trigger,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(
             import_components.Composite.Item,
             {
               className: clsx_default(
@@ -11737,18 +11855,18 @@ var wp;
               type: "button",
               role: "option",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "block-directory-downloadable-block-list-item__icon", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("div", { className: "block-directory-downloadable-block-list-item__icon", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
                     downloadable_block_icon_default,
                     {
                       icon,
                       title
                     }
                   ),
-                  isInstalling2 ? /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: "block-directory-downloadable-block-list-item__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_components.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(block_ratings_default, { rating })
+                  isInstalling2 ? /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: "block-directory-downloadable-block-list-item__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_components.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(block_ratings_default, { rating })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("span", { className: "block-directory-downloadable-block-list-item__details", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: "block-directory-downloadable-block-list-item__title", children: (0, import_element32.createInterpolateElement)(
+                /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("span", { className: "block-directory-downloadable-block-list-item__details", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: "block-directory-downloadable-block-list-item__title", children: (0, import_element33.createInterpolateElement)(
                     (0, import_i18n9.sprintf)(
                       /* translators: 1: block title. 2: author name. */
                       (0, import_i18n9.__)("%1$s <span>by %2$s</span>"),
@@ -11756,12 +11874,12 @@ var wp;
                       author
                     ),
                     {
-                      span: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: "block-directory-downloadable-block-list-item__author" })
+                      span: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: "block-directory-downloadable-block-list-item__author" })
                     }
                   ) }),
-                  hasNotice ? /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(downloadable_block_notice_default, { block: item }) : /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(import_jsx_runtime44.Fragment, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: "block-directory-downloadable-block-list-item__desc", children: !!statusText ? statusText : (0, import_html_entities.decodeEntities)(description) }),
-                    isInstallable && !(isInstalled || isInstalling2) && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(VisuallyHidden, { children: (0, import_i18n9.__)("Install block") })
+                  hasNotice ? /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(downloadable_block_notice_default, { block: item }) : /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(import_jsx_runtime45.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: "block-directory-downloadable-block-list-item__desc", children: !!statusText ? statusText : (0, import_html_entities.decodeEntities)(description) }),
+                    isInstallable && !(isInstalled || isInstalling2) && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(VisuallyHidden, { children: (0, import_i18n9.__)("Install block") })
                   ] })
                 ] })
               ]
@@ -11769,13 +11887,13 @@ var wp;
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(tooltip_exports.Popup, { children: itemLabel })
+      /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(tooltip_exports.Popup, { children: itemLabel })
     ] });
   }
   var downloadable_block_list_item_default = DownloadableBlockListItem;
 
   // packages/block-directory/build-module/components/downloadable-blocks-list/index.mjs
-  var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
   var noop4 = () => {
   };
   function DownloadableBlocksList({ items, onHover = noop4, onSelect }) {
@@ -11783,14 +11901,14 @@ var wp;
     if (!items.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
       import_components2.Composite,
       {
         role: "listbox",
         className: "block-directory-downloadable-blocks-list",
         "aria-label": (0, import_i18n10.__)("Blocks available for install"),
         children: items.map((item) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
             downloadable_block_list_item_default,
             {
               onClick: () => {
@@ -11818,16 +11936,16 @@ var wp;
 
   // packages/block-directory/build-module/components/downloadable-blocks-panel/inserter-panel.mjs
   var import_i18n11 = __toESM(require_i18n(), 1);
-  var import_element33 = __toESM(require_element(), 1);
+  var import_element34 = __toESM(require_element(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
   function DownloadableBlocksInserterPanel({
     children,
     downloadableItems,
     hasLocalBlocks
   }) {
     const count = downloadableItems.length;
-    (0, import_element33.useEffect)(() => {
+    (0, import_element34.useEffect)(() => {
       (0, import_a11y2.speak)(
         (0, import_i18n11.sprintf)(
           /* translators: %d: number of available blocks. */
@@ -11840,13 +11958,13 @@ var wp;
         )
       );
     }, [count]);
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(import_jsx_runtime46.Fragment, { children: [
-      !hasLocalBlocks && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("p", { className: "block-directory-downloadable-blocks-panel__no-local", children: (0, import_i18n11.__)("No results available from your installed blocks.") }),
-      /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "block-editor-inserter__quick-inserter-separator" }),
-      /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { className: "block-directory-downloadable-blocks-panel", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { className: "block-directory-downloadable-blocks-panel__header", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("h2", { className: "block-directory-downloadable-blocks-panel__title", children: (0, import_i18n11.__)("Available to install") }),
-          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("p", { className: "block-directory-downloadable-blocks-panel__description", children: (0, import_i18n11.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(import_jsx_runtime47.Fragment, { children: [
+      !hasLocalBlocks && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("p", { className: "block-directory-downloadable-blocks-panel__no-local", children: (0, import_i18n11.__)("No results available from your installed blocks.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "block-editor-inserter__quick-inserter-separator" }),
+      /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { className: "block-directory-downloadable-blocks-panel", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { className: "block-directory-downloadable-blocks-panel__header", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("h2", { className: "block-directory-downloadable-blocks-panel__title", children: (0, import_i18n11.__)("Available to install") }),
+          /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("p", { className: "block-directory-downloadable-blocks-panel__description", children: (0, import_i18n11.__)(
             "Select a block to install and add it to your post."
           ) })
         ] }),
@@ -11858,13 +11976,13 @@ var wp;
 
   // packages/block-directory/build-module/components/downloadable-blocks-panel/no-results.mjs
   var import_i18n12 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
   function DownloadableBlocksNoResults() {
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(import_jsx_runtime47.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "block-editor-inserter__no-results", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("p", { children: (0, import_i18n12.__)("No results found.") }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "block-editor-inserter__tips", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(notice_exports.Root, { intent: "info", icon: tip_default, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(notice_exports.Description, { children: (0, import_i18n12.__)("Interested in creating your own block?") }),
-        /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(notice_exports.Actions, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(import_jsx_runtime48.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "block-editor-inserter__no-results", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("p", { children: (0, import_i18n12.__)("No results found.") }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "block-editor-inserter__tips", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(notice_exports.Root, { intent: "info", icon: tip_default, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(notice_exports.Description, { children: (0, import_i18n12.__)("Interested in creating your own block?") }),
+        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(notice_exports.Actions, { children: /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(
           notice_exports.ActionLink,
           {
             href: "https://developer.wordpress.org/block-editor/",
@@ -11881,7 +11999,7 @@ var wp;
   var no_results_default = DownloadableBlocksNoResults;
 
   // packages/block-directory/build-module/components/downloadable-blocks-panel/index.mjs
-  var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY3 = [];
   var useDownloadableBlocks = (filterValue) => (0, import_data8.useSelect)(
     (select) => {
@@ -11931,31 +12049,31 @@ var wp;
   }) {
     const { hasPermission, downloadableBlocks: downloadableBlocks2, isLoading } = useDownloadableBlocks(filterValue);
     if (hasPermission === void 0 || isLoading || isTyping) {
-      return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(import_jsx_runtime48.Fragment, { children: [
-        hasPermission && !hasLocalBlocks && /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(import_jsx_runtime48.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("p", { className: "block-directory-downloadable-blocks-panel__no-local", children: (0, import_i18n13.__)(
+      return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(import_jsx_runtime49.Fragment, { children: [
+        hasPermission && !hasLocalBlocks && /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(import_jsx_runtime49.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("p", { className: "block-directory-downloadable-blocks-panel__no-local", children: (0, import_i18n13.__)(
             "No results available from your installed blocks."
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "block-editor-inserter__quick-inserter-separator" })
+          /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "block-editor-inserter__quick-inserter-separator" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "block-directory-downloadable-blocks-panel has-blocks-loading", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_components3.Spinner, {}) })
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "block-directory-downloadable-blocks-panel has-blocks-loading", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_components3.Spinner, {}) })
       ] });
     }
     if (false === hasPermission) {
       if (!hasLocalBlocks) {
-        return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(no_results_default, {});
+        return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(no_results_default, {});
       }
       return null;
     }
     if (downloadableBlocks2.length === 0) {
-      return hasLocalBlocks ? null : /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(no_results_default, {});
+      return hasLocalBlocks ? null : /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(no_results_default, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
       inserter_panel_default,
       {
         downloadableItems: downloadableBlocks2,
         hasLocalBlocks,
-        children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
           downloadable_blocks_list_default,
           {
             items: downloadableBlocks2,
@@ -11968,18 +12086,18 @@ var wp;
   }
 
   // packages/block-directory/build-module/plugins/inserter-menu-downloadable-blocks-panel/index.mjs
-  var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
   function InserterMenuDownloadableBlocksPanel() {
-    const [debouncedFilterValue, setFilterValue] = (0, import_element34.useState)("");
+    const [debouncedFilterValue, setFilterValue] = (0, import_element35.useState)("");
     const debouncedSetFilterValue = (0, import_compose.debounce)(setFilterValue, 400);
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_block_editor3.__unstableInserterMenuExtension, { children: ({ onSelect, onHover, filterValue, hasItems }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_block_editor3.__unstableInserterMenuExtension, { children: ({ onSelect, onHover, filterValue, hasItems }) => {
       if (debouncedFilterValue !== filterValue) {
         debouncedSetFilterValue(filterValue);
       }
       if (!debouncedFilterValue) {
         return null;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
         DownloadableBlocksPanel,
         {
           onSelect,
@@ -12000,16 +12118,16 @@ var wp;
 
   // packages/block-directory/build-module/components/compact-list/index.mjs
   var import_i18n14 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
   function CompactList({ items }) {
     if (!items.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("ul", { className: "block-directory-compact-list", children: items.map(({ icon, id, title, author }) => /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)("li", { className: "block-directory-compact-list__item", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(downloadable_block_icon_default, { icon, title }),
-      /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)("div", { className: "block-directory-compact-list__item-details", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "block-directory-compact-list__item-title", children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "block-directory-compact-list__item-author", children: (0, import_i18n14.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("ul", { className: "block-directory-compact-list", children: items.map(({ icon, id, title, author }) => /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)("li", { className: "block-directory-compact-list__item", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(downloadable_block_icon_default, { icon, title }),
+      /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)("div", { className: "block-directory-compact-list__item-details", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "block-directory-compact-list__item-title", children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "block-directory-compact-list__item-author", children: (0, import_i18n14.sprintf)(
           /* translators: %s: Name of the block author. */
           (0, import_i18n14.__)("By %s"),
           author
@@ -12019,7 +12137,7 @@ var wp;
   }
 
   // packages/block-directory/build-module/plugins/installed-blocks-pre-publish-panel/index.mjs
-  var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
   function InstalledBlocksPrePublishPanel() {
     const newBlockTypes = (0, import_data9.useSelect)(
       (select) => select(store).getNewBlockTypes(),
@@ -12028,7 +12146,7 @@ var wp;
     if (!newBlockTypes.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
       import_editor2.PluginPrePublishPanel,
       {
         title: (0, import_i18n15.sprintf)(
@@ -12042,12 +12160,12 @@ var wp;
         ),
         initialOpen: true,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("p", { className: "installed-blocks-pre-publish-panel__copy", children: (0, import_i18n15._n)(
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("p", { className: "installed-blocks-pre-publish-panel__copy", children: (0, import_i18n15._n)(
             "The following block has been added to your site.",
             "The following blocks have been added to your site.",
             newBlockTypes.length
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(CompactList, { items: newBlockTypes })
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(CompactList, { items: newBlockTypes })
         ]
       }
     );
@@ -12057,7 +12175,7 @@ var wp;
   var import_i18n17 = __toESM(require_i18n(), 1);
   var import_components5 = __toESM(require_components(), 1);
   var import_blocks7 = __toESM(require_blocks(), 1);
-  var import_element35 = __toESM(require_element(), 1);
+  var import_element36 = __toESM(require_element(), 1);
   var import_data11 = __toESM(require_data(), 1);
   var import_core_data2 = __toESM(require_core_data(), 1);
   var import_block_editor5 = __toESM(require_block_editor(), 1);
@@ -12068,7 +12186,7 @@ var wp;
   var import_blocks6 = __toESM(require_blocks(), 1);
   var import_data10 = __toESM(require_data(), 1);
   var import_block_editor4 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
   function InstallButton({ attributes, block, clientId }) {
     const isInstallingBlock = (0, import_data10.useSelect)(
       (select) => select(store).isInstalling(block.id),
@@ -12076,7 +12194,7 @@ var wp;
     );
     const { installBlockType: installBlockType2 } = (0, import_data10.useDispatch)(store);
     const { replaceBlock } = (0, import_data10.useDispatch)(import_block_editor4.store);
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
       import_components4.Button,
       {
         __next40pxDefaultSize: true,
@@ -12112,7 +12230,7 @@ var wp;
   }
 
   // packages/block-directory/build-module/plugins/get-install-missing/index.mjs
-  var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
   var getInstallMissing = (OriginalComponent) => (props) => {
     const { originalName } = props.attributes;
     const { block, hasPermission } = (0, import_data11.useSelect)(
@@ -12132,9 +12250,9 @@ var wp;
       [originalName]
     );
     if (!hasPermission || !block) {
-      return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(OriginalComponent, { ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(OriginalComponent, { ...props });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(ModifiedWarning, { ...props, originalBlock: block });
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(ModifiedWarning, { ...props, originalBlock: block });
   };
   var ModifiedWarning = ({ originalBlock, ...props }) => {
     const { originalName, originalUndelimitedContent, clientId } = props.attributes;
@@ -12164,7 +12282,7 @@ var wp;
       originalBlock.title || originalName
     );
     const actions = [
-      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
         InstallButton,
         {
           block: originalBlock,
@@ -12183,7 +12301,7 @@ var wp;
         originalBlock.title || originalName
       );
       actions.push(
-        /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
           import_components5.Button,
           {
             __next40pxDefaultSize: true,
@@ -12195,24 +12313,24 @@ var wp;
         )
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)("div", { ...(0, import_block_editor5.useBlockProps)(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_block_editor5.Warning, { actions, children: messageHTML }),
-      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_element35.RawHTML, { children: originalUndelimitedContent })
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)("div", { ...(0, import_block_editor5.useBlockProps)(), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_block_editor5.Warning, { actions, children: messageHTML }),
+      /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_element36.RawHTML, { children: originalUndelimitedContent })
     ] });
   };
   var get_install_missing_default = getInstallMissing;
 
   // packages/block-directory/build-module/plugins/index.mjs
-  var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
   (0, import_plugins.registerPlugin)("block-directory", {
     // The icon is explicitly set to undefined to prevent PluginPrePublishPanel
     // from rendering the fallback icon pluginIcon.
     icon: void 0,
     render() {
-      return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(import_jsx_runtime54.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(AutoBlockUninstaller, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(inserter_menu_downloadable_blocks_panel_default, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(InstalledBlocksPrePublishPanel, {})
+      return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(import_jsx_runtime55.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(AutoBlockUninstaller, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(inserter_menu_downloadable_blocks_panel_default, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(InstalledBlocksPrePublishPanel, {})
       ] });
     }
   });
