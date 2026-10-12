@@ -92317,7 +92317,7 @@ var wp;
   var shortcuts_default = (props) => (element) => {
     const { keyboardShortcuts } = props.current;
     function onKeyDown(event) {
-      for (const keyboardShortcut of keyboardShortcuts.current) {
+      for (const keyboardShortcut of keyboardShortcuts) {
         keyboardShortcut(event);
       }
     }
@@ -92330,7 +92330,7 @@ var wp;
   var input_events_default = (props) => (element) => {
     const { inputEvents } = props.current;
     function onInput(event) {
-      for (const keyboardShortcut of inputEvents.current) {
+      for (const keyboardShortcut of inputEvents) {
         keyboardShortcut(event);
       }
     }
@@ -93263,8 +93263,8 @@ var wp;
       value,
       onMarkPersistent: __unstableMarkLastChangeAsPersistent2
     });
-    const keyboardShortcuts = (0, import_element304.useRef)(/* @__PURE__ */ new Set());
-    const inputEvents = (0, import_element304.useRef)(/* @__PURE__ */ new Set());
+    const [keyboardShortcuts] = (0, import_element304.useState)(() => /* @__PURE__ */ new Set());
+    const [inputEvents] = (0, import_element304.useState)(() => /* @__PURE__ */ new Set());
     function onFocus() {
       anchorRef.current?.focus();
     }

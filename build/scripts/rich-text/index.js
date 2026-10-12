@@ -2982,16 +2982,15 @@ var wp;
     const keyboardShortcuts = (0, import_element7.useContext)(KeyboardShortcutContext);
     const stableOnUse = (0, import_compose9.useEvent)(onUse);
     (0, import_element7.useEffect)(() => {
-      const shortcuts = keyboardShortcuts.current;
       function callback(event) {
         if (import_keycodes3.isKeyboardEvent[type](event, character)) {
           stableOnUse();
           event.preventDefault();
         }
       }
-      shortcuts.add(callback);
+      keyboardShortcuts.add(callback);
       return () => {
-        shortcuts.delete(callback);
+        keyboardShortcuts.delete(callback);
       };
     }, [character, type, keyboardShortcuts, stableOnUse]);
     return null;
@@ -3004,26 +3003,24 @@ var wp;
     const callbacks = (0, import_element8.useContext)(InputEventContext);
     const stableOnInput = (0, import_compose10.useEvent)(onInput);
     (0, import_element8.useEffect)(() => {
-      const inputCallbacks = callbacks.current;
       function callback(event) {
         if (event.inputType === inputType) {
           stableOnInput();
           event.preventDefault();
         }
       }
-      inputCallbacks.add(callback);
+      callbacks.add(callback);
       return () => {
-        inputCallbacks.delete(callback);
+        callbacks.delete(callback);
       };
     }, [inputType, callbacks, stableOnInput]);
     return null;
   }
 
   // packages/rich-text/build-module/event-listeners.mjs
-  var shortcutsListener = (props) => (element) => {
-    const { keyboardShortcuts } = props.current;
+  var shortcutsListener = (keyboardShortcuts) => (element) => {
     function onKeyDown(event) {
-      for (const keyboardShortcut of keyboardShortcuts.current) {
+      for (const keyboardShortcut of keyboardShortcuts) {
         keyboardShortcut(event);
       }
     }
@@ -3032,10 +3029,9 @@ var wp;
       element.removeEventListener("keydown", onKeyDown);
     };
   };
-  var inputEventsListener = (props) => (element) => {
-    const { inputEvents } = props.current;
+  var inputEventsListener = (inputEvents) => (element) => {
     function onInput(event) {
-      for (const inputEventHandler of inputEvents.current) {
+      for (const inputEventHandler of inputEvents) {
         inputEventHandler(event);
       }
     }

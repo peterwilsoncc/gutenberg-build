@@ -128212,10 +128212,10 @@ ${content}
     });
     const [isSelected2, setIsSelected] = (0, import_element448.useState)(false);
     const anchorRef = (0, import_element448.useRef)(void 0);
-    const inputEvents = (0, import_element448.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element448.useRef)(
-      /* @__PURE__ */ new Set()
+    const [inputEvents] = (0, import_element448.useState)(
+      () => /* @__PURE__ */ new Set()
     );
+    const [keyboardShortcuts] = (0, import_element448.useState)(() => /* @__PURE__ */ new Set());
     const focusOutside = (0, import_compose98.__experimentalUseFocusOutside)(() => setIsSelected(false));
     const adjustedAllowedFormats = getAllowedFormats({
       allowedFormats,
@@ -128250,10 +128250,6 @@ ${content}
     function onFocus() {
       anchorRef.current?.focus();
     }
-    const eventListenersPropsRef = (0, import_element448.useRef)({
-      keyboardShortcuts,
-      inputEvents
-    });
     const inputRulePropsRef = (0, import_element448.useRef)({
       formatTypes,
       getValue: getValue3,
@@ -128300,12 +128296,8 @@ ${content}
         if (!isSelected2) {
           return;
         }
-        const cleanupShortcuts = shortcutsListener(
-          eventListenersPropsRef
-        )(element);
-        const cleanupInputEvents = inputEventsListener(
-          eventListenersPropsRef
-        )(element);
+        const cleanupShortcuts = shortcutsListener(keyboardShortcuts)(element);
+        const cleanupInputEvents = inputEventsListener(inputEvents)(element);
         function onFormatInput(event) {
           if (event.inputType !== "insertText" && event.type !== "compositionend") {
             return;
@@ -128338,7 +128330,7 @@ ${content}
           element.removeEventListener("compositionend", onFormatInput);
         };
       },
-      [isSelected2]
+      [isSelected2, keyboardShortcuts, inputEvents]
     );
     const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components263.__unstableUseAutocompleteProps)(
       {
