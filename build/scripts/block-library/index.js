@@ -53758,6 +53758,24 @@ ${text}
   // packages/block-library/build-module/icon/components/custom-inserter/icon-grid.mjs
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
   var BATCH_SIZE = 20;
+  var IconGridItem = (0, import_element117.memo)(
+    (0, import_element117.forwardRef)(function IconGridItemContent({ icon: icon2, isSelected, onChange }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
+        import_components51.Button,
+        {
+          ref,
+          className: "wp-block-icon__inserter-grid-icons-list-item",
+          onClick: () => onChange(icon2.name),
+          variant: isSelected ? "primary" : void 0,
+          __next40pxDefaultSize: true,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-icon", children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(html_renderer_default, { html: icon2.content }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-title", children: icon2.label })
+          ]
+        }
+      );
+    })
+  );
   function IconGrid({ icons, onChange, value, collections }) {
     const instanceId = (0, import_compose25.useInstanceId)(
       IconGrid,
@@ -53789,18 +53807,13 @@ ${text}
       }
       node.scrollIntoView({ block: "center" });
     }, [isReadyToScroll]);
-    const renderIcons = (iconsToRender) => /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { className: "wp-block-icon__inserter-grid-icons-list", children: iconsToRender.map((icon2) => /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
-      import_components51.Button,
+    const renderIcons = (iconsToRender) => /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { className: "wp-block-icon__inserter-grid-icons-list", children: iconsToRender.map((icon2) => /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
+      IconGridItem,
       {
         ref: icon2.name === value ? selectedIconRef : void 0,
-        className: "wp-block-icon__inserter-grid-icons-list-item",
-        onClick: () => onChange(icon2.name),
-        variant: icon2.name === value ? "primary" : void 0,
-        __next40pxDefaultSize: true,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-icon", children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(html_renderer_default, { html: icon2.content }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-title", children: icon2.label })
-        ]
+        icon: icon2,
+        isSelected: icon2.name === value,
+        onChange
       },
       icon2.name
     )) });
@@ -54020,6 +54033,13 @@ ${text}
       metadata
     } = attributes2;
     const [isInserterOpen, setInserterOpen] = (0, import_element119.useState)(false);
+    const onChangeIcon = (0, import_element119.useCallback)(
+      (name118) => {
+        setAttributes({ icon: name118 });
+        setInserterOpen(false);
+      },
+      [setAttributes]
+    );
     const isContentOnlyMode = (0, import_block_editor104.useBlockEditingMode)() === "contentOnly";
     const { isIconBindingReadOnly = false, iconBindingReadOnlyMessage } = (0, import_data48.useSelect)(
       (select10) => {
@@ -54240,10 +54260,7 @@ ${text}
         {
           onClose: () => setInserterOpen(false),
           value: attributes2.icon,
-          onChange: (name118) => {
-            setAttributes({ icon: name118 });
-            setInserterOpen(false);
-          }
+          onChange: onChangeIcon
         }
       )
     ] });
