@@ -1232,6 +1232,10 @@ var wp;
         if (node.contains(nextElement)) {
           return;
         }
+        if (!import_dom.focus.tabbable.find(node).length) {
+          event.preventDefault();
+          return;
+        }
         const domAction = shiftKey ? "append" : "prepend";
         const { ownerDocument } = node;
         const trap = ownerDocument.createElement("div");

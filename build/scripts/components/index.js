@@ -4648,7 +4648,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (isItem(store, activeElement2)) return true;
     return !!getPopupElement(store)?.contains(activeElement2);
   }
-  function presentItem({ store, id: id3, focus: focus4, markedOnly, requireFocus, focusOwner, scrollIntoView, onConsume }) {
+  function presentItem({ store, id: id3, focus: focus5, markedOnly, requireFocus, focusOwner, scrollIntoView, onConsume }) {
     let element = null;
     let resolvedId;
     let focused = false;
@@ -4727,12 +4727,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
       if (restoreFocus) focused = false;
       else if (!stillOwnsFocus(element)) return settle();
-      const focusWithheld = focus4 && startedOnComposite && entersClosedPopup(state, element);
+      const focusWithheld = focus5 && startedOnComposite && entersClosedPopup(state, element);
       if (focusWithheld) {
         const { activeId } = state;
         if (activeId != null && activeId !== resolvedId) return settle();
       }
-      if (focus4 && !focused && !focusWithheld) {
+      if (focus5 && !focused && !focusWithheld) {
         focused = true;
         consume();
         focusLeftElement = false;
@@ -38293,7 +38293,7 @@ This message will only show in development mode. It won't appear in production. 
       active,
       borderRadius = "inherit",
       className,
-      focus: focus4,
+      focus: focus5,
       hover: hover2,
       isInteractive = false,
       offset: offset4 = 0,
@@ -38310,7 +38310,7 @@ This message will only show in development mode. It won't appear in production. 
       "--wp-components-elevation-offset": `${offset4}px`,
       "--wp-components-elevation-shadow": hasValidShadow(value) ? getBoxShadow(value) : void 0,
       "--wp-components-elevation-hover-shadow": hasValidShadow(hoverValue) ? getBoxShadow(hoverValue) : void 0,
-      "--wp-components-elevation-focus-shadow": hasValidShadow(focus4) ? getBoxShadow(focus4) : void 0,
+      "--wp-components-elevation-focus-shadow": hasValidShadow(focus5) ? getBoxShadow(focus5) : void 0,
       "--wp-components-elevation-active-shadow": hasValidShadow(activeValue) ? getBoxShadow(activeValue) : void 0,
       ...style2
     };
@@ -38319,7 +38319,7 @@ This message will only show in development mode. It won't appear in production. 
       className: clsx_default(style_module_default29.elevation, {
         [style_module_default29["has-shadow"]]: hasValidShadow(value),
         [style_module_default29["has-hover"]]: hasValidShadow(hoverValue),
-        [style_module_default29["has-focus"]]: hasValidShadow(focus4),
+        [style_module_default29["has-focus"]]: hasValidShadow(focus5),
         [style_module_default29["has-active"]]: hasValidShadow(activeValue)
       }, radiusKeyword && style_module_default29[`border-radius-${radiusKeyword}`], className),
       style: elevationStyle,
@@ -49271,7 +49271,7 @@ This message will only show in development mode. It won't appear in production. 
       ignoreMouse: false,
       stickIfOpen: parent.type === void 0 ? stickIfOpen : false
     });
-    const focus4 = useFocus(floatingRootContext, {
+    const focus5 = useFocus(floatingRootContext, {
       enabled: !disabled2 && parentMenubarHasSubmenuOpen
     });
     const mixedToggleHandlers = useMixedToggleClickHandler({
@@ -49279,7 +49279,7 @@ This message will only show in development mode. It won't appear in production. 
       enabled: isInMenubar,
       mouseDownAction: "open"
     });
-    const localInteractionProps = React86.useMemo(() => mergeProps2(focus4.reference, click.reference), [focus4.reference, click.reference]);
+    const localInteractionProps = React86.useMemo(() => mergeProps2(focus5.reference, click.reference), [focus5.reference, click.reference]);
     const rootTriggerProps = store.useState("triggerProps", isMountedByThisTrigger);
     const {
       preFocusGuardRef,
@@ -56947,11 +56947,25 @@ This message will only show in development mode. It won't appear in production. 
     const ref = (0, import_element147.useRef)(null);
     const instanceId = (0, import_compose52.useInstanceId)(Modal);
     const headingId = title ? `components-modal-header-${instanceId}` : aria.labelledby;
-    const focusOnMountRef = (0, import_compose52.useFocusOnMount)(focusOnMount === "firstContentElement" ? "firstElement" : focusOnMount);
+    const shouldFocusContent = focusOnMount === "firstContentElement";
+    const focusOnMountRef = (0, import_compose52.useFocusOnMount)(shouldFocusContent ? false : focusOnMount);
     const constrainedTabbingRef = (0, import_compose52.useConstrainedTabbing)();
     const focusReturnRef = (0, import_compose52.useFocusReturn)();
     const contentRef = (0, import_element147.useRef)(null);
     const childrenContainerRef = (0, import_element147.useRef)(null);
+    const focusContentRef = (0, import_compose52.useRefEffect)((node2) => {
+      if (!shouldFocusContent || node2.contains(node2.ownerDocument.activeElement)) {
+        return;
+      }
+      const timerId = setTimeout(() => {
+        const childrenContainer = childrenContainerRef.current;
+        const target = childrenContainer && import_dom25.focus.tabbable.find(childrenContainer)[0] || import_dom25.focus.tabbable.find(node2)[0] || node2;
+        target.focus({
+          preventScroll: true
+        });
+      }, 0);
+      return () => clearTimeout(timerId);
+    }, [shouldFocusContent]);
     const [hasScrolledContent, setHasScrolledContent] = (0, import_element147.useState)(false);
     const [hasScrollableContent, setHasScrollableContent] = (0, import_element147.useState)(false);
     let sizeClass;
@@ -57078,7 +57092,7 @@ This message will only show in development mode. It won't appear in production. 
           children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
             className: clsx_default("components-modal__frame", sizeClass, className),
             style: style2,
-            ref: (0, import_compose52.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, focusOnMount !== "firstContentElement" ? focusOnMountRef : null]),
+            ref: (0, import_compose52.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, shouldFocusContent ? focusContentRef : focusOnMountRef]),
             role,
             "aria-label": contentLabel,
             "aria-labelledby": contentLabel ? void 0 : headingId,
@@ -57121,7 +57135,7 @@ This message will only show in development mode. It won't appear in production. 
                   })]
                 })]
               }), /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
-                ref: (0, import_compose52.useMergeRefs)([childrenContainerRef, focusOnMount === "firstContentElement" ? focusOnMountRef : null]),
+                ref: childrenContainerRef,
                 className: "components-modal__children-container",
                 children
               })]
@@ -61190,7 +61204,7 @@ This message will only show in development mode. It won't appear in production. 
     const debouncedSpeak = (0, import_compose61.useDebounce)(import_a11y6.speak, 500);
     (0, import_element169.useEffect)(() => {
       if (isActive && !hasFocus2()) {
-        focus4();
+        focus5();
       }
     }, [isActive]);
     (0, import_element169.useEffect)(() => {
@@ -61209,7 +61223,7 @@ This message will only show in development mode. It won't appear in production. 
       setIsActive(false);
       setIncompleteTokenValue("");
     }
-    function focus4() {
+    function focus5() {
       input.current?.focus();
     }
     function hasFocus2() {
@@ -61313,7 +61327,7 @@ This message will only show in development mode. It won't appear in production. 
     }
     function onTokenClickRemove(event) {
       deleteToken(event.value);
-      focus4();
+      focus5();
     }
     function onSuggestionHovered(suggestion) {
       const index2 = getMatchingSuggestions().indexOf(suggestion);
@@ -61485,7 +61499,7 @@ This message will only show in development mode. It won't appear in production. 
       setSelectedSuggestionScroll(false);
       setIsExpanded(!__experimentalExpandOnFocus);
       if (isActive && !tokenizeOnBlur) {
-        focus4();
+        focus5();
       }
       return true;
     }
