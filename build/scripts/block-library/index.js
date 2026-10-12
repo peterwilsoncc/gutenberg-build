@@ -96545,7 +96545,11 @@ ${text}
       },
       typography: {
         fontSize: true,
-        __experimentalFontFamily: true
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalTextTransform: true,
+        __experimentalLetterSpacing: true
       },
       __experimentalBorder: {
         color: true,
