@@ -458,14 +458,14 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React237 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef175 = React237.useRef, useEffect138 = React237.useEffect, useMemo196 = React237.useMemo, useDebugValue2 = React237.useDebugValue;
+        var React237 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef175 = React237.useRef, useEffect138 = React237.useEffect, useMemo197 = React237.useMemo, useDebugValue2 = React237.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef175(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo196(
+          instRef = useMemo197(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -62705,7 +62705,7 @@ var wp;
   var import_i18n120 = __toESM(require_i18n(), 1);
   var import_element203 = __toESM(require_element(), 1);
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/button/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/button/utils.js
   function withDefaultButtonType(props) {
     const { render: render5, type } = props;
     if (render5 || type !== void 0) return props;
@@ -62714,10 +62714,6 @@ var wp;
       type: "button"
     };
   }
-
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
-  var import_react60 = __toESM(require_react(), 1);
-  var FocusableContext = (0, import_react60.createContext)(true);
 
   // node_modules/.store/@ariakit/utils@0.2.1-YOB-0_MVoA4gcTIEeAgqYA/node_modules/@ariakit/utils/dist/index.js
   function toArray2(arg) {
@@ -63073,11 +63069,6 @@ var wp;
     element.dispatchEvent(new FocusEvent("focusout", bubbleInit));
     return defaultAllowed;
   }
-  function fireKeyboardEvent(element, type, eventInit) {
-    const { KeyboardEvent } = getWindow2(element);
-    const event = new KeyboardEvent(type, eventInit);
-    return element.dispatchEvent(event);
-  }
   var resetAttributes = {
     width: true,
     height: true,
@@ -63240,7 +63231,37 @@ var wp;
     };
   }
 
-  // node_modules/.store/@ariakit/react-utils@0.2.6-CGxqgfkqXmSIekEBZ0P2qw/node_modules/@ariakit/react-utils/dist/index.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/C4_D9PgF.js
+  var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
+  function accessibleWhenDisabledFromProps(props) {
+    return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
+  }
+  var trulyDisabledAttribute = "data-truly-disabled";
+  function resolvedTrulyDisabledFromElement(element) {
+    const value = element.getAttribute(trulyDisabledAttribute);
+    if (value === "true") return true;
+    if (value === "false") return false;
+  }
+  function isCompositeMoveKey(key) {
+    return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
+  }
+  function isShadowRoot2(node) {
+    return node.nodeType === node.DOCUMENT_FRAGMENT_NODE && "host" in node;
+  }
+  function getTreeActiveElement(node) {
+    const root = node?.getRootNode();
+    if (root && isShadowRoot2(root) && root.activeElement) return root.activeElement;
+    return getActiveElement(node);
+  }
+  function hasTreeFocus(element) {
+    return hasFocus(element) || getTreeActiveElement(element) === element;
+  }
+
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
+  var import_react60 = __toESM(require_react(), 1);
+  var FocusableContext = (0, import_react60.createContext)(true);
+
+  // node_modules/.store/@ariakit/react-utils@0.2.7-w6BBn4LVqMPN0vaiP2Jw4Q/node_modules/@ariakit/react-utils/dist/index.js
   var React235 = __toESM(require_react(), 1);
   var import_react61 = __toESM(require_react(), 1);
   var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
@@ -63438,8 +63459,7 @@ var wp;
   function useMetadataProps(props, key, value) {
     const parent = props.onLoadedMetadataCapture;
     const onLoadedMetadataCapture = (0, import_react61.useMemo)(() => {
-      return Object.assign(() => {
-      }, parent, ...value !== void 0 ? [{ [key]: value }] : []);
+      return Object.assign(noop5.bind(null), parent, ...value !== void 0 ? [{ [key]: value }] : []);
     }, [
       parent,
       key,
@@ -63552,21 +63572,8 @@ var wp;
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/__chunks/CcVRFmzE.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/focusable/focusable.js
   var import_react62 = __toESM(require_react(), 1);
-  var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
-  function accessibleWhenDisabledFromProps(props) {
-    return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
-  }
-  var trulyDisabledAttribute = "data-truly-disabled";
-  function resolvedTrulyDisabledFromElement(element) {
-    const value = element.getAttribute(trulyDisabledAttribute);
-    if (value === "true") return true;
-    if (value === "false") return false;
-  }
-  function isCompositeMoveKey(key) {
-    return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
-  }
   var TagName = "div";
   var isSafariBrowser = isSafari();
   var nativeTabbableMask = 1;
@@ -63721,7 +63728,7 @@ var wp;
       if (!focusable2) return;
       const element = event.currentTarget;
       if (!element) return;
-      if (!hasFocus(element)) return;
+      if (!hasTreeFocus(element)) return;
       onFocusVisible?.(event);
       if (event.defaultPrevented) return;
       element.dataset.focusVisible = "true";
@@ -63849,7 +63856,7 @@ var wp;
     return createElement5(TagName, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/command/command.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/command/command.js
   var import_react63 = __toESM(require_react(), 1);
   var TagName2 = "button";
   function isNativeClick(event) {
@@ -63961,7 +63968,7 @@ var wp;
     return createElement5(TagName2, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/collection/collection-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/collection/collection-context.js
   var ctx = createStoreContext();
   var useCollectionContext = ctx.useContext;
   var useCollectionScopedContext = ctx.useScopedContext;
@@ -63969,7 +63976,7 @@ var wp;
   var CollectionContextProvider = ctx.ContextProvider;
   var CollectionScopedContextProvider = ctx.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/collection/collection-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/collection/collection-item.js
   var import_react64 = __toESM(require_react(), 1);
   var TagName3 = "div";
   var useCollectionItem = createHook(function useCollectionItem2({ store: store4, shouldRegisterItem = true, getItem = identity, element, ...props }) {
@@ -64004,7 +64011,7 @@ var wp;
     return createElement5(TagName3, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/composite/composite-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-context.js
   var import_react65 = __toESM(require_react(), 1);
   var ctx2 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
   var useCompositeContext = ctx2.useContext;
@@ -64015,7 +64022,7 @@ var wp;
   var CompositeItemContext = (0, import_react65.createContext)(void 0);
   var CompositeRowContext = (0, import_react65.createContext)(void 0);
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/composite/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/utils.js
   var import_react66 = __toESM(require_react(), 1);
 
   // node_modules/.store/@ariakit/store@0.1.10-tkEeU1qj6cwY7nBH6-ymFg/node_modules/@ariakit/store/dist/index.js
@@ -64528,7 +64535,7 @@ If there's a particular need for this, please submit a feature request at https:
 `);
   }
 
-  // node_modules/.store/@ariakit/components@0.1.13-10iXASpUFeimNoJh6Wxj0g/node_modules/@ariakit/components/dist/collection/collection-store.js
+  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/collection/collection-store.js
   function getCommonParent(items) {
     const firstItem = items.find((item) => !!item.element);
     const lastElement = [...items].reverse().find((item) => !!item.element)?.element;
@@ -64728,7 +64735,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/components@0.1.13-10iXASpUFeimNoJh6Wxj0g/node_modules/@ariakit/components/dist/composite/composite-store.js
+  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/composite/composite-store.js
   var NULL_ITEM = { id: null };
   function findFirstEnabledItem(items, excludeId) {
     return items.find((item) => {
@@ -64989,7 +64996,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/composite/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/utils.js
   var findFirstEnabledItem2 = findFirstEnabledItem;
   var groupItemsByRows2 = groupItemsByRows;
   var unmountingItems = /* @__PURE__ */ new WeakSet();
@@ -65020,13 +65027,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function ownsFocus(store4) {
     const { compositeElement } = store4.getState();
-    const activeElement2 = getActiveElement(compositeElement);
+    const activeElement2 = getTreeActiveElement(compositeElement);
     if (!activeElement2) return false;
     if (compositeElement?.contains(activeElement2)) return true;
     if (isItem(store4, activeElement2)) return true;
     return !!getPopupElement(store4)?.contains(activeElement2);
   }
-  function presentItem({ store: store4, id, focus: focus2, markedOnly, requireFocus, scrollIntoView, onConsume }) {
+  function presentItem({ store: store4, id, focus: focus2, markedOnly, requireFocus, focusOwner, scrollIntoView, onConsume }) {
     let element = null;
     let resolvedId;
     let focused = false;
@@ -65035,12 +65042,12 @@ If there's a particular need for this, please submit a feature request at https:
     let wasMounted = false;
     let wasOpen = false;
     const compositeAtStart = store4.getState().compositeElement;
-    const activeAtStart = getActiveElement(compositeAtStart);
-    const owner = requireFocus ? activeAtStart : null;
+    const activeAtStart = getTreeActiveElement(compositeAtStart);
+    const owner = requireFocus ? focusOwner || activeAtStart : null;
     const startedOnComposite = !!compositeAtStart?.contains(activeAtStart);
     const stillOwnsFocus = (target) => {
       if (!owner) return true;
-      const activeElement2 = getActiveElement(owner);
+      const activeElement2 = getTreeActiveElement(owner);
       if (activeElement2 === owner) return true;
       if (activeElement2 === target) return true;
       return ownsFocus(store4);
@@ -65218,11 +65225,11 @@ If there's a particular need for this, please submit a feature request at https:
     return true;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/composite/composite-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-item.js
   var import_react67 = __toESM(require_react(), 1);
   var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
 
-  // node_modules/.store/@ariakit/react-store@0.1.11-2VYVlLDCxnCSuA5TttXzwg/node_modules/@ariakit/react-store/dist/index.js
+  // node_modules/.store/@ariakit/react-store@0.1.12-0QjTp8acZVRryn4UBgu5Mw/node_modules/@ariakit/react-store/dist/index.js
   var React236 = __toESM(require_react(), 1);
   var import_shim4 = __toESM(require_shim(), 1);
   var noopSubscribe = () => () => {
@@ -65374,7 +65381,7 @@ If there's a particular need for this, please submit a feature request at https:
     })];
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/composite/composite-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-item.js
   var TagName4 = "button";
   function isEditableElement(element) {
     if (isTextbox(element)) return true;
@@ -65686,13 +65693,31 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName4, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/__chunks/BLQmamO1.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/CDh2UhnG.js
+  var sourceEvents = /* @__PURE__ */ new WeakMap();
+  function fireProxiedKeyboardEvent(element, source, eventInit) {
+    const { KeyboardEvent } = getWindow2(element);
+    const event = new KeyboardEvent(source.type, eventInit);
+    sourceEvents.set(event, getKeyboardEventSource(source));
+    return element.dispatchEvent(event);
+  }
+  function getKeyboardEventSource(event) {
+    return sourceEvents.get(event) ?? event;
+  }
+
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/xFYjARz5.js
   var cancelled = /* @__PURE__ */ Symbol("cancelled");
   var moveRequests = /* @__PURE__ */ new WeakMap();
-  function getMoveRequest(store4) {
-    const key = store4.item;
+  function getMoveRequest(store4, source) {
+    const key = store4.getState;
     const cached = moveRequests.get(key);
     if (cached) return cached;
+    const sourceState = source?.getState();
+    if (source && sourceState && hasOwnProperty(sourceState, "moves") && hasOwnProperty(sourceState, "activeId")) {
+      const request2 = getMoveRequest(source);
+      moveRequests.set(key, request2);
+      return request2;
+    }
     const request = {
       consumedBy: null,
       targetId: store4.getState().activeId
@@ -65709,7 +65734,7 @@ If there's a particular need for this, please submit a feature request at https:
     return request;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/composite/composite.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite.js
   var import_react68 = __toESM(require_react(), 1);
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
   var TagName5 = "div";
@@ -65737,7 +65762,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!activeElement2) return;
       const { view, ...eventInit } = event;
       if (activeElement2 !== previousElementRef?.current) activeElement2.focus({ preventScroll: true });
-      if (!fireKeyboardEvent(activeElement2, event.type, eventInit)) event.preventDefault();
+      if (!fireProxiedKeyboardEvent(activeElement2, event.nativeEvent, eventInit)) event.preventDefault();
       if (event.currentTarget.contains(activeElement2)) event.stopPropagation();
     });
   }
@@ -65755,12 +65780,11 @@ If there's a particular need for this, please submit a feature request at https:
   var CompositeFocusOnMove = memo10(function CompositeFocusOnMove2({ store: store4, focusOnMove, previousElementRef, present, scrollIntoView }) {
     const moves = useStoreState(store4, "moves");
     const compositeElement = useStoreState(store4, "compositeElement");
-    const instanceRef = (0, import_react68.useRef)({});
+    const instance = (0, import_react68.useMemo)(() => ({}), [store4.getState]);
     (0, import_react68.useEffect)(() => {
       const moveRequest = getMoveRequest(store4);
       if (!moves) return;
       if (!focusOnMove) return;
-      const instance = instanceRef.current;
       if (!mayActOnMove(store4, instance)) return;
       const { activeId } = store4.getState();
       if (activeId == null) return;
@@ -65778,13 +65802,13 @@ If there's a particular need for this, please submit a feature request at https:
       focusOnMove,
       compositeElement,
       present,
-      scrollIntoView
+      scrollIntoView,
+      instance
     ]);
     useSafeLayoutEffect(() => {
       const moveRequest = getMoveRequest(store4);
       if (!moves) return;
       if (!compositeElement) return;
-      const instance = instanceRef.current;
       if (!mayActOnMove(store4, instance)) return;
       const { activeId } = store4.getState();
       if (!(activeId === null)) return;
@@ -65804,7 +65828,8 @@ If there's a particular need for this, please submit a feature request at https:
       store4,
       moves,
       compositeElement,
-      previousElementRef
+      previousElementRef,
+      instance
     ]);
     return null;
   });
@@ -66007,7 +66032,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName5, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
   var ctx3 = createStoreContext();
   var useDisclosureContext = ctx3.useContext;
   var useDisclosureScopedContext = ctx3.useScopedContext;
@@ -66015,7 +66040,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DisclosureContextProvider = ctx3.ContextProvider;
   var DisclosureScopedContextProvider = ctx3.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
   var import_react69 = __toESM(require_react(), 1);
   var ctx4 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
   var useDialogContext = ctx4.useContext;
@@ -66026,7 +66051,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DialogHeadingContext = (0, import_react69.createContext)(void 0);
   var DialogDescriptionContext = (0, import_react69.createContext)(void 0);
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
   var import_react70 = __toESM(require_react(), 1);
   var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
   var import_react_dom4 = __toESM(require_react_dom(), 1);
@@ -66181,7 +66206,17 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(DisclosureContentImpl, { ...props });
   });
 
-  // node_modules/.store/@ariakit/components@0.1.13-10iXASpUFeimNoJh6Wxj0g/node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
+  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
+  function getParentHideRequest(store4) {
+    const onHideRequest = store4?.unstable_onHideRequest;
+    const requestHide = store4?.unstable_requestHide;
+    if (!onHideRequest) return;
+    if (!requestHide) return;
+    return {
+      onHideRequest,
+      requestHide
+    };
+  }
   function createDisclosureStore(props = {}) {
     const store4 = props.store || props.disclosure ? mergeStore(props.store, omit2(props.disclosure, ["contentElement", "disclosureElement"])) : void 0;
     throwOnConflictingProps(props, store4);
@@ -66208,20 +66243,63 @@ If there's a particular need for this, please submit a feature request at https:
     setup(disclosure, () => sync2(disclosure, ["open", "animating"], (state2) => {
       disclosure.setState("mounted", state2.open || state2.animating);
     }));
+    const parentHideRequest = getParentHideRequest(props.store);
+    const hideHandlers = /* @__PURE__ */ new Map();
+    const onHideRequest = parentHideRequest?.onHideRequest ?? ((handler) => {
+      if (handler === requestHide) return () => {
+      };
+      hideHandlers.set(handler, (hideHandlers.get(handler) ?? 0) + 1);
+      return () => {
+        const count = hideHandlers.get(handler);
+        if (count == null) return;
+        if (count > 1) {
+          hideHandlers.set(handler, count - 1);
+          return;
+        }
+        hideHandlers.delete(handler);
+      };
+    });
+    const requestHide = parentHideRequest?.requestHide ?? ((hide5) => {
+      const handlers = [...hideHandlers.keys()];
+      const runHandler = (index3) => {
+        const handler = handlers[index3];
+        if (!handler) {
+          hide5();
+          return;
+        }
+        handler(() => runHandler(index3 + 1));
+      };
+      runHandler(0);
+    });
+    setup(disclosure, () => {
+      if (!props.disclosure) return;
+      return onHideRequest(props.disclosure.unstable_requestHide);
+    });
+    const setOpen = (value) => {
+      const { open: open4 } = disclosure.getState();
+      const nextOpen = applyState(value, open4);
+      if (!open4 || nextOpen) {
+        disclosure.setState("open", nextOpen);
+        return;
+      }
+      requestHide(() => disclosure.setState("open", false));
+    };
     return {
       ...disclosure,
       disclosure: props.disclosure,
-      setOpen: (value) => disclosure.setState("open", value),
+      setOpen,
       show: () => disclosure.setState("open", true),
-      hide: () => disclosure.setState("open", false),
-      toggle: () => disclosure.setState("open", (open4) => !open4),
+      hide: () => setOpen(false),
+      toggle: () => setOpen((open4) => !open4),
+      unstable_onHideRequest: onHideRequest,
+      unstable_requestHide: requestHide,
       stopAnimation: () => disclosure.setState("animating", false),
       setContentElement: (value) => disclosure.setState("contentElement", value),
       setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
   function useDisclosureStoreProps(store4, update4, props) {
     useUpdateEffect(update4, [
       props.store,
@@ -66234,7 +66312,7 @@ If there's a particular need for this, please submit a feature request at https:
     return Object.assign(store4, { disclosure: props.disclosure });
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/popover/popover-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/popover/popover-context.js
   var ctx5 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
   var usePopoverContext = ctx5.useContext;
   var usePopoverScopedContext = ctx5.useScopedContext;
@@ -66242,7 +66320,7 @@ If there's a particular need for this, please submit a feature request at https:
   var PopoverContextProvider = ctx5.ContextProvider;
   var PopoverScopedContextProvider = ctx5.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
   var import_react71 = __toESM(require_react(), 1);
   var ComboboxListRoleContext = (0, import_react71.createContext)(null);
   var ctx6 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
@@ -66255,14 +66333,14 @@ If there's a particular need for this, please submit a feature request at https:
   var ComboboxItemCheckedContext = (0, import_react71.createContext)(false);
   var ComboboxHeadingContext = (0, import_react71.createContext)(null);
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/collection/collection-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/collection/collection-store.js
   function useCollectionStoreProps(store4, update4, props) {
     useUpdateEffect(update4, [props.store, update4]);
     useStoreProps(store4, props, "items", "setItems");
     return store4;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/composite/composite-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-store.js
   function useCompositeStoreOptions(props) {
     return {
       id: useId10(props.id),
@@ -66271,7 +66349,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useCompositeStoreProps(store4, update4, props) {
     store4 = useCollectionStoreProps(store4, update4, props);
-    getMoveRequest(store4);
+    getMoveRequest(store4, props.store);
     useStoreProps(store4, props, "activeId", "setActiveId");
     const focusOrderProps = { compositeElementInFocusOrder: props.compositeElementInFocusOrder ?? props.includesBaseElement };
     useStoreProps(store4, focusOrderProps, "compositeElementInFocusOrder");
@@ -66284,17 +66362,17 @@ If there's a particular need for this, please submit a feature request at https:
     return store4;
   }
 
-  // node_modules/.store/@ariakit/components@0.1.13-10iXASpUFeimNoJh6Wxj0g/node_modules/@ariakit/components/dist/dialog/dialog-store.js
+  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/dialog/dialog-store.js
   function createDialogStore(props = {}) {
     return createDisclosureStore(props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
   function useDialogStoreProps(store4, update4, props) {
     return useDisclosureStoreProps(store4, update4, props);
   }
 
-  // node_modules/.store/@ariakit/components@0.1.13-10iXASpUFeimNoJh6Wxj0g/node_modules/@ariakit/components/dist/popover/popover-store.js
+  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/popover/popover-store.js
   function createPopoverStore({ popover: otherPopover, ...props } = {}) {
     const store4 = mergeStore(props.store, omit2(otherPopover, [
       "arrowElement",
@@ -66331,6 +66409,7 @@ If there's a particular need for this, please submit a feature request at https:
       syncedAnchorElement = state2.disclosureElement;
       popover.setState("anchorElement", syncedAnchorElement);
     }));
+    setup(popover, () => otherPopover?.unstable_onHideRequest(dialog.unstable_requestHide));
     return {
       ...dialog,
       ...popover,
@@ -66341,14 +66420,14 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/popover/popover-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/popover/popover-store.js
   function usePopoverStoreProps(store4, update4, props) {
     useUpdateEffect(update4, [props.popover, update4]);
     useStoreProps(store4, props, "placement");
     return useDialogStoreProps(store4, update4, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
   var import_react72 = __toESM(require_react(), 1);
   var TagName7 = "div";
   function hoveringInside(event) {
@@ -66415,8 +66494,8 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName7, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/__chunks/DAieEu03.js
-  var openingMovesByStore = /* @__PURE__ */ new WeakMap();
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/HXejjTMM.js
+  var openingMovesBySelect = /* @__PURE__ */ new WeakMap();
   var scrollItemIntoViewByStore = /* @__PURE__ */ new WeakMap();
   function scrollIntoViewNearest(element) {
     element.scrollIntoView({
@@ -66474,7 +66553,7 @@ If there's a particular need for this, please submit a feature request at https:
     const scrollItemIntoView = (element) => {
       const { contentElement, moves, selectElement } = store4.getState();
       if (!selectElement) return scrollIntoViewNearest(element);
-      if (moves !== openingMovesByStore.get(store4)) return scrollIntoViewNearest(element);
+      if (moves !== openingMovesBySelect.get(selectElement)) return scrollIntoViewNearest(element);
       if (!contentElement?.contains(element)) return scrollIntoViewNearest(element);
       const scrollport = getSingleVerticalScrollport(element, contentElement);
       if (!scrollport) return scrollIntoViewNearest(element);
@@ -66484,7 +66563,7 @@ If there's a particular need for this, please submit a feature request at https:
     return scrollItemIntoView;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/combobox/combobox.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox.js
   var import_react73 = __toESM(require_react(), 1);
   var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
   var TagName8 = "input";
@@ -66685,7 +66764,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!canAutoSelect && (!resetValueOnSelect || userScrolledRef.current)) return;
       const state2 = store4.getState();
       const { compositeElement: compositeElement2, activeId, selectElement, selectedValue: selectedValue2 } = state2;
-      if (compositeElement2 && !hasFocus(compositeElement2)) return;
+      if (compositeElement2 && !hasTreeFocus(compositeElement2)) return;
       if (state2.unstable_placing) return;
       const activeValue = store4.item(activeId)?.value;
       const activeValueSelected = activeValue != null && (Array.isArray(selectedValue2) ? selectedValue2.includes(activeValue) : selectedValue2 === activeValue);
@@ -66918,7 +66997,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName8, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
   var import_react74 = __toESM(require_react(), 1);
   var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
   var TagName9 = "div";
@@ -67075,7 +67154,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName9, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
   var import_react75 = __toESM(require_react(), 1);
   var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
   var TagName10 = "span";
@@ -67194,7 +67273,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName10, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/combobox/combobox-label.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox-label.js
   var TagName11 = "label";
   var useComboboxLabel = createHook(function useComboboxLabel2({ store: store4, ...props }) {
     const scopedContext = useComboboxScopedContext(true);
@@ -67218,7 +67297,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName11, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
   var import_react76 = __toESM(require_react(), 1);
   var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
   var TagName12 = "div";
@@ -67238,7 +67317,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isFocusable(compositeElement)) return;
       const list = event.currentTarget;
       queueMicrotask(() => {
-        if (getActiveElement(list) !== list) return;
+        if (getTreeActiveElement(list) !== list) return;
         compositeElement.focus();
       });
     });
@@ -67326,7 +67405,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName12, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/tag/tag-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tag/tag-context.js
   var import_react77 = __toESM(require_react(), 1);
   var TagValueContext = (0, import_react77.createContext)(null);
   var TagRemoveIdContext = (0, import_react77.createContext)(null);
@@ -67337,7 +67416,7 @@ If there's a particular need for this, please submit a feature request at https:
   var TagContextProvider = ctx7.ContextProvider;
   var TagScopedContextProvider = ctx7.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/components@0.1.13-10iXASpUFeimNoJh6Wxj0g/node_modules/@ariakit/components/dist/combobox/combobox-store.js
+  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/combobox/combobox-store.js
   var isTouchSafari = isSafari() && isTouchDevice();
   function createComboboxStore({ tag, ...props } = {}) {
     const store4 = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
@@ -67552,7 +67631,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/combobox/combobox-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox-store.js
   function useComboboxStoreOptions(props) {
     const tag = useTagContext();
     props = {
@@ -67580,7 +67659,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useComboboxStoreProps(store4, update4, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.6.1-Dr-uGOIDPTJfQKUuqpgP7g/node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
   var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
   function ComboboxProvider(props = {}) {
     const store4 = useComboboxStore(props);
