@@ -71079,6 +71079,7 @@ ${text}
       },
       spacing: {
         padding: true,
+        margin: true,
         __experimentalDefaultControls: {
           padding: true
         }
