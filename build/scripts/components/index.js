@@ -66971,8 +66971,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             className: itemClassName,
             role: "menuitem",
             label: (0, import_i18n74.sprintf)(
-              // translators: %s: The name of the control being reset e.g. "Padding".
-              (0, import_i18n74.__)("Reset %s"),
+              // translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the reset action, to match the visible menu label order.
+              (0, import_i18n74.__)("%s, reset to default"),
               label
             ),
             onClick: () => {
@@ -67008,12 +67008,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_jsx_runtime317.Fragment, {
       children: items.map(([label, isSelected2]) => {
         const itemLabel = isSelected2 ? (0, import_i18n74.sprintf)(
-          // translators: %s: The name of the control being hidden and reset e.g. "Padding".
-          (0, import_i18n74.__)("Hide and reset %s"),
+          // translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the hide and reset action.
+          (0, import_i18n74.__)("%s, hide and reset"),
           label
         ) : (0, import_i18n74.sprintf)(
-          // translators: %s: The name of the control to display e.g. "Padding".
-          (0, import_i18n74._x)("Show %s", "input control"),
+          // translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the show action.
+          (0, import_i18n74._x)("%s, show", "input control"),
           label
         );
         return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
