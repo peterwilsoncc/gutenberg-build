@@ -49077,7 +49077,7 @@ ${url}
       ...getViewportGalleryStyle(currentStyle, viewport)
     };
     Object.entries(settings117).forEach(([key, value]) => {
-      if (value === void 0 || value === baseSettings[key]) {
+      if (value === void 0 || key !== "columns" && value === baseSettings[key]) {
         delete nextViewportStyle[key];
       } else {
         nextViewportStyle[key] = value;
