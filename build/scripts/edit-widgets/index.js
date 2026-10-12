@@ -250,9 +250,9 @@ var wp;
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React59 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef27 = React59.useRef, useEffect25 = React59.useEffect, useMemo24 = React59.useMemo, useDebugValue2 = React59.useDebugValue;
+        var React59 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef28 = React59.useRef, useEffect25 = React59.useEffect, useMemo24 = React59.useMemo, useDebugValue2 = React59.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-          var instRef = useRef27(null);
+          var instRef = useRef28(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -16236,13 +16236,14 @@ ${content}
       []
     );
     const isLargeViewport = (0, import_compose11.useViewportMatch)("medium");
+    const contentRef = (0, import_element64.useRef)();
     const styles = (0, import_element64.useMemo)(() => {
       return hasThemeStyles ? blockEditorSettings.styles : [];
     }, [blockEditorSettings, hasThemeStyles]);
     return /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)("div", { className: "edit-widgets-block-editor", children: [
       /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(notices_default, {}),
       !isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.BlockToolbar, { hideDragHandle: true }),
-      /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(import_block_editor13.BlockTools, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(import_block_editor13.BlockTools, { __unstableContentRef: contentRef, children: [
         /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(keyboard_shortcuts_default, {}),
         /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
           import_block_editor13.__unstableEditorStyles,
@@ -16251,7 +16252,7 @@ ${content}
             scope: ":where(.editor-styles-wrapper)"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.BlockSelectionClearer, { children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.WritingFlow, { children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.BlockList, { className: "edit-widgets-main-block-list" }) }) })
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.BlockSelectionClearer, { children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.WritingFlow, { ref: contentRef, children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.BlockList, { className: "edit-widgets-main-block-list" }) }) })
       ] })
     ] });
   }

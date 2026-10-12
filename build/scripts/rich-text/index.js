@@ -1642,6 +1642,21 @@ var wp;
       selection: { startPath, endPath }
     };
   }
+  function getDomPosition({
+    value,
+    offset,
+    element,
+    prepareEditableTree,
+    placeholder
+  }) {
+    const { selection } = toDom({
+      value: { ...value, start: offset, end: offset },
+      prepareEditableTree,
+      placeholder,
+      doc: element.ownerDocument
+    });
+    return getNodeByPath(element, selection.startPath);
+  }
   function apply({
     value,
     current,
@@ -2737,6 +2752,7 @@ var wp;
   }
 
   // packages/rich-text/build-module/hook/index.mjs
+  var getDomPositionKey = /* @__PURE__ */ Symbol("getDomPosition");
   function hasFocus(element) {
     const { activeElement } = element.ownerDocument;
     return activeElement === element || activeElement?.contentEditable === "true" && activeElement.contains(element);
@@ -2898,7 +2914,19 @@ var wp;
       // may re-render asynchronously.
       getValue: () => recordRef.current,
       onChange: handleChange,
-      ref: mergedRefs
+      ref: mergedRefs,
+      // The DOM position of an offset in the value, for a selection set
+      // from outside the element.
+      [getDomPositionKey]: (0, import_element5.useCallback)(
+        (offset) => getDomPosition({
+          value: recordRef.current,
+          offset: Math.min(offset, recordRef.current.text.length),
+          element: ref.current,
+          prepareEditableTree: __unstableAddInvisibleFormats,
+          placeholder
+        }),
+        [__unstableAddInvisibleFormats, placeholder]
+      )
     };
   }
   function useRichText({
@@ -3045,6 +3073,8 @@ var wp;
   var privateApis = {};
   lock(privateApis, {
     useRichText,
+    getDomPositionKey,
+    useFormatTypes,
     KeyboardShortcutContext,
     InputEventContext,
     RichTextShortcut,
