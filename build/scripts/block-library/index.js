@@ -89055,6 +89055,7 @@ ${text}
       __experimentalBorder: {
         color: true,
         radius: true,
+        style: true,
         width: true,
         __experimentalSkipSerialization: true,
         __experimentalDefaultControls: {
