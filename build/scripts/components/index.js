@@ -78,16 +78,16 @@ var wp;
     }
   });
 
-  // node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
+  // node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
   var require_use_sync_external_store_shim_development = __commonJS({
-    "node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
+    "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
       "use strict";
       (function() {
         function is(x2, y3) {
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         function useSyncExternalStore$2(subscribe2, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React94.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React125.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -97,7 +97,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState93({
+          cachedValue = useState100({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -109,7 +109,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect91(
+          useEffect93(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -135,16 +135,16 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React94 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState93 = React94.useState, useEffect91 = React94.useEffect, useLayoutEffect25 = React94.useLayoutEffect, useDebugValue2 = React94.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React94.useSyncExternalStore ? React94.useSyncExternalStore : shim;
+        var React125 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState100 = React125.useState, useEffect93 = React125.useEffect, useLayoutEffect25 = React125.useLayoutEffect, useDebugValue2 = React125.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React125.useSyncExternalStore ? React125.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
   });
 
-  // node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/shim/index.js
+  // node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/shim/index.js
   var require_shim = __commonJS({
-    "node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/shim/index.js"(exports, module) {
+    "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/shim/index.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;
@@ -276,7 +276,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment15 = REACT_FRAGMENT_TYPE;
+          var Fragment16 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal4 = REACT_PORTAL_TYPE;
@@ -335,7 +335,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment15;
+          exports.Fragment = Fragment16;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal4;
@@ -1308,23 +1308,23 @@ var wp;
     }
   });
 
-  // node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js
+  // node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js
   var require_with_selector_development = __commonJS({
-    "node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js"(exports) {
+    "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js"(exports) {
       "use strict";
       (function() {
         function is(x2, y3) {
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React94 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef128 = React94.useRef, useEffect91 = React94.useEffect, useMemo85 = React94.useMemo, useDebugValue2 = React94.useDebugValue;
+        var React125 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef139 = React125.useRef, useEffect93 = React125.useEffect, useMemo90 = React125.useMemo, useDebugValue2 = React125.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual2) {
-          var instRef = useRef128(null);
+          var instRef = useRef139(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo85(
+          instRef = useMemo90(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -1360,7 +1360,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector2, isEqual2]
           );
           var value = useSyncExternalStore5(subscribe2, instRef[0], instRef[1]);
-          useEffect91(
+          useEffect93(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -1375,9 +1375,9 @@ var wp;
     }
   });
 
-  // node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/shim/with-selector.js
+  // node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/shim/with-selector.js
   var require_with_selector = __commonJS({
-    "node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/shim/with-selector.js"(exports, module) {
+    "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/shim/with-selector.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;
@@ -2156,7 +2156,7 @@ var wp;
   var import_compose2 = __toESM(require_compose(), 1);
   var import_element19 = __toESM(require_element(), 1);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/button/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/button/utils.js
   function withDefaultButtonType(props) {
     const { render, type } = props;
     if (render || type !== void 0) return props;
@@ -2832,7 +2832,7 @@ var wp;
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/C4_D9PgF.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/C4_D9PgF.js
   var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
   function accessibleWhenDisabledFromProps(props) {
     return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
@@ -2861,7 +2861,7 @@ var wp;
     return hasFocus(element) || getTreeActiveElement(element) === element;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
   var import_react = __toESM(require_react(), 1);
   var FocusableContext = (0, import_react.createContext)(true);
 
@@ -3147,16 +3147,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React.createContext(void 0);
     const scopedContext = React.createContext(void 0);
-    const useContext84 = () => React.useContext(context);
+    const useContext91 = () => React.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React.useContext(scopedContext);
-      const store = useContext84();
+      const store = useContext91();
       if (onlyScoped) return scoped;
       return scoped || store;
     };
     const useProviderContext = () => {
       const scoped = React.useContext(scopedContext);
-      const store = useContext84();
+      const store = useContext91();
       if (scoped && scoped === store) return;
       return store;
     };
@@ -3178,7 +3178,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext84,
+      useContext: useContext91,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -3186,7 +3186,7 @@ var wp;
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/focusable/focusable.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/focusable/focusable.js
   var import_react3 = __toESM(require_react(), 1);
   var TagName = "div";
   var isSafariBrowser = isSafari();
@@ -3470,7 +3470,7 @@ var wp;
     return createElement(TagName, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/command/command.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/command/command.js
   var import_react4 = __toESM(require_react(), 1);
   var TagName2 = "button";
   function isNativeClick(event) {
@@ -3582,7 +3582,7 @@ var wp;
     return createElement(TagName2, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/collection/collection-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/collection/collection-context.js
   var ctx = createStoreContext();
   var useCollectionContext = ctx.useContext;
   var useCollectionScopedContext = ctx.useScopedContext;
@@ -3590,7 +3590,7 @@ var wp;
   var CollectionContextProvider = ctx.ContextProvider;
   var CollectionScopedContextProvider = ctx.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/collection/collection-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/collection/collection-item.js
   var import_react5 = __toESM(require_react(), 1);
   var TagName3 = "div";
   var useCollectionItem = createHook(function useCollectionItem2({ store, shouldRegisterItem = true, getItem = identity, element, ...props }) {
@@ -3625,7 +3625,7 @@ var wp;
     return createElement(TagName3, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-context.js
   var import_react6 = __toESM(require_react(), 1);
   var ctx2 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
   var useCompositeContext = ctx2.useContext;
@@ -3636,7 +3636,7 @@ var wp;
   var CompositeItemContext = (0, import_react6.createContext)(void 0);
   var CompositeRowContext = (0, import_react6.createContext)(void 0);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/utils.js
   var import_react7 = __toESM(require_react(), 1);
 
   // node_modules/.store/@ariakit/store@0.1.10-tkEeU1qj6cwY7nBH6-ymFg/node_modules/@ariakit/store/dist/index.js
@@ -4610,7 +4610,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/utils.js
   var flipItems2 = flipItems;
   var findFirstEnabledItem2 = findFirstEnabledItem;
   var groupItemsByRows2 = groupItemsByRows;
@@ -4840,11 +4840,11 @@ If there's a particular need for this, please submit a feature request at https:
     return true;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-item.js
   var import_react8 = __toESM(require_react(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 
-  // node_modules/.store/@ariakit/react-store@0.1.12-0QjTp8acZVRryn4UBgu5Mw/node_modules/@ariakit/react-store/dist/index.js
+  // node_modules/.store/@ariakit/react-store@0.1.12-W5z3hCzhi_z6bEUegMVTow/node_modules/@ariakit/react-store/dist/index.js
   var React2 = __toESM(require_react(), 1);
   var import_shim = __toESM(require_shim(), 1);
   var noopSubscribe = () => () => {
@@ -4984,11 +4984,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React2.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState93 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+    const useState100 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
     return [React2.useMemo(() => ({
       ...store,
-      useState: useState93
-    }), [store, useState93]), useEvent(() => {
+      useState: useState100
+    }), [store, useState100]), useEvent(() => {
       setStore((store2) => createStore2({
         ...props,
         ...store2.getState()
@@ -4996,7 +4996,7 @@ If there's a particular need for this, please submit a feature request at https:
     })];
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-item.js
   var TagName4 = "button";
   function isEditableElement(element) {
     if (isTextbox(element)) return true;
@@ -5308,7 +5308,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName4, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tab/tab-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tab/tab-context.js
   var ctx3 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
   var useTabContext = ctx3.useContext;
   var useTabScopedContext = ctx3.useScopedContext;
@@ -5316,7 +5316,7 @@ If there's a particular need for this, please submit a feature request at https:
   var TabContextProvider = ctx3.ContextProvider;
   var TabScopedContextProvider = ctx3.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tab/tab.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tab/tab.js
   var import_react9 = __toESM(require_react(), 1);
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var TagName5 = "button";
@@ -5402,7 +5402,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName5, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/CDh2UhnG.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/CDh2UhnG.js
   var sourceEvents = /* @__PURE__ */ new WeakMap();
   function fireProxiedKeyboardEvent(element, source, eventInit) {
     const { KeyboardEvent } = getWindow(element);
@@ -5414,7 +5414,7 @@ If there's a particular need for this, please submit a feature request at https:
     return sourceEvents.get(event) ?? event;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/xFYjARz5.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/xFYjARz5.js
   var cancelled = /* @__PURE__ */ Symbol("cancelled");
   var moveRequests = /* @__PURE__ */ new WeakMap();
   function getMoveRequest(store, source) {
@@ -5443,7 +5443,7 @@ If there's a particular need for this, please submit a feature request at https:
     return request;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite.js
   var import_react10 = __toESM(require_react(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   var TagName6 = "div";
@@ -5741,7 +5741,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName6, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tab/tab-list.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tab/tab-list.js
   var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
   var TagName7 = "div";
   var useTabList = createHook(function useTabList2({ store, ...props }) {
@@ -5773,7 +5773,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName7, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
   var ctx4 = createStoreContext();
   var useDisclosureContext = ctx4.useContext;
   var useDisclosureScopedContext = ctx4.useScopedContext;
@@ -5781,7 +5781,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DisclosureContextProvider = ctx4.ContextProvider;
   var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
   var import_react11 = __toESM(require_react(), 1);
   var ctx5 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
   var useDialogContext = ctx5.useContext;
@@ -5792,7 +5792,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DialogHeadingContext = (0, import_react11.createContext)(void 0);
   var DialogDescriptionContext = (0, import_react11.createContext)(void 0);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
   var import_react12 = __toESM(require_react(), 1);
   var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   var import_react_dom = __toESM(require_react_dom(), 1);
@@ -6040,7 +6040,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
   function useDisclosureStoreProps(store, update2, props) {
     useUpdateEffect(update2, [
       props.store,
@@ -6057,7 +6057,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useDisclosureStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tab/tab-panel.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tab/tab-panel.js
   var import_react13 = __toESM(require_react(), 1);
   var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   var TagName9 = "div";
@@ -6184,7 +6184,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName9, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/popover/popover-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/popover/popover-context.js
   var ctx6 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
   var usePopoverContext = ctx6.useContext;
   var usePopoverScopedContext = ctx6.useScopedContext;
@@ -6192,7 +6192,7 @@ If there's a particular need for this, please submit a feature request at https:
   var PopoverContextProvider = ctx6.ContextProvider;
   var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
   var import_react14 = __toESM(require_react(), 1);
   var ComboboxListRoleContext = (0, import_react14.createContext)(null);
   var ctx7 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
@@ -6205,14 +6205,14 @@ If there's a particular need for this, please submit a feature request at https:
   var ComboboxItemCheckedContext = (0, import_react14.createContext)(false);
   var ComboboxHeadingContext = (0, import_react14.createContext)(null);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/collection/collection-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/collection/collection-store.js
   function useCollectionStoreProps(store, update2, props) {
     useUpdateEffect(update2, [props.store, update2]);
     useStoreProps(store, props, "items", "setItems");
     return store;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-store.js
   function useCompositeStoreOptions(props) {
     return {
       id: useId(props.id),
@@ -6239,7 +6239,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useCompositeStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select-context.js
   var import_react15 = __toESM(require_react(), 1);
   var ctx8 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
   var useSelectContext = ctx8.useContext;
@@ -6250,7 +6250,7 @@ If there's a particular need for this, please submit a feature request at https:
   var SelectItemCheckedContext = (0, import_react15.createContext)(false);
   var SelectHeadingContext = (0, import_react15.createContext)(null);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tab/tab-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tab/tab-store.js
   var import_react16 = __toESM(require_react(), 1);
 
   // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/tab/tab-store.js
@@ -6410,7 +6410,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tab/tab-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tab/tab-store.js
   function useTabStoreProps(store, update2, props) {
     useUpdateEffect(update2, [
       props.composite,
@@ -6442,7 +6442,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useTabStoreProps(store, update2, storeProps);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/toolbar/toolbar-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/toolbar/toolbar-context.js
   var ctx9 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
   var useToolbarContext = ctx9.useContext;
   var useToolbarScopedContext = ctx9.useScopedContext;
@@ -6460,7 +6460,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/toolbar/toolbar-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/toolbar/toolbar-store.js
   function useToolbarStoreProps(store, update2, props) {
     return useCompositeStoreProps(store, update2, props);
   }
@@ -6469,7 +6469,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useToolbarStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/toolbar/toolbar.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/toolbar/toolbar.js
   var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   var TagName10 = "div";
   var useToolbar = createHook(function useToolbar2({ store: storeProp, orientation: orientationProp, virtualFocus, focusLoop, rtl: rtl2, ...props }) {
@@ -6503,7 +6503,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName10, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/toolbar/toolbar-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/toolbar/toolbar-item.js
   var TagName11 = "button";
   var useToolbarItem = createHook(function useToolbarItem2({ store, ...props }) {
     const context = useToolbarContext();
@@ -6519,7 +6519,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName11, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/separator/separator.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/separator/separator.js
   var TagName12 = "hr";
   var useSeparator = createHook(function useSeparator2({ orientation = "horizontal", ...props }) {
     props = {
@@ -6534,7 +6534,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName12, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-separator.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-separator.js
   var TagName13 = "hr";
   var useCompositeSeparator = createHook(function useCompositeSeparator2({ store, orientation: orientationProp, ...props }) {
     const context = useCompositeScopedContext();
@@ -6552,7 +6552,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName13, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/focusable/focusable-container.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/focusable/focusable-container.js
   var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
   var TagName14 = "div";
   var useFocusableContainer = createHook(function useFocusableContainer2({ autoFocusOnShow = true, ...props }) {
@@ -6567,11 +6567,11 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName14, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/heading/heading-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/heading/heading-context.js
   var import_react17 = __toESM(require_react(), 1);
   var HeadingContext = (0, import_react17.createContext)(0);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/heading/heading-level.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/heading/heading-level.js
   var import_react18 = __toESM(require_react(), 1);
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   function HeadingLevel({ level, children }) {
@@ -6583,7 +6583,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/visually-hidden/visually-hidden.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/visually-hidden/visually-hidden.js
   var TagName15 = "span";
   function getVisuallyHiddenStyle(style2) {
     return {
@@ -6611,7 +6611,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName15, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/focus-trap/focus-trap.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/focus-trap/focus-trap.js
   var TagName16 = "span";
   var useFocusTrap = createHook(function useFocusTrap2(props) {
     props = {
@@ -6634,11 +6634,11 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName16, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/portal/portal-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/portal/portal-context.js
   var import_react19 = __toESM(require_react(), 1);
   var PortalContext = (0, import_react19.createContext)(null);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/portal/portal.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/portal/portal.js
   var import_react20 = __toESM(require_react(), 1);
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   var import_react_dom2 = __toESM(require_react_dom(), 1);
@@ -6866,7 +6866,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName17, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/is-backdrop.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/is-backdrop.js
   function isBackdrop(element, ...ids) {
     if (!element) return false;
     const backdrop = element.getAttribute("data-backdrop");
@@ -6877,7 +6877,7 @@ If there's a particular need for this, please submit a feature request at https:
     return ids.some((id3) => backdrop === id3);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/orchestrate.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/orchestrate.js
   var cleanups = /* @__PURE__ */ new WeakMap();
   function flushCleanupStack(elementCleanups, key, stack) {
     while (stack.length) {
@@ -6961,7 +6961,7 @@ If there's a particular need for this, please submit a feature request at https:
     return orchestrate(element, property, setup2);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/tree-cleanup.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/tree-cleanup.js
   function isElementMarkedBy(element, cleanups2) {
     if (!cleanups2) return false;
     if (cleanups2.get(element)?.has("ancestorMark")) return true;
@@ -7051,7 +7051,7 @@ If there's a particular need for this, please submit a feature request at https:
     cleanups2.clear();
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/CexKSKpV.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/CexKSKpV.js
   function getSnapshotPropertyName(id3) {
     return `__ariakit-dialog-snapshot-${id3}`;
   }
@@ -7108,7 +7108,7 @@ If there's a particular need for this, please submit a feature request at https:
     return chain(setProperty(body, getSnapshotPropertyName(id3), true), addToWalkTreeSnapshot(id3, snapshotElements));
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/mark-tree-outside.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/mark-tree-outside.js
   function markTreeOutside(id3, elements2, previousCleanups) {
     const walk = startCleanupWalk(previousCleanups);
     const ids = elements2.map((el) => el?.id);
@@ -7246,7 +7246,7 @@ If there's a particular need for this, please submit a feature request at https:
     "svg"
   ];
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/role/role.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/role/role.js
   var TagName18 = "div";
   var useRole = createHook(function useRole2(props) {
     return props;
@@ -7261,7 +7261,7 @@ If there's a particular need for this, please submit a feature request at https:
     return acc;
   }, {}));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/dialog-backdrop.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/dialog-backdrop.js
   var import_react21 = __toESM(require_react(), 1);
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   function DialogBackdrop({ store, backdrop, backdropRef, alwaysVisible, hidden }) {
@@ -7314,7 +7314,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createDisclosureStore(props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
   function useDialogStoreProps(store, update2, props) {
     return useDisclosureStoreProps(store, update2, props);
   }
@@ -7323,7 +7323,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useDialogStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/DztuoDGI.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/DztuoDGI.js
   function isHiddenDismiss(element, ...ids) {
     if (!element) return false;
     const dismiss = element.getAttribute("data-dialog-hidden-dismiss");
@@ -7333,17 +7333,17 @@ If there's a particular need for this, please submit a feature request at https:
     return ids.some((id3) => dismiss === id3);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/supports-inert.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/supports-inert.js
   function supportsInert() {
     return "inert" in HTMLElement.prototype;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/disable-accessibility-tree-outside.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/disable-accessibility-tree-outside.js
   function hideElementFromAccessibilityTree(element) {
     return setAttribute(element, "aria-hidden", "true");
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/is-focus-trap.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/is-focus-trap.js
   function isFocusTrap(element, ...ids) {
     if (!element) return false;
     const attr2 = element.getAttribute("data-focus-trap");
@@ -7353,7 +7353,7 @@ If there's a particular need for this, please submit a feature request at https:
     return ids.some((id3) => attr2 === id3);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/disable-tree.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/disable-tree.js
   function disableTree(element, ignoredElements) {
     if (!("style" in element)) return noop;
     if (supportsInert()) return setProperty(element, "inert", true);
@@ -7423,7 +7423,7 @@ If there's a particular need for this, please submit a feature request at https:
     return finishCleanupWalk(walk);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/use-previous-mouse-down-ref.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/use-previous-mouse-down-ref.js
   var import_react22 = __toESM(require_react(), 1);
   function getFrameChain(element) {
     const chain3 = [element];
@@ -7471,7 +7471,7 @@ If there's a particular need for this, please submit a feature request at https:
     return previousMouseDownRef;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/use-hide-on-interact-outside.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/use-hide-on-interact-outside.js
   var import_react23 = __toESM(require_react(), 1);
   function getHighestReadableWindow(element) {
     const highestElement = getFrameChain(element).at(-1);
@@ -7622,7 +7622,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/use-nested-dialogs.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/use-nested-dialogs.js
   var import_react24 = __toESM(require_react(), 1);
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   var NestedDialogsContext = (0, import_react24.createContext)({});
@@ -7655,7 +7655,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/use-root-dialog.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/use-root-dialog.js
   var import_react25 = __toESM(require_react(), 1);
   var import_react_dom3 = __toESM(require_react_dom(), 1);
   function useRootDialog({ attribute, contentId, contentElement, enabled }) {
@@ -7697,7 +7697,7 @@ If there's a particular need for this, please submit a feature request at https:
     return isRootDialog;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/utils/use-prevent-body-scroll.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/utils/use-prevent-body-scroll.js
   var import_react26 = __toESM(require_react(), 1);
   var isIOS = isApple() && !isMac();
   var useLockEffect = isIOS ? import_react26.useEffect : useSafeLayoutEffect;
@@ -7771,7 +7771,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [isRootDialog, contentElement]);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/DpKu70iZ.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/DpKu70iZ.js
   var import_react27 = __toESM(require_react(), 1);
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
   var capturedDisclosures = /* @__PURE__ */ new WeakSet();
@@ -8515,12 +8515,12 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(DialogWithInternalStore, { ...props });
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/B3k5_R1L.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/B3k5_R1L.js
   function getBasePlacement(placement) {
     return placement.split("-")[0];
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/popover/popover.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/popover/popover.js
   var import_react28 = __toESM(require_react(), 1);
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 
@@ -10053,7 +10053,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   };
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/popover/popover.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/popover/popover.js
   var TagName20 = "div";
   var placingWriters = /* @__PURE__ */ new WeakMap();
   function createDOMRect(x2 = 0, y3 = 0, width = 0, height = 0) {
@@ -10389,7 +10389,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName20, htmlProps);
   }), usePopoverProviderContext);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/hovercard/hovercard-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/hovercard/hovercard-context.js
   var ctx10 = createStoreContext([PopoverContextProvider], [PopoverScopedContextProvider]);
   var useHovercardContext = ctx10.useContext;
   var useHovercardScopedContext = ctx10.useScopedContext;
@@ -10397,7 +10397,7 @@ If there's a particular need for this, please submit a feature request at https:
   var HovercardContextProvider = ctx10.ContextProvider;
   var HovercardScopedContextProvider = ctx10.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/hovercard/utils/polygon.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/hovercard/utils/polygon.js
   function getEventPoint(event) {
     return [event.clientX, event.clientY];
   }
@@ -10467,7 +10467,7 @@ If there's a particular need for this, please submit a feature request at https:
     return polygon;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/CW2hYOhU.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/CW2hYOhU.js
   var import_react29 = __toESM(require_react(), 1);
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   function useEscapeClose({ hideOnEscape, onClose, onEscapeClose }) {
@@ -10714,7 +10714,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName21, htmlProps);
   }), useHovercardProviderContext);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tooltip/tooltip-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tooltip/tooltip-context.js
   var ctx11 = createStoreContext([HovercardContextProvider], [HovercardScopedContextProvider]);
   var useTooltipContext = ctx11.useContext;
   var useTooltipScopedContext = ctx11.useScopedContext;
@@ -10722,7 +10722,7 @@ If there's a particular need for this, please submit a feature request at https:
   var TooltipContextProvider = ctx11.ContextProvider;
   var TooltipScopedContextProvider = ctx11.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tooltip/tooltip.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tooltip/tooltip.js
   var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   var TagName22 = "div";
   var useTooltip = createHook(function useTooltip2({ store, portal = true, gutter = 8, preserveTabOrder = false, hideOnHoverOutside = true, hideOnInteractOutside = true, ...props }) {
@@ -10765,7 +10765,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName22, htmlProps);
   }), useTooltipProviderContext);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/Dv0S4FLv.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/Dv0S4FLv.js
   var import_react30 = __toESM(require_react(), 1);
   var useHovercardTrigger = createHook(function useHovercardTrigger2({ store, showOnHover = true, unstable_showOnHoverWhenDisabled: showOnHoverWhenDisabled = true, setAnchorElement = false, ...props }) {
     const disabled2 = disabledFromProps(props);
@@ -10842,7 +10842,7 @@ If there's a particular need for this, please submit a feature request at https:
     return props;
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/hovercard/hovercard-anchor.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/hovercard/hovercard-anchor.js
   var TagName23 = "a";
   var useHovercardAnchor = createHook(function useHovercardAnchor2({ store, showOnHover = true, ...props }) {
     const context = useHovercardProviderContext();
@@ -10860,7 +10860,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName23, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tooltip/tooltip-anchor.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tooltip/tooltip-anchor.js
   var import_react31 = __toESM(require_react(), 1);
   var TagName24 = "div";
   var globalStore = createStore({ activeStore: null });
@@ -11032,7 +11032,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/popover/popover-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/popover/popover-store.js
   function usePopoverStoreProps(store, update2, props) {
     useUpdateEffect(update2, [props.popover, update2]);
     useStoreProps(store, props, "placement");
@@ -11062,7 +11062,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/hovercard/hovercard-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/hovercard/hovercard-store.js
   function useHovercardStoreProps(store, update2, props) {
     useStoreProps(store, props, "timeout");
     useStoreProps(store, props, "showTimeout");
@@ -11093,7 +11093,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/tooltip/tooltip-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tooltip/tooltip-store.js
   function useTooltipStoreProps(store, update2, props) {
     useStoreProps(store, props, "type");
     useStoreProps(store, props, "skipTimeout");
@@ -11104,7 +11104,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useTooltipStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menubar/menubar-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menubar/menubar-context.js
   var menubar = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
   var useMenubarContext = menubar.useContext;
   var useMenubarScopedContext = menubar.useScopedContext;
@@ -11112,7 +11112,7 @@ If there's a particular need for this, please submit a feature request at https:
   var MenubarContextProvider = menubar.ContextProvider;
   var MenubarScopedContextProvider = menubar.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/button/button.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/button/button.js
   var import_react32 = __toESM(require_react(), 1);
   var TagName25 = "button";
   var useButton = createHook(function useButton2(props) {
@@ -11139,7 +11139,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName25, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/disclosure/disclosure.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/disclosure/disclosure.js
   var import_react33 = __toESM(require_react(), 1);
   var TagName26 = "button";
   var symbol2 = /* @__PURE__ */ Symbol("disclosure");
@@ -11200,7 +11200,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName26, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/dialog/dialog-disclosure.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/dialog-disclosure.js
   var TagName27 = "button";
   var useDialogDisclosure = createHook(function useDialogDisclosure2({ store, ...props }) {
     const context = useDialogProviderContext();
@@ -11222,7 +11222,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName27, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/popover/popover-disclosure.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/popover/popover-disclosure.js
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   var TagName28 = "button";
   var usePopoverDisclosure = createHook(function usePopoverDisclosure2({ store, ...props }) {
@@ -11244,7 +11244,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName28, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/popover/popover-disclosure-arrow.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/popover/popover-disclosure-arrow.js
   var import_react34 = __toESM(require_react(), 1);
   var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   var TagName29 = "span";
@@ -11290,7 +11290,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName29, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/radio/radio-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/radio/radio-context.js
   var import_react35 = __toESM(require_react(), 1);
   var ctx12 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
   var useRadioContext = ctx12.useContext;
@@ -11300,7 +11300,7 @@ If there's a particular need for this, please submit a feature request at https:
   var RadioScopedContextProvider = ctx12.ScopedContextProvider;
   var RadioGroupDisabledContext = (0, import_react35.createContext)(false);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/radio/radio.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/radio/radio.js
   var import_react36 = __toESM(require_react(), 1);
   var TagName30 = "input";
   function getIsChecked(value, storeValue) {
@@ -11412,7 +11412,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName30, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/radio/radio-group.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/radio/radio-group.js
   var import_react37 = __toESM(require_react(), 1);
   var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   var TagName31 = "div";
@@ -11486,7 +11486,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/radio/radio-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/radio/radio-store.js
   function useRadioStoreProps(store, update2, props) {
     store = useCompositeStoreProps(store, update2, props);
     useStoreProps(store, props, "value", "setValue");
@@ -11498,7 +11498,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useRadioStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-typeahead.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-typeahead.js
   var TagName32 = "div";
   var typeaheadStates = /* @__PURE__ */ new WeakMap();
   function getTypeaheadState(store) {
@@ -11588,7 +11588,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName32, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select-arrow.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select-arrow.js
   var TagName33 = "span";
   var useSelectArrow = createHook(function useSelectArrow2({ store, ...props }) {
     const context = useSelectContext();
@@ -11604,7 +11604,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName33, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select.js
   var import_react38 = __toESM(require_react(), 1);
   var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   var TagName34 = "button";
@@ -11763,11 +11763,11 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName34, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/group/group-label-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/group/group-label-context.js
   var import_react39 = __toESM(require_react(), 1);
   var GroupLabelContext = (0, import_react39.createContext)(void 0);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/group/group.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/group/group.js
   var import_react40 = __toESM(require_react(), 1);
   var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   var TagName35 = "div";
@@ -11789,7 +11789,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName35, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-group.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-group.js
   var TagName36 = "div";
   var useCompositeGroup = createHook(function useCompositeGroup2({ store, ...props }) {
     props = useGroup(props);
@@ -11800,7 +11800,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName36, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/group/group-label.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/group/group-label.js
   var import_react41 = __toESM(require_react(), 1);
   var TagName37 = "div";
   var useGroupLabel = createHook(function useGroupLabel2(props) {
@@ -11822,7 +11822,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName37, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-group-label.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-group-label.js
   var TagName38 = "div";
   var useCompositeGroupLabel = createHook(function useCompositeGroupLabel2({ store, ...props }) {
     props = useGroupLabel(props);
@@ -11833,7 +11833,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName38, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
   var import_react42 = __toESM(require_react(), 1);
   var TagName39 = "div";
   function hoveringInside(event) {
@@ -11900,7 +11900,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName39, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select-item.js
   var import_react43 = __toESM(require_react(), 1);
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   var TagName40 = "div";
@@ -12003,11 +12003,11 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName40, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/checkbox/checkbox-checked-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/checkbox/checkbox-checked-context.js
   var import_react44 = __toESM(require_react(), 1);
   var CheckboxCheckedContext = (0, import_react44.createContext)(false);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/checkbox/checkbox-check.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/checkbox/checkbox-check.js
   var import_react45 = __toESM(require_react(), 1);
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var TagName41 = "span";
@@ -12052,7 +12052,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName41, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select-item-check.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select-item-check.js
   var import_react46 = __toESM(require_react(), 1);
   var TagName42 = "span";
   var useSelectItemCheck = createHook(function useSelectItemCheck2({ store, checked: checked2, ...props }) {
@@ -12069,7 +12069,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName42, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select-label.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select-label.js
   var TagName43 = "div";
   var useSelectLabel = createHook(function useSelectLabel2({ store, ...props }) {
     const context = useSelectProviderContext();
@@ -12101,7 +12101,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName43, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select-list.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select-list.js
   var import_react47 = __toESM(require_react(), 1);
   var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   var TagName44 = "div";
@@ -12197,7 +12197,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName44, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select-popover.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select-popover.js
   var TagName45 = "div";
   var useSelectPopover = createHook(function useSelectPopover2({ store, alwaysVisible, ...props }) {
     const context = useSelectProviderContext();
@@ -12314,7 +12314,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/select/select-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/select/select-store.js
   function useSelectStoreOptions(props) {
     const combobox = useComboboxProviderContext();
     props = {
@@ -12335,7 +12335,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useSelectStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/composite/composite-row.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-row.js
   var import_react48 = __toESM(require_react(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var TagName46 = "div";
@@ -12383,7 +12383,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/checkbox/checkbox-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/checkbox/checkbox-store.js
   function useCheckboxStoreProps(store, update2, props) {
     useUpdateEffect(update2, [props.store, update2]);
     useStoreProps(store, props, "value", "setValue");
@@ -12394,7 +12394,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useCheckboxStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/checkbox/checkbox-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/checkbox/checkbox-context.js
   var ctx13 = createStoreContext();
   var useCheckboxContext = ctx13.useContext;
   var useCheckboxScopedContext = ctx13.useScopedContext;
@@ -12402,7 +12402,7 @@ If there's a particular need for this, please submit a feature request at https:
   var CheckboxContextProvider = ctx13.ContextProvider;
   var CheckboxScopedContextProvider = ctx13.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/__chunks/DjvJNLSl.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/DjvJNLSl.js
   var import_react49 = __toESM(require_react(), 1);
   var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   function getPrimitiveValue(value) {
@@ -12520,7 +12520,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName47, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-context.js
   var import_react50 = __toESM(require_react(), 1);
   var menu = createStoreContext([CompositeContextProvider, HovercardContextProvider], [CompositeScopedContextProvider, HovercardScopedContextProvider]);
   var useMenuContext = menu.useContext;
@@ -12531,7 +12531,7 @@ If there's a particular need for this, please submit a feature request at https:
   var MenuItemCheckedContext = (0, import_react50.createContext)(void 0);
   var MenuListHiddenContext = (0, import_react50.createContext)(false);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-list.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-list.js
   var import_react51 = __toESM(require_react(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var TagName48 = "div";
@@ -12668,7 +12668,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName48, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu.js
   var import_react52 = __toESM(require_react(), 1);
   var TagName49 = "div";
   var useMenu = createHook(function useMenu2({ store, modal: modalProp = false, portal = modalProp, hideOnEscape = true, autoFocusOnShow = true, hideOnHoverOutside, alwaysVisible, getPersistentElements, unstable_treeSnapshotKey, ...props }) {
@@ -12813,7 +12813,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName49, htmlProps);
   }), useMenuProviderContext);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-button.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-button.js
   var import_react53 = __toESM(require_react(), 1);
   var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   var TagName50 = "button";
@@ -12886,11 +12886,11 @@ If there's a particular need for this, please submit a feature request at https:
       onClickProp?.(event);
       if (event.defaultPrevented) return;
       if (!store) return;
-      const isKeyboardClick = !event.detail;
+      const isKeyboardClick2 = !event.detail;
       const { open: open2 } = store.getState();
-      if (!open2 || isKeyboardClick) {
-        if (!hasParentMenu || isKeyboardClick) store.setAutoFocusOnShow(true);
-        store.setInitialFocus(isKeyboardClick ? "first" : "container");
+      if (!open2 || isKeyboardClick2) {
+        if (!hasParentMenu || isKeyboardClick2) store.setAutoFocusOnShow(true);
+        store.setInitialFocus(isKeyboardClick2 ? "first" : "container");
       }
       if (hasParentMenu) showMenu();
     });
@@ -12958,7 +12958,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName50, withDefaultButtonType(htmlProps));
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-group.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-group.js
   var TagName51 = "div";
   var useMenuGroup = createHook(function useMenuGroup2(props) {
     props = useCompositeGroup(props);
@@ -12969,7 +12969,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName51, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-group-label.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-group-label.js
   var TagName52 = "div";
   var useMenuGroupLabel = createHook(function useMenuGroupLabel2(props) {
     props = useCompositeGroupLabel(props);
@@ -12980,7 +12980,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName52, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-item.js
   var import_react54 = __toESM(require_react(), 1);
   var TagName53 = "div";
   function menuHasFocus(compositeElement, items, currentTarget) {
@@ -13064,7 +13064,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName53, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-item-check.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-item-check.js
   var import_react55 = __toESM(require_react(), 1);
   var TagName54 = "span";
   var useMenuItemCheck = createHook(function useMenuItemCheck2({ store, checked: checked2, ...props }) {
@@ -13081,7 +13081,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName54, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-item-checkbox.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-item-checkbox.js
   var import_react56 = __toESM(require_react(), 1);
   var TagName55 = "div";
   function getValue(storeValue, value, checked2) {
@@ -13163,7 +13163,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName55, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-item-radio.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-item-radio.js
   var import_react57 = __toESM(require_react(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   var TagName56 = "div";
@@ -13302,7 +13302,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-store.js
   function useMenuStoreProps(store, update2, props) {
     useUpdateEffect(update2, [
       props.combobox,
@@ -13331,7 +13331,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useMenuStoreProps(store, update2, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-b-7fAlfpqRg2Jp6O33r7Tg/node_modules/@ariakit/react-components/dist/menu/menu-separator.js
+  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/menu/menu-separator.js
   var TagName57 = "hr";
   var useMenuSeparator = createHook(function useMenuSeparator2({ store, ...props }) {
     const context = useMenuContext();
@@ -22886,10 +22886,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React7.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx267) {
+  (function(_jsx284) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx267.JSX || (_jsx267.JSX = {})));
+    })(JSX || (JSX = _jsx284.JSX || (_jsx284.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css2() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -39764,10 +39764,10 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n43 = __toESM(require_i18n(), 1);
   var import_compose46 = __toESM(require_compose(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useRenderElement.mjs
   var React14 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useRefWithInit.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useRefWithInit.mjs
   var React11 = __toESM(require_react(), 1);
   var UNINITIALIZED = {};
   function useRefWithInit(init2, initArg) {
@@ -39778,7 +39778,7 @@ This message will only show in development mode. It won't appear in production. 
     return ref;
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useMergedRefs.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useMergedRefs.mjs
   function useMergedRefs(a2, b2, c3, d2) {
     const forkRef = useRefWithInit(createForkRef).current;
     if (didChange(forkRef, a2, b2, c3, d2)) {
@@ -39867,17 +39867,17 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getReactElementRef.mjs
   var React13 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/reactVersion.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/reactVersion.mjs
   var React12 = __toESM(require_react(), 1);
   var majorVersion = parseInt(React12.version, 10);
   function isReactVersionAtLeast(reactVersionToCheck) {
     return majorVersion >= reactVersionToCheck;
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getReactElementRef.mjs
   function getReactElementRef(element) {
     if (!/* @__PURE__ */ React13.isValidElement(element)) {
       return null;
@@ -39887,7 +39887,7 @@ This message will only show in development mode. It won't appear in production. 
     return (isReactVersionAtLeast(19) ? propsWithRef?.ref : reactElement.ref) ?? null;
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/mergeObjects.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/mergeObjects.mjs
   function mergeObjects(a2, b2) {
     if (a2 && !b2) {
       return a2;
@@ -39904,7 +39904,7 @@ This message will only show in development mode. It won't appear in production. 
     return void 0;
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/createLogOnce.mjs
   var loggedMessages;
   if (true) {
     loggedMessages = /* @__PURE__ */ new Set();
@@ -39927,16 +39927,16 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/warn.mjs
   var warn4 = createLogOnce("warn", "Base UI");
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/empty.mjs
   function NOOP() {
   }
   var EMPTY_ARRAY = Object.freeze([]);
   var EMPTY_OBJECT = Object.freeze({});
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
   function getStateAttributesProps(state, customMapping) {
     const props = {};
     for (const key in state) {
@@ -39957,17 +39957,17 @@ This message will only show in development mode. It won't appear in production. 
     return props;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveClassName.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/resolveClassName.mjs
   function resolveClassName(className, state) {
     return typeof className === "function" ? className(state) : className;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveStyle.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/resolveStyle.mjs
   function resolveStyle(style2, state) {
     return typeof style2 === "function" ? style2(state) : style2;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/merge-props/mergeProps.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/merge-props/mergeProps.mjs
   var EMPTY_PROPS = {};
   function mergeProps2(a2, b2, c3, d2, e3) {
     if (!c3 && !d2 && !e3 && !a2) {
@@ -40004,14 +40004,14 @@ This message will only show in development mode. It won't appear in production. 
   function createInitialMergedProps(inputProps) {
     if (isPropsGetter(inputProps)) {
       return {
-        ...resolvePropsGetter(inputProps, EMPTY_PROPS)
+        ...inputProps(EMPTY_PROPS)
       };
     }
     return copyInitialProps(inputProps);
   }
   function mergeInto(merged, inputProps) {
     if (isPropsGetter(inputProps)) {
-      return resolvePropsGetter(inputProps, merged);
+      return inputProps(merged);
     }
     return mutablyMergeInto(merged, inputProps);
   }
@@ -40061,12 +40061,6 @@ This message will only show in development mode. It won't appear in production. 
   }
   function isPropsGetter(inputProps) {
     return typeof inputProps === "function";
-  }
-  function resolvePropsGetter(inputProps, previousProps) {
-    if (isPropsGetter(inputProps)) {
-      return inputProps(previousProps);
-    }
-    return inputProps ?? EMPTY_PROPS;
   }
   function mergeEventHandlers(ourHandler, theirHandler) {
     if (!theirHandler) {
@@ -40122,7 +40116,7 @@ This message will only show in development mode. It won't appear in production. 
     return event != null && typeof event === "object" && "nativeEvent" in event;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useRenderElement.mjs
   var import_react96 = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
     let renderProp = componentProps.render;
@@ -40206,12 +40200,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return /* @__PURE__ */ React14.cloneElement(render, mergedProps);
     }
-    if (element) {
-      if (typeof element === "string") {
-        return renderTag(element, props);
-      }
-    }
-    throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage_default(8));
+    return renderTag(element, props);
   }
   function warnIfRenderPropLooksLikeComponent(renderFn) {
     const functionName = renderFn.name;
@@ -40244,13 +40233,13 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ React14.createElement(Tag, props);
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/safeReact.mjs
   var React15 = __toESM(require_react(), 1);
   var SafeReact = {
     ...React15
   };
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useStableCallback.mjs
   var useInsertionEffect5 = SafeReact.useInsertionEffect;
   var useSafeInsertionEffect = (
     // React 17 doesn't have useInsertionEffect.
@@ -40283,25 +40272,25 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
   var React16 = __toESM(require_react(), 1);
   var noop12 = () => {
   };
   var useIsoLayoutEffect = typeof document !== "undefined" ? React16.useLayoutEffect : noop12;
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
   var React18 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
   var ReactDOM2 = __toESM(require_react_dom(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useOnMount.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useOnMount.mjs
   var React17 = __toESM(require_react(), 1);
   function useOnMount(fn) {
     React17.useEffect(fn, EMPTY_ARRAY);
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useAnimationFrame.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useAnimationFrame.mjs
   var EMPTY = null;
   var LAST_RAF = globalThis.requestAnimationFrame;
   var Scheduler = class {
@@ -40392,7 +40381,7 @@ This message will only show in development mode. It won't appear in production. 
     return timeout;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveRef.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/resolveRef.mjs
   function resolveRef(maybeRef) {
     if (maybeRef == null) {
       return maybeRef;
@@ -40400,11 +40389,19 @@ This message will only show in development mode. It won't appear in production. 
     return "current" in maybeRef ? maybeRef.current : maybeRef;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getFiniteAnimations.mjs
+  function getFiniteAnimations(element, options2) {
+    return element.getAnimations(options2).filter((animation) => {
+      const timing = animation.effect?.getTiming();
+      return timing?.duration !== Infinity && timing?.iterations !== Infinity;
+    });
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
   var startingStyle = "data-starting-style";
   var endingStyle = "data-ending-style";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
   var pendingCallbacks = null;
   function flushBeforePaint(fn) {
     if (!pendingCallbacks) {
@@ -40446,7 +40443,7 @@ This message will only show in development mode. It won't appear in production. 
         return;
       }
       function exec() {
-        Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+        Promise.all(getFiniteAnimations(resolvedElement).map((animation) => animation.finished.then(NOOP))).then(() => {
           if (!signal?.aborted) {
             done();
           }
@@ -40454,7 +40451,7 @@ This message will only show in development mode. It won't appear in production. 
           if (signal?.aborted) {
             return;
           }
-          const currentAnimations = resolvedElement.getAnimations();
+          const currentAnimations = getFiniteAnimations(resolvedElement);
           if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
             exec();
             return;
@@ -40487,7 +40484,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
   function useOpenChangeComplete(parameters) {
     const {
       enabled = true,
@@ -40510,7 +40507,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [enabled, open2, onComplete, runOnceAnimationsFinish]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
   var STARTING_HOOK = {
     [startingStyle]: ""
   };
@@ -40529,7 +40526,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
   var React19 = __toESM(require_react(), 1);
   function useTransitionStatus(open2, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
     const [transitionStatus, setTransitionStatus] = React19.useState(open2 && enableIdleState ? "idle" : void 0);
@@ -40556,7 +40553,7 @@ This message will only show in development mode. It won't appear in production. 
       return void 0;
     }, [open2, mounted, transitionStatus, deferEndingState]);
     useIsoLayoutEffect(() => {
-      if (!open2 || enableIdleState) {
+      if (!open2 || enableIdleState || transitionStatus === void 0) {
         return void 0;
       }
       const frame2 = AnimationFrame.request(() => {
@@ -40565,7 +40562,7 @@ This message will only show in development mode. It won't appear in production. 
       return () => {
         AnimationFrame.cancel(frame2);
       };
-    }, [enableIdleState, open2]);
+    }, [enableIdleState, open2, transitionStatus]);
     useIsoLayoutEffect(() => {
       if (!open2 || !enableIdleState) {
         return void 0;
@@ -40587,7 +40584,7 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useTimeout.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useTimeout.mjs
   var EMPTY2 = 0;
   var Timeout = class _Timeout {
     static create() {
@@ -40623,13 +40620,13 @@ This message will only show in development mode. It won't appear in production. 
     return timeout;
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useControlled.mjs
   var React20 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
   var error = createLogOnce("error", "Base UI");
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useControlled.mjs
   function useControlled({
     controlled,
     default: defaultProp,
@@ -40639,7 +40636,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       current: isControlled
     } = React20.useRef(controlled !== void 0);
-    const [valueState, setValue] = React20.useState(defaultProp);
+    const [valueState, setValue] = React20.useState(() => defaultProp);
     const value = isControlled && controlled !== void 0 ? controlled : valueState;
     if (true) {
       React20.useEffect(() => {
@@ -40690,10 +40687,10 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
   var React22 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
   var React21 = __toESM(require_react(), 1);
   var CompositeListContext = /* @__PURE__ */ React21.createContext({
     register: () => {
@@ -40711,7 +40708,7 @@ This message will only show in development mode. It won't appear in production. 
     return React21.useContext(CompositeListContext);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
   function CompositeList(props) {
     const {
@@ -40721,7 +40718,7 @@ This message will only show in development mode. It won't appear in production. 
       onMapChange: onMapChangeProp
     } = props;
     const onMapChange = useStableCallback(onMapChangeProp);
-    const [, setMapTick] = React22.useState(false);
+    const [, setMapTick] = React22.useState(0);
     const listeners = useRefWithInit(createListeners).current;
     const map = useRefWithInit(createMap).current;
     const nextIndexRef = React22.useRef(0);
@@ -40733,7 +40730,7 @@ This message will only show in development mode. It won't appear in production. 
         return;
       }
       isDirtyRef.current = true;
-      setMapTick((tick) => !tick);
+      setMapTick((tick) => tick + 1);
     });
     const register2 = useStableCallback((node2, registration) => {
       map.set(node2, registration);
@@ -40913,21 +40910,42 @@ This message will only show in development mode. It won't appear in production. 
     return false;
   }
   function sortByDocumentPosition(a2, b2) {
+    if (a2.nextElementSibling === b2) {
+      return -1;
+    }
+    if (b2.nextElementSibling === a2) {
+      return 1;
+    }
     return a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useId.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useId.mjs
+  var React24 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useForcedRerendering.mjs
   var React23 = __toESM(require_react(), 1);
+  function useForcedRerendering() {
+    const [, setState] = React23.useState({});
+    return React23.useCallback(() => {
+      setState({});
+    }, []);
+  }
+
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useId.mjs
   var globalId = 0;
   function useGlobalId(idOverride, prefix2 = "mui") {
-    const [defaultId, setDefaultId] = React23.useState(idOverride);
-    const id3 = idOverride || defaultId;
-    React23.useEffect(() => {
-      if (defaultId == null) {
+    const defaultId = React24.useRef(void 0);
+    const forceRerender = useForcedRerendering();
+    const id3 = idOverride ?? defaultId.current;
+    React24.useEffect(() => {
+      if (defaultId.current == null) {
         globalId += 1;
-        setDefaultId(`${prefix2}-${globalId}`);
+        defaultId.current = `${prefix2}-${globalId}`;
+        if (idOverride == null) {
+          forceRerender();
+        }
       }
-    }, [defaultId, prefix2]);
+    }, [idOverride, prefix2, forceRerender]);
     return id3;
   }
   var maybeReactUseId = SafeReact.useId;
@@ -40939,12 +40957,47 @@ This message will only show in development mode. It won't appear in production. 
     return useGlobalId(idOverride, prefix2);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useBaseUiId.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useBaseUiId.mjs
   function useBaseUiId(idOverride) {
     return useId5(idOverride, "base-ui");
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/reason-parts.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
+  function createChangeEventDetails(reason, event, trigger, customProperties) {
+    let canceled = false;
+    let allowPropagation = false;
+    const custom = customProperties ?? EMPTY_OBJECT;
+    const details = {
+      reason,
+      event: event ?? new Event("base-ui"),
+      cancel() {
+        canceled = true;
+      },
+      allowPropagation() {
+        allowPropagation = true;
+      },
+      get isCanceled() {
+        return canceled;
+      },
+      get isPropagationAllowed() {
+        return allowPropagation;
+      },
+      trigger,
+      ...custom
+    };
+    return details;
+  }
+  function createGenericEventDetails(reason, event, customProperties) {
+    const custom = customProperties ?? EMPTY_OBJECT;
+    const details = {
+      reason,
+      event: event ?? new Event("base-ui"),
+      ...custom
+    };
+    return details;
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/reason-parts.mjs
   var reason_parts_exports = {};
   __export(reason_parts_exports, {
     cancelOpen: () => cancelOpen,
@@ -40973,6 +41026,7 @@ This message will only show in development mode. It won't appear in production. 
     none: () => none,
     outsidePress: () => outsidePress,
     pointer: () => pointer,
+    popupClose: () => popupClose,
     scrub: () => scrub,
     siblingOpen: () => siblingOpen,
     swipe: () => swipe,
@@ -41010,6 +41064,7 @@ This message will only show in development mode. It won't appear in production. 
   var drag2 = "drag";
   var wheel = "wheel";
   var scrub = "scrub";
+  var popupClose = "popup-close";
   var cancelOpen = "cancel-open";
   var siblingOpen = "sibling-open";
   var disabled = "disabled";
@@ -41019,34 +41074,8 @@ This message will only show in development mode. It won't appear in production. 
   var swipe = "swipe";
   var windowResize = "window-resize";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
-  function createChangeEventDetails(reason, event, trigger, customProperties) {
-    let canceled = false;
-    let allowPropagation = false;
-    const custom = customProperties ?? EMPTY_OBJECT;
-    const details = {
-      reason,
-      event: event ?? new Event("base-ui"),
-      cancel() {
-        canceled = true;
-      },
-      allowPropagation() {
-        allowPropagation = true;
-      },
-      get isCanceled() {
-        return canceled;
-      },
-      get isPropagationAllowed() {
-        return allowPropagation;
-      },
-      trigger,
-      ...custom
-    };
-    return details;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
-  var React24 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
+  var React25 = __toESM(require_react(), 1);
   function useCompositeListItem(params = {}) {
     const {
       guess,
@@ -41061,8 +41090,8 @@ This message will only show in development mode. It won't appear in production. 
       subscribeMapChange,
       nextIndexRef
     } = useCompositeListContext();
-    const indexRef = React24.useRef(-1);
-    const [internalIndex, setInternalIndex] = React24.useState(externalIndex == null && guess ? () => {
+    const indexRef = React25.useRef(-1);
+    const [internalIndex, setInternalIndex] = React25.useState(externalIndex == null && guess ? () => {
       if (indexRef.current === -1) {
         const newIndex = nextIndexRef.current;
         nextIndexRef.current += 1;
@@ -41071,8 +41100,8 @@ This message will only show in development mode. It won't appear in production. 
       return indexRef.current;
     } : -1);
     const index2 = externalIndex ?? internalIndex;
-    const componentRef = React24.useRef(null);
-    const ref = React24.useCallback((node2) => {
+    const componentRef = React25.useRef(null);
+    const ref = React25.useCallback((node2) => {
       const previousNode = componentRef.current;
       if (previousNode) {
         unregister(previousNode);
@@ -41104,23 +41133,23 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/use-button/useButton.mjs
-  var React27 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/use-button/useButton.mjs
+  var React28 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-  var React25 = __toESM(require_react(), 1);
-  var CompositeRootContext = /* @__PURE__ */ React25.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
+  var React26 = __toESM(require_react(), 1);
+  var CompositeRootContext = /* @__PURE__ */ React26.createContext(void 0);
   if (true) CompositeRootContext.displayName = "CompositeRootContext";
   function useCompositeRootContext(optional = false) {
-    const context = React25.useContext(CompositeRootContext);
+    const context = React26.useContext(CompositeRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-  var React26 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
+  var React27 = __toESM(require_react(), 1);
   function useFocusableWhenDisabled(parameters) {
     const {
       focusableWhenDisabled,
@@ -41131,7 +41160,7 @@ This message will only show in development mode. It won't appear in production. 
     } = parameters;
     const isFocusableComposite = composite && focusableWhenDisabled !== false;
     const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-    const props = React26.useMemo(() => {
+    const props = React27.useMemo(() => {
       const additionalProps = {
         // allow Tabbing away from focusableWhenDisabled elements
         onKeyDown(event) {
@@ -41159,20 +41188,22 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/owner.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/owner.mjs
   function ownerDocument(node2) {
     return node2?.ownerDocument || document;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/dispatchClickWithModifiers.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/dispatchClickWithModifiers.mjs
   function dispatchClickWithModifiers(target, sourceEvent, {
-    detail = 0
+    detail = 0,
+    pointerType = ""
   } = {}) {
     target.dispatchEvent(new (getWindow2(target)).PointerEvent("click", {
       bubbles: true,
       cancelable: true,
       composed: true,
       detail,
+      pointerType,
       shiftKey: sourceEvent.shiftKey,
       ctrlKey: sourceEvent.ctrlKey,
       altKey: sourceEvent.altKey,
@@ -41180,7 +41211,7 @@ This message will only show in development mode. It won't appear in production. 
     }));
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/use-button/useButton.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/use-button/useButton.mjs
   function useButton3(parameters = {}) {
     const {
       disabled: disabled2 = false,
@@ -41189,7 +41220,7 @@ This message will only show in development mode. It won't appear in production. 
       native: isNativeButton = true,
       composite: compositeProp
     } = parameters;
-    const elementRef = React27.useRef(null);
+    const elementRef = React28.useRef(null);
     const compositeRootContext = useCompositeRootContext(true);
     const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
     const {
@@ -41202,7 +41233,7 @@ This message will only show in development mode. It won't appear in production. 
       isNativeButton
     });
     if (true) {
-      React27.useEffect(() => {
+      React28.useEffect(() => {
         if (!elementRef.current) {
           return;
         }
@@ -41220,7 +41251,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       }, [isNativeButton]);
     }
-    const updateDisabled = React27.useCallback(() => {
+    const updateDisabled = React28.useCallback(() => {
       const element = elementRef.current;
       if (!isButtonElement(element)) {
         return;
@@ -41230,7 +41261,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
     useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-    const getButtonProps = React27.useCallback((externalProps = {}) => {
+    const getButtonProps = React28.useCallback((externalProps = {}) => {
       const {
         onClick: externalOnClick,
         onMouseDown: externalOnMouseDown,
@@ -41343,7 +41374,7 @@ This message will only show in development mode. It won't appear in production. 
     return isHTMLElement(elem) && elem.tagName === "A" && Boolean(elem.href);
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/addEventListener.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/addEventListener.mjs
   function addEventListener(target, type, listener, options2) {
     target.addEventListener(type, listener, options2);
     return () => {
@@ -41351,7 +41382,7 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useValueAsRef.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useValueAsRef.mjs
   function useValueAsRef(value) {
     const latest = useRefWithInit(createLatestRef, value).current;
     latest.next = value;
@@ -41369,7 +41400,7 @@ This message will only show in development mode. It won't appear in production. 
     return latest;
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/parts.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/parts.mjs
   var parts_exports = {};
   __export(parts_exports, {
     engine: () => engine_exports,
@@ -41379,7 +41410,7 @@ This message will only show in development mode. It won't appear in production. 
     screenReader: () => screen_reader_exports
   });
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/os.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/os.mjs
   var os_exports = {};
   __export(os_exports, {
     android: () => android,
@@ -41390,7 +41421,7 @@ This message will only show in development mode. It won't appear in production. 
     windows: () => windows
   });
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/shared.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/shared.mjs
   function readRawData() {
     if (typeof navigator === "undefined") {
       return {
@@ -41426,7 +41457,7 @@ This message will only show in development mode. It won't appear in production. 
   var lowerUserAgent = userAgent.toLowerCase();
   var lowerPlatform = platform2.toLowerCase();
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/os.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/os.mjs
   var ios = /^i(os$|p)/.test(lowerPlatform) || lowerPlatform === "macintel" && maxTouchPoints > 1;
   var ANDROID_STRING = "android";
   var android = lowerPlatform === ANDROID_STRING || lowerUserAgent.includes(ANDROID_STRING);
@@ -41435,7 +41466,7 @@ This message will only show in development mode. It won't appear in production. 
   var linux = !android && /^(linux|chrome os)/.test(lowerPlatform);
   var apple = mac || ios;
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/engine.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/engine.mjs
   var engine_exports = {};
   __export(engine_exports, {
     blink: () => blink,
@@ -41446,28 +41477,28 @@ This message will only show in development mode. It won't appear in production. 
   var gecko = !webkit && lowerUserAgent.includes("firefox");
   var blink = !webkit && lowerUserAgent.includes("chrom");
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/screen-reader.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/screen-reader.mjs
   var screen_reader_exports = {};
   __export(screen_reader_exports, {
     voiceOver: () => voiceOver
   });
   var voiceOver = apple;
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/env.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/env.mjs
   var env_exports = {};
   __export(env_exports, {
     jsdom: () => jsdom
   });
   var jsdom = /jsdom|happydom/.test(lowerUserAgent);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/media-query.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/media-query.mjs
   var media_query_exports = {};
   __export(media_query_exports, {
     iOS: () => iOS
   });
   var iOS = "@supports (-webkit-touch-callout: none)";
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useScrollLock.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useScrollLock.mjs
   var originalHtmlStyles = {};
   var originalBodyStyles = {};
   var originalHtmlScrollBehavior = "";
@@ -41687,7 +41718,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [enabled, referenceElement]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
   function stopEvent(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -41708,7 +41739,10 @@ This message will only show in development mode. It won't appear in production. 
     if (parts_exports.env.jsdom) {
       return false;
     }
-    return !parts_exports.os.android && event.width === 0 && event.height === 0 || parts_exports.os.android && event.width === 1 && event.height === 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "mouse" || // iOS VoiceOver returns 0.333• for width/height.
+    return !parts_exports.os.android && event.width === 0 && event.height === 0 || // Chrome synthesizes a screen reader press (TalkBack, VoiceOver, NVDA) as a 1x1 mouse
+    // `pointerdown` with no pressure. TalkBack can report a pressed button, while desktop
+    // mouse presses can report no pressure, so only require no pressed button off Android.
+    event.type === "pointerdown" && event.width === 1 && event.height === 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "mouse" && (parts_exports.os.android || event.buttons === 0) || // iOS VoiceOver returns 0.333• for width/height.
     event.width < 1 && event.height < 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "touch";
   }
   function isMouseLikePointerType(pointerType, strict) {
@@ -41723,7 +41757,7 @@ This message will only show in development mode. It won't appear in production. 
     return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/shadowDom.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/shadowDom.mjs
   function activeElement(doc) {
     let element = doc.activeElement;
     while (element?.shadowRoot?.activeElement != null) {
@@ -41750,6 +41784,16 @@ This message will only show in development mode. It won't appear in production. 
     }
     return false;
   }
+  function closest(node2, selector2) {
+    let current = node2;
+    while (current) {
+      if (isElement2(current) && current.matches(selector2)) {
+        return current;
+      }
+      current = current.assignedSlot ?? current.parentNode ?? (isShadowRoot2(current) ? current.host : null);
+    }
+    return null;
+  }
   function getTarget(event) {
     if ("composedPath" in event) {
       return event.composedPath()[0] ?? event.target;
@@ -41757,7 +41801,7 @@ This message will only show in development mode. It won't appear in production. 
     return event.target;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
   var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
   var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
   var ARROW_LEFT = "ArrowLeft";
@@ -41765,12 +41809,12 @@ This message will only show in development mode. It won't appear in production. 
   var ARROW_UP = "ArrowUp";
   var ARROW_DOWN = "ArrowDown";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonPopupDataAttributes.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonPopupDataAttributes.mjs
   var open = "data-open";
   var closed = "data-closed";
   var anchorHidden = "data-anchor-hidden";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonTriggerDataAttributes.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonTriggerDataAttributes.mjs
   var CommonTriggerDataAttributes_exports = {};
   __export(CommonTriggerDataAttributes_exports, {
     popupOpen: () => popupOpen,
@@ -41779,7 +41823,7 @@ This message will only show in development mode. It won't appear in production. 
   var popupOpen = "data-popup-open";
   var pressed = "data-pressed";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popupStateMapping.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popupStateMapping.mjs
   var TRIGGER_HOOK = {
     [popupOpen]: ""
   };
@@ -41831,11 +41875,11 @@ This message will only show in development mode. It won't appear in production. 
     ...transitionStatusMapping
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
   var popupOpen2 = CommonTriggerDataAttributes_exports.popupOpen;
   var triggerDisabled = "data-trigger-disabled";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
   function isTargetInsideEnabledTrigger(target, triggerElements) {
     if (!isElement2(target)) {
       return false;
@@ -41868,7 +41912,7 @@ This message will only show in development mode. It won't appear in production. 
     return isHTMLElement(element) && element.matches(TYPEABLE_SELECTOR);
   }
   function isInteractiveElement(element) {
-    return element?.closest(`button,a[href],[role="button"],select,[tabindex]:not([tabindex="-1"]),${TYPEABLE_SELECTOR}`) != null;
+    return closest(element, `button,a[href],[role="button"],select,[tabindex]:not([tabindex="-1"]),${TYPEABLE_SELECTOR}`) != null;
   }
   function isTypeableCombobox(element) {
     if (!element) {
@@ -41893,7 +41937,7 @@ This message will only show in development mode. It won't appear in production. 
     return floatingElement.hasAttribute(FOCUSABLE_ATTRIBUTE) ? floatingElement : floatingElement.querySelector(`[${FOCUSABLE_ATTRIBUTE}]`) || floatingElement;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
   function resolveValue(value, pointerType) {
     if (pointerType != null && !isMouseLikePointerType(pointerType)) {
       return 0;
@@ -41923,10 +41967,10 @@ This message will only show in development mode. It won't appear in production. 
     return openEventType?.includes("mouse") && openEventType !== "mousedown";
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
-  var React31 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
+  var React32 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/mergeCleanups.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/mergeCleanups.mjs
   function mergeCleanups(...cleanups2) {
     return () => {
       for (let i2 = 0; i2 < cleanups2.length; i2 += 1) {
@@ -41938,10 +41982,10 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/FocusGuard.mjs
-  var React28 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FocusGuard.mjs
+  var React29 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/visuallyHidden.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/visuallyHidden.mjs
   var visuallyHiddenBase = {
     clipPath: "inset(50%)",
     overflow: "hidden",
@@ -41955,6 +41999,7 @@ This message will only show in development mode. It won't appear in production. 
   var visuallyHidden2 = {
     ...visuallyHiddenBase,
     position: "fixed",
+    margin: 0,
     top: 0,
     left: 0
   };
@@ -41963,10 +42008,10 @@ This message will only show in development mode. It won't appear in production. 
     position: "absolute"
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/FocusGuard.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FocusGuard.mjs
   var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
-  var FocusGuard = /* @__PURE__ */ React28.forwardRef(function FocusGuard2(props, ref) {
-    const [role, setRole] = React28.useState();
+  var FocusGuard = /* @__PURE__ */ React29.forwardRef(function FocusGuard2(props, ref) {
+    const [role, setRole] = React29.useState();
     useIsoLayoutEffect(() => {
       if (parts_exports.screenReader.voiceOver && parts_exports.engine.webkit) {
         setRole("button");
@@ -41988,7 +42033,7 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) FocusGuard.displayName = "FocusGuard";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
   function isIndexOutOfListBounds(list, index2) {
     return index2 < 0 || index2 >= list.length;
   }
@@ -42003,6 +42048,40 @@ This message will only show in development mode. It won't appear in production. 
       startingIndex: listRef.current.length,
       disabledIndices
     });
+  }
+  function getNextListIndex(list, currentIndex, options2) {
+    const {
+      decrement,
+      loopFocus,
+      allowEscape,
+      disabledIndices,
+      minIndex,
+      maxIndex
+    } = options2;
+    const step = () => findNonDisabledListIndex(list, {
+      startingIndex: currentIndex,
+      decrement,
+      disabledIndices
+    });
+    let index2;
+    let wrapped = false;
+    if (!loopFocus) {
+      index2 = decrement ? Math.max(minIndex, step()) : Math.min(maxIndex, step());
+    } else if (decrement ? currentIndex <= minIndex : currentIndex >= maxIndex) {
+      const outside = decrement ? -1 : list.length;
+      if (allowEscape && currentIndex !== outside) {
+        index2 = -1;
+      } else {
+        index2 = decrement ? maxIndex : minIndex;
+        wrapped = true;
+      }
+    } else {
+      index2 = step();
+    }
+    return {
+      index: isIndexOutOfListBounds(list, index2) ? -1 : index2,
+      wrapped
+    };
   }
   function findNonDisabledListIndex(list, {
     startingIndex = -1,
@@ -42046,7 +42125,7 @@ This message will only show in development mode. It won't appear in production. 
     return styles2.display !== "none" && styles2.display !== "contents";
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/tabbable.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/tabbable.mjs
   var CANDIDATE_SELECTOR = 'a[href],button,input,select,textarea,summary,details,iframe,object,embed,[tabindex],[contenteditable]:not([contenteditable="false"]),audio[controls],video[controls]';
   function getParentElement(element) {
     const assignedSlot = element.assignedSlot;
@@ -42191,27 +42270,24 @@ This message will only show in development mode. It won't appear in production. 
   function getPreviousTabbable2(referenceElement) {
     return getTabbableIn(ownerDocument(referenceElement).body, -1) || referenceElement;
   }
-  function getTabbableNearElement(referenceElement, dir) {
+  function getTabbableNearElement(referenceElement, direction, exclude) {
     if (!referenceElement) {
       return null;
     }
-    const list = tabbable(ownerDocument(referenceElement).body);
-    const elementCount = list.length;
-    if (elementCount === 0) {
-      return null;
-    }
+    const list = [];
+    appendCandidates(ownerDocument(referenceElement).body, list);
     const index2 = list.indexOf(referenceElement);
     if (index2 === -1) {
       return null;
     }
-    const nextIndex = (index2 + dir + elementCount) % elementCount;
-    return list[nextIndex];
-  }
-  function getTabbableAfterElement(referenceElement) {
-    return getTabbableNearElement(referenceElement, 1);
-  }
-  function getTabbableBeforeElement(referenceElement) {
-    return getTabbableNearElement(referenceElement, -1);
+    const candidates = list.filter(isFocusableElement);
+    for (let offset4 = 1; offset4 < list.length; offset4 += 1) {
+      const element = list[(index2 + direction * offset4 + list.length) % list.length];
+      if (!contains2(exclude, element) && isTabbable2(element) && isTabbableRadio(element, candidates)) {
+        return element;
+      }
+    }
+    return list[index2];
   }
   function isOutsideEvent(event, container) {
     const containerElement = container || event.currentTarget;
@@ -42239,7 +42315,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
   function getNodeChildren(nodes, id3, onlyOpenChildren = true) {
     const directChildren = nodes.filter((node2) => node2.parentId === id3);
     return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
@@ -42257,12 +42333,12 @@ This message will only show in development mode. It won't appear in production. 
     return allAncestors;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
   function createAttribute(name) {
     return `data-base-ui-${name}`;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/enqueueFocus.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/enqueueFocus.mjs
   var rafId = 0;
   function enqueueFocus(el, options2 = {}) {
     const {
@@ -42293,21 +42369,12 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/markOthers.mjs
-  var counters = {
-    inert: /* @__PURE__ */ new WeakMap(),
-    "aria-hidden": /* @__PURE__ */ new WeakMap()
-  };
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/markOthers.mjs
   var markerName = "data-base-ui-inert";
-  var uncontrolledElementsSets = {
-    inert: /* @__PURE__ */ new WeakSet(),
-    "aria-hidden": /* @__PURE__ */ new WeakSet()
-  };
+  var ariaHiddenCounterMap = /* @__PURE__ */ new WeakMap();
+  var uncontrolledElementsSet = /* @__PURE__ */ new WeakSet();
   var markerCounterMap = /* @__PURE__ */ new WeakMap();
   var lockCount = 0;
-  function getUncontrolledElementsSet(controlAttribute) {
-    return uncontrolledElementsSets[controlAttribute];
-  }
   function unwrapHost(node2) {
     if (!node2) {
       return null;
@@ -42355,40 +42422,28 @@ This message will only show in development mode. It won't appear in production. 
     walk(root);
     return outside;
   };
-  function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, inert, {
+  function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, {
     mark = true
   }) {
-    let controlAttribute = null;
-    if (inert) {
-      controlAttribute = "inert";
-    } else if (ariaHidden) {
-      controlAttribute = "aria-hidden";
-    }
-    let counterMap = null;
-    let uncontrolledElementsSet = null;
     const avoidElements = correctElements(body, uncorrectedAvoidElements);
     const markerTargets = mark ? collectOutsideElements(body, buildKeepSet(avoidElements), new Set(avoidElements)) : [];
     const hiddenElements = [];
     const markedElements = [];
-    if (controlAttribute) {
-      const map = counters[controlAttribute];
-      const currentUncontrolledElementsSet = getUncontrolledElementsSet(controlAttribute);
-      uncontrolledElementsSet = currentUncontrolledElementsSet;
-      counterMap = map;
+    if (ariaHidden) {
       const ariaLiveElements = correctElements(body, Array.from(body.querySelectorAll("[aria-live]")));
       const controlElements = avoidElements.concat(ariaLiveElements);
       const controlTargets = collectOutsideElements(body, buildKeepSet(controlElements), new Set(controlElements));
       controlTargets.forEach((node2) => {
-        const attr2 = node2.getAttribute(controlAttribute);
+        const attr2 = node2.getAttribute("aria-hidden");
         const alreadyHidden = attr2 !== null && attr2 !== "false";
-        const counterValue = (map.get(node2) || 0) + 1;
-        map.set(node2, counterValue);
+        const counterValue = (ariaHiddenCounterMap.get(node2) || 0) + 1;
+        ariaHiddenCounterMap.set(node2, counterValue);
         hiddenElements.push(node2);
         if (counterValue === 1 && alreadyHidden) {
-          currentUncontrolledElementsSet.add(node2);
+          uncontrolledElementsSet.add(node2);
         }
         if (!alreadyHidden) {
-          node2.setAttribute(controlAttribute, controlAttribute === "inert" ? "" : "true");
+          node2.setAttribute("aria-hidden", "true");
         }
       });
     }
@@ -42404,19 +42459,16 @@ This message will only show in development mode. It won't appear in production. 
     }
     lockCount += 1;
     return () => {
-      if (counterMap) {
-        hiddenElements.forEach((element) => {
-          const currentCounterValue = counterMap.get(element) || 0;
-          const counterValue = currentCounterValue - 1;
-          counterMap.set(element, counterValue);
-          if (!counterValue) {
-            if (!uncontrolledElementsSet?.has(element) && controlAttribute) {
-              element.removeAttribute(controlAttribute);
-            }
-            uncontrolledElementsSet?.delete(element);
+      hiddenElements.forEach((element) => {
+        const counterValue = (ariaHiddenCounterMap.get(element) || 0) - 1;
+        ariaHiddenCounterMap.set(element, counterValue);
+        if (!counterValue) {
+          if (!uncontrolledElementsSet.has(element)) {
+            element.removeAttribute("aria-hidden");
           }
-        });
-      }
+          uncontrolledElementsSet.delete(element);
+        }
+      });
       if (mark) {
         markedElements.forEach((element) => {
           const markerValue = (markerCounterMap.get(element) || 0) - 1;
@@ -42428,10 +42480,8 @@ This message will only show in development mode. It won't appear in production. 
       }
       lockCount -= 1;
       if (!lockCount) {
-        counters.inert = /* @__PURE__ */ new WeakMap();
-        counters["aria-hidden"] = /* @__PURE__ */ new WeakMap();
-        uncontrolledElementsSets.inert = /* @__PURE__ */ new WeakSet();
-        uncontrolledElementsSets["aria-hidden"] = /* @__PURE__ */ new WeakSet();
+        ariaHiddenCounterMap = /* @__PURE__ */ new WeakMap();
+        uncontrolledElementsSet = /* @__PURE__ */ new WeakSet();
         markerCounterMap = /* @__PURE__ */ new WeakMap();
       }
     };
@@ -42439,20 +42489,19 @@ This message will only show in development mode. It won't appear in production. 
   function markOthers(avoidElements, options2 = {}) {
     const {
       ariaHidden = false,
-      inert = false,
       mark = true
     } = options2;
     const body = ownerDocument(avoidElements[0]).body;
-    return applyAttributeToOthers(avoidElements, body, ariaHidden, inert, {
+    return applyAttributeToOthers(avoidElements, body, ariaHidden, {
       mark
     });
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
-  var React29 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+  var React30 = __toESM(require_react(), 1);
   var ReactDOM3 = __toESM(require_react_dom(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/constants.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/constants.mjs
   var TYPEAHEAD_RESET_MS = 500;
   var PATIENT_CLICK_THRESHOLD = 500;
   var DISABLED_TRANSITIONS_STYLE = {
@@ -42478,11 +42527,11 @@ This message will only show in development mode. It won't appear in production. 
     left: 0
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
-  var PortalContext2 = /* @__PURE__ */ React29.createContext(null);
+  var PortalContext2 = /* @__PURE__ */ React30.createContext(null);
   if (true) PortalContext2.displayName = "PortalContext";
-  var usePortalContext = () => React29.useContext(PortalContext2);
+  var usePortalContext = () => React30.useContext(PortalContext2);
   var attr = createAttribute("portal");
   function useFloatingPortalNode(props = {}) {
     const {
@@ -42494,14 +42543,14 @@ This message will only show in development mode. It won't appear in production. 
     const uniqueId = useId5();
     const portalContext = usePortalContext();
     const parentPortalNode = portalContext?.portalNode;
-    const [containerElement, setContainerElement] = React29.useState(null);
-    const [portalNode, setPortalNode] = React29.useState(null);
+    const [containerElement, setContainerElement] = React30.useState(null);
+    const [portalNode, setPortalNode] = React30.useState(null);
     const setPortalNodeRef = useStableCallback((node2) => {
       if (node2 !== null) {
         setPortalNode(node2);
       }
     });
-    const containerRef = React29.useRef(null);
+    const containerRef = React30.useRef(null);
     useIsoLayoutEffect(() => {
       if (containerProp === null) {
         if (containerRef.current) {
@@ -42538,11 +42587,11 @@ This message will only show in development mode. It won't appear in production. 
       node: portalNode,
       // `id` and `render` props can override or remove the generated ID. Use the exact
       // rendered value so `aria-owns` never points at an ID absent from the DOM.
-      nodeId: /* @__PURE__ */ React29.isValidElement(portalElement) ? portalElement.props.id : void 0,
+      nodeId: /* @__PURE__ */ React30.isValidElement(portalElement) ? portalElement.props.id : void 0,
       subtree: portalSubtree
     };
   }
-  var FloatingPortal = /* @__PURE__ */ React29.forwardRef(function FloatingPortal2(componentProps, forwardedRef) {
+  var FloatingPortal = /* @__PURE__ */ React30.forwardRef(function FloatingPortal2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -42562,16 +42611,16 @@ This message will only show in development mode. It won't appear in production. 
       componentProps,
       elementProps
     });
-    const beforeOutsideRef = React29.useRef(null);
-    const afterOutsideRef = React29.useRef(null);
-    const beforeInsideRef = React29.useRef(null);
-    const afterInsideRef = React29.useRef(null);
-    const [focusManagerState, setFocusManagerState] = React29.useState(null);
-    const focusInsideDisabledRef = React29.useRef(false);
+    const beforeOutsideRef = React30.useRef(null);
+    const afterOutsideRef = React30.useRef(null);
+    const beforeInsideRef = React30.useRef(null);
+    const afterInsideRef = React30.useRef(null);
+    const [focusManagerState, setFocusManagerState] = React30.useState(null);
+    const focusInsideDisabledRef = React30.useRef(false);
     const modal = focusManagerState?.modal;
     const open2 = focusManagerState?.open;
     const shouldRenderGuards = !!focusManagerState && !focusManagerState.modal && focusManagerState.open && !!portalNode;
-    React29.useEffect(() => {
+    React30.useEffect(() => {
       if (!portalNode || modal) {
         return void 0;
       }
@@ -42597,7 +42646,7 @@ This message will only show in development mode. It won't appear in production. 
       enableFocusInside(portalNode);
       focusInsideDisabledRef.current = false;
     }, [open2, portalNode]);
-    const portalContextValue = React29.useMemo(() => ({
+    const portalContextValue = React30.useMemo(() => ({
       beforeOutsideRef,
       afterOutsideRef,
       beforeInsideRef,
@@ -42605,7 +42654,7 @@ This message will only show in development mode. It won't appear in production. 
       portalNode,
       setFocusManagerState
     }), [portalNode]);
-    return /* @__PURE__ */ (0, import_jsx_runtime174.jsxs)(React29.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime174.jsxs)(React30.Fragment, {
       children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime174.jsxs)(PortalContext2.Provider, {
         value: portalContextValue,
         children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(FocusGuard, {
@@ -42645,10 +42694,10 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) FloatingPortal.displayName = "FloatingPortal";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
-  var React30 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+  var React31 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
   function createEventEmitter() {
     const map = /* @__PURE__ */ new Map();
     return {
@@ -42667,7 +42716,7 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingTreeStore.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTreeStore.mjs
   var FloatingTreeStore = class {
     nodesRef = {
       current: []
@@ -42684,15 +42733,15 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
   var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
-  var FloatingNodeContext = /* @__PURE__ */ React30.createContext(null);
+  var FloatingNodeContext = /* @__PURE__ */ React31.createContext(null);
   if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
-  var FloatingTreeContext = /* @__PURE__ */ React30.createContext(null);
+  var FloatingTreeContext = /* @__PURE__ */ React31.createContext(null);
   if (true) FloatingTreeContext.displayName = "FloatingTreeContext";
-  var useFloatingParentNodeId = () => React30.useContext(FloatingNodeContext)?.id || null;
+  var useFloatingParentNodeId = () => React31.useContext(FloatingNodeContext)?.id || null;
   var useFloatingTree = (externalTree) => {
-    const contextTree = React30.useContext(FloatingTreeContext);
+    const contextTree = React31.useContext(FloatingTreeContext);
     return externalTree ?? contextTree;
   };
   function useFloatingNodeId(externalTree) {
@@ -42721,7 +42770,7 @@ This message will only show in development mode. It won't appear in production. 
     } = props;
     const parentId = useFloatingParentNodeId();
     return /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(FloatingNodeContext.Provider, {
-      value: React30.useMemo(() => ({
+      value: React31.useMemo(() => ({
         id: id3,
         parentId
       }), [id3, parentId]),
@@ -42740,7 +42789,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
   var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
   function getEventType(event, lastInteractionType) {
     const win = getWindow2(getTarget(event));
@@ -42751,7 +42800,7 @@ This message will only show in development mode. It won't appear in production. 
       return lastInteractionType || "keyboard";
     }
     if ("pointerType" in event) {
-      return event.pointerType || "keyboard";
+      return event.pointerType || (isVirtualClick(event) ? "keyboard" : lastInteractionType || "mouse");
     }
     if ("touches" in event) {
       return "touch";
@@ -42815,11 +42864,12 @@ This message will only show in development mode. It won't appear in production. 
   }
   function FloatingFocusManager(props) {
     const {
-      context,
+      context: store,
       children,
       disabled: disabled2 = false,
       initialFocus = true,
       returnFocus = true,
+      explicitReturnFocus,
       restoreFocus = false,
       modal = true,
       closeOnFocusOut = true,
@@ -42830,7 +42880,6 @@ This message will only show in development mode. It won't appear in production. 
       externalTree,
       getInsideElements
     } = props;
-    const store = "rootStore" in context ? context.rootStore : context;
     const open2 = store.useState("open");
     const domReference = store.useState("domReferenceElement");
     const floating = store.useState("floatingElement");
@@ -42843,18 +42892,19 @@ This message will only show in development mode. It won't appear in production. 
     const isUntrappedTypeableCombobox = isTypeableCombobox(domReference) && ignoreInitialFocus;
     const initialFocusRef = useValueAsRef(initialFocus);
     const returnFocusRef = useValueAsRef(returnFocus);
+    const explicitReturnFocusRef = useValueAsRef(explicitReturnFocus);
     const openInteractionTypeRef = useValueAsRef(openInteractionType);
     const openRef = useValueAsRef(open2);
     const tree = useFloatingTree(externalTree);
     const portalContext = usePortalContext();
-    const preventReturnFocusRef = React31.useRef(false);
-    const isPointerDownRef = React31.useRef(false);
-    const pointerDownOutsideRef = React31.useRef(false);
-    const lastFocusedTabbableRef = React31.useRef(null);
-    const closeTypeRef = React31.useRef("");
-    const lastInteractionTypeRef = React31.useRef("");
-    const beforeGuardRef = React31.useRef(null);
-    const afterGuardRef = React31.useRef(null);
+    const preventReturnFocusRef = React32.useRef(false);
+    const isPointerDownRef = React32.useRef(false);
+    const pointerDownOutsideRef = React32.useRef(false);
+    const lastFocusedTabbableRef = React32.useRef(null);
+    const closeTypeRef = React32.useRef("");
+    const lastInteractionTypeRef = React32.useRef("");
+    const beforeGuardRef = React32.useRef(null);
+    const afterGuardRef = React32.useRef(null);
     const mergedBeforeGuardRef = useMergedRefs(beforeGuardRef, beforeContentFocusGuardRef, portalContext?.beforeInsideRef);
     const mergedAfterGuardRef = useMergedRefs(afterGuardRef, portalContext?.afterInsideRef);
     const blurTimeout = useTimeout();
@@ -42866,7 +42916,7 @@ This message will only show in development mode. It won't appear in production. 
       return container ? tabbable(container) : [];
     });
     const getResolvedInsideElements = useStableCallback(() => getInsideElements?.().filter((element) => element != null) ?? []);
-    React31.useEffect(() => {
+    React32.useEffect(() => {
       if (disabled2 || !modal) {
         return void 0;
       }
@@ -42880,7 +42930,7 @@ This message will only show in development mode. It won't appear in production. 
       const doc = ownerDocument(floatingFocusElement);
       return addEventListener(doc, "keydown", onKeyDown);
     }, [disabled2, floatingFocusElement, modal, isUntrappedTypeableCombobox, getTabbableContent]);
-    React31.useEffect(() => {
+    React32.useEffect(() => {
       if (disabled2 || !open2) {
         return void 0;
       }
@@ -42894,7 +42944,7 @@ This message will only show in development mode. It won't appear in production. 
         const pointerTargetInside = contains2(floating, target) || contains2(domReference, target) || contains2(portalContext?.portalNode, target) || insideElements2.some((element) => element === target || contains2(element, target));
         pointerDownOutsideRef.current = !pointerTargetInside;
         lastInteractionTypeRef.current = event.pointerType || "keyboard";
-        if (target?.closest(`[${CLICK_TRIGGER_IDENTIFIER}]`)) {
+        if (closest(target, `[${CLICK_TRIGGER_IDENTIFIER}]`)) {
           isPointerDownRef.current = true;
           pointerDownTimeout.start(0, () => {
             isPointerDownRef.current = false;
@@ -42914,7 +42964,7 @@ This message will only show in development mode. It won't appear in production. 
         clearPointerDownOutside
       );
     }, [disabled2, floating, domReference, floatingFocusElement, open2, portalContext, pointerDownTimeout, getResolvedInsideElements]);
-    React31.useEffect(() => {
+    React32.useEffect(() => {
       if (disabled2 || !closeOnFocusOut) {
         return void 0;
       }
@@ -42996,7 +43046,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return mergeCleanups(domReferenceElement && addEventListener(domReferenceElement, "focusout", handleFocusOutside), domReferenceElement && addEventListener(domReferenceElement, "pointerdown", handlePointerDown), floating && addEventListener(floating, "focusin", handleFocusIn), floating && addEventListener(floating, "focusout", handleFocusOutside), floating && portalContext && addEventListener(floating, "focusout", markInsideReactTree, true));
     }, [disabled2, domReference, floating, floatingFocusElement, modal, tree, portalContext, store, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
-    React31.useEffect(() => {
+    React32.useEffect(() => {
       if (disabled2 || !floating || !open2) {
         return void 0;
       }
@@ -43049,7 +43099,10 @@ This message will only show in development mode. It won't appear in production. 
         }
         elToFocus = elToFocus || getDefaultFocusElement();
         const hadFocusInside = contains2(floatingFocusElement, activeElement(doc));
+        const openEvent = dataRef.current.openEvent;
+        const openedByVirtualPress = openEvent?.type === "mousedown" && isVirtualClick(openEvent);
         void enqueueFocus(elToFocus, {
+          sync: openedByVirtualPress,
           preventScroll: elToFocus === floatingFocusElement,
           shouldFocus() {
             if (!openRef.current) {
@@ -43064,10 +43117,16 @@ This message will only show in development mode. It won't appear in production. 
           }
         });
       });
-    }, [disabled2, open2, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
+    }, [disabled2, open2, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef, dataRef]);
+    const pendingReturnFocusRef = React32.useRef(null);
     useIsoLayoutEffect(() => {
       if (disabled2 || !floatingFocusElement) {
+        pendingReturnFocusRef.current = null;
         return void 0;
+      }
+      if (pendingReturnFocusRef.current) {
+        pendingReturnFocusRef.current.cancelled = true;
+        pendingReturnFocusRef.current = null;
       }
       const doc = ownerDocument(floatingFocusElement);
       const elementFocusedBeforeOpen = activeElement(doc);
@@ -43077,7 +43136,7 @@ This message will only show in development mode. It won't appear in production. 
         if (!details.open) {
           closeTypeRef.current = getEventType(details.nativeEvent, lastInteractionTypeRef.current);
         }
-        if (details.reason === reason_parts_exports.triggerHover && details.nativeEvent.type === "mouseleave") {
+        if (details.reason === reason_parts_exports.focusOut && details.triggerElement?.hasAttribute(createAttribute("focus-guard")) || details.reason === reason_parts_exports.triggerHover && details.nativeEvent.type === "mouseleave") {
           preventReturnFocusRef.current = true;
         }
         if (details.reason !== reason_parts_exports.outsidePress) {
@@ -43131,10 +43190,20 @@ This message will only show in development mode. It won't appear in production. 
         const returnFocusValueOrFn = returnFocusRef.current;
         const closeType = closeTypeRef.current;
         const returnElement = getReturnElement(closeType);
+        const job = {
+          cancelled: false
+        };
+        pendingReturnFocusRef.current = job;
         queueMicrotask(() => {
+          if (pendingReturnFocusRef.current === job) {
+            pendingReturnFocusRef.current = null;
+          }
           const tabbableReturnElement = getFirstTabbableElement(returnElement);
-          const hasExplicitReturnFocus = typeof returnFocusValueOrFn !== "boolean";
-          if (returnFocusValueOrFn && !preventReturnFocusRef.current && isHTMLElement(tabbableReturnElement) && // If the focus moved somewhere else after mount, avoid returning focus
+          const hasExplicitReturnFocus = (
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            explicitReturnFocusRef.current ?? typeof returnFocusValueOrFn !== "boolean"
+          );
+          if (!job.cancelled && returnFocusValueOrFn && !preventReturnFocusRef.current && isHTMLElement(tabbableReturnElement) && // If the focus moved somewhere else after mount, avoid returning focus
           // since it likely entered a different element which should be
           // respected: https://github.com/floating-ui/floating-ui/issues/2607
           (!hasExplicitReturnFocus && tabbableReturnElement !== activeEl && activeEl !== doc.body ? isFocusInsideFloatingTree : true)) {
@@ -43149,7 +43218,7 @@ This message will only show in development mode. It won't appear in production. 
           preventReturnFocusRef.current = false;
         });
       };
-    }, [disabled2, floating, floatingFocusElement, returnFocusRef, openInteractionTypeRef, events, tree, domReference, getNodeId, getResolvedInsideElements]);
+    }, [disabled2, floating, floatingFocusElement, returnFocusRef, explicitReturnFocusRef, openInteractionTypeRef, events, tree, domReference, getNodeId, getResolvedInsideElements]);
     useIsoLayoutEffect(() => {
       if (!parts_exports.engine.webkit || open2 || !floating) {
         return;
@@ -43187,7 +43256,7 @@ This message will only show in development mode. It won't appear in production. 
       };
     }, [disabled2, floatingFocusElement]);
     const shouldRenderGuards = !disabled2 && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
-    return /* @__PURE__ */ (0, import_jsx_runtime176.jsxs)(React31.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime176.jsxs)(React32.Fragment, {
       children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(FocusGuard, {
         "data-type": "inside",
         ref: mergedBeforeGuardRef,
@@ -43227,9 +43296,9 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useClick.mjs
-  var React32 = __toESM(require_react(), 1);
-  function useClick(context, props = {}) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useClick.mjs
+  var React33 = __toESM(require_react(), 1);
+  function useClick(store, props = {}) {
     const {
       enabled = true,
       event: eventOption = "click",
@@ -43239,12 +43308,11 @@ This message will only show in development mode. It won't appear in production. 
       touchOpenDelay = 0,
       reason = reason_parts_exports.triggerPress
     } = props;
-    const store = "rootStore" in context ? context.rootStore : context;
     const dataRef = store.context.dataRef;
-    const pointerTypeRef = React32.useRef(void 0);
+    const pointerTypeRef = React33.useRef(void 0);
     const frame2 = useAnimationFrame();
     const touchOpenTimeout = useTimeout();
-    const reference = React32.useMemo(() => {
+    const reference = React33.useMemo(() => {
       function setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType) {
         const details = createChangeEventDetails(reason, nativeEvent, target);
         if (nextOpen && pointerType === "touch" && touchOpenDelay > 0) {
@@ -43267,7 +43335,7 @@ This message will only show in development mode. It won't appear in production. 
         if (!toggle) {
           return true;
         }
-        if (openEvent && stickIfOpen) {
+        if (openEvent && (typeof stickIfOpen === "function" ? stickIfOpen() : stickIfOpen)) {
           return !isClickLikeOpenEvent2(openEvent.type);
         }
         return false;
@@ -43285,8 +43353,9 @@ This message will only show in development mode. It won't appear in production. 
           }
           const nextOpen = getNextOpen(open2, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
           const target = getTarget(nativeEvent);
-          if (isTypeableElement(target)) {
-            setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType);
+          const isTypeable = isTypeableElement(target);
+          if (isTypeable || pointerType === "virtual") {
+            setOpenWithTouchDelay(nextOpen, nativeEvent, isTypeable ? target : event.currentTarget, pointerType);
             return;
           }
           const eventCurrentTarget = event.currentTarget;
@@ -43315,13 +43384,13 @@ This message will only show in development mode. It won't appear in production. 
         }
       };
     }, [dataRef, eventOption, ignoreMouse, reason, store, stickIfOpen, toggle, frame2, touchOpenTimeout, touchOpenDelay]);
-    return React32.useMemo(() => enabled ? {
+    return React33.useMemo(() => enabled ? {
       reference
     } : EMPTY_OBJECT, [enabled, reference]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
-  var React33 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
+  var React34 = __toESM(require_react(), 1);
   function alwaysFalse() {
     return false;
   }
@@ -43331,7 +43400,7 @@ This message will only show in development mode. It won't appear in production. 
       outsidePress: typeof normalizable === "boolean" ? normalizable : normalizable?.outsidePress ?? true
     };
   }
-  function useDismiss(context, props = {}) {
+  function useDismiss(store, props = {}) {
     const {
       enabled = true,
       escapeKey: escapeKey2 = true,
@@ -43341,7 +43410,6 @@ This message will only show in development mode. It won't appear in production. 
       bubbles,
       externalTree
     } = props;
-    const store = "rootStore" in context ? context.rootStore : context;
     const open2 = store.useState("open");
     const floatingElement = store.useState("floatingElement");
     const {
@@ -43357,15 +43425,16 @@ This message will only show in development mode. It won't appear in production. 
       escapeKey: escapeKeyBubbles,
       outsidePress: outsidePressBubbles
     } = normalizeProp(bubbles);
-    const pressStartedInsideRef = React33.useRef(false);
-    const pressStartPreventedRef = React33.useRef(false);
-    const suppressNextOutsideClickRef = React33.useRef(false);
-    const sawPressWhileOpenRef = React33.useRef(false);
-    const isComposingRef = React33.useRef(false);
-    const currentPointerTypeRef = React33.useRef("");
-    const touchStateRef = React33.useRef(null);
+    const pressStartedInsideRef = React34.useRef(false);
+    const pressStartPreventedRef = React34.useRef(false);
+    const suppressNextOutsideClickRef = React34.useRef(false);
+    const sawPressWhileOpenRef = React34.useRef(false);
+    const isComposingRef = React34.useRef(false);
+    const currentPointerTypeRef = React34.useRef("");
+    const touchStateRef = React34.useRef(null);
     const cancelDismissOnEndTimeout = useTimeout();
     const clearInsideReactTreeTimeout = useTimeout();
+    const compositionTimeout = useTimeout();
     const clearInsideReactTree = useStableCallback(() => {
       clearInsideReactTreeTimeout.clear();
       dataRef.current.insideReactTree = false;
@@ -43388,13 +43457,13 @@ This message will only show in development mode. It won't appear in production. 
       if (!open2 || !enabled || !escapeKey2 || event.key !== "Escape") {
         return;
       }
-      if (isComposingRef.current) {
+      const native = isReactEvent(event) ? event.nativeEvent : event;
+      if (isComposingRef.current || native.isComposing) {
         return;
       }
       if (!escapeKeyBubbles && hasBlockingChild("__escapeKeyBubbles")) {
         return;
       }
-      const native = isReactEvent(event) ? event.nativeEvent : event;
       const eventDetails = createChangeEventDetails(reason_parts_exports.escapeKey, native);
       store.setOpen(false, eventDetails);
       if (!eventDetails.isCanceled) {
@@ -43432,7 +43501,7 @@ This message will only show in development mode. It won't appear in production. 
         pressStartPreventedRef.current = true;
       }
     });
-    React33.useEffect(() => {
+    React34.useEffect(() => {
       function handleOpenChange(details) {
         if (!details.open) {
           sawPressWhileOpenRef.current = false;
@@ -43443,16 +43512,19 @@ This message will only show in development mode. It won't appear in production. 
         events.off("openchange", handleOpenChange);
       };
     }, [events]);
-    React33.useEffect(() => {
+    React34.useEffect(() => clearInsideReactTree, [clearInsideReactTree]);
+    React34.useEffect(() => {
       if (!open2 || !enabled) {
         if (!open2) {
           sawPressWhileOpenRef.current = false;
+          isComposingRef.current = false;
+          currentPointerTypeRef.current = "";
+          touchStateRef.current = null;
         }
         return clearInsideReactTree;
       }
       dataRef.current.__escapeKeyBubbles = escapeKeyBubbles;
       dataRef.current.__outsidePressBubbles = outsidePressBubbles;
-      const compositionTimeout = new Timeout();
       const preventedPressSuppressionTimeout = new Timeout();
       const doc = ownerDocument(floatingElement);
       function handleCompositionStart() {
@@ -43460,6 +43532,7 @@ This message will only show in development mode. It won't appear in production. 
         isComposingRef.current = true;
       }
       function handleCompositionEnd() {
+        isComposingRef.current = true;
         compositionTimeout.start(
           // 0ms or 1ms don't work in Safari. 5ms appears to consistently work.
           // Only apply to WebKit for the test to remain 0ms.
@@ -43710,19 +43783,17 @@ This message will only show in development mode. It won't appear in production. 
       })));
       return () => {
         unsubscribe();
-        compositionTimeout.clear();
         preventedPressSuppressionTimeout.clear();
         resetPressStartState();
         suppressNextOutsideClickRef.current = false;
-        clearInsideReactTree();
       };
-    }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open2, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout]);
-    const reference = React33.useMemo(() => ({
+    }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open2, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout, compositionTimeout]);
+    const reference = React34.useMemo(() => ({
       onKeyDown: closeOnEscapeKeyDown,
       onPointerDown: closeOnReferencePress,
       onClick: closeOnReferencePress
     }), [closeOnEscapeKeyDown, closeOnReferencePress]);
-    const floating = React33.useMemo(() => ({
+    const floating = React34.useMemo(() => ({
       onKeyDown: closeOnEscapeKeyDown,
       // `onMouseDown` may be blocked if `event.preventDefault()` is called in
       // `onPointerDown`, such as with <NumberField.ScrubArea>.
@@ -43742,17 +43813,14 @@ This message will only show in development mode. It won't appear in production. 
       onTouchEndCapture: markInsideReactTree,
       onTouchMoveCapture: markInsideReactTree
     }), [closeOnEscapeKeyDown, markInsideReactTree, markPressStartedInsideReactTree, markInsidePressStartPrevented]);
-    return React33.useMemo(() => enabled ? {
+    return React34.useMemo(() => enabled ? {
       reference,
       floating,
       trigger: reference
     } : {}, [enabled, reference, floating]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
-  var React40 = __toESM(require_react(), 1);
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/popupHandle.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupHandle.mjs
   var BasePopupHandle = class {
     /**
      * Stores of every root currently using this handle, in attach order. A handle is meant to be used
@@ -43913,20 +43981,471 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
-  var React38 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+  var React36 = __toESM(require_react(), 1);
   var ReactDOM4 = __toESM(require_react_dom(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
-  var React37 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
+  function useSyncedFloatingRootContext(options2) {
+    const {
+      popupStore,
+      treatPopupAsFloatingElement = false,
+      floatingRootContext: store,
+      floatingId,
+      nested,
+      onOpenChange
+    } = options2;
+    const open2 = popupStore.useState("open");
+    const referenceElement = popupStore.useState("activeTriggerElement");
+    const floatingElement = popupStore.useState(treatPopupAsFloatingElement ? "popupElement" : "positionerElement");
+    const handleOpenChange = onOpenChange;
+    popupStore.useSyncedValue("floatingId", floatingId);
+    useIsoLayoutEffect(() => {
+      const valuesToSync = {
+        open: open2,
+        floatingId,
+        referenceElement,
+        floatingElement
+      };
+      if (isElement2(referenceElement)) {
+        valuesToSync.domReferenceElement = referenceElement;
+      }
+      if (store.state.positionReference === store.state.referenceElement) {
+        valuesToSync.positionReference = referenceElement;
+      }
+      store.update(valuesToSync);
+    }, [open2, floatingId, referenceElement, floatingElement, store]);
+    store.context.onOpenChange = handleOpenChange;
+    store.context.nested = nested;
+    return store;
+  }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/store/useStore.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useUnmountAfterClose.mjs
   var React35 = __toESM(require_react(), 1);
+  function useUnmountAfterClose(parameters) {
+    const {
+      open: open2,
+      ref,
+      preventUnmountOnClose,
+      setPreventUnmountOnClose: setPreventUnmountOnCloseParam,
+      onUnmount,
+      animateInitialOpen
+    } = parameters;
+    const setPreventUnmountOnClose = useStableCallback(setPreventUnmountOnCloseParam);
+    const {
+      mounted,
+      setMounted,
+      transitionStatus
+    } = useTransitionStatus(open2, false, false, animateInitialOpen);
+    const preventUnmountingOnClose = open2 ? false : preventUnmountOnClose;
+    useIsoLayoutEffect(() => {
+      if (open2) {
+        setPreventUnmountOnClose(false);
+      }
+    }, [open2, setPreventUnmountOnClose]);
+    const mountedRef = React35.useRef(mounted);
+    const pendingUnmountRef = React35.useRef(false);
+    const rerender = useForcedRerendering();
+    const unmount = () => {
+      mountedRef.current = false;
+      setMounted(false);
+      onUnmount();
+    };
+    useIsoLayoutEffect(() => {
+      mountedRef.current = mounted;
+      if (pendingUnmountRef.current) {
+        pendingUnmountRef.current = false;
+        if (!open2 && mounted) {
+          unmount();
+        }
+      }
+    });
+    const forceUnmount = useStableCallback(() => {
+      if (!mountedRef.current) {
+        return;
+      }
+      if (open2) {
+        pendingUnmountRef.current = true;
+        rerender();
+        return;
+      }
+      unmount();
+    });
+    useOpenChangeComplete({
+      enabled: mounted && !open2 && !preventUnmountingOnClose,
+      open: open2,
+      ref,
+      onComplete() {
+        if (!open2) {
+          forceUnmount();
+        }
+      }
+    });
+    return {
+      mounted,
+      transitionStatus,
+      preventUnmountingOnClose,
+      forceUnmount
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+  var FOCUSABLE_POPUP_PROPS = {
+    tabIndex: -1,
+    [FOCUSABLE_ATTRIBUTE]: ""
+  };
+  function PopupHandleAttachment({
+    handle,
+    store
+  }) {
+    useIsoLayoutEffect(() => {
+      return handle.attachStore(store);
+    }, [handle, store]);
+    return null;
+  }
+  function syncTriggerCount(store) {
+    const triggerCount = store.context.triggerElements.size;
+    if (store.select("open") && store.state.triggerCount !== triggerCount) {
+      store.set("triggerCount", triggerCount);
+    }
+  }
+  function useTriggerRegistration(id3, store) {
+    const registrationRef = React36.useRef(null);
+    return useStableCallback((element) => {
+      const registration = registrationRef.current;
+      if (registration !== null) {
+        if (registration.element === element && registration.store === store && registration.id === id3) {
+          return;
+        }
+        registrationRef.current = null;
+        const registeredStore = registration.store;
+        if (registeredStore.context.triggerElements.getById(registration.id) === registration.element) {
+          registeredStore.context.triggerElements.delete(registration.id);
+          syncTriggerCount(registeredStore);
+        }
+      }
+      if (element !== null && id3 !== void 0) {
+        registrationRef.current = {
+          store,
+          id: id3,
+          element
+        };
+        store.context.triggerElements.add(id3, element);
+        syncTriggerCount(store);
+      }
+    });
+  }
+  function createPopupOpenState(state, open2, trigger, preventUnmountOnClose = false) {
+    let preventUnmountingOnClose = state.preventUnmountingOnClose;
+    if (open2) {
+      preventUnmountingOnClose = false;
+    } else if (preventUnmountOnClose) {
+      preventUnmountingOnClose = true;
+    }
+    const triggerId = trigger?.id ?? null;
+    let activeTriggerId = state.activeTriggerId;
+    let activeTriggerElement = state.activeTriggerElement;
+    if (triggerId || open2) {
+      activeTriggerId = triggerId;
+      activeTriggerElement = trigger ?? null;
+    }
+    return {
+      open: open2,
+      preventUnmountingOnClose,
+      activeTriggerId,
+      activeTriggerElement,
+      // An open request without a trigger (a handle's `open(null)` or `openWithPayload()`) must not
+      // be reassociated with a lone registered trigger later on. Controlled and default opens never
+      // pass through here, so they keep claiming a lone trigger. A close request keeps the flag: a
+      // controlled root may decline it and stay open, so the Root clears the flag only once the
+      // popup is effectively closed.
+      openedWithoutTrigger: open2 ? trigger == null : state.openedWithoutTrigger
+    };
+  }
+  function attachPreventUnmountOnClose(eventDetails) {
+    let preventUnmountOnClose = false;
+    eventDetails.preventUnmountOnClose = () => {
+      preventUnmountOnClose = true;
+    };
+    return () => preventUnmountOnClose;
+  }
+  function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
+    const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
+    const baseRegisterTrigger = useTriggerRegistration(triggerId, store);
+    const applyTriggerData = useStableCallback((element) => {
+      const open2 = store.select("open");
+      const activeTriggerId = store.select("activeTriggerId");
+      if (activeTriggerId === triggerId) {
+        const changes = {
+          activeTriggerElement: element,
+          ...open2 ? stateUpdates : null
+        };
+        store.update(changes);
+        return;
+      }
+      if (activeTriggerId == null && open2 && !store.state.openedWithoutTrigger) {
+        const changes = {
+          activeTriggerId: triggerId ?? null,
+          activeTriggerElement: element,
+          ...stateUpdates
+        };
+        store.update(changes);
+      }
+    });
+    const registerTrigger = useStableCallback((element) => {
+      baseRegisterTrigger(element);
+      if (element) {
+        applyTriggerData(element);
+      }
+    });
+    useIsoLayoutEffect(() => {
+      registerTrigger(triggerElementRef.current);
+      return () => registerTrigger(null);
+    }, [registerTrigger, triggerElementRef, store, triggerId]);
+    useIsoLayoutEffect(() => {
+      if (isMountedByThisTrigger) {
+        const changes = {
+          activeTriggerElement: triggerElementRef.current,
+          ...stateUpdates
+        };
+        store.update(changes);
+      }
+    }, [isMountedByThisTrigger, store, triggerElementRef, ...Object.values(stateUpdates)]);
+    return {
+      registerTrigger,
+      isMountedByThisTrigger
+    };
+  }
+  function useImplicitActiveTrigger(store, options2 = {}) {
+    const {
+      closeOnActiveTriggerUnmount = false
+    } = options2;
+    const resolvedActiveTriggerIdRef = React36.useRef(null);
+    const open2 = store.useState("open");
+    const reactiveTriggerCount = store.useState("triggerCount");
+    const activeTriggerId = store.useState("activeTriggerId");
+    const reactiveActiveTriggerElement = store.useState("activeTriggerElement");
+    useIsoLayoutEffect(() => {
+      if (!open2) {
+        resolvedActiveTriggerIdRef.current = null;
+        if (store.state.triggerCount !== 0) {
+          store.set("triggerCount", 0);
+        }
+        if (store.state.openedWithoutTrigger) {
+          store.set("openedWithoutTrigger", false);
+        }
+        return;
+      }
+      const triggerCount = store.context.triggerElements.size;
+      const stateUpdates = {};
+      if (store.state.triggerCount !== triggerCount) {
+        stateUpdates.triggerCount = triggerCount;
+      }
+      const currentActiveTriggerId = store.select("activeTriggerId");
+      let lostActiveTriggerId = null;
+      if (currentActiveTriggerId) {
+        const activeTriggerElement = store.context.triggerElements.getById(currentActiveTriggerId);
+        if (!activeTriggerElement) {
+          for (const [triggerId, triggerElement] of store.context.triggerElements.entries()) {
+            if (triggerElement === store.state.activeTriggerElement) {
+              stateUpdates.activeTriggerId = triggerId;
+              stateUpdates.activeTriggerElement = triggerElement;
+              resolvedActiveTriggerIdRef.current = triggerId;
+              break;
+            }
+          }
+          if (stateUpdates.activeTriggerId === void 0) {
+            if (resolvedActiveTriggerIdRef.current === currentActiveTriggerId) {
+              lostActiveTriggerId = currentActiveTriggerId;
+            } else {
+              resolvedActiveTriggerIdRef.current = null;
+            }
+          }
+        } else {
+          resolvedActiveTriggerIdRef.current = currentActiveTriggerId;
+          if (activeTriggerElement !== store.state.activeTriggerElement) {
+            stateUpdates.activeTriggerElement = activeTriggerElement;
+          }
+        }
+      } else {
+        resolvedActiveTriggerIdRef.current = null;
+      }
+      if (!lostActiveTriggerId && !currentActiveTriggerId && !store.state.openedWithoutTrigger && triggerCount === 1) {
+        const iteratorResult = store.context.triggerElements.entries().next();
+        if (!iteratorResult.done) {
+          const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
+          stateUpdates.activeTriggerId = implicitTriggerId;
+          stateUpdates.activeTriggerElement = implicitTriggerElement;
+          resolvedActiveTriggerIdRef.current = implicitTriggerId;
+        }
+      }
+      if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
+        store.update(stateUpdates);
+      }
+      if (lostActiveTriggerId) {
+        if (closeOnActiveTriggerUnmount) {
+          queueMicrotask(() => {
+            if (store.select("open") && store.select("activeTriggerId") === lostActiveTriggerId && !store.context.triggerElements.getById(lostActiveTriggerId)) {
+              const eventDetails = createChangeEventDetails(reason_parts_exports.none);
+              store.setOpen(false, eventDetails);
+              if (!eventDetails.isCanceled) {
+                store.update({
+                  activeTriggerId: null,
+                  activeTriggerElement: null
+                });
+              }
+            }
+          });
+        }
+      }
+    }, [open2, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
+  }
+  function useOpenStateTransitions(open2, store, onUnmount, animateInitialOpen) {
+    const {
+      mounted,
+      transitionStatus,
+      forceUnmount
+    } = useUnmountAfterClose({
+      open: open2,
+      ref: store.context.popupRef,
+      preventUnmountOnClose: store.useState("preventUnmountingOnClose"),
+      setPreventUnmountOnClose: (preventUnmountOnClose) => store.set("preventUnmountingOnClose", preventUnmountOnClose),
+      animateInitialOpen,
+      onUnmount() {
+        store.update({
+          activeTriggerId: null,
+          activeTriggerElement: null,
+          mounted: false,
+          preventUnmountingOnClose: false
+        });
+        onUnmount?.();
+        store.context.onOpenChangeComplete?.(false);
+      }
+    });
+    useRefWithInit(() => {
+      store.set("mounted", mounted);
+      return null;
+    });
+    store.useSyncedValues({
+      mounted,
+      transitionStatus
+    });
+    return {
+      forceUnmount,
+      transitionStatus
+    };
+  }
+  function usePopupInteractionProps(store, statePart) {
+    store.useSyncedValues(statePart);
+    useIsoLayoutEffect(() => () => {
+      store.update({
+        activeTriggerProps: EMPTY_OBJECT,
+        inactiveTriggerProps: EMPTY_OBJECT,
+        popupProps: EMPTY_OBJECT
+      });
+    }, [store]);
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
+  var devElementIdsByMap;
+  function getDevElementIds(map) {
+    devElementIdsByMap ??= /* @__PURE__ */ new WeakMap();
+    let elementIds = devElementIdsByMap.get(map);
+    if (!elementIds) {
+      elementIds = /* @__PURE__ */ new WeakMap();
+      devElementIdsByMap.set(map, elementIds);
+    }
+    return elementIds;
+  }
+  var PopupTriggerMap = class {
+    idMap = /* @__PURE__ */ new Map();
+    /**
+     * Adds a trigger element with the given ID.
+     *
+     * Note: The provided element is assumed to not be registered under multiple IDs.
+     */
+    add(id3, element) {
+      if (true) {
+        const elementIds = getDevElementIds(this);
+        const existingId = elementIds.get(element);
+        if (existingId !== void 0 && existingId !== id3) {
+          throw new Error("Base UI: A trigger element cannot be registered under multiple IDs in PopupTriggerMap.");
+        }
+        const previousElement = this.idMap.get(id3);
+        if (previousElement !== void 0 && previousElement !== element) {
+          elementIds.delete(previousElement);
+        }
+        elementIds.set(element, id3);
+      }
+      this.idMap.set(id3, element);
+    }
+    /**
+     * Removes the trigger element with the given ID.
+     */
+    delete(id3) {
+      if (true) {
+        const element = this.idMap.get(id3);
+        if (element !== void 0) {
+          devElementIdsByMap?.get(this)?.delete(element);
+        }
+      }
+      this.idMap.delete(id3);
+    }
+    /**
+     * Whether the given element is registered as a trigger.
+     */
+    hasElement(element) {
+      for (const registered of this.idMap.values()) {
+        if (registered === element) {
+          return true;
+        }
+      }
+      return false;
+    }
+    /**
+     * Whether there is a registered trigger element matching the given predicate.
+     */
+    hasMatchingElement(predicate) {
+      for (const element of this.idMap.values()) {
+        if (predicate(element)) {
+          return true;
+        }
+      }
+      return false;
+    }
+    /**
+     * Returns the trigger element associated with the given ID, or undefined if no such element exists.
+     */
+    getById(id3) {
+      return this.idMap.get(id3);
+    }
+    /**
+     * Returns an iterable of all registered trigger entries, where each entry is a tuple of [id, element].
+     */
+    entries() {
+      return this.idMap.entries();
+    }
+    /**
+     * Returns an iterable of all registered trigger elements.
+     */
+    elements() {
+      return this.idMap.values();
+    }
+    /**
+     * Returns the number of registered trigger elements.
+     */
+    get size() {
+      return this.idMap.size;
+    }
+  };
+
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/useStore.mjs
+  var React38 = __toESM(require_react(), 1);
   var import_shim2 = __toESM(require_shim(), 1);
   var import_with_selector = __toESM(require_with_selector(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/fastHooks.mjs
-  var React34 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/fastHooks.mjs
+  var React37 = __toESM(require_react(), 1);
   var hooks = [];
   var currentInstance = void 0;
   function getInstance() {
@@ -43958,7 +44477,7 @@ This message will only show in development mode. It won't appear in production. 
     return FastComponent;
   }
   function fastComponentRef(fn) {
-    return /* @__PURE__ */ React34.forwardRef(fastComponent(fn));
+    return /* @__PURE__ */ React37.forwardRef(fastComponent(fn));
   }
   function createInstance() {
     return {
@@ -43966,14 +44485,14 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/store/useStore.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/useStore.mjs
   var canUseRawUseSyncExternalStore = isReactVersionAtLeast(19);
   var useStoreImplementation = canUseRawUseSyncExternalStore ? useStoreFast : useStoreLegacy;
   function useStore2(store, selector2, a1, a2, a3) {
     return useStoreImplementation(store, selector2, a1, a2, a3);
   }
   function useStoreR19(store, selector2, a1, a2, a3) {
-    const getSelection = React35.useCallback(() => selector2(store.getSnapshot(), a1, a2, a3), [store, selector2, a1, a2, a3]);
+    const getSelection = React38.useCallback(() => selector2(store.getSnapshot(), a1, a2, a3), [store, selector2, a1, a2, a3]);
     return (0, import_shim2.useSyncExternalStore)(store.subscribe, getSelection, getSelection);
   }
   register({
@@ -44062,7 +44581,7 @@ This message will only show in development mode. It won't appear in production. 
     return (0, import_with_selector.useSyncExternalStoreWithSelector)(store.subscribe, store.getSnapshot, store.getSnapshot, (state) => selector2(state, a1, a2, a3));
   }
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/store/Store.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/Store.mjs
   var Store = class {
     /**
      * Creates a store with the given initial state, constructing the class it is called on.
@@ -44169,8 +44688,8 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/store/ReactStore.mjs
-  var React36 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/ReactStore.mjs
+  var React39 = __toESM(require_react(), 1);
   var ReactStore = class extends Store {
     /**
      * Creates a new ReactStore instance.
@@ -44179,10 +44698,10 @@ This message will only show in development mode. It won't appear in production. 
      * @param context Non-reactive context values.
      * @param selectors Optional selectors for use with `useState`.
      */
-    constructor(state, context = {}, selectors3) {
+    constructor(state, context = {}, selectors4) {
       super(state);
       this.context = context;
-      this.selectors = selectors3;
+      this.selectors = selectors4;
     }
     /**
      * Non-reactive values such as refs, callbacks, etc.
@@ -44194,7 +44713,7 @@ This message will only show in development mode. It won't appear in production. 
      * by `useState` is updated before the next render (similarly to React's `useState`).
      */
     useSyncedValue(key, value) {
-      React36.useDebugValue(key);
+      React39.useDebugValue(key);
       const store = this;
       useIsoLayoutEffect(() => {
         if (store.state[key] !== value) {
@@ -44233,8 +44752,8 @@ This message will only show in development mode. It won't appear in production. 
     useSyncedValues(statePart) {
       const store = this;
       if (true) {
-        React36.useDebugValue(statePart, (p3) => Object.keys(p3));
-        const keys = React36.useRef(Object.keys(statePart)).current;
+        React39.useDebugValue(statePart, (p3) => Object.keys(p3));
+        const keys = React39.useRef(Object.keys(statePart)).current;
         const nextKeys = Object.keys(statePart);
         if (keys.length !== nextKeys.length || keys.some((key, index2) => key !== nextKeys[index2])) {
           console.error("ReactStore.useSyncedValues expects the same prop keys on every render. Keys should be stable.");
@@ -44250,7 +44769,7 @@ This message will only show in development mode. It won't appear in production. 
      * is non-undefined, the store's state at `key` is updated to match `controlled`.
      */
     useControlledProp(key, controlled) {
-      React36.useDebugValue(key);
+      React39.useDebugValue(key);
       const store = this;
       const isControlled = controlled !== void 0;
       useIsoLayoutEffect(() => {
@@ -44268,7 +44787,7 @@ This message will only show in development mode. It won't appear in production. 
         }
         const previouslyControlled = cache2.get(key);
         if (previouslyControlled !== void 0 && previouslyControlled !== isControlled) {
-          console.error(`A component is changing the ${isControlled ? "" : "un"}controlled state of ${key.toString()} to be ${isControlled ? "un" : ""}controlled. Elements should not switch from uncontrolled to controlled (or vice versa).`);
+          console.error(`A component is changing the ${previouslyControlled ? "" : "un"}controlled state of ${key.toString()} to be ${previouslyControlled ? "un" : ""}controlled. Elements should not switch from uncontrolled to controlled (or vice versa).`);
         }
       }
     }
@@ -44288,7 +44807,7 @@ This message will only show in development mode. It won't appear in production. 
      * @param key Key of the selector to use.
      */
     useState(key, a1, a2, a3) {
-      React36.useDebugValue(key);
+      React39.useDebugValue(key);
       return useStore2(this, this.selectors[key], a1, a2, a3);
     }
     /**
@@ -44299,7 +44818,7 @@ This message will only show in development mode. It won't appear in production. 
      * @param fn Function to assign.
      */
     useContextCallback(key, fn) {
-      React36.useDebugValue(key);
+      React39.useDebugValue(key);
       const stableFunction = useStableCallback(fn ?? NOOP);
       this.context[key] = stableFunction;
     }
@@ -44310,7 +44829,7 @@ This message will only show in development mode. It won't appear in production. 
      * @param key Key of the state to set.
      */
     useStateSetter(key) {
-      const ref = React36.useRef(void 0);
+      const ref = React39.useRef(void 0);
       if (ref.current === void 0) {
         ref.current = (value) => {
           this.set(key, value);
@@ -44344,7 +44863,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
   var selectors = {
     open: (state) => state.open,
     transitionStatus: (state) => state.transitionStatus,
@@ -44417,405 +44936,7 @@ This message will only show in development mode. It won't appear in production. 
     };
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
-  function useSyncedFloatingRootContext(options2) {
-    const {
-      popupStore,
-      treatPopupAsFloatingElement = false,
-      floatingRootContext: floatingRootContextProp,
-      floatingId,
-      nested,
-      onOpenChange
-    } = options2;
-    const open2 = popupStore.useState("open");
-    const referenceElement = popupStore.useState("activeTriggerElement");
-    const floatingElement = popupStore.useState(treatPopupAsFloatingElement ? "popupElement" : "positionerElement");
-    const triggerElements = popupStore.context.triggerElements;
-    const handleOpenChange = onOpenChange;
-    const internalStoreRef = React37.useRef(null);
-    if (floatingRootContextProp === void 0 && internalStoreRef.current === null) {
-      internalStoreRef.current = new FloatingRootStore({
-        open: open2,
-        transitionStatus: void 0,
-        referenceElement,
-        floatingElement,
-        triggerElements,
-        onOpenChange: handleOpenChange,
-        floatingId,
-        syncOnly: true,
-        nested
-      });
-    }
-    const store = floatingRootContextProp ?? internalStoreRef.current;
-    popupStore.useSyncedValue("floatingId", floatingId);
-    useIsoLayoutEffect(() => {
-      const valuesToSync = {
-        open: open2,
-        floatingId,
-        referenceElement,
-        floatingElement
-      };
-      if (isElement2(referenceElement)) {
-        valuesToSync.domReferenceElement = referenceElement;
-      }
-      if (store.state.positionReference === store.state.referenceElement) {
-        valuesToSync.positionReference = referenceElement;
-      }
-      store.update(valuesToSync);
-    }, [open2, floatingId, referenceElement, floatingElement, store]);
-    store.context.onOpenChange = handleOpenChange;
-    store.context.nested = nested;
-    return store;
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
-  var FOCUSABLE_POPUP_PROPS = {
-    tabIndex: -1,
-    [FOCUSABLE_ATTRIBUTE]: ""
-  };
-  function PopupHandleAttachment({
-    handle,
-    store
-  }) {
-    useIsoLayoutEffect(() => {
-      return handle.attachStore(store);
-    }, [handle, store]);
-    return null;
-  }
-  function syncTriggerCount(store) {
-    const triggerCount = store.context.triggerElements.size;
-    if (store.select("open") && store.state.triggerCount !== triggerCount) {
-      store.set("triggerCount", triggerCount);
-    }
-  }
-  function useTriggerRegistration(id3, store) {
-    const registrationRef = React38.useRef(null);
-    return useStableCallback((element) => {
-      const registration = registrationRef.current;
-      if (registration !== null) {
-        if (registration.element === element && registration.store === store && registration.id === id3) {
-          return;
-        }
-        registrationRef.current = null;
-        const registeredStore = registration.store;
-        if (registeredStore.context.triggerElements.getById(registration.id) === registration.element) {
-          registeredStore.context.triggerElements.delete(registration.id);
-          syncTriggerCount(registeredStore);
-        }
-      }
-      if (element !== null && id3 !== void 0) {
-        registrationRef.current = {
-          store,
-          id: id3,
-          element
-        };
-        store.context.triggerElements.add(id3, element);
-        syncTriggerCount(store);
-      }
-    });
-  }
-  function createPopupOpenState(state, open2, trigger, preventUnmountOnClose = false) {
-    let preventUnmountingOnClose = state.preventUnmountingOnClose;
-    if (open2) {
-      preventUnmountingOnClose = false;
-    } else if (preventUnmountOnClose) {
-      preventUnmountingOnClose = true;
-    }
-    const triggerId = trigger?.id ?? null;
-    let activeTriggerId = state.activeTriggerId;
-    let activeTriggerElement = state.activeTriggerElement;
-    if (triggerId || open2) {
-      activeTriggerId = triggerId;
-      activeTriggerElement = trigger ?? null;
-    }
-    return {
-      open: open2,
-      preventUnmountingOnClose,
-      activeTriggerId,
-      activeTriggerElement
-    };
-  }
-  function attachPreventUnmountOnClose(eventDetails) {
-    let preventUnmountOnClose = false;
-    eventDetails.preventUnmountOnClose = () => {
-      preventUnmountOnClose = true;
-    };
-    return () => preventUnmountOnClose;
-  }
-  function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
-    const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
-    const baseRegisterTrigger = useTriggerRegistration(triggerId, store);
-    const applyTriggerData = useStableCallback((element) => {
-      const open2 = store.select("open");
-      const activeTriggerId = store.select("activeTriggerId");
-      if (activeTriggerId === triggerId) {
-        const changes = {
-          activeTriggerElement: element,
-          ...open2 ? stateUpdates : null
-        };
-        store.update(changes);
-        return;
-      }
-      if (activeTriggerId == null && open2) {
-        const changes = {
-          activeTriggerId: triggerId ?? null,
-          activeTriggerElement: element,
-          ...stateUpdates
-        };
-        store.update(changes);
-      }
-    });
-    const registerTrigger = useStableCallback((element) => {
-      baseRegisterTrigger(element);
-      if (element) {
-        applyTriggerData(element);
-      }
-    });
-    useIsoLayoutEffect(() => {
-      registerTrigger(triggerElementRef.current);
-      return () => registerTrigger(null);
-    }, [registerTrigger, triggerElementRef, store, triggerId]);
-    useIsoLayoutEffect(() => {
-      if (isMountedByThisTrigger) {
-        const changes = {
-          activeTriggerElement: triggerElementRef.current,
-          ...stateUpdates
-        };
-        store.update(changes);
-      }
-    }, [isMountedByThisTrigger, store, triggerElementRef, ...Object.values(stateUpdates)]);
-    return {
-      registerTrigger,
-      isMountedByThisTrigger
-    };
-  }
-  function useImplicitActiveTrigger(store, options2 = {}) {
-    const {
-      closeOnActiveTriggerUnmount = false
-    } = options2;
-    const resolvedActiveTriggerIdRef = React38.useRef(null);
-    const open2 = store.useState("open");
-    const reactiveTriggerCount = store.useState("triggerCount");
-    const activeTriggerId = store.useState("activeTriggerId");
-    const reactiveActiveTriggerElement = store.useState("activeTriggerElement");
-    useIsoLayoutEffect(() => {
-      if (!open2) {
-        resolvedActiveTriggerIdRef.current = null;
-        if (store.state.triggerCount !== 0) {
-          store.set("triggerCount", 0);
-        }
-        return;
-      }
-      const triggerCount = store.context.triggerElements.size;
-      const stateUpdates = {};
-      if (store.state.triggerCount !== triggerCount) {
-        stateUpdates.triggerCount = triggerCount;
-      }
-      const currentActiveTriggerId = store.select("activeTriggerId");
-      let lostActiveTriggerId = null;
-      if (currentActiveTriggerId) {
-        const activeTriggerElement = store.context.triggerElements.getById(currentActiveTriggerId);
-        if (!activeTriggerElement) {
-          for (const [triggerId, triggerElement] of store.context.triggerElements.entries()) {
-            if (triggerElement === store.state.activeTriggerElement) {
-              stateUpdates.activeTriggerId = triggerId;
-              stateUpdates.activeTriggerElement = triggerElement;
-              resolvedActiveTriggerIdRef.current = triggerId;
-              break;
-            }
-          }
-          if (stateUpdates.activeTriggerId === void 0) {
-            if (resolvedActiveTriggerIdRef.current === currentActiveTriggerId) {
-              lostActiveTriggerId = currentActiveTriggerId;
-            } else {
-              resolvedActiveTriggerIdRef.current = null;
-            }
-          }
-        } else {
-          resolvedActiveTriggerIdRef.current = currentActiveTriggerId;
-          if (activeTriggerElement !== store.state.activeTriggerElement) {
-            stateUpdates.activeTriggerElement = activeTriggerElement;
-          }
-        }
-      } else {
-        resolvedActiveTriggerIdRef.current = null;
-      }
-      if (!lostActiveTriggerId && !currentActiveTriggerId && triggerCount === 1) {
-        const iteratorResult = store.context.triggerElements.entries().next();
-        if (!iteratorResult.done) {
-          const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
-          stateUpdates.activeTriggerId = implicitTriggerId;
-          stateUpdates.activeTriggerElement = implicitTriggerElement;
-          resolvedActiveTriggerIdRef.current = implicitTriggerId;
-        }
-      }
-      if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
-        store.update(stateUpdates);
-      }
-      if (lostActiveTriggerId) {
-        if (closeOnActiveTriggerUnmount) {
-          queueMicrotask(() => {
-            if (store.select("open") && store.select("activeTriggerId") === lostActiveTriggerId && !store.context.triggerElements.getById(lostActiveTriggerId)) {
-              const eventDetails = createChangeEventDetails(reason_parts_exports.none);
-              store.setOpen(false, eventDetails);
-              if (!eventDetails.isCanceled) {
-                store.update({
-                  activeTriggerId: null,
-                  activeTriggerElement: null
-                });
-              }
-            }
-          });
-        }
-      }
-    }, [open2, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
-  }
-  function useOpenStateTransitions(open2, store, onUnmount, animateInitialOpen) {
-    const {
-      mounted,
-      setMounted,
-      transitionStatus
-    } = useTransitionStatus(open2, false, false, animateInitialOpen);
-    const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
-    const syncedPreventUnmountingOnClose = open2 ? false : preventUnmountingOnClose;
-    store.useSyncedValues({
-      mounted,
-      transitionStatus,
-      preventUnmountingOnClose: syncedPreventUnmountingOnClose
-    });
-    const forceUnmount = useStableCallback(() => {
-      setMounted(false);
-      store.update({
-        activeTriggerId: null,
-        activeTriggerElement: null,
-        mounted: false,
-        preventUnmountingOnClose: false
-      });
-      onUnmount?.();
-      store.context.onOpenChangeComplete?.(false);
-    });
-    useOpenChangeComplete({
-      enabled: mounted && !open2 && !syncedPreventUnmountingOnClose,
-      open: open2,
-      ref: store.context.popupRef,
-      onComplete() {
-        if (!open2) {
-          forceUnmount();
-        }
-      }
-    });
-    return {
-      forceUnmount,
-      transitionStatus
-    };
-  }
-  function usePopupInteractionProps(store, statePart) {
-    store.useSyncedValues(statePart);
-    useIsoLayoutEffect(() => () => {
-      store.update({
-        activeTriggerProps: EMPTY_OBJECT,
-        inactiveTriggerProps: EMPTY_OBJECT,
-        popupProps: EMPTY_OBJECT
-      });
-    }, [store]);
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
-  var devElementIdsByMap;
-  function getDevElementIds(map) {
-    devElementIdsByMap ??= /* @__PURE__ */ new WeakMap();
-    let elementIds = devElementIdsByMap.get(map);
-    if (!elementIds) {
-      elementIds = /* @__PURE__ */ new WeakMap();
-      devElementIdsByMap.set(map, elementIds);
-    }
-    return elementIds;
-  }
-  var PopupTriggerMap = class {
-    constructor() {
-      this.idMap = /* @__PURE__ */ new Map();
-    }
-    /**
-     * Adds a trigger element with the given ID.
-     *
-     * Note: The provided element is assumed to not be registered under multiple IDs.
-     */
-    add(id3, element) {
-      if (true) {
-        const elementIds = getDevElementIds(this);
-        const existingId = elementIds.get(element);
-        if (existingId !== void 0 && existingId !== id3) {
-          throw new Error("Base UI: A trigger element cannot be registered under multiple IDs in PopupTriggerMap.");
-        }
-        const previousElement = this.idMap.get(id3);
-        if (previousElement !== void 0 && previousElement !== element) {
-          elementIds.delete(previousElement);
-        }
-        elementIds.set(element, id3);
-      }
-      this.idMap.set(id3, element);
-    }
-    /**
-     * Removes the trigger element with the given ID.
-     */
-    delete(id3) {
-      if (true) {
-        const element = this.idMap.get(id3);
-        if (element !== void 0) {
-          devElementIdsByMap?.get(this)?.delete(element);
-        }
-      }
-      this.idMap.delete(id3);
-    }
-    /**
-     * Whether the given element is registered as a trigger.
-     */
-    hasElement(element) {
-      for (const registered of this.idMap.values()) {
-        if (registered === element) {
-          return true;
-        }
-      }
-      return false;
-    }
-    /**
-     * Whether there is a registered trigger element matching the given predicate.
-     */
-    hasMatchingElement(predicate) {
-      for (const element of this.idMap.values()) {
-        if (predicate(element)) {
-          return true;
-        }
-      }
-      return false;
-    }
-    /**
-     * Returns the trigger element associated with the given ID, or undefined if no such element exists.
-     */
-    getById(id3) {
-      return this.idMap.get(id3);
-    }
-    /**
-     * Returns an iterable of all registered trigger entries, where each entry is a tuple of [id, element].
-     */
-    entries() {
-      return this.idMap.entries();
-    }
-    /**
-     * Returns an iterable of all registered trigger elements.
-     */
-    elements() {
-      return this.idMap.values();
-    }
-    /**
-     * Returns the number of registered trigger elements.
-     */
-    get size() {
-      return this.idMap.size;
-    }
-  };
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/store.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/store.mjs
   function createInitialPopupStoreState(triggerElements, floatingId, nested = false) {
     return {
       open: false,
@@ -44839,6 +44960,7 @@ This message will only show in development mode. It won't appear in production. 
       payload: void 0,
       activeTriggerId: null,
       activeTriggerElement: null,
+      openedWithoutTrigger: false,
       triggerIdProp: void 0,
       popupElement: null,
       positionerElement: null,
@@ -44860,12 +44982,14 @@ This message will only show in development mode. It won't appear in production. 
     if (triggerOwnsOpenPopup(state, triggerId)) {
       return true;
     }
-    return triggerId !== void 0 && openSelector(state) && activeTriggerIdSelector(state) == null && state.triggerCount === 1;
+    return triggerId !== void 0 && openSelector(state) && activeTriggerIdSelector(state) == null && !state.openedWithoutTrigger && state.triggerCount === 1;
   }
   var popupStoreSelectors = {
     open: openSelector,
     mounted: (state) => state.mounted,
-    transitionStatus: (state) => state.transitionStatus,
+    // `open` is written synchronously on an open change; `mounted`/`transitionStatus` sync in a
+    // layout effect. Match useTransitionStatus so a retained popup does not miss its starting phase.
+    transitionStatus: (state) => openSelector(state) && !state.mounted ? "starting" : state.transitionStatus,
     floatingRootContext: (state) => state.floatingRootContext,
     triggerCount: (state) => state.triggerCount,
     preventUnmountingOnClose: (state) => state.preventUnmountingOnClose,
@@ -44895,138 +45019,30 @@ This message will only show in development mode. It won't appear in production. 
     positionerElement: (state) => state.positionerElement
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/usePopupHandleStore.mjs
-  var React39 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/usePopupHandleStore.mjs
+  var React40 = __toESM(require_react(), 1);
   var import_shim3 = __toESM(require_shim(), 1);
   function usePopupHandleStore(handle) {
-    const subscribe2 = React39.useCallback((listener) => {
+    const subscribe2 = React40.useCallback((listener) => {
       if (handle === void 0) {
         return NOOP;
       }
       return handle.subscribeStore(listener);
     }, [handle]);
-    const getSnapshot = React39.useCallback(() => {
+    const getSnapshot = React40.useCallback(() => {
       return handle === void 0 ? void 0 : handle.store;
     }, [handle]);
     return (0, import_shim3.useSyncExternalStore)(subscribe2, getSnapshot, () => handle?.serverStore);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
-  function useBaseUIFloating(options2) {
-    return useFloatingWithStore(options2, options2.rootContext);
-  }
-  function useFloatingWithStore(options2, store) {
-    const {
-      nodeId,
-      externalTree
-    } = options2;
-    const referenceElement = store.useState("referenceElement");
-    const floatingElement = store.useState("floatingElement");
-    const domReferenceElement = store.useState("domReferenceElement");
-    const open2 = store.useState("open");
-    const floatingId = store.useState("floatingId");
-    const [positionReference, setPositionReferenceRaw] = React40.useState(null);
-    const [localDomReference, setLocalDomReference] = React40.useState(void 0);
-    const [localFloatingElement, setLocalFloatingElement] = React40.useState(void 0);
-    const domReferenceRef = React40.useRef(null);
-    const tree = useFloatingTree(externalTree);
-    const storeElements = React40.useMemo(() => ({
-      reference: referenceElement,
-      floating: floatingElement,
-      domReference: domReferenceElement
-    }), [referenceElement, floatingElement, domReferenceElement]);
-    const position2 = useFloating({
-      ...options2,
-      elements: {
-        ...storeElements,
-        ...positionReference && {
-          reference: positionReference
-        }
-      }
-    });
-    const localDomReferenceElement = isElement2(localDomReference) ? localDomReference : null;
-    const syncedFloatingElement = localFloatingElement === void 0 ? store.state.floatingElement : localFloatingElement;
-    store.useSyncedValue("referenceElement", localDomReference ?? null);
-    store.useSyncedValue("domReferenceElement", localDomReference === void 0 ? domReferenceElement : localDomReferenceElement);
-    store.useSyncedValue("floatingElement", syncedFloatingElement);
-    const setPositionReference = React40.useCallback((node2) => {
-      const computedPositionReference = isElement2(node2) ? {
-        getBoundingClientRect: () => node2.getBoundingClientRect(),
-        getClientRects: () => node2.getClientRects(),
-        contextElement: node2
-      } : node2;
-      setPositionReferenceRaw(computedPositionReference);
-      position2.refs.setReference(computedPositionReference);
-    }, [position2.refs]);
-    const setReference = React40.useCallback((node2) => {
-      if (isElement2(node2) || node2 === null) {
-        domReferenceRef.current = node2;
-        setLocalDomReference(node2);
-      }
-      if (isElement2(position2.refs.reference.current) || position2.refs.reference.current === null || // Don't allow setting virtual elements using the old technique back to
-      // `null` to support `positionReference` + an unstable `reference`
-      // callback ref.
-      node2 !== null && !isElement2(node2)) {
-        position2.refs.setReference(node2);
-      }
-    }, [position2.refs, setLocalDomReference]);
-    const setFloating = React40.useCallback((node2) => {
-      setLocalFloatingElement(node2);
-      position2.refs.setFloating(node2);
-    }, [position2.refs]);
-    const refs = React40.useMemo(() => ({
-      ...position2.refs,
-      setReference,
-      setFloating,
-      setPositionReference,
-      domReference: domReferenceRef
-    }), [position2.refs, setReference, setFloating, setPositionReference]);
-    const elements2 = React40.useMemo(() => ({
-      ...position2.elements,
-      domReference: domReferenceElement
-    }), [position2.elements, domReferenceElement]);
-    const context = React40.useMemo(() => ({
-      ...position2,
-      dataRef: store.context.dataRef,
-      open: open2,
-      onOpenChange: store.setOpen,
-      events: store.context.events,
-      floatingId,
-      refs,
-      elements: elements2,
-      nodeId,
-      rootStore: store
-    }), [position2, refs, elements2, nodeId, store, open2, floatingId]);
-    useIsoLayoutEffect(() => {
-      if (domReferenceElement) {
-        domReferenceRef.current = domReferenceElement;
-      }
-    }, [domReferenceElement]);
-    useIsoLayoutEffect(() => {
-      store.context.dataRef.current.floatingContext = context;
-      const node2 = tree?.nodesRef.current.find((n2) => n2.id === nodeId);
-      if (node2) {
-        node2.context = context;
-      }
-    });
-    return React40.useMemo(() => ({
-      ...position2,
-      context,
-      refs,
-      elements: elements2,
-      rootStore: store
-    }), [position2, refs, elements2, context, store]);
-  }
-
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
   var React41 = __toESM(require_react(), 1);
   var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
-  function useFocus(context, props = {}) {
+  function useFocus(store, props = {}) {
     const {
       enabled = true,
       delay: delay2
     } = props;
-    const store = "rootStore" in context ? context.rootStore : context;
     const {
       events,
       dataRef
@@ -45106,12 +45122,11 @@ This message will only show in development mode. It won't appear in production. 
             nativeEvent,
             currentTarget
           } = event;
-          const delayValue = typeof delay2 === "function" ? delay2() : delay2;
-          if (store.select("open") && movedFromOtherEnabledTrigger || delayValue === 0 || delayValue === void 0) {
+          if (store.select("open") && movedFromOtherEnabledTrigger || !delay2) {
             store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerFocus, nativeEvent, currentTarget));
             return;
           }
-          timeout.start(delayValue, () => {
+          timeout.start(delay2, () => {
             if (blockFocusRef.current) {
               return;
             }
@@ -45147,25 +45162,23 @@ This message will only show in development mode. It won't appear in production. 
     } : {}, [enabled, reference]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
   var React42 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
   var HoverInteraction = class _HoverInteraction {
-    constructor() {
-      this.pointerType = void 0;
-      this.interactedInside = false;
-      this.handler = void 0;
-      this.blockMouseMove = true;
-      this.performedPointerEventsMutation = false;
-      this.pointerEventsScopeElement = null;
-      this.pointerEventsReferenceElement = null;
-      this.pointerEventsFloatingElement = null;
-      this.restTimeoutPending = false;
-      this.openChangeTimeout = new Timeout();
-      this.restTimeout = new Timeout();
-      this.handleCloseOptions = void 0;
-    }
+    pointerType = void 0;
+    interactedInside = false;
+    handler = void 0;
+    blockMouseMove = true;
+    performedPointerEventsMutation = false;
+    pointerEventsScopeElement = null;
+    pointerEventsReferenceElement = null;
+    pointerEventsFloatingElement = null;
+    restTimeoutPending = false;
+    openChangeTimeout = new Timeout();
+    restTimeout = new Timeout();
+    handleCloseOptions = void 0;
     static create() {
       return new _HoverInteraction();
     }
@@ -45224,14 +45237,13 @@ This message will only show in development mode. It won't appear in production. 
     return data.hoverInteractionState;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
-  function useHoverFloatingInteraction(context, parameters = {}) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+  function useHoverFloatingInteraction(store, parameters = {}) {
     const {
       enabled = true,
       closeDelay: closeDelayProp = 0,
       nodeId: nodeIdProp
     } = parameters;
-    const store = "rootStore" in context ? context.rootStore : context;
     const open2 = store.useState("open");
     const floatingElement = store.useState("floatingElement");
     const domReferenceElement = store.useState("domReferenceElement");
@@ -45276,7 +45288,7 @@ This message will only show in development mode. It won't appear in production. 
         }
         const cachedScopeElement = instance.pointerEventsScopeElement !== floatingEl ? instance.pointerEventsScopeElement : null;
         const parentScopeElement = parentFloating !== floatingEl ? parentFloating : null;
-        const scopeElement = instance.handleCloseOptions?.getScope?.() ?? cachedScopeElement ?? parentScopeElement ?? ref.closest("[data-rootownerid]") ?? doc.body;
+        const scopeElement = instance.handleCloseOptions?.getScope?.() ?? cachedScopeElement ?? parentScopeElement ?? closest(ref, "[data-rootownerid]") ?? doc.body;
         applySafePolygonPointerEventsMutation(instance, {
           scopeElement,
           referenceElement: ref,
@@ -45314,7 +45326,7 @@ This message will only show in development mode. It won't appear in production. 
           instance.interactedInside = false;
           return;
         }
-        instance.interactedInside = target?.closest("[aria-haspopup]") != null;
+        instance.interactedInside = closest(target, "[aria-haspopup]") != null;
       }
       function onFloatingMouseEnter() {
         instance.openChangeTimeout.clear();
@@ -45362,13 +45374,13 @@ This message will only show in development mode. It won't appear in production. 
     }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isHoverOpen, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
   var React43 = __toESM(require_react(), 1);
   var ReactDOM5 = __toESM(require_react_dom(), 1);
   var EMPTY_REF = {
     current: null
   };
-  function useHoverReferenceInteraction(context, props = {}) {
+  function useHoverReferenceInteraction(store, props = {}) {
     const {
       enabled = true,
       delay: delay2 = 0,
@@ -45384,7 +45396,6 @@ This message will only show in development mode. It won't appear in production. 
       shouldOpen: shouldOpenProp,
       guardStaleOpen = false
     } = props;
-    const store = "rootStore" in context ? context.rootStore : context;
     const {
       dataRef,
       events
@@ -45646,9 +45657,8 @@ This message will only show in development mode. It won't appear in production. 
     }, [enabled, instance, isClickLikeOpenEvent2, isOverInactiveTrigger, mouseOnly, store, restMsRef, checkShouldOpen]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useListNavigation.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useListNavigation.mjs
   var React44 = __toESM(require_react(), 1);
-  var ESCAPE = "Escape";
   function isStationaryWebKitPointer(event) {
     return parts_exports.engine.webkit && event.movementX === 0 && event.movementY === 0;
   }
@@ -45681,11 +45691,11 @@ This message will only show in development mode. It won't appear in production. 
     const vertical = rtl2 ? key === ARROW_RIGHT : key === ARROW_LEFT;
     const horizontal = key === ARROW_UP;
     if (orientation === "both" || orientation === "horizontal" && grid) {
-      return key === ESCAPE;
+      return key === "Escape";
     }
     return doSwitch(orientation, vertical, horizontal);
   }
-  function useListNavigation(context, props) {
+  function useListNavigation(store, props) {
     const {
       listRef,
       activeIndex,
@@ -45703,10 +45713,12 @@ This message will only show in development mode. It won't appear in production. 
       openOnArrowKeyDown = true,
       disabledIndices = void 0,
       orientation = "vertical",
+      triggerOrientation = orientation,
       parentOrientation,
       id: id3,
       resetOnPointerLeave = true,
       externalTree,
+      nestedReturnFocusRef,
       grid: navigateGrid
     } = props;
     const isGrid2 = navigateGrid != null;
@@ -45723,7 +45735,6 @@ This message will only show in development mode. It won't appear in production. 
         console.warn("In grid list navigation mode, the `orientation` should", 'be either "horizontal" or "both".');
       }
     }
-    const store = "rootStore" in context ? context.rootStore : context;
     const open2 = store.useState("open");
     const floatingElement = store.useState("floatingElement");
     const domReferenceElement = store.useState("domReferenceElement");
@@ -45752,10 +45763,9 @@ This message will only show in development mode. It won't appear in production. 
     const focusFrame = useAnimationFrame();
     const waitForListPopulatedFrame = useAnimationFrame();
     const focusItem = useStableCallback(() => {
+      focusFrame.cancel();
       function runFocus(item2) {
-        if (virtual) {
-          tree?.events.emit("virtualfocus", item2);
-        } else {
+        if (!virtual) {
           cancelQueuedFocusRef.current = enqueueFocus(item2, {
             sync: forceSyncFocusRef.current,
             preventScroll: true
@@ -45791,6 +45801,14 @@ This message will only show in development mode. It won't appear in production. 
     useIsoLayoutEffect(() => {
       dataRef.current.orientation = orientation;
     }, [dataRef, orientation]);
+    useIsoLayoutEffect(() => {
+      if (!open2) {
+        keyRef.current = null;
+      }
+      if (!open2 || focusItemOnOpen !== "auto") {
+        focusItemOnOpenRef.current = focusItemOnOpen;
+      }
+    }, [open2, focusItemOnOpen]);
     useIsoLayoutEffect(() => {
       if (!enabled) {
         return;
@@ -45836,7 +45854,7 @@ This message will only show in development mode. It won't appear in production. 
               }
               runs += 1;
             } else {
-              indexRef.current = keyRef.current == null || isMainOrientationToEndKey(keyRef.current, orientation, rtl2) || nested ? getMinListIndex(listRef) : getMaxListIndex(listRef);
+              indexRef.current = keyRef.current == null || isMainOrientationToEndKey(keyRef.current, triggerOrientation, rtl2) || nested ? getMinListIndex(listRef) : getMaxListIndex(listRef);
               keyRef.current = null;
               onNavigate();
             }
@@ -45848,7 +45866,7 @@ This message will only show in development mode. It won't appear in production. 
         focusItem();
         forceScrollIntoViewRef.current = false;
       }
-    }, [enabled, open2, floatingElement, activeIndex, selectedIndexRef, nested, listRef, orientation, rtl2, onNavigate, focusItem, waitForListPopulatedFrame]);
+    }, [enabled, open2, floatingElement, activeIndex, selectedIndexRef, nested, listRef, triggerOrientation, rtl2, onNavigate, focusItem, waitForListPopulatedFrame]);
     useIsoLayoutEffect(() => {
       if (!enabled || floatingElement || !tree || virtual || !previousMountedRef.current) {
         return;
@@ -45867,12 +45885,6 @@ This message will only show in development mode. It won't appear in production. 
       previousOpenRef.current = open2;
       previousMountedRef.current = !!floatingElement;
     });
-    useIsoLayoutEffect(() => {
-      if (!open2) {
-        keyRef.current = null;
-        focusItemOnOpenRef.current = focusItemOnOpen;
-      }
-    }, [open2, focusItemOnOpen]);
     const hasActiveIndex = activeIndex != null;
     const syncCurrentTarget = useStableCallback((event) => {
       if (!latestOpenRef.current) {
@@ -45904,14 +45916,14 @@ This message will only show in development mode. It won't appear in production. 
           stopEvent(event);
         }
         store.setOpen(false, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
-        if (isHTMLElement(domReferenceElement)) {
-          if (virtual) {
-            tree?.events.emit("virtualfocus", domReferenceElement);
-          } else {
-            domReferenceElement.focus();
-          }
+        const returnElement = nestedReturnFocusRef?.current ?? domReferenceElement;
+        if (isHTMLElement(returnElement)) {
+          returnElement.focus();
         }
         return;
+      }
+      if (activeIndex != null && activeIndex !== indexRef.current && !isIndexOutOfListBounds(listRef.current, activeIndex)) {
+        indexRef.current = activeIndex;
       }
       const currentIndex = indexRef.current;
       const minIndex = getMinListIndex(listRef, disabledIndices);
@@ -45930,7 +45942,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       if (navigateGrid != null) {
         const index2 = navigateGrid(event, indexRef.current, listRef, orientation, loopFocus, rtl2, disabledIndices, minIndex, maxIndex);
-        if (index2 != null) {
+        if (index2 != null && index2 !== indexRef.current) {
           indexRef.current = index2;
           onNavigate(event);
         }
@@ -45940,57 +45952,30 @@ This message will only show in development mode. It won't appear in production. 
       }
       if (isMainOrientationKey(event.key, orientation)) {
         stopEvent(event);
-        if (open2 && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
+        const focusedElement = activeElement(event.currentTarget.ownerDocument);
+        if (open2 && !virtual && contains2(event.currentTarget, focusedElement) && !listRef.current.some((item2) => item2 != null && contains2(item2, focusedElement))) {
           indexRef.current = isMainOrientationToEndKey(event.key, orientation, rtl2) ? minIndex : maxIndex;
           onNavigate(event);
+          if (activeIndex === indexRef.current) {
+            focusItem();
+          }
           return;
         }
-        if (isMainOrientationToEndKey(event.key, orientation, rtl2)) {
-          if (loopFocus) {
-            if (currentIndex >= maxIndex) {
-              if (allowEscape && currentIndex !== listRef.current.length) {
-                indexRef.current = -1;
-              } else {
-                forceSyncFocusRef.current = false;
-                indexRef.current = minIndex;
-              }
-            } else {
-              indexRef.current = findNonDisabledListIndex(listRef.current, {
-                startingIndex: currentIndex,
-                disabledIndices
-              });
-            }
-          } else {
-            indexRef.current = Math.min(maxIndex, findNonDisabledListIndex(listRef.current, {
-              startingIndex: currentIndex,
-              disabledIndices
-            }));
-          }
-        } else if (loopFocus) {
-          if (currentIndex <= minIndex) {
-            if (allowEscape && currentIndex !== -1) {
-              indexRef.current = listRef.current.length;
-            } else {
-              forceSyncFocusRef.current = false;
-              indexRef.current = maxIndex;
-            }
-          } else {
-            indexRef.current = findNonDisabledListIndex(listRef.current, {
-              startingIndex: currentIndex,
-              decrement: true,
-              disabledIndices
-            });
-          }
-        } else {
-          indexRef.current = Math.max(minIndex, findNonDisabledListIndex(listRef.current, {
-            startingIndex: currentIndex,
-            decrement: true,
-            disabledIndices
-          }));
+        const {
+          index: index2,
+          wrapped
+        } = getNextListIndex(listRef.current, currentIndex, {
+          decrement: !isMainOrientationToEndKey(event.key, orientation, rtl2),
+          loopFocus,
+          allowEscape,
+          disabledIndices,
+          minIndex,
+          maxIndex
+        });
+        if (wrapped) {
+          forceSyncFocusRef.current = false;
         }
-        if (isIndexOutOfListBounds(listRef.current, indexRef.current)) {
-          indexRef.current = -1;
-        }
+        indexRef.current = index2;
         onNavigate(event);
       }
     });
@@ -46000,12 +45985,15 @@ This message will only show in development mode. It won't appear in production. 
           forceSyncFocusRef.current = true;
           syncCurrentTarget(event);
         },
-        onClick: ({
+        onClick({
           currentTarget
-        }) => currentTarget.focus({
-          preventScroll: true
-        }),
-        // Safari
+        }) {
+          if (!virtual) {
+            currentTarget.focus({
+              preventScroll: true
+            });
+          }
+        },
         onMouseMove(event) {
           if (isStationaryWebKitPointer(event)) {
             return;
@@ -46060,9 +46048,11 @@ This message will only show in development mode. It won't appear in production. 
               return;
             }
             stopEvent(event);
-            store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent));
-            if (isHTMLElement(domReferenceElement)) {
-              domReferenceElement.focus();
+            const details = createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent);
+            store.setOpen(false, details);
+            const returnElement = nestedReturnFocusRef?.current ?? domReferenceElement;
+            if (!details.isCanceled && isHTMLElement(returnElement)) {
+              returnElement.focus();
             }
             return;
           }
@@ -46075,7 +46065,7 @@ This message will only show in development mode. It won't appear in production. 
           isPointerModalityRef.current = true;
         }
       };
-    }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, typeableComboboxReference, store, open2, virtual, domReferenceElement]);
+    }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, typeableComboboxReference, store, open2, virtual, domReferenceElement, nestedReturnFocusRef]);
     const trigger = React44.useMemo(() => {
       function openOnNavigationKeyDown(event) {
         store.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
@@ -46097,9 +46087,9 @@ This message will only show in development mode. It won't appear in production. 
           isPointerModalityRef.current = false;
           const isArrowKey = event.key.startsWith("Arrow");
           const isParentCrossOpenKey = isCrossOrientationOpenKey(event.key, getParentOrientation(), rtl2);
-          const isMainKey = isMainOrientationKey(event.key, orientation);
+          const isMainKey = isMainOrientationKey(event.key, currentOpen ? orientation : triggerOrientation);
           const isNavigationKey = (nested ? isParentCrossOpenKey : isMainKey) || event.key === "Enter" || event.key.trim() === "";
-          if (virtual && currentOpen) {
+          if (virtual && currentOpen && (!nested || isTypeableElement(event.currentTarget))) {
             return commonOnKeyDown(event);
           }
           if (!currentOpen && !openOnArrowKeyDown && isArrowKey) {
@@ -46115,6 +46105,9 @@ This message will only show in development mode. It won't appear in production. 
               if (currentOpen) {
                 indexRef.current = getMinEnabledIndex();
                 onNavigate(event);
+                if (virtual) {
+                  floatingFocusElementRef.current?.focus();
+                }
               } else {
                 openOnNavigationKeyDown(event);
               }
@@ -46138,6 +46131,9 @@ This message will only show in development mode. It won't appear in production. 
           return void 0;
         },
         onFocus(event) {
+          if (event.target !== event.currentTarget) {
+            return;
+          }
           if (store.select("open") && !virtual) {
             indexRef.current = -1;
             onNavigate(event);
@@ -46148,7 +46144,7 @@ This message will only show in development mode. It won't appear in production. 
         onMouseDown: checkVirtualMouse,
         onClick: checkVirtualMouse
       };
-    }, [commonOnKeyDown, focusItemOnOpen, getMinEnabledIndex, nested, onNavigate, store, openOnArrowKeyDown, orientation, getParentOrientation, rtl2, selectedIndexRef, virtual]);
+    }, [commonOnKeyDown, focusItemOnOpen, getMinEnabledIndex, nested, onNavigate, store, openOnArrowKeyDown, orientation, triggerOrientation, getParentOrientation, rtl2, selectedIndexRef, virtual, floatingFocusElementRef]);
     const reference = React44.useMemo(() => {
       return {
         ...ariaActiveDescendantProp,
@@ -46163,21 +46159,21 @@ This message will only show in development mode. It won't appear in production. 
     } : {}, [enabled, reference, floating, trigger, item]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useTypeahead.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useTypeahead.mjs
   var React45 = __toESM(require_react(), 1);
-  function useTypeahead(context, props) {
+  function useTypeahead(store, props) {
     const {
       listRef,
       elementsRef,
       activeIndex,
       onMatch: onMatchProp,
       disabledIndices,
-      onTyping,
+      onTyping: onTypingProp,
       enabled = true,
       resetMs = 750,
       selectedIndex = null
     } = props;
-    const store = "rootStore" in context ? context.rootStore : context;
+    const onTyping = useStableCallback(onTypingProp);
     const open2 = store.useState("open");
     const timeout = useTimeout();
     const stringRef = React45.useRef("");
@@ -46248,7 +46244,7 @@ This message will only show in development mode. It won't appear in production. 
       const startIndex = (prevIndex ?? 0) + 1;
       const index2 = getMatchingIndex(listContent, stringRef.current, startIndex);
       if (index2 !== -1) {
-        onMatchProp?.(index2);
+        onMatchProp?.(index2, event);
         matchIndexRef.current = index2;
       } else if (event.key !== " ") {
         stringRef.current = "";
@@ -46276,8 +46272,9 @@ This message will only show in development mode. It won't appear in production. 
       matchIndexRef.current = null;
       if (stringRef.current !== "") {
         stringRef.current = "";
+        onTyping?.(false);
       }
-    }, [open2, selectedIndex, timeout]);
+    }, [open2, selectedIndex, timeout, onTyping]);
     const sharedProps = React45.useMemo(() => ({
       onKeyDown,
       onBlur
@@ -46288,7 +46285,7 @@ This message will only show in development mode. It won't appear in production. 
     } : {}, [enabled, sharedProps]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
   var CURSOR_SPEED_THRESHOLD = 0.1;
   var CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
   var POLYGON_BUFFER = 0.5;
@@ -46504,7 +46501,7 @@ This message will only show in development mode. It won't appear in production. 
     return fn;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/NullStore.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/NullStore.mjs
   var NullStore = class extends ReactStore {
     // `update`/`set`/`notifyAll` funnel through `setState` in the base `Store`, so overriding
     // `setState` alone would neutralize them today. They are overridden explicitly so the store stays
@@ -46519,7 +46516,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/composite.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/composite.mjs
   var ARROW_UP2 = "ArrowUp";
   var ARROW_DOWN2 = "ArrowDown";
   var ARROW_LEFT2 = "ArrowLeft";
@@ -46528,7 +46525,7 @@ This message will only show in development mode. It won't appear in production. 
   var END = "End";
   var COMPOSITE_KEYS = /* @__PURE__ */ new Set([ARROW_UP2, ARROW_DOWN2, ARROW_LEFT2, ARROW_RIGHT2, HOME, END]);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/inertValue.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/inertValue.mjs
   function inertValue(value) {
     if (isReactVersionAtLeast(19)) {
       return value;
@@ -46536,7 +46533,7 @@ This message will only show in development mode. It won't appear in production. 
     return value ? "true" : void 0;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/InternalBackdrop.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/InternalBackdrop.mjs
   var React46 = __toESM(require_react(), 1);
   var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
   var InternalBackdrop = /* @__PURE__ */ React46.forwardRef(function InternalBackdrop2(props, ref) {
@@ -46565,10 +46562,10 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) InternalBackdrop.displayName = "InternalBackdrop";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
   var React49 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useEnhancedClickHandler.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useEnhancedClickHandler.mjs
   var React47 = __toESM(require_react(), 1);
   function useEnhancedClickHandler(handler) {
     const lastClickInteractionTypeRef = React47.useRef("");
@@ -46597,7 +46594,7 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useValueChanged.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useValueChanged.mjs
   var React48 = __toESM(require_react(), 1);
   function useValueChanged(value, onChange) {
     const valueRef = React48.useRef(value);
@@ -46610,7 +46607,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [value, onChangeCallback]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
   function useOpenMethodTriggerProps(open2, setOpenMethod) {
     const handleTriggerClick = useStableCallback((_2, interactionType) => {
       const isOpen = typeof open2 === "function" ? open2() : open2;
@@ -46644,16 +46641,128 @@ This message will only show in development mode. It won't appear in production. 
     }), [openMethod, triggerProps]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getHighlightReason.mjs
+  function getHighlightReason(event) {
+    if (event == null) {
+      return reason_parts_exports.none;
+    }
+    if (event.type.startsWith("key")) {
+      return reason_parts_exports.keyboard;
+    }
+    if (event.type.startsWith("mouse") || event.type.startsWith("pointer")) {
+      return reason_parts_exports.pointer;
+    }
+    return reason_parts_exports.none;
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveValueLabel.mjs
   var React50 = __toESM(require_react(), 1);
-  var DirectionContext = /* @__PURE__ */ React50.createContext(void 0);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/serializeValue.mjs
+  function serializeValue(value) {
+    if (value == null) {
+      return "";
+    }
+    if (typeof value === "string") {
+      return value;
+    }
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveValueLabel.mjs
+  var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
+  function stringifyAsLabel(item, itemToStringLabel) {
+    if (itemToStringLabel && item != null) {
+      return itemToStringLabel(item) ?? "";
+    }
+    if (item && typeof item === "object") {
+      if ("label" in item && item.label != null) {
+        return String(item.label);
+      }
+      if ("value" in item) {
+        return String(item.value);
+      }
+    }
+    return serializeValue(item);
+  }
+
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/stringifyLocale.mjs
+  function stringifyLocale(locale) {
+    if (Array.isArray(locale)) {
+      return locale.map((value) => stringifyLocale(value)).join(",");
+    }
+    if (locale == null) {
+      return "";
+    }
+    return String(locale);
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/filter.mjs
+  var filterCache = /* @__PURE__ */ new Map();
+  function getFilter(options2 = {}) {
+    const {
+      locale,
+      ...restOptions
+    } = options2;
+    const collatorOptions = {
+      usage: "search",
+      sensitivity: "base",
+      ignorePunctuation: true,
+      ...restOptions
+    };
+    const cacheKey = `${stringifyLocale(locale)}|${JSON.stringify(collatorOptions)}`;
+    const cachedFilter = filterCache.get(cacheKey);
+    if (cachedFilter) {
+      return cachedFilter;
+    }
+    const collator = new Intl.Collator(locale, collatorOptions);
+    const filter2 = {
+      contains(item, query, itemToString) {
+        if (!query) {
+          return true;
+        }
+        const itemString = stringifyAsLabel(item, itemToString);
+        for (let i2 = 0; i2 <= itemString.length - query.length; i2 += 1) {
+          if (collator.compare(itemString.slice(i2, i2 + query.length), query) === 0) {
+            return true;
+          }
+        }
+        return false;
+      },
+      startsWith(item, query, itemToString) {
+        if (!query) {
+          return true;
+        }
+        const itemString = stringifyAsLabel(item, itemToString);
+        return collator.compare(itemString.slice(0, query.length), query) === 0;
+      },
+      endsWith(item, query, itemToString) {
+        if (!query) {
+          return true;
+        }
+        const itemString = stringifyAsLabel(item, itemToString);
+        const queryLength = query.length;
+        return itemString.length >= queryLength && collator.compare(itemString.slice(itemString.length - queryLength), query) === 0;
+      }
+    };
+    filterCache.set(cacheKey, filter2);
+    return filter2;
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
+  var React51 = __toESM(require_react(), 1);
+  var DirectionContext = /* @__PURE__ */ React51.createContext(void 0);
   if (true) DirectionContext.displayName = "DirectionContext";
   function useDirection() {
-    const context = React50.useContext(DirectionContext);
+    const context = React51.useContext(DirectionContext);
     return context?.direction ?? "ltr";
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/getPseudoElementBounds.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getPseudoElementBounds.mjs
   var BOUNDARY_OFFSET = 5;
   function isMouseWithinBounds(event, element) {
     const bounds = getPseudoElementBounds(element);
@@ -46687,10 +46796,139 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
-  var React51 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useInitialLiveRegionTextMutation.mjs
+  var React52 = __toESM(require_react(), 1);
+  var LIVE_REGION_MARKER = "\u2060";
+  var INITIAL_LIVE_REGION_TEXT_MUTATION_RESET_DELAY = 200;
+  function findLastTextNode(root) {
+    const walker = root.ownerDocument.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let lastTextNode = null;
+    while (walker.nextNode()) {
+      const textNode = walker.currentNode;
+      if (textNode.nodeValue !== "") {
+        lastTextNode = textNode;
+      }
+    }
+    return lastTextNode;
+  }
+  function useInitialLiveRegionTextMutation(present = true) {
+    const timeout = useTimeout();
+    const rootRef = React52.useRef(null);
+    React52.useEffect(() => {
+      if (!present || parts_exports.os.ios) {
+        return void 0;
+      }
+      const root = rootRef.current;
+      if (root == null) {
+        return void 0;
+      }
+      const textNode = findLastTextNode(root);
+      if (textNode == null) {
+        return void 0;
+      }
+      const originalValue = textNode.data;
+      const markedValue = `${originalValue}${LIVE_REGION_MARKER}`;
+      textNode.nodeValue = markedValue;
+      timeout.start(INITIAL_LIVE_REGION_TEXT_MUTATION_RESET_DELAY, () => {
+        if (textNode.nodeValue === markedValue) {
+          textNode.nodeValue = originalValue;
+        }
+      });
+      return () => {
+        timeout.clear();
+        if (textNode.nodeValue === markedValue) {
+          textNode.nodeValue = originalValue;
+        }
+      };
+    }, [present, rootRef, timeout]);
+    return rootRef;
+  }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
+  var React54 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+  var React53 = __toESM(require_react(), 1);
+  function useBaseUIFloating(options2) {
+    const {
+      nodeId,
+      externalTree,
+      rootContext: store
+    } = options2;
+    const referenceElement = store.useState("referenceElement");
+    const floatingElement = store.useState("floatingElement");
+    const domReferenceElement = store.useState("domReferenceElement");
+    const open2 = store.useState("open");
+    const floatingId = store.useState("floatingId");
+    const [positionReference, setPositionReferenceRaw] = React53.useState(null);
+    const domReferenceRef = React53.useRef(null);
+    const tree = useFloatingTree(externalTree);
+    const storeElements = React53.useMemo(() => ({
+      reference: referenceElement,
+      floating: floatingElement,
+      domReference: domReferenceElement
+    }), [referenceElement, floatingElement, domReferenceElement]);
+    const position2 = useFloating({
+      ...options2,
+      elements: {
+        ...storeElements,
+        ...positionReference && {
+          reference: positionReference
+        }
+      }
+    });
+    const setPositionReference = React53.useCallback((node2) => {
+      const computedPositionReference = isElement2(node2) ? {
+        getBoundingClientRect: () => node2.getBoundingClientRect(),
+        getClientRects: () => node2.getClientRects(),
+        contextElement: node2
+      } : node2;
+      setPositionReferenceRaw(computedPositionReference);
+      position2.refs.setReference(computedPositionReference);
+    }, [position2.refs]);
+    const refs = React53.useMemo(() => ({
+      ...position2.refs,
+      setPositionReference,
+      domReference: domReferenceRef
+    }), [position2.refs, setPositionReference]);
+    const elements2 = React53.useMemo(() => ({
+      ...position2.elements,
+      domReference: domReferenceElement
+    }), [position2.elements, domReferenceElement]);
+    const context = React53.useMemo(() => ({
+      ...position2,
+      dataRef: store.context.dataRef,
+      open: open2,
+      onOpenChange: store.setOpen,
+      events: store.context.events,
+      floatingId,
+      refs,
+      elements: elements2,
+      nodeId,
+      rootStore: store
+    }), [position2, refs, elements2, nodeId, store, open2, floatingId]);
+    useIsoLayoutEffect(() => {
+      if (domReferenceElement) {
+        domReferenceRef.current = domReferenceElement;
+      }
+    }, [domReferenceElement]);
+    useIsoLayoutEffect(() => {
+      store.context.dataRef.current.floatingContext = context;
+      const node2 = tree?.nodesRef.current.find((n2) => n2.id === nodeId);
+      if (node2) {
+        node2.context = context;
+      }
+    });
+    return React53.useMemo(() => ({
+      ...position2,
+      context,
+      refs,
+      elements: elements2,
+      rootStore: store
+    }), [position2, refs, elements2, context, store]);
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
   var baseArrow = (options2) => ({
     name: "arrow",
     options: options2,
@@ -46706,8 +46944,7 @@ This message will only show in development mode. It won't appear in production. 
       } = state;
       const {
         element,
-        padding = 0,
-        offsetParent = "real"
+        padding = 0
       } = evaluate(options2, state) || {};
       if (element == null) {
         return {};
@@ -46726,11 +46963,7 @@ This message will only show in development mode. It won't appear in production. 
       const clientProp = isYAxis ? "clientHeight" : "clientWidth";
       const endDiff = rects.reference[length2] + rects.reference[axis] - coords[axis] - rects.floating[length2];
       const startDiff = coords[axis] - rects.reference[axis];
-      const arrowOffsetParent = offsetParent === "real" ? await platform3.getOffsetParent?.(element) : elements2.floating;
-      let clientSize = elements2.floating[clientProp] || rects.floating[length2];
-      if (!clientSize || !await platform3.isElement?.(arrowOffsetParent)) {
-        clientSize = elements2.floating[clientProp] || rects.floating[length2];
-      }
+      const clientSize = elements2.floating[clientProp] || rects.floating[length2];
       const centerToReference = endDiff / 2 - startDiff / 2;
       const largestPossiblePadding = clientSize / 2 - arrowDimensions[length2] / 2 - 1;
       const minPadding = Math.min(paddingObject[minProp], largestPossiblePadding);
@@ -46766,7 +46999,7 @@ This message will only show in development mode. It won't appear in production. 
     };
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/hideMiddleware.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/hideMiddleware.mjs
   var hide4 = {
     name: "hide",
     async fn(state) {
@@ -46789,13 +47022,13 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/adaptiveOriginConstants.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/adaptiveOriginConstants.mjs
   var DEFAULT_SIDES = {
     sideX: "left",
     sideY: "top"
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonPositionerCssVars.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonPositionerCssVars.mjs
   var availableWidth = "--available-width";
   var availableHeight = "--available-height";
   var anchorWidth = "--anchor-width";
@@ -46804,7 +47037,7 @@ This message will only show in development mode. It won't appear in production. 
   var positionerWidth = "--positioner-width";
   var positionerHeight = "--positioner-height";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
   var AVAILABLE_WIDTH_VAR = availableWidth;
   var AVAILABLE_HEIGHT_VAR = availableHeight;
   function getLogicalSide(sideParam, renderedSide, isRtl) {
@@ -46866,10 +47099,6 @@ This message will only show in development mode. It won't appear in production. 
       lazyFlip = false,
       externalTree
     } = params;
-    const [mountSide, setMountSide] = React51.useState(null);
-    if (!mounted && mountSide !== null) {
-      setMountSide(null);
-    }
     const collisionAvoidanceSide = collisionAvoidance.side || "flip";
     const collisionAvoidanceAlign = collisionAvoidance.align || "flip";
     const collisionAvoidanceFallbackAxisSide = collisionAvoidance.fallbackAxisSide || "end";
@@ -46882,6 +47111,13 @@ This message will only show in development mode. It won't appear in production. 
     const mountedRef = useValueAsRef(mounted);
     const direction = useDirection();
     const isRtl = direction === "rtl";
+    const [mountPlacement, setMountPlacement] = React54.useState(null);
+    if (!mounted && mountPlacement !== null) {
+      setMountPlacement(null);
+    }
+    const lockAlign = lazyFlip === "placement";
+    const mountSide = mountPlacement ? getSide(mountPlacement) : null;
+    const mountAlign = mountPlacement && lockAlign ? getAlignment(mountPlacement) || "center" : null;
     const side = mountSide || {
       top: "top",
       right: "right",
@@ -46890,7 +47126,8 @@ This message will only show in development mode. It won't appear in production. 
       "inline-end": isRtl ? "left" : "right",
       "inline-start": isRtl ? "right" : "left"
     }[sideParam];
-    const placement = align === "center" ? side : `${side}-${align}`;
+    const placementAlign = mountAlign || align;
+    const placement = placementAlign === "center" ? side : `${side}-${placementAlign}`;
     let collisionPadding = collisionPaddingParam;
     if (typeof collisionPadding === "number") {
       collisionPadding = {
@@ -46916,7 +47153,7 @@ This message will only show in development mode. It won't appear in production. 
       boundary: collisionBoundary === "clipping-ancestors" ? "clippingAncestors" : collisionBoundary,
       padding: collisionPadding
     };
-    const arrowRef = React51.useRef(null);
+    const arrowRef = React54.useRef(null);
     const sideOffsetRef = useValueAsRef(sideOffset);
     const alignOffsetRef = useValueAsRef(alignOffset);
     const sideOffsetDep = typeof sideOffset !== "function" ? sideOffset : 0;
@@ -46973,7 +47210,7 @@ This message will only show in development mode. It won't appear in production. 
         };
       })
     }, [commonCollisionProps, sticky, shiftCrossAxis, shiftRootBoundary, collisionPadding, collisionAvoidanceAlign]);
-    if (collisionAvoidanceSide === "shift" || collisionAvoidanceAlign === "shift" || align === "center") {
+    if (collisionAvoidanceSide === "shift" || collisionAvoidanceAlign === "shift" || placementAlign === "center") {
       middleware2.push(shiftMiddleware, flipMiddleware);
     } else {
       middleware2.push(flipMiddleware, shiftMiddleware);
@@ -47011,8 +47248,7 @@ This message will only show in development mode. It won't appear in production. 
       // we'll create a fake element.
       element: arrowRef.current || ownerDocument(state.elements.floating).createElement("div"),
       // No padding for the fake arrow: it would displace aligned popups on narrow anchors.
-      padding: arrowRef.current ? arrowPadding : 0,
-      offsetParent: "floating"
+      padding: arrowRef.current ? arrowPadding : 0
     }), [arrowPadding]), {
       name: "transformOrigin",
       fn(state) {
@@ -47057,7 +47293,7 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     }, [mounted, floatingRootContext]);
-    const autoUpdateOptions = React51.useMemo(() => ({
+    const autoUpdateOptions = React54.useMemo(() => ({
       ancestorScroll: !disableAnchorTracking,
       elementResize: !disableAnchorTracking && typeof ResizeObserver !== "undefined",
       layoutShift: !disableAnchorTracking && typeof IntersectionObserver !== "undefined"
@@ -47088,7 +47324,7 @@ This message will only show in development mode. It won't appear in production. 
       sideY
     } = middlewareData.adaptiveOrigin || DEFAULT_SIDES;
     const resolvedPosition = isPositioned ? positionMethod : "fixed";
-    const floatingStyles = React51.useMemo(() => {
+    const floatingStyles = React54.useMemo(() => {
       let base;
       if (!isPositioned) {
         base = {
@@ -47115,7 +47351,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return base;
     }, [adaptiveOrigin2, resolvedPosition, sideX, x2, sideY, y3, originalFloatingStyles, isPositioned]);
-    const registeredPositionReferenceRef = React51.useRef(null);
+    const registeredPositionReferenceRef = React54.useRef(null);
     useIsoLayoutEffect(() => {
       if (!mounted) {
         return;
@@ -47129,7 +47365,7 @@ This message will only show in development mode. It won't appear in production. 
         registeredPositionReferenceRef.current = finalAnchor;
       }
     }, [mounted, refs, anchorDep, anchorValueRef]);
-    React51.useEffect(() => {
+    React54.useEffect(() => {
       if (!mounted) {
         return;
       }
@@ -47142,7 +47378,7 @@ This message will only show in development mode. It won't appear in production. 
         registeredPositionReferenceRef.current = anchorValue.current;
       }
     }, [mounted, refs, anchorDep, anchorValueRef]);
-    React51.useEffect(() => {
+    React54.useEffect(() => {
       if (keepMounted && mounted && elements2.reference && elements2.floating) {
         return autoUpdate(elements2.reference, elements2.floating, update2, autoUpdateOptions);
       }
@@ -47153,17 +47389,17 @@ This message will only show in development mode. It won't appear in production. 
     const renderedAlign = getAlignment(renderedPlacement) || "center";
     const anchorHidden2 = Boolean(middlewareData.hide?.referenceHidden);
     useIsoLayoutEffect(() => {
-      if (lazyFlip && mounted && isPositioned && renderedSide !== side) {
-        setMountSide(renderedSide);
+      if (lazyFlip && mounted && isPositioned && (renderedSide !== side || lockAlign && renderedAlign !== placementAlign)) {
+        setMountPlacement(renderedPlacement);
       }
-    }, [lazyFlip, mounted, isPositioned, renderedSide, side]);
-    const arrowStyles = React51.useMemo(() => ({
+    }, [lazyFlip, lockAlign, mounted, isPositioned, renderedPlacement, renderedSide, renderedAlign, side, placementAlign]);
+    const arrowStyles = React54.useMemo(() => ({
       position: "absolute",
       top: middlewareData.arrow?.y,
       left: middlewareData.arrow?.x
     }), [middlewareData.arrow]);
     const arrowUncentered = middlewareData.arrow?.centerOffset !== 0;
-    return React51.useMemo(() => ({
+    return React54.useMemo(() => ({
       positionerStyles: floatingStyles,
       arrowStyles,
       arrowRef,
@@ -47182,12 +47418,12 @@ This message will only show in development mode. It won't appear in production. 
     return param != null && "current" in param;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/getDisabledMountTransitionStyles.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/getDisabledMountTransitionStyles.mjs
   function getDisabledMountTransitionStyles(transitionStatus) {
     return transitionStatus === "starting" ? DISABLED_TRANSITIONS_STYLE : EMPTY_OBJECT;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePositioner.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePositioner.mjs
   function usePositioner(componentProps, state, {
     styles: styles2,
     transitionStatus,
@@ -47214,11 +47450,11 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useAnchoredPopupScrollLock.mjs
-  var React52 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useAnchoredPopupScrollLock.mjs
+  var React55 = __toESM(require_react(), 1);
   var VIEWPORT_WIDTH_TOLERANCE_PX = 20;
   function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, referenceElement) {
-    const [touchOpenShouldLockScroll, setTouchOpenShouldLockScroll] = React52.useState(false);
+    const [touchOpenShouldLockScroll, setTouchOpenShouldLockScroll] = React55.useState(false);
     useIsoLayoutEffect(() => {
       if (!enabled || !touchOpen || positionerElement == null) {
         setTouchOpenShouldLockScroll(false);
@@ -47231,30 +47467,35 @@ This message will only show in development mode. It won't appear in production. 
     useScrollLock(enabled && (!touchOpen || touchOpenShouldLockScroll), referenceElement);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/context-menu/root/ContextMenuRootContext.mjs
-  var React53 = __toESM(require_react(), 1);
-  var ContextMenuRootContext = /* @__PURE__ */ React53.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/context-menu/root/ContextMenuRootContext.mjs
+  var React56 = __toESM(require_react(), 1);
+  var ContextMenuRootContext = /* @__PURE__ */ React56.createContext(void 0);
   if (true) ContextMenuRootContext.displayName = "ContextMenuRootContext";
   function useContextMenuRootContext(optional = true) {
-    const context = React53.useContext(ContextMenuRootContext);
+    const context = React56.useContext(ContextMenuRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: ContextMenuRootContext is missing. ContextMenu parts must be placed within <ContextMenu.Root>." : formatErrorMessage_default(25));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/index.parts.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/index.parts.mjs
   var index_parts_exports = {};
   __export(index_parts_exports, {
     Arrow: () => MenuArrow2,
     Backdrop: () => MenuBackdrop,
     CheckboxItem: () => MenuCheckboxItem,
     CheckboxItemIndicator: () => MenuCheckboxItemIndicator,
+    Clear: () => MenuClear,
+    Empty: () => MenuEmpty,
+    FilterProvider: () => MenuFilterProvider,
     Group: () => MenuGroup3,
     GroupLabel: () => MenuGroupLabel3,
     Handle: () => MenuHandle,
+    Input: () => MenuInput,
     Item: () => MenuItem3,
     LinkItem: () => MenuLinkItem,
+    List: () => MenuList3,
     Popup: () => MenuPopup,
     Portal: () => MenuPortal,
     Positioner: () => MenuPositioner,
@@ -47267,38 +47508,39 @@ This message will only show in development mode. It won't appear in production. 
     SubmenuTrigger: () => MenuSubmenuTrigger,
     Trigger: () => MenuTrigger,
     Viewport: () => MenuViewport,
-    createHandle: () => createMenuHandle
+    createHandle: () => createMenuHandle,
+    useFilter: () => getFilter
   });
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
-  var React56 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
+  var React59 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/positioner/MenuPositionerContext.mjs
-  var React54 = __toESM(require_react(), 1);
-  var MenuPositionerContext = /* @__PURE__ */ React54.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositionerContext.mjs
+  var React57 = __toESM(require_react(), 1);
+  var MenuPositionerContext = /* @__PURE__ */ React57.createContext(void 0);
   if (true) MenuPositionerContext.displayName = "MenuPositionerContext";
   function useMenuPositionerContext(optional) {
-    const context = React54.useContext(MenuPositionerContext);
+    const context = React57.useContext(MenuPositionerContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: MenuPositionerContext is missing. MenuPositioner parts must be placed within <Menu.Positioner>." : formatErrorMessage_default(33));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/root/MenuRootContext.mjs
-  var React55 = __toESM(require_react(), 1);
-  var MenuRootContext = /* @__PURE__ */ React55.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/root/MenuRootContext.mjs
+  var React58 = __toESM(require_react(), 1);
+  var MenuRootContext = /* @__PURE__ */ React58.createContext(void 0);
   if (true) MenuRootContext.displayName = "MenuRootContext";
   function useMenuRootContext(optional) {
-    const context = React55.useContext(MenuRootContext);
+    const context = React58.useContext(MenuRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: MenuRootContext is missing. Menu parts must be placed within <Menu.Root>." : formatErrorMessage_default(36));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
-  var MenuArrow2 = /* @__PURE__ */ React56.forwardRef(function MenuArrow3(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
+  var MenuArrow2 = /* @__PURE__ */ React59.forwardRef(function MenuArrow3(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -47335,9 +47577,9 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) MenuArrow2.displayName = "MenuArrow";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/backdrop/MenuBackdrop.mjs
-  var React57 = __toESM(require_react(), 1);
-  var MenuBackdrop = /* @__PURE__ */ React57.forwardRef(function MenuBackdrop2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/backdrop/MenuBackdrop.mjs
+  var React60 = __toESM(require_react(), 1);
+  var MenuBackdrop = /* @__PURE__ */ React60.forwardRef(function MenuBackdrop2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -47373,26 +47615,70 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) MenuBackdrop.displayName = "MenuBackdrop";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
-  var React61 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
+  var React65 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemContext.mjs
-  var React58 = __toESM(require_react(), 1);
-  var MenuCheckboxItemContext = /* @__PURE__ */ React58.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterContext.mjs
+  var React61 = __toESM(require_react(), 1);
+  var MenuFilterImplContext = /* @__PURE__ */ React61.createContext(null);
+  if (true) MenuFilterImplContext.displayName = "MenuFilterImplContext";
+  function useMenuFilterImpl(scope = "root") {
+    const impl = React61.useContext(MenuFilterImplContext);
+    const root = React61.useContext(MenuRootContext);
+    if (impl === null || root === void 0) {
+      return null;
+    }
+    const filterable = scope === "submenu-trigger" ? root.virtualFocus || root.parentVirtualFocus : root.virtualFocus;
+    return filterable ? impl : null;
+  }
+  function useMenuFilterPart(part) {
+    if (useMenuFilterImpl() === null) {
+      throw new Error(true ? `Base UI: <Menu.${part}> must be placed in a menu wrapped in <Menu.FilterProvider>. It reads the filter query and the matching items from the provider, which a plain menu does not have. Wrap the <Menu.Root> or <Menu.SubmenuRoot> it belongs to in <Menu.FilterProvider>. See https://base-ui.com/react/components/menu#filtering` : formatErrorMessage_default(104, part));
+    }
+  }
+  var UNFILTERED = {
+    visible: true,
+    ref: null
+  };
+  function useUnfilteredItem() {
+    return UNFILTERED;
+  }
+  function useMenuFilterItem(props, forwardedRef, scope = "root") {
+    const impl = useMenuFilterImpl(scope);
+    const useItem2 = (scope === "submenu-trigger" ? impl?.useSubmenuTrigger : impl?.useItem) ?? useUnfilteredItem;
+    const item = useItem2({
+      label: props.label,
+      children: props.children,
+      render: props.render
+    });
+    const ref = useMergedRefs(forwardedRef, item.ref);
+    return {
+      visible: item.visible,
+      ref,
+      props: item.props
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemContext.mjs
+  var React62 = __toESM(require_react(), 1);
+  var MenuCheckboxItemContext = /* @__PURE__ */ React62.createContext(void 0);
   if (true) MenuCheckboxItemContext.displayName = "MenuCheckboxItemContext";
   function useMenuCheckboxItemContext() {
-    const context = React58.useContext(MenuCheckboxItemContext);
+    const context = React62.useContext(MenuCheckboxItemContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: MenuCheckboxItemContext is missing. MenuCheckboxItem parts must be placed within <Menu.CheckboxItem>." : formatErrorMessage_default(30));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
-  var React60 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
+  var React64 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/item/useMenuItemCommonProps.mjs
-  var React59 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/useMenuItemCommonProps.mjs
+  var React63 = __toESM(require_react(), 1);
+  function preventMouseDownDefault(event) {
+    event.preventDefault();
+  }
   function useMenuItemCommonProps(params) {
     const {
       closeOnClick,
@@ -47404,16 +47690,25 @@ This message will only show in development mode. It won't appear in production. 
       itemRef,
       itemMetadata
     } = params;
+    const rootContext = useMenuRootContext();
+    const contextMenuContext = useContextMenuRootContext(true);
+    const isSubmenuTrigger = itemMetadata.type === "submenu-trigger";
+    const virtualFocus = isSubmenuTrigger ? rootContext.parentVirtualFocus : rootContext.virtualFocus;
+    const selectionStore = isSubmenuTrigger && rootContext.parent.type === "menu" ? rootContext.parent.store : rootContext.store;
+    const ariaSelected = selectionStore.useState("webkitAriaSelected", highlighted);
     const {
       events: menuEvents
     } = store.useState("floatingTreeRoot");
     const open2 = store.useState("open");
-    const contextMenuContext = useContextMenuRootContext(true);
     const isContextMenu = contextMenuContext !== void 0;
-    return React59.useMemo(() => ({
+    const tabIndex = !virtualFocus && open2 && highlighted ? 0 : -1;
+    return React63.useMemo(() => ({
       id: id3,
       role: "menuitem",
-      tabIndex: open2 && highlighted ? 0 : -1,
+      tabIndex,
+      "aria-selected": ariaSelected,
+      // Real focus stays on the input or list that owns virtual navigation.
+      onMouseDown: virtualFocus ? preventMouseDownDefault : void 0,
       onKeyDown(event) {
         if (event.key === " " && typingRef?.current) {
           event.preventDefault();
@@ -47431,7 +47726,7 @@ This message will only show in development mode. It won't appear in production. 
       onClick(event) {
         if (closeOnClick) {
           menuEvents.emit("close", {
-            domEvent: event,
+            domEvent: event.nativeEvent,
             reason: reason_parts_exports.itemPress
           });
         }
@@ -47450,15 +47745,16 @@ This message will only show in development mode. It won't appear in production. 
         if (itemRef.current && store.context.allowMouseUpTriggerRef.current && (!isContextMenu || event.button === 2)) {
           if (itemMetadata.type === "regular-item") {
             dispatchClickWithModifiers(itemRef.current, event, {
-              detail: 1
+              detail: 1,
+              pointerType: "mouse"
             });
           }
         }
       }
-    }), [closeOnClick, highlighted, id3, menuEvents, nodeId, open2, store, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata]);
+    }), [closeOnClick, tabIndex, id3, menuEvents, nodeId, store.context.allowMouseUpTriggerRef, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata.type, ariaSelected, virtualFocus]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
   var REGULAR_ITEM = {
     type: "regular-item"
   };
@@ -47474,7 +47770,7 @@ This message will only show in development mode. It won't appear in production. 
       itemMetadata,
       nodeId
     } = params;
-    const itemRef = React60.useRef(null);
+    const itemRef = React64.useRef(null);
     const {
       getButtonProps,
       buttonRef
@@ -47494,28 +47790,28 @@ This message will only show in development mode. It won't appear in production. 
       itemRef,
       itemMetadata
     });
-    const getItemProps = React60.useCallback((externalProps) => {
+    const getItemProps = React64.useCallback((externalProps) => {
       return mergeProps2(commonProps, {
-        onMouseEnter() {
+        onMouseEnter(event) {
           if (itemMetadata.type !== "submenu-trigger") {
             return;
           }
-          itemMetadata.setActive();
+          itemMetadata.setActive(event.nativeEvent);
         }
       }, externalProps, getButtonProps);
     }, [commonProps, getButtonProps, itemMetadata]);
     const mergedRef = useMergedRefs(itemRef, buttonRef);
-    return React60.useMemo(() => ({
+    return React64.useMemo(() => ({
       getItemProps,
       itemRef: mergedRef
     }), [getItemProps, mergedRef]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemDataAttributes.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemDataAttributes.mjs
   var checked = "data-checked";
   var unchecked = "data-unchecked";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/utils/stateAttributesMapping.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/utils/stateAttributesMapping.mjs
   var itemMapping = {
     checked(value) {
       if (value) {
@@ -47530,9 +47826,9 @@ This message will only show in development mode. It won't appear in production. 
     ...transitionStatusMapping
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
-  var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
-  var MenuCheckboxItem = /* @__PURE__ */ React61.forwardRef(function MenuCheckboxItem2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
+  var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
+  var MenuCheckboxItemPlain = /* @__PURE__ */ React65.forwardRef(function MenuCheckboxItemPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -47541,31 +47837,24 @@ This message will only show in development mode. It won't appear in production. 
       nativeButton = false,
       disabled: disabledProp = false,
       closeOnClick = false,
-      checked: checkedProp,
-      defaultChecked,
+      checked: checked2 = false,
       onCheckedChange,
       style: style2,
       ...elementProps
     } = componentProps;
+    const {
+      store
+    } = useMenuRootContext();
     const listItem = useCompositeListItem({
       guess: true,
       label
     });
-    const menuPositionerContext = useMenuPositionerContext(true);
     const id3 = useBaseUiId(idProp);
-    const {
-      store
-    } = useMenuRootContext();
     const rootDisabled = store.useState("disabled");
-    const disabled2 = disabledProp || rootDisabled;
     const highlighted = store.useState("isActive", listItem.index);
+    const nodeId = store.useState("floatingNodeId");
     const itemProps = store.useState("itemProps");
-    const [checked2, setChecked] = useControlled({
-      controlled: checkedProp,
-      default: defaultChecked ?? false,
-      name: "MenuCheckboxItem",
-      state: "checked"
-    });
+    const disabled2 = disabledProp || rootDisabled;
     const {
       getItemProps,
       itemRef
@@ -47576,10 +47865,10 @@ This message will only show in development mode. It won't appear in production. 
       id: id3,
       store,
       nativeButton,
-      nodeId: menuPositionerContext?.context.nodeId,
+      nodeId,
       itemMetadata: REGULAR_ITEM
     });
-    const state = React61.useMemo(() => ({
+    const state = React65.useMemo(() => ({
       disabled: disabled2,
       highlighted,
       checked: checked2
@@ -47589,10 +47878,6 @@ This message will only show in development mode. It won't appear in production. 
         preventUnmountOnClose: NOOP
       });
       onCheckedChange?.(!checked2, details);
-      if (details.isCanceled) {
-        return;
-      }
-      setChecked((currentlyChecked) => !currentlyChecked);
     }
     const element = useRenderElement("div", componentProps, {
       state,
@@ -47604,16 +47889,47 @@ This message will only show in development mode. It won't appear in production. 
       }, elementProps, getItemProps],
       ref: [itemRef, forwardedRef, listItem.ref]
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(MenuCheckboxItemContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(MenuCheckboxItemContext.Provider, {
       value: state,
       children: element
     });
   });
+  if (true) MenuCheckboxItemPlain.displayName = "MenuCheckboxItemPlain";
+  var MenuCheckboxItem = /* @__PURE__ */ React65.forwardRef(function MenuCheckboxItem2(props, forwardedRef) {
+    const {
+      checked: checkedProp,
+      defaultChecked,
+      onCheckedChange,
+      ...plainProps
+    } = props;
+    const [checked2, setChecked] = useControlled({
+      controlled: checkedProp,
+      default: defaultChecked ?? false,
+      name: "MenuCheckboxItem",
+      state: "checked"
+    });
+    const filterItem = useMenuFilterItem(props, forwardedRef);
+    function handleCheckedChange(nextChecked, eventDetails) {
+      onCheckedChange?.(nextChecked, eventDetails);
+      if (!eventDetails.isCanceled) {
+        setChecked(nextChecked);
+      }
+    }
+    if (!filterItem.visible) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(MenuCheckboxItemPlain, {
+      ...plainProps,
+      checked: checked2,
+      onCheckedChange: handleCheckedChange,
+      ref: filterItem.ref
+    });
+  });
   if (true) MenuCheckboxItem.displayName = "MenuCheckboxItem";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item-indicator/MenuCheckboxItemIndicator.mjs
-  var React62 = __toESM(require_react(), 1);
-  var MenuCheckboxItemIndicator = /* @__PURE__ */ React62.forwardRef(function MenuCheckboxItemIndicator2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item-indicator/MenuCheckboxItemIndicator.mjs
+  var React66 = __toESM(require_react(), 1);
+  var MenuCheckboxItemIndicator = /* @__PURE__ */ React66.forwardRef(function MenuCheckboxItemIndicator2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -47622,7 +47938,7 @@ This message will only show in development mode. It won't appear in production. 
       ...elementProps
     } = componentProps;
     const item = useMenuCheckboxItemContext();
-    const indicatorRef = React62.useRef(null);
+    const indicatorRef = React66.useRef(null);
     const {
       transitionStatus,
       mounted,
@@ -47659,31 +47975,31 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) MenuCheckboxItemIndicator.displayName = "MenuCheckboxItemIndicator";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
-  var React64 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
+  var React68 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/group/MenuGroupContext.mjs
-  var React63 = __toESM(require_react(), 1);
-  var MenuGroupContext = /* @__PURE__ */ React63.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroupContext.mjs
+  var React67 = __toESM(require_react(), 1);
+  var MenuGroupContext = /* @__PURE__ */ React67.createContext(void 0);
   if (true) MenuGroupContext.displayName = "MenuGroupContext";
   function useMenuGroupRootContext() {
-    const context = React63.useContext(MenuGroupContext);
+    const context = React67.useContext(MenuGroupContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: MenuGroupContext is missing. Menu group parts must be used within <Menu.Group> or <Menu.RadioGroup>." : formatErrorMessage_default(31));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
-  var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
-  var MenuGroup3 = /* @__PURE__ */ React64.forwardRef(function MenuGroup4(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
+  var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
+  var MenuGroupPlain = /* @__PURE__ */ React68.forwardRef(function MenuGroupPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
       style: style2,
       ...elementProps
     } = componentProps;
-    const [labelId, setLabelId] = React64.useState(void 0);
+    const [labelId, setLabelId] = React68.useState(void 0);
     const element = useRenderElement("div", componentProps, {
       ref: forwardedRef,
       props: {
@@ -47692,16 +48008,24 @@ This message will only show in development mode. It won't appear in production. 
         ...elementProps
       }
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(MenuGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(MenuGroupContext.Provider, {
       value: setLabelId,
       children: element
     });
   });
+  if (true) MenuGroupPlain.displayName = "MenuGroupPlain";
+  var MenuGroup3 = /* @__PURE__ */ React68.forwardRef(function MenuGroup4(props, forwardedRef) {
+    const Group6 = useMenuFilterImpl()?.Group ?? MenuGroupPlain;
+    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(Group6, {
+      ...props,
+      ref: forwardedRef
+    });
+  });
   if (true) MenuGroup3.displayName = "MenuGroup";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/group-label/MenuGroupLabel.mjs
-  var React65 = __toESM(require_react(), 1);
-  var MenuGroupLabel3 = /* @__PURE__ */ React65.forwardRef(function MenuGroupLabel4(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group-label/MenuGroupLabel.mjs
+  var React69 = __toESM(require_react(), 1);
+  var MenuGroupLabel3 = /* @__PURE__ */ React69.forwardRef(function MenuGroupLabel4(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -47728,9 +48052,10 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) MenuGroupLabel3.displayName = "MenuGroupLabel";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/item/MenuItem.mjs
-  var React66 = __toESM(require_react(), 1);
-  var MenuItem3 = /* @__PURE__ */ React66.forwardRef(function MenuItem4(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/MenuItem.mjs
+  var React70 = __toESM(require_react(), 1);
+  var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
+  var MenuItemPlain = /* @__PURE__ */ React70.forwardRef(function MenuItemPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -47742,19 +48067,19 @@ This message will only show in development mode. It won't appear in production. 
       style: style2,
       ...elementProps
     } = componentProps;
+    const {
+      store
+    } = useMenuRootContext();
     const listItem = useCompositeListItem({
       guess: true,
       label
     });
-    const menuPositionerContext = useMenuPositionerContext(true);
     const id3 = useBaseUiId(idProp);
-    const {
-      store
-    } = useMenuRootContext();
     const rootDisabled = store.useState("disabled");
-    const disabled2 = disabledProp || rootDisabled;
     const highlighted = store.useState("isActive", listItem.index);
+    const nodeId = store.useState("floatingNodeId");
     const itemProps = store.useState("itemProps");
+    const disabled2 = disabledProp || rootDisabled;
     const {
       getItemProps,
       itemRef
@@ -47765,7 +48090,7 @@ This message will only show in development mode. It won't appear in production. 
       id: id3,
       store,
       nativeButton,
-      nodeId: menuPositionerContext?.context.nodeId,
+      nodeId,
       itemMetadata: REGULAR_ITEM
     });
     const state = {
@@ -47778,11 +48103,23 @@ This message will only show in development mode. It won't appear in production. 
       ref: [itemRef, forwardedRef, listItem.ref]
     });
   });
+  if (true) MenuItemPlain.displayName = "MenuItemPlain";
+  var MenuItem3 = /* @__PURE__ */ React70.forwardRef(function MenuItem4(props, forwardedRef) {
+    const filterItem = useMenuFilterItem(props, forwardedRef);
+    if (!filterItem.visible) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(MenuItemPlain, {
+      ...props,
+      ref: filterItem.ref
+    });
+  });
   if (true) MenuItem3.displayName = "MenuItem";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/link-item/MenuLinkItem.mjs
-  var React67 = __toESM(require_react(), 1);
-  var MenuLinkItem = /* @__PURE__ */ React67.forwardRef(function MenuLinkItem2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/link-item/MenuLinkItem.mjs
+  var React71 = __toESM(require_react(), 1);
+  var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
+  var MenuLinkItemPlain = /* @__PURE__ */ React71.forwardRef(function MenuLinkItemPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -47792,18 +48129,17 @@ This message will only show in development mode. It won't appear in production. 
       style: style2,
       ...elementProps
     } = componentProps;
-    const linkRef = React67.useRef(null);
+    const {
+      store
+    } = useMenuRootContext();
+    const linkRef = React71.useRef(null);
     const listItem = useCompositeListItem({
       guess: true,
       label
     });
-    const menuPositionerContext = useMenuPositionerContext(true);
-    const nodeId = menuPositionerContext?.context.nodeId;
     const id3 = useBaseUiId(idProp);
-    const {
-      store
-    } = useMenuRootContext();
     const highlighted = store.useState("isActive", listItem.index);
+    const nodeId = store.useState("floatingNodeId");
     const itemProps = store.useState("itemProps");
     const typingRef = store.context.typingRef;
     const {
@@ -47835,36 +48171,94 @@ This message will only show in development mode. It won't appear in production. 
       ref: [linkRef, buttonRef, forwardedRef, listItem.ref]
     });
   });
+  if (true) MenuLinkItemPlain.displayName = "MenuLinkItemPlain";
+  var MenuLinkItem = /* @__PURE__ */ React71.forwardRef(function MenuLinkItem2(props, forwardedRef) {
+    const filterItem = useMenuFilterItem(props, forwardedRef);
+    if (!filterItem.visible) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(MenuLinkItemPlain, {
+      ...props,
+      ref: filterItem.ref
+    });
+  });
   if (true) MenuLinkItem.displayName = "MenuLinkItem";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
-  var React69 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
+  var React76 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/toolbar/root/ToolbarRootContext.mjs
-  var React68 = __toESM(require_react(), 1);
-  var ToolbarRootContext = /* @__PURE__ */ React68.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/toolbar/root/ToolbarRootContext.mjs
+  var React72 = __toESM(require_react(), 1);
+  var ToolbarRootContext = /* @__PURE__ */ React72.createContext(void 0);
   if (true) ToolbarRootContext.displayName = "ToolbarRootContext";
   function useToolbarRootContext(optional) {
-    const context = React68.useContext(ToolbarRootContext);
+    const context = React72.useContext(ToolbarRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: ToolbarRootContext is missing. Toolbar parts must be placed within <Toolbar.Root>." : formatErrorMessage_default(69));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
-  var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
-  var MenuPopup = /* @__PURE__ */ React69.forwardRef(function MenuPopup2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRootContext.mjs
+  var React73 = __toESM(require_react(), 1);
+  var MenuSubmenuRootContext = /* @__PURE__ */ React73.createContext(void 0);
+  if (true) MenuSubmenuRootContext.displayName = "MenuSubmenuRootContext";
+  function useMenuSubmenuRootContext() {
+    return React73.useContext(MenuSubmenuRootContext);
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveRenderedId.mjs
+  var React74 = __toESM(require_react(), 1);
+  function resolveRenderedId(props, fallbackId) {
+    const render = unwrapLazyRenderProp(props.render);
+    if (/* @__PURE__ */ React74.isValidElement(render)) {
+      const renderProps = render.props;
+      if (Object.hasOwn(renderProps, "id")) {
+        return renderProps.id ?? "";
+      }
+    }
+    return props.id ?? fallbackId;
+  }
+  function useRenderedId(props, defaultId, setId) {
+    const id3 = resolveRenderedId(props, defaultId);
+    const registeredId = id3 === defaultId ? void 0 : id3;
+    const ref = React74.useCallback((element) => setId?.(element ? registeredId : void 0), [registeredId, setId]);
+    return [id3, ref];
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolvePopupLabel.mjs
+  var React75 = __toESM(require_react(), 1);
+  function resolvePopupLabel(props, activeTriggerElement, activeTriggerId) {
+    const render = unwrapLazyRenderProp(props.render);
+    const renderedElementProps = /* @__PURE__ */ React75.isValidElement(render) ? render.props : void 0;
+    const ariaLabel = props["aria-label"] ?? renderedElementProps?.["aria-label"];
+    let ariaLabelledBy = props["aria-labelledby"] ?? renderedElementProps?.["aria-labelledby"];
+    if (ariaLabelledBy == null && !ariaLabel) {
+      ariaLabelledBy = activeTriggerElement ? activeTriggerElement.id || void 0 : activeTriggerId || void 0;
+    }
+    return ariaLabelledBy;
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
+  var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
+  var MenuPopupPlain = /* @__PURE__ */ React76.forwardRef(function MenuPopupPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
       style: style2,
       finalFocus,
+      id: idProp,
+      initialFocus: initialFocusProp,
       ...elementProps
     } = componentProps;
     const {
-      store
+      store,
+      defaultFloatingId,
+      setRenderedFloatingId,
+      virtualFocus,
+      orientation
     } = useMenuRootContext();
+    const inheritedSubmenuRootContext = useMenuSubmenuRootContext();
     const {
       side,
       align
@@ -47885,7 +48279,21 @@ This message will only show in development mode. It won't appear in production. 
     const hoverEnabled = store.useState("hoverEnabled");
     const disabled2 = store.useState("disabled");
     const openMethod = store.useState("openMethod");
+    const activeTriggerId = store.useState("activeTriggerId");
+    const listElement = store.useState("listElement");
+    const [id3, registerIdRef] = useRenderedId(componentProps, defaultFloatingId, setRenderedFloatingId);
+    const ariaLabelledBy = resolvePopupLabel(componentProps, activeTriggerElement, activeTriggerId);
+    const submenuRootContext = parent.type === "menu" ? inheritedSubmenuRootContext : void 0;
     const isContextMenu = parent.type === "context-menu";
+    let initialFocus = initialFocusProp ?? parent.type !== "menu";
+    if (initialFocusProp === void 0 && listElement && parent.type !== "menu") {
+      initialFocus = () => {
+        if (store.state.activeIndex !== null) {
+          return false;
+        }
+        return listElement;
+      };
+    }
     useOpenChangeComplete({
       open: open2,
       ref: store.context.popupRef,
@@ -47895,7 +48303,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       }
     });
-    React69.useEffect(() => {
+    React76.useEffect(() => {
       function handleClose(event) {
         store.setOpen(false, createChangeEventDetails(event.reason, event.domEvent));
       }
@@ -47909,6 +48317,11 @@ This message will only show in development mode. It won't appear in production. 
       closeDelay
     });
     const setPopupElement = store.useStateSetter("popupElement");
+    const useParentHandoff = React76.useContext(MenuFilterImplContext)?.useParentHandoff ?? useNoParentHandoff;
+    const {
+      parentVirtualFocusRef,
+      handleFocus
+    } = useParentHandoff(store, parent, open2, virtualFocus);
     const state = {
       transitionStatus,
       side,
@@ -47919,14 +48332,27 @@ This message will only show in development mode. It won't appear in production. 
     };
     const element = useRenderElement("div", componentProps, {
       state,
-      ref: [forwardedRef, store.context.popupRef, setPopupElement],
+      ref: [forwardedRef, store.context.popupRef, setPopupElement, registerIdRef],
       stateAttributesMapping: popupTransitionStateMapping,
       props: [popupProps, {
+        id: id3,
+        // A rendered `Menu.List` carries the `menu` semantics instead.
+        ...listElement ? {
+          role: "presentation"
+        } : {
+          role: "menu",
+          // `menu` is implicitly vertical, so only the non-default value needs to be
+          // rendered.
+          "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
+          "aria-labelledby": ariaLabelledBy
+        },
         onKeyDown(event) {
+          submenuRootContext?.onPopupKeyDown?.(event);
           if (insideToolbar && COMPOSITE_KEYS.has(event.key)) {
             event.stopPropagation();
           }
-        }
+        },
+        onFocus: handleFocus
       }, getDisabledMountTransitionStyles(transitionStatus), elementProps, {
         "data-rootownerid": rootId
       }]
@@ -47935,41 +48361,59 @@ This message will only show in development mode. It won't appear in production. 
     if (activeTriggerElement || parent.type === "menubar" && lastOpenChangeReason !== reason_parts_exports.outsidePress) {
       returnFocus = true;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(FloatingFocusManager, {
+    const dynamicReturnFocus = submenuRootContext?.getReturnElement ?? parentVirtualFocusRef;
+    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(FloatingFocusManager, {
       context: floatingContext,
       openInteractionType: openMethod,
       modal: isContextMenu,
       disabled: !mounted,
-      returnFocus: finalFocus === void 0 ? returnFocus : finalFocus,
-      initialFocus: parent.type !== "menu",
+      returnFocus: finalFocus ?? dynamicReturnFocus ?? returnFocus,
+      explicitReturnFocus: finalFocus === void 0 && dynamicReturnFocus ? false : void 0,
+      initialFocus,
       restoreFocus: true,
+      getInsideElements: parent.type === void 0 ? () => [store.context.beforeTriggerFocusGuardRef.current] : void 0,
       externalTree: parent.type !== "menubar" ? floatingTreeRoot : void 0,
       previousFocusableElement: activeTriggerElement,
       nextFocusableElement: parent.type === void 0 ? store.context.triggerFocusTargetRef : void 0,
-      beforeContentFocusGuardRef: parent.type === void 0 ? store.context.beforeContentFocusGuardRef : void 0,
+      beforeContentFocusGuardRef: store.context.beforeContentFocusGuardRef,
       children: element
+    });
+  });
+  if (true) MenuPopupPlain.displayName = "MenuPopupPlain";
+  var NO_PARENT_HANDOFF = {
+    parentVirtualFocusRef: void 0,
+    handleFocus: void 0
+  };
+  function useNoParentHandoff() {
+    return NO_PARENT_HANDOFF;
+  }
+  var MenuPopup = /* @__PURE__ */ React76.forwardRef(function MenuPopup2(props, forwardedRef) {
+    const Popup2 = useMenuFilterImpl()?.Popup ?? MenuPopupPlain;
+    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(Popup2, {
+      ...props,
+      ref: forwardedRef
     });
   });
   if (true) MenuPopup.displayName = "MenuPopup";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
-  var React71 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
+  var React78 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/portal/MenuPortalContext.mjs
-  var React70 = __toESM(require_react(), 1);
-  var MenuPortalContext = /* @__PURE__ */ React70.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortalContext.mjs
+  var React77 = __toESM(require_react(), 1);
+  var MenuPortalContext = /* @__PURE__ */ React77.createContext(void 0);
   if (true) MenuPortalContext.displayName = "MenuPortalContext";
   function useMenuPortalContext() {
-    const value = React70.useContext(MenuPortalContext);
+    const value = React77.useContext(MenuPortalContext);
     if (value === void 0) {
       throw new Error(true ? "Base UI: <Menu.Portal> is missing." : formatErrorMessage_default(32));
     }
     return value;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
-  var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
-  var MenuPortal = /* @__PURE__ */ React71.forwardRef(function MenuPortal2(props, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
+  var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
+  var MenuPortal = /* @__PURE__ */ React78.forwardRef(function MenuPortal2(props, forwardedRef) {
     const {
       keepMounted = false,
       ...portalProps
@@ -47984,9 +48428,9 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     const portalOwnerRole = parent.type === "menu" || parent.type === "menubar" ? "group" : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(MenuPortalContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(MenuPortalContext.Provider, {
       value: keepMounted,
-      children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(FloatingPortal, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(FloatingPortal, {
         ref: forwardedRef,
         ...portalProps,
         portalOwnerRole
@@ -47995,10 +48439,60 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) MenuPortal.displayName = "MenuPortal";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/positioner/MenuPositioner.mjs
-  var React72 = __toESM(require_react(), 1);
-  var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
-  var MenuPositioner = /* @__PURE__ */ React72.forwardRef(function MenuPositioner2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositioner.mjs
+  var React80 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useTriggerSwitchTransition.mjs
+  var React79 = __toESM(require_react(), 1);
+  function useTriggerSwitchTransition(parameters) {
+    const {
+      store,
+      domReference,
+      positionerElement,
+      open: open2
+    } = parameters;
+    const previousTriggerRef = React79.useRef(null);
+    const pendingSwitchRef = React79.useRef(null);
+    const runOnceAnimationsFinish = useAnimationsFinished(positionerElement);
+    useIsoLayoutEffect(() => {
+      if (open2) {
+        return;
+      }
+      pendingSwitchRef.current?.abort();
+      pendingSwitchRef.current = null;
+      if (store.state.instantType === "trigger-change") {
+        store.set("instantType", void 0);
+      }
+    }, [open2, store]);
+    useIsoLayoutEffect(() => {
+      const currentTrigger = domReference;
+      const previousTrigger = previousTriggerRef.current;
+      if (currentTrigger) {
+        previousTriggerRef.current = currentTrigger;
+      }
+      if (!previousTrigger || !currentTrigger || currentTrigger === previousTrigger) {
+        return void 0;
+      }
+      if (!store.select("open")) {
+        return void 0;
+      }
+      store.set("instantType", void 0);
+      const abortController = new AbortController();
+      pendingSwitchRef.current = abortController;
+      runOnceAnimationsFinish(() => {
+        if (store.select("open")) {
+          store.set("instantType", "trigger-change");
+        }
+      }, abortController.signal);
+      return () => {
+        abortController.abort();
+      };
+    }, [domReference, runOnceAnimationsFinish, store]);
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositioner.mjs
+  var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
+  var MenuPositioner = /* @__PURE__ */ React80.forwardRef(function MenuPositioner2(componentProps, forwardedRef) {
     const {
       anchor: anchorProp,
       positionMethod: positionMethodProp = "absolute",
@@ -48018,7 +48512,9 @@ This message will only show in development mode. It won't appear in production. 
       ...elementProps
     } = componentProps;
     const {
-      store
+      store,
+      virtualFocus,
+      syncHighlightedItem
     } = useMenuRootContext();
     const keepMounted = useMenuPortalContext();
     const contextMenuContext = useContextMenuRootContext(true);
@@ -48038,8 +48534,6 @@ This message will only show in development mode. It won't appear in production. 
     const floatingNodeId = store.useState("floatingNodeId");
     const floatingParentNodeId = store.useState("floatingParentNodeId");
     const domReference = floatingRootContext.useState("domReferenceElement");
-    const previousTriggerRef = React72.useRef(null);
-    const runOnceAnimationsFinish = useAnimationsFinished(positionerElement);
     let anchor = anchorProp;
     let sideOffset = sideOffsetProp;
     let alignOffset = alignOffsetProp;
@@ -48086,9 +48580,10 @@ This message will only show in development mode. It won't appear in production. 
         rootBoundary: "layoutViewport"
       } : void 0,
       externalTree: floatingTreeRoot,
-      adaptiveOrigin: adaptiveOrigin2
+      adaptiveOrigin: adaptiveOrigin2,
+      lazyFlip: virtualFocus ? "placement" : false
     });
-    React72.useEffect(() => {
+    React80.useEffect(() => {
       function onMenuOpenChange(details) {
         if (details.open) {
           if (details.parentNodeId === floatingNodeId) {
@@ -48104,7 +48599,7 @@ This message will only show in development mode. It won't appear in production. 
         floatingTreeRoot.events.off("menuopenchange", onMenuOpenChange);
       };
     }, [store, floatingTreeRoot.events, floatingNodeId]);
-    React72.useEffect(() => {
+    React80.useEffect(() => {
       if (store.select("floatingParentNodeId") == null) {
         return void 0;
       }
@@ -48121,12 +48616,12 @@ This message will only show in development mode. It won't appear in production. 
       };
     }, [floatingTreeRoot.events, store]);
     const closeTimeout = useTimeout();
-    React72.useEffect(() => {
+    React80.useEffect(() => {
       if (!open2) {
         closeTimeout.clear();
       }
     }, [open2, closeTimeout]);
-    React72.useEffect(() => {
+    React80.useEffect(() => {
       function onItemHover(event) {
         if (!open2 || event.nodeId !== store.select("floatingParentNodeId")) {
           return;
@@ -48151,7 +48646,7 @@ This message will only show in development mode. It won't appear in production. 
         floatingTreeRoot.events.off("itemhover", onItemHover);
       };
     }, [floatingTreeRoot.events, open2, triggerElement, store, closeTimeout]);
-    React72.useEffect(() => {
+    React80.useEffect(() => {
       const eventDetails = {
         open: open2,
         nodeId: floatingNodeId,
@@ -48160,24 +48655,12 @@ This message will only show in development mode. It won't appear in production. 
       };
       floatingTreeRoot.events.emit("menuopenchange", eventDetails);
     }, [floatingTreeRoot.events, open2, store, floatingNodeId, floatingParentNodeId]);
-    useIsoLayoutEffect(() => {
-      const currentTrigger = domReference;
-      const previousTrigger = previousTriggerRef.current;
-      if (currentTrigger) {
-        previousTriggerRef.current = currentTrigger;
-      }
-      if (previousTrigger && currentTrigger && currentTrigger !== previousTrigger) {
-        store.set("instantType", void 0);
-        const abortController = new AbortController();
-        runOnceAnimationsFinish(() => {
-          store.set("instantType", "trigger-change");
-        }, abortController.signal);
-        return () => {
-          abortController.abort();
-        };
-      }
-      return void 0;
-    }, [domReference, runOnceAnimationsFinish, store]);
+    useTriggerSwitchTransition({
+      store,
+      domReference,
+      positionerElement,
+      open: open2
+    });
     const state = {
       open: open2,
       side: positioner.side,
@@ -48204,17 +48687,18 @@ This message will only show in development mode. It won't appear in production. 
     } else if (parent.type === void 0) {
       backdropCutout = triggerElement;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(MenuPositionerContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(MenuPositionerContext.Provider, {
       value: positioner,
-      children: [shouldRenderBackdrop && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(InternalBackdrop, {
+      children: [shouldRenderBackdrop && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(InternalBackdrop, {
         ref: parent.type === "context-menu" || parent.type === "nested-context-menu" ? parent.context.internalBackdropRef : null,
         inert: inertValue(!open2),
         cutout: backdropCutout
-      }), /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(FloatingNode, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(FloatingNode, {
         id: floatingNodeId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(CompositeList, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(CompositeList, {
           elementsRef: store.context.itemDomElements,
           labelsRef: store.context.itemLabels,
+          onMapChange: syncHighlightedItem,
           children: element
         })
       })]
@@ -48222,24 +48706,24 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) MenuPositioner.displayName = "MenuPositioner";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
-  var React74 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
+  var React82 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroupContext.mjs
-  var React73 = __toESM(require_react(), 1);
-  var MenuRadioGroupContext = /* @__PURE__ */ React73.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroupContext.mjs
+  var React81 = __toESM(require_react(), 1);
+  var MenuRadioGroupContext = /* @__PURE__ */ React81.createContext(void 0);
   if (true) MenuRadioGroupContext.displayName = "MenuRadioGroupContext";
   function useMenuRadioGroupContext() {
-    const context = React73.useContext(MenuRadioGroupContext);
+    const context = React81.useContext(MenuRadioGroupContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: MenuRadioGroupContext is missing. MenuRadioGroup parts must be placed within <Menu.RadioGroup>." : formatErrorMessage_default(34));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
-  var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
-  var MenuRadioGroup = /* @__PURE__ */ React74.memo(/* @__PURE__ */ React74.forwardRef(function MenuRadioGroup2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
+  var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
+  var MenuRadioGroupPlain = /* @__PURE__ */ React82.forwardRef(function MenuRadioGroupPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -48251,7 +48735,7 @@ This message will only show in development mode. It won't appear in production. 
       "aria-labelledby": ariaLabelledByProp,
       ...elementProps
     } = componentProps;
-    const [labelId, setLabelId] = React74.useState(void 0);
+    const [labelId, setLabelId] = React82.useState(void 0);
     const [value, setValueUnwrapped] = useControlled({
       controlled: valueProp,
       default: defaultValue2,
@@ -48277,39 +48761,47 @@ This message will only show in development mode. It won't appear in production. 
         ...elementProps
       }
     });
-    const context = React74.useMemo(() => ({
+    const context = React82.useMemo(() => ({
       value,
       setValue,
       disabled: disabled2
     }), [value, setValue, disabled2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(MenuGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(MenuGroupContext.Provider, {
       value: setLabelId,
-      children: /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(MenuRadioGroupContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(MenuRadioGroupContext.Provider, {
         value: context,
         children: element
       })
     });
+  });
+  if (true) MenuRadioGroupPlain.displayName = "MenuRadioGroupPlain";
+  var MenuRadioGroup = /* @__PURE__ */ React82.memo(/* @__PURE__ */ React82.forwardRef(function MenuRadioGroup2(props, forwardedRef) {
+    const RadioGroup4 = useMenuFilterImpl()?.RadioGroup ?? MenuRadioGroupPlain;
+    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(RadioGroup4, {
+      ...props,
+      ref: forwardedRef
+    });
   }));
   if (true) MenuRadioGroup.displayName = "MenuRadioGroup";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
-  var React76 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
+  var React84 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-item/MenuRadioItemContext.mjs
-  var React75 = __toESM(require_react(), 1);
-  var MenuRadioItemContext = /* @__PURE__ */ React75.createContext(void 0);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItemContext.mjs
+  var React83 = __toESM(require_react(), 1);
+  var MenuRadioItemContext = /* @__PURE__ */ React83.createContext(void 0);
   if (true) MenuRadioItemContext.displayName = "MenuRadioItemContext";
   function useMenuRadioItemContext() {
-    const context = React75.useContext(MenuRadioItemContext);
+    const context = React83.useContext(MenuRadioItemContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: MenuRadioItemContext is missing. MenuRadioItem parts must be placed within <Menu.RadioItem>." : formatErrorMessage_default(35));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
-  var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
-  var MenuRadioItem = /* @__PURE__ */ React76.forwardRef(function MenuRadioItem2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
+  var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
+  var MenuRadioItemPlain = /* @__PURE__ */ React84.forwardRef(function MenuRadioItemPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -48322,22 +48814,22 @@ This message will only show in development mode. It won't appear in production. 
       style: style2,
       ...elementProps
     } = componentProps;
-    const listItem = useCompositeListItem({
-      guess: true,
-      label
-    });
-    const menuPositionerContext = useMenuPositionerContext(true);
-    const id3 = useBaseUiId(idProp);
     const {
       store
     } = useMenuRootContext();
-    const highlighted = store.useState("isActive", listItem.index);
-    const itemProps = store.useState("itemProps");
     const {
       value: selectedValue,
       setValue: setSelectedValue,
       disabled: groupDisabled
     } = useMenuRadioGroupContext();
+    const listItem = useCompositeListItem({
+      guess: true,
+      label
+    });
+    const id3 = useBaseUiId(idProp);
+    const highlighted = store.useState("isActive", listItem.index);
+    const nodeId = store.useState("floatingNodeId");
+    const itemProps = store.useState("itemProps");
     const rootDisabled = store.useState("disabled");
     const disabled2 = disabledProp || groupDisabled || rootDisabled;
     const checked2 = selectedValue === value;
@@ -48351,10 +48843,10 @@ This message will only show in development mode. It won't appear in production. 
       id: id3,
       store,
       nativeButton,
-      nodeId: menuPositionerContext?.context.nodeId,
+      nodeId,
       itemMetadata: REGULAR_ITEM
     });
-    const state = React76.useMemo(() => ({
+    const state = React84.useMemo(() => ({
       disabled: disabled2,
       highlighted,
       checked: checked2
@@ -48375,16 +48867,27 @@ This message will only show in development mode. It won't appear in production. 
       }, elementProps, getItemProps],
       ref: [itemRef, forwardedRef, listItem.ref]
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(MenuRadioItemContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(MenuRadioItemContext.Provider, {
       value: state,
       children: element
     });
   });
+  if (true) MenuRadioItemPlain.displayName = "MenuRadioItemPlain";
+  var MenuRadioItem = /* @__PURE__ */ React84.forwardRef(function MenuRadioItem2(props, forwardedRef) {
+    const filterItem = useMenuFilterItem(props, forwardedRef);
+    if (!filterItem.visible) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(MenuRadioItemPlain, {
+      ...props,
+      ref: filterItem.ref
+    });
+  });
   if (true) MenuRadioItem.displayName = "MenuRadioItem";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-item-indicator/MenuRadioItemIndicator.mjs
-  var React77 = __toESM(require_react(), 1);
-  var MenuRadioItemIndicator = /* @__PURE__ */ React77.forwardRef(function MenuRadioItemIndicator2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item-indicator/MenuRadioItemIndicator.mjs
+  var React85 = __toESM(require_react(), 1);
+  var MenuRadioItemIndicator = /* @__PURE__ */ React85.forwardRef(function MenuRadioItemIndicator2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -48393,7 +48896,7 @@ This message will only show in development mode. It won't appear in production. 
       ...elementProps
     } = componentProps;
     const item = useMenuRadioItemContext();
-    const indicatorRef = React77.useRef(null);
+    const indicatorRef = React85.useRef(null);
     const {
       transitionStatus,
       mounted,
@@ -48430,28 +48933,29 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) MenuRadioItemIndicator.displayName = "MenuRadioItemIndicator";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
-  var React81 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
+  var React89 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menubar/MenubarContext.mjs
-  var React78 = __toESM(require_react(), 1);
-  var MenubarContext = /* @__PURE__ */ React78.createContext(null);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menubar/MenubarContext.mjs
+  var React86 = __toESM(require_react(), 1);
+  var MenubarContext = /* @__PURE__ */ React86.createContext(null);
   if (true) MenubarContext.displayName = "MenubarContext";
   function useMenubarContext2(optional) {
-    const context = React78.useContext(MenubarContext);
+    const context = React86.useContext(MenubarContext);
     if (context === null && !optional) {
       throw new Error(true ? "Base UI: MenubarContext is missing. Menubar parts must be placed within <Menubar>." : formatErrorMessage_default(5));
     }
     return context;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/store/MenuStore.mjs
-  var React79 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/store/MenuStore.mjs
+  var React87 = __toESM(require_react(), 1);
   var selectors2 = {
     ...popupStoreSelectors,
     disabled: (state) => state.parent.type === "menubar" ? state.parent.context.disabled || state.disabled : state.disabled,
     modal: (state) => (state.parent.type === void 0 || state.parent.type === "context-menu") && (state.modal ?? true),
     openMethod: (state) => state.openMethod,
+    keyboardOpen: (state) => state.keyboardOpen,
     allowMouseEnter: (state) => state.allowMouseEnter,
     highlightItemOnHover: (state) => state.highlightItemOnHover,
     parent: (state) => state.parent,
@@ -48462,9 +48966,27 @@ This message will only show in development mode. It won't appear in production. 
       return state.parent.type !== void 0 ? state.parent.context.rootId : state.rootId;
     },
     activeIndex: (state) => state.activeIndex,
+    listElement: (state) => state.listElement,
+    /** The trigger's `aria-controls`: the list when one holds the `menu` role, else the popup. */
+    triggerControlsId: (state, triggerId) => {
+      const popupId = popupStoreSelectors.triggerPopupId(state, triggerId);
+      return popupId ? state.listElement?.id || popupId : void 0;
+    },
+    filterTriggerProps: (state) => state.filterTriggerProps,
+    inputProps: (state) => state.inputProps,
+    // `aria-selected` is invalid on `menuitem`, but Safari VoiceOver needs it for arrow-key
+    // navigation. Limit it to WebKit while the input has focus so normal VoiceOver navigation
+    // does not encounter the invalid attribute.
+    webkitAriaSelected: (state, highlighted) => parts_exports.engine.webkit && state.inputFocused && highlighted ? true : void 0,
+    highlightedItemId: (state) => state.highlightedItem?.id || void 0,
     isActive: (state, itemIndex) => state.activeIndex === itemIndex,
     hoverEnabled: (state) => state.hoverEnabled,
-    instantType: (state) => state.instantType,
+    // `trigger-change` describes a popup moving between triggers, which only has
+    // meaning while it is open. Dropping it once closed keeps a late or stale
+    // restoration from marking a closing popup instant and skipping its exit
+    // transition, including on close paths that never reach `setOpen` — a
+    // controlled consumer committing `open={false}` goes straight through the prop.
+    instantType: (state) => state.instantType === "trigger-change" && !popupStoreSelectors.open(state) ? void 0 : state.instantType,
     lastOpenChangeReason: (state) => state.openChangeReason,
     floatingTreeRoot: (state) => {
       if (state.parent.type === "menu") {
@@ -48492,31 +49014,39 @@ This message will only show in development mode. It won't appear in production. 
       const triggerElements = new PopupTriggerMap();
       const state = createInitialState(triggerElements, floatingId, nested, initialState2);
       super(state, createInitialContext(triggerElements), selectors2);
-      this.unsubscribeParentListener = this.observe("parent", (parent) => {
-        this.unsubscribeParentListener?.();
+      void this.observe("parent", (parent) => {
         if (parent.type === "menu") {
-          let rootId = parent.store.select("rootId");
-          let floatingTreeRoot = parent.store.select("floatingTreeRoot");
-          let keyboardEventRelay = parent.store.select("keyboardEventRelay");
-          this.unsubscribeParentListener = parent.store.subscribe(() => {
-            const nextRootId = parent.store.select("rootId");
-            const nextFloatingTreeRoot = parent.store.select("floatingTreeRoot");
-            const nextKeyboardEventRelay = parent.store.select("keyboardEventRelay");
-            if (rootId === nextRootId && floatingTreeRoot === nextFloatingTreeRoot && keyboardEventRelay === nextKeyboardEventRelay) {
-              return;
-            }
-            rootId = nextRootId;
-            floatingTreeRoot = nextFloatingTreeRoot;
-            keyboardEventRelay = nextKeyboardEventRelay;
-            this.notifyAll();
-          });
           this.context.allowMouseUpTriggerRef = parent.store.context.allowMouseUpTriggerRef;
-          return;
-        }
-        if (parent.type !== void 0) {
+        } else if (parent.type !== void 0) {
           this.context.allowMouseUpTriggerRef = parent.context.allowMouseUpTriggerRef;
         }
-        this.unsubscribeParentListener = null;
+      });
+    }
+    /**
+     * Propagates changes of the parent menu's shared tree state to this store's subscribers.
+     * The owning `Menu.Root` calls it from an effect so the parent store subscription is released
+     * when the submenu unmounts.
+     * @returns A function that removes the parent store subscription.
+     */
+    subscribeToParentMenu() {
+      const parent = this.state.parent;
+      if (parent.type !== "menu") {
+        return void 0;
+      }
+      let rootId = parent.store.select("rootId");
+      let floatingTreeRoot = parent.store.select("floatingTreeRoot");
+      let keyboardEventRelay = parent.store.select("keyboardEventRelay");
+      return parent.store.subscribe(() => {
+        const nextRootId = parent.store.select("rootId");
+        const nextFloatingTreeRoot = parent.store.select("floatingTreeRoot");
+        const nextKeyboardEventRelay = parent.store.select("keyboardEventRelay");
+        if (rootId === nextRootId && floatingTreeRoot === nextFloatingTreeRoot && keyboardEventRelay === nextKeyboardEventRelay) {
+          return;
+        }
+        rootId = nextRootId;
+        floatingTreeRoot = nextFloatingTreeRoot;
+        keyboardEventRelay = nextKeyboardEventRelay;
+        this.notifyAll();
       });
     }
     setOpen(open2, eventDetails) {
@@ -48525,7 +49055,21 @@ This message will only show in development mode. It won't appear in production. 
         eventDetails
       });
     }
-    unsubscribeParentListener = null;
+    setActiveIndex(activeIndex, reason, event) {
+      if (this.state.activeIndex !== activeIndex) {
+        const item = activeIndex === null ? void 0 : this.context.itemDomElements.current[activeIndex];
+        const isWriteBack = item === this.context.reportedItem;
+        this.context.highlightReason = isWriteBack ? "none" : reason;
+        this.context.highlightEvent = isWriteBack ? void 0 : event;
+      }
+      this.set("activeIndex", activeIndex);
+    }
+    highlightItem(element, reason, event) {
+      const index2 = this.context.itemDomElements.current.indexOf(element);
+      if (index2 > -1) {
+        this.setActiveIndex(index2, reason, event);
+      }
+    }
   };
   function createNullMenuStore() {
     const triggerElements = new PopupTriggerMap();
@@ -48536,8 +49080,8 @@ This message will only show in development mode. It won't appear in production. 
   }
   function createInitialContext(triggerElements) {
     return {
-      positionerRef: /* @__PURE__ */ React79.createRef(),
-      popupRef: /* @__PURE__ */ React79.createRef(),
+      positionerRef: /* @__PURE__ */ React87.createRef(),
+      popupRef: /* @__PURE__ */ React87.createRef(),
       typingRef: {
         current: false
       },
@@ -48547,11 +49091,16 @@ This message will only show in development mode. It won't appear in production. 
       itemLabels: {
         current: []
       },
+      highlightReason: "none",
+      highlightEvent: void 0,
+      reportedItem: void 0,
       allowMouseUpTriggerRef: {
         current: false
       },
-      triggerFocusTargetRef: /* @__PURE__ */ React79.createRef(),
-      beforeContentFocusGuardRef: /* @__PURE__ */ React79.createRef(),
+      virtualFocusRef: void 0,
+      triggerFocusTargetRef: /* @__PURE__ */ React87.createRef(),
+      beforeTriggerFocusGuardRef: /* @__PURE__ */ React87.createRef(),
+      beforeContentFocusGuardRef: /* @__PURE__ */ React87.createRef(),
       onOpenChangeComplete: void 0,
       triggerElements
     };
@@ -48562,6 +49111,7 @@ This message will only show in development mode. It won't appear in production. 
       disabled: false,
       modal: true,
       openMethod: null,
+      keyboardOpen: false,
       allowMouseEnter: false,
       highlightItemOnHover: true,
       parent: {
@@ -48569,6 +49119,11 @@ This message will only show in development mode. It won't appear in production. 
       },
       rootId: void 0,
       activeIndex: null,
+      listElement: null,
+      filterTriggerProps: EMPTY_OBJECT,
+      inputProps: EMPTY_OBJECT,
+      inputFocused: false,
+      highlightedItem: void 0,
       hoverEnabled: true,
       instantType: void 0,
       openChangeReason: null,
@@ -48583,22 +49138,28 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRootContext.mjs
-  var React80 = __toESM(require_react(), 1);
-  var MenuSubmenuRootContext = /* @__PURE__ */ React80.createContext(void 0);
-  if (true) MenuSubmenuRootContext.displayName = "MenuSubmenuRootContext";
-  function useMenuSubmenuRootContext() {
-    return React80.useContext(MenuSubmenuRootContext);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-provider/MenuFilterProviderContext.mjs
+  var React88 = __toESM(require_react(), 1);
+  var MenuFilterProviderContext = /* @__PURE__ */ React88.createContext(null);
+  if (true) MenuFilterProviderContext.displayName = "MenuFilterProviderContext";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/utils/isKeyboardOpen.mjs
+  function isKeyboardClick(reason, event) {
+    return (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.itemPress) && event?.detail === 0;
+  }
+  function isKeyboardOpen(reason, event) {
+    return reason === reason_parts_exports.listNavigation || isKeyboardClick(reason, event);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
-  var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
-  var MenuRoot = fastComponent(function MenuRoot2(props) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
+  var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
+  var MenuRootInternal = fastComponent(function MenuRootInternal2(props) {
     const {
       children,
       open: openProp,
       onOpenChange,
       onOpenChangeComplete,
+      onItemHighlighted: onItemHighlightedProp,
       defaultOpen = false,
       disabled: disabledProp = false,
       modal: modalProp,
@@ -48609,17 +49170,23 @@ This message will only show in development mode. It won't appear in production. 
       handle,
       triggerId: triggerIdProp,
       defaultTriggerId: defaultTriggerIdProp = null,
-      highlightItemOnHover = true
+      highlightItemOnHover = true,
+      isSubmenu = false,
+      virtualFocus = false,
+      virtualFocusRef,
+      allowEscape = true,
+      resetOnPointerLeave = true
     } = props;
     const contextMenuContext = useContextMenuRootContext(true);
     const parentMenuRootContext = useMenuRootContext(true);
     const menubarContext = useMenubarContext2(true);
-    const isSubmenu = useMenuSubmenuRootContext();
-    const parentFromContext = React81.useMemo(() => {
-      if (isSubmenu && parentMenuRootContext) {
+    const enclosingMenuStore = parentMenuRootContext?.store;
+    const parentVirtualFocus = parentMenuRootContext?.virtualFocus ?? false;
+    const parentFromContext = React89.useMemo(() => {
+      if (isSubmenu && enclosingMenuStore) {
         return {
           type: "menu",
-          store: parentMenuRootContext.store
+          store: enclosingMenuStore
         };
       }
       if (menubarContext) {
@@ -48628,7 +49195,7 @@ This message will only show in development mode. It won't appear in production. 
           context: menubarContext
         };
       }
-      if (contextMenuContext && !parentMenuRootContext) {
+      if (contextMenuContext && !enclosingMenuStore) {
         return {
           type: "context-menu",
           context: contextMenuContext
@@ -48637,25 +49204,31 @@ This message will only show in development mode. It won't appear in production. 
       return {
         type: void 0
       };
-    }, [contextMenuContext, parentMenuRootContext, menubarContext, isSubmenu]);
-    const rootId = useId5();
-    const floatingId = useId5();
+    }, [contextMenuContext, enclosingMenuStore, menubarContext, isSubmenu]);
+    const rootId = useBaseUiId();
+    const defaultFloatingId = useBaseUiId();
+    const [renderedFloatingId, setRenderedFloatingId] = React89.useState(void 0);
+    const floatingId = (renderedFloatingId ?? defaultFloatingId) || void 0;
     const floatingParentNodeIdFromContext = useFloatingParentNodeId();
     const parentMenuStore = parentFromContext.type === "menu" ? parentFromContext.store : void 0;
     const animateInitialOpen = (openProp ?? defaultOpen) && parentMenuStore?.state.transitionStatus === "starting";
     const seededInstantType = useRefWithInit(() => animateInitialOpen ? parentMenuStore?.state.instantType : void 0).current;
-    const store = useMenuRootStore({
-      open: defaultOpen,
-      openProp,
-      activeTriggerId: defaultTriggerIdProp,
-      triggerIdProp,
-      parent: parentFromContext,
-      disabled: disabledProp,
-      highlightItemOnHover,
-      modal: parentFromContext.type === void 0 ? modalProp : void 0,
-      rootId,
-      instantType: seededInstantType
-    }, floatingId, floatingParentNodeIdFromContext != null);
+    const store = useRefWithInit(() => {
+      const menuStore = new MenuStore({
+        open: defaultOpen,
+        openProp,
+        activeTriggerId: defaultTriggerIdProp,
+        triggerIdProp,
+        parent: parentFromContext,
+        disabled: disabledProp,
+        highlightItemOnHover,
+        modal: parentFromContext.type === void 0 ? modalProp : void 0,
+        rootId,
+        instantType: seededInstantType
+      }, floatingId, floatingParentNodeIdFromContext != null);
+      menuStore.context.virtualFocusRef = virtualFocusRef;
+      return menuStore;
+    }).current;
     store.useControlledProp("openProp", openProp);
     store.useControlledProp("triggerIdProp", triggerIdProp);
     store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
@@ -48669,12 +49242,13 @@ This message will only show in development mode. It won't appear in production. 
     const lastOpenChangeReason = store.useState("lastOpenChangeReason");
     const parent = store.useState("parent");
     const activeIndex = store.useState("activeIndex");
+    const keyboardOpen = store.useState("keyboardOpen");
     const payload = store.useState("payload");
     const floatingParentNodeId = store.useState("floatingParentNodeId");
-    const openEventRef = React81.useRef(null);
-    const allowOutsidePressDismissalRef = React81.useRef(parent.type !== "context-menu");
+    const openEventRef = React89.useRef(null);
+    const allowOutsidePressDismissalRef = React89.useRef(parent.type !== "context-menu");
     const allowOutsidePressDismissalTimeout = useTimeout();
-    const allowTouchToCloseRef = React81.useRef(true);
+    const allowTouchToCloseRef = React89.useRef(true);
     const allowTouchToCloseTimeout = useTimeout();
     const nested = floatingParentNodeId != null;
     if (true) {
@@ -48701,7 +49275,7 @@ This message will only show in development mode. It won't appear in production. 
       store.set("allowMouseEnter", false);
     }, animateInitialOpen);
     const runOnceAnimationsFinish = useAnimationsFinished(store.context.popupRef);
-    React81.useEffect(() => {
+    React89.useEffect(() => {
       if (seededInstantType === void 0) {
         return void 0;
       }
@@ -48737,14 +49311,14 @@ This message will only show in development mode. It won't appear in production. 
           floatingNodeId: floatingNodeIdFromContext,
           floatingParentNodeId: floatingParentNodeIdFromContext
         });
-      } else if (parentMenuRootContext) {
+      } else if (parentMenuRootContext || !store.select("activeTriggerElement")) {
         store.update({
           floatingNodeId: floatingNodeIdFromContext,
           floatingParentNodeId: floatingParentNodeIdFromContext
         });
       }
-    }, [contextMenuContext, parentMenuRootContext, floatingNodeIdFromContext, floatingParentNodeIdFromContext, store]);
-    React81.useEffect(() => {
+    }, [contextMenuContext, parentMenuRootContext, floatingNodeIdFromContext, floatingParentNodeIdFromContext, activeTriggerElement, store]);
+    React89.useEffect(() => {
       if (!open2) {
         openEventRef.current = null;
       }
@@ -48783,7 +49357,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
       const nativeEvent = eventDetails.event;
-      if (nextOpen === false && nativeEvent?.type === "click" && nativeEvent.pointerType === "touch" && !allowTouchToCloseRef.current) {
+      if (nextOpen === false && reason !== reason_parts_exports.itemPress && nativeEvent?.type === "click" && nativeEvent.pointerType === "touch" && !allowTouchToCloseRef.current) {
         return;
       }
       if (nextOpen && reason === reason_parts_exports.triggerFocus) {
@@ -48795,15 +49369,17 @@ This message will only show in development mode. It won't appear in production. 
         allowTouchToCloseRef.current = true;
         allowTouchToCloseTimeout.clear();
       }
-      const isKeyboardClick = (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.itemPress) && nativeEvent.detail === 0;
       const isDismissClose = !nextOpen && (reason === reason_parts_exports.escapeKey || reason == null);
       openEventRef.current = eventDetails.event;
       const popupOpenState = createPopupOpenState(store.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
       popupOpenState.openChangeReason = reason;
+      popupOpenState.keyboardOpen = nextOpen && isKeyboardOpen(reason, nativeEvent);
       if (parent.type === "menubar" && (reason === reason_parts_exports.triggerFocus || reason === reason_parts_exports.focusOut || reason === reason_parts_exports.triggerHover || reason === reason_parts_exports.listNavigation || reason === reason_parts_exports.siblingOpen)) {
         popupOpenState.instantType = "group";
-      } else if (isKeyboardClick || isDismissClose) {
-        popupOpenState.instantType = isKeyboardClick ? "click" : "dismiss";
+      } else if (isKeyboardClick(reason, nativeEvent)) {
+        popupOpenState.instantType = "click";
+      } else if (isDismissClose) {
+        popupOpenState.instantType = "dismiss";
       } else {
         popupOpenState.instantType = void 0;
       }
@@ -48827,10 +49403,11 @@ This message will only show in development mode. It won't appear in production. 
         floatingEvents?.off("setOpen", handleSetOpenEvent);
       };
     }, [floatingEvents, setOpen]);
-    const handleImperativeClose = React81.useCallback(() => {
+    useIsoLayoutEffect(() => store.subscribeToParentMenu(), [store]);
+    const handleImperativeClose = React89.useCallback(() => {
       store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
     }, [store]);
-    React81.useImperativeHandle(actionsRef, () => ({
+    React89.useImperativeHandle(actionsRef, () => ({
       unmount: forceUnmount,
       close: handleImperativeClose
     }), [forceUnmount, handleImperativeClose]);
@@ -48838,8 +49415,8 @@ This message will only show in development mode. It won't appear in production. 
     if (parent.type === "context-menu") {
       ctx14 = parent.context;
     }
-    React81.useImperativeHandle(ctx14?.positionerRef, () => positionerElement, [positionerElement]);
-    React81.useImperativeHandle(ctx14?.actionsRef, () => ({
+    React89.useImperativeHandle(ctx14?.positionerRef, () => positionerElement, [positionerElement]);
+    React89.useImperativeHandle(ctx14?.actionsRef, () => ({
       setOpen
     }), [setOpen]);
     const dismiss = useDismiss(floatingRootContext, {
@@ -48856,45 +49433,103 @@ This message will only show in development mode. It won't appear in production. 
       externalTree: nested ? floatingTreeRoot : void 0
     });
     const direction = useDirection();
-    const setActiveIndex = React81.useCallback((index2) => {
-      if (store.select("activeIndex") === index2) {
-        return;
-      }
-      store.set("activeIndex", index2);
-    }, [store]);
     const listNavigation2 = useListNavigation(floatingRootContext, {
       enabled: !disabled2,
       listRef: store.context.itemDomElements,
       activeIndex,
-      nested: parent.type !== void 0,
-      loopFocus,
-      orientation,
+      virtual: virtualFocus,
+      nested: parent.type === "menubar" || !virtualFocus && parent.type !== void 0,
       parentOrientation: parent.type === "menubar" ? parent.context.orientation : void 0,
+      loopFocus,
+      // Filtered menus keep DOM focus on the input, while keyboard and virtual opens initially
+      // highlight an item as ordinary menus do. The input stays in the arrow-key loop unless the
+      // filter highlights automatically.
+      focusItemOnOpen: virtualFocus ? keyboardOpen : void 0,
+      allowEscape: virtualFocus && loopFocus && allowEscape,
+      orientation,
+      // A virtual-focus list can navigate on either axis, but its trigger always opens on the
+      // vertical one.
+      triggerOrientation: virtualFocus ? "vertical" : orientation,
       rtl: direction === "rtl",
       disabledIndices: EMPTY_ARRAY,
-      onNavigate: setActiveIndex,
-      openOnArrowKeyDown: parent.type !== "context-menu",
-      externalTree: nested ? floatingTreeRoot : void 0,
-      focusItemOnHover: highlightItemOnHover
+      onNavigate(nextActiveIndex, event) {
+        store.setActiveIndex(nextActiveIndex, getHighlightReason(event), event?.nativeEvent);
+      },
+      // A virtual-focus submenu's keyboard opening is orchestrated by its navigation wrapper based
+      // on both menus' orientations; the generic arrow-key opening would also react to the parent's
+      // forwarded cross-axis keys while closed.
+      openOnArrowKeyDown: parent.type !== "context-menu" && !(virtualFocus && isSubmenu),
+      externalTree: !virtualFocus && nested ? floatingTreeRoot : void 0,
+      nestedReturnFocusRef: parentMenuStore?.context.virtualFocusRef,
+      focusItemOnHover: highlightItemOnHover,
+      resetOnPointerLeave
     });
-    const onTyping = React81.useCallback((nextTyping) => {
+    const onTyping = React89.useCallback((nextTyping) => {
       store.context.typingRef.current = nextTyping;
     }, [store]);
     const typeahead = useTypeahead(floatingRootContext, {
-      enabled: !disabled2,
+      // Under virtual focus the input owns typing, so typeahead would race the filter query.
+      enabled: !disabled2 && !virtualFocus,
       listRef: store.context.itemLabels,
       elementsRef: store.context.itemDomElements,
       activeIndex,
       resetMs: TYPEAHEAD_RESET_MS,
-      onMatch: (index2) => {
+      onMatch: (index2, event) => {
         if (open2 && index2 !== activeIndex) {
-          store.set("activeIndex", index2);
+          store.setActiveIndex(index2, reason_parts_exports.keyboard, event.nativeEvent);
         }
       },
       onTyping
     });
-    const activeTriggerProps = React81.useMemo(() => {
-      const mergedProps = mergeProps2(typeahead.reference, listNavigation2.reference, dismiss.reference, {
+    const onItemHighlighted = useStableCallback(onItemHighlightedProp);
+    const lastHighlightIndexRef = React89.useRef(-1);
+    const syncHighlightedItem = useStableCallback(() => {
+      const index2 = store.state.activeIndex;
+      const item = index2 === null ? void 0 : store.context.itemDomElements.current[index2] ?? void 0;
+      if (item?.isConnected === false) {
+        return;
+      }
+      const itemIndex = item === void 0 ? -1 : index2;
+      if (lastHighlightIndexRef.current === itemIndex && store.context.reportedItem === item) {
+        return;
+      }
+      lastHighlightIndexRef.current = itemIndex;
+      store.context.reportedItem = item;
+      if (virtualFocus) {
+        store.set("highlightedItem", item);
+      }
+      const {
+        highlightReason,
+        highlightEvent
+      } = store.context;
+      store.context.highlightReason = reason_parts_exports.none;
+      store.context.highlightEvent = void 0;
+      if (!onItemHighlightedProp) {
+        return;
+      }
+      onItemHighlighted(item, createGenericEventDetails(highlightReason, highlightEvent, {
+        label: item === void 0 ? void 0 : store.context.itemLabels.current[itemIndex] ?? void 0
+      }));
+    });
+    useIsoLayoutEffect(() => {
+      syncHighlightedItem();
+    }, [activeIndex, syncHighlightedItem]);
+    const openTriggerProps = React89.useMemo(() => {
+      if (!virtualFocus) {
+        return listNavigation2.reference;
+      }
+      if (!listNavigation2.trigger) {
+        return EMPTY_OBJECT;
+      }
+      const {
+        onFocus,
+        ...rest
+      } = listNavigation2.trigger;
+      return rest;
+    }, [virtualFocus, listNavigation2.reference, listNavigation2.trigger]);
+    store.useSyncedValue("inputProps", virtualFocus ? listNavigation2.reference ?? EMPTY_OBJECT : EMPTY_OBJECT);
+    const activeTriggerProps = React89.useMemo(() => {
+      const mergedProps = mergeProps2(typeahead.reference, openTriggerProps, dismiss.reference, {
         onMouseMove() {
           store.set("allowMouseEnter", true);
         }
@@ -48902,8 +49537,8 @@ This message will only show in development mode. It won't appear in production. 
       mergedProps["aria-haspopup"] = "menu";
       mergedProps["aria-expanded"] = open2;
       return mergedProps;
-    }, [store, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps, open2]);
-    const inactiveTriggerProps = React81.useMemo(() => {
+    }, [store, typeahead.reference, openTriggerProps, dismiss.reference, interactionTypeProps, open2]);
+    const inactiveTriggerProps = React89.useMemo(() => {
       const mergedProps = mergeProps2(listNavigation2.trigger, dismiss.trigger, interactionTypeProps);
       mergedProps["aria-haspopup"] = "menu";
       mergedProps["aria-expanded"] = false;
@@ -48915,12 +49550,7 @@ This message will only show in development mode. It won't appear in production. 
       });
       return null;
     });
-    const popupProps = React81.useMemo(() => mergeProps2(FOCUSABLE_POPUP_PROPS, {
-      id: floatingId,
-      role: "menu",
-      // `menu` is implicitly vertical, so only the non-default value needs to be rendered.
-      "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
-      "aria-labelledby": activeTriggerElement?.id,
+    const popupProps = React89.useMemo(() => mergeProps2(FOCUSABLE_POPUP_PROPS, {
       onMouseMove() {
         store.set("allowMouseEnter", true);
         if (parent.type === "menu") {
@@ -48938,7 +49568,7 @@ This message will only show in development mode. It won't appear in production. 
           relay(event);
         }
       }
-    }, typeahead.floating, listNavigation2.floating, dismiss.floating), [activeTriggerElement, floatingId, orientation, parent.type, store, typeahead.floating, listNavigation2.floating, dismiss.floating]);
+    }, typeahead.floating, listNavigation2.floating, dismiss.floating), [parent.type, store, typeahead.floating, listNavigation2.floating, dismiss.floating]);
     const itemProps = listNavigation2.item ?? EMPTY_OBJECT;
     usePopupInteractionProps(store, {
       floatingRootContext,
@@ -48947,54 +49577,88 @@ This message will only show in development mode. It won't appear in production. 
       popupProps,
       itemProps
     });
-    const context = React81.useMemo(() => ({
+    const context = React89.useMemo(() => ({
       store,
-      parent: parentFromContext
-    }), [store, parentFromContext]);
-    const content = /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(MenuRootContext.Provider, {
+      parent: parentFromContext,
+      orientation,
+      loopFocus,
+      allowEscape,
+      defaultFloatingId,
+      setRenderedFloatingId,
+      virtualFocus,
+      parentVirtualFocus,
+      syncHighlightedItem
+    }), [store, parentFromContext, orientation, loopFocus, allowEscape, defaultFloatingId, virtualFocus, parentVirtualFocus, syncHighlightedItem]);
+    const renderedChildren = typeof children === "function" ? children({
+      payload
+    }) : children;
+    let content = /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(MenuRootContext.Provider, {
       value: context,
-      children: [handle && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(PopupHandleAttachment, {
+      children: [handle && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(PopupHandleAttachment, {
         handle,
         store
-      }), typeof children === "function" ? children({
-        payload
-      }) : children]
+      }), renderedChildren]
     });
     if (parent.type === void 0 || parent.type === "context-menu") {
-      return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(FloatingTree, {
+      content = /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(FloatingTree, {
         externalTree: floatingTreeRoot,
         children: content
       });
     }
     return content;
   });
-  if (true) MenuRoot.displayName = "MenuRoot";
-  function useMenuRootStore(initialState2, floatingId, nested) {
-    const store = useRefWithInit(() => new MenuStore(initialState2, floatingId, nested)).current;
-    return store;
+  if (true) MenuRootInternal.displayName = "MenuRootInternal";
+  function MenuRoot(props) {
+    const filterProvider = React89.useContext(MenuFilterProviderContext);
+    if (filterProvider === null) {
+      return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(MenuRootInternal, {
+        ...props
+      });
+    }
+    const FilterRoot = filterProvider.Root;
+    return (
+      // The root consumes its provider so a plain submenu inside doesn't inherit it.
+      /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(MenuFilterProviderContext.Provider, {
+        value: null,
+        children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(FilterRoot, {
+          ...filterProvider.options,
+          ...props
+        })
+      })
+    );
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRoot.mjs
-  var React82 = __toESM(require_react(), 1);
-  var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRoot.mjs
+  var React90 = __toESM(require_react(), 1);
+  var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
+  var EMPTY_SUBMENU_ROOT_CONTEXT = {};
   function MenuSubmenuRoot(props) {
-    const parentMenu = useMenuRootContext().store;
-    const contextValue = React82.useMemo(() => ({
-      parentMenu
-    }), [parentMenu]);
-    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(MenuSubmenuRootContext.Provider, {
-      value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(MenuRoot, {
-        ...props
+    useMenuRootContext();
+    const filterProvider = React90.useContext(MenuFilterProviderContext);
+    if (filterProvider !== null) {
+      const FilterSubmenuRoot = filterProvider.SubmenuRoot;
+      return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(MenuFilterProviderContext.Provider, {
+        value: null,
+        children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(FilterSubmenuRoot, {
+          ...filterProvider.options,
+          ...props
+        })
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(MenuSubmenuRootContext.Provider, {
+      value: EMPTY_SUBMENU_ROOT_CONTEXT,
+      children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(MenuRootInternal, {
+        ...props,
+        isSubmenu: true
       })
     });
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
-  var React86 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
+  var React93 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
-  var React83 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
+  var React91 = __toESM(require_react(), 1);
   function useCompositeItem3(params = {}) {
     const {
       highlightItemOnHover,
@@ -49006,7 +49670,7 @@ This message will only show in development mode. It won't appear in production. 
       index: index2
     } = useCompositeListItem(params);
     const isHighlighted = highlightedIndex === index2;
-    const itemRef = React83.useRef(null);
+    const itemRef = React91.useRef(null);
     const mergedRef = useMergedRefs(ref, itemRef);
     const compositeProps = {
       tabIndex: isHighlighted ? 0 : -1,
@@ -49031,7 +49695,7 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/item/CompositeItem.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/item/CompositeItem.mjs
   function CompositeItem3(componentProps) {
     const {
       render,
@@ -49060,7 +49724,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/utils/findRootOwnerId.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/utils/findRootOwnerId.mjs
   function findRootOwnerId(node2) {
     if (isHTMLElement(node2) && node2.hasAttribute("data-rootownerid")) {
       return node2.getAttribute("data-rootownerid");
@@ -49071,54 +49735,43 @@ This message will only show in development mode. It won't appear in production. 
     return findRootOwnerId(getParentNode(node2));
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/useTriggerFocusGuards.mjs
-  var React84 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/useTriggerFocusGuards.mjs
   var ReactDOM6 = __toESM(require_react_dom(), 1);
   function useTriggerFocusGuards(store, triggerElementRef) {
-    const preFocusGuardRef = React84.useRef(null);
-    function handlePreFocusGuardFocus(event) {
+    function closeAndFocus(event, direction, positionerElement) {
+      const guard = event.currentTarget;
       ReactDOM6.flushSync(() => {
-        store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent, event.currentTarget));
+        store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent, guard));
       });
-      const previousTabbable = getTabbableBeforeElement(preFocusGuardRef.current);
-      previousTabbable?.focus();
+      getTabbableNearElement(guard.isConnected ? guard : triggerElementRef.current, direction, positionerElement)?.focus();
+    }
+    function handlePreFocusGuardFocus(event) {
+      closeAndFocus(event, -1, store.select("positionerElement"));
     }
     function handleFocusTargetFocus(event) {
       const positionerElement = store.select("positionerElement");
       if (positionerElement && isOutsideEvent(event, positionerElement)) {
         store.context.beforeContentFocusGuardRef.current?.focus();
       } else {
-        ReactDOM6.flushSync(() => {
-          store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent, event.currentTarget));
-        });
-        let nextTabbable = getTabbableAfterElement(store.context.triggerFocusTargetRef.current || triggerElementRef.current);
-        while (nextTabbable !== null && contains2(positionerElement, nextTabbable)) {
-          const prevTabbable = nextTabbable;
-          nextTabbable = getNextTabbable2(nextTabbable);
-          if (nextTabbable === prevTabbable) {
-            break;
-          }
-        }
-        nextTabbable?.focus();
+        closeAndFocus(event, 1, positionerElement);
       }
     }
     return {
-      preFocusGuardRef,
       handlePreFocusGuardFocus,
       handleFocusTargetFocus
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useMixedToggleClickHandler.mjs
-  var React85 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useMixedToggleClickHandler.mjs
+  var React92 = __toESM(require_react(), 1);
   function useMixedToggleClickHandler(params) {
     const {
       enabled = true,
       mouseDownAction,
       open: open2
     } = params;
-    const ignoreClickRef = React85.useRef(false);
-    return React85.useMemo(() => {
+    const ignoreClickRef = React92.useRef(false);
+    return React92.useMemo(() => {
       if (!enabled) {
         return EMPTY_OBJECT;
       }
@@ -49143,8 +49796,8 @@ This message will only show in development mode. It won't appear in production. 
     }, [enabled, mouseDownAction, open2]);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
-  var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
+  var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
   var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forwardedRef) {
     const {
       render,
@@ -49170,12 +49823,12 @@ This message will only show in development mode. It won't appear in production. 
     const isTriggerActive = store.useState("isTriggerActive", thisTriggerId);
     const floatingRootContext = store.useState("floatingRootContext");
     const isOpenedByThisTrigger = store.useState("isOpenedByTrigger", thisTriggerId);
-    const popupId = store.useState("triggerPopupId", thisTriggerId);
-    const triggerElementRef = React86.useRef(null);
+    const controlsId = store.useState("triggerControlsId", thisTriggerId);
+    const triggerElementRef = React93.useRef(null);
     const parent = useMenuParent();
     const compositeRootContext = useCompositeRootContext(true);
     const floatingTreeRootFromContext = useFloatingTree();
-    const floatingTreeRoot = React86.useMemo(() => {
+    const floatingTreeRoot = React93.useMemo(() => {
       return floatingTreeRootFromContext ?? new FloatingTreeStore();
     }, [floatingTreeRootFromContext]);
     const floatingNodeId = useFloatingNodeId(floatingTreeRoot);
@@ -49202,12 +49855,12 @@ This message will only show in development mode. It won't appear in production. 
       disabled: disabled2,
       native: nativeButton
     });
-    React86.useEffect(() => {
+    React93.useEffect(() => {
       if (!isOpenedByThisTrigger && parent.type === void 0) {
         store.context.allowMouseUpTriggerRef.current = false;
       }
     }, [store, isOpenedByThisTrigger, parent.type]);
-    const triggerRef = React86.useRef(null);
+    const triggerRef = React93.useRef(null);
     const allowMouseUpTriggerTimeout = useTimeout();
     const handleDocumentMouseUp = useStableCallback((mouseEvent) => {
       if (!triggerRef.current) {
@@ -49230,13 +49883,17 @@ This message will only show in development mode. It won't appear in production. 
         reason: reason_parts_exports.cancelOpen
       });
     });
-    React86.useEffect(() => {
+    React93.useEffect(() => {
+      const doc = ownerDocument(triggerRef.current);
       if (isOpenedByThisTrigger && store.select("lastOpenChangeReason") === reason_parts_exports.triggerHover) {
-        const doc = ownerDocument(triggerRef.current);
         doc.addEventListener("mouseup", handleDocumentMouseUp, {
           once: true
         });
+        return () => {
+          doc.removeEventListener("mouseup", handleDocumentMouseUp);
+        };
       }
+      return void 0;
     }, [isOpenedByThisTrigger, handleDocumentMouseUp, store]);
     const parentMenubarHasSubmenuOpen = isInMenubar && parent.context.hasSubmenuOpen;
     const openOnHover = openOnHoverProp ?? parentMenubarHasSubmenuOpen;
@@ -49272,10 +49929,10 @@ This message will only show in development mode. It won't appear in production. 
       enabled: isInMenubar,
       mouseDownAction: "open"
     });
-    const localInteractionProps = React86.useMemo(() => mergeProps2(focus5.reference, click.reference), [focus5.reference, click.reference]);
+    const localInteractionProps = React93.useMemo(() => mergeProps2(focus5.reference, click.reference), [focus5.reference, click.reference]);
     const rootTriggerProps = store.useState("triggerProps", isMountedByThisTrigger);
+    const filterTriggerProps = store.useState("filterTriggerProps");
     const {
-      preFocusGuardRef,
       handlePreFocusGuardFocus,
       handleFocusTargetFocus
     } = useTriggerFocusGuards(store, triggerElementRef);
@@ -49286,7 +49943,7 @@ This message will only show in development mode. It won't appear in production. 
     const ref = [triggerRef, forwardedRef, buttonRef, registerTrigger, triggerElementRef];
     const props = [localInteractionProps, hoverProps ?? EMPTY_OBJECT, rootTriggerProps, {
       "aria-haspopup": "menu",
-      "aria-controls": popupId,
+      "aria-controls": controlsId,
       id: thisTriggerId,
       onMouseDown: (event) => {
         if (store.select("open")) {
@@ -49300,7 +49957,7 @@ This message will only show in development mode. It won't appear in production. 
           once: true
         });
       }
-    }, isInMenubar ? {
+    }, filterTriggerProps, isInMenubar ? {
       role: "menuitem"
     } : {}, mixedToggleHandlers, elementProps, getButtonProps];
     const element = useRenderElement("button", componentProps, {
@@ -49311,7 +49968,7 @@ This message will only show in development mode. It won't appear in production. 
       props
     });
     if (isInMenubar) {
-      return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(CompositeItem3, {
+      return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(CompositeItem3, {
         tag: "button",
         render,
         className,
@@ -49323,26 +49980,26 @@ This message will only show in development mode. It won't appear in production. 
       });
     }
     if (isOpenedByThisTrigger) {
-      return /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(React86.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime187.jsx)(FocusGuard, {
-          ref: preFocusGuardRef,
+      return /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(React93.Fragment, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsx)(FocusGuard, {
+          ref: store.context.beforeTriggerFocusGuardRef,
           onFocus: handlePreFocusGuardFocus
-        }, `${thisTriggerId}-pre-focus-guard`), /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(React86.Fragment, {
+        }, `${thisTriggerId}-pre-focus-guard`), /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(React93.Fragment, {
           children: element
-        }, thisTriggerId), /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(FocusGuard, {
+        }, thisTriggerId), /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(FocusGuard, {
           ref: store.context.triggerFocusTargetRef,
           onFocus: handleFocusTargetFocus
         }, `${thisTriggerId}-post-focus-guard`)]
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(React86.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(React93.Fragment, {
       children: element
     }, thisTriggerId);
   });
   if (true) MenuTrigger.displayName = "MenuTrigger";
   function useStickIfOpen(open2, openReason) {
     const stickIfOpenTimeout = useTimeout();
-    const [stickIfOpen, setStickIfOpen] = React86.useState(false);
+    const [stickIfOpen, setStickIfOpen] = React93.useState(false);
     useIsoLayoutEffect(() => {
       if (open2 && openReason === reason_parts_exports.triggerHover) {
         setStickIfOpen(true);
@@ -49358,7 +50015,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   function useMenuParent() {
     const menubarContext = useMenubarContext2(true);
-    const parent = React86.useMemo(() => {
+    const parent = React93.useMemo(() => {
       if (menubarContext) {
         return {
           type: "menubar",
@@ -49372,17 +50029,17 @@ This message will only show in development mode. It won't appear in production. 
     return parent;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
-  var React91 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
+  var React98 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePopupViewport.mjs
-  var React90 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupViewport.mjs
+  var React97 = __toESM(require_react(), 1);
   var ReactDOM7 = __toESM(require_react_dom(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/usePreviousValue.mjs
-  var React87 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/usePreviousValue.mjs
+  var React94 = __toESM(require_react(), 1);
   function usePreviousValue(value) {
-    const [state, setState] = React87.useState({
+    const [state, setState] = React94.useState({
       current: value,
       previous: null
     });
@@ -49395,10 +50052,10 @@ This message will only show in development mode. It won't appear in production. 
     return state.previous;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
-  var React88 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+  var React95 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/getCssDimensions.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getCssDimensions.mjs
   function getCssDimensions2(element) {
     const css4 = getComputedStyle2(element);
     let width = parseFloat(css4.width) || 0;
@@ -49417,11 +50074,11 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonPopupCssVars.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonPopupCssVars.mjs
   var popupWidth = "--popup-width";
   var popupHeight = "--popup-height";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
   function usePopupAutoResize(parameters) {
     const {
       popupElement,
@@ -49435,23 +50092,19 @@ This message will only show in development mode. It won't appear in production. 
     } = parameters;
     const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true);
     const animationFrame = useAnimationFrame();
-    const committedDimensionsRef = React88.useRef(null);
-    const isInitialRenderRef = React88.useRef(true);
-    const restoreAnchoringStylesRef = React88.useRef(NOOP);
+    const committedDimensionsRef = React95.useRef(null);
     const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
     const onMeasureLayoutComplete = useStableCallback(onMeasureLayoutCompleteParam);
-    const anchoringStyles = React88.useMemo(() => getPopupAnchoringStyles(side, direction), [side, direction]);
+    const anchoringStyles = React95.useMemo(() => getPopupAnchoringStyles(side, direction), [side, direction]);
     useIsoLayoutEffect(() => {
       if (!mounted) {
-        restoreAnchoringStylesRef.current = NOOP;
-        isInitialRenderRef.current = true;
         committedDimensionsRef.current = null;
         return void 0;
       }
       if (!popupElement || !positionerElement) {
         return void 0;
       }
-      restoreAnchoringStylesRef.current = applyElementStyles(popupElement, anchoringStyles);
+      const restoreAnchoringStyles = applyElementStyles(popupElement, anchoringStyles);
       setPopupCssSize(popupElement, "auto");
       const restorePopupPosition = overrideElementStyle(popupElement, "position", "static");
       const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
@@ -49464,31 +50117,24 @@ This message will only show in development mode. It won't appear in production. 
         restorePopupPosition();
         restorePopupTransform();
         restorePositionerAvailableSize();
-      }
-      function restoreMeasurementOverridesIncludingScale() {
-        restoreMeasurementOverrides();
         restorePopupScale();
       }
       onMeasureLayout?.();
-      if (isInitialRenderRef.current || committedDimensionsRef.current === null) {
+      if (committedDimensionsRef.current === null) {
         setPositionerCssSize(positionerElement, "max-content");
         const dimensions = getCssDimensions2(popupElement);
         committedDimensionsRef.current = dimensions;
         setPositionerCssSize(positionerElement, dimensions);
-        restoreMeasurementOverridesIncludingScale();
+        restoreMeasurementOverrides();
         onMeasureLayoutComplete?.(null, dimensions);
-        isInitialRenderRef.current = false;
-        return () => {
-          restoreAnchoringStylesRef.current();
-          restoreAnchoringStylesRef.current = NOOP;
-        };
+        return restoreAnchoringStyles;
       }
       setPositionerCssSize(positionerElement, "max-content");
       const previousDimensions = committedDimensionsRef.current;
       const newDimensions = getCssDimensions2(popupElement);
       committedDimensionsRef.current = newDimensions;
       setPopupCssSize(popupElement, previousDimensions);
-      restoreMeasurementOverridesIncludingScale();
+      restoreMeasurementOverrides();
       onMeasureLayoutComplete?.(previousDimensions, newDimensions);
       setPositionerCssSize(positionerElement, newDimensions);
       const abortController = new AbortController();
@@ -49502,8 +50148,7 @@ This message will only show in development mode. It won't appear in production. 
       return () => {
         abortController.abort();
         animationFrame.cancel();
-        restoreAnchoringStylesRef.current();
-        restoreAnchoringStylesRef.current = NOOP;
+        restoreAnchoringStyles();
       };
     }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
   }
@@ -49548,24 +50193,24 @@ This message will only show in development mode. It won't appear in production. 
     positionerElement.style.setProperty(positionerHeight, height);
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
-  var React89 = __toESM(require_react(), 1);
-  var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
+  var React96 = __toESM(require_react(), 1);
+  var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   var DirectionProvider = function DirectionProvider2(props) {
     const {
       direction = "ltr"
     } = props;
-    const contextValue = React89.useMemo(() => ({
+    const contextValue = React96.useMemo(() => ({
       direction
     }), [direction]);
-    return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(DirectionContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(DirectionContext.Provider, {
       value: contextValue,
       children: props.children
     });
   };
   if (true) DirectionProvider.displayName = "DirectionProvider";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
   var adaptiveOrigin = {
     name: "adaptiveOrigin",
     async fn(state) {
@@ -49633,11 +50278,11 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonViewportDataAttributes.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonViewportDataAttributes.mjs
   var activationDirection = "data-activation-direction";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePopupViewport.mjs
-  var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupViewport.mjs
+  var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
   var popupViewportStateMapping = {
     activationDirection: (value) => value ? {
       [activationDirection]: value
@@ -49659,16 +50304,16 @@ This message will only show in development mode. It won't appear in production. 
     const positionerElement = store.useState("positionerElement");
     const previousActiveTrigger = usePreviousValue(open2 ? activeTrigger : null);
     const currentContentKey = usePopupContentKey(activeTriggerId, payload);
-    const capturedNodeRef = React90.useRef(null);
-    const [previousContentNode, setPreviousContentNode] = React90.useState(null);
-    const [newTriggerOffset, setNewTriggerOffset] = React90.useState(null);
-    const currentContainerRef = React90.useRef(null);
-    const previousContainerRef = React90.useRef(null);
+    const capturedNodeRef = React97.useRef(null);
+    const [previousContentNode, setPreviousContentNode] = React97.useState(null);
+    const [newTriggerOffset, setNewTriggerOffset] = React97.useState(null);
+    const currentContainerRef = React97.useRef(null);
+    const previousContainerRef = React97.useRef(null);
     const onAnimationsFinished = useAnimationsFinished(currentContainerRef, true);
     const cleanupFrame = useAnimationFrame();
-    const cleanupControllerRef = React90.useRef(null);
-    const [previousContentDimensions, setPreviousContentDimensions] = React90.useState(null);
-    const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React90.useState(false);
+    const cleanupControllerRef = React97.useRef(null);
+    const [previousContentDimensions, setPreviousContentDimensions] = React97.useState(null);
+    const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React97.useState(false);
     useIsoLayoutEffect(() => {
       store.set("adaptiveOrigin", adaptiveOrigin);
       return () => {
@@ -49698,21 +50343,21 @@ This message will only show in development mode. It won't appear in production. 
         capturedNodeRef.current = null;
       }, controller.signal);
     });
-    const lastHandledTriggerRef = React90.useRef(null);
+    const lastHandledTriggerRef = React97.useRef(null);
     useIsoLayoutEffect(() => {
       if (!open2 || !mounted) {
         lastHandledTriggerRef.current = null;
       }
     }, [open2, mounted]);
     useIsoLayoutEffect(() => {
-      if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
+      if (open2 && activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
         setPreviousContentNode(capturedNodeRef.current);
         setShowStartingStyleAttribute(true);
         const offset4 = calculateRelativePosition(previousActiveTrigger, activeTrigger);
         setNewTriggerOffset(offset4);
         lastHandledTriggerRef.current = activeTrigger;
       }
-    }, [activeTrigger, previousActiveTrigger]);
+    }, [open2, activeTrigger, previousActiveTrigger]);
     useIsoLayoutEffect(() => {
       if (previousContentNode == null) {
         return;
@@ -49740,14 +50385,14 @@ This message will only show in development mode. It won't appear in production. 
     const isTransitioning = previousContentNode != null;
     let childrenToRender;
     if (!isTransitioning) {
-      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("div", {
+      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", {
         "data-current": true,
         ref: currentContainerRef,
         children
       }, currentContentKey);
     } else {
-      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(React90.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime189.jsx)("div", {
+      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(React97.Fragment, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", {
           "data-previous": true,
           inert: inertValue(true),
           ref: previousContainerRef,
@@ -49759,7 +50404,7 @@ This message will only show in development mode. It won't appear in production. 
             position: "absolute"
           },
           "data-ending-style": showStartingStyleAttribute ? void 0 : ""
-        }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("div", {
+        }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", {
           "data-current": true,
           ref: currentContainerRef,
           "data-starting-style": showStartingStyleAttribute ? "" : void 0,
@@ -49825,10 +50470,10 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
   function usePopupContentKey(activeTriggerId, payload) {
-    const [contentKey, setContentKey] = React90.useState(0);
-    const previousActiveTriggerIdRef = React90.useRef(activeTriggerId);
-    const previousPayloadRef = React90.useRef(payload);
-    const pendingPayloadUpdateRef = React90.useRef(false);
+    const [contentKey, setContentKey] = React97.useState(0);
+    const previousActiveTriggerIdRef = React97.useRef(activeTriggerId);
+    const previousPayloadRef = React97.useRef(payload);
+    const pendingPayloadUpdateRef = React97.useRef(false);
     useIsoLayoutEffect(() => {
       const previousActiveTriggerId = previousActiveTriggerIdRef.current;
       const previousPayload = previousPayloadRef.current;
@@ -49847,8 +50492,8 @@ This message will only show in development mode. It won't appear in production. 
     return `${activeTriggerId ?? "current"}-${contentKey}`;
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
-  var MenuViewport = /* @__PURE__ */ React91.forwardRef(function MenuViewport2(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
+  var MenuViewport = /* @__PURE__ */ React98.forwardRef(function MenuViewport2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49887,9 +50532,9 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) MenuViewport.displayName = "MenuViewport";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/separator/Separator.mjs
-  var React92 = __toESM(require_react(), 1);
-  var Separator3 = /* @__PURE__ */ React92.forwardRef(function SeparatorComponent(componentProps, forwardedRef) {
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/separator/Separator.mjs
+  var React99 = __toESM(require_react(), 1);
+  var Separator3 = /* @__PURE__ */ React99.forwardRef(function SeparatorComponent(componentProps, forwardedRef) {
     const {
       className,
       render,
@@ -49912,19 +50557,20 @@ This message will only show in development mode. It won't appear in production. 
   });
   if (true) Separator3.displayName = "Separator";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
-  var React93 = __toESM(require_react(), 1);
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
+  var React100 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/isElementDisabled.mjs
+  // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/isElementDisabled.mjs
   function isElementDisabled(element) {
     return element == null || element.hasAttribute("disabled") || element.getAttribute("aria-disabled") === "true";
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
+  var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
   var VOICE_OVER_EXPANDED_PROPS = {
     "aria-expanded": void 0
   };
-  var MenuSubmenuTrigger = /* @__PURE__ */ React93.forwardRef(function MenuSubmenuTrigger2(componentProps, forwardedRef) {
+  var MenuSubmenuTriggerPlain = /* @__PURE__ */ React100.forwardRef(function MenuSubmenuTriggerPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49938,27 +50584,33 @@ This message will only show in development mode. It won't appear in production. 
       disabled: disabledProp = false,
       ...elementProps
     } = componentProps;
-    const submenuRootContext = useMenuSubmenuRootContext();
-    if (!submenuRootContext?.parentMenu) {
+    const context = useMenuRootContext(true);
+    if (context?.parent.type !== "menu") {
       throw new Error(true ? "Base UI: <Menu.SubmenuTrigger> must be placed in <Menu.SubmenuRoot>." : formatErrorMessage_default(37));
     }
+    const menuPositionerContext = useMenuPositionerContext();
+    const submenuRootContext = useMenuSubmenuRootContext();
+    const {
+      store,
+      parentVirtualFocus
+    } = context;
+    const parentMenuStore = context.parent.store;
     const listItem = useCompositeListItem({
       guess: true,
       label
     });
-    const menuPositionerContext = useMenuPositionerContext();
-    const {
-      store
-    } = useMenuRootContext();
     const thisTriggerId = useBaseUiId(idProp);
     const open2 = store.useState("open");
+    const focusReturnedThroughGuardRef = React100.useRef(false);
+    const positionerElement = store.useState("positionerElement");
     const floatingRootContext = store.useState("floatingRootContext");
     const floatingTreeRoot = store.useState("floatingTreeRoot");
     const popupId = store.useState("triggerPopupId", thisTriggerId);
     const baseRegisterTrigger = useTriggerRegistration(thisTriggerId, store);
     const registerTrigger = useStableCallback((element2) => {
       baseRegisterTrigger(element2);
-      if (element2 !== null && store.select("open") && store.select("activeTriggerId") == null) {
+      const activeTriggerElement = store.select("activeTriggerElement");
+      if (element2 !== null && store.select("open") && (activeTriggerElement === element2 || store.select("activeTriggerId") == null)) {
         store.update({
           activeTriggerId: thisTriggerId ?? null,
           activeTriggerElement: element2,
@@ -49966,8 +50618,8 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     });
-    const triggerElementRef = React93.useRef(null);
-    const handleTriggerElementRef = React93.useCallback((el) => {
+    const triggerElementRef = React100.useRef(null);
+    const handleTriggerElementRef = React100.useCallback((el) => {
       triggerElementRef.current = el;
       store.set("activeTriggerElement", el);
     }, [store]);
@@ -49975,13 +50627,27 @@ This message will only show in development mode. It won't appear in production. 
       registerTrigger(triggerElementRef.current);
       return () => registerTrigger(null);
     }, [registerTrigger, thisTriggerId, store]);
+    useIsoLayoutEffect(() => {
+      if (!open2 || !positionerElement) {
+        return void 0;
+      }
+      function handleGuardFocusOut(event) {
+        if (getTarget(event) === store.context.beforeContentFocusGuardRef.current) {
+          focusReturnedThroughGuardRef.current = event.relatedTarget === triggerElementRef.current;
+        }
+      }
+      positionerElement.addEventListener("focusout", handleGuardFocusOut, true);
+      return () => {
+        focusReturnedThroughGuardRef.current = false;
+        positionerElement.removeEventListener("focusout", handleGuardFocusOut, true);
+      };
+    }, [open2, positionerElement, store]);
     store.useSyncedValue("closeDelay", closeDelay);
-    const parentMenuStore = submenuRootContext.parentMenu;
     const rootDisabled = store.useState("disabled");
     const parentDisabled = parentMenuStore.useState("disabled");
     const disabled2 = disabledProp || rootDisabled || parentDisabled;
     if (true) {
-      React93.useEffect(() => {
+      React100.useEffect(() => {
         const element2 = triggerElementRef.current;
         if (element2 && isElementDisabled(element2) && !disabled2) {
           const ownerStackMessage = SafeReact.captureOwnerStack?.() || "";
@@ -49991,11 +50657,11 @@ This message will only show in development mode. It won't appear in production. 
     }
     const itemProps = parentMenuStore.useState("itemProps");
     const highlighted = parentMenuStore.useState("isActive", listItem.index);
-    const itemMetadata = React93.useMemo(() => ({
+    const itemMetadata = React100.useMemo(() => ({
       type: "submenu-trigger",
-      setActive() {
+      setActive(event) {
         if (parentMenuStore.select("highlightItemOnHover")) {
-          parentMenuStore.set("activeIndex", listItem.index);
+          parentMenuStore.setActiveIndex(listItem.index, reason_parts_exports.pointer, event);
         }
       }
     }), [parentMenuStore, listItem.index]);
@@ -50037,9 +50703,14 @@ This message will only show in development mode. It won't appear in production. 
     const click = useClick(floatingRootContext, {
       enabled: !disabled2,
       event: "mousedown",
-      toggle: !openOnHover,
+      // Without toggling, TalkBack users cannot close the submenu to reach the next parent menu
+      // item: moving the virtual cursor outside does not close it, and moving forward again
+      // re-enters the still-open submenu. Keep toggling enabled so activating its trigger closes it.
+      // Toggling applies to touch and keyboard activation. In hover mode, mouse presses are
+      // ignored and the first activation after hover-opening keeps the submenu open.
+      toggle: true,
       ignoreMouse: openOnHover,
-      stickIfOpen: false
+      stickIfOpen: openOnHover
     });
     const localInteractionProps = click.reference ?? EMPTY_OBJECT;
     const rootTriggerProps = store.useState("triggerProps", true);
@@ -50053,6 +50724,9 @@ This message will only show in development mode. It won't appear in production. 
     const lastOpenChangeReason = store.useState("lastOpenChangeReason");
     const openedByKeyboard = lastOpenChangeReason === reason_parts_exports.listNavigation || openMethod === "keyboard";
     const shouldOmitExpanded = open2 && openedByKeyboard && parts_exports.screenReader.voiceOver;
+    const submenuKeyDownProps = submenuRootContext?.onTriggerKeyDown ? {
+      onKeyDown: submenuRootContext.onTriggerKeyDown
+    } : void 0;
     const element = useRenderElement("div", componentProps, {
       state,
       stateAttributesMapping: triggerOpenStateMapping,
@@ -50060,6 +50734,9 @@ This message will only show in development mode. It won't appear in production. 
         localInteractionProps,
         hoverProps,
         rootTriggerProps,
+        // MenuFilterSubmenuRoot overrides the generic trigger handler because entry and exit
+        // depend on both the parent and child menu orientations.
+        submenuKeyDownProps,
         itemProps,
         // Opening a submenu changes the trigger's expanded state while the trigger still holds
         // focus, and VoiceOver announces that state change instead of the submenu item that focus
@@ -50069,23 +50746,44 @@ This message will only show in development mode. It won't appear in production. 
         shouldOmitExpanded ? VOICE_OVER_EXPANDED_PROPS : void 0,
         {
           "aria-controls": popupId,
-          tabIndex: open2 || highlighted ? 0 : -1,
+          // A virtually focused parent keeps real focus on its input, so the trigger must stay out
+          // of the tab order.
+          tabIndex: parentVirtualFocus || !(open2 || highlighted) ? -1 : 0,
+          onFocus(event) {
+            if (store.select("open") && focusReturnedThroughGuardRef.current) {
+              focusReturnedThroughGuardRef.current = false;
+              store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent));
+            }
+          },
           onBlur() {
             if (highlighted) {
-              parentMenuStore.set("activeIndex", null);
+              parentMenuStore.setActiveIndex(null, reason_parts_exports.none);
             }
           }
         },
         elementProps,
+        // `getItemProps` stays last so `useButton` keeps gating consumer handlers while disabled.
         getItemProps
       ],
       ref: [forwardedRef, listItem.ref, itemRef, registerTrigger, handleTriggerElementRef]
     });
     return element;
   });
+  if (true) MenuSubmenuTriggerPlain.displayName = "MenuSubmenuTriggerPlain";
+  var MenuSubmenuTrigger = /* @__PURE__ */ React100.forwardRef(function MenuSubmenuTrigger2(props, forwardedRef) {
+    const filterItem = useMenuFilterItem(props, forwardedRef, "submenu-trigger");
+    if (!filterItem.visible) {
+      return null;
+    }
+    const mergedProps = filterItem.props ? mergeProps2(filterItem.props, props) : props;
+    return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(MenuSubmenuTriggerPlain, {
+      ...mergedProps,
+      ref: filterItem.ref
+    });
+  });
   if (true) MenuSubmenuTrigger.displayName = "MenuSubmenuTrigger";
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/store/MenuHandle.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/store/MenuHandle.mjs
   var MenuHandle = class extends BasePopupHandle {
     constructor() {
       super(createNullMenuStore(), "Menu");
@@ -50120,7 +50818,1689 @@ This message will only show in development mode. It won't appear in production. 
     return new MenuHandle();
   }
 
-  // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/use-render/useRender.mjs
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-provider/MenuFilterProvider.mjs
+  var React117 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterRoot.mjs
+  var React115 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterDropdown.mjs
+  var React113 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/FilterDropdownRoot.mjs
+  var React103 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useItemRegistry.mjs
+  var React101 = __toESM(require_react(), 1);
+  function useItemRegistry() {
+    const itemRegistry = useRefWithInit(() => /* @__PURE__ */ new Map()).current;
+    const [registryVersion, setRegistryVersion] = React101.useState(0);
+    const isUpdateScheduledRef = React101.useRef(false);
+    const scheduleRegistryUpdate = useStableCallback(() => {
+      if (isUpdateScheduledRef.current) {
+        return;
+      }
+      isUpdateScheduledRef.current = true;
+      setRegistryVersion((version3) => version3 + 1);
+    });
+    const registerItem = useStableCallback((key, item) => {
+      itemRegistry.set(key, item);
+      scheduleRegistryUpdate();
+      return () => {
+        itemRegistry.delete(key);
+        scheduleRegistryUpdate();
+      };
+    });
+    const registeredItems = React101.useMemo(
+      () => new Map(itemRegistry),
+      // The mutable registry is stable. Its version explicitly controls when to publish a copy.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [registryVersion]
+    );
+    useIsoLayoutEffect(() => {
+      isUpdateScheduledRef.current = false;
+    }, [registryVersion]);
+    return {
+      items: registeredItems,
+      registerItem,
+      liveItems: itemRegistry
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/FilterDropdownRootContext.mjs
+  var React102 = __toESM(require_react(), 1);
+  function throwMissingFilterRoot() {
+    throw new Error(true ? "Base UI: Filter parts are missing their filter context and cannot access the query or items. Wrap the component root in its filter provider." : formatErrorMessage_default(103));
+  }
+  var FilterDropdownItemContext = /* @__PURE__ */ React102.createContext(null);
+  if (true) FilterDropdownItemContext.displayName = "FilterDropdownItemContext";
+  function useFilterDropdownItemContext(optional = false) {
+    const context = React102.useContext(FilterDropdownItemContext);
+    if (context === null && !optional) {
+      throwMissingFilterRoot();
+    }
+    return context;
+  }
+  var FilterDropdownRootContext = /* @__PURE__ */ React102.createContext(null);
+  if (true) FilterDropdownRootContext.displayName = "FilterDropdownRootContext";
+  function useFilterDropdownRootContext(optional = false) {
+    const context = React102.useContext(FilterDropdownRootContext);
+    if (context === null && !optional) {
+      throwMissingFilterRoot();
+    }
+    return context;
+  }
+  function useFilterContextForList(listRef) {
+    let context = React102.useContext(FilterDropdownItemContext);
+    if (listRef === null) {
+      return null;
+    }
+    while (context !== null && context.listRef !== listRef) {
+      context = context.parent;
+    }
+    return context;
+  }
+  var FilterDropdownValueContext = /* @__PURE__ */ React102.createContext("");
+  if (true) FilterDropdownValueContext.displayName = "FilterDropdownValueContext";
+  function useFilterDropdownValueContext() {
+    return React102.useContext(FilterDropdownValueContext);
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/store.mjs
+  var selectors3 = {
+    // A null `visibleItemIds` means no query, so fall back to whether anything registered.
+    isEmpty: (state) => state.visibleItemIds === null ? state.registeredItemCount === 0 : state.visibleItemIds.size === 0,
+    isItemVisible: (state, id3) => state.visibleItemIds === null || state.visibleItemIds.has(id3)
+  };
+  var FilterDropdownStore = class extends ReactStore {
+    constructor() {
+      super({
+        visibleItemIds: null,
+        registeredItemCount: 0
+      }, EMPTY_OBJECT, selectors3);
+    }
+  };
+  var DETACHED_OWNER = {
+    registerItem: () => NOOP,
+    store: new FilterDropdownStore()
+  };
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/FilterDropdownRoot.mjs
+  var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
+  function FilterDropdownRoot(props) {
+    const {
+      children,
+      open: open2,
+      disabled: disabled2 = false,
+      openedByKeyboard = false,
+      locale,
+      value,
+      query,
+      onValueChange,
+      filter: filter2,
+      autoHighlight = false,
+      triggerId: triggerIdProp,
+      listRef,
+      getActiveIndex,
+      setActiveIndex,
+      focusOwnerRef: focusOwnerRefProp
+    } = props;
+    const parentItemContext = React103.useContext(FilterDropdownItemContext);
+    const [renderedListId, setRenderedListId] = React103.useState(void 0);
+    const [inputFocusVisible, setInputFocusVisible] = React103.useState(openedByKeyboard);
+    const [keyboardModality, setKeyboardModality] = React103.useState(openedByKeyboard);
+    const [previousOpenedByKeyboard, setPreviousOpenedByKeyboard] = React103.useState(openedByKeyboard);
+    if (openedByKeyboard !== previousOpenedByKeyboard) {
+      setPreviousOpenedByKeyboard(openedByKeyboard);
+      setInputFocusVisible(openedByKeyboard);
+      setKeyboardModality(openedByKeyboard);
+    }
+    const {
+      items: registeredItems,
+      registerItem: registerInRegistry,
+      liveItems
+    } = useItemRegistry();
+    const defaultId = useBaseUiId();
+    const store = useRefWithInit(() => new FilterDropdownStore()).current;
+    const registerItem = useStableCallback((id3, item) => {
+      const unregister = registerInRegistry(id3, item);
+      store.set("registeredItemCount", liveItems.size);
+      return () => {
+        unregister();
+        store.set("registeredItemCount", liveItems.size);
+      };
+    });
+    const fallbackFocusOwnerRef = React103.useRef(null);
+    const lastFilterQueryRef = React103.useRef(null);
+    const defaultMatchItem = React103.useMemo(() => getFilter({
+      locale
+    }).contains, [locale]);
+    const focusOwnerRef = focusOwnerRefProp ?? fallbackFocusOwnerRef;
+    const filterQuery = (query ?? value).trim();
+    const matchItem = filterQuery === "" || filter2 === null ? null : filter2 ?? defaultMatchItem;
+    const autoHighlightEnabled = open2 && (autoHighlight === "always" || autoHighlight && filterQuery !== "");
+    const defaultListId = defaultId ? `${defaultId}-list` : void 0;
+    const listId = (renderedListId ?? defaultListId) || void 0;
+    const triggerId = triggerIdProp || void 0;
+    const handleValueChange = useStableCallback((nextValue, eventDetails) => {
+      onValueChange?.(nextValue, eventDetails);
+      if (!eventDetails.isCanceled && !autoHighlight) {
+        setActiveIndex(null);
+      }
+    });
+    const handleItemsChange = useStableCallback((previousItems) => {
+      const items = listRef.current;
+      const activeIndex = getActiveIndex();
+      if (activeIndex != null && items[activeIndex] != null && items[activeIndex] === previousItems[activeIndex]) {
+        return;
+      }
+      setActiveIndex(autoHighlightEnabled && items.length > 0 ? 0 : null);
+    });
+    useIsoLayoutEffect(() => {
+      if (!open2 && query === void 0) {
+        return;
+      }
+      const queryChanged = lastFilterQueryRef.current !== null && lastFilterQueryRef.current !== filterQuery;
+      lastFilterQueryRef.current = filterQuery;
+      if (matchItem === null) {
+        store.set("visibleItemIds", null);
+        if (autoHighlightEnabled && liveItems.size > 0) {
+          if (queryChanged || getActiveIndex() == null) {
+            setActiveIndex(0);
+          }
+        } else if (filterQuery === "" && queryChanged) {
+          setActiveIndex(null);
+        }
+        return;
+      }
+      const currentIds = store.state.visibleItemIds;
+      if (currentIds === null && liveItems.size === 0) {
+        return;
+      }
+      const nextIds = /* @__PURE__ */ new Set();
+      let hasNewMatch = currentIds === null;
+      liveItems.forEach(({
+        getText
+      }, id3) => {
+        const text = getText();
+        if (text != null && matchItem(text, filterQuery)) {
+          nextIds.add(id3);
+          hasNewMatch ||= !currentIds?.has(id3);
+        }
+      });
+      if (hasNewMatch || currentIds?.size !== nextIds.size) {
+        if (autoHighlightEnabled && nextIds.size > 0) {
+          setActiveIndex(0);
+        } else if (currentIds !== null || queryChanged) {
+          setActiveIndex(null);
+        }
+        store.set("visibleItemIds", nextIds);
+      } else if (autoHighlightEnabled && queryChanged && nextIds.size > 0) {
+        setActiveIndex(0);
+      }
+    }, [open2, query, filterQuery, registeredItems, liveItems, matchItem, autoHighlightEnabled, store, setActiveIndex, getActiveIndex]);
+    const contextValue = React103.useMemo(() => ({
+      open: open2,
+      disabled: disabled2,
+      inputFocusVisible,
+      setInputFocusVisible,
+      keyboardModality,
+      setKeyboardModality,
+      autoHighlight,
+      triggerId,
+      defaultListId,
+      listId,
+      setRenderedListId,
+      focusOwnerRef,
+      setActiveIndex,
+      onItemsChange: handleItemsChange,
+      onValueChange: handleValueChange
+    }), [open2, disabled2, inputFocusVisible, keyboardModality, autoHighlight, triggerId, defaultListId, listId, focusOwnerRef, setActiveIndex, handleItemsChange, handleValueChange]);
+    const itemContextValue = React103.useMemo(() => ({
+      parent: parentItemContext,
+      store,
+      registerItem,
+      listRef
+    }), [parentItemContext, store, registerItem, listRef]);
+    return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(FilterDropdownItemContext.Provider, {
+      value: itemContextValue,
+      children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(FilterDropdownRootContext.Provider, {
+        value: contextValue,
+        children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(FilterDropdownValueContext.Provider, {
+          value: query ?? value,
+          children
+        })
+      })
+    });
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/useFilterDropdownCloseQuery.mjs
+  var React104 = __toESM(require_react(), 1);
+  function useFilterDropdownCloseQuery(parameters) {
+    const {
+      open: open2,
+      mounted,
+      value,
+      onValueChange
+    } = parameters;
+    const [closeQuery, setCloseQuery] = React104.useState(null);
+    const previousOpenRef = React104.useRef(open2);
+    useIsoLayoutEffect(() => {
+      const wasOpen = previousOpenRef.current;
+      previousOpenRef.current = open2;
+      if (wasOpen && !open2 && value !== "") {
+        setCloseQuery(value);
+        onValueChange("", createChangeEventDetails(reason_parts_exports.popupClose));
+      } else if ((open2 || !mounted) && closeQuery !== null) {
+        setCloseQuery(null);
+      }
+    }, [open2, mounted, value, closeQuery, onValueChange]);
+    return !open2 && closeQuery !== null ? closeQuery : value;
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterPopup.mjs
+  var React106 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterPopup.mjs
+  var React105 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/utils/refocusOwner.mjs
+  var refocusing = false;
+  function refocusOwner(owner) {
+    refocusing = true;
+    try {
+      owner.focus({
+        preventScroll: true
+      });
+    } finally {
+      refocusing = false;
+    }
+  }
+  function isRefocusingOwner() {
+    return refocusing;
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterPopup.mjs
+  function useMenuFilterPopup(orientation) {
+    const context = useFilterDropdownRootContext();
+    const direction = useDirection();
+    const {
+      focusOwnerRef
+    } = context;
+    const nestedFocusRef = React105.useRef(null);
+    const pointerTypeRef = React105.useRef("mouse");
+    function trackPointerType(event) {
+      pointerTypeRef.current = event.pointerType || "mouse";
+    }
+    if (true) {
+      React105.useEffect(() => {
+        if (context.open && focusOwnerRef.current === null) {
+          warn4("A filterable menu opened without a <Menu.Input>. Render the input inside <Menu.Popup>, or drop <Menu.FilterProvider> for a menu that does not filter.");
+        }
+      }, [context.open, focusOwnerRef]);
+    }
+    function restoreInputFocus(event, enteredTrigger) {
+      const focusOwner = focusOwnerRef.current;
+      if (!context.open || !focusOwner) {
+        return;
+      }
+      const activeEl = activeElement(ownerDocument(event.currentTarget));
+      if (activeEl === focusOwner || contains2(event.currentTarget, activeEl)) {
+        return;
+      }
+      let submenuTrigger = null;
+      const nearestPopup = event.nativeEvent.composedPath().find((node2) => {
+        if (!isHTMLElement(node2)) {
+          return false;
+        }
+        if (node2.getAttribute("role") === "dialog" || node2.hasAttribute("data-rootownerid")) {
+          return true;
+        }
+        if (node2.hasAttribute("aria-haspopup")) {
+          submenuTrigger = node2;
+        }
+        return false;
+      });
+      if (nearestPopup !== event.currentTarget) {
+        return;
+      }
+      if (nestedFocusRef.current && !(enteredTrigger && submenuTrigger)) {
+        return;
+      }
+      if (enteredTrigger && submenuTrigger && isElement2(event.relatedTarget) && contains2(submenuTrigger, event.relatedTarget)) {
+        return;
+      }
+      refocusOwner(focusOwner);
+    }
+    return {
+      // The input owns virtual focus.
+      "aria-activedescendant": void 0,
+      // Not valid on a dialog; the list's implicit orientation is already vertical.
+      "aria-orientation": void 0,
+      onMouseDown(event) {
+        if (getTarget(event.nativeEvent) === event.currentTarget) {
+          event.preventDefault();
+        }
+      },
+      onPointerDown: trackPointerType,
+      // `pointerover` precedes the compatibility `mouseover`, so a mouse entering right after a tap
+      // is recognized before the handoff below.
+      onPointerOver: trackPointerType,
+      onPointerMove: trackPointerType,
+      onMouseMove(event) {
+        if (pointerTypeRef.current === "mouse") {
+          restoreInputFocus(event, false);
+        }
+      },
+      onMouseOver(event) {
+        if (pointerTypeRef.current === "mouse" && nestedFocusRef.current) {
+          restoreInputFocus(event, true);
+        }
+      },
+      onFocus(event) {
+        const target = getTarget(event.nativeEvent);
+        if (target === focusOwnerRef.current) {
+          nestedFocusRef.current = null;
+        } else if (isHTMLElement(target) && !contains2(event.currentTarget, target) && !isRefocusingOwner()) {
+          nestedFocusRef.current = target;
+        }
+        if (context.open && target === event.currentTarget) {
+          focusOwnerRef.current?.focus({
+            preventScroll: true
+          });
+        }
+      },
+      onKeyDown(event) {
+        const target = getTarget(event.nativeEvent);
+        if (target === focusOwnerRef.current || isTypeableElement(target)) {
+          return;
+        }
+        if (isCrossOrientationCloseKey(event.key, orientation, direction === "rtl", false)) {
+          focusOwnerRef.current?.focus({
+            preventScroll: true
+          });
+          event.stopPropagation();
+        }
+      }
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterPopup.mjs
+  var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
+  var MenuFilterPopup = /* @__PURE__ */ React106.forwardRef(function MenuFilterPopup2(props, forwardedRef) {
+    const {
+      store,
+      orientation
+    } = useMenuRootContext();
+    const open2 = store.useState("open");
+    const parent = store.useState("parent");
+    const openMethod = store.useState("openMethod");
+    const lastOpenChangeReason = store.useState("lastOpenChangeReason");
+    const interactionProps = useMenuFilterPopup(orientation);
+    const openedByHover = open2 && lastOpenChangeReason === reason_parts_exports.triggerHover;
+    const mayFocusInput = parent.type !== "menu" || open2 && (openMethod === "keyboard" || lastOpenChangeReason === reason_parts_exports.listNavigation || lastOpenChangeReason === reason_parts_exports.triggerHover || lastOpenChangeReason === reason_parts_exports.triggerPress);
+    let initialFocus = false;
+    if (mayFocusInput) {
+      initialFocus = () => {
+        const touchOpen = (openMethod === "touch" || openMethod === "pen") && !store.context.virtualPress;
+        if (openedByHover || touchOpen) {
+          return false;
+        }
+        return store.context.virtualFocusRef?.current ?? false;
+      };
+    }
+    const popupProps = mergeProps2(interactionProps, props);
+    return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(MenuPopupPlain, {
+      ...popupProps,
+      role: "dialog",
+      initialFocus,
+      ref: forwardedRef
+    });
+  });
+  if (true) MenuFilterPopup.displayName = "MenuFilterPopup";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterList.mjs
+  var React109 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/list/FilterDropdownList.mjs
+  var React108 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/group/FilterDropdownGroupContext.mjs
+  var React107 = __toESM(require_react(), 1);
+  var FilterDropdownGroupContext = /* @__PURE__ */ React107.createContext(null);
+  if (true) FilterDropdownGroupContext.displayName = "FilterDropdownGroupContext";
+  function useFilterDropdownGroupContext() {
+    return React107.useContext(FilterDropdownGroupContext);
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/list/FilterDropdownList.mjs
+  var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
+  var FilterDropdownList = /* @__PURE__ */ React108.forwardRef(function FilterDropdownList2(componentProps, forwardedRef) {
+    const {
+      render,
+      className,
+      style: style2,
+      id: idProp,
+      ...elementProps
+    } = componentProps;
+    const context = useFilterDropdownRootContext();
+    const [id3, registerIdRef] = useRenderedId(componentProps, context.defaultListId, context.setRenderedListId);
+    const defaultProps = {
+      // Chromium includes scrollable elements in sequential focus navigation by default.
+      tabIndex: -1,
+      id: id3,
+      onFocus(event) {
+        const owner = context.focusOwnerRef.current;
+        if (owner && event.relatedTarget === owner && getTarget(event.nativeEvent) === event.currentTarget) {
+          refocusOwner(owner);
+        }
+      },
+      onPointerMove() {
+        context.setKeyboardModality(false);
+      },
+      onPointerDown() {
+        context.setKeyboardModality(false);
+      }
+    };
+    return useRenderElement("div", componentProps, {
+      ref: [forwardedRef, registerIdRef],
+      props: [defaultProps, elementProps, {
+        // The list's groups and items belong to this root's query. A nested root's list renders
+        // inside an enclosing group, which must not count them as its own members.
+        children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(FilterDropdownGroupContext.Provider, {
+          value: null,
+          children: elementProps.children
+        })
+      }]
+    });
+  });
+  if (true) FilterDropdownList.displayName = "FilterDropdownList";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterKeyDown.mjs
+  function getMenuFilterKeyAction(event, context) {
+    const {
+      orientation,
+      rtl: rtl2,
+      hasActiveItem: hasActiveItem2,
+      activeItemOpensSubmenu,
+      hasValue
+    } = context;
+    const {
+      key
+    } = event;
+    if (event.which === 229) {
+      return "ignore";
+    }
+    if (key === "Tab") {
+      return event.shiftKey ? "close" : "ignore";
+    }
+    if (key === "Enter") {
+      return hasActiveItem2 ? "activate" : "navigate";
+    }
+    const isArrow = key.startsWith("Arrow");
+    const isBoundary = key === "Home" || key === "End";
+    if (event.shiftKey || event.ctrlKey || event.altKey || event.metaKey) {
+      return isArrow || isBoundary || key.length === 1 ? "edit" : "navigate";
+    }
+    if (key.length === 1) {
+      return "edit";
+    }
+    if (isBoundary) {
+      return hasActiveItem2 && !hasValue ? "navigate" : "edit";
+    }
+    if (!isArrow) {
+      return "navigate";
+    }
+    if (isMainOrientationKey(key, orientation)) {
+      return orientation === "horizontal" && !hasActiveItem2 && hasValue ? "edit" : "navigate";
+    }
+    if (activeItemOpensSubmenu && (isCrossOrientationOpenKey(key, orientation, rtl2) || isCrossOrientationCloseKey(key, orientation, rtl2, false))) {
+      return "submenu";
+    }
+    if (orientation === "horizontal" && !hasActiveItem2) {
+      return "enter-list";
+    }
+    return hasValue ? "edit" : "navigate";
+  }
+  function useMenuFilterKeyDown(hasValue) {
+    const {
+      orientation,
+      store
+    } = useMenuRootContext();
+    const submenuContext = useMenuSubmenuRootContext();
+    const direction = useDirection();
+    return useStableCallback((event) => {
+      if (!store.select("open")) {
+        return;
+      }
+      const activeItem = store.state.highlightedItem;
+      const action = getMenuFilterKeyAction(event, {
+        orientation,
+        rtl: direction === "rtl",
+        hasActiveItem: activeItem != null,
+        activeItemOpensSubmenu: activeItem?.hasAttribute("aria-haspopup") ?? false,
+        hasValue
+      });
+      switch (action) {
+        case "edit":
+          event.stopPropagation();
+          if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+            store.state.inputProps.onKeyDown?.(event);
+          }
+          break;
+        case "navigate": {
+          if (isMainOrientationKey(event.key, orientation)) {
+            event.stopPropagation();
+          }
+          store.state.inputProps.onKeyDown?.(event);
+          break;
+        }
+        case "enter-list": {
+          event.stopPropagation();
+          const listRef = store.context.itemDomElements;
+          const index2 = event.key === "ArrowDown" ? getMinListIndex(listRef, EMPTY_ARRAY) : getMaxListIndex(listRef, EMPTY_ARRAY);
+          if (listRef.current[index2]) {
+            event.preventDefault();
+            store.setActiveIndex(index2, reason_parts_exports.keyboard, event.nativeEvent);
+          }
+          break;
+        }
+        case "submenu": {
+          stopEvent(event);
+          const KeyboardEventConstructor = getWindow2(activeItem).KeyboardEvent;
+          activeItem.dispatchEvent(new KeyboardEventConstructor(event.type, event.nativeEvent));
+          break;
+        }
+        case "activate":
+          event.preventDefault();
+          dispatchClickWithModifiers(activeItem, event);
+          break;
+        case "close": {
+          stopEvent(event);
+          const returnElement = store.state.parent.type === "menu" && submenuContext?.getReturnElement?.() || store.state.activeTriggerElement;
+          const details = createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent);
+          store.setOpen(false, details);
+          if (!details.isCanceled && isHTMLElement(returnElement)) {
+            returnElement.focus();
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    });
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/moveHighlightFrom.mjs
+  function moveHighlightFrom(store, item, event, options2) {
+    const {
+      orientation,
+      rtl: rtl2,
+      loopFocus,
+      allowEscape
+    } = options2;
+    const listRef = store.context.itemDomElements;
+    const items = listRef.current;
+    const {
+      index: index2
+    } = getNextListIndex(items, items.indexOf(item), {
+      decrement: !isMainOrientationToEndKey(event.key, orientation, rtl2),
+      loopFocus,
+      allowEscape,
+      // Match the menu's list navigation: `aria-disabled` items stay reachable.
+      disabledIndices: EMPTY_ARRAY,
+      minIndex: getMinListIndex(listRef, EMPTY_ARRAY),
+      maxIndex: getMaxListIndex(listRef, EMPTY_ARRAY)
+    });
+    const next2 = items[index2];
+    if (next2) {
+      store.setActiveIndex(index2, reason_parts_exports.keyboard, event.nativeEvent);
+      next2.scrollIntoView?.({
+        block: "nearest",
+        inline: "nearest"
+      });
+    }
+    return next2 ?? void 0;
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterList.mjs
+  var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
+  var MenuFilterList = /* @__PURE__ */ React109.forwardRef(function MenuFilterList2(componentProps, forwardedRef) {
+    const {
+      store,
+      orientation,
+      loopFocus,
+      allowEscape
+    } = useMenuRootContext();
+    const direction = useDirection();
+    const {
+      onItemsChange,
+      focusOwnerRef,
+      triggerId
+    } = useFilterDropdownRootContext();
+    const {
+      listRef
+    } = useFilterDropdownItemContext();
+    const {
+      subscribeMapChange
+    } = useCompositeListContext();
+    const value = useFilterDropdownValueContext();
+    const handleInputKeyDown = useMenuFilterKeyDown(value !== "");
+    const handleKeyDown = useStableCallback((event) => {
+      const owner = focusOwnerRef.current;
+      const target = getTarget(event.nativeEvent);
+      const ownerFocused = owner != null && activeElement(ownerDocument(owner)) === owner;
+      const fromNestedPopup = !contains2(event.currentTarget, target);
+      if (owner == null || ownerFocused || fromNestedPopup) {
+        if (event.which !== 229 && !event.shiftKey && !event.ctrlKey && !event.metaKey && !event.altKey && isMainOrientationKey(event.key, orientation)) {
+          event.stopPropagation();
+          const trigger = fromNestedPopup && ownerFocused ? getNestedPopupTrigger(target) : void 0;
+          if (trigger) {
+            moveHighlightFrom(store, trigger, event, {
+              orientation,
+              rtl: direction === "rtl",
+              loopFocus,
+              allowEscape
+            });
+          }
+        }
+        return;
+      }
+      if (event.defaultPrevented) {
+        return;
+      }
+      refocusOwner(owner);
+      handleInputKeyDown(event);
+    });
+    function getNestedPopupTrigger(target) {
+      const root = target.getRootNode();
+      return listRef.current.find((item) => {
+        const popupId = item?.getAttribute("aria-controls");
+        return popupId != null && isHTMLElement(item) && contains2(root.getElementById(popupId), target);
+      });
+    }
+    const previousItemsRef = React109.useRef(null);
+    const handleItemMapChange = useStableCallback(() => {
+      const items = [...listRef.current];
+      const previousItems = previousItemsRef.current;
+      const changed = previousItems === null || previousItems.length !== items.length || items.some((item, index2) => item !== previousItems[index2]);
+      if (changed && previousItems !== null) {
+        onItemsChange(previousItems);
+      }
+      previousItemsRef.current = items;
+    });
+    useIsoLayoutEffect(() => {
+      return subscribeMapChange(handleItemMapChange);
+    }, [subscribeMapChange, handleItemMapChange]);
+    const ariaLabelledBy = resolvePopupLabel(componentProps, null, triggerId ?? null);
+    const listProps = mergeProps2({
+      role: "menu",
+      "aria-labelledby": ariaLabelledBy,
+      "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
+      onKeyDown: handleKeyDown
+    }, componentProps);
+    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(FilterDropdownList, {
+      ...listProps,
+      ref: forwardedRef
+    });
+  });
+  if (true) MenuFilterList.displayName = "MenuFilterList";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterGroup.mjs
+  var React111 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/group/useFilterDropdownGroup.mjs
+  var React110 = __toESM(require_react(), 1);
+  function isGroupHidden(state, items) {
+    if (state.visibleItemIds === null || items.size === 0) {
+      return false;
+    }
+    for (const [id3, retained] of items) {
+      if (retained || state.visibleItemIds.has(id3)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  function useFilterDropdownGroup() {
+    const {
+      store
+    } = useFilterDropdownItemContext();
+    const parentContext = useFilterDropdownGroupContext();
+    const {
+      items,
+      registerItem
+    } = useItemRegistry();
+    const hidden = useStore2(store, isGroupHidden, items);
+    const groupId = useRefWithInit(() => /* @__PURE__ */ Symbol("filter-dropdown-group")).current;
+    const registerInParent = parentContext?.registerItem;
+    useIsoLayoutEffect(() => registerInParent?.(groupId, !hidden), [registerInParent, groupId, hidden]);
+    const context = React110.useMemo(() => ({
+      registerItem
+    }), [registerItem]);
+    return {
+      hidden,
+      context
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterGroup.mjs
+  var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
+  var MenuFilterGroup = /* @__PURE__ */ React111.forwardRef(function MenuFilterGroup2(props, forwardedRef) {
+    const {
+      hidden,
+      context
+    } = useFilterDropdownGroup();
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(FilterDropdownGroupContext.Provider, {
+      value: context,
+      children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(MenuGroupPlain, {
+        ...props,
+        hidden: hidden || props.hidden || void 0,
+        ref: forwardedRef
+      })
+    });
+  });
+  if (true) MenuFilterGroup.displayName = "MenuFilterGroup";
+  var MenuFilterRadioGroup = /* @__PURE__ */ React111.forwardRef(function MenuFilterRadioGroup2(props, forwardedRef) {
+    const {
+      hidden,
+      context
+    } = useFilterDropdownGroup();
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(FilterDropdownGroupContext.Provider, {
+      value: context,
+      children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(MenuRadioGroupPlain, {
+        ...props,
+        hidden: hidden || props.hidden || void 0,
+        ref: forwardedRef
+      })
+    });
+  });
+  if (true) MenuFilterRadioGroup.displayName = "MenuFilterRadioGroup";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/item/useFilterDropdownItem.mjs
+  var React112 = __toESM(require_react(), 1);
+  function childrenText(children) {
+    if (typeof children === "string" || typeof children === "number") {
+      return String(children);
+    }
+    if (Array.isArray(children)) {
+      return children.map(childrenText).join("");
+    }
+    if (/* @__PURE__ */ React112.isValidElement(children)) {
+      return childrenText(children.props.children);
+    }
+    return "";
+  }
+  function useFilterDropdownItem(params) {
+    const {
+      label,
+      retainGroup = false,
+      children,
+      render,
+      context
+    } = params;
+    const nearestContext = useFilterDropdownItemContext(context !== void 0);
+    const groupContext = useFilterDropdownGroupContext();
+    const owner = context === void 0 ? nearestContext : context;
+    const {
+      registerItem,
+      store
+    } = owner ?? DETACHED_OWNER;
+    const registerGroupItem = groupContext?.registerItem;
+    const itemId = useRefWithInit(() => /* @__PURE__ */ Symbol("filter-dropdown-item")).current;
+    const ref = React112.useRef(null);
+    const registeredTextRef = React112.useRef(void 0);
+    const matched = useStore2(store, selectors3.isItemVisible, itemId);
+    const [registered, setRegistered] = React112.useState(matched);
+    const childrenRef = useValueAsRef(children);
+    const renderRef = useValueAsRef(render);
+    const childrenTextRef = React112.useRef(void 0);
+    const resolveText = React112.useCallback(() => {
+      if (label != null) {
+        return label;
+      }
+      const fromChildren = childrenText(childrenRef.current ?? unwrapLazyRenderProp(renderRef.current));
+      const previousChildrenText = childrenTextRef.current;
+      childrenTextRef.current = fromChildren;
+      if (ref.current !== null) {
+        return ref.current.textContent ?? "";
+      }
+      if (registeredTextRef.current !== void 0 && fromChildren === previousChildrenText) {
+        return registeredTextRef.current;
+      }
+      return fromChildren;
+    }, [label, childrenRef, renderRef]);
+    const register2 = React112.useCallback((resolvedText) => {
+      const text = resolvedText ?? resolveText();
+      if (text) {
+        registeredTextRef.current = text;
+      }
+      return registerItem(itemId, {
+        getText() {
+          if (label == null && ref.current) {
+            registeredTextRef.current = ref.current.textContent ?? "";
+          }
+          return registeredTextRef.current;
+        }
+      });
+    }, [itemId, label, registerItem, resolveText]);
+    useIsoLayoutEffect(() => {
+      const unregister = register2();
+      setRegistered(true);
+      return unregister;
+    }, [register2]);
+    useIsoLayoutEffect(() => registerGroupItem?.(itemId, retainGroup), [registerGroupItem, itemId, retainGroup]);
+    useIsoLayoutEffect(() => {
+      const text = resolveText();
+      if (text !== registeredTextRef.current) {
+        registeredTextRef.current = text;
+        void register2(text);
+      }
+    }, [register2, resolveText, children, render, label]);
+    return {
+      visible: !registered || matched,
+      ref
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterSubmenuTrigger.mjs
+  function useMenuFilterSubmenuTrigger(params) {
+    const {
+      store,
+      virtualFocus
+    } = useMenuRootContext();
+    const open2 = store.useState("open");
+    const mounted = store.useState("mounted");
+    const parent = store.useState("parent");
+    const parentListRef = parent.type === "menu" ? parent.store.context.itemDomElements : null;
+    const parentContext = useFilterContextForList(parentListRef);
+    const {
+      visible,
+      ref
+    } = useFilterDropdownItem({
+      ...params,
+      context: parentContext,
+      retainGroup: mounted
+    });
+    useIsoLayoutEffect(() => {
+      if (visible || !open2) {
+        return;
+      }
+      store.setOpen(false, createChangeEventDetails(reason_parts_exports.none));
+    }, [visible, open2, store]);
+    const clickProps = useEnhancedClickHandler((event, interactionType) => {
+      if (event.type === "click" && store.select("open") && (interactionType === "keyboard" || interactionType === "mouse" && store.select("lastOpenChangeReason") === reason_parts_exports.triggerPress)) {
+        store.context.virtualFocusRef?.current?.focus({
+          preventScroll: true
+        });
+      }
+    });
+    const props = {
+      // Omitted rather than `undefined`, which would clear the `'menu'` the root puts on every
+      // trigger.
+      ...virtualFocus ? {
+        "aria-haspopup": "dialog"
+      } : void 0,
+      ...clickProps,
+      onPointerDown(event) {
+        clickProps.onPointerDown(event);
+        store.context.virtualPress = isVirtualPointerEvent(event.nativeEvent);
+      },
+      onFocus(event) {
+        const focusOwner = store.context.virtualFocusRef?.current;
+        if (focusOwner && store.select("open") && event.relatedTarget === focusOwner) {
+          event.preventBaseUIHandler();
+          focusOwner.focus({
+            preventScroll: true
+          });
+        }
+      }
+    };
+    if (parentContext === null) {
+      return {
+        visible: true,
+        ref: null,
+        props
+      };
+    }
+    return {
+      visible: visible || mounted,
+      ref,
+      props
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useVirtualFocusParentHandoff.mjs
+  function useVirtualFocusParentHandoff(store, parent, open2, virtualFocus) {
+    const parentStore = parent.type === "menu" ? parent.store : null;
+    const parentVirtualFocusRef = parentStore?.context.virtualFocusRef;
+    const returnToParent = useStableCallback((trigger, reason) => {
+      const focusOwner = parentVirtualFocusRef?.current;
+      if (virtualFocus || store.select("open") || !parentStore?.select("open") || !focusOwner) {
+        return;
+      }
+      if (contains2(store.context.popupRef.current, activeElement(ownerDocument(focusOwner)))) {
+        focusOwner.focus({
+          preventScroll: true
+        });
+      }
+      if ((reason === reason_parts_exports.listNavigation || reason === reason_parts_exports.escapeKey) && parentStore.state.activeIndex == null) {
+        parentStore.highlightItem(trigger, reason_parts_exports.none);
+      }
+    });
+    useIsoLayoutEffect(() => {
+      if (!open2) {
+        const trigger = store.state.activeTriggerElement;
+        const reason = store.select("lastOpenChangeReason");
+        queueMicrotask(() => returnToParent(trigger, reason));
+      }
+    }, [open2, store, returnToParent]);
+    function handleFocus() {
+      if (!virtualFocus && parentVirtualFocusRef && parentStore?.state.activeIndex != null) {
+        parentStore.setActiveIndex(null, reason_parts_exports.none);
+      }
+    }
+    return {
+      parentVirtualFocusRef,
+      handleFocus
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterImpl.mjs
+  var MENU_FILTER_IMPL = {
+    Popup: MenuFilterPopup,
+    List: MenuFilterList,
+    Group: MenuFilterGroup,
+    RadioGroup: MenuFilterRadioGroup,
+    useItem: useFilterDropdownItem,
+    useSubmenuTrigger: useMenuFilterSubmenuTrigger,
+    useParentHandoff: useVirtualFocusParentHandoff
+  };
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterDropdown.mjs
+  var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
+  function MenuFilterDropdown(props) {
+    const {
+      value: valueProp,
+      defaultValue: defaultValue2 = "",
+      onValueChange,
+      ...dropdownProps
+    } = props;
+    const {
+      store
+    } = useMenuRootContext();
+    const open2 = store.useState("open");
+    const mounted = store.useState("mounted");
+    const keyboardOpen = store.useState("keyboardOpen");
+    const activeTriggerId = store.useState("activeTriggerId");
+    const activeTriggerElement = store.useState("activeTriggerElement");
+    const disabled2 = store.useState("disabled");
+    const [value, setValue] = useControlled({
+      controlled: valueProp,
+      default: defaultValue2,
+      name: "MenuFilterProvider",
+      state: "value"
+    });
+    const handleValueChange = useStableCallback((nextValue, eventDetails) => {
+      onValueChange?.(nextValue, eventDetails);
+      if (!eventDetails.isCanceled) {
+        setValue(nextValue);
+      }
+    });
+    const getActiveIndex = useStableCallback(() => store.state.activeIndex);
+    const setActiveIndex = useStableCallback((index2) => {
+      store.setActiveIndex(index2, reason_parts_exports.none);
+    });
+    const query = useFilterDropdownCloseQuery({
+      open: open2,
+      mounted,
+      value,
+      onValueChange: handleValueChange
+    });
+    const filterTriggerProps = useFilterTriggerProps(value !== "");
+    useRefWithInit(() => {
+      store.set("filterTriggerProps", filterTriggerProps);
+      return null;
+    });
+    store.useSyncedValue("filterTriggerProps", filterTriggerProps);
+    useIsoLayoutEffect(() => {
+      if (!open2) {
+        store.set("keyboardOpen", false);
+      }
+    }, [open2, store]);
+    const triggerId = activeTriggerElement ? activeTriggerElement.id || null : activeTriggerId;
+    return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(MenuFilterImplContext.Provider, {
+      value: MENU_FILTER_IMPL,
+      children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(FilterDropdownRoot, {
+        ...dropdownProps,
+        open: open2,
+        openedByKeyboard: keyboardOpen,
+        disabled: disabled2,
+        value,
+        query,
+        onValueChange: handleValueChange,
+        triggerId,
+        listRef: store.context.itemDomElements,
+        getActiveIndex,
+        setActiveIndex,
+        focusOwnerRef: store.context.virtualFocusRef
+      })
+    });
+  }
+  function useFilterTriggerProps(hasValue) {
+    const {
+      store
+    } = useMenuRootContext();
+    const isInMenubar = useMenubarContext2(true) != null;
+    const handleInputKeyDown = useMenuFilterKeyDown(hasValue);
+    return React113.useMemo(() => ({
+      "aria-haspopup": "dialog",
+      onPointerDown(event) {
+        store.context.virtualPress = isVirtualPointerEvent(event.nativeEvent);
+      },
+      onKeyDown(event) {
+        const focusOwner = store.context.virtualFocusRef?.current;
+        if (!store.select("open") || !focusOwner || isInMenubar) {
+          return;
+        }
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+          focusOwner.focus({
+            preventScroll: true
+          });
+          handleInputKeyDown(event);
+          event.preventDefault();
+          event.preventBaseUIHandler();
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+          event.preventBaseUIHandler();
+        } else if (isTypeaheadKey(event)) {
+          focusOwner.focus({
+            preventScroll: true
+          });
+        }
+      }
+    }), [store, isInMenubar, handleInputKeyDown]);
+  }
+  function isTypeaheadKey(event) {
+    return event.key.length === 1 && event.key !== " " && !event.ctrlKey && !event.metaKey && !event.altKey;
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterRoot.mjs
+  var React114 = __toESM(require_react(), 1);
+  function useMenuFilterRoot(props) {
+    const {
+      children,
+      value,
+      defaultValue: defaultValue2,
+      onValueChange,
+      filter: filter2,
+      autoHighlight = false,
+      locale,
+      ...otherProps
+    } = props;
+    const virtualFocusRef = React114.useRef(null);
+    return {
+      children,
+      rootProps: {
+        ...otherProps,
+        virtualFocus: true,
+        virtualFocusRef,
+        allowEscape: !autoHighlight,
+        resetOnPointerLeave: autoHighlight !== "always"
+      },
+      dropdownProps: {
+        value,
+        defaultValue: defaultValue2,
+        onValueChange,
+        filter: filter2,
+        autoHighlight,
+        locale
+      }
+    };
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterRoot.mjs
+  var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
+  function MenuFilterRoot(props) {
+    const {
+      children,
+      rootProps,
+      dropdownProps
+    } = useMenuFilterRoot(props);
+    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(MenuRootInternal, {
+      ...rootProps,
+      children: (payload) => /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(MenuFilterDropdown, {
+        ...dropdownProps,
+        children: typeof children === "function" ? children(payload) : children
+      })
+    });
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-submenu-root/MenuFilterSubmenuRoot.mjs
+  var React116 = __toESM(require_react(), 1);
+  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
+  function MenuFilterSubmenuRoot(props) {
+    const parent = useMenuRootContext();
+    const parentStore = parent.store;
+    const parentDisabled = parentStore.useState("disabled");
+    const {
+      rootProps,
+      dropdownProps
+    } = useMenuFilterRoot(props);
+    const parentReferenceRef = React116.useRef(null);
+    function handleSubmenuEnter(trigger, event) {
+      const focusedElement = parent.virtualFocus ? parentStore.context.virtualFocusRef?.current : activeElement(ownerDocument(trigger));
+      if (isHTMLElement(focusedElement)) {
+        parentReferenceRef.current = {
+          reference: focusedElement,
+          trigger
+        };
+        parentStore.setActiveIndex(null, event ? reason_parts_exports.keyboard : reason_parts_exports.none, event);
+      }
+    }
+    function highlightTrigger(trigger, event) {
+      parentStore.highlightItem(trigger, reason_parts_exports.keyboard, event);
+    }
+    function handleSubmenuExit(event) {
+      const parentReference = parentReferenceRef.current;
+      if (!parentReference) {
+        return;
+      }
+      parentReference.reference.focus({
+        preventScroll: true
+      });
+      highlightTrigger(parentReference.trigger, event);
+    }
+    function handleOpenChange(nextOpen, details) {
+      rootProps.onOpenChange?.(nextOpen, details);
+      if (details.isCanceled) {
+        return;
+      }
+      if (!nextOpen) {
+        if (details.reason === reason_parts_exports.escapeKey && isHTMLElement(details.trigger)) {
+          highlightTrigger(details.trigger, details.event);
+          parentReferenceRef.current = {
+            reference: parent.virtualFocus ? parentStore.context.virtualFocusRef?.current ?? details.trigger : details.trigger,
+            trigger: details.trigger
+          };
+        }
+        return;
+      }
+      parentReferenceRef.current = null;
+      if (isHTMLElement(details.trigger) && isKeyboardOpen(details.reason, details.event)) {
+        handleSubmenuEnter(details.trigger, details.reason === reason_parts_exports.listNavigation ? details.event : void 0);
+      }
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(MenuRootInternal, {
+      ...rootProps,
+      isSubmenu: true,
+      disabled: parentDisabled || props.disabled,
+      onOpenChange: handleOpenChange,
+      children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(MenuFilterSubmenuNavigation, {
+        parentStore,
+        parentVirtualFocus: parent.virtualFocus,
+        parentAllowEscape: parent.virtualFocus && parent.allowEscape,
+        parentOrientation: parent.orientation,
+        parentLoopFocus: parent.loopFocus,
+        getReturnElement: () => parentReferenceRef.current?.reference ?? (parent.virtualFocus ? parentStore.context.virtualFocusRef?.current : null) ?? null,
+        onSubmenuEnter: handleSubmenuEnter,
+        onSubmenuExit: handleSubmenuExit,
+        children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(MenuFilterDropdown, {
+          ...dropdownProps,
+          children: props.children
+        })
+      })
+    });
+  }
+  function MenuFilterSubmenuNavigation(props) {
+    const {
+      children,
+      parentStore,
+      parentVirtualFocus,
+      parentAllowEscape,
+      parentOrientation,
+      parentLoopFocus,
+      onSubmenuEnter,
+      onSubmenuExit,
+      getReturnElement
+    } = props;
+    const {
+      store,
+      orientation
+    } = useMenuRootContext();
+    const direction = useDirection();
+    const mounted = store.useState("mounted");
+    const wasMountedRef = React116.useRef(false);
+    const handleReturnFocus = useStableCallback(() => {
+      const [ownTrigger] = store.context.triggerElements.elements();
+      return getReturnElement() ?? (isHTMLElement(ownTrigger) ? ownTrigger : null);
+    });
+    useIsoLayoutEffect(() => {
+      const wasMounted = wasMountedRef.current;
+      wasMountedRef.current = mounted;
+      if (mounted || !wasMounted) {
+        return;
+      }
+      const returnElement = handleReturnFocus();
+      if (!returnElement || !parentStore.select("open")) {
+        return;
+      }
+      const doc = ownerDocument(returnElement);
+      const activeEl = activeElement(doc);
+      if (activeEl === doc.body || contains2(store.select("popupElement"), activeEl)) {
+        returnElement.focus({
+          preventScroll: true
+        });
+      }
+    }, [mounted, store, parentStore, handleReturnFocus]);
+    function moveInParent(from2, event) {
+      const item = moveHighlightFrom(parentStore, from2, event, {
+        orientation: parentOrientation,
+        rtl: direction === "rtl",
+        loopFocus: parentLoopFocus,
+        allowEscape: parentAllowEscape
+      });
+      if (!parentVirtualFocus) {
+        item?.focus({
+          preventScroll: true
+        });
+      }
+    }
+    function close(event) {
+      if (!store.select("open")) {
+        return;
+      }
+      stopEvent(event);
+      const trigger = store.select("activeTriggerElement");
+      const eventDetails = createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent);
+      store.setOpen(false, eventDetails);
+      if (!eventDetails.isCanceled) {
+        onSubmenuExit(event.nativeEvent);
+      }
+      const returnElement = getReturnElement() ?? store.select("activeTriggerElement");
+      if (!store.select("open") && isHTMLElement(returnElement) && activeElement(ownerDocument(returnElement)) !== returnElement) {
+        returnElement.focus();
+      }
+      if (!store.select("open") && isHTMLElement(trigger) && isMainOrientationKey(event.key, parentOrientation)) {
+        moveInParent(trigger, event);
+      }
+    }
+    const handleTriggerKeyDown = useStableCallback((event) => {
+      if (isMainOrientationKey(event.key, parentOrientation)) {
+        moveInParent(event.currentTarget, event);
+        event.preventBaseUIHandler();
+        stopEvent(event);
+        return;
+      }
+      const open2 = store.select("open");
+      const isRtl = direction === "rtl";
+      const isCloseKey = isCrossOrientationCloseKey(event.key, orientation, isRtl, false);
+      if (open2 && isCloseKey) {
+        close(event);
+        return;
+      }
+      const isOpenKey = isCrossOrientationOpenKey(event.key, parentOrientation, isRtl);
+      if (!isOpenKey) {
+        return;
+      }
+      stopEvent(event);
+      if (open2) {
+        onSubmenuEnter(event.currentTarget, event.nativeEvent);
+        store.context.virtualFocusRef?.current?.focus({
+          preventScroll: true
+        });
+        return;
+      }
+      store.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
+    });
+    const handlePopupKeyDown = useStableCallback((event) => {
+      if (event.which === 229) {
+        return;
+      }
+      const isCloseKey = isCrossOrientationCloseKey(event.key, orientation, direction === "rtl", false);
+      if (isCloseKey) {
+        close(event);
+      }
+    });
+    const contextValue = React116.useMemo(() => ({
+      getReturnElement: handleReturnFocus,
+      onTriggerKeyDown: handleTriggerKeyDown,
+      onPopupKeyDown: handlePopupKeyDown
+    }), [handleReturnFocus, handleTriggerKeyDown, handlePopupKeyDown]);
+    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(MenuSubmenuRootContext.Provider, {
+      value: contextValue,
+      children
+    });
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-provider/MenuFilterProvider.mjs
+  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+  function MenuFilterProvider(props) {
+    const {
+      children,
+      filter: filter2,
+      value,
+      defaultValue: defaultValue2,
+      onValueChange,
+      autoHighlight,
+      locale
+    } = props;
+    const contextValue = React117.useMemo(() => ({
+      Root: MenuFilterRoot,
+      SubmenuRoot: MenuFilterSubmenuRoot,
+      options: {
+        filter: filter2,
+        value,
+        defaultValue: defaultValue2,
+        onValueChange,
+        autoHighlight,
+        locale
+      }
+    }), [filter2, value, defaultValue2, onValueChange, autoHighlight, locale]);
+    return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(MenuFilterProviderContext.Provider, {
+      value: contextValue,
+      children
+    });
+  }
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/input/MenuInput.mjs
+  var React119 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/input/FilterDropdownInput.mjs
+  var React118 = __toESM(require_react(), 1);
+  var FilterDropdownInput = /* @__PURE__ */ React118.forwardRef(function FilterDropdownInput2(componentProps, forwardedRef) {
+    const {
+      render,
+      className,
+      style: style2,
+      id: idProp,
+      disabled: disabled2,
+      activeItemId,
+      navigationProps,
+      ...elementProps
+    } = componentProps;
+    const id3 = useBaseUiId(idProp);
+    const context = useFilterDropdownRootContext();
+    const {
+      listRef
+    } = useFilterDropdownItemContext();
+    const value = useFilterDropdownValueContext();
+    const [composingValue, setComposingValue] = React118.useState(null);
+    const isComposingRef = React118.useRef(false);
+    function commitValue(nextValue, nativeEvent) {
+      if (!context.open) {
+        return;
+      }
+      const reason = nextValue === "" ? reason_parts_exports.inputClear : reason_parts_exports.inputChange;
+      context.onValueChange(nextValue, createChangeEventDetails(reason, nativeEvent));
+    }
+    const state = {
+      highlighted: context.inputFocusVisible && (!context.keyboardModality || activeItemId == null)
+    };
+    return useRenderElement("input", componentProps, {
+      state,
+      ref: [forwardedRef, context.focusOwnerRef],
+      props: [navigationProps, {
+        id: id3,
+        type: "text",
+        disabled: context.disabled || disabled2,
+        "aria-activedescendant": activeItemId,
+        role: "searchbox",
+        inputMode: "search",
+        autoComplete: "off",
+        spellCheck: "false",
+        autoCorrect: "off",
+        autoCapitalize: "none",
+        // The aria-autocomplete 'list' value is only valid with `aria-haspopup` so we depend
+        // on the searchbox role to communicate affordance, with an input label as fallback
+        // https://w3c.github.io/aria/#aria-autocomplete
+        "aria-autocomplete": void 0,
+        "aria-controls": context.listId,
+        value: composingValue ?? value,
+        onCompositionStart(event) {
+          if (parts_exports.os.android) {
+            return;
+          }
+          isComposingRef.current = true;
+          setComposingValue(event.currentTarget.value);
+        },
+        onCompositionEnd(event) {
+          if (!isComposingRef.current) {
+            return;
+          }
+          isComposingRef.current = false;
+          setComposingValue(null);
+          commitValue(event.currentTarget.value, event.nativeEvent);
+        },
+        onChange(event) {
+          if (isComposingRef.current) {
+            setComposingValue(event.currentTarget.value);
+            return;
+          }
+          commitValue(event.currentTarget.value, event.nativeEvent);
+        },
+        onKeyDown() {
+          context.setKeyboardModality(true);
+        },
+        onPointerDown() {
+          context.setKeyboardModality(false);
+        },
+        onMouseEnter(event) {
+          context.setKeyboardModality(false);
+          if (context.open) {
+            refocusOwner(event.currentTarget);
+          }
+        },
+        onFocus(event) {
+          context.setInputFocusVisible(true);
+          if (context.autoHighlight === "always" || isRefocusingOwner()) {
+            return;
+          }
+          const from2 = event.relatedTarget;
+          if (from2 !== null && listRef.current.includes(from2)) {
+            context.setActiveIndex(null);
+          }
+        },
+        onBlur() {
+          context.setInputFocusVisible(false);
+        }
+      }, elementProps]
+    });
+  });
+  if (true) FilterDropdownInput.displayName = "FilterDropdownInput";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/input/MenuInput.mjs
+  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+  var MenuInput = /* @__PURE__ */ React119.forwardRef(function MenuInput2(componentProps, forwardedRef) {
+    useMenuFilterPart("Input");
+    const {
+      store
+    } = useMenuRootContext();
+    const value = useFilterDropdownValueContext();
+    const {
+      onKeyDown,
+      ...navigationProps
+    } = store.useState("inputProps");
+    const activeItemId = store.useState("highlightedItemId");
+    const handleKeyDown = useMenuFilterKeyDown(value !== "");
+    const handleInputRef = React119.useCallback((input) => {
+      store.set("inputFocused", input !== null && activeElement(ownerDocument(input)) === input);
+    }, [store]);
+    const mergedRefs = useMergedRefs(forwardedRef, handleInputRef);
+    const inputProps = mergeProps2({
+      onKeyDown: handleKeyDown,
+      onFocus() {
+        store.set("inputFocused", true);
+      },
+      onBlur() {
+        store.set("inputFocused", false);
+      }
+    }, componentProps);
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(FilterDropdownInput, {
+      ...inputProps,
+      activeItemId,
+      navigationProps,
+      ref: mergedRefs
+    });
+  });
+  if (true) MenuInput.displayName = "MenuInput";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/list/MenuList.mjs
+  var React120 = __toESM(require_react(), 1);
+  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+  var MenuListPlain = /* @__PURE__ */ React120.forwardRef(function MenuListPlain2(componentProps, forwardedRef) {
+    const {
+      render,
+      className,
+      style: style2,
+      id: idProp,
+      ...elementProps
+    } = componentProps;
+    const {
+      store,
+      orientation
+    } = useMenuRootContext();
+    const activeTriggerId = store.useState("activeTriggerId");
+    const activeTriggerElement = store.useState("activeTriggerElement");
+    const setListElement = store.useStateSetter("listElement");
+    const id3 = useBaseUiId(idProp);
+    const renderedIdRef = React120.useRef(id3);
+    useIsoLayoutEffect(() => {
+      if (renderedIdRef.current !== id3) {
+        renderedIdRef.current = id3;
+        store.notifyAll();
+      }
+    }, [id3, store]);
+    const ariaLabelledBy = resolvePopupLabel(componentProps, activeTriggerElement, activeTriggerId);
+    return useRenderElement("div", componentProps, {
+      ref: [forwardedRef, setListElement],
+      props: [{
+        id: id3,
+        role: "menu",
+        // The popup focuses the list on a pointer open in place of itself.
+        tabIndex: -1,
+        // `menu` is implicitly vertical, so only the non-default value needs to be rendered.
+        "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
+        "aria-labelledby": ariaLabelledBy
+      }, elementProps]
+    });
+  });
+  if (true) MenuListPlain.displayName = "MenuListPlain";
+  var MenuList3 = /* @__PURE__ */ React120.forwardRef(function MenuList4(props, forwardedRef) {
+    const List = useMenuFilterImpl()?.List ?? MenuListPlain;
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(List, {
+      ...props,
+      ref: forwardedRef
+    });
+  });
+  if (true) MenuList3.displayName = "MenuList";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/clear/MenuClear.mjs
+  var React122 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/clear/FilterDropdownClear.mjs
+  var React121 = __toESM(require_react(), 1);
+  var FilterDropdownClear = /* @__PURE__ */ React121.forwardRef(function FilterDropdownClear2(componentProps, forwardedRef) {
+    const {
+      render,
+      className,
+      style: style2,
+      disabled: disabledProp = false,
+      nativeButton = true,
+      ...elementProps
+    } = componentProps;
+    const context = useFilterDropdownRootContext();
+    const value = useFilterDropdownValueContext();
+    const disabled2 = context.disabled || disabledProp;
+    const visible = value !== "";
+    const {
+      buttonRef,
+      getButtonProps
+    } = useButton3({
+      disabled: disabled2,
+      native: nativeButton
+    });
+    const state = {
+      disabled: disabled2
+    };
+    return useRenderElement("button", componentProps, {
+      enabled: visible,
+      state,
+      ref: [forwardedRef, buttonRef],
+      props: [{
+        tabIndex: -1,
+        "aria-hidden": true,
+        onMouseDown(event) {
+          event.preventDefault();
+        },
+        onClick(event) {
+          const eventDetails = createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent);
+          context.onValueChange("", eventDetails);
+          context.focusOwnerRef.current?.focus({
+            preventScroll: true
+          });
+        }
+      }, elementProps, getButtonProps]
+    });
+  });
+  if (true) FilterDropdownClear.displayName = "FilterDropdownClear";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/clear/MenuClear.mjs
+  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
+  var MenuClear = /* @__PURE__ */ React122.forwardRef(function MenuClear2(props, forwardedRef) {
+    useMenuFilterPart("Clear");
+    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(FilterDropdownClear, {
+      ...props,
+      ref: forwardedRef
+    });
+  });
+  if (true) MenuClear.displayName = "MenuClear";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/empty/MenuEmpty.mjs
+  var React124 = __toESM(require_react(), 1);
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/empty/FilterDropdownEmpty.mjs
+  var React123 = __toESM(require_react(), 1);
+  var FilterDropdownEmpty = /* @__PURE__ */ React123.forwardRef(function FilterDropdownEmpty2(componentProps, forwardedRef) {
+    const {
+      render,
+      className,
+      style: style2,
+      ...elementProps
+    } = componentProps;
+    const {
+      store
+    } = useFilterDropdownItemContext();
+    const isEmpty = useStore2(store, selectors3.isEmpty);
+    const [ready, setReady] = React123.useState(false);
+    useIsoLayoutEffect(() => {
+      setReady(true);
+    }, []);
+    const visible = ready && isEmpty;
+    const emptyRef = useInitialLiveRegionTextMutation(visible);
+    return useRenderElement("div", componentProps, {
+      enabled: visible,
+      ref: [forwardedRef, emptyRef],
+      props: [{
+        role: "status",
+        "aria-live": "polite",
+        "aria-atomic": true
+      }, elementProps]
+    });
+  });
+  if (true) FilterDropdownEmpty.displayName = "FilterDropdownEmpty";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/empty/MenuEmpty.mjs
+  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
+  var MenuEmpty = /* @__PURE__ */ React124.forwardRef(function MenuEmpty2(props, forwardedRef) {
+    useMenuFilterPart("Empty");
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(FilterDropdownEmpty, {
+      ...props,
+      ref: forwardedRef
+    });
+  });
+  if (true) MenuEmpty.displayName = "MenuEmpty";
+
+  // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/use-render/useRender.mjs
   function useRender(params) {
     return useRenderElement(params.defaultTagName ?? "div", params, params);
   }
@@ -50237,7 +52617,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/spinner/spinner.mjs
   var import_element104 = __toESM(require_element(), 1);
-  var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE43 = "data-wp-hash";
   function getRuntime43() {
     const globalScope = globalThis;
@@ -50324,7 +52704,7 @@ This message will only show in development mode. It won't appear in production. 
   var style_default2 = { "spinner": "ab4d64c07c0ba587__spinner", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
   var Spinner = (0, import_element104.forwardRef)(
     function UnforwardedSpinner({ className, color: color2, style: style2, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
         "svg",
         {
           className: clsx_default(style_default2.spinner, className),
@@ -50335,7 +52715,7 @@ This message will only show in development mode. It won't appear in production. 
           focusable: "false",
           ...props,
           ref,
-          children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
             "path",
             {
               className: style_default2.indicator,
@@ -50351,11 +52731,11 @@ This message will only show in development mode. It won't appear in production. 
   // packages/ui/build-module/icon/icon.mjs
   var import_element105 = __toESM(require_element(), 1);
   var import_primitives32 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
   var Icon2 = (0, import_element105.forwardRef)(
     function UnforwardedIcon({ icon, size: size4 = 24, style: style2, ...restProps }, ref) {
       const mergedStyle = icon.props.style || style2 ? { ...icon.props.style, ...style2 } : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
         import_primitives32.SVG,
         {
           ref,
@@ -50520,7 +52900,7 @@ This message will only show in development mode. It won't appear in production. 
   );
 
   // packages/ui/build-module/utils/keyboard-shortcut.mjs
-  var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
   function useKeyboardShortcutProps({
     "aria-describedby": ariaDescribedBy,
     "aria-keyshortcuts": ariaKeyShortcuts,
@@ -50538,12 +52918,12 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
   var KeyboardShortcutDescription = (0, import_element108.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
       VisuallyHidden4,
       {
         id: descriptionId,
         "aria-hidden": "true",
-        render: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("span", { ref }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)("span", { ref }),
         children: (0, import_i18n33.sprintf)(
           /* translators: %s: keyboard shortcut. */
           (0, import_i18n33.__)("Keyboard shortcut: %s"),
@@ -50553,7 +52933,7 @@ This message will only show in development mode. It won't appear in production. 
     );
   });
   var KeyboardShortcutDisplay = (0, import_element108.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
   });
 
   // packages/ui/build-module/utils/item-popup/item-content.mjs
@@ -50635,7 +53015,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/menu/item-description.mjs
   var import_element110 = __toESM(require_element(), 1);
-  var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE45 = "data-wp-hash";
   function getRuntime45() {
     const globalScope = globalThis;
@@ -50729,7 +53109,7 @@ This message will only show in development mode. It won't appear in production. 
           "Menu.ItemDescription: Missing direct menu item parent. Render <Menu.ItemDescription> as a direct child of a menu item."
         );
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
         Text2,
         {
           ref,
@@ -50744,7 +53124,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/menu/item-label.mjs
   var import_element111 = __toESM(require_element(), 1);
-  var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE46 = "data-wp-hash";
   function getRuntime46() {
     const globalScope = globalThis;
@@ -50832,7 +53212,7 @@ This message will only show in development mode. It won't appear in production. 
   var ItemLabel = (0, import_element111.forwardRef)(
     function MenuItemLabel({ children, className, id: id3, ...props }, ref) {
       const itemContentContext = useMenuItemContentContext();
-      return /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(
         Text2,
         {
           ref,
@@ -50850,7 +53230,7 @@ This message will only show in development mode. It won't appear in production. 
   );
 
   // packages/ui/build-module/menu/item.mjs
-  var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE47 = "data-wp-hash";
   function getRuntime47() {
     const globalScope = globalThis;
@@ -51004,8 +53384,8 @@ This message will only show in development mode. It won't appear in production. 
       (child) => child !== ""
     );
     const [label, ...descriptions] = import_element112.Children.toArray(children);
-    return /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(import_jsx_runtime195.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
         "span",
         {
           className: clsx_default(
@@ -51014,7 +53394,7 @@ This message will only show in development mode. It won't appear in production. 
           ),
           children: [
             label,
-            hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+            hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
               Text2,
               {
                 variant: "body-sm",
@@ -51022,21 +53402,21 @@ This message will only show in development mode. It won't appear in production. 
                 children: suffix
               }
             ),
-            shortcut && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+            shortcut && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
               Text2,
               {
                 variant: "body-sm",
                 className: style_default6["item-shortcut"],
-                children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(KeyboardShortcutDisplay, { shortcut })
+                children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(KeyboardShortcutDisplay, { shortcut })
               }
             ),
-            hasTrailing && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("span", { className: style_default6["item-trailing"], children: trailing })
+            hasTrailing && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { className: style_default6["item-trailing"], children: trailing })
           ]
         }
       ),
-      descriptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("span", { className: style_default6["item-descriptions"], children: descriptions }),
-      hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("span", { "aria-hidden": "true", className: style_default6["item-prefix"], children: prefix2 }),
-      shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+      descriptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { className: style_default6["item-descriptions"], children: descriptions }),
+      hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { "aria-hidden": "true", className: style_default6["item-prefix"], children: prefix2 }),
+      shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
         KeyboardShortcutDescription,
         {
           descriptionId: shortcutDescriptionId,
@@ -51069,7 +53449,7 @@ This message will only show in development mode. It won't appear in production. 
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
       index_parts_exports.Item,
       {
         ref,
@@ -51081,7 +53461,7 @@ This message will only show in development mode. It won't appear in production. 
           className
         ),
         ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
           ItemContent,
           {
             prefix: prefix2,
@@ -51096,7 +53476,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/ui/build-module/menu/checkbox-item.mjs
-  var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE48 = "data-wp-hash";
   function getRuntime48() {
     const globalScope = globalThis;
@@ -51214,7 +53594,7 @@ This message will only show in development mode. It won't appear in production. 
         "aria-labelledby": ariaLabelledBy,
         shortcut
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
         index_parts_exports.CheckboxItem,
         {
           ref,
@@ -51227,12 +53607,12 @@ This message will only show in development mode. It won't appear in production. 
           ),
           ...props,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
               index_parts_exports.CheckboxItemIndicator,
               {
                 keepMounted: true,
                 className: style_default7["item-selection-indicator"],
-                children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
                   Icon2,
                   {
                     icon: check_default,
@@ -51243,7 +53623,7 @@ This message will only show in development mode. It won't appear in production. 
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
               ItemContent,
               {
                 prefix: prefix2,
@@ -51261,7 +53641,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/menu/group.mjs
   var import_element114 = __toESM(require_element(), 1);
-  var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE49 = "data-wp-hash";
   function getRuntime49() {
     const globalScope = globalThis;
@@ -51353,7 +53733,7 @@ This message will only show in development mode. It won't appear in production. 
         "Menu.Group: Cannot be nested inside Menu.RadioGroup. Remove Menu.Group and put Menu.GroupLabel and Menu.RadioItem directly inside Menu.RadioGroup."
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(MenuGroupContext2.Provider, { value: "group", children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(MenuGroupContext2.Provider, { value: "group", children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
       index_parts_exports.Group,
       {
         ref,
@@ -51365,7 +53745,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/menu/group-label.mjs
   var import_element115 = __toESM(require_element(), 1);
-  var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE50 = "data-wp-hash";
   function getRuntime50() {
     const globalScope = globalThis;
@@ -51452,7 +53832,7 @@ This message will only show in development mode. It won't appear in production. 
   var style_default9 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
   var GroupLabel3 = (0, import_element115.forwardRef)(
     function MenuGroupLabel5({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
         index_parts_exports.GroupLabel,
         {
           ref,
@@ -51466,7 +53846,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/ui/build-module/menu/link-item.mjs
   var import_element116 = __toESM(require_element(), 1);
   var import_i18n34 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE51 = "data-wp-hash";
   function getRuntime51() {
     const globalScope = globalThis;
@@ -51575,7 +53955,7 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }, ref) {
     const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
-    const externalLinkIndicator = shouldShowNewTabIndicator ? /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+    const externalLinkIndicator = shouldShowNewTabIndicator ? /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
       "span",
       {
         className: style_default10["external-link-indicator"],
@@ -51599,7 +53979,7 @@ This message will only show in development mode. It won't appear in production. 
       labelTrailing: externalLinkIndicator,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
       index_parts_exports.LinkItem,
       {
         ref,
@@ -51613,7 +53993,7 @@ This message will only show in development mode. It won't appear in production. 
           style_default10.item,
           className
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
           ItemContent,
           {
             prefix: prefix2,
@@ -51783,9 +54163,9 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/ui/build-module/menu/portal.mjs
-  var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
   var Portal3 = (0, import_element118.forwardRef)(function MenuPortal3({ container, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
       index_parts_exports.Portal,
       {
         ref,
@@ -51807,7 +54187,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/ui/build-module/menu/positioner.mjs
-  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE53 = "data-wp-hash";
   function getRuntime53() {
     const globalScope = globalThis;
@@ -51998,7 +54378,7 @@ This message will only show in development mode. It won't appear in production. 
         props.disableAnchorTracking,
         submenuTriggerRef
       ]);
-      return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
         index_parts_exports.Positioner,
         {
           ...defaultProps,
@@ -52017,7 +54397,7 @@ This message will only show in development mode. It won't appear in production. 
   );
 
   // packages/ui/build-module/menu/popup.mjs
-  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE54 = "data-wp-hash";
   function getRuntime54() {
     const globalScope = globalThis;
@@ -52104,7 +54484,7 @@ This message will only show in development mode. It won't appear in production. 
   var style_default12 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
   var Popup = (0, import_element120.forwardRef)(function MenuPopup3({ children, className, portal, positioner, ...props }, ref) {
     const { isSubmenu } = useMenuContext2();
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
       index_parts_exports.Popup,
       {
         ref,
@@ -52114,7 +54494,7 @@ This message will only show in development mode. It won't appear in production. 
           className
         ),
         ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
           "div",
           {
             className: style_default12.list,
@@ -52125,15 +54505,15 @@ This message will only show in development mode. It won't appear in production. 
     );
     const positionedPopup = renderSlotWithChildren(
       positioner,
-      /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(Positioner, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(Positioner, {}),
       popupContent
     );
-    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(Portal3, {}), positionedPopup);
+    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(Portal3, {}), positionedPopup);
   });
 
   // packages/ui/build-module/menu/prefix-icon.mjs
   var import_element121 = __toESM(require_element(), 1);
-  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE55 = "data-wp-hash";
   function getRuntime55() {
     const globalScope = globalThis;
@@ -52220,7 +54600,7 @@ This message will only show in development mode. It won't appear in production. 
   var style_default13 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
   var PrefixIcon = (0, import_element121.forwardRef)(
     function MenuPrefixIcon({ className, size: size4 = 16, style: style2, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
         Icon2,
         {
           ...props,
@@ -52239,7 +54619,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/menu/radio-group.mjs
   var import_element122 = __toESM(require_element(), 1);
-  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE56 = "data-wp-hash";
   function getRuntime56() {
     const globalScope = globalThis;
@@ -52332,7 +54712,7 @@ This message will only show in development mode. It won't appear in production. 
           "Menu.RadioGroup: Cannot be nested inside Menu.Group. Move Menu.RadioGroup outside Menu.Group and put its Menu.GroupLabel inside Menu.RadioGroup."
         );
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(MenuGroupContext2.Provider, { value: "radio-group", children: /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(MenuGroupContext2.Provider, { value: "radio-group", children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
         index_parts_exports.RadioGroup,
         {
           ref,
@@ -52346,7 +54726,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/ui/build-module/menu/radio-item.mjs
   var import_element123 = __toESM(require_element(), 1);
   var import_primitives33 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE57 = "data-wp-hash";
   function getRuntime57() {
     const globalScope = globalThis;
@@ -52439,7 +54819,7 @@ This message will only show in development mode. It won't appear in production. 
     registerStyle56("5e71ea1d52", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-sm,320px);--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}._33f07ab17005471d__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText;--_gcd-a-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid Highlight;--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._99c5bd141cbf516f__checkbox-selection-icon{translate:0 1px}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._64924ecabf65a5d6__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.a836378335a4cbf1__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}.af879698ede76757__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._5c211f9edfe0ed66__has-prefix{grid-column:content-start/content-end}}._76f3e69cf2228139__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}.af879698ede76757__item-content>._091406749ed93e6e__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}.af879698ede76757__item-content>._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing,.af879698ede76757__item-content>._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._06be17a91bf434a0__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._5ed41da4abcf8958__item-label+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
   }
   var style_default15 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
-  var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives33.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives33.Circle, { cx: 12, cy: 12, r: 3 }) });
+  var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_primitives33.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_primitives33.Circle, { cx: 12, cy: 12, r: 3 }) });
   var RadioItem = (0, import_element123.forwardRef)(
     function MenuRadioItem3({
       children,
@@ -52465,7 +54845,7 @@ This message will only show in development mode. It won't appear in production. 
         "aria-labelledby": ariaLabelledBy,
         shortcut
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)(
         index_parts_exports.RadioItem,
         {
           ref,
@@ -52478,12 +54858,12 @@ This message will only show in development mode. It won't appear in production. 
           ),
           ...props,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
               index_parts_exports.RadioItemIndicator,
               {
                 keepMounted: true,
                 className: style_default15["item-selection-indicator"],
-                children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
                   Icon2,
                   {
                     icon: radioCheck,
@@ -52493,7 +54873,7 @@ This message will only show in development mode. It won't appear in production. 
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
               ItemContent,
               {
                 prefix: prefix2,
@@ -52511,9 +54891,9 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/utils/direction-provider.mjs
   var import_i18n35 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
   function DirectionProvider3({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(DirectionProvider, { direction: (0, import_i18n35.isRTL)() ? "rtl" : "ltr", children });
+    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(DirectionProvider, { direction: (0, import_i18n35.isRTL)() ? "rtl" : "ltr", children });
   }
 
   // packages/ui/build-module/utils/use-iframe-dismissal-bridge.mjs
@@ -52676,7 +55056,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/ui/build-module/menu/root.mjs
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
   function Root3(props) {
     const { onOpenChange } = props;
     const handleOpenChange = (nextOpen, eventDetails) => {
@@ -52698,12 +55078,12 @@ This message will only show in development mode. It won't appear in production. 
       onOpenChange: handleOpenChange,
       open: props.open
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(index_parts_exports.Root, { ...props, ...iframeDismissalProps }) }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(index_parts_exports.Root, { ...props, ...iframeDismissalProps }) }) }) });
   }
 
   // packages/ui/build-module/menu/separator.mjs
   var import_element125 = __toESM(require_element(), 1);
-  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE58 = "data-wp-hash";
   function getRuntime58() {
     const globalScope = globalThis;
@@ -52790,7 +55170,7 @@ This message will only show in development mode. It won't appear in production. 
   var style_default16 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
   var Separator4 = (0, import_element125.forwardRef)(
     function MenuSeparator3({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
         index_parts_exports.Separator,
         {
           ref,
@@ -52803,16 +55183,16 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/menu/submenu-root.mjs
   var import_element126 = __toESM(require_element(), 1);
-  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
   function SubmenuRoot(props) {
     const submenuTriggerRef = (0, import_element126.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(MenuContext.Provider, { value: { isSubmenu: true, submenuTriggerRef }, children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(index_parts_exports.SubmenuRoot, { ...props }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(MenuContext.Provider, { value: { isSubmenu: true, submenuTriggerRef }, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(index_parts_exports.SubmenuRoot, { ...props }) }) });
   }
 
   // packages/ui/build-module/menu/submenu-trigger.mjs
   var import_element127 = __toESM(require_element(), 1);
   var import_compose42 = __toESM(require_compose(), 1);
-  var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE59 = "data-wp-hash";
   function getRuntime59() {
     const globalScope = globalThis;
@@ -52932,7 +55312,7 @@ This message will only show in development mode. It won't appear in production. 
         "aria-labelledby": ariaLabelledBy,
         shortcut
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
         index_parts_exports.SubmenuTrigger,
         {
           ref: mergedRef,
@@ -52944,14 +55324,14 @@ This message will only show in development mode. It won't appear in production. 
             className
           ),
           ...props,
-          children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
             ItemContent,
             {
               prefix: prefix2,
               shortcut,
               shortcutDescriptionId,
               suffix,
-              trailing: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
+              trailing: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
                 Icon2,
                 {
                   className: style_default17["submenu-chevron"],
@@ -52970,10 +55350,10 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/menu/trigger.mjs
   var import_element128 = __toESM(require_element(), 1);
-  var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   var Trigger = (0, import_element128.forwardRef)(
     function MenuTrigger3(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(index_parts_exports.Trigger, { ref, ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(index_parts_exports.Trigger, { ref, ...props });
     }
   );
 
@@ -53428,7 +55808,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element130 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-  var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE61 = "data-wp-hash";
   function getRuntime61() {
     const globalScope = globalThis;
@@ -53526,7 +55906,7 @@ This message will only show in development mode. It won't appear in production. 
     type,
     message
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(
       "p",
       {
         id: id3,
@@ -53536,7 +55916,7 @@ This message will only show in development mode. It won't appear in production. 
           style_default19[`is-${type}`]
         ),
         children: [
-          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Spinner, { className: style_default19["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Spinner, { className: style_default19["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
             Icon2,
             {
               className: style_default19["indicator-icon"],
@@ -53552,8 +55932,8 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
-  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+  var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
   function appendRequiredIndicator(label, required, markWhenOptional) {
     let suffix;
     if (required && !markWhenOptional) {
@@ -53567,7 +55947,7 @@ This message will only show in development mode. It won't appear in production. 
     if (typeof label === "string") {
       return `${label} ${suffix}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_jsx_runtime213.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(import_jsx_runtime230.Fragment, { children: [
       label,
       " ",
       suffix
@@ -53702,7 +56082,7 @@ This message will only show in development mode. It won't appear in production. 
     const messageId = (0, import_element130.useId)();
     const message = (() => {
       if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
           ValidityIndicator,
           {
             id: messageId,
@@ -53712,7 +56092,7 @@ This message will only show in development mode. It won't appear in production. 
         );
       }
       if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
           ValidityIndicator,
           {
             id: messageId,
@@ -53748,7 +56128,7 @@ This message will only show in development mode. It won't appear in production. 
       ref: [forwardedRef, wrapperRef],
       props: mergeProps2(restProps, {
         onBlur,
-        children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_jsx_runtime213.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(import_jsx_runtime230.Fragment, { children: [
           (0, import_element130.cloneElement)(children, {
             label: appendRequiredIndicator(
               children.props.label,
@@ -53900,7 +56280,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/item-group/item/component.mjs
-  var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedItem(props, forwardedRef) {
     const {
       role,
@@ -53916,11 +56296,11 @@ This message will only show in development mode. It won't appear in production. 
         throw new Error('Item with list semantics must be rendered inside an element with role="list".');
       }
     }, [isList, role]);
-    return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
       ref: itemRef,
       role,
       className: wrapperClassName,
-      children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(component_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(component_default, {
         ...otherProps,
         ref: forwardedRef
       })
@@ -54033,7 +56413,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/item-group/item-group/component.mjs
-  var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedItemGroup(props, forwardedRef) {
     const {
       isBordered,
@@ -54051,9 +56431,9 @@ This message will only show in development mode. It won't appear in production. 
       spacedAround,
       size: size4
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(ItemGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(ItemGroupContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(component_default, {
         ...otherProps,
         ref: forwardedRef
       })
@@ -54156,7 +56536,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/control-points.mjs
-  var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   function ControlPointButton({
     isOpen,
     position: position2,
@@ -54166,8 +56546,8 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     const instanceId = (0, import_compose43.useInstanceId)(ControlPointButton);
     const descriptionId = `components-custom-gradient-picker__control-point-button-description-${instanceId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(import_jsx_runtime216.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime216.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(import_jsx_runtime233.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime233.jsx)(button_default, {
         "aria-label": (0, import_i18n37.sprintf)(
           // translators: 1: gradient position e.g: 70. 2: gradient color code e.g: rgb(52,121,151).
           (0, import_i18n37.__)("Gradient control point at position %1$d%% with color code %2$s."),
@@ -54182,7 +56562,7 @@ This message will only show in development mode. It won't appear in production. 
           "is-active": isOpen
         }),
         ...additionalProps
-      }), /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default2, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(component_default2, {
         id: descriptionId,
         children: disablePositioning ? (0, import_i18n37.__)("Press the button to change the color.") : (0, import_i18n37.__)("Use your left or right arrow keys or drag and drop with the mouse to change the gradient position. Press the button to change the color or remove the control point.")
       })]
@@ -54202,7 +56582,7 @@ This message will only show in development mode. It won't appear in production. 
       resize: false
     }), []);
     const mergedClassName = clsx_default("components-custom-gradient-picker__control-point-dropdown", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(CustomColorPickerDropdown, {
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(CustomColorPickerDropdown, {
       isRenderedInSidebar,
       popoverProps,
       className: mergedClassName,
@@ -54252,16 +56632,16 @@ This message will only show in development mode. It won't appear in production. 
         cleanEventListenersRef.current?.();
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(import_jsx_runtime216.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(import_jsx_runtime233.Fragment, {
       children: controlPoints.map((point, index2) => {
         const initialPosition = point?.position;
-        return ignoreMarkerPosition !== initialPosition && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(GradientColorPickerDropdown, {
+        return ignoreMarkerPosition !== initialPosition && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(GradientColorPickerDropdown, {
           isRenderedInSidebar: __experimentalIsRenderedInSidebar,
           onClose: onStopControlPointChange,
           renderToggle: ({
             isOpen,
             onToggle
-          }) => /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(ControlPointButton, {
+          }) => /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(ControlPointButton, {
             onClick: () => {
               if (controlPointMoveStateRef.current && controlPointMoveStateRef.current.significantMoveHappened) {
                 return;
@@ -54311,18 +56691,18 @@ This message will only show in development mode. It won't appear in production. 
           }, index2),
           renderContent: ({
             onClose
-          }) => /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(dropdown_content_wrapper_default, {
+          }) => /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(dropdown_content_wrapper_default, {
             paddingSize: "none",
-            children: [/* @__PURE__ */ (0, import_jsx_runtime216.jsx)(LegacyAdapter, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime233.jsx)(LegacyAdapter, {
               enableAlpha: !disableAlpha,
               color: point.color,
               onChange: (color2) => {
                 onChange(updateControlPointColor(controlPoints, index2, A(color2).toRgbString()));
               }
-            }), !disableRemove && controlPoints.length > 2 && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default9, {
+            }), !disableRemove && controlPoints.length > 2 && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(component_default9, {
               className: "components-custom-gradient-picker__remove-control-point-wrapper",
               alignment: "center",
-              children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(button_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(button_default, {
                 onClick: () => {
                   onChange(removeControlPoint(controlPoints, index2));
                   onClose();
@@ -54350,7 +56730,7 @@ This message will only show in development mode. It won't appear in production. 
     __experimentalIsRenderedInSidebar
   }) {
     const [alreadyInsertedPoint, setAlreadyInsertedPoint] = (0, import_element133.useState)(false);
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(GradientColorPickerDropdown, {
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(GradientColorPickerDropdown, {
       isRenderedInSidebar: __experimentalIsRenderedInSidebar,
       className: "components-custom-gradient-picker__inserter",
       onClose: () => {
@@ -54359,7 +56739,7 @@ This message will only show in development mode. It won't appear in production. 
       renderToggle: ({
         isOpen,
         onToggle
-      }) => /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(button_default, {
+      }) => /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(button_default, {
         __next40pxDefaultSize: true,
         "aria-expanded": isOpen,
         "aria-haspopup": "true",
@@ -54375,9 +56755,9 @@ This message will only show in development mode. It won't appear in production. 
         className: "components-custom-gradient-picker__insert-point-dropdown",
         icon: plus_default
       }),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(dropdown_content_wrapper_default, {
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(dropdown_content_wrapper_default, {
         paddingSize: "none",
-        children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(LegacyAdapter, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(LegacyAdapter, {
           enableAlpha: !disableAlpha,
           onChange: (color2) => {
             if (!alreadyInsertedPoint) {
@@ -54399,7 +56779,7 @@ This message will only show in development mode. It won't appear in production. 
   var control_points_default = ControlPoints;
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/index.mjs
-  var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
   var customGradientBarReducer = (state, action) => {
     switch (action.type) {
       case "MOVE_INSERTER":
@@ -54493,23 +56873,23 @@ This message will only show in development mode. It won't appear in production. 
     };
     const isMovingInserter = gradientBarState.id === "MOVING_INSERTER";
     const isInsertingControlPoint = gradientBarState.id === "INSERTING_CONTROL_POINT";
-    return /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)("div", {
       className: clsx_default("components-custom-gradient-picker__gradient-bar", {
         "has-gradient": hasGradient
       }),
       onMouseEnter: onMouseEnterAndMove,
       onMouseMove: onMouseEnterAndMove,
       onMouseLeave,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime217.jsx)("div", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime234.jsx)("div", {
         className: "components-custom-gradient-picker__gradient-bar-background",
         style: {
           background,
           opacity: hasGradient ? 1 : 0.4
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)("div", {
         ref: gradientMarkersContainerDomRef,
         className: "components-custom-gradient-picker__markers-container",
-        children: [!disableInserter && (isMovingInserter || isInsertingControlPoint) && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(control_points_default.InsertPoint, {
+        children: [!disableInserter && (isMovingInserter || isInsertingControlPoint) && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(control_points_default.InsertPoint, {
           __experimentalIsRenderedInSidebar,
           disableAlpha,
           insertPosition: gradientBarState.insertPosition,
@@ -54525,7 +56905,7 @@ This message will only show in development mode. It won't appear in production. 
               type: "CLOSE_INSERTER"
             });
           }
-        }), /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(control_points_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(control_points_default, {
           __experimentalIsRenderedInSidebar,
           disableAlpha,
           disableRemove: disableInserter,
@@ -54745,7 +57125,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/custom-gradient-picker/index.mjs
-  var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE64 = "data-wp-hash";
   function getRuntime64() {
     const globalScope = globalThis;
@@ -54840,7 +57220,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       }));
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(angle_picker_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(angle_picker_control_default, {
       onChange: onAngleChange,
       value: hasGradient ? angle : ""
     });
@@ -54885,7 +57265,7 @@ This message will only show in development mode. It won't appear in production. 
         onSetRadialGradient();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(select_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(select_control_default, {
       className: "components-custom-gradient-picker__type-picker",
       label: (0, import_i18n39.__)("Type"),
       labelPosition: "top",
@@ -54914,10 +57294,10 @@ This message will only show in development mode. It won't appear in production. 
         position: parseInt(colorStop.length.value)
       };
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(component_default18, {
       spacing: 4,
       className: "components-custom-gradient-picker",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime218.jsx)(CustomGradientBar, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime235.jsx)(CustomGradientBar, {
         __experimentalIsRenderedInSidebar,
         disableAlpha: !enableAlpha,
         background,
@@ -54926,19 +57306,19 @@ This message will only show in development mode. It won't appear in production. 
         onChange: (newControlPoints) => {
           onChange(serializeGradient(getGradientAstWithControlPoints(gradientAST, newControlPoints)));
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)(component_default3, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(component_default3, {
         gap: 3,
         className: "components-custom-gradient-picker__ui-line",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime218.jsx)(component_default5, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime235.jsx)(component_default5, {
           className: style_module_default43["control-wrapper"],
-          children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(GradientTypePicker, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(GradientTypePicker, {
             gradientAST,
             hasGradient,
             onChange
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(component_default5, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(component_default5, {
           className: style_module_default43["control-wrapper"],
-          children: gradientAST.type === "linear-gradient" && /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(GradientAnglePicker, {
+          children: gradientAST.type === "linear-gradient" && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(GradientAnglePicker, {
             gradientAST,
             hasGradient,
             onChange
@@ -54950,7 +57330,7 @@ This message will only show in development mode. It won't appear in production. 
   var custom_gradient_picker_default = CustomGradientPicker;
 
   // packages/components/build-module/gradient-picker/index.mjs
-  var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE65 = "data-wp-hash";
   function getRuntime65() {
     const globalScope = globalThis;
@@ -55051,7 +57431,7 @@ This message will only show in development mode. It won't appear in production. 
         slug
       }, index2) => {
         const isSelected2 = presentation !== "command-buttons" && (selectedSlug ? slug === selectedSlug : value === gradient);
-        return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(circular_option_picker_default2.Option, {
+        return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(circular_option_picker_default2.Option, {
           value: gradient,
           isSelected: isSelected2,
           tooltipText: name || // translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);".
@@ -55071,7 +57451,7 @@ This message will only show in development mode. It won't appear in production. 
         }, slug);
       });
     }, [gradients, value, onChange, clearGradient, selectedSlug, presentation]);
-    return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(circular_option_picker_default2.OptionGroup, {
+    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(circular_option_picker_default2.OptionGroup, {
       className,
       options: gradientOptions,
       ...additionalProps
@@ -55088,7 +57468,7 @@ This message will only show in development mode. It won't appear in production. 
     presentation
   }) {
     const instanceId = (0, import_compose44.useInstanceId)(MultipleOrigin);
-    return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(component_default18, {
       spacing: 3,
       className,
       children: gradients.map(({
@@ -55096,14 +57476,14 @@ This message will only show in development mode. It won't appear in production. 
         gradients: gradientSet
       }, index2) => {
         const id3 = `color-palette-${instanceId}-${index2}`;
-        return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(component_default18, {
+        return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(component_default18, {
           spacing: 2,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default19, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime236.jsx)(component_default19, {
             className: style_module_default44["color-heading"],
             level: headingLevel,
             id: id3,
             children: name
-          }), /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(SingleOrigin, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(SingleOrigin, {
             clearGradient,
             gradients: gradientSet,
             onChange: (gradient, _index, slug) => onChange(gradient, index2, slug),
@@ -55133,15 +57513,15 @@ This message will only show in development mode. It won't appear in production. 
       labelProps,
       resolvedPresentation
     } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby, presentation);
-    const options2 = isMultipleOriginArray(props.gradients) ? /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(MultipleOrigin, {
+    const options2 = isMultipleOriginArray(props.gradients) ? /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(MultipleOrigin, {
       headingLevel,
       ...additionalProps,
       presentation: resolvedPresentation
-    }) : /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(SingleOrigin, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(SingleOrigin, {
       ...additionalProps,
       presentation: resolvedPresentation
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(circular_option_picker_default2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(circular_option_picker_default2, {
       ...metaProps,
       ...labelProps,
       actions,
@@ -55161,21 +57541,21 @@ This message will only show in development mode. It won't appear in production. 
     ...additionalProps
   }) {
     const clearGradient = (0, import_element136.useCallback)(() => onChange(void 0), [onChange]);
-    return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(component_default18, {
       spacing: gradients.length ? 4 : 0,
-      children: [!disableCustomGradients && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(custom_gradient_picker_default, {
+      children: [!disableCustomGradients && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(custom_gradient_picker_default, {
         __experimentalIsRenderedInSidebar,
         enableAlpha,
         value,
         onChange
-      }), (gradients.length > 0 || clearable) && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(Component3, {
+      }), (gradients.length > 0 || clearable) && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(Component3, {
         ...additionalProps,
         className,
         clearGradient,
         gradients,
         onChange,
         value,
-        actions: clearable && !disableCustomGradients && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(circular_option_picker_default2.ButtonAction, {
+        actions: clearable && !disableCustomGradients && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(circular_option_picker_default2.ButtonAction, {
           onClick: clearGradient,
           accessibleWhenDisabled: true,
           disabled: !value,
@@ -55196,7 +57576,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element137 = __toESM(require_element(), 1);
   var import_i18n41 = __toESM(require_i18n(), 1);
   var import_compose45 = __toESM(require_compose(), 1);
-  var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   function ColorOption({
     label,
     value,
@@ -55209,27 +57589,27 @@ This message will only show in development mode. It won't appear in production. 
     const idRoot = (0, import_compose45.useInstanceId)(ColorOption, "color-list-picker-option");
     const labelId = `${idRoot}__label`;
     const contentId = `${idRoot}__content`;
-    return /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(import_jsx_runtime220.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime220.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_jsx_runtime237.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime237.jsx)(button_default, {
         __next40pxDefaultSize: true,
         className: "components-color-list-picker__swatch-button",
         id: labelId,
         onClick: () => setIsOpen((prev2) => !prev2),
         "aria-expanded": isOpen,
         "aria-controls": contentId,
-        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(color_indicator_default, {
+        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(color_indicator_default, {
           colorValue: value,
           className: "components-color-list-picker__swatch-color"
-        }) : /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(icon_default3, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(icon_default3, {
           icon: swatch_default
         }),
         text: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime220.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime237.jsx)("div", {
         role: "group",
         id: contentId,
         "aria-labelledby": labelId,
         "aria-hidden": !isOpen,
-        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(color_palette_default, {
+        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(color_palette_default, {
           "aria-label": (0, import_i18n41.__)("Color options"),
           className: "components-color-list-picker__color-picker",
           colors,
@@ -55250,9 +57630,9 @@ This message will only show in development mode. It won't appear in production. 
     enableAlpha,
     onChange
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)("div", {
       className: "components-color-list-picker",
-      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(ColorOption, {
+      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(ColorOption, {
         label,
         value: value[index2],
         colors,
@@ -55309,7 +57689,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/duotone-picker/custom-duotone-bar.mjs
-  var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   var PLACEHOLDER_VALUES = ["#333", "#CCC"];
   function CustomDuotoneBar({
     value,
@@ -55319,7 +57699,7 @@ This message will only show in development mode. It won't appear in production. 
     const values = hasGradient ? value : PLACEHOLDER_VALUES;
     const background = getGradientFromCSSColors(values);
     const controlPoints = getColorStopsFromColors(values);
-    return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(CustomGradientBar, {
+    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(CustomGradientBar, {
       disableInserter: true,
       disablePositioning: true,
       background,
@@ -55333,7 +57713,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/duotone-picker/duotone-picker.mjs
-  var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
   function DuotonePicker({
     asButtons,
     presentation,
@@ -55361,7 +57741,7 @@ This message will only show in development mode. It won't appear in production. 
     const isUnset = value === "unset";
     const isUnsetSelected = resolvedPresentation !== "command-buttons" && isUnset;
     const unsetOptionLabel = (0, import_i18n42.__)("Unset");
-    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(circular_option_picker_default2.Option, {
+    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(circular_option_picker_default2.Option, {
       value: "unset",
       isSelected: isUnsetSelected,
       tooltipText: unsetOptionLabel,
@@ -55391,7 +57771,7 @@ This message will only show in development mode. It won't appear in production. 
         name
       ) : tooltipText;
       const isSelected2 = resolvedPresentation !== "command-buttons" && (selectedSlug ? slug === selectedSlug : (0, import_es62.default)(colors, value));
-      return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(circular_option_picker_default2.Option, {
+      return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(circular_option_picker_default2.Option, {
         value: colors,
         isSelected: isSelected2,
         "aria-label": label,
@@ -55407,25 +57787,25 @@ This message will only show in development mode. It won't appear in production. 
       }, slug);
     });
     const options2 = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
-    return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(circular_option_picker_default2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(circular_option_picker_default2, {
       ...otherProps,
       ...metaProps,
       ...labelProps,
       options: options2,
-      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(circular_option_picker_default2.ButtonAction, {
+      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(circular_option_picker_default2.ButtonAction, {
         onClick: () => onChange(void 0),
         accessibleWhenDisabled: true,
         disabled: !value,
         children: (0, import_i18n42.__)("Clear")
       }),
-      children: !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(component_default6, {
+      children: !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(component_default6, {
         paddingTop: options2.length === 0 ? 0 : 4,
-        children: /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)(component_default18, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(component_default18, {
           spacing: 3,
-          children: [!disableCustomColors && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(CustomDuotoneBar, {
+          children: [!disableCustomColors && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(CustomDuotoneBar, {
             value: isUnset ? void 0 : value,
             onChange
-          }), /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(color_list_picker_default, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(color_list_picker_default, {
             labels: [(0, import_i18n42.__)("Shadows"), (0, import_i18n42.__)("Highlights")],
             colors: colorPalette,
             value: isUnset ? void 0 : value,
@@ -55449,20 +57829,20 @@ This message will only show in development mode. It won't appear in production. 
   var duotone_picker_default = DuotonePicker;
 
   // packages/components/build-module/duotone-picker/duotone-swatch.mjs
-  var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
   function DuotoneSwatch({
     values
   }) {
-    return values ? /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(color_indicator_default, {
+    return values ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(color_indicator_default, {
       colorValue: getGradientFromCSSColors(values, "135deg")
-    }) : /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(icon_default3, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(icon_default3, {
       icon: swatch_default
     });
   }
   var duotone_swatch_default = DuotoneSwatch;
 
   // packages/components/build-module/palette-edit/index.mjs
-  var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE66 = "data-wp-hash";
   function getRuntime66() {
     const globalScope = globalThis;
@@ -55637,7 +58017,7 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     label
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(input_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(input_control_default, {
       className: style_module_default45["name-input"],
       size: "compact",
       label,
@@ -55711,10 +58091,10 @@ This message will only show in development mode. It won't appear in production. 
       ...receivedPopoverProps,
       className: clsx_default("components-palette-edit__popover", receivedPopoverProps?.className)
     }), [receivedPopoverProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(popover_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(popover_default, {
       ...popoverProps,
       onClose,
-      children: [variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(LegacyAdapter, {
+      children: [variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(LegacyAdapter, {
         color: element.color,
         enableAlpha: true,
         onChange: (newColor) => {
@@ -55723,9 +58103,9 @@ This message will only show in development mode. It won't appear in production. 
             color: newColor
           });
         }
-      }), variant === "gradient" && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)("div", {
+      }), variant === "gradient" && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("div", {
         className: "components-palette-edit__popover-gradient-picker",
-        children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(custom_gradient_picker_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(custom_gradient_picker_default, {
           __experimentalIsRenderedInSidebar: true,
           value: element.gradient,
           onChange: (newGradient) => {
@@ -55735,11 +58115,11 @@ This message will only show in development mode. It won't appear in production. 
             });
           }
         })
-      }), variant === "duotone" && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)("div", {
+      }), variant === "duotone" && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("div", {
         className: "components-palette-edit__popover-duotone-picker",
-        children: /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(component_default18, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(component_default18, {
           spacing: 3,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime224.jsx)(CustomDuotoneBar, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime241.jsx)(CustomDuotoneBar, {
             value: getDuotoneColors(element),
             onChange: (newColors) => {
               if (!newColors?.length) {
@@ -55750,7 +58130,7 @@ This message will only show in development mode. It won't appear in production. 
                 colors: newColors
               });
             }
-          }), /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(color_list_picker_default, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(color_list_picker_default, {
             labels: [(0, import_i18n43.__)("Shadows"), (0, import_i18n43.__)("Highlights")],
             colors: colorPalette ?? [],
             value: getDuotoneColors(element),
@@ -55790,12 +58170,12 @@ This message will only show in development mode. It won't appear in production. 
       // Use the custom palette color item as the popover anchor.
       anchor: popoverAnchor
     }), [popoverAnchor, receivedPopoverProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(component_default35, {
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(component_default35, {
       ref: setPopoverAnchor,
       size: "small",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(component_default9, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(component_default9, {
         justify: "flex-start",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime241.jsx)(button_default, {
           size: "small",
           onClick: () => {
             setIsEditingColor(true);
@@ -55808,27 +58188,27 @@ This message will only show in development mode. It won't appear in production. 
           style: {
             padding: 0
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(color_indicator_default, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(color_indicator_default, {
             className: style_module_default45.indicator,
             colorValue: value
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(component_default5, {
-          children: !canOnlyChangeValues ? /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(NameInput, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(component_default5, {
+          children: !canOnlyChangeValues ? /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(NameInput, {
             label: getNameInputLabel(variant),
             value: element.name,
             onChange: (nextName) => onChange({
               ...element,
               name: nextName
             })
-          }) : /* @__PURE__ */ (0, import_jsx_runtime224.jsx)("div", {
+          }) : /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("div", {
             className: style_module_default45.name,
             children: element.name.trim().length ? element.name : (
               /* Fall back to non-breaking space to maintain height */
               "\xA0"
             )
           })
-        }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(component_default4, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+        }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(component_default4, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(button_default, {
             className: style_module_default45.remove,
             size: "small",
             icon: line_solid_default,
@@ -55836,7 +58216,7 @@ This message will only show in development mode. It won't appear in production. 
             onClick: onRemove
           })
         })]
-      }), isEditingColor && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(ColorPickerPopover, {
+      }), isEditingColor && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(ColorPickerPopover, {
         variant,
         colorPalette,
         onChange,
@@ -55860,13 +58240,13 @@ This message will only show in development mode. It won't appear in production. 
       elementsReferenceRef.current = elements2;
     }, [elements2]);
     const debounceOnChange = (0, import_compose46.useDebounce)((updatedElements) => onChange(deduplicateElementSlugs(updatedElements)), 100);
-    return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(component_default18, {
       spacing: 3,
-      children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(component_default36, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(component_default36, {
         isRounded: true,
         isBordered: true,
         isSeparated: true,
-        children: elements2.map((element, index2) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Option2, {
+        children: elements2.map((element, index2) => /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(Option2, {
           variant,
           colorPalette,
           canOnlyChangeValues,
@@ -55942,18 +58322,18 @@ This message will only show in development mode. It won't appear in production. 
     }, [duotones]);
     const addColorRef = (0, import_element139.useRef)(null);
     const paletteLabelId = (0, import_compose46.useInstanceId)(PaletteEdit, "components-palette-edit__heading");
-    return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(component_default, {
       className: style_module_default45.palette,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(component_default9, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime224.jsx)(component_default19, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(component_default9, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime241.jsx)(component_default19, {
           className: style_module_default45.heading,
           id: paletteLabelId,
           level: paletteLabelHeadingLevel,
           children: paletteLabel
-        }), /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(Stack, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(Stack, {
           direction: "row",
           gap: "xs",
-          children: [hasElements && isEditing && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+          children: [hasElements && isEditing && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(button_default, {
             className: style_module_default45.done,
             size: "small",
             onClick: () => {
@@ -55961,7 +58341,7 @@ This message will only show in development mode. It won't appear in production. 
               setEditingElement(null);
             },
             children: (0, import_i18n43.__)("Done")
-          }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+          }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(button_default, {
             ref: addColorRef,
             size: "small",
             isPressed: isAdding,
@@ -55994,48 +58374,48 @@ This message will only show in development mode. It won't appear in production. 
               setIsEditing(true);
               setEditingElement(elements2.length);
             }
-          }), hasElements && (!isEditing || !canOnlyChangeValues || canReset) && /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(menu_exports.Root, {
+          }), hasElements && (!isEditing || !canOnlyChangeValues || canReset) && /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(menu_exports.Root, {
             modal: false,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.Trigger, {
-              render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_exports.Trigger, {
+              render: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(button_default, {
                 size: "small",
                 icon: more_vertical_default,
                 label: getOptionsLabel(variant),
                 showTooltip: true
               })
-            }), /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(menu_exports.Popup, {
-              positioner: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.Positioner, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(menu_exports.Popup, {
+              positioner: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_exports.Positioner, {
                 align: "end"
               }),
-              children: [!isEditing && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.Item, {
+              children: [!isEditing && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_exports.Item, {
                 onClick: () => setIsEditing(true),
-                children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.ItemLabel, {
+                children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_exports.ItemLabel, {
                   children: (0, import_i18n43.__)("Show details")
                 })
-              }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.Item, {
+              }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_exports.Item, {
                 onClick: () => {
                   setEditingElement(null);
                   setIsEditing(false);
                   onChange();
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.ItemLabel, {
+                children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_exports.ItemLabel, {
                   children: getRemoveAllLabel(variant)
                 })
-              }), canReset && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.Item, {
+              }), canReset && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_exports.Item, {
                 onClick: () => {
                   setEditingElement(null);
                   onChange();
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.ItemLabel, {
+                children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_exports.ItemLabel, {
                   children: getResetLabel(variant)
                 })
               })]
             })]
           })]
         })]
-      }), hasElements && /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(component_default, {
+      }), hasElements && /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(component_default, {
         className: style_module_default45.contents,
-        children: [isEditing && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(PaletteEditListView, {
+        children: [isEditing && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(PaletteEditListView, {
           canOnlyChangeValues,
           elements: elements2,
           onChange,
@@ -56043,7 +58423,7 @@ This message will only show in development mode. It won't appear in production. 
           colorPalette: duotoneColorPalette,
           popoverProps,
           addColorRef
-        }), !isEditing && editingElement !== null && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(ColorPickerPopover, {
+        }), !isEditing && editingElement !== null && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(ColorPickerPopover, {
           variant,
           colorPalette: duotoneColorPalette,
           onClose: () => setEditingElement(null),
@@ -56060,14 +58440,14 @@ This message will only show in development mode. It won't appear in production. 
           },
           element: elements2[editingElement ?? -1],
           popoverProps
-        }), !isEditing && variant === "gradient" && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(gradient_picker_default, {
+        }), !isEditing && variant === "gradient" && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(gradient_picker_default, {
           presentation: "command-buttons",
           "aria-labelledby": paletteLabelId,
           gradients,
           onChange: onSelectPaletteItem,
           clearable: false,
           disableCustomGradients: true
-        }), !isEditing && variant === "duotone" && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(duotone_picker_default, {
+        }), !isEditing && variant === "duotone" && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(duotone_picker_default, {
           presentation: "command-buttons",
           "aria-labelledby": paletteLabelId,
           duotonePalette: duotones ?? [],
@@ -56077,7 +58457,7 @@ This message will only show in development mode. It won't appear in production. 
           unsetable: false,
           disableCustomDuotone: true,
           disableCustomColors: true
-        }), !isEditing && variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(color_palette_default, {
+        }), !isEditing && variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(color_palette_default, {
           presentation: "command-buttons",
           "aria-labelledby": paletteLabelId,
           colors,
@@ -56085,7 +58465,7 @@ This message will only show in development mode. It won't appear in production. 
           clearable: false,
           disableCustomColors: true
         })]
-      }), !hasElements && emptyMessage && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(component_default, {
+      }), !hasElements && emptyMessage && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(component_default, {
         className: style_module_default45.contents,
         children: emptyMessage
       })]
@@ -56102,7 +58482,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/token-input.mjs
   var import_element140 = __toESM(require_element(), 1);
-  var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
   function UnForwardedTokenInput(props, ref) {
     const {
       value,
@@ -56133,7 +58513,7 @@ This message will only show in development mode. It won't appear in production. 
       setHasFocus(false);
       onBlur?.(e3);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("input", {
+    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("input", {
       ref,
       id: `components-form-token-input-${instanceId}`,
       type: "text",
@@ -56166,7 +58546,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/form-token-field/suggestions-list.mjs
   var import_compose47 = __toESM(require_compose(), 1);
   var import_i18n44 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
   var handleMouseDown = (e3) => {
     e3.preventDefault();
   };
@@ -56213,7 +58593,7 @@ This message will only show in development mode. It won't appear in production. 
         suggestionAfterMatch: transformedSuggestion.substring(indexOfMatch + matchText.length)
       };
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)("ul", {
+    return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("ul", {
       ref: listRef,
       className: "components-form-token-field__suggestions-list",
       id: `components-form-token-suggestions-${instanceId}`,
@@ -56232,9 +58612,9 @@ This message will only show in development mode. It won't appear in production. 
             item: suggestion
           });
         } else if (matchText) {
-          output = /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)("span", {
+          output = /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("span", {
             "aria-label": displayTransform(suggestion),
-            children: [matchText.suggestionBeforeMatch, /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("strong", {
+            children: [matchText.suggestionBeforeMatch, /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("strong", {
               className: "components-form-token-field__suggestion-match",
               children: matchText.suggestionMatch
             }), matchText.suggestionAfterMatch]
@@ -56242,7 +58622,7 @@ This message will only show in development mode. It won't appear in production. 
         } else {
           output = displayTransform(suggestion);
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("li", {
+        return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("li", {
           id: `components-form-token-suggestions-${instanceId}-${index2}`,
           role: "option",
           className,
@@ -56253,7 +58633,7 @@ This message will only show in development mode. It won't appear in production. 
           "aria-disabled": isDisabled,
           children: output
         }, key);
-      }), suggestions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("li", {
+      }), suggestions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("li", {
         className: "components-form-token-field__suggestion is-empty",
         children: (0, import_i18n44.__)("No items found")
       })]
@@ -56264,13 +58644,13 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/higher-order/with-focus-outside/index.mjs
   var import_element141 = __toESM(require_element(), 1);
   var import_compose48 = __toESM(require_compose(), 1);
-  var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
   var with_focus_outside_default = (0, import_compose48.createHigherOrderComponent)((WrappedComponent) => function WithFocusOutside(props) {
     const [handleFocusOutside, setHandleFocusOutside] = (0, import_element141.useState)(void 0);
     const bindFocusOutsideHandler = (0, import_element141.useCallback)((node2) => setHandleFocusOutside(() => node2?.handleFocusOutside ? node2.handleFocusOutside.bind(node2) : void 0), []);
-    return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("div", {
       ...(0, import_compose48.__experimentalUseFocusOutside)(handleFocusOutside),
-      children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(WrappedComponent, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(WrappedComponent, {
         ref: bindFocusOutsideHandler,
         ...props
       })
@@ -56279,7 +58659,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/spinner/index.mjs
   var import_element142 = __toESM(require_element(), 1);
-  var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE67 = "data-wp-hash";
   function getRuntime67() {
     const globalScope = globalThis;
@@ -56363,7 +58743,7 @@ This message will only show in development mode. It won't appear in production. 
     className,
     ...props
   }, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)("svg", {
       className: clsx_default("components-spinner", style_module_default46.spinner, className),
       viewBox: "0 0 100 100",
       width: "16",
@@ -56373,13 +58753,13 @@ This message will only show in development mode. It won't appear in production. 
       focusable: "false",
       ...props,
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime228.jsx)("circle", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime245.jsx)("circle", {
         className: style_module_default46.track,
         cx: "50",
         cy: "50",
         r: "50",
         vectorEffect: "non-scaling-stroke"
-      }), /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("path", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("path", {
         className: style_module_default46.indicator,
         d: "m 50 0 a 50 50 0 0 1 50 50",
         vectorEffect: "non-scaling-stroke"
@@ -56391,7 +58771,7 @@ This message will only show in development mode. It won't appear in production. 
   var spinner_default = Spinner2;
 
   // packages/components/build-module/combobox-control/index.mjs
-  var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE68 = "data-wp-hash";
   function getRuntime68() {
     const globalScope = globalThis;
@@ -56630,22 +59010,22 @@ This message will only show in development mode. It won't appear in production. 
         (0, import_a11y5.speak)(message, "polite");
       }
     }, [matchingSuggestions, isExpanded]);
-    return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(DetectOutside, {
+    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(DetectOutside, {
       onFocusOutside,
-      children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(base_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(base_control_default, {
         className: clsx_default(className, "components-combobox-control"),
         label,
         id: `components-form-token-input-${instanceId}`,
         hideLabelFromVision,
         help,
-        children: /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)("div", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)("div", {
           className: "components-combobox-control__suggestions-container",
           tabIndex: -1,
           onKeyDown,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(component_default3, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(component_default3, {
             className: style_module_default47["input-wrapper"],
-            children: [/* @__PURE__ */ (0, import_jsx_runtime229.jsx)(component_default5, {
-              children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(token_input_default, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime246.jsx)(component_default5, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(token_input_default, {
                 className: "components-combobox-control__input",
                 instanceId,
                 ref: inputContainer,
@@ -56662,14 +59042,14 @@ This message will only show in development mode. It won't appear in production. 
                   `components-form-token-input-${instanceId}__help`
                 ) : void 0
               })
-            }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(spinner_default, {}), allowReset && Boolean(value) && !isExpanded && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(button_default, {
+            }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(spinner_default, {}), allowReset && Boolean(value) && !isExpanded && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(button_default, {
               size: "small",
               icon: close_small_default,
               onClick: handleOnReset,
               onKeyDown: handleResetStopPropagation,
               label: (0, import_i18n45.__)("Reset")
             })]
-          }), isExpanded && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(suggestions_list_default, {
+          }), isExpanded && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(suggestions_list_default, {
             instanceId,
             match: {
               label: inputValue,
@@ -56693,7 +59073,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element144 = __toESM(require_element(), 1);
   var import_compose50 = __toESM(require_compose(), 1);
   var import_deprecated15 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
   function mapLegacyStatePropsToComponentProps(legacyProps) {
     if (legacyProps.state) {
       const {
@@ -56743,7 +59123,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       });
       delete props.baseId;
-      return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(ProxiedComponent, {
+      return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(ProxiedComponent, {
         ...props,
         store
       });
@@ -56756,7 +59136,7 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }, ref) => {
     const Component7 = role === "row" ? Composite22.Row : Composite22.Group;
-    return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Component7, {
+    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(Component7, {
       ref,
       role,
       ...props
@@ -56812,7 +59192,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element147 = __toESM(require_element(), 1);
   var import_compose52 = __toESM(require_compose(), 1);
   var import_i18n46 = __toESM(require_i18n(), 1);
-  var import_dom25 = __toESM(require_dom(), 1);
+  var import_dom29 = __toESM(require_dom(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/modal/aria-helper.mjs
@@ -56907,7 +59287,7 @@ This message will only show in development mode. It won't appear in production. 
   ModalContext.displayName = "ModalContext";
 
   // packages/components/build-module/modal/index.mjs
-  var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
   var bodyOpenClasses = /* @__PURE__ */ new Map();
   function UnforwardedModal(props, forwardedRef) {
     const {
@@ -56952,7 +59332,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       const timerId = setTimeout(() => {
         const childrenContainer = childrenContainerRef.current;
-        const target = childrenContainer && import_dom25.focus.tabbable.find(childrenContainer)[0] || import_dom25.focus.tabbable.find(node2)[0] || node2;
+        const target = childrenContainer && import_dom29.focus.tabbable.find(childrenContainer)[0] || import_dom29.focus.tabbable.find(node2)[0] || node2;
         target.focus({
           preventScroll: true
         });
@@ -56971,7 +59351,7 @@ This message will only show in development mode. It won't appear in production. 
       if (!contentRef.current) {
         return;
       }
-      const closestScrollContainer = (0, import_dom25.getScrollContainer)(contentRef.current);
+      const closestScrollContainer = (0, import_dom29.getScrollContainer)(contentRef.current);
       if (contentRef.current === closestScrollContainer) {
         setHasScrollableContent(true);
       } else {
@@ -57075,14 +59455,14 @@ This message will only show in development mode. It won't appear in production. 
     };
     const modal = (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
+      /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {
         ref: (0, import_compose52.useMergeRefs)([ref, forwardedRef]),
         className: clsx_default("components-modal__screen-overlay", overlayClassname, overlayClassnameProp),
         onKeyDown: (0, import_keycodes4.withIgnoreIMEEvents)(handleEscapeKeyDown),
         ...shouldCloseOnClickOutside ? overlayPressHandlers : {},
-        children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(style_provider_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(style_provider_default, {
           document,
-          children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
+          children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {
             className: clsx_default("components-modal__frame", sizeClass, className),
             style: style2,
             ref: (0, import_compose52.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, shouldFocusContent ? focusContentRef : focusOnMountRef]),
@@ -57092,7 +59472,7 @@ This message will only show in development mode. It won't appear in production. 
             "aria-describedby": aria.describedby,
             tabIndex: -1,
             onKeyDown,
-            children: /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)("div", {
+            children: /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
               className: clsx_default("components-modal__content", {
                 "hide-header": __experimentalHideHeader,
                 "is-scrollable": hasScrollableContent,
@@ -57103,31 +59483,31 @@ This message will only show in development mode. It won't appear in production. 
               ref: contentRef,
               "aria-label": hasScrollableContent ? (0, import_i18n46.__)("Scrollable section") : void 0,
               tabIndex: hasScrollableContent ? 0 : void 0,
-              children: [!__experimentalHideHeader && /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)("div", {
+              children: [!__experimentalHideHeader && /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
                 className: "components-modal__header",
-                children: [/* @__PURE__ */ (0, import_jsx_runtime231.jsxs)("div", {
+                children: [/* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
                   className: "components-modal__header-heading-container",
-                  children: [icon && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("span", {
+                  children: [icon && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("span", {
                     className: "components-modal__icon-container",
                     "aria-hidden": true,
                     children: icon
-                  }), title && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("h1", {
+                  }), title && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("h1", {
                     id: headingId,
                     className: "components-modal__header-heading",
                     children: title
                   })]
-                }), headerActions, isDismissible && /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(import_jsx_runtime231.Fragment, {
-                  children: [/* @__PURE__ */ (0, import_jsx_runtime231.jsx)(component_default6, {
+                }), headerActions, isDismissible && /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(import_jsx_runtime248.Fragment, {
+                  children: [/* @__PURE__ */ (0, import_jsx_runtime248.jsx)(component_default6, {
                     marginBottom: 0,
                     marginLeft: 2
-                  }), /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(button_default, {
+                  }), /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(button_default, {
                     size: "compact",
                     onClick: (event) => closeModal().then(() => onRequestClose(event)),
                     icon: close_default,
                     label: closeButtonLabel || (0, import_i18n46.__)("Close")
                   })]
                 })]
-              }), /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
+              }), /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {
                 ref: childrenContainerRef,
                 className: "components-modal__children-container",
                 children
@@ -57137,7 +59517,7 @@ This message will only show in development mode. It won't appear in production. 
         })
       })
     );
-    return (0, import_element147.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime231.jsx)(ModalContext.Provider, {
+    return (0, import_element147.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime248.jsx)(ModalContext.Provider, {
       value: nestedDismissers,
       children: modal
     }), document.body);
@@ -57147,7 +59527,7 @@ This message will only show in development mode. It won't appear in production. 
   var modal_default = Modal;
 
   // packages/components/build-module/confirm-dialog/component.mjs
-  var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE69 = "data-wp-hash";
   function getRuntime69() {
     const globalScope = globalThis;
@@ -57264,8 +59644,8 @@ This message will only show in development mode. It won't appear in production. 
     }, [handleEvent, onConfirm]);
     const cancelLabel = cancelButtonText ?? (0, import_i18n47.__)("Cancel");
     const confirmLabel = confirmButtonText ?? (0, import_i18n47.__)("OK");
-    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(import_jsx_runtime232.Fragment, {
-      children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(modal_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(import_jsx_runtime249.Fragment, {
+      children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(modal_default, {
         onRequestClose: handleEvent(onCancel),
         onKeyDown: handleEnter,
         closeButtonLabel: cancelLabel,
@@ -57276,14 +59656,14 @@ This message will only show in development mode. It won't appear in production. 
         contentLabel: __experimentalHideHeader ? title : void 0,
         __experimentalHideHeader,
         ...otherProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(component_default18, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(component_default18, {
           spacing: 8,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime232.jsx)(component_default8, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime249.jsx)(component_default8, {
             children
-          }), /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(component_default3, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(component_default3, {
             direction: "row",
             justify: "flex-end",
-            children: [/* @__PURE__ */ (0, import_jsx_runtime232.jsx)(button_default, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime249.jsx)(button_default, {
               __next40pxDefaultSize: true,
               ref: cancelButtonRef,
               variant: "tertiary",
@@ -57291,7 +59671,7 @@ This message will only show in development mode. It won't appear in production. 
               accessibleWhenDisabled: true,
               disabled: isBusy,
               children: cancelLabel
-            }), /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(button_default, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(button_default, {
               __next40pxDefaultSize: true,
               ref: confirmButtonRef,
               variant: "primary",
@@ -57316,7 +59696,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/custom-select-control-v2/custom-select.mjs
   var import_element149 = __toESM(require_element(), 1);
   var import_i18n48 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE70 = "data-wp-hash";
   function getRuntime70() {
     const globalScope = globalThis;
@@ -57423,7 +59803,7 @@ This message will only show in development mode. It won't appear in production. 
       value: currentValue
     } = useStoreState(store);
     const computedRenderSelectedValue = (0, import_element149.useMemo)(() => renderSelectedValue ?? defaultRenderSelectedValue, [renderSelectedValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(Select, {
+    return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(Select, {
       ...restProps,
       className: clsx_default(style_module_default49.select, className, {
         [style_module_default49["is-compact"]]: size4 === "compact",
@@ -57456,29 +59836,29 @@ This message will only show in development mode. It won't appear in production. 
     }), [store, size4]);
     return (
       // Where should `restProps` be forwarded to?
-      /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)("div", {
+      /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)("div", {
         className,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime233.jsx)(SelectLabel, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime250.jsx)(SelectLabel, {
           store,
           render: hideLabelFromVision ? (
             // @ts-expect-error `children` are passed via the render prop
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(component_default2, {})
+            /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(component_default2, {})
           ) : (
             // @ts-expect-error `children` are passed via the render prop
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(base_control_default.VisualLabel, {
+            /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(base_control_default.VisualLabel, {
               as: "div"
             })
           ),
           children: label
-        }), /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(input_base_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)(input_base_default, {
           size: size4,
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(chevron_down_default2, {}),
-          children: [/* @__PURE__ */ (0, import_jsx_runtime233.jsx)(CustomSelectButton, {
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(chevron_down_default2, {}),
+          children: [/* @__PURE__ */ (0, import_jsx_runtime250.jsx)(CustomSelectButton, {
             ...restProps,
             size: size4,
             store,
             showOnKeyDown: !isLegacy
-          }), /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(SelectPopover, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(SelectPopover, {
             className: style_module_default49.popover,
             gutter: 12,
             store,
@@ -57486,7 +59866,7 @@ This message will only show in development mode. It won't appear in production. 
             slide: false,
             onKeyDown: onSelectPopoverKeyDown,
             flip: !isLegacy,
-            children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(CustomSelectContext.Provider, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(CustomSelectContext.Provider, {
               value: contextValue,
               children
             })
@@ -57499,7 +59879,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/custom-select-control-v2/item.mjs
   var import_element150 = __toESM(require_element(), 1);
-  var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE71 = "data-wp-hash";
   function getRuntime71() {
     const globalScope = globalThis;
@@ -57586,16 +59966,16 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     const customSelectContext = (0, import_element150.useContext)(CustomSelectContext);
     const size4 = customSelectContext?.size ?? "default";
-    return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(SelectItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)(SelectItem, {
       store: customSelectContext?.store,
       ...props,
       className: clsx_default(style_module_default50.item, className, {
         [style_module_default50["is-compact"]]: size4 === "compact",
         [style_module_default50["is-small"]]: size4 === "small"
       }),
-      children: [children ?? props.value, /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(SelectItemCheck, {
+      children: [children ?? props.value, /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(SelectItemCheck, {
         className: style_module_default50["item-check"],
-        children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(icon_default2, {
           icon: check_default
         })
       })]
@@ -57605,7 +59985,7 @@ This message will only show in development mode. It won't appear in production. 
   var item_default = CustomSelectItem;
 
   // packages/components/build-module/custom-select-control/index.mjs
-  var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE72 = "data-wp-hash";
   function getRuntime72() {
     const globalScope = globalThis;
@@ -57754,17 +60134,17 @@ This message will only show in development mode. It won't appear in production. 
       style: style2,
       className
     }) => {
-      const withHint = /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)("div", {
+      const withHint = /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)("div", {
         className: style_module_default51["hint-wrapper"],
-        children: [/* @__PURE__ */ (0, import_jsx_runtime235.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", {
           children: name
-        }), /* @__PURE__ */ (0, import_jsx_runtime235.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", {
           // Keeping the classname for legacy reasons
           className: clsx_default(style_module_default51["item-hint"], "components-custom-select-control__item-hint"),
           children: hint
         })]
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(item_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(item_default, {
         value: key,
         children: hint ? withHint : name,
         style: style2,
@@ -57786,17 +60166,17 @@ This message will only show in development mode. It won't appear in production. 
       if (!showSelectedHint || !selectedOption.hint) {
         return selectedOption?.name;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)("div", {
+      return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)("div", {
         className: style_module_default51["selected-hint-wrapper"],
-        children: [selectedOption?.name, /* @__PURE__ */ (0, import_jsx_runtime235.jsx)("span", {
+        children: [selectedOption?.name, /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", {
           // Keeping the classname for legacy reasons
           className: clsx_default(style_module_default51["selected-hint"], "components-custom-select-control__hint"),
           children: selectedOption?.hint
         })]
       });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(import_jsx_runtime235.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime235.jsx)(custom_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(import_jsx_runtime252.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime252.jsx)(custom_select_default, {
         "aria-describedby": descriptionId,
         renderSelectedValue,
         size: size4,
@@ -57809,8 +60189,8 @@ This message will only show in development mode. It won't appear in production. 
         isLegacy: true,
         ...restProps,
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(component_default2, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(component_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", {
           id: descriptionId,
           children: getDescribedBy(selectedOption?.name, describedBy)
         })
@@ -58148,7 +60528,7 @@ This message will only show in development mode. It won't appear in production. 
   var TIMEZONELESS_FORMAT = "Y-m-d\\TH:i:s";
 
   // packages/components/build-module/date-time/date-picker/index.mjs
-  var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
   function DatePicker({
     currentDate,
     onChange,
@@ -58180,12 +60560,12 @@ This message will only show in development mode. It won't appear in production. 
       setViewing(startOfDayInConfiguredTimezone(date));
       setFocusable(startOfDayInConfiguredTimezone(date));
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(Wrapper3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(Wrapper3, {
       className: "components-datetime__date",
       role: "application",
       "aria-label": (0, import_i18n50.__)("Calendar"),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(Navigator, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime236.jsx)(ViewPreviousMonthButton, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(Navigator, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)(ViewPreviousMonthButton, {
           icon: (0, import_i18n50.isRTL)() ? arrow_right_default : arrow_left_default,
           variant: "tertiary",
           "aria-label": (0, import_i18n50.__)("View previous month"),
@@ -58196,12 +60576,12 @@ This message will only show in development mode. It won't appear in production. 
             onMonthPreviewed?.((0, import_date3.dateI18n)(TIMEZONELESS_FORMAT, prevMonth, -prevMonth.getTimezoneOffset()));
           },
           size: "compact"
-        }), /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(NavigatorHeading, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(NavigatorHeading, {
           level: 3,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime236.jsx)("strong", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)("strong", {
             children: (0, import_date3.dateI18n)("F", viewing, -viewing.getTimezoneOffset())
           }), " ", (0, import_date3.dateI18n)("Y", viewing, -viewing.getTimezoneOffset())]
-        }), /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(ViewNextMonthButton, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(ViewNextMonthButton, {
           icon: (0, import_i18n50.isRTL)() ? arrow_left_default : arrow_right_default,
           variant: "tertiary",
           "aria-label": (0, import_i18n50.__)("View next month"),
@@ -58213,16 +60593,16 @@ This message will only show in development mode. It won't appear in production. 
           },
           size: "compact"
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(Calendar, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(Calendar, {
         onFocus: () => setIsFocusWithinCalendar(true),
         onBlur: () => setIsFocusWithinCalendar(false),
-        children: [calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(DayOfWeek, {
+        children: [calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(DayOfWeek, {
           children: (0, import_date3.dateI18n)("D", day, -day.getTimezoneOffset())
         }, day.toString())), calendar[0].map((week) => week.map((day, index2) => {
           if (!isSameMonth(day, viewing)) {
             return null;
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(Day2, {
+          return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Day2, {
             day,
             column: index2 + 1,
             isSelected: isSelected2(day),
@@ -58303,7 +60683,7 @@ This message will only show in development mode. It won't appear in production. 
         ref.current.focus();
       }
     }, [isFocusable2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(DayButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(DayButton, {
       __next40pxDefaultSize: true,
       ref,
       className: "components-datetime__date__day",
@@ -58350,7 +60730,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/date-time/time-picker/timezone.mjs
   var import_i18n51 = __toESM(require_i18n(), 1);
   var import_date4 = __toESM(require_date(), 1);
-  var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE73 = "data-wp-hash";
   function getRuntime73() {
     const globalScope = globalThis;
@@ -58443,13 +60823,13 @@ This message will only show in development mode. It won't appear in production. 
     const prettyTimezoneString = timezone.string.replace("_", " ");
     const timezoneDetail = "UTC" === timezone.string ? (0, import_i18n51.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
     const hasNoAdditionalTimezoneDetail = prettyTimezoneString.trim().length === 0;
-    return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime237.jsx)("div", {
+    return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
       className: clsx_default("components-datetime__timezone", style_module_default52["time-zone"]),
       children: zoneAbbr
-    }) : /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(tooltip_default, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(tooltip_default, {
       placement: "top",
       text: timezoneDetail,
-      children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
         className: clsx_default("components-datetime__timezone", style_module_default52["time-zone"]),
         children: zoneAbbr
       })
@@ -58460,7 +60840,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/date-time/time-picker/time-input/index.mjs
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_element153 = __toESM(require_element(), 1);
-  var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE74 = "data-wp-hash";
   function getRuntime74() {
     const globalScope = globalThis;
@@ -58587,19 +60967,19 @@ This message will only show in development mode. It won't appear in production. 
       return _hours < 12 ? "AM" : "PM";
     }
     const Wrapper4 = label ? "fieldset" : import_element153.Fragment;
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(Wrapper4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(Wrapper4, {
       ...label ? {
         className: style_module_default53.fieldset
       } : {},
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(base_control_default.VisualLabel, {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(base_control_default.VisualLabel, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(component_default9, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(component_default9, {
         alignment: "left",
         expanded: false,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsxs)("div", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime255.jsxs)("div", {
           className: clsx_default("components-datetime__time-field components-datetime__time-field-time", style_module_default53["time-wrapper"]),
-          children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)(number_control_default, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime255.jsx)(number_control_default, {
             className: clsx_default("components-datetime__time-field-hours-input", style_module_default53["hours-input"]),
             label: (0, import_i18n52.__)("Hours"),
             hideLabelFromVision: true,
@@ -58614,11 +60994,11 @@ This message will only show in development mode. It won't appear in production. 
             isShiftStepEnabled: false,
             onChange: buildNumberControlChangeCallback("hours"),
             __unstableStateReducer: buildPadInputStateReducer(2)
-          }), /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("span", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("span", {
             className: clsx_default("components-datetime__time-separator", style_module_default53["time-separator"]),
             "aria-hidden": "true",
             children: ":"
-          }), /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(number_control_default, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(number_control_default, {
             label: (0, import_i18n52.__)("Minutes"),
             hideLabelFromVision: true,
             value: String(value.minutes).padStart(2, "0"),
@@ -58642,7 +61022,7 @@ This message will only show in development mode. It won't appear in production. 
               // Unused, for backwards compatibility.
             )
           })]
-        }), is12Hour && /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(component_default12, {
+        }), is12Hour && /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(component_default12, {
           isBlock: true,
           label: (0, import_i18n52.__)("Select AM or PM"),
           hideLabelFromVision: true,
@@ -58650,10 +61030,10 @@ This message will only show in development mode. It won't appear in production. 
           onChange: (newValue) => {
             buildAmPmChangeCallback(newValue)();
           },
-          children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)(component_default14, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime255.jsx)(component_default14, {
             value: "AM",
             label: (0, import_i18n52.__)("AM")
-          }), /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(component_default14, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(component_default14, {
             value: "PM",
             label: (0, import_i18n52.__)("PM")
           })]
@@ -58663,7 +61043,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/date-time/time-picker/index.mjs
-  var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE75 = "data-wp-hash";
   function getRuntime75() {
     const globalScope = globalThis;
@@ -58835,7 +61215,7 @@ This message will only show in development mode. It won't appear in production. 
       setDate(newDate);
       onChange?.((0, import_date5.date)(TIMEZONELESS_FORMAT, newDate));
     };
-    const dayField = /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(number_control_default, {
+    const dayField = /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(number_control_default, {
       className: clsx_default("components-datetime__time-field components-datetime__time-field-day", style_module_default54["day-input"]),
       label: (0, import_i18n53.__)("Day"),
       hideLabelFromVision: true,
@@ -58850,9 +61230,9 @@ This message will only show in development mode. It won't appear in production. 
       isShiftStepEnabled: false,
       onChange: buildNumberControlChangeCallback("date")
     }, "day");
-    const monthField = /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", {
+    const monthField = /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", {
       className: style_module_default54["month-select-wrapper"],
-      children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(select_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(select_control_default, {
         className: "components-datetime__time-field components-datetime__time-field-month",
         label: (0, import_i18n53.__)("Month"),
         hideLabelFromVision: true,
@@ -58867,7 +61247,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       })
     }, "month");
-    const yearField = /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(number_control_default, {
+    const yearField = /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(number_control_default, {
       className: clsx_default("components-datetime__time-field components-datetime__time-field-year", style_module_default54["year-input"]),
       label: (0, import_i18n53.__)("Year"),
       hideLabelFromVision: true,
@@ -58897,38 +61277,38 @@ This message will only show in development mode. It won't appear in production. 
           return null;
       }
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)("div", {
       className: clsx_default("components-datetime__time", style_module_default54.wrapper),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime239.jsxs)("fieldset", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime256.jsxs)("fieldset", {
         className: style_module_default54.fieldset,
-        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(component_default2, {
+        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(component_default2, {
           as: "legend",
           children: (0, import_i18n53.__)("Time")
-        }) : /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(base_control_default.VisualLabel, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(base_control_default.VisualLabel, {
           as: "legend",
           className: "components-datetime__time-legend",
           children: (0, import_i18n53.__)("Time")
-        }), /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(component_default9, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(component_default9, {
           className: "components-datetime__time-wrapper",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime239.jsx)(TimeInput, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime256.jsx)(TimeInput, {
             value: {
               hours: Number(hours),
               minutes: Number(minutes)
             },
             is12Hour,
             onChange: onTimeInputChangeCallback
-          }), /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(component_default6, {}), /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(timezone_default, {})]
+          }), /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(component_default6, {}), /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(timezone_default, {})]
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)("fieldset", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)("fieldset", {
         className: style_module_default54.fieldset,
-        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(component_default2, {
+        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(component_default2, {
           as: "legend",
           children: (0, import_i18n53.__)("Date")
-        }) : /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(base_control_default.VisualLabel, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(base_control_default.VisualLabel, {
           as: "legend",
           className: "components-datetime__time-legend",
           children: (0, import_i18n53.__)("Date")
-        }), /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(component_default9, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(component_default9, {
           className: "components-datetime__time-wrapper",
           children: fields
         })]
@@ -58943,7 +61323,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/date-time/date-time/index.mjs
   var import_element155 = __toESM(require_element(), 1);
-  var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE76 = "data-wp-hash";
   function getRuntime76() {
     const globalScope = globalThis;
@@ -59035,17 +61415,17 @@ This message will only show in development mode. It won't appear in production. 
     events,
     startOfWeek: startOfWeek2
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(component_default18, {
       ref,
       className: clsx_default("components-datetime", style_module_default55.wrapper),
       spacing: 4,
-      children: /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(import_jsx_runtime240.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime240.jsx)(time_picker_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)(import_jsx_runtime257.Fragment, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime257.jsx)(time_picker_default, {
           currentTime: currentDate,
           onChange,
           is12Hour,
           dateOrder
-        }), /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(date_picker_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(date_picker_default, {
           currentDate,
           onChange,
           isInvalidDate,
@@ -59070,7 +61450,7 @@ This message will only show in development mode. It won't appear in production. 
   var context_default3 = Context;
 
   // packages/components/build-module/disabled/index.mjs
-  var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE77 = "data-wp-hash";
   function getRuntime77() {
     const globalScope = globalThis;
@@ -59160,9 +61540,9 @@ This message will only show in development mode. It won't appear in production. 
     isDisabled = true,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(Provider2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(Provider2, {
       value: isDisabled,
-      children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)("div", {
         inert: inertValue2(isDisabled),
         className: clsx_default(className, isDisabled && [style_module_default56.disabled, "components-disabled"]) || void 0,
         ...props,
@@ -59176,7 +61556,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/disclosure/index.mjs
   var import_element157 = __toESM(require_element(), 1);
-  var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedDisclosureContent = ({
     visible,
     children,
@@ -59185,7 +61565,7 @@ This message will only show in development mode. It won't appear in production. 
     const disclosure = useDisclosureStore({
       open: visible
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(DisclosureContent, {
+    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(DisclosureContent, {
       store: disclosure,
       ref,
       ...props,
@@ -59210,7 +61590,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/draggable/index.mjs
   var import_compose54 = __toESM(require_compose(), 1);
   var import_element158 = __toESM(require_element(), 1);
-  var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE78 = "data-wp-hash";
   function getRuntime78() {
     const globalScope = globalThis;
@@ -59398,7 +61778,7 @@ This message will only show in development mode. It won't appear in production. 
       };
     }
     (0, import_element158.useEffect)(() => () => cleanupRef.current(), []);
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(import_jsx_runtime243.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)(import_jsx_runtime260.Fragment, {
       children: [children({
         onDraggableStart: start,
         onDraggableEnd: end
@@ -59410,9 +61790,9 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/drop-zone/index.mjs
   var import_i18n54 = __toESM(require_i18n(), 1);
   var import_element159 = __toESM(require_element(), 1);
-  var import_dom26 = __toESM(require_dom(), 1);
+  var import_dom30 = __toESM(require_dom(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
-  var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
   function DropZoneComponent({
     className,
     icon = upload_default,
@@ -59431,7 +61811,7 @@ This message will only show in development mode. It won't appear in production. 
         if (!event.dataTransfer) {
           return;
         }
-        const files = (0, import_dom26.getFilesFromDataTransfer)(event.dataTransfer);
+        const files = (0, import_dom30.getFilesFromDataTransfer)(event.dataTransfer);
         const html = event.dataTransfer.getData("text/html");
         if (html && onHTMLDrop) {
           onHTMLDrop(html);
@@ -59451,7 +61831,7 @@ This message will only show in development mode. It won't appear in production. 
         } else if (
           // Check for the types because sometimes the files themselves
           // are only available on drop.
-          event.dataTransfer.types.includes("Files") || (0, import_dom26.getFilesFromDataTransfer)(event.dataTransfer).length > 0
+          event.dataTransfer.types.includes("Files") || (0, import_dom30.getFilesFromDataTransfer)(event.dataTransfer).length > 0
         ) {
           setIsActive(!!onFilesDrop);
         } else {
@@ -59475,18 +61855,18 @@ This message will only show in development mode. It won't appear in production. 
       "is-dragging-over-document": isDraggingOverDocument,
       "is-dragging-over-element": isDraggingOverElement
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("div", {
       ...restProps,
       ref,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("div", {
         className: "components-drop-zone__content",
-        children: /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)("div", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", {
           className: "components-drop-zone__content-inner",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime244.jsx)(icon_default2, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime261.jsx)(icon_default2, {
             icon,
             className: "components-drop-zone__content-icon"
-          }), /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("span", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("span", {
             className: "components-drop-zone__content-text",
             children: label ? label : (0, import_i18n54.__)("Drop files to upload")
           })]
@@ -59514,8 +61894,8 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/navigable-container/container.mjs
   var import_element160 = __toESM(require_element(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
-  var import_dom27 = __toESM(require_dom(), 1);
-  var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
+  var import_dom31 = __toESM(require_dom(), 1);
+  var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
   var noop15 = () => {
   };
   var MENU_ITEM_ROLES = ["menuitem", "menuitemradio", "menuitemcheckbox"];
@@ -59529,7 +61909,7 @@ This message will only show in development mode. It won't appear in production. 
     return nextValue;
   }
   function getFocusableContext(container, target, tabbableOnly) {
-    const finder = tabbableOnly ? import_dom27.focus.tabbable : import_dom27.focus.focusable;
+    const finder = tabbableOnly ? import_dom31.focus.tabbable : import_dom31.focus.focusable;
     const focusables = finder.find(container);
     const index2 = focusables.indexOf(target);
     if (index2 > -1) {
@@ -59600,7 +61980,7 @@ This message will only show in development mode. It won't appear in production. 
       };
     }, [onKeyDown, eventToOffset, stopNavigationEvents, cycle, onNavigate, onlyBrowserTabstops]);
     const mergedRef = (0, import_compose56.useMergeRefs)([containerRef, ref]);
-    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)("div", {
       ref: mergedRef,
       ...restProps,
       children
@@ -59611,7 +61991,7 @@ This message will only show in development mode. It won't appear in production. 
   var container_default = NavigableContainer;
 
   // packages/components/build-module/navigable-container/menu.mjs
-  var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedNavigableMenu({
     role = "menu",
     orientation = "vertical",
@@ -59640,7 +62020,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return void 0;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(container_default, {
       ref,
       stopNavigationEvents: true,
       onlyBrowserTabstops: false,
@@ -59656,7 +62036,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigable-container/tabbable.mjs
   var import_element162 = __toESM(require_element(), 1);
-  var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTabbableContainer({
     eventToOffset,
     ...props
@@ -59674,7 +62054,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return void 0;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(container_default, {
       ref,
       stopNavigationEvents: true,
       onlyBrowserTabstops: true,
@@ -59687,7 +62067,7 @@ This message will only show in development mode. It won't appear in production. 
   var tabbable_default = TabbableContainer;
 
   // packages/components/build-module/dropdown-menu/index.mjs
-  var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
   function mergeProps3(defaultProps = {}, props = {}) {
     const mergedProps = {
       ...defaultProps,
@@ -59734,7 +62114,7 @@ This message will only show in development mode. It won't appear in production. 
       className: "components-dropdown-menu__popover",
       variant
     }, popoverProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(dropdown_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(dropdown_default, {
       className,
       popoverProps: mergedPopoverProps,
       renderToggle: ({
@@ -59759,7 +62139,7 @@ This message will only show in development mode. It won't appear in production. 
             "is-opened": isOpen
           })
         }, restToggleProps);
-        return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(Toggle, {
+        return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(Toggle, {
           ...mergedToggleProps,
           icon,
           onClick: (event) => {
@@ -59789,10 +62169,10 @@ This message will only show in development mode. It won't appear in production. 
             "no-icons": noIcons
           })
         }, menuProps);
-        return /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(menu_default2, {
+        return /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)(menu_default2, {
           ...mergedMenuProps,
           role: "menu",
-          children: [isFunction2(children) ? children(props) : null, controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(button_default, {
+          children: [isFunction2(children) ? children(props) : null, controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(button_default, {
             size: "compact",
             onClick: (event) => {
               event.stopPropagation();
@@ -59839,7 +62219,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/external-link/index.mjs
   var import_i18n55 = __toESM(require_i18n(), 1);
   var import_element163 = __toESM(require_element(), 1);
-  var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedExternalLink(props, ref) {
     const {
       href,
@@ -59859,17 +62239,17 @@ This message will only show in development mode. It won't appear in production. 
     };
     return (
       /* eslint-disable react/jsx-no-target-blank */
-      /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)("a", {
+      /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)("a", {
         ...additionalProps,
         className: classes,
         href,
         onClick: onClickHandler,
         target: "_blank",
         ref,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime249.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime266.jsx)("span", {
           className: "components-external-link__contents",
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("span", {
           className: clsx_default(
             "components-external-link__icon",
             // This class prevents the arrow from being replaced by a Twemoji image.
@@ -60032,7 +62412,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/focal-point-picker/controls.mjs
-  var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
   var TEXTCONTROL_MIN = 0;
   var TEXTCONTROL_MAX = 100;
   var noop16 = () => {
@@ -60059,17 +62439,17 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)(ControlWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)(ControlWrapper, {
       className: "focal-point-picker__controls",
       hasHelpText,
       gap: 4,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime250.jsx)(FocalPointUnitControl, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsx)(FocalPointUnitControl, {
         label: (0, import_i18n56.__)("Left"),
         "aria-label": (0, import_i18n56.__)("Focal point left position"),
         value: [valueX, "%"].join(""),
         onChange: (next2) => handleChange(next2, "x"),
         dragDirection: "e"
-      }), /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(FocalPointUnitControl, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(FocalPointUnitControl, {
         label: (0, import_i18n56.__)("Top"),
         "aria-label": (0, import_i18n56.__)("Focal point top position"),
         value: [valueY, "%"].join(""),
@@ -60079,7 +62459,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function FocalPointUnitControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(StyledUnitControl, {
+    return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(StyledUnitControl, {
       className: "focal-point-picker__controls-position-unit-control",
       labelPosition: "top",
       max: TEXTCONTROL_MAX,
@@ -60107,7 +62487,7 @@ This message will only show in development mode. It won't appear in production. 
 			`, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZvY2FsLXBvaW50LXN0eWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUd1QyIsImZpbGUiOiJmb2NhbC1wb2ludC1zdHlsZS50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcblxuZXhwb3J0IGNvbnN0IFBvaW50ZXJDaXJjbGUgPSBzdHlsZWQuZGl2YFxuXHRiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcblx0Y3Vyc29yOiBncmFiO1xuXHRoZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogLTIwcHggMCAwIC0yMHB4O1xuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHVzZXItc2VsZWN0OiBub25lO1xuXHR3aWR0aDogNDBweDtcblx0d2lsbC1jaGFuZ2U6IHRyYW5zZm9ybTtcblx0ei1pbmRleDogMTAwMDA7XG5cdGJhY2tncm91bmQ6IHJnYmEoIDI1NSwgMjU1LCAyNTUsIDAuNCApO1xuXHRib3JkZXI6IDFweCBzb2xpZCByZ2JhKCAyNTUsIDI1NSwgMjU1LCAwLjQgKTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1JvdW5kIH07XG5cdGJhY2tkcm9wLWZpbHRlcjogYmx1ciggMTZweCApIHNhdHVyYXRlKCAxODAlICk7XG5cdGJveC1zaGFkb3c6IHJnYiggMCAwIDAgLyAxMCUgKSAwcHggMHB4IDhweDtcblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHR0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMTAwbXMgbGluZWFyO1xuXHR9XG5cblx0JHsgKCB7IGlzRHJhZ2dpbmcgfTogeyBpc0RyYWdnaW5nOiBib29sZWFuIH0gKSA9PlxuXHRcdGlzRHJhZ2dpbmcgJiZcblx0XHRgXG5cdFx0XHRib3gtc2hhZG93OiByZ2IoIDAgMCAwIC8gMTIlICkgMHB4IDBweCAxMHB4O1xuXHRcdFx0dHJhbnNmb3JtOiBzY2FsZSggMS4xICk7XG5cdFx0XHRjdXJzb3I6IGdyYWJiaW5nO1xuXHRcdFx0YCB9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/focal-point-picker/focal-point.mjs
-  var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   function FocalPoint({
     left = "50%",
     top = "50%",
@@ -60117,7 +62497,7 @@ This message will only show in development mode. It won't appear in production. 
       left,
       top
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(PointerCircle, {
+    return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(PointerCircle, {
       ...props,
       className: "components-focal-point-picker__icon_container",
       style: style2
@@ -60125,31 +62505,31 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/grid.mjs
-  var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
   function FocalPointPickerGrid({
     bounds,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(GridView, {
+    return /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)(GridView, {
       ...props,
       className: "components-focal-point-picker__grid",
       style: {
         width: bounds.width,
         height: bounds.height
       },
-      children: [/* @__PURE__ */ (0, import_jsx_runtime252.jsx)(GridLineX, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime269.jsx)(GridLineX, {
         style: {
           top: "33%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(GridLineX, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(GridLineX, {
         style: {
           top: "66%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(GridLineY, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(GridLineY, {
         style: {
           left: "33%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(GridLineY, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(GridLineY, {
         style: {
           left: "66%"
         }
@@ -60158,7 +62538,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/media.mjs
-  var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
   function Media({
     alt,
     autoPlay,
@@ -60171,14 +62551,14 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }) {
     if (!src) {
-      return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(MediaPlaceholder, {
+      return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(MediaPlaceholder, {
         className: "components-focal-point-picker__media components-focal-point-picker__media--placeholder",
         ref: mediaRef,
         ...props
       });
     }
     const isVideo = isVideoType(src);
-    return isVideo ? /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("video", {
+    return isVideo ? /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("video", {
       ...props,
       autoPlay,
       className: "components-focal-point-picker__media components-focal-point-picker__media--video",
@@ -60187,7 +62567,7 @@ This message will only show in development mode. It won't appear in production. 
       onLoadedData: onLoad,
       ref: mediaRef,
       src
-    }) : /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("img", {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("img", {
       ...props,
       alt,
       className: "components-focal-point-picker__media components-focal-point-picker__media--image",
@@ -60198,7 +62578,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/index.mjs
-  var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
   var GRID_OVERLAY_TIMEOUT = 600;
   function FocalPointPicker({
     // Prevent passing to internal component.
@@ -60348,19 +62728,19 @@ This message will only show in development mode. It won't appear in production. 
       }, GRID_OVERLAY_TIMEOUT);
       return () => window.clearTimeout(timeout);
     }, [x2, y3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(Container2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(Container2, {
       ...restProps,
       as: "fieldset",
       className: classes,
-      children: [!!label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(component_default2, {
+      children: [!!label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(component_default2, {
         as: "legend",
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(StyledLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(StyledLabel, {
         as: "legend",
         children: label
-      })), /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(MediaWrapper, {
+      })), /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(MediaWrapper, {
         className: "components-focal-point-picker-wrapper",
-        children: /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(MediaContainer, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(MediaContainer, {
           className: "components-focal-point-picker",
           onKeyDown: arrowKeyStep,
           onPointerDown: (event) => {
@@ -60378,20 +62758,20 @@ This message will only show in development mode. It won't appear in production. 
           ref: dragAreaRef,
           role: "button",
           tabIndex: -1,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime254.jsx)(FocalPointPickerGrid, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime271.jsx)(FocalPointPickerGrid, {
             bounds,
             showOverlay: showGridOverlay
-          }), /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(Media, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(Media, {
             alt: (0, import_i18n57.__)("Media preview"),
             autoPlay,
             onLoad: refUpdateBounds.current,
             src: url
-          }), /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(FocalPoint, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(FocalPoint, {
             ...focalPointPosition,
             isDragging: isDragging2
           })]
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(FocalPointPickerControls, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(FocalPointPickerControls, {
         hasHelpText: !!help,
         point: {
           x: x2,
@@ -60400,7 +62780,7 @@ This message will only show in development mode. It won't appear in production. 
         onChange: (value) => {
           onChange?.(getFinalValue(value));
         }
-      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(StyledHelp, {
+      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(StyledHelp, {
         children: help
       })]
     });
@@ -60410,7 +62790,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/focusable-iframe/index.mjs
   var import_compose58 = __toESM(require_compose(), 1);
   var import_deprecated19 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
   function FocusableIframe({
     iframeRef,
     ...props
@@ -60420,7 +62800,7 @@ This message will only show in development mode. It won't appear in production. 
       since: "5.9",
       alternative: "wp.compose.useFocusableIframe"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("iframe", {
       ref,
       ...props
     });
@@ -60451,7 +62831,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
-  var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE79 = "data-wp-hash";
   function getRuntime79() {
     const globalScope = globalThis;
@@ -60564,7 +62944,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return options2.find((option) => option.value === value) ?? DEFAULT_OPTION;
     }, [value, valueMode, options2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(custom_select_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(custom_select_control_default, {
       className: clsx_default("components-font-size-picker__select", style_module_default58.select),
       label: (0, import_i18n58.__)("Font size"),
       hideLabelFromVision: true,
@@ -60606,7 +62986,7 @@ This message will only show in development mode. It won't appear in production. 
   var T_SHIRT_NAMES = [(0, import_i18n59.__)("Small"), (0, import_i18n59.__)("Medium"), (0, import_i18n59.__)("Large"), (0, import_i18n59.__)("Extra Large"), (0, import_i18n59.__)("Extra Extra Large")];
 
   // packages/components/build-module/font-size-picker/font-size-picker-toggle-group.mjs
-  var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
   var FontSizePickerToggleGroup = (props) => {
     const {
       fontSizes,
@@ -60628,7 +63008,7 @@ This message will only show in development mode. It won't appear in production. 
       const fontSizeBySize = fontSizes.find((fontSize) => fontSize.size === value);
       return fontSizeBySize?.slug;
     })();
-    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(component_default12, {
+    return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(component_default12, {
       label: (0, import_i18n60.__)("Font size"),
       hideLabelFromVision: true,
       value: currentValue,
@@ -60643,7 +63023,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       },
       isBlock: true,
-      children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(component_default14, {
+      children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(component_default14, {
         value: fontSize.slug,
         label: T_SHIRT_ABBREVIATIONS[index2],
         "aria-label": fontSize.name || T_SHIRT_NAMES[index2],
@@ -60654,7 +63034,7 @@ This message will only show in development mode. It won't appear in production. 
   var font_size_picker_toggle_group_default = FontSizePickerToggleGroup;
 
   // packages/components/build-module/font-size-picker/index.mjs
-  var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE80 = "data-wp-hash";
   function getRuntime80() {
     const globalScope = globalThis;
@@ -60777,18 +63157,18 @@ This message will only show in development mode. It won't appear in production. 
     const [valueQuantity, valueUnit] = parseQuantityAndUnitFromRawValue(resolvedValueForControls, units);
     const isValueUnitRelative = !!valueUnit && ["em", "rem", "vw", "vh"].includes(valueUnit);
     const isDisabled = value === void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)("fieldset", {
+    return /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)("fieldset", {
       ref,
       className: clsx_default("components-font-size-picker", style_module_default59.container),
       "aria-labelledby": labelId,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default6, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(component_default9, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime275.jsx)(component_default6, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)(component_default9, {
           className: clsx_default("components-font-size-picker__header", style_module_default59.header),
-          children: [/* @__PURE__ */ (0, import_jsx_runtime258.jsx)(base_control_default.VisualLabel, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime275.jsx)(base_control_default.VisualLabel, {
             id: labelId,
             className: style_module_default59["header-label"],
             children: (0, import_i18n61.__)("Font size")
-          }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(Button3, {
+          }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(Button3, {
             className: style_module_default59["header-toggle"],
             label: currentPickerType === "custom" ? (0, import_i18n61.__)("Use size preset") : (0, import_i18n61.__)("Set custom size"),
             icon: settings_default,
@@ -60797,8 +63177,8 @@ This message will only show in development mode. It won't appear in production. 
             size: "small"
           })]
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)("div", {
-        children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(font_size_picker_select_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)("div", {
+        children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(font_size_picker_select_default, {
           fontSizes,
           value,
           valueMode,
@@ -60811,7 +63191,7 @@ This message will only show in development mode. It won't appear in production. 
             }
           },
           onSelectCustom: () => setUserRequestedCustom(true)
-        }), currentPickerType === "togglegroup" && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(font_size_picker_toggle_group_default, {
+        }), currentPickerType === "togglegroup" && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(font_size_picker_toggle_group_default, {
           fontSizes,
           value,
           valueMode,
@@ -60822,11 +63202,11 @@ This message will only show in development mode. It won't appear in production. 
               onChange?.(hasUnits2 ? newValue : Number(newValue), selectedItem);
             }
           }
-        }), currentPickerType === "custom" && /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(component_default3, {
+        }), currentPickerType === "custom" && /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)(component_default3, {
           className: "components-font-size-picker__custom-size-control",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default4, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime275.jsx)(component_default4, {
             isBlock: true,
-            children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(unit_control_default, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(unit_control_default, {
               label: (0, import_i18n61.__)("Font size"),
               labelPosition: "top",
               hideLabelFromVision: true,
@@ -60842,12 +63222,12 @@ This message will only show in development mode. It won't appear in production. 
               units: hasUnits2 ? units : [],
               min: 0
             })
-          }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default4, {
+          }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(component_default4, {
             isBlock: true,
-            children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default6, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(component_default6, {
               marginX: 2,
               marginBottom: 0,
-              children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(range_control_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(range_control_default, {
                 className: "components-font-size-picker__custom-input",
                 label: (0, import_i18n61.__)("Font size"),
                 hideLabelFromVision: true,
@@ -60869,8 +63249,8 @@ This message will only show in development mode. It won't appear in production. 
                 step: isValueUnitRelative ? 0.1 : 1
               })
             })
-          }), withReset && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default4, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(Button3, {
+          }), withReset && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(component_default4, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(Button3, {
               disabled: isDisabled,
               accessibleWhenDisabled: true,
               onClick: () => {
@@ -60892,7 +63272,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-file-upload/index.mjs
   var import_element167 = __toESM(require_element(), 1);
-  var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
   function FormFileUpload({
     accept,
     children,
@@ -60909,16 +63289,16 @@ This message will only show in development mode. It won't appear in production. 
     };
     const ui = render ? render({
       openFileDialog
-    }) : /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(button_default, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(button_default, {
       onClick: openFileDialog,
       __next40pxDefaultSize: true,
       ...props,
       children
     });
     const compatAccept = accept?.includes("audio/*") ? `${accept}, audio/mp3, audio/x-m4a, audio/x-m4b, audio/x-m4p, audio/x-wav, audio/webm` : accept;
-    return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime276.jsxs)("div", {
       className: "components-form-file-upload",
-      children: [ui, /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("input", {
+      children: [ui, /* @__PURE__ */ (0, import_jsx_runtime276.jsx)("input", {
         type: "file",
         ref,
         multiple,
@@ -60936,7 +63316,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-toggle/index.mjs
   var import_element168 = __toESM(require_element(), 1);
-  var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
   var noop17 = () => {
   };
   function UnforwardedFormToggle(props, ref) {
@@ -60953,9 +63333,9 @@ This message will only show in development mode. It won't appear in production. 
       "is-checked": checked2,
       "is-disabled": disabled2
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)("span", {
       className: wrapperClasses,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime260.jsx)("input", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime277.jsx)("input", {
         className: "components-form-toggle__input",
         id: id3,
         type: "checkbox",
@@ -60968,9 +63348,9 @@ This message will only show in development mode. It won't appear in production. 
         },
         ...additionalProps,
         ref
-      }), /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("span", {
         className: "components-form-toggle__track"
-      }), /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("span", {
         className: "components-form-toggle__thumb"
       })]
     });
@@ -60991,7 +63371,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/form-token-field/token.mjs
   var import_compose60 = __toESM(require_compose(), 1);
   var import_i18n62 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
   var noop18 = () => {
   };
   function Token({
@@ -61027,22 +63407,22 @@ This message will only show in development mode. It won't appear in production. 
       termPosition,
       termsCount
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime278.jsxs)("span", {
       className: tokenClasses,
       onMouseEnter,
       onMouseLeave,
       title,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime278.jsxs)("span", {
         className: "components-form-token-field__token-text",
         id: `components-form-token-field__token-text-${instanceId}`,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime261.jsx)(component_default2, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime278.jsx)(component_default2, {
           as: "span",
           children: termPositionAndCount
-        }), /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("span", {
           "aria-hidden": "true",
           children: transformedValue
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(button_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(button_default, {
         className: "components-form-token-field__remove-token",
         size: "small",
         icon: close_small_default,
@@ -61055,7 +63435,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/form-token-field/index.mjs
-  var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE81 = "data-wp-hash";
   function getRuntime81() {
     const globalScope = globalThis;
@@ -61591,8 +63971,8 @@ This message will only show in development mode. It won't appear in production. 
       const status = typeof token2 !== "string" ? token2.status : void 0;
       const termPosition = index2 + 1;
       const termsCount = tokens.length;
-      return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(component_default4, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Token, {
+      return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(component_default4, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(Token, {
           value: _value,
           status,
           title: typeof token2 !== "string" ? token2.title : void 0,
@@ -61622,7 +64002,7 @@ This message will only show in development mode. It won't appear in production. 
         selectedSuggestionIndex,
         "aria-describedby": describedById
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(token_input_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(token_input_default, {
         ...inputProps,
         onChange: !(maxLength && value.length >= maxLength) ? onInputChangeHandler : void 0,
         ref: input
@@ -61644,26 +64024,26 @@ This message will only show in development mode. It won't appear in production. 
         onFocus: onFocusHandler
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime279.jsxs)("div", {
       ...tokenFieldProps,
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(StyledLabel, {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(StyledLabel, {
         htmlFor: `components-form-token-input-${instanceId}`,
         className: "components-form-token-field__label",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime279.jsxs)("div", {
         ref: tokensAndInput,
         className: classes,
         tabIndex: -1,
         onMouseDown: onContainerTouched,
         onTouchStart: onContainerTouched,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime262.jsx)(component_default3, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime279.jsx)(component_default3, {
           className: style_module_default60["tokens-and-input"],
           justify: "flex-start",
           align: "center",
           gap: 1,
           wrap: true,
           children: renderTokensAndInput()
-        }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(suggestions_list_default, {
+        }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(suggestions_list_default, {
           instanceId,
           match: saveTransform(incompleteTokenValue),
           displayTransform,
@@ -61674,7 +64054,7 @@ This message will only show in development mode. It won't appear in production. 
           onSelect: onSuggestionSelected,
           __experimentalRenderItem
         })]
-      }), computedHelp && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(StyledHelp, {
+      }), computedHelp && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(StyledHelp, {
         id: `components-form-token-input-${instanceId}__help`,
         className: "components-form-token-field__help",
         children: computedHelp
@@ -61693,13 +64073,13 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/icons.mjs
   var import_primitives34 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
-  var PageControlIcon = () => /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_primitives34.SVG, {
+  var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
+  var PageControlIcon = () => /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_primitives34.SVG, {
     width: "8",
     height: "8",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
-    children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_primitives34.Circle, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_primitives34.Circle, {
       cx: "4",
       cy: "4",
       r: "4"
@@ -61707,23 +64087,23 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/guide/page-control.mjs
-  var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
   function PageControl({
     currentPage,
     numberOfPages,
     setCurrentPage
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("ul", {
+    return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)("ul", {
       className: "components-guide__page-control",
       "aria-label": (0, import_i18n64.__)("Guide controls"),
       children: Array.from({
         length: numberOfPages
-      }).map((_2, page) => /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("li", {
+      }).map((_2, page) => /* @__PURE__ */ (0, import_jsx_runtime281.jsx)("li", {
         // Set aria-current="step" on the active page, see https://www.w3.org/TR/wai-aria-1.1/#aria-current
         "aria-current": page === currentPage ? "step" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(button_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(button_default, {
           size: "small",
-          icon: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(PageControlIcon, {}),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(PageControlIcon, {}),
           "aria-label": (0, import_i18n64.sprintf)(
             /* translators: 1: current page number 2: total number of pages */
             (0, import_i18n64.__)("Page %1$d of %2$d"),
@@ -61737,7 +64117,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/guide/index.mjs
-  var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
   function Guide({
     children,
     className,
@@ -61784,7 +64164,7 @@ This message will only show in development mode. It won't appear in production. 
     if (pages.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(modal_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(modal_default, {
       className: clsx_default("components-guide", className),
       contentLabel,
       isDismissible: pages.length > 1,
@@ -61799,30 +64179,30 @@ This message will only show in development mode. It won't appear in production. 
         }
       },
       ref,
-      children: /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)("div", {
         className: "components-guide__container",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime265.jsxs)("div", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime282.jsxs)("div", {
           className: "components-guide__page",
-          children: [pages[currentPage].image, pages.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(PageControl, {
+          children: [pages[currentPage].image, pages.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(PageControl, {
             currentPage,
             numberOfPages: pages.length,
             setCurrentPage
           }), pages[currentPage].content]
-        }), /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)("div", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)("div", {
           className: "components-guide__footer",
-          children: [canGoBack && /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(button_default, {
+          children: [canGoBack && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(button_default, {
             className: "components-guide__back-button",
             variant: "tertiary",
             onClick: goBack,
             __next40pxDefaultSize: true,
             children: previousButtonText
-          }), canGoForward && /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(button_default, {
+          }), canGoForward && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(button_default, {
             className: "components-guide__forward-button",
             variant: "primary",
             onClick: goForward,
             __next40pxDefaultSize: true,
             children: nextButtonText
-          }), !canGoForward && /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(button_default, {
+          }), !canGoForward && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(button_default, {
             className: "components-guide__finish-button",
             variant: "primary",
             onClick: onFinish,
@@ -61838,7 +64218,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/guide/page.mjs
   var import_element171 = __toESM(require_element(), 1);
   var import_deprecated22 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
   function GuidePage(props) {
     (0, import_element171.useEffect)(() => {
       (0, import_deprecated22.default)("<GuidePage>", {
@@ -61846,7 +64226,7 @@ This message will only show in development mode. It won't appear in production. 
         alternative: "the `pages` prop in <Guide>"
       });
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", {
       ...props
     });
   }
@@ -61854,7 +64234,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/button/deprecated.mjs
   var import_deprecated23 = __toESM(require_deprecated(), 1);
   var import_element172 = __toESM(require_element(), 1);
-  var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedIconButton({
     label,
     labelPosition,
@@ -61870,7 +64250,7 @@ This message will only show in development mode. It won't appear in production. 
     return (
       // Disable reason: the parent component is taking care of the __next40pxDefaultSize prop.
       // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
-      /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(button_default, {
+      /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(button_default, {
         ...props,
         ref,
         tooltipPosition: labelPosition,
@@ -61885,7 +64265,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/keyboard-shortcuts/index.mjs
   var import_element173 = __toESM(require_element(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
-  var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   function KeyboardShortcut({
     target,
     callback,
@@ -61907,7 +64287,7 @@ This message will only show in development mode. It won't appear in production. 
     eventName
   }) {
     const target = (0, import_element173.useRef)(null);
-    const element = Object.entries(shortcuts ?? {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(KeyboardShortcut, {
+    const element = Object.entries(shortcuts ?? {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(KeyboardShortcut, {
       shortcut,
       callback,
       bindGlobal,
@@ -61915,11 +64295,11 @@ This message will only show in development mode. It won't appear in production. 
       target
     }, shortcut));
     if (!import_element173.Children.count(children)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_jsx_runtime268.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_jsx_runtime285.Fragment, {
         children: element
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime268.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)("div", {
       ref: target,
       children: [element, children]
     });
@@ -61929,7 +64309,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/menu-group/index.mjs
   var import_element174 = __toESM(require_element(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
-  var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   function MenuGroup6(props) {
     const {
       children,
@@ -61945,14 +64325,14 @@ This message will only show in development mode. It won't appear in production. 
     const classNames = clsx_default(className, "components-menu-group", {
       "has-hidden-separator": hideSeparator
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)("div", {
       className: classNames,
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("div", {
         className: "components-menu-group__label",
         id: labelId,
         "aria-hidden": "true",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("div", {
         role: "group",
         "aria-labelledby": label ? labelId : void 0,
         children
@@ -61963,7 +64343,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/menu-item/index.mjs
   var import_element175 = __toESM(require_element(), 1);
-  var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedMenuItem(props, ref) {
     let {
       children,
@@ -61979,12 +64359,12 @@ This message will only show in development mode. It won't appear in production. 
     } = props;
     className = clsx_default("components-menu-item__button", className);
     if (info) {
-      children = /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)("span", {
+      children = /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)("span", {
         className: "components-menu-item__info-wrapper",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime270.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime287.jsx)("span", {
           className: "components-menu-item__item",
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("span", {
           className: "components-menu-item__info",
           children: info
         })]
@@ -61997,7 +64377,7 @@ This message will only show in development mode. It won't appear in production. 
         })
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(button_default, {
       size: "compact",
       ref,
       "aria-checked": role === "menuitemcheckbox" || role === "menuitemradio" ? isSelected2 : void 0,
@@ -62006,13 +64386,13 @@ This message will only show in development mode. It won't appear in production. 
       className,
       accessibleWhenDisabled: true,
       ...buttonProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime270.jsx)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime287.jsx)("span", {
         className: "components-menu-item__item",
         children
-      }), !suffix && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(shortcut_default, {
+      }), !suffix && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(shortcut_default, {
         className: "components-menu-item__shortcut",
         shortcut
-      }), !suffix && icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(icon_default3, {
+      }), !suffix && icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(icon_default3, {
         icon
       }), suffix]
     });
@@ -62022,7 +64402,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_item_default = MenuItem6;
 
   // packages/components/build-module/menu-items-choice/index.mjs
-  var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   var noop19 = () => {
   };
   function MenuItemsChoice({
@@ -62031,10 +64411,10 @@ This message will only show in development mode. It won't appear in production. 
     onSelect,
     value
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(import_jsx_runtime271.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_jsx_runtime288.Fragment, {
       children: choices.map((item) => {
         const isSelected2 = value === item.value;
-        return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(menu_item_default, {
           role: "menuitemradio",
           disabled: item.disabled,
           icon: isSelected2 ? check_default : null,
@@ -62523,7 +64903,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/navigator/navigator/component.mjs
-  var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
   function addScreen({
     screens
   }, screen) {
@@ -62722,11 +65102,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }), [currentLocation, matchedPath, methods]);
     const cx2 = useCx();
     const classes = (0, import_element177.useMemo)(() => cx2(navigatorWrapper, className), [className, cx2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(component_default, {
       ref: forwardedRef,
       className: classes,
       ...otherProps,
-      children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(NavigatorContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(NavigatorContext.Provider, {
         value: navigatorContextValue,
         children
       })
@@ -62735,7 +65115,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Navigator2 = contextConnect(UnconnectedNavigator, "Navigator");
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
-  var import_dom28 = __toESM(require_dom(), 1);
+  var import_dom32 = __toESM(require_dom(), 1);
   var import_element179 = __toESM(require_element(), 1);
   var import_compose65 = __toESM(require_compose(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
@@ -62818,7 +65198,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
-  var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorScreen(props, forwardedRef) {
     if (!/^\//.test(props.path)) {
       true ? (0, import_warning9.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
@@ -62884,14 +65264,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         elementToFocus = wrapperEl.querySelector(focusTargetSelector);
       }
       if (!elementToFocus) {
-        const [firstTabbable] = import_dom28.focus.tabbable.find(wrapperEl);
+        const [firstTabbable] = import_dom32.focus.tabbable.find(wrapperEl);
         elementToFocus = firstTabbable ?? wrapperEl;
       }
       locationRef.current.hasRestoredFocus = true;
       elementToFocus.focus();
     }, [skipAnimationAndFocusRestoration, isMatch, isBack, focusTargetSelector, skipFocus]);
     const mergedWrapperRef = (0, import_compose65.useMergeRefs)([forwardedRef, wrapperRef]);
-    return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(component_default, {
+    return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(component_default, {
       ref: mergedWrapperRef,
       className: classes,
       ...screenProps,
@@ -62954,10 +65334,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-button/component.mjs
-  var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorButton(props, forwardedRef) {
     const navigatorButtonProps = useNavigatorButton(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(component_default, {
       ref: forwardedRef,
       ...navigatorButtonProps
     });
@@ -62988,10 +65368,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-back-button/component.mjs
-  var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorBackButton(props, forwardedRef) {
     const navigatorBackButtonProps = useNavigatorBackButton(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(component_default, {
       ref: forwardedRef,
       ...navigatorBackButtonProps
     });
@@ -63000,13 +65380,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/navigator/navigator-to-parent-button/component.mjs
   var import_deprecated25 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
     (0, import_deprecated25.default)("wp.components.NavigatorToParentButton", {
       since: "6.7",
       alternative: "wp.components.Navigator.BackButton"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(NavigatorBackButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(NavigatorBackButton, {
       ref: forwardedRef,
       ...props
     });
@@ -63131,7 +65511,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_i18n67 = __toESM(require_i18n(), 1);
   var import_element183 = __toESM(require_element(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   var noop20 = () => {
   };
   function useSpokenMessage(message, politeness) {
@@ -63184,7 +65564,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     useSpokenMessage(spokenMessage, politeness);
     const classes = clsx_default(className, "components-notice", "is-" + status);
     if (__unstableHTML && typeof children === "string") {
-      children = /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_element183.RawHTML, {
+      children = /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_element183.RawHTML, {
         children
       });
     }
@@ -63192,14 +65572,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onDismiss();
       onRemove();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)("div", {
       className: classes,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime277.jsx)(component_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime294.jsx)(component_default2, {
         children: getStatusLabel(status)
-      }), /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
         className: "components-notice__content",
         children
-      }), actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("div", {
+      }), actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
         className: "components-notice__actions",
         children: actions.map(({
           className: buttonCustomClasses,
@@ -63218,7 +65598,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           if (typeof computedVariant === "undefined" && isPrimary) {
             computedVariant = "primary";
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(button_default, {
+          return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(button_default, {
             size: "compact",
             href: url,
             variant: computedVariant,
@@ -63229,7 +65609,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: label
           }, index2);
         })
-      }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(button_default, {
+      }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(button_default, {
         size: "small",
         className: "components-notice__dismiss",
         icon: close_small_default,
@@ -63242,7 +65622,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/notice/list.mjs
   var import_react103 = __toESM(require_react(), 1);
-  var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
   var noop21 = () => {
   };
   function NoticeList({
@@ -63253,7 +65633,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const removeNotice = (id3) => () => onRemove(id3);
     className = clsx_default("components-notice-list", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime278.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)("div", {
       className,
       children: [children, [...notices].reverse().map((notice) => {
         const {
@@ -63274,14 +65654,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element184 = __toESM(require_element(), 1);
 
   // packages/components/build-module/panel/header.mjs
-  var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
   function PanelHeader({
     label,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime279.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)("div", {
       className: "components-panel__header",
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("h2", {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("h2", {
         children: label
       }), children]
     });
@@ -63289,17 +65669,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var header_default = PanelHeader;
 
   // packages/components/build-module/panel/index.mjs
-  var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedPanel({
     header,
     className,
     children
   }, ref) {
     const classNames = clsx_default(className, "components-panel");
-    return /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime297.jsxs)("div", {
       className: classNames,
       ref,
-      children: [header && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(header_default, {
+      children: [header && /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(header_default, {
         label: header
       }), children]
     });
@@ -63311,7 +65691,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/panel/body.mjs
   var import_compose66 = __toESM(require_compose(), 1);
   var import_element185 = __toESM(require_element(), 1);
-  var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   var noop22 = () => {
   };
   function UnforwardedPanelBody(props, ref) {
@@ -63352,10 +65732,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const classes = clsx_default("components-panel__body", className, {
       "is-opened": isOpened
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("div", {
       className: classes,
       ref: (0, import_compose66.useMergeRefs)([nodeRef, ref]),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime281.jsx)(PanelBodyTitle, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime298.jsx)(PanelBodyTitle, {
         icon,
         isOpened: Boolean(isOpened),
         onClick: handleOnToggle,
@@ -63375,21 +65755,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!title) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)("h2", {
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("h2", {
       className: "components-panel__body-title",
-      children: /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(button_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)(button_default, {
         __next40pxDefaultSize: true,
         className: "components-panel__body-toggle",
         "aria-expanded": isOpened,
         ref,
         ...props,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime281.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime298.jsx)("span", {
           "aria-hidden": "true",
-          children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(icon_default3, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(icon_default3, {
             className: "components-panel__arrow",
             icon: isOpened ? chevron_up_default : chevron_down_default
           })
-        }), title, icon && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(icon_default3, {
+        }), title, icon && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(icon_default3, {
           icon,
           className: "components-panel__icon",
           size: 20
@@ -63403,12 +65783,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/panel/row.mjs
   var import_element186 = __toESM(require_element(), 1);
-  var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedPanelRow({
     className,
     children
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("div", {
       className: clsx_default("components-panel__row", className),
       ref,
       children
@@ -63423,14 +65803,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_primitives35 = __toESM(require_primitives(), 1);
   var import_element187 = __toESM(require_element(), 1);
   var import_a11y8 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
-  var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_primitives35.SVG, {
+  var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
+  var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_primitives35.SVG, {
     className: "components-placeholder__illustration",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 60 60",
     preserveAspectRatio: "none",
-    children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_primitives35.Path, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_primitives35.Path, {
       vectorEffect: "non-scaling-stroke",
       d: "M60 60 0 0"
     })
@@ -63468,21 +65848,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         (0, import_a11y8.speak)(instructions);
       }
     }, [instructions]);
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", {
       ...additionalProps,
       className: classes,
-      children: [withIllustration ? PlaceholderIllustration : null, resizeListener, notices, preview && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", {
+      children: [withIllustration ? PlaceholderIllustration : null, resizeListener, notices, preview && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
         className: "components-placeholder__preview",
         children: preview
-      }), /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", {
         className: "components-placeholder__label",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime283.jsx)(icon_default3, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime300.jsx)(icon_default3, {
           icon
         }), label]
-      }), !!instructions && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", {
+      }), !!instructions && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
         className: "components-placeholder__instructions",
         children: instructions
-      }), /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
         className: fieldsetClasses,
         children
       })]
@@ -63493,7 +65873,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/progress-bar/index.mjs
   var import_i18n68 = __toESM(require_i18n(), 1);
   var import_element188 = __toESM(require_element(), 1);
-  var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE82 = "data-wp-hash";
   function getRuntime82() {
     const globalScope = globalThis;
@@ -63580,16 +65960,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...progressProps
     } = props;
     const isIndeterminate = !Number.isFinite(value);
-    return /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)("div", {
       className: clsx_default(style_module_default61.track, className),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime284.jsx)("div", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime301.jsx)("div", {
         className: clsx_default(style_module_default61.indicator, {
           [style_module_default61["is-indeterminate"]]: isIndeterminate
         }),
         style: {
           "--indicator-width": !isIndeterminate ? `${value}%` : void 0
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("progress", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime301.jsx)("progress", {
         className: style_module_default61["progress-element"],
         max: 100,
         value,
@@ -63645,7 +66025,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tree-select/index.mjs
   var import_element189 = __toESM(require_element(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
-  var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   function getSelectOptions(tree, level = 0) {
     return tree.flatMap((treeNode) => [{
       value: treeNode.id,
@@ -63670,7 +66050,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         label: noOptionLabel
       }, ...getSelectOptions(tree)].filter((option) => !!option);
     }, [noOptionLabel, tree]);
-    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(SelectControl, {
+    return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(SelectControl, {
       label,
       options: options2,
       onChange,
@@ -63681,7 +66061,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var tree_select_default = TreeSelect;
 
   // packages/components/build-module/query-controls/author-select.mjs
-  var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
   function AuthorSelect({
     label,
     noOptionLabel,
@@ -63693,7 +66073,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const termsTree = buildTermsTree(authorList);
-    return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(tree_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(tree_select_default, {
       label,
       noOptionLabel,
       onChange: onChangeProp,
@@ -63704,7 +66084,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/query-controls/category-select.mjs
   var import_element190 = __toESM(require_element(), 1);
-  var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
   function CategorySelect({
     label,
     noOptionLabel,
@@ -63716,7 +66096,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const termsTree = (0, import_element190.useMemo)(() => {
       return buildTermsTree(categoriesList);
     }, [categoriesList]);
-    return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(tree_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(tree_select_default, {
       label,
       noOptionLabel,
       onChange: onChangeProp,
@@ -63727,7 +66107,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/query-controls/index.mjs
-  var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_MIN_ITEMS = 1;
   var DEFAULT_MAX_ITEMS = 100;
   var MAX_CATEGORIES_SUGGESTIONS = 20;
@@ -63769,10 +66149,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     // but instead are destructured inline where necessary.
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(component_default18, {
       spacing: "4",
       className: "components-query-controls",
-      children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(select_control_default, {
+      children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(select_control_default, {
         label: (0, import_i18n69.__)("Order by"),
         value: orderBy === void 0 || order === void 0 ? void 0 : `${orderBy}/${order}`,
         options: orderByOptions,
@@ -63788,13 +66168,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             onOrderByChange(newOrderBy);
           }
         }
-      }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(CategorySelect, {
+      }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(CategorySelect, {
         categoriesList: props.categoriesList,
         label: (0, import_i18n69.__)("Category"),
         noOptionLabel: (0, import_i18n69._x)("All", "categories"),
         selectedCategoryId: props.selectedCategoryId,
         onChange: props.onCategoryChange
-      }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(form_token_field_default, {
+      }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(form_token_field_default, {
         label: (0, import_i18n69.__)("Categories"),
         value: props.selectedCategories && props.selectedCategories.map((item) => ({
           id: item.id,
@@ -63807,13 +66187,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         suggestions: Object.keys(props.categorySuggestions),
         onChange: props.onCategoryChange,
         maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
-      }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(AuthorSelect, {
+      }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(AuthorSelect, {
         authorList,
         label: (0, import_i18n69.__)("Author"),
         noOptionLabel: (0, import_i18n69._x)("All", "authors"),
         selectedAuthorId,
         onChange: onAuthorChange
-      }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(range_control_default, {
+      }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(range_control_default, {
         label: (0, import_i18n69.__)("Number of items"),
         value: numberOfItems,
         onChange: onNumberOfItemsChange,
@@ -63837,7 +66217,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   RadioGroupContext.displayName = "RadioGroupContext";
 
   // packages/components/build-module/radio-group/radio.mjs
-  var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedRadio({
     value,
     children,
@@ -63850,12 +66230,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = (0, import_element192.useContext)(RadioGroupContext);
     const selectedValue = useStoreState(store, "value");
     const isChecked = selectedValue !== void 0 && selectedValue === value;
-    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(Radio, {
+    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(Radio, {
       disabled: disabled2,
       store,
       ref,
       value,
-      render: /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(button_default, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(button_default, {
         variant: isChecked ? "primary" : "secondary",
         __next40pxDefaultSize: true,
         ...props
@@ -63871,7 +66251,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_deprecated26 = __toESM(require_deprecated(), 1);
   var import_element193 = __toESM(require_element(), 1);
   var import_i18n70 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedRadioGroup({
     label,
     checked: checked2,
@@ -63897,11 +66277,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(RadioGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(RadioGroupContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(RadioGroup, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(RadioGroup, {
         store: radioStore,
-        render: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(button_group_default, {
+        render: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(button_group_default, {
           __shouldNotWarnDeprecated: true,
           children
         }),
@@ -63917,7 +66297,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/radio-control/index.mjs
   var import_compose68 = __toESM(require_compose(), 1);
-  var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
   function generateOptionDescriptionId(radioGroupId, index2) {
     return `${radioGroupId}-${index2}-option-description`;
   }
@@ -63946,26 +66326,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!options2?.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)("fieldset", {
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)("fieldset", {
       id: id3,
       role: "radiogroup",
       className: clsx_default(className, "components-radio-control"),
       disabled: disabled2,
       "aria-describedby": !!help ? generateHelpId(id3) : void 0,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(component_default2, {
         as: "legend",
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(base_control_default.VisualLabel, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(component_default18, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(component_default18, {
         spacing: 3,
         className: clsx_default("components-radio-control__group-wrapper", {
           "has-help": !!help
         }),
-        children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)("div", {
+        children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)("div", {
           className: "components-radio-control__option",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime291.jsx)("input", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime308.jsx)("input", {
             id: generateOptionId(id3, index2),
             className: "components-radio-control__input",
             type: "radio",
@@ -63980,17 +66360,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
               onClick?.(event);
             },
             ...additionalProps
-          }), /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("label", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("label", {
             className: "components-radio-control__label",
             htmlFor: generateOptionId(id3, index2),
             children: option.label
-          }), !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(StyledHelp, {
+          }), !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(StyledHelp, {
             id: generateOptionDescriptionId(id3, index2),
             className: "components-radio-control__option-description",
             children: option.description
           }) : null]
         }, generateOptionId(id3, index2)))
-      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(StyledHelp, {
+      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(StyledHelp, {
         id: generateHelpId(id3),
         className: "components-base-control__help",
         children: help
@@ -64003,12 +66383,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element197 = __toESM(require_element(), 1);
 
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/index.js
-  var import_jsx_runtime293 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime310 = __toESM(require_jsx_runtime());
   var import_react105 = __toESM(require_react());
   var import_react_dom9 = __toESM(require_react_dom());
 
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/resizer.js
-  var import_jsx_runtime292 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime309 = __toESM(require_jsx_runtime());
   var import_react104 = __toESM(require_react());
   var __assign2 = function() {
     __assign2 = Object.assign || function(t3) {
@@ -64062,7 +66442,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     var style2 = (0, import_react104.useMemo)(function() {
       return __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles[direction]), replaceStyles !== null && replaceStyles !== void 0 ? replaceStyles : {});
     }, [replaceStyles, direction]);
-    return (0, import_jsx_runtime292.jsx)("div", { className: className || void 0, style: style2, onMouseDown, onTouchStart, children });
+    return (0, import_jsx_runtime309.jsx)("div", { className: className || void 0, style: style2, onMouseDown, onTouchStart, children });
   });
 
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/index.js
@@ -64744,11 +67124,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
         var resizers = Object.keys(enable).map(function(dir) {
           if (enable[dir] !== false) {
-            return (0, import_jsx_runtime293.jsx)(Resizer, { direction: dir, onResizeStart: _this.onResizeStart, replaceStyles: handleStyles && handleStyles[dir], className: handleClasses && handleClasses[dir], children: handleComponent && handleComponent[dir] ? handleComponent[dir] : null }, dir);
+            return (0, import_jsx_runtime310.jsx)(Resizer, { direction: dir, onResizeStart: _this.onResizeStart, replaceStyles: handleStyles && handleStyles[dir], className: handleClasses && handleClasses[dir], children: handleComponent && handleComponent[dir] ? handleComponent[dir] : null }, dir);
           }
           return null;
         });
-        return (0, import_jsx_runtime293.jsx)("div", { className: handleWrapperClass, style: handleWrapperStyle, children: resizers });
+        return (0, import_jsx_runtime310.jsx)("div", { className: handleWrapperClass, style: handleWrapperStyle, children: resizers });
       };
       Resizable2.prototype.render = function() {
         var _this = this;
@@ -64764,7 +67144,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           style2.flexBasis = this.state.flexBasis;
         }
         var Wrapper4 = this.props.as || "div";
-        return (0, import_jsx_runtime293.jsxs)(Wrapper4, __assign3({ style: style2, className: this.props.className }, extendsProps, {
+        return (0, import_jsx_runtime310.jsxs)(Wrapper4, __assign3({ style: style2, className: this.props.className }, extendsProps, {
           // `ref` is after `extendsProps` to ensure this one wins over a version
           // passed in
           ref: function(c3) {
@@ -64772,7 +67152,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
               _this.resizable = c3;
             }
           },
-          children: [this.state.isResizing && (0, import_jsx_runtime293.jsx)("div", { style: this.state.backgroundStyle }), this.props.children, this.renderResizer()]
+          children: [this.state.isResizing && (0, import_jsx_runtime310.jsx)("div", { style: this.state.backgroundStyle }), this.props.children, this.renderResizer()]
         }));
       };
       Resizable2.defaultProps = {
@@ -64934,7 +67314,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
-  var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE83 = "data-wp-hash";
   function getRuntime83() {
     const globalScope = globalThis;
@@ -65054,16 +67434,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         left: (0, import_i18n71.isRTL)() ? CORNER_OFFSET : void 0
       };
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)("div", {
       "aria-hidden": "true",
       className: clsx_default("components-resizable-tooltip__tooltip-wrapper", style_module_default62["tooltip-wrapper"]),
       ref,
       style: style2,
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)("div", {
         className: clsx_default("components-resizable-tooltip__tooltip", style_module_default62.tooltip),
         style: labelStyle,
-        children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(component_default8, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(component_default8, {
           as: "span",
           className: style_module_default62["label-text"],
           children: label
@@ -65075,7 +67455,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var label_default = ForwardedComponent3;
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-  var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE84 = "data-wp-hash";
   function getRuntime84() {
     const globalScope = globalThis;
@@ -65184,13 +67564,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const classes = clsx_default("components-resize-tooltip", style_module_default63.root, className);
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(PolymorphicElement, {
+    return /* @__PURE__ */ (0, import_jsx_runtime312.jsxs)(PolymorphicElement, {
       "aria-hidden": "true",
       as,
       ...props,
       className: classes,
       ref,
-      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(label_default, {
+      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(label_default, {
         "aria-hidden": props["aria-hidden"],
         label,
         position: position2,
@@ -65203,7 +67583,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var resize_tooltip_default = ForwardedComponent4;
 
   // packages/components/build-module/resizable-box/index.mjs
-  var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
   var HANDLE_CLASS_NAME = "components-resizable-box__handle";
   var SIDE_HANDLE_CLASS_NAME = "components-resizable-box__side-handle";
   var CORNER_HANDLE_CLASS_NAME = "components-resizable-box__corner-handle";
@@ -65243,16 +67623,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     __experimentalTooltipProps: tooltipProps = {},
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(Resizable, {
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(Resizable, {
       className: clsx_default("components-resizable-box__container", showHandle && "has-show-handle", className),
-      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("div", {
+      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime313.jsx)("div", {
         tabIndex: -1
       }, key)])),
       handleClasses: HANDLE_CLASSES,
       handleStyles: HANDLE_STYLES,
       ref,
       ...props,
-      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(resize_tooltip_default, {
+      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(resize_tooltip_default, {
         ...tooltipProps
       })]
     });
@@ -65264,7 +67644,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/responsive-wrapper/index.mjs
   var import_deprecated27 = __toESM(require_deprecated(), 1);
   var import_element198 = __toESM(require_element(), 1);
-  var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveWrapper({
     naturalWidth,
     naturalHeight,
@@ -65285,9 +67665,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       aspectRatio2 = `${naturalWidth} / ${naturalHeight}`;
     }
     const ch = children;
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(TagName58, {
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(TagName58, {
       className: "components-responsive-wrapper",
-      children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("div", {
         children: (0, import_element198.cloneElement)(ch, {
           className: clsx_default("components-responsive-wrapper__content", ch.props.className),
           style: {
@@ -65303,7 +67683,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/sandbox/index.mjs
   var import_element199 = __toESM(require_element(), 1);
   var import_compose70 = __toESM(require_compose(), 1);
-  var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   var observeAndResizeJS = function() {
     const {
       MutationObserver: MutationObserver2
@@ -65400,34 +67780,34 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     scripts,
     lang
   }) {
-    const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("html", {
+    const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)("html", {
       lang,
       className: type,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("head", {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime298.jsx)("title", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsxs)("head", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsx)("title", {
           children: title
-        }), /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("style", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("style", {
           dangerouslySetInnerHTML: {
             __html: style
           }
-        }), styles2.map((rules, i2) => /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("style", {
+        }), styles2.map((rules, i2) => /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("style", {
           dangerouslySetInnerHTML: {
             __html: rules
           }
-        }, i2)), /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("script", {
+        }, i2)), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("script", {
           type: "text/javascript",
           dangerouslySetInnerHTML: {
             __html: `(${observeAndResizeJS.toString()})();`
           }
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("body", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)("body", {
         "data-resizable-iframe-connected": "data-resizable-iframe-connected",
         className: type,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime298.jsx)("div", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsx)("div", {
           dangerouslySetInnerHTML: {
             __html: html
           }
-        }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("script", {
+        }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("script", {
           src
         }, src))]
       })]
@@ -65502,7 +67882,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         currentView?.removeEventListener("message", checkMessageForResize);
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("iframe", {
       ref: (0, import_compose70.useMergeRefs)([ref, (0, import_compose70.useFocusableIframe)()]),
       title,
       tabIndex,
@@ -65603,7 +67983,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     (0, import_element199.useEffect)(() => {
       trySandBox(true);
     }, [html, type]);
-    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("iframe", {
       ref: (0, import_compose70.useMergeRefs)([ref, (0, import_compose70.useFocusableIframe)()]),
       title,
       tabIndex,
@@ -65619,11 +67999,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...contentProps
   }) {
     if (allowSameOrigin) {
-      return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(SameOriginSandBox, {
+      return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(SameOriginSandBox, {
         ...contentProps
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(IsolatedSandBox, {
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(IsolatedSandBox, {
       ...contentProps
     });
   }
@@ -65634,7 +68014,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_i18n72 = __toESM(require_i18n(), 1);
   var import_element200 = __toESM(require_element(), 1);
   var import_deprecated28 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE85 = "data-wp-hash";
   function getRuntime85() {
     const globalScope = globalThis;
@@ -65728,9 +68108,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onChange("");
       searchRef.current?.focus();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(InputControlSuffixWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(InputControlSuffixWrapper, {
       variant: "control",
-      children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(button_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(button_default, {
         size: "small",
         icon: close_small_default,
         label: onClose ? (0, import_i18n72.__)("Close search") : (0, import_i18n72.__)("Reset search"),
@@ -65759,7 +68139,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const searchRef = (0, import_element200.useRef)(null);
     const instanceId = (0, import_compose71.useInstanceId)(SearchControl, "components-search-control");
     const hasSuffix = !!onClose || !!value;
-    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(input_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(input_control_default, {
       id: instanceId,
       hideLabelFromVision,
       label,
@@ -65771,15 +68151,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       autoComplete: "off",
       placeholder,
       value: value ?? "",
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(InputControlPrefixWrapper, {
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(InputControlPrefixWrapper, {
         variant: "icon",
-        children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(icon_default3, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(icon_default3, {
           className: style_module_default64.icon,
           icon: search_default,
           fill: "currentColor"
         })
       }),
-      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(SuffixItem, {
+      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(SuffixItem, {
         searchRef,
         onChange,
         onClose
@@ -65797,7 +68177,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element201 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_warning10 = __toESM(require_warning(), 1);
-  var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_TIMEOUT = 6e3;
   function useSpokenMessage2(message, politeness) {
     const spokenMessage = typeof message === "string" ? message : (0, import_element201.renderToString)(message);
@@ -65885,7 +68265,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const snackbarContentClassnames = clsx_default("components-snackbar__content", {
       "components-snackbar__content-with-icon": !!icon
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("div", {
       ref: mergedRef,
       onFocus,
       className: classes,
@@ -65895,9 +68275,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onKeyPress: !explicitDismiss ? dismissMe : void 0,
       "aria-label": !explicitDismiss ? (0, import_i18n73.__)("Dismiss this notice") : void 0,
       "data-testid": "snackbar",
-      children: /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)("div", {
         className: snackbarContentClassnames,
-        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
+        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("div", {
           className: "components-snackbar__icon",
           children: icon
         }), children, actions.map(({
@@ -65905,19 +68285,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           onClick,
           url,
           openInNewTab = false
-        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(external_link_default, {
+        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(external_link_default, {
           href: url,
           onClick: (event) => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
-        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(button_default, {
+        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(button_default, {
           __next40pxDefaultSize: true,
           href: url,
           variant: "link",
           onClick: (event) => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
-        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("span", {
+        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("span", {
           role: "button",
           "aria-label": (0, import_i18n73.__)("Dismiss this notice"),
           tabIndex: 0,
@@ -65936,7 +68316,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/snackbar/list.mjs
   var import_compose73 = __toESM(require_compose(), 1);
   var import_element202 = __toESM(require_element(), 1);
-  var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   var SNACKBAR_VARIANTS = {
     init: {
       height: 0,
@@ -65978,18 +68358,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const isReducedMotion = (0, import_compose73.useReducedMotion)();
     className = clsx_default("components-snackbar-list", className);
     const removeNotice = (notice) => () => onRemove?.(notice.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)("div", {
       className,
       tabIndex: -1,
       ref: listRef,
       "data-testid": "snackbar-list",
-      children: [children, /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(AnimatePresence, {
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(AnimatePresence, {
         children: notices.map((notice) => {
           const {
             content,
             ...restNotice
           } = notice;
-          return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(motion.div, {
+          return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(motion.div, {
             layout: isReducedMotion ? false : "position",
             style: {
               width: "100%"
@@ -65998,9 +68378,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             animate: "open",
             exit: "exit",
             variants: isReducedMotion ? void 0 : SNACKBAR_VARIANTS,
-            children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)("div", {
+            children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("div", {
               className: "components-snackbar-list__notice-container",
-              children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(snackbar_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(snackbar_default, {
                 ...restNotice,
                 onRemove: removeNotice(notice),
                 listRef,
@@ -66030,7 +68410,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element203 = __toESM(require_element(), 1);
   var import_compose74 = __toESM(require_compose(), 1);
   var import_i18n74 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var extractTabName = (id3) => {
     if (typeof id3 === "undefined" || id3 === null) {
       return;
@@ -66113,21 +68493,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         setTabStoreSelectedId(firstEnabledTab.name);
       }
     }, [tabs, selectedTab?.disabled, setTabStoreSelectedId, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("div", {
       className,
       ref,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(TabList, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime319.jsx)(TabList, {
         store: tabStore,
         className: "components-tab-panel__tabs",
         children: tabs.map((tab) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(Tab, {
+          return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(Tab, {
             id: prependInstanceId(tab.name),
             className: clsx_default("components-tab-panel__tabs-item", tab.className, {
               [activeClass]: tab.name === selectedTabName
             }),
             disabled: tab.disabled,
             "aria-controls": `${prependInstanceId(tab.name)}-view`,
-            render: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(button_default, {
+            render: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(button_default, {
               __next40pxDefaultSize: true,
               icon: tab.icon,
               label: tab.icon && tab.title,
@@ -66136,7 +68516,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: !tab.icon && tab.title
           }, tab.name);
         })
-      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(TabPanel, {
+      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(TabPanel, {
         id: `${prependInstanceId(selectedTab.name)}-view`,
         store: tabStore,
         tabId: prependInstanceId(selectedTab.name),
@@ -66152,7 +68532,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/text-control/index.mjs
   var import_compose75 = __toESM(require_compose(), 1);
   var import_element204 = __toESM(require_element(), 1);
-  var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTextControl(props, ref) {
     const {
       // Prevent passing legacy props to `input`.
@@ -66170,13 +68550,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = props;
     const id3 = (0, import_compose75.useInstanceId)(TextControl, "inspector-text-control", idProp);
     const onChangeValue = (event) => onChange(event.target.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(base_control_default, {
       label,
       hideLabelFromVision,
       id: id3,
       help,
       className,
-      children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)("input", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("input", {
         className: "components-text-control__input",
         type,
         id: id3,
@@ -66195,7 +68575,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/textarea-control/index.mjs
   var import_compose76 = __toESM(require_compose(), 1);
   var import_element205 = __toESM(require_element(), 1);
-  var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE86 = "data-wp-hash";
   function getRuntime86() {
     const globalScope = globalThis;
@@ -66292,13 +68672,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const id3 = `inspector-textarea-control-${instanceId}`;
     const onChangeValue = (event) => onChange(event.target.value);
     const classes = clsx_default("components-textarea-control", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(base_control_default, {
       label,
       hideLabelFromVision,
       id: id3,
       help,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)("textarea", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)("textarea", {
         className: clsx_default("components-textarea-control__input", style_module_default65.textarea),
         id: id3,
         rows,
@@ -66316,7 +68696,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/text-highlight/index.mjs
   var import_element206 = __toESM(require_element(), 1);
-  var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   var TextHighlight = (props) => {
     const {
       text = "",
@@ -66324,13 +68704,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = props;
     const trimmedHighlightText = highlight.trim();
     if (!trimmedHighlightText) {
-      return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(import_jsx_runtime305.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_jsx_runtime322.Fragment, {
         children: text
       });
     }
     const regex = new RegExp(`(${escapeRegExp(trimmedHighlightText)})`, "gi");
     return (0, import_element206.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
-      mark: /* @__PURE__ */ (0, import_jsx_runtime305.jsx)("mark", {})
+      mark: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("mark", {})
     });
   };
   TextHighlight.displayName = "TextHighlight";
@@ -66338,7 +68718,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tip/index.mjs
   var import_deprecated30 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   function Tip(props) {
     const {
       children
@@ -66348,11 +68728,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       version: "7.4",
       alternative: "Notice from @wordpress/ui"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("div", {
       className: "components-tip",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime306.jsx)(icon_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime323.jsx)(icon_default2, {
         icon: tip_default
-      }), /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("p", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("p", {
         children
       })]
     });
@@ -66362,7 +68742,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/toggle-control/index.mjs
   var import_element207 = __toESM(require_element(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
-  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToggleControl({
     label,
     checked: checked2,
@@ -66392,17 +68772,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         describedBy = id3 + "__help";
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(base_control_default, {
       id: id3,
-      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("span", {
+      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("span", {
         className: "components-toggle-control__help",
         children: helpLabel
       }),
       className: clsx_default("components-toggle-control", className),
-      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)(component_default9, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(component_default9, {
         justify: "flex-start",
         spacing: 2,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime307.jsx)(form_toggle_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime324.jsx)(form_toggle_default, {
           id: id3,
           checked: checked2,
           onChange: onChangeToggle,
@@ -66410,7 +68790,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           disabled: disabled2,
           ref,
           ...additionalProps
-        }), /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(component_default5, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(component_default5, {
           as: "label",
           htmlFor: id3,
           className: clsx_default("components-toggle-control__label", {
@@ -66446,7 +68826,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_context_default = ToolbarContext;
 
   // packages/components/build-module/toolbar/toolbar-item/index.mjs
-  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarItem({
     children,
     as: Component7,
@@ -66465,7 +68845,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     if (!accessibleToolbarStore) {
       if (Component7) {
-        return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(Component7, {
+        return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(Component7, {
           ...allProps,
           children
         });
@@ -66475,10 +68855,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       return children(allProps);
     }
-    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(Component7, {
+    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(Component7, {
       children
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ToolbarItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ToolbarItem, {
       accessibleWhenDisabled: true,
       ...allProps,
       store: accessibleToolbarStore,
@@ -66490,18 +68870,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_item_default = ToolbarItem22;
 
   // packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.mjs
-  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
   var ToolbarButtonContainer = ({
     children,
     className
-  }) => /* @__PURE__ */ (0, import_jsx_runtime309.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("div", {
     className,
     children
   });
   var toolbar_button_container_default = ToolbarButtonContainer;
 
   // packages/components/build-module/toolbar/toolbar-button/index.mjs
-  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
   function useDeprecatedProps6({
     isDisabled,
     ...otherProps
@@ -66523,9 +68903,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = useDeprecatedProps6(props);
     const accessibleToolbarState = (0, import_element210.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(toolbar_button_container_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(toolbar_button_container_default, {
         className: containerClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(button_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(button_default, {
           ref,
           icon: restProps.icon,
           size: "compact",
@@ -66548,12 +68928,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         })
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(toolbar_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(toolbar_item_default, {
       className: clsx_default("components-toolbar-button", className),
       ...extraProps,
       ...restProps,
       ref,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(button_default, {
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(button_default, {
         size: "compact",
         label: title,
         isPressed: isActive,
@@ -66567,12 +68947,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_button_default = ToolbarButton;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-container.mjs
-  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   var ToolbarGroupContainer = ({
     className,
     children,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime311.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime328.jsx)("div", {
     className,
     ...props,
     children
@@ -66581,14 +68961,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.mjs
   var import_element211 = __toESM(require_element(), 1);
-  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   function ToolbarGroupCollapsed({
     controls = [],
     toggleProps,
     ...props
   }) {
     const accessibleToolbarState = (0, import_element211.useContext)(toolbar_context_default);
-    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(dropdown_menu_default, {
+    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(dropdown_menu_default, {
       controls,
       toggleProps: {
         ...internalToggleProps,
@@ -66597,7 +68977,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...props
     });
     if (accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(toolbar_item_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(toolbar_item_default, {
         ...toggleProps,
         children: renderDropdownMenu
       });
@@ -66607,7 +68987,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_group_collapsed_default = ToolbarGroupCollapsed;
 
   // packages/components/build-module/toolbar/toolbar-group/index.mjs
-  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   function isNestedArray(arr) {
     return Array.isArray(arr) && Array.isArray(arr[0]);
   }
@@ -66636,7 +69016,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       controlSets = [controls];
     }
     if (isCollapsed2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(toolbar_group_collapsed_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(toolbar_group_collapsed_default, {
         label: title,
         controls: controlSets,
         className: finalClassName,
@@ -66644,10 +69024,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(toolbar_group_container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(toolbar_group_container_default, {
       className: finalClassName,
       ...props,
-      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(toolbar_button_default, {
+      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(toolbar_button_default, {
         containerClassName: indexOfSet > 0 && indexOfControl === 0 ? "has-left-divider" : void 0,
         ...control
       }, [indexOfSet, indexOfControl].join()))), children]
@@ -66658,7 +69038,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/toolbar/toolbar/toolbar-container.mjs
   var import_element213 = __toESM(require_element(), 1);
   var import_i18n75 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarContainer({
     label,
     ...props
@@ -66669,9 +69049,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     return (
       // This will provide state for `ToolbarButton`'s
-      /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(toolbar_context_default.Provider, {
+      /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(toolbar_context_default.Provider, {
         value: toolbarStore,
-        children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(Toolbar, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(Toolbar, {
           ref,
           "aria-label": label,
           store: toolbarStore,
@@ -66685,7 +69065,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_container_default = ToolbarContainer2;
 
   // packages/components/build-module/toolbar/toolbar/index.mjs
-  var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbar({
     className,
     label,
@@ -66719,16 +69099,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         title: _title,
         ...restProps
       } = props;
-      return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(toolbar_group_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(toolbar_group_default, {
         isCollapsed: false,
         ...restProps,
         className
       });
     }
     const finalClassName = clsx_default("components-accessible-toolbar", className, variant && `is-${variant}`);
-    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ContextSystemProvider, {
       value: contextSystemValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(toolbar_container_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(toolbar_container_default, {
         className: finalClassName,
         label,
         ref,
@@ -66742,18 +69122,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.mjs
   var import_element215 = __toESM(require_element(), 1);
-  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarDropdownMenu(props, ref) {
     const accessibleToolbarState = (0, import_element215.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(dropdown_menu_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(dropdown_menu_default, {
         ...props
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(toolbar_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(toolbar_item_default, {
       ref,
       ...props.toggleProps,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(dropdown_menu_default, {
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(dropdown_menu_default, {
         ...props,
         popoverProps: {
           ...props.popoverProps
@@ -66896,7 +69276,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
-  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE88 = "data-wp-hash";
   function getRuntime88() {
     const globalScope = globalThis;
@@ -66984,15 +69364,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!items.length) {
       return null;
     }
-    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("span", {
+    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime334.jsx)("span", {
       "aria-hidden": true,
       className: style_module_default67["reset-label"],
       children: (0, import_i18n76.__)("Reset")
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_jsx_runtime317.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(import_jsx_runtime334.Fragment, {
       children: items.map(([label, hasValue]) => {
         if (hasValue) {
-          return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
+          return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(menu_item_default, {
             className: itemClassName,
             role: "menuitem",
             label: (0, import_i18n76.sprintf)(
@@ -67012,7 +69392,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: label
           }, label);
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(menu_item_default, {
           icon: check_default,
           className: itemClassName,
           role: "menuitemcheckbox",
@@ -67030,7 +69410,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!items.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_jsx_runtime317.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(import_jsx_runtime334.Fragment, {
       children: items.map(([label, isSelected2]) => {
         const itemLabel = isSelected2 ? (0, import_i18n76.sprintf)(
           // translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the hide and reset action.
@@ -67041,7 +69421,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           (0, import_i18n76._x)("%s, show", "input control"),
           label
         );
-        return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(menu_item_default, {
           icon: isSelected2 ? check_default : null,
           isSelected: isSelected2,
           label: itemLabel,
@@ -67095,14 +69475,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     );
     const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n76.__)("All options are currently hidden") : void 0;
     const canResetAll = [...defaultItems, ...optionalItems].some(([, isSelected2]) => isSelected2);
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(component_default9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(component_default9, {
       ...headerProps,
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime317.jsx)(component_default19, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime334.jsx)(component_default19, {
         level: headingLevel,
         className: headingClassName,
         children: labelText
-      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(dropdown_menu_default, {
+      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(dropdown_menu_default, {
         ...dropdownMenuProps,
         icon: dropDownMenuIcon,
         label: dropDownMenuLabelText,
@@ -67113,19 +69493,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           size: "small",
           description: dropdownMenuDescriptionText
         },
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(import_jsx_runtime317.Fragment, {
-          children: [/* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(menu_group_default, {
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(import_jsx_runtime334.Fragment, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(menu_group_default, {
             label: labelText,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime317.jsx)(DefaultControlsGroup, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime334.jsx)(DefaultControlsGroup, {
               items: defaultItems,
               toggleItem,
               itemClassName: defaultControlsItemClassName
-            }), /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(OptionalControlsGroup, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(OptionalControlsGroup, {
               items: optionalItems,
               toggleItem
             })]
-          }), /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_group_default, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(menu_group_default, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(menu_item_default, {
               "aria-disabled": !canResetAll,
               variant: "tertiary",
               onClick: () => {
@@ -67492,7 +69872,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel/component.mjs
-  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
   var TOOLS_PANEL_GAP = space(4);
   var UnconnectedToolsPanel = (props, forwardedRef) => {
     const {
@@ -67505,7 +69885,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       dropdownMenuProps,
       ...toolsPanelProps
     } = useToolsPanel(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(component_default22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(component_default22, {
       ...toolsPanelProps,
       columns: 2,
       gap: 4,
@@ -67513,9 +69893,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       rowGap: TOOLS_PANEL_GAP,
       templateColumns: "repeat( 2, minmax(0, 1fr) )",
       ref: forwardedRef,
-      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(ToolsPanelContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(ToolsPanelContext.Provider, {
         value: panelContext,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime318.jsx)(component_default38, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime335.jsx)(component_default38, {
           label,
           resetAll: resetAllItems,
           toggleItem,
@@ -67702,7 +70082,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-item/component.mjs
-  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
   var UnconnectedToolsPanelItem = (props, forwardedRef) => {
     const {
       children,
@@ -67711,12 +70091,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...toolsPanelItemProps
     } = useToolsPanelItem(props);
     if (!isShown) {
-      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(component_default, {
+      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(component_default, {
         ...toolsPanelItemProps,
         ref: forwardedRef
       }) : null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(component_default, {
       ...toolsPanelItemProps,
       ref: forwardedRef,
       children
@@ -67726,7 +70106,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var component_default40 = ToolsPanelItem;
 
   // packages/components/build-module/tree-grid/index.mjs
-  var import_dom29 = __toESM(require_dom(), 1);
+  var import_dom33 = __toESM(require_dom(), 1);
   var import_element226 = __toESM(require_element(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
 
@@ -67741,7 +70121,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var RovingTabIndexProvider = RovingTabIndexContext.Provider;
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
-  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
   function RovingTabIndex({
     children
   }) {
@@ -67750,14 +70130,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       lastFocusedElement,
       setLastFocusedElement
     }), [lastFocusedElement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(RovingTabIndexProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(RovingTabIndexProvider, {
       value: providerValue,
       children
     });
   }
 
   // packages/components/build-module/tree-grid/index.mjs
-  var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
 
   // packages/components/build-module/tree-grid/row.mjs
   var import_compose79 = __toESM(require_compose(), 1);
@@ -67817,7 +70197,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tree-grid/row.mjs
-  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridRow({
     children,
     level,
@@ -67829,7 +70209,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const rowRef = (0, import_element222.useRef)(null);
     const refs = (0, import_compose79.useMergeRefs)([rowRef, ref]);
     useValidateTreeGridStructure("TreeGridRow", rowRef);
-    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)("tr", {
+    return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)("tr", {
       ...props,
       ref: refs,
       role: "row",
@@ -67852,7 +70232,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tree-grid/roving-tab-index-item.mjs
   var import_element223 = __toESM(require_element(), 1);
-  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
   var RovingTabIndexItem = (0, import_element223.forwardRef)(function UnforwardedRovingTabIndexItem({
     children,
     as: Component7,
@@ -67889,7 +70269,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!Component7) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(Component7, {
+    return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(Component7, {
       ...allProps,
       children
     });
@@ -67898,12 +70278,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var roving_tab_index_item_default = RovingTabIndexItem;
 
   // packages/components/build-module/tree-grid/item.mjs
-  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridItem({
     children,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(roving_tab_index_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(roving_tab_index_item_default, {
       ref,
       ...props,
       children
@@ -67914,7 +70294,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var item_default2 = TreeGridItem;
 
   // packages/components/build-module/tree-grid/cell.mjs
-  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridCell({
     children,
     withoutGridItem = false,
@@ -67922,16 +70302,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, ref) {
     const cellRef = (0, import_element225.useRef)(null);
     useValidateTreeGridStructure("TreeGridCell", cellRef);
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("td", {
       ref: cellRef,
       ...props,
       role: "gridcell",
-      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(import_jsx_runtime324.Fragment, {
+      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(import_jsx_runtime341.Fragment, {
         children: typeof children === "function" ? children({
           ...props,
           ref
         }) : children
-      }) : /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(item_default2, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(item_default2, {
         ref,
         children
       })
@@ -67943,7 +70323,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tree-grid/index.mjs
   function getRowFocusables(rowElement) {
-    const focusablesInRow = import_dom29.focus.focusable.find(rowElement, {
+    const focusablesInRow = import_dom33.focus.focusable.find(rowElement, {
       sequential: true
     });
     return focusablesInRow.filter((focusable2) => {
@@ -68082,16 +70462,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         event.preventDefault();
       }
     }, [onExpandRow, onCollapseRow, onFocusRow]);
-    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(RovingTabIndex, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(RovingTabIndex, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("div", {
         role: "application",
         "aria-label": applicationAriaLabel,
-        children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("table", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("table", {
           ...props,
           role: "treegrid",
           onKeyDown,
           ref,
-          children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("tbody", {
+          children: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("tbody", {
             children
           })
         })
@@ -68105,7 +70485,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/isolated-event-container/index.mjs
   var import_element227 = __toESM(require_element(), 1);
   var import_deprecated32 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
@@ -68113,7 +70493,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     (0, import_deprecated32.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)("div", {
       ...props,
       ref,
       onMouseDown: stopPropagation
@@ -68124,7 +70504,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/z-stack/component.mjs
   var import_deprecated33 = __toESM(require_deprecated(), 1);
   var import_element228 = __toESM(require_element(), 1);
-  var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE91 = "data-wp-hash";
   function getRuntime91() {
     const globalScope = globalThis;
@@ -68224,7 +70604,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       const zIndex = isReversed ? childrenLastIndex - index2 : index2;
       const offsetAmount = isLayered ? offset4 * index2 : offset4;
       const key = (0, import_element228.isValidElement)(child) ? child.key : index2;
-      return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)("div", {
+      return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)("div", {
         className: style_module_default70.child,
         style: {
           "--z-stack-offset": `${offsetAmount}px`,
@@ -68233,7 +70613,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         children: child
       }, key);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(PolymorphicElement, {
+    return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(PolymorphicElement, {
       ...otherProps,
       className: clsx_default(style_module_default70["z-stack"], isLayered && style_module_default70.layered, className),
       ref: forwardedRef,
@@ -68247,7 +70627,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element229 = __toESM(require_element(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
-  var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
   var defaultShortcuts = {
     previous: [{
       modifier: "ctrlShift",
@@ -68322,9 +70702,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     shortcuts,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime345.jsx)("div", {
       ...useNavigateRegions(shortcuts),
-      children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(Component7, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(Component7, {
         ...props
       })
     });
@@ -68332,13 +70712,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-constrained-tabbing/index.mjs
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
   var withConstrainedTabbing = (0, import_compose81.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
     const ref = (0, import_compose81.useConstrainedTabbing)();
-    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)("div", {
       ref,
       tabIndex: -1,
-      children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(WrappedComponent, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(WrappedComponent, {
         ...props
       })
     });
@@ -68349,7 +70729,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_es63 = __toESM(require_es6(), 1);
   var import_element230 = __toESM(require_element(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
-  var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
   var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose82.createHigherOrderComponent)((WrappedComponent) => {
     return function WithFallbackStyles(props) {
       const [fallbackStyles, setFallbackStyles] = (0, import_element230.useState)(void 0);
@@ -68364,11 +70744,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
       });
-      const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(WrappedComponent, {
+      const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(WrappedComponent, {
         ...props,
         ...fallbackStyles
       });
-      return props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)("div", {
+      return props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime347.jsxs)("div", {
         ref: nodeRef,
         children: [" ", wrappedComponent, " "]
       });
@@ -68379,7 +70759,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element231 = __toESM(require_element(), 1);
   var import_hooks9 = __toESM(require_hooks(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
-  var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_FRAME_PERIOD = 16;
   function withFilters(hookName) {
     return (0, import_compose83.createHigherOrderComponent)((OriginalComponent) => {
@@ -68410,7 +70790,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
         render() {
-          return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(FilteredComponent, {
+          return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(FilteredComponent, {
             ...this.props
           });
         }
@@ -68435,7 +70815,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element232 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
   var import_deprecated34 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element232.Component || typeof object === "function";
   }
@@ -68447,9 +70827,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       } = {}) => (WrappedComponent) => {
         const WithFocusReturn = (props) => {
           const ref = (0, import_compose84.useFocusReturn)(onFocusReturn);
-          return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)("div", {
+          return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)("div", {
             ref,
-            children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(WrappedComponent, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(WrappedComponent, {
               ...props
             })
           });
@@ -68477,7 +70857,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-notices/index.mjs
   var import_element233 = __toESM(require_element(), 1);
   var import_compose85 = __toESM(require_compose(), 1);
-  var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
   var with_notices_default = (0, import_compose85.createHigherOrderComponent)((OriginalComponent) => {
     function Component7(props, ref) {
       const [noticeList, setNoticeList] = (0, import_element233.useState)([]);
@@ -68509,16 +70889,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props,
         noticeList,
         noticeOperations,
-        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(list_default, {
+        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(list_default, {
           className: "components-with-notices-ui",
           notices: noticeList,
           onRemove: noticeOperations.removeNotice
         })
       };
-      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(OriginalComponent, {
+      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(OriginalComponent, {
         ...propsOut,
         ref
-      }) : /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(OriginalComponent, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(OriginalComponent, {
         ...propsOut
       });
     }
@@ -68536,9 +70916,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-spoken-messages/index.mjs
   var import_compose86 = __toESM(require_compose(), 1);
   var import_a11y11 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
   var with_spoken_messages_default = (0, import_compose86.createHigherOrderComponent)((Component7) => function WithSpokenMessages(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(Component7, {
+    return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(Component7, {
       ...props,
       speak: import_a11y11.speak,
       debouncedSpeak: (0, import_compose86.useDebounce)(import_a11y11.speak, 500)
@@ -68730,7 +71110,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/menu/item.mjs
-  var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var Item22 = (0, import_element236.forwardRef)(function UnforwardedItem({
     prefix: prefix2,
     suffix,
@@ -68746,19 +71126,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store || !computedStore) {
       throw new Error("Menu.Item can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(Item3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(Item3, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled: disabled2,
       store: computedStore,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemPrefixWrapper, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime352.jsx)(ItemPrefixWrapper, {
         children: prefix2
-      }), /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime352.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -68767,7 +71147,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/checkbox-item.mjs
   var import_element237 = __toESM(require_element(), 1);
-  var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
   var CheckboxItem22 = (0, import_element237.forwardRef)(function UnforwardedCheckboxItem({
     suffix,
     children,
@@ -68781,28 +71161,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!store) {
       throw new Error("Menu.CheckboxItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(CheckboxItem2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(CheckboxItem2, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled: disabled2,
       store,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime336.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime353.jsx)(MenuItemCheck, {
         store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(icon_default2, {
           icon: check_default,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime336.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime353.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -68812,11 +71192,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/radio-item.mjs
   var import_element238 = __toESM(require_element(), 1);
   var import_primitives36 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
-  var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_primitives36.SVG, {
+  var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
+  var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(import_primitives36.SVG, {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
-    children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_primitives36.Circle, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(import_primitives36.Circle, {
       cx: 12,
       cy: 12,
       r: 3
@@ -68835,28 +71215,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!store) {
       throw new Error("Menu.RadioItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(RadioItem2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)(RadioItem2, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled: disabled2,
       store,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime337.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime354.jsx)(MenuItemCheck, {
         store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(icon_default2, {
           icon: radioCheck2,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime337.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime354.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -68865,13 +71245,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/group.mjs
   var import_element239 = __toESM(require_element(), 1);
-  var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
   var Group22 = (0, import_element239.forwardRef)(function UnforwardedGroup(props, ref) {
     const menuContext = (0, import_element239.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Group can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(Group4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(Group4, {
       ref,
       ...props,
       store: menuContext.store
@@ -68880,17 +71260,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/group-label.mjs
   var import_element240 = __toESM(require_element(), 1);
-  var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
   var GroupLabel22 = (0, import_element240.forwardRef)(function Group5(props, ref) {
     const menuContext = (0, import_element240.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.GroupLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(GroupLabel4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(GroupLabel4, {
       ref,
       render: (
         // @ts-expect-error The `children` prop is passed
-        /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(component_default8, {
+        /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(component_default8, {
           upperCase: true,
           variant: "muted",
           size: "11px",
@@ -68905,13 +71285,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/separator.mjs
   var import_element241 = __toESM(require_element(), 1);
-  var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
   var Separator22 = (0, import_element241.forwardRef)(function UnforwardedSeparator(props, ref) {
     const menuContext = (0, import_element241.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Separator can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(Separator5, {
+    return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(Separator5, {
       ref,
       ...props,
       store: menuContext.store,
@@ -68921,13 +71301,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/item-label.mjs
   var import_element242 = __toESM(require_element(), 1);
-  var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
   var ItemLabel22 = (0, import_element242.forwardRef)(function UnforwardedItemLabel(props, ref) {
     const menuContext = (0, import_element242.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(ItemLabel2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(ItemLabel2, {
       numberOfLines: 1,
       ref,
       ...props
@@ -68936,13 +71316,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/item-help-text.mjs
   var import_element243 = __toESM(require_element(), 1);
-  var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
   var ItemHelpText2 = (0, import_element243.forwardRef)(function UnforwardedItemHelpText(props, ref) {
     const menuContext = (0, import_element243.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemHelpText can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(ItemHelpText, {
+    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(ItemHelpText, {
       numberOfLines: 2,
       ref,
       ...props
@@ -68951,7 +71331,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/trigger-button.mjs
   var import_element244 = __toESM(require_element(), 1);
-  var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime360 = __toESM(require_jsx_runtime(), 1);
   var TriggerButton = (0, import_element244.forwardRef)(function UnforwardedTriggerButton({
     children,
     disabled: disabled2 = false,
@@ -68964,7 +71344,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (menuContext.store.parent) {
       throw new Error("Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead.");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(MenuButton, {
       ref,
       ...props,
       disabled: disabled2,
@@ -68975,7 +71355,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/submenu-trigger-item.mjs
   var import_element245 = __toESM(require_element(), 1);
-  var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
   var SubmenuTriggerItem = (0, import_element245.forwardRef)(function UnforwardedSubmenuTriggerItem({
     suffix,
     ...otherProps
@@ -68984,19 +71364,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store.parent) {
       throw new Error("Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(MenuButton, {
       ref,
       accessibleWhenDisabled: true,
       store: menuContext.store,
-      render: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(Item22, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(Item22, {
         ...otherProps,
         // The menu item needs to register and be part of the parent menu.
         // Without specifying the store explicitly, the `Item` component
         // would otherwise read the store via context and pick up the one from
         // the sub-menu `Menu` component.
         store: menuContext.store.parent,
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime344.jsxs)(import_jsx_runtime344.Fragment, {
-          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(SubmenuChevronIcon, {
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(import_jsx_runtime361.Fragment, {
+          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(SubmenuChevronIcon, {
             "aria-hidden": "true",
             icon: chevron_right_small_default,
             size: 24,
@@ -69009,7 +71389,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/popover.mjs
   var import_element246 = __toESM(require_element(), 1);
-  var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime362 = __toESM(require_jsx_runtime(), 1);
   var Popover4 = (0, import_element246.forwardRef)(function UnforwardedPopover2({
     gutter,
     shift: shift4,
@@ -69032,13 +71412,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.Popover can only be rendered inside a Menu component");
     }
-    const renderMenu = (0, import_element246.useCallback)((htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(MenuMotionRoot, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(MenuSurface, {
+    const renderMenu = (0, import_element246.useCallback)((htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(MenuMotionRoot, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(MenuSurface, {
         ...htmlProps,
         variant: menuContext.variant
       })
     }), [menuContext.variant]);
-    return /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(Menu22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(Menu22, {
       ...otherProps,
       ref,
       modal,
@@ -69056,7 +71436,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/index.mjs
-  var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime363 = __toESM(require_jsx_runtime(), 1);
   var UnconnectedMenu = (props) => {
     const {
       children,
@@ -69092,7 +71472,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store: menuStore,
       variant
     }), [menuStore, variant]);
-    return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(Context2.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(Context2.Provider, {
       value: contextValue,
       children
     });
@@ -69212,7 +71592,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tabs/tab.mjs
   var import_element249 = __toESM(require_element(), 1);
   var import_warning12 = __toESM(require_warning(), 1);
-  var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE92 = "data-wp-hash";
   function getRuntime92() {
     const globalScope = globalThis;
@@ -69309,7 +71689,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime347.jsxs)(Tab, {
+    return /* @__PURE__ */ (0, import_jsx_runtime364.jsxs)(Tab, {
       ref,
       store,
       id: instancedTabId,
@@ -69317,10 +71697,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       render,
       ...otherProps,
       className: clsx_default(style_module_default71.tab, className),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime347.jsx)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime364.jsx)("span", {
         className: style_module_default71["tab-children"],
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(icon_default3, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(icon_default3, {
         className: style_module_default71["tab-chevron"],
         icon: chevron_right_default
       })]
@@ -69386,7 +71766,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tabs/tablist.mjs
-  var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime365 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE93 = "data-wp-hash";
   function getRuntime93() {
     const globalScope = globalThis;
@@ -69530,10 +71910,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       true ? (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(TabList, {
+    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(TabList, {
       ref: refs,
       store,
-      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime348.jsx)("div", {
+      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", {
         ...props,
         // Fallback to -1 to prevent browsers from making the tablist
         // tabbable when it is a scrolling container.
@@ -69549,7 +71929,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tabs/tabpanel.mjs
   var import_element252 = __toESM(require_element(), 1);
   var import_warning14 = __toESM(require_warning(), 1);
-  var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime366 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE94 = "data-wp-hash";
   function getRuntime94() {
     const globalScope = globalThis;
@@ -69647,7 +72027,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       instanceId
     } = context;
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(TabPanel, {
+    return /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(TabPanel, {
       ref,
       store,
       id: `${instancedTabId}-view`,
@@ -69660,7 +72040,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/index.mjs
-  var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime367 = __toESM(require_jsx_runtime(), 1);
   function externalToInternalTabId(externalId, instanceId) {
     return externalId && `${instanceId}-${externalId}`;
   }
@@ -69698,7 +72078,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store,
       instanceId
     }), [store, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(TabsContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(TabsContext.Provider, {
       value: contextValue,
       children
     });
@@ -69733,7 +72113,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/badge/index.mjs
   var import_deprecated35 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime368 = __toESM(require_jsx_runtime(), 1);
   function contextBasedIcon(intent = "default") {
     switch (intent) {
       case "info":
@@ -69761,20 +72141,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
-    return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime368.jsx)("span", {
       className: clsx_default("components-badge", className, {
         [`is-${intent}`]: intent,
         "has-icon": hasIcon
       }),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)("span", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime368.jsxs)("span", {
         className: "components-badge__flex-wrapper",
-        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(icon_default3, {
+        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(icon_default3, {
           icon,
           size: 16,
           fill: "currentColor",
           className: "components-badge__icon"
-        }), /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime368.jsx)("span", {
           className: "components-badge__content",
           children
         })]
@@ -69787,7 +72167,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element254 = __toESM(require_element(), 1);
   var import_compose90 = __toESM(require_compose(), 1);
   var import_deprecated36 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
     customValidity,
@@ -69801,13 +72181,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     const validityTargetRef = (0, import_element254.useRef)(null);
     const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(ControlWithError, {
       className: "components-validated-control",
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(input_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(input_control_default, {
         ref: mergedRefs,
         ...restProps
       })
@@ -69822,7 +72202,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/content-editable-control/index.mjs
   var import_compose91 = __toESM(require_compose(), 1);
   var import_element255 = __toESM(require_element(), 1);
-  var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE95 = "data-wp-hash";
   function getRuntime95() {
     const globalScope = globalThis;
@@ -69924,16 +72304,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const labelId = `${controlProps.id}__label`;
     const editableRef = (0, import_element255.useRef)(null);
     const mergedRefs = (0, import_compose91.useMergeRefs)([editableRef, forwardedRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(base_control_default, {
       ...baseControlProps,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(component_default2, {
         id: labelId,
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(base_control_default.VisualLabel, {
         id: labelId,
         onClick: () => editableRef.current?.focus(),
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", {
         className: style_module_default74.editable,
         role: "textbox",
         "aria-multiline": true,
@@ -69954,7 +72334,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var content_editable_control_default = ContentEditableControl;
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime371 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedContentEditableControl = ({
     required,
     customValidity,
@@ -69964,21 +72344,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element256.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime354.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime371.jsx)(ControlWithError, {
         className: "components-validated-control",
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(content_editable_control_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(content_editable_control_default, {
           ref: forwardedRef,
           className: clsx_default("components-validated-control__content-editable", className),
           "aria-invalid": customValidity?.type === "invalid" || void 0,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime354.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime371.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -70000,7 +72380,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element257 = __toESM(require_element(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
   var import_deprecated37 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime372 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
     customValidity,
@@ -70014,13 +72394,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     const validityTargetRef = (0, import_element257.useRef)(null);
     const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(ControlWithError, {
       className: "components-validated-control",
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(textarea_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(textarea_control_default, {
         ref: mergedRefs,
         ...restProps
       })

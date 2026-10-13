@@ -69,16 +69,16 @@ var require_element = __commonJS({
   }
 });
 
-// node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
+// node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
 var require_use_sync_external_store_shim_development = __commonJS({
-  "node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
+  "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
     "use strict";
     (function() {
       function is(x2, y2) {
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe, getSnapshot) {
-        didWarnOld18Alpha || void 0 === React107.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React138.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot();
@@ -88,7 +88,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState40({
+        cachedValue = useState47({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -100,7 +100,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe, value, getSnapshot]
         );
-        useEffect29(
+        useEffect31(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe(function() {
@@ -126,16 +126,16 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React107 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState40 = React107.useState, useEffect29 = React107.useEffect, useLayoutEffect5 = React107.useLayoutEffect, useDebugValue2 = React107.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React107.useSyncExternalStore ? React107.useSyncExternalStore : shim;
+      var React138 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState47 = React138.useState, useEffect31 = React138.useEffect, useLayoutEffect5 = React138.useLayoutEffect, useDebugValue2 = React138.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React138.useSyncExternalStore ? React138.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
 });
 
-// node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/shim/index.js
+// node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/shim/index.js
 var require_shim = __commonJS({
-  "node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/shim/index.js"(exports, module) {
+  "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/shim/index.js"(exports, module) {
     "use strict";
     if (false) {
       module.exports = null;
@@ -145,23 +145,23 @@ var require_shim = __commonJS({
   }
 });
 
-// node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js
+// node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js
 var require_with_selector_development = __commonJS({
-  "node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js"(exports) {
+  "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js"(exports) {
     "use strict";
     (function() {
       function is(x2, y2) {
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React107 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef47 = React107.useRef, useEffect29 = React107.useEffect, useMemo51 = React107.useMemo, useDebugValue2 = React107.useDebugValue;
+      var React138 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef58 = React138.useRef, useEffect31 = React138.useEffect, useMemo56 = React138.useMemo, useDebugValue2 = React138.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-        var instRef = useRef47(null);
+        var instRef = useRef58(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo51(
+        instRef = useMemo56(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -197,7 +197,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual]
         );
         var value = useSyncExternalStore3(subscribe, instRef[0], instRef[1]);
-        useEffect29(
+        useEffect31(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -212,9 +212,9 @@ var require_with_selector_development = __commonJS({
   }
 });
 
-// node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/shim/with-selector.js
+// node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/shim/with-selector.js
 var require_with_selector = __commonJS({
-  "node_modules/.store/use-sync-external-store@1.6.0-I0W9gfWaba5M6uWU9Ouj4A/node_modules/use-sync-external-store/shim/with-selector.js"(exports, module) {
+  "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/shim/with-selector.js"(exports, module) {
     "use strict";
     if (false) {
       module.exports = null;
@@ -481,10 +481,10 @@ var require_date = __commonJS({
   }
 });
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useRenderElement.mjs
 var React4 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useRefWithInit.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useRefWithInit.mjs
 var React = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
@@ -495,7 +495,7 @@ function useRefWithInit(init, initArg) {
   return ref;
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useMergedRefs.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useMergedRefs.mjs
 function useMergedRefs(a, b, c2, d) {
   const forkRef = useRefWithInit(createForkRef).current;
   if (didChange(forkRef, a, b, c2, d)) {
@@ -584,17 +584,17 @@ function update(forkRef, refs) {
   };
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getReactElementRef.mjs
 var React3 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/reactVersion.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/reactVersion.mjs
 var React2 = __toESM(require_react(), 1);
 var majorVersion = parseInt(React2.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/getReactElementRef.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getReactElementRef.mjs
 function getReactElementRef(element) {
   if (!/* @__PURE__ */ React3.isValidElement(element)) {
     return null;
@@ -604,7 +604,7 @@ function getReactElementRef(element) {
   return (isReactVersionAtLeast(19) ? propsWithRef?.ref : reactElement.ref) ?? null;
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/mergeObjects.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/mergeObjects.mjs
 function mergeObjects(a, b) {
   if (a && !b) {
     return a;
@@ -621,7 +621,7 @@ function mergeObjects(a, b) {
   return void 0;
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/createLogOnce.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/createLogOnce.mjs
 var loggedMessages;
 if (true) {
   loggedMessages = /* @__PURE__ */ new Set();
@@ -644,16 +644,16 @@ function createLogOnce(severity, prefix) {
   };
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/warn.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/warn.mjs
 var warn = createLogOnce("warn", "Base UI");
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/empty.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/empty.mjs
 function NOOP() {
 }
 var EMPTY_ARRAY = Object.freeze([]);
 var EMPTY_OBJECT = Object.freeze({});
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
 function getStateAttributesProps(state, customMapping) {
   const props = {};
   for (const key in state) {
@@ -674,17 +674,17 @@ function getStateAttributesProps(state, customMapping) {
   return props;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveClassName.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/resolveClassName.mjs
 function resolveClassName(className, state) {
   return typeof className === "function" ? className(state) : className;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveStyle.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/resolveStyle.mjs
 function resolveStyle(style, state) {
   return typeof style === "function" ? style(state) : style;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/merge-props/mergeProps.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/merge-props/mergeProps.mjs
 var EMPTY_PROPS = {};
 function mergeProps(a, b, c2, d, e) {
   if (!c2 && !d && !e && !a) {
@@ -721,14 +721,14 @@ function mergePropsN(props) {
 function createInitialMergedProps(inputProps) {
   if (isPropsGetter(inputProps)) {
     return {
-      ...resolvePropsGetter(inputProps, EMPTY_PROPS)
+      ...inputProps(EMPTY_PROPS)
     };
   }
   return copyInitialProps(inputProps);
 }
 function mergeInto(merged, inputProps) {
   if (isPropsGetter(inputProps)) {
-    return resolvePropsGetter(inputProps, merged);
+    return inputProps(merged);
   }
   return mutablyMergeInto(merged, inputProps);
 }
@@ -778,12 +778,6 @@ function isEventHandler(key, value) {
 }
 function isPropsGetter(inputProps) {
   return typeof inputProps === "function";
-}
-function resolvePropsGetter(inputProps, previousProps) {
-  if (isPropsGetter(inputProps)) {
-    return inputProps(previousProps);
-  }
-  return inputProps ?? EMPTY_PROPS;
 }
 function mergeEventHandlers(ourHandler, theirHandler) {
   if (!theirHandler) {
@@ -839,7 +833,7 @@ function isSyntheticEvent(event) {
   return event != null && typeof event === "object" && "nativeEvent" in event;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useRenderElement.mjs
 var import_react = __toESM(require_react(), 1);
 function useRenderElement(element, componentProps, params = {}) {
   let renderProp = componentProps.render;
@@ -923,12 +917,7 @@ function evaluateRenderProp(element, render, props, state) {
     }
     return /* @__PURE__ */ React4.cloneElement(render, mergedProps);
   }
-  if (element) {
-    if (typeof element === "string") {
-      return renderTag(element, props);
-    }
-  }
-  throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage_default(8));
+  return renderTag(element, props);
 }
 function warnIfRenderPropLooksLikeComponent(renderFn) {
   const functionName = renderFn.name;
@@ -961,13 +950,13 @@ function renderTag(Tag, props) {
   return /* @__PURE__ */ React4.createElement(Tag, props);
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/safeReact.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/safeReact.mjs
 var React5 = __toESM(require_react(), 1);
 var SafeReact = {
   ...React5
 };
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useStableCallback.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useStableCallback.mjs
 var useInsertionEffect = SafeReact.useInsertionEffect;
 var useSafeInsertionEffect = (
   // React 17 doesn't have useInsertionEffect.
@@ -1000,25 +989,25 @@ function assertNotCalled() {
   }
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
 var React6 = __toESM(require_react(), 1);
 var noop = () => {
 };
 var useIsoLayoutEffect = typeof document !== "undefined" ? React6.useLayoutEffect : noop;
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
 var React8 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
 var ReactDOM = __toESM(require_react_dom(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useOnMount.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useOnMount.mjs
 var React7 = __toESM(require_react(), 1);
 function useOnMount(fn) {
   React7.useEffect(fn, EMPTY_ARRAY);
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useAnimationFrame.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useAnimationFrame.mjs
 var EMPTY = null;
 var LAST_RAF = globalThis.requestAnimationFrame;
 var Scheduler = class {
@@ -1109,7 +1098,7 @@ function useAnimationFrame() {
   return timeout;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/resolveRef.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/resolveRef.mjs
 function resolveRef(maybeRef) {
   if (maybeRef == null) {
     return maybeRef;
@@ -1117,11 +1106,19 @@ function resolveRef(maybeRef) {
   return "current" in maybeRef ? maybeRef.current : maybeRef;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getFiniteAnimations.mjs
+function getFiniteAnimations(element, options) {
+  return element.getAnimations(options).filter((animation) => {
+    const timing = animation.effect?.getTiming();
+    return timing?.duration !== Infinity && timing?.iterations !== Infinity;
+  });
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
 var startingStyle = "data-starting-style";
 var endingStyle = "data-ending-style";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
 var pendingCallbacks = null;
 function flushBeforePaint(fn) {
   if (!pendingCallbacks) {
@@ -1163,7 +1160,7 @@ function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false
       return;
     }
     function exec() {
-      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+      Promise.all(getFiniteAnimations(resolvedElement).map((animation) => animation.finished.then(NOOP))).then(() => {
         if (!signal?.aborted) {
           done();
         }
@@ -1171,7 +1168,7 @@ function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false
         if (signal?.aborted) {
           return;
         }
-        const currentAnimations = resolvedElement.getAnimations();
+        const currentAnimations = getFiniteAnimations(resolvedElement);
         if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
           exec();
           return;
@@ -1204,7 +1201,7 @@ function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false
   });
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
 function useOpenChangeComplete(parameters) {
   const {
     enabled = true,
@@ -1227,7 +1224,7 @@ function useOpenChangeComplete(parameters) {
   }, [enabled, open2, onComplete, runOnceAnimationsFinish]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
 var STARTING_HOOK = {
   [startingStyle]: ""
 };
@@ -1246,7 +1243,7 @@ var transitionStatusMapping = {
   }
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
 var React9 = __toESM(require_react(), 1);
 function useTransitionStatus(open2, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
   const [transitionStatus, setTransitionStatus] = React9.useState(open2 && enableIdleState ? "idle" : void 0);
@@ -1273,7 +1270,7 @@ function useTransitionStatus(open2, enableIdleState = false, deferEndingState = 
     return void 0;
   }, [open2, mounted, transitionStatus, deferEndingState]);
   useIsoLayoutEffect(() => {
-    if (!open2 || enableIdleState) {
+    if (!open2 || enableIdleState || transitionStatus === void 0) {
       return void 0;
     }
     const frame = AnimationFrame.request(() => {
@@ -1282,7 +1279,7 @@ function useTransitionStatus(open2, enableIdleState = false, deferEndingState = 
     return () => {
       AnimationFrame.cancel(frame);
     };
-  }, [enableIdleState, open2]);
+  }, [enableIdleState, open2, transitionStatus]);
   useIsoLayoutEffect(() => {
     if (!open2 || !enableIdleState) {
       return void 0;
@@ -1304,7 +1301,7 @@ function useTransitionStatus(open2, enableIdleState = false, deferEndingState = 
   };
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useTimeout.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useTimeout.mjs
 var EMPTY2 = 0;
 var Timeout = class _Timeout {
   static create() {
@@ -1356,13 +1353,13 @@ function clsx() {
 }
 var clsx_default = clsx;
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useControlled.mjs
 var React10 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/error.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
 var error = createLogOnce("error", "Base UI");
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useControlled.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useControlled.mjs
 function useControlled({
   controlled,
   default: defaultProp,
@@ -1372,7 +1369,7 @@ function useControlled({
   const {
     current: isControlled
   } = React10.useRef(controlled !== void 0);
-  const [valueState, setValue] = React10.useState(defaultProp);
+  const [valueState, setValue] = React10.useState(() => defaultProp);
   const value = isControlled && controlled !== void 0 ? controlled : valueState;
   if (true) {
     React10.useEffect(() => {
@@ -1423,10 +1420,10 @@ function serializeToDevModeString(input) {
   }
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
 var React12 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
 var React11 = __toESM(require_react(), 1);
 var CompositeListContext = /* @__PURE__ */ React11.createContext({
   register: () => {
@@ -1444,7 +1441,7 @@ function useCompositeListContext() {
   return React11.useContext(CompositeListContext);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
 function CompositeList(props) {
   const {
@@ -1454,7 +1451,7 @@ function CompositeList(props) {
     onMapChange: onMapChangeProp
   } = props;
   const onMapChange = useStableCallback(onMapChangeProp);
-  const [, setMapTick] = React12.useState(false);
+  const [, setMapTick] = React12.useState(0);
   const listeners = useRefWithInit(createListeners).current;
   const map = useRefWithInit(createMap).current;
   const nextIndexRef = React12.useRef(0);
@@ -1466,7 +1463,7 @@ function CompositeList(props) {
       return;
     }
     isDirtyRef.current = true;
-    setMapTick((tick) => !tick);
+    setMapTick((tick) => tick + 1);
   });
   const register2 = useStableCallback((node, registration) => {
     map.set(node, registration);
@@ -1646,21 +1643,42 @@ function hasMovedNode(entries) {
   return false;
 }
 function sortByDocumentPosition(a, b) {
+  if (a.nextElementSibling === b) {
+    return -1;
+  }
+  if (b.nextElementSibling === a) {
+    return 1;
+  }
   return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useId.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useId.mjs
+var React14 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useForcedRerendering.mjs
 var React13 = __toESM(require_react(), 1);
+function useForcedRerendering() {
+  const [, setState] = React13.useState({});
+  return React13.useCallback(() => {
+    setState({});
+  }, []);
+}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useId.mjs
 var globalId = 0;
 function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React13.useState(idOverride);
-  const id = idOverride || defaultId;
-  React13.useEffect(() => {
-    if (defaultId == null) {
+  const defaultId = React14.useRef(void 0);
+  const forceRerender = useForcedRerendering();
+  const id = idOverride ?? defaultId.current;
+  React14.useEffect(() => {
+    if (defaultId.current == null) {
       globalId += 1;
-      setDefaultId(`${prefix}-${globalId}`);
+      defaultId.current = `${prefix}-${globalId}`;
+      if (idOverride == null) {
+        forceRerender();
+      }
     }
-  }, [defaultId, prefix]);
+  }, [idOverride, prefix, forceRerender]);
   return id;
 }
 var maybeReactUseId = SafeReact.useId;
@@ -1672,12 +1690,47 @@ function useId(idOverride, prefix) {
   return useGlobalId(idOverride, prefix);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useBaseUiId.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useBaseUiId.mjs
 function useBaseUiId(idOverride) {
   return useId(idOverride, "base-ui");
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/reason-parts.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
+function createChangeEventDetails(reason, event, trigger, customProperties) {
+  let canceled = false;
+  let allowPropagation = false;
+  const custom = customProperties ?? EMPTY_OBJECT;
+  const details = {
+    reason,
+    event: event ?? new Event("base-ui"),
+    cancel() {
+      canceled = true;
+    },
+    allowPropagation() {
+      allowPropagation = true;
+    },
+    get isCanceled() {
+      return canceled;
+    },
+    get isPropagationAllowed() {
+      return allowPropagation;
+    },
+    trigger,
+    ...custom
+  };
+  return details;
+}
+function createGenericEventDetails(reason, event, customProperties) {
+  const custom = customProperties ?? EMPTY_OBJECT;
+  const details = {
+    reason,
+    event: event ?? new Event("base-ui"),
+    ...custom
+  };
+  return details;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/reason-parts.mjs
 var reason_parts_exports = {};
 __export(reason_parts_exports, {
   cancelOpen: () => cancelOpen,
@@ -1706,6 +1759,7 @@ __export(reason_parts_exports, {
   none: () => none,
   outsidePress: () => outsidePress,
   pointer: () => pointer,
+  popupClose: () => popupClose,
   scrub: () => scrub,
   siblingOpen: () => siblingOpen,
   swipe: () => swipe,
@@ -1743,6 +1797,7 @@ var pointer = "pointer";
 var drag = "drag";
 var wheel = "wheel";
 var scrub = "scrub";
+var popupClose = "popup-close";
 var cancelOpen = "cancel-open";
 var siblingOpen = "sibling-open";
 var disabled = "disabled";
@@ -1752,34 +1807,8 @@ var imperativeAction = "imperative-action";
 var swipe = "swipe";
 var windowResize = "window-resize";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
-function createChangeEventDetails(reason, event, trigger, customProperties) {
-  let canceled = false;
-  let allowPropagation = false;
-  const custom = customProperties ?? EMPTY_OBJECT;
-  const details = {
-    reason,
-    event: event ?? new Event("base-ui"),
-    cancel() {
-      canceled = true;
-    },
-    allowPropagation() {
-      allowPropagation = true;
-    },
-    get isCanceled() {
-      return canceled;
-    },
-    get isPropagationAllowed() {
-      return allowPropagation;
-    },
-    trigger,
-    ...custom
-  };
-  return details;
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
-var React14 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
+var React15 = __toESM(require_react(), 1);
 function useCompositeListItem(params = {}) {
   const {
     guess,
@@ -1794,8 +1823,8 @@ function useCompositeListItem(params = {}) {
     subscribeMapChange,
     nextIndexRef
   } = useCompositeListContext();
-  const indexRef = React14.useRef(-1);
-  const [internalIndex, setInternalIndex] = React14.useState(externalIndex == null && guess ? () => {
+  const indexRef = React15.useRef(-1);
+  const [internalIndex, setInternalIndex] = React15.useState(externalIndex == null && guess ? () => {
     if (indexRef.current === -1) {
       const newIndex = nextIndexRef.current;
       nextIndexRef.current += 1;
@@ -1804,8 +1833,8 @@ function useCompositeListItem(params = {}) {
     return indexRef.current;
   } : -1);
   const index2 = externalIndex ?? internalIndex;
-  const componentRef = React14.useRef(null);
-  const ref = React14.useCallback((node) => {
+  const componentRef = React15.useRef(null);
+  const ref = React15.useCallback((node) => {
     const previousNode = componentRef.current;
     if (previousNode) {
       unregister(previousNode);
@@ -1837,8 +1866,8 @@ function useCompositeListItem(params = {}) {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/use-button/useButton.mjs
-var React17 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/use-button/useButton.mjs
+var React18 = __toESM(require_react(), 1);
 
 // node_modules/.store/@floating-ui/utils@0.2.12-gOxTzMf36nCrbeHpEew-rw/node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
 function hasWindow() {
@@ -1996,20 +2025,20 @@ function getFrameElement(win) {
   return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-var React15 = __toESM(require_react(), 1);
-var CompositeRootContext = /* @__PURE__ */ React15.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
+var React16 = __toESM(require_react(), 1);
+var CompositeRootContext = /* @__PURE__ */ React16.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
 function useCompositeRootContext(optional = false) {
-  const context = React15.useContext(CompositeRootContext);
+  const context = React16.useContext(CompositeRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-var React16 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
+var React17 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
     focusableWhenDisabled,
@@ -2020,7 +2049,7 @@ function useFocusableWhenDisabled(parameters) {
   } = parameters;
   const isFocusableComposite = composite && focusableWhenDisabled !== false;
   const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-  const props = React16.useMemo(() => {
+  const props = React17.useMemo(() => {
     const additionalProps = {
       // allow Tabbing away from focusableWhenDisabled elements
       onKeyDown(event) {
@@ -2048,20 +2077,22 @@ function useFocusableWhenDisabled(parameters) {
   };
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/owner.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/owner.mjs
 function ownerDocument(node) {
   return node?.ownerDocument || document;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/dispatchClickWithModifiers.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/dispatchClickWithModifiers.mjs
 function dispatchClickWithModifiers(target, sourceEvent, {
-  detail = 0
+  detail = 0,
+  pointerType = ""
 } = {}) {
   target.dispatchEvent(new (getWindow(target)).PointerEvent("click", {
     bubbles: true,
     cancelable: true,
     composed: true,
     detail,
+    pointerType,
     shiftKey: sourceEvent.shiftKey,
     ctrlKey: sourceEvent.ctrlKey,
     altKey: sourceEvent.altKey,
@@ -2069,7 +2100,7 @@ function dispatchClickWithModifiers(target, sourceEvent, {
   }));
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/use-button/useButton.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/use-button/useButton.mjs
 function useButton(parameters = {}) {
   const {
     disabled: disabled2 = false,
@@ -2078,7 +2109,7 @@ function useButton(parameters = {}) {
     native: isNativeButton = true,
     composite: compositeProp
   } = parameters;
-  const elementRef = React17.useRef(null);
+  const elementRef = React18.useRef(null);
   const compositeRootContext = useCompositeRootContext(true);
   const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
   const {
@@ -2091,7 +2122,7 @@ function useButton(parameters = {}) {
     isNativeButton
   });
   if (true) {
-    React17.useEffect(() => {
+    React18.useEffect(() => {
       if (!elementRef.current) {
         return;
       }
@@ -2109,7 +2140,7 @@ function useButton(parameters = {}) {
       }
     }, [isNativeButton]);
   }
-  const updateDisabled = React17.useCallback(() => {
+  const updateDisabled = React18.useCallback(() => {
     const element = elementRef.current;
     if (!isButtonElement(element)) {
       return;
@@ -2119,7 +2150,7 @@ function useButton(parameters = {}) {
     }
   }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
   useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-  const getButtonProps = React17.useCallback((externalProps = {}) => {
+  const getButtonProps = React18.useCallback((externalProps = {}) => {
     const {
       onClick: externalOnClick,
       onMouseDown: externalOnMouseDown,
@@ -2232,7 +2263,7 @@ function isValidLinkElement(elem) {
   return isHTMLElement(elem) && elem.tagName === "A" && Boolean(elem.href);
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/addEventListener.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/addEventListener.mjs
 function addEventListener(target, type, listener, options) {
   target.addEventListener(type, listener, options);
   return () => {
@@ -2240,7 +2271,7 @@ function addEventListener(target, type, listener, options) {
   };
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useValueAsRef.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useValueAsRef.mjs
 function useValueAsRef(value) {
   const latest = useRefWithInit(createLatestRef, value).current;
   latest.next = value;
@@ -2258,7 +2289,7 @@ function createLatestRef(value) {
   return latest;
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/parts.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/parts.mjs
 var parts_exports = {};
 __export(parts_exports, {
   engine: () => engine_exports,
@@ -2268,7 +2299,7 @@ __export(parts_exports, {
   screenReader: () => screen_reader_exports
 });
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/os.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/os.mjs
 var os_exports = {};
 __export(os_exports, {
   android: () => android,
@@ -2279,7 +2310,7 @@ __export(os_exports, {
   windows: () => windows
 });
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/shared.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/shared.mjs
 function readRawData() {
   if (typeof navigator === "undefined") {
     return {
@@ -2315,7 +2346,7 @@ var {
 var lowerUserAgent = userAgent.toLowerCase();
 var lowerPlatform = platform.toLowerCase();
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/os.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/os.mjs
 var ios = /^i(os$|p)/.test(lowerPlatform) || lowerPlatform === "macintel" && maxTouchPoints > 1;
 var ANDROID_STRING = "android";
 var android = lowerPlatform === ANDROID_STRING || lowerUserAgent.includes(ANDROID_STRING);
@@ -2324,7 +2355,7 @@ var windows = lowerPlatform.startsWith("win");
 var linux = !android && /^(linux|chrome os)/.test(lowerPlatform);
 var apple = mac || ios;
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/engine.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/engine.mjs
 var engine_exports = {};
 __export(engine_exports, {
   blink: () => blink,
@@ -2335,28 +2366,28 @@ var webkit = typeof CSS !== "undefined" && !!CSS.supports?.("-webkit-backdrop-fi
 var gecko = !webkit && lowerUserAgent.includes("firefox");
 var blink = !webkit && lowerUserAgent.includes("chrom");
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/screen-reader.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/screen-reader.mjs
 var screen_reader_exports = {};
 __export(screen_reader_exports, {
   voiceOver: () => voiceOver
 });
 var voiceOver = apple;
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/env.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/env.mjs
 var env_exports = {};
 __export(env_exports, {
   jsdom: () => jsdom
 });
 var jsdom = /jsdom|happydom/.test(lowerUserAgent);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/platform/media-query.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/platform/media-query.mjs
 var media_query_exports = {};
 __export(media_query_exports, {
   iOS: () => iOS
 });
 var iOS = "@supports (-webkit-touch-callout: none)";
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useScrollLock.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useScrollLock.mjs
 var originalHtmlStyles = {};
 var originalBodyStyles = {};
 var originalHtmlScrollBehavior = "";
@@ -2576,10 +2607,10 @@ function useScrollLock(enabled = true, referenceElement = null) {
   }, [enabled, referenceElement]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var React18 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
+var React19 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
 function stopEvent(event) {
   event.preventDefault();
   event.stopPropagation();
@@ -2600,7 +2631,10 @@ function isVirtualPointerEvent(event) {
   if (parts_exports.env.jsdom) {
     return false;
   }
-  return !parts_exports.os.android && event.width === 0 && event.height === 0 || parts_exports.os.android && event.width === 1 && event.height === 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "mouse" || // iOS VoiceOver returns 0.333• for width/height.
+  return !parts_exports.os.android && event.width === 0 && event.height === 0 || // Chrome synthesizes a screen reader press (TalkBack, VoiceOver, NVDA) as a 1x1 mouse
+  // `pointerdown` with no pressure. TalkBack can report a pressed button, while desktop
+  // mouse presses can report no pressure, so only require no pressed button off Android.
+  event.type === "pointerdown" && event.width === 1 && event.height === 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "mouse" && (parts_exports.os.android || event.buttons === 0) || // iOS VoiceOver returns 0.333• for width/height.
   event.width < 1 && event.height < 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "touch";
 }
 function isMouseLikePointerType(pointerType, strict) {
@@ -2615,7 +2649,7 @@ function isClickLikeEvent(event) {
   return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/shadowDom.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/shadowDom.mjs
 function activeElement(doc) {
   let element = doc.activeElement;
   while (element?.shadowRoot?.activeElement != null) {
@@ -2642,6 +2676,16 @@ function contains(parent, child) {
   }
   return false;
 }
+function closest(node, selector) {
+  let current = node;
+  while (current) {
+    if (isElement(current) && current.matches(selector)) {
+      return current;
+    }
+    current = current.assignedSlot ?? current.parentNode ?? (isShadowRoot(current) ? current.host : null);
+  }
+  return null;
+}
 function getTarget(event) {
   if ("composedPath" in event) {
     return event.composedPath()[0] ?? event.target;
@@ -2649,7 +2693,7 @@ function getTarget(event) {
   return event.target;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
 var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
 var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
 var ARROW_LEFT = "ArrowLeft";
@@ -2657,12 +2701,12 @@ var ARROW_RIGHT = "ArrowRight";
 var ARROW_UP = "ArrowUp";
 var ARROW_DOWN = "ArrowDown";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonPopupDataAttributes.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonPopupDataAttributes.mjs
 var open = "data-open";
 var closed = "data-closed";
 var anchorHidden = "data-anchor-hidden";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonTriggerDataAttributes.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonTriggerDataAttributes.mjs
 var CommonTriggerDataAttributes_exports = {};
 __export(CommonTriggerDataAttributes_exports, {
   popupOpen: () => popupOpen,
@@ -2671,7 +2715,7 @@ __export(CommonTriggerDataAttributes_exports, {
 var popupOpen = "data-popup-open";
 var pressed = "data-pressed";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popupStateMapping.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popupStateMapping.mjs
 var TRIGGER_HOOK = {
   [popupOpen]: ""
 };
@@ -2723,11 +2767,11 @@ var popupTransitionStateMapping = {
   ...transitionStatusMapping
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
 var popupOpen2 = CommonTriggerDataAttributes_exports.popupOpen;
 var triggerDisabled = "data-trigger-disabled";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
 function isTargetInsideEnabledTrigger(target, triggerElements) {
   if (!isElement(target)) {
     return false;
@@ -2760,7 +2804,7 @@ function isTypeableElement(element) {
   return isHTMLElement(element) && element.matches(TYPEABLE_SELECTOR);
 }
 function isInteractiveElement(element) {
-  return element?.closest(`button,a[href],[role="button"],select,[tabindex]:not([tabindex="-1"]),${TYPEABLE_SELECTOR}`) != null;
+  return closest(element, `button,a[href],[role="button"],select,[tabindex]:not([tabindex="-1"]),${TYPEABLE_SELECTOR}`) != null;
 }
 function isTypeableCombobox(element) {
   if (!element) {
@@ -2785,7 +2829,7 @@ function getFloatingFocusElement(floatingElement) {
   return floatingElement.hasAttribute(FOCUSABLE_ATTRIBUTE) ? floatingElement : floatingElement.querySelector(`[${FOCUSABLE_ATTRIBUTE}]`) || floatingElement;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
 function resolveValue(value, pointerType) {
   if (pointerType != null && !isMouseLikePointerType(pointerType)) {
     return 0;
@@ -2815,9 +2859,9 @@ function isHoverOpenEvent(openEventType) {
   return openEventType?.includes("mouse") && openEventType !== "mousedown";
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var FloatingDelayGroupContext = /* @__PURE__ */ React18.createContext({
+var FloatingDelayGroupContext = /* @__PURE__ */ React19.createContext({
   hasProvider: false,
   timeoutMs: 0,
   delayRef: {
@@ -2844,10 +2888,10 @@ function FloatingDelayGroup(props) {
     delay,
     timeoutMs = 0
   } = props;
-  const delayRef = React18.useRef(delay);
-  const initialDelayRef = React18.useRef(delay);
-  const currentIdRef = React18.useRef(null);
-  const currentContextRef = React18.useRef(null);
+  const delayRef = React19.useRef(delay);
+  const initialDelayRef = React19.useRef(delay);
+  const currentIdRef = React19.useRef(null);
+  const currentContextRef = React19.useRef(null);
   const timeout = useTimeout();
   useIsoLayoutEffect(() => {
     initialDelayRef.current = delay;
@@ -2861,7 +2905,7 @@ function FloatingDelayGroup(props) {
     };
   }, [delay, currentIdRef, delayRef, initialDelayRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(FloatingDelayGroupContext.Provider, {
-    value: React18.useMemo(() => ({
+    value: React19.useMemo(() => ({
       hasProvider: true,
       delayRef,
       initialDelayRef,
@@ -2873,15 +2917,14 @@ function FloatingDelayGroup(props) {
     children
   });
 }
-function useDelayGroup(context, options = {
+function useDelayGroup(store, options = {
   open: false
 }) {
   const {
     open: open2
   } = options;
-  const store = "rootStore" in context ? context.rootStore : context;
   const floatingId = store.useState("floatingId");
-  const groupContext = React18.useContext(FloatingDelayGroupContext);
+  const groupContext = React19.useContext(FloatingDelayGroupContext);
   const {
     currentIdRef,
     delayRef,
@@ -2891,8 +2934,8 @@ function useDelayGroup(context, options = {
     hasProvider,
     timeout
   } = groupContext;
-  const [isInstantPhase, setIsInstantPhase] = React18.useState(false);
-  const openRef = React18.useRef(open2);
+  const [isInstantPhase, setIsInstantPhase] = React19.useState(false);
+  const openRef = React19.useRef(open2);
   useIsoLayoutEffect(() => {
     openRef.current = open2;
   }, [open2]);
@@ -2965,7 +3008,7 @@ function useDelayGroup(context, options = {
       }
     };
   }, [currentContextRef, currentIdRef, delayRef, floatingId, initialDelayRef, timeout]);
-  return React18.useMemo(() => ({
+  return React19.useMemo(() => ({
     activeIdRef: currentIdRef,
     hasProvider,
     delayRef,
@@ -2973,10 +3016,10 @@ function useDelayGroup(context, options = {
   }), [currentIdRef, hasProvider, delayRef, isInstantPhase]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
-var React22 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
+var React23 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/mergeCleanups.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/mergeCleanups.mjs
 function mergeCleanups(...cleanups) {
   return () => {
     for (let i = 0; i < cleanups.length; i += 1) {
@@ -2988,10 +3031,10 @@ function mergeCleanups(...cleanups) {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/FocusGuard.mjs
-var React19 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FocusGuard.mjs
+var React20 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/visuallyHidden.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/visuallyHidden.mjs
 var visuallyHiddenBase = {
   clipPath: "inset(50%)",
   overflow: "hidden",
@@ -3005,6 +3048,7 @@ var visuallyHiddenBase = {
 var visuallyHidden = {
   ...visuallyHiddenBase,
   position: "fixed",
+  margin: 0,
   top: 0,
   left: 0
 };
@@ -3013,10 +3057,10 @@ var visuallyHiddenInput = {
   position: "absolute"
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/FocusGuard.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FocusGuard.mjs
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-var FocusGuard = /* @__PURE__ */ React19.forwardRef(function FocusGuard2(props, ref) {
-  const [role, setRole] = React19.useState();
+var FocusGuard = /* @__PURE__ */ React20.forwardRef(function FocusGuard2(props, ref) {
+  const [role, setRole] = React20.useState();
   useIsoLayoutEffect(() => {
     if (parts_exports.screenReader.voiceOver && parts_exports.engine.webkit) {
       setRole("button");
@@ -3166,7 +3210,7 @@ function rectToClientRect(rect) {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
 function isIndexOutOfListBounds(list, index2) {
   return index2 < 0 || index2 >= list.length;
 }
@@ -3181,6 +3225,40 @@ function getMaxListIndex(listRef, disabledIndices) {
     startingIndex: listRef.current.length,
     disabledIndices
   });
+}
+function getNextListIndex(list, currentIndex, options) {
+  const {
+    decrement,
+    loopFocus,
+    allowEscape,
+    disabledIndices,
+    minIndex,
+    maxIndex
+  } = options;
+  const step = () => findNonDisabledListIndex(list, {
+    startingIndex: currentIndex,
+    decrement,
+    disabledIndices
+  });
+  let index2;
+  let wrapped = false;
+  if (!loopFocus) {
+    index2 = decrement ? Math.max(minIndex, step()) : Math.min(maxIndex, step());
+  } else if (decrement ? currentIndex <= minIndex : currentIndex >= maxIndex) {
+    const outside = decrement ? -1 : list.length;
+    if (allowEscape && currentIndex !== outside) {
+      index2 = -1;
+    } else {
+      index2 = decrement ? maxIndex : minIndex;
+      wrapped = true;
+    }
+  } else {
+    index2 = step();
+  }
+  return {
+    index: isIndexOutOfListBounds(list, index2) ? -1 : index2,
+    wrapped
+  };
 }
 function findNonDisabledListIndex(list, {
   startingIndex = -1,
@@ -3224,7 +3302,7 @@ function isElementVisible(element, styles = element ? getComputedStyle2(element)
   return styles.display !== "none" && styles.display !== "contents";
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/tabbable.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/tabbable.mjs
 var CANDIDATE_SELECTOR = 'a[href],button,input,select,textarea,summary,details,iframe,object,embed,[tabindex],[contenteditable]:not([contenteditable="false"]),audio[controls],video[controls]';
 function getParentElement(element) {
   const assignedSlot = element.assignedSlot;
@@ -3369,27 +3447,24 @@ function getNextTabbable(referenceElement) {
 function getPreviousTabbable(referenceElement) {
   return getTabbableIn(ownerDocument(referenceElement).body, -1) || referenceElement;
 }
-function getTabbableNearElement(referenceElement, dir) {
+function getTabbableNearElement(referenceElement, direction, exclude) {
   if (!referenceElement) {
     return null;
   }
-  const list = tabbable(ownerDocument(referenceElement).body);
-  const elementCount = list.length;
-  if (elementCount === 0) {
-    return null;
-  }
+  const list = [];
+  appendCandidates(ownerDocument(referenceElement).body, list);
   const index2 = list.indexOf(referenceElement);
   if (index2 === -1) {
     return null;
   }
-  const nextIndex = (index2 + dir + elementCount) % elementCount;
-  return list[nextIndex];
-}
-function getTabbableAfterElement(referenceElement) {
-  return getTabbableNearElement(referenceElement, 1);
-}
-function getTabbableBeforeElement(referenceElement) {
-  return getTabbableNearElement(referenceElement, -1);
+  const candidates = list.filter(isFocusableElement);
+  for (let offset4 = 1; offset4 < list.length; offset4 += 1) {
+    const element = list[(index2 + direction * offset4 + list.length) % list.length];
+    if (!contains(exclude, element) && isTabbable(element) && isTabbableRadio(element, candidates)) {
+      return element;
+    }
+  }
+  return list[index2];
 }
 function isOutsideEvent(event, container) {
   const containerElement = container || event.currentTarget;
@@ -3417,7 +3492,7 @@ function enableFocusInside(container) {
   });
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
 function getNodeChildren(nodes, id, onlyOpenChildren = true) {
   const directChildren = nodes.filter((node) => node.parentId === id);
   return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
@@ -3435,12 +3510,12 @@ function getNodeAncestors(nodes, id) {
   return allAncestors;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
 function createAttribute(name2) {
   return `data-base-ui-${name2}`;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/enqueueFocus.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/enqueueFocus.mjs
 var rafId = 0;
 function enqueueFocus(el, options = {}) {
   const {
@@ -3471,21 +3546,12 @@ function enqueueFocus(el, options = {}) {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/markOthers.mjs
-var counters = {
-  inert: /* @__PURE__ */ new WeakMap(),
-  "aria-hidden": /* @__PURE__ */ new WeakMap()
-};
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/markOthers.mjs
 var markerName = "data-base-ui-inert";
-var uncontrolledElementsSets = {
-  inert: /* @__PURE__ */ new WeakSet(),
-  "aria-hidden": /* @__PURE__ */ new WeakSet()
-};
+var ariaHiddenCounterMap = /* @__PURE__ */ new WeakMap();
+var uncontrolledElementsSet = /* @__PURE__ */ new WeakSet();
 var markerCounterMap = /* @__PURE__ */ new WeakMap();
 var lockCount = 0;
-function getUncontrolledElementsSet(controlAttribute) {
-  return uncontrolledElementsSets[controlAttribute];
-}
 function unwrapHost(node) {
   if (!node) {
     return null;
@@ -3533,40 +3599,28 @@ var collectOutsideElements = (root, keepElements, stopElements) => {
   walk(root);
   return outside;
 };
-function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, inert, {
+function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, {
   mark = true
 }) {
-  let controlAttribute = null;
-  if (inert) {
-    controlAttribute = "inert";
-  } else if (ariaHidden) {
-    controlAttribute = "aria-hidden";
-  }
-  let counterMap = null;
-  let uncontrolledElementsSet = null;
   const avoidElements = correctElements(body, uncorrectedAvoidElements);
   const markerTargets = mark ? collectOutsideElements(body, buildKeepSet(avoidElements), new Set(avoidElements)) : [];
   const hiddenElements = [];
   const markedElements = [];
-  if (controlAttribute) {
-    const map = counters[controlAttribute];
-    const currentUncontrolledElementsSet = getUncontrolledElementsSet(controlAttribute);
-    uncontrolledElementsSet = currentUncontrolledElementsSet;
-    counterMap = map;
+  if (ariaHidden) {
     const ariaLiveElements = correctElements(body, Array.from(body.querySelectorAll("[aria-live]")));
     const controlElements = avoidElements.concat(ariaLiveElements);
     const controlTargets = collectOutsideElements(body, buildKeepSet(controlElements), new Set(controlElements));
     controlTargets.forEach((node) => {
-      const attr2 = node.getAttribute(controlAttribute);
+      const attr2 = node.getAttribute("aria-hidden");
       const alreadyHidden = attr2 !== null && attr2 !== "false";
-      const counterValue = (map.get(node) || 0) + 1;
-      map.set(node, counterValue);
+      const counterValue = (ariaHiddenCounterMap.get(node) || 0) + 1;
+      ariaHiddenCounterMap.set(node, counterValue);
       hiddenElements.push(node);
       if (counterValue === 1 && alreadyHidden) {
-        currentUncontrolledElementsSet.add(node);
+        uncontrolledElementsSet.add(node);
       }
       if (!alreadyHidden) {
-        node.setAttribute(controlAttribute, controlAttribute === "inert" ? "" : "true");
+        node.setAttribute("aria-hidden", "true");
       }
     });
   }
@@ -3582,19 +3636,16 @@ function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, iner
   }
   lockCount += 1;
   return () => {
-    if (counterMap) {
-      hiddenElements.forEach((element) => {
-        const currentCounterValue = counterMap.get(element) || 0;
-        const counterValue = currentCounterValue - 1;
-        counterMap.set(element, counterValue);
-        if (!counterValue) {
-          if (!uncontrolledElementsSet?.has(element) && controlAttribute) {
-            element.removeAttribute(controlAttribute);
-          }
-          uncontrolledElementsSet?.delete(element);
+    hiddenElements.forEach((element) => {
+      const counterValue = (ariaHiddenCounterMap.get(element) || 0) - 1;
+      ariaHiddenCounterMap.set(element, counterValue);
+      if (!counterValue) {
+        if (!uncontrolledElementsSet.has(element)) {
+          element.removeAttribute("aria-hidden");
         }
-      });
-    }
+        uncontrolledElementsSet.delete(element);
+      }
+    });
     if (mark) {
       markedElements.forEach((element) => {
         const markerValue = (markerCounterMap.get(element) || 0) - 1;
@@ -3606,10 +3657,8 @@ function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, iner
     }
     lockCount -= 1;
     if (!lockCount) {
-      counters.inert = /* @__PURE__ */ new WeakMap();
-      counters["aria-hidden"] = /* @__PURE__ */ new WeakMap();
-      uncontrolledElementsSets.inert = /* @__PURE__ */ new WeakSet();
-      uncontrolledElementsSets["aria-hidden"] = /* @__PURE__ */ new WeakSet();
+      ariaHiddenCounterMap = /* @__PURE__ */ new WeakMap();
+      uncontrolledElementsSet = /* @__PURE__ */ new WeakSet();
       markerCounterMap = /* @__PURE__ */ new WeakMap();
     }
   };
@@ -3617,20 +3666,19 @@ function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, iner
 function markOthers(avoidElements, options = {}) {
   const {
     ariaHidden = false,
-    inert = false,
     mark = true
   } = options;
   const body = ownerDocument(avoidElements[0]).body;
-  return applyAttributeToOthers(avoidElements, body, ariaHidden, inert, {
+  return applyAttributeToOthers(avoidElements, body, ariaHidden, {
     mark
   });
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
-var React20 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+var React21 = __toESM(require_react(), 1);
 var ReactDOM2 = __toESM(require_react_dom(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/constants.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/constants.mjs
 var TYPEAHEAD_RESET_MS = 500;
 var PATIENT_CLICK_THRESHOLD = 500;
 var DISABLED_TRANSITIONS_STYLE = {
@@ -3656,11 +3704,11 @@ var ownerVisuallyHidden = {
   left: 0
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-var PortalContext = /* @__PURE__ */ React20.createContext(null);
+var PortalContext = /* @__PURE__ */ React21.createContext(null);
 if (true) PortalContext.displayName = "PortalContext";
-var usePortalContext = () => React20.useContext(PortalContext);
+var usePortalContext = () => React21.useContext(PortalContext);
 var attr = createAttribute("portal");
 function useFloatingPortalNode(props = {}) {
   const {
@@ -3672,14 +3720,14 @@ function useFloatingPortalNode(props = {}) {
   const uniqueId = useId();
   const portalContext = usePortalContext();
   const parentPortalNode = portalContext?.portalNode;
-  const [containerElement, setContainerElement] = React20.useState(null);
-  const [portalNode, setPortalNode] = React20.useState(null);
+  const [containerElement, setContainerElement] = React21.useState(null);
+  const [portalNode, setPortalNode] = React21.useState(null);
   const setPortalNodeRef = useStableCallback((node) => {
     if (node !== null) {
       setPortalNode(node);
     }
   });
-  const containerRef = React20.useRef(null);
+  const containerRef = React21.useRef(null);
   useIsoLayoutEffect(() => {
     if (containerProp === null) {
       if (containerRef.current) {
@@ -3716,11 +3764,11 @@ function useFloatingPortalNode(props = {}) {
     node: portalNode,
     // `id` and `render` props can override or remove the generated ID. Use the exact
     // rendered value so `aria-owns` never points at an ID absent from the DOM.
-    nodeId: /* @__PURE__ */ React20.isValidElement(portalElement) ? portalElement.props.id : void 0,
+    nodeId: /* @__PURE__ */ React21.isValidElement(portalElement) ? portalElement.props.id : void 0,
     subtree: portalSubtree
   };
 }
-var FloatingPortal = /* @__PURE__ */ React20.forwardRef(function FloatingPortal2(componentProps, forwardedRef) {
+var FloatingPortal = /* @__PURE__ */ React21.forwardRef(function FloatingPortal2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -3740,16 +3788,16 @@ var FloatingPortal = /* @__PURE__ */ React20.forwardRef(function FloatingPortal2
     componentProps,
     elementProps
   });
-  const beforeOutsideRef = React20.useRef(null);
-  const afterOutsideRef = React20.useRef(null);
-  const beforeInsideRef = React20.useRef(null);
-  const afterInsideRef = React20.useRef(null);
-  const [focusManagerState, setFocusManagerState] = React20.useState(null);
-  const focusInsideDisabledRef = React20.useRef(false);
+  const beforeOutsideRef = React21.useRef(null);
+  const afterOutsideRef = React21.useRef(null);
+  const beforeInsideRef = React21.useRef(null);
+  const afterInsideRef = React21.useRef(null);
+  const [focusManagerState, setFocusManagerState] = React21.useState(null);
+  const focusInsideDisabledRef = React21.useRef(false);
   const modal = focusManagerState?.modal;
   const open2 = focusManagerState?.open;
   const shouldRenderGuards = !!focusManagerState && !focusManagerState.modal && focusManagerState.open && !!portalNode;
-  React20.useEffect(() => {
+  React21.useEffect(() => {
     if (!portalNode || modal) {
       return void 0;
     }
@@ -3775,7 +3823,7 @@ var FloatingPortal = /* @__PURE__ */ React20.forwardRef(function FloatingPortal2
     enableFocusInside(portalNode);
     focusInsideDisabledRef.current = false;
   }, [open2, portalNode]);
-  const portalContextValue = React20.useMemo(() => ({
+  const portalContextValue = React21.useMemo(() => ({
     beforeOutsideRef,
     afterOutsideRef,
     beforeInsideRef,
@@ -3783,7 +3831,7 @@ var FloatingPortal = /* @__PURE__ */ React20.forwardRef(function FloatingPortal2
     portalNode,
     setFocusManagerState
   }), [portalNode]);
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(React20.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(React21.Fragment, {
     children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(PortalContext.Provider, {
       value: portalContextValue,
       children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(FocusGuard, {
@@ -3823,10 +3871,10 @@ var FloatingPortal = /* @__PURE__ */ React20.forwardRef(function FloatingPortal2
 });
 if (true) FloatingPortal.displayName = "FloatingPortal";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
-var React21 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+var React22 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
 function createEventEmitter() {
   const map = /* @__PURE__ */ new Map();
   return {
@@ -3845,7 +3893,7 @@ function createEventEmitter() {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingTreeStore.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTreeStore.mjs
 var FloatingTreeStore = class {
   nodesRef = {
     current: []
@@ -3862,15 +3910,15 @@ var FloatingTreeStore = class {
   }
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
-var FloatingNodeContext = /* @__PURE__ */ React21.createContext(null);
+var FloatingNodeContext = /* @__PURE__ */ React22.createContext(null);
 if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
-var FloatingTreeContext = /* @__PURE__ */ React21.createContext(null);
+var FloatingTreeContext = /* @__PURE__ */ React22.createContext(null);
 if (true) FloatingTreeContext.displayName = "FloatingTreeContext";
-var useFloatingParentNodeId = () => React21.useContext(FloatingNodeContext)?.id || null;
+var useFloatingParentNodeId = () => React22.useContext(FloatingNodeContext)?.id || null;
 var useFloatingTree = (externalTree) => {
-  const contextTree = React21.useContext(FloatingTreeContext);
+  const contextTree = React22.useContext(FloatingTreeContext);
   return externalTree ?? contextTree;
 };
 function useFloatingNodeId(externalTree) {
@@ -3899,7 +3947,7 @@ function FloatingNode(props) {
   } = props;
   const parentId = useFloatingParentNodeId();
   return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(FloatingNodeContext.Provider, {
-    value: React21.useMemo(() => ({
+    value: React22.useMemo(() => ({
       id,
       parentId
     }), [id, parentId]),
@@ -3918,7 +3966,7 @@ function FloatingTree(props) {
   });
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 function getEventType(event, lastInteractionType) {
   const win = getWindow(getTarget(event));
@@ -3929,7 +3977,7 @@ function getEventType(event, lastInteractionType) {
     return lastInteractionType || "keyboard";
   }
   if ("pointerType" in event) {
-    return event.pointerType || "keyboard";
+    return event.pointerType || (isVirtualClick(event) ? "keyboard" : lastInteractionType || "mouse");
   }
   if ("touches" in event) {
     return "touch";
@@ -3993,11 +4041,12 @@ function handleTabIndex(floatingFocusElement) {
 }
 function FloatingFocusManager(props) {
   const {
-    context,
+    context: store,
     children,
     disabled: disabled2 = false,
     initialFocus = true,
     returnFocus = true,
+    explicitReturnFocus,
     restoreFocus = false,
     modal = true,
     closeOnFocusOut = true,
@@ -4008,7 +4057,6 @@ function FloatingFocusManager(props) {
     externalTree,
     getInsideElements
   } = props;
-  const store = "rootStore" in context ? context.rootStore : context;
   const open2 = store.useState("open");
   const domReference = store.useState("domReferenceElement");
   const floating = store.useState("floatingElement");
@@ -4021,18 +4069,19 @@ function FloatingFocusManager(props) {
   const isUntrappedTypeableCombobox = isTypeableCombobox(domReference) && ignoreInitialFocus;
   const initialFocusRef = useValueAsRef(initialFocus);
   const returnFocusRef = useValueAsRef(returnFocus);
+  const explicitReturnFocusRef = useValueAsRef(explicitReturnFocus);
   const openInteractionTypeRef = useValueAsRef(openInteractionType);
   const openRef = useValueAsRef(open2);
   const tree = useFloatingTree(externalTree);
   const portalContext = usePortalContext();
-  const preventReturnFocusRef = React22.useRef(false);
-  const isPointerDownRef = React22.useRef(false);
-  const pointerDownOutsideRef = React22.useRef(false);
-  const lastFocusedTabbableRef = React22.useRef(null);
-  const closeTypeRef = React22.useRef("");
-  const lastInteractionTypeRef = React22.useRef("");
-  const beforeGuardRef = React22.useRef(null);
-  const afterGuardRef = React22.useRef(null);
+  const preventReturnFocusRef = React23.useRef(false);
+  const isPointerDownRef = React23.useRef(false);
+  const pointerDownOutsideRef = React23.useRef(false);
+  const lastFocusedTabbableRef = React23.useRef(null);
+  const closeTypeRef = React23.useRef("");
+  const lastInteractionTypeRef = React23.useRef("");
+  const beforeGuardRef = React23.useRef(null);
+  const afterGuardRef = React23.useRef(null);
   const mergedBeforeGuardRef = useMergedRefs(beforeGuardRef, beforeContentFocusGuardRef, portalContext?.beforeInsideRef);
   const mergedAfterGuardRef = useMergedRefs(afterGuardRef, portalContext?.afterInsideRef);
   const blurTimeout = useTimeout();
@@ -4044,7 +4093,7 @@ function FloatingFocusManager(props) {
     return container ? tabbable(container) : [];
   });
   const getResolvedInsideElements = useStableCallback(() => getInsideElements?.().filter((element) => element != null) ?? []);
-  React22.useEffect(() => {
+  React23.useEffect(() => {
     if (disabled2 || !modal) {
       return void 0;
     }
@@ -4058,7 +4107,7 @@ function FloatingFocusManager(props) {
     const doc = ownerDocument(floatingFocusElement);
     return addEventListener(doc, "keydown", onKeyDown);
   }, [disabled2, floatingFocusElement, modal, isUntrappedTypeableCombobox, getTabbableContent]);
-  React22.useEffect(() => {
+  React23.useEffect(() => {
     if (disabled2 || !open2) {
       return void 0;
     }
@@ -4072,7 +4121,7 @@ function FloatingFocusManager(props) {
       const pointerTargetInside = contains(floating, target) || contains(domReference, target) || contains(portalContext?.portalNode, target) || insideElements.some((element) => element === target || contains(element, target));
       pointerDownOutsideRef.current = !pointerTargetInside;
       lastInteractionTypeRef.current = event.pointerType || "keyboard";
-      if (target?.closest(`[${CLICK_TRIGGER_IDENTIFIER}]`)) {
+      if (closest(target, `[${CLICK_TRIGGER_IDENTIFIER}]`)) {
         isPointerDownRef.current = true;
         pointerDownTimeout.start(0, () => {
           isPointerDownRef.current = false;
@@ -4092,7 +4141,7 @@ function FloatingFocusManager(props) {
       clearPointerDownOutside
     );
   }, [disabled2, floating, domReference, floatingFocusElement, open2, portalContext, pointerDownTimeout, getResolvedInsideElements]);
-  React22.useEffect(() => {
+  React23.useEffect(() => {
     if (disabled2 || !closeOnFocusOut) {
       return void 0;
     }
@@ -4174,7 +4223,7 @@ function FloatingFocusManager(props) {
     }
     return mergeCleanups(domReferenceElement && addEventListener(domReferenceElement, "focusout", handleFocusOutside), domReferenceElement && addEventListener(domReferenceElement, "pointerdown", handlePointerDown), floating && addEventListener(floating, "focusin", handleFocusIn), floating && addEventListener(floating, "focusout", handleFocusOutside), floating && portalContext && addEventListener(floating, "focusout", markInsideReactTree, true));
   }, [disabled2, domReference, floating, floatingFocusElement, modal, tree, portalContext, store, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
-  React22.useEffect(() => {
+  React23.useEffect(() => {
     if (disabled2 || !floating || !open2) {
       return void 0;
     }
@@ -4227,7 +4276,10 @@ function FloatingFocusManager(props) {
       }
       elToFocus = elToFocus || getDefaultFocusElement();
       const hadFocusInside = contains(floatingFocusElement, activeElement(doc));
+      const openEvent = dataRef.current.openEvent;
+      const openedByVirtualPress = openEvent?.type === "mousedown" && isVirtualClick(openEvent);
       void enqueueFocus(elToFocus, {
+        sync: openedByVirtualPress,
         preventScroll: elToFocus === floatingFocusElement,
         shouldFocus() {
           if (!openRef.current) {
@@ -4242,10 +4294,16 @@ function FloatingFocusManager(props) {
         }
       });
     });
-  }, [disabled2, open2, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
+  }, [disabled2, open2, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef, dataRef]);
+  const pendingReturnFocusRef = React23.useRef(null);
   useIsoLayoutEffect(() => {
     if (disabled2 || !floatingFocusElement) {
+      pendingReturnFocusRef.current = null;
       return void 0;
+    }
+    if (pendingReturnFocusRef.current) {
+      pendingReturnFocusRef.current.cancelled = true;
+      pendingReturnFocusRef.current = null;
     }
     const doc = ownerDocument(floatingFocusElement);
     const elementFocusedBeforeOpen = activeElement(doc);
@@ -4255,7 +4313,7 @@ function FloatingFocusManager(props) {
       if (!details.open) {
         closeTypeRef.current = getEventType(details.nativeEvent, lastInteractionTypeRef.current);
       }
-      if (details.reason === reason_parts_exports.triggerHover && details.nativeEvent.type === "mouseleave") {
+      if (details.reason === reason_parts_exports.focusOut && details.triggerElement?.hasAttribute(createAttribute("focus-guard")) || details.reason === reason_parts_exports.triggerHover && details.nativeEvent.type === "mouseleave") {
         preventReturnFocusRef.current = true;
       }
       if (details.reason !== reason_parts_exports.outsidePress) {
@@ -4309,10 +4367,20 @@ function FloatingFocusManager(props) {
       const returnFocusValueOrFn = returnFocusRef.current;
       const closeType = closeTypeRef.current;
       const returnElement = getReturnElement(closeType);
+      const job = {
+        cancelled: false
+      };
+      pendingReturnFocusRef.current = job;
       queueMicrotask(() => {
+        if (pendingReturnFocusRef.current === job) {
+          pendingReturnFocusRef.current = null;
+        }
         const tabbableReturnElement = getFirstTabbableElement(returnElement);
-        const hasExplicitReturnFocus = typeof returnFocusValueOrFn !== "boolean";
-        if (returnFocusValueOrFn && !preventReturnFocusRef.current && isHTMLElement(tabbableReturnElement) && // If the focus moved somewhere else after mount, avoid returning focus
+        const hasExplicitReturnFocus = (
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          explicitReturnFocusRef.current ?? typeof returnFocusValueOrFn !== "boolean"
+        );
+        if (!job.cancelled && returnFocusValueOrFn && !preventReturnFocusRef.current && isHTMLElement(tabbableReturnElement) && // If the focus moved somewhere else after mount, avoid returning focus
         // since it likely entered a different element which should be
         // respected: https://github.com/floating-ui/floating-ui/issues/2607
         (!hasExplicitReturnFocus && tabbableReturnElement !== activeEl && activeEl !== doc.body ? isFocusInsideFloatingTree : true)) {
@@ -4327,7 +4395,7 @@ function FloatingFocusManager(props) {
         preventReturnFocusRef.current = false;
       });
     };
-  }, [disabled2, floating, floatingFocusElement, returnFocusRef, openInteractionTypeRef, events, tree, domReference, getNodeId, getResolvedInsideElements]);
+  }, [disabled2, floating, floatingFocusElement, returnFocusRef, explicitReturnFocusRef, openInteractionTypeRef, events, tree, domReference, getNodeId, getResolvedInsideElements]);
   useIsoLayoutEffect(() => {
     if (!parts_exports.engine.webkit || open2 || !floating) {
       return;
@@ -4365,7 +4433,7 @@ function FloatingFocusManager(props) {
     };
   }, [disabled2, floatingFocusElement]);
   const shouldRenderGuards = !disabled2 && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React22.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React23.Fragment, {
     children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(FocusGuard, {
       "data-type": "inside",
       ref: mergedBeforeGuardRef,
@@ -4405,9 +4473,9 @@ function FloatingFocusManager(props) {
   });
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useClick.mjs
-var React23 = __toESM(require_react(), 1);
-function useClick(context, props = {}) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useClick.mjs
+var React24 = __toESM(require_react(), 1);
+function useClick(store, props = {}) {
   const {
     enabled = true,
     event: eventOption = "click",
@@ -4417,12 +4485,11 @@ function useClick(context, props = {}) {
     touchOpenDelay = 0,
     reason = reason_parts_exports.triggerPress
   } = props;
-  const store = "rootStore" in context ? context.rootStore : context;
   const dataRef = store.context.dataRef;
-  const pointerTypeRef = React23.useRef(void 0);
+  const pointerTypeRef = React24.useRef(void 0);
   const frame = useAnimationFrame();
   const touchOpenTimeout = useTimeout();
-  const reference = React23.useMemo(() => {
+  const reference = React24.useMemo(() => {
     function setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType) {
       const details = createChangeEventDetails(reason, nativeEvent, target);
       if (nextOpen && pointerType === "touch" && touchOpenDelay > 0) {
@@ -4445,7 +4512,7 @@ function useClick(context, props = {}) {
       if (!toggle) {
         return true;
       }
-      if (openEvent && stickIfOpen) {
+      if (openEvent && (typeof stickIfOpen === "function" ? stickIfOpen() : stickIfOpen)) {
         return !isClickLikeOpenEvent2(openEvent.type);
       }
       return false;
@@ -4463,8 +4530,9 @@ function useClick(context, props = {}) {
         }
         const nextOpen = getNextOpen(open2, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
         const target = getTarget(nativeEvent);
-        if (isTypeableElement(target)) {
-          setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType);
+        const isTypeable = isTypeableElement(target);
+        if (isTypeable || pointerType === "virtual") {
+          setOpenWithTouchDelay(nextOpen, nativeEvent, isTypeable ? target : event.currentTarget, pointerType);
           return;
         }
         const eventCurrentTarget = event.currentTarget;
@@ -4493,13 +4561,13 @@ function useClick(context, props = {}) {
       }
     };
   }, [dataRef, eventOption, ignoreMouse, reason, store, stickIfOpen, toggle, frame, touchOpenTimeout, touchOpenDelay]);
-  return React23.useMemo(() => enabled ? {
+  return React24.useMemo(() => enabled ? {
     reference
   } : EMPTY_OBJECT, [enabled, reference]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useClientPoint.mjs
-var React24 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useClientPoint.mjs
+var React25 = __toESM(require_react(), 1);
 function createVirtualElement(domElement, data) {
   let offsetX = null;
   let offsetY = null;
@@ -4516,8 +4584,8 @@ function createVirtualElement(domElement, data) {
       const isXAxis = data.axis === "x" || data.axis === "both";
       const isYAxis = data.axis === "y" || data.axis === "both";
       const canTrackCursorOnAutoUpdate = ["mouseenter", "mousemove"].includes(data.dataRef.current.openEvent?.type || "") && data.pointerType !== "touch";
-      let width = domRect.width;
-      let height = domRect.height;
+      const width = data.axis === "y" ? domRect.width : 0;
+      const height = data.axis === "x" ? domRect.height : 0;
       let x2 = domRect.x;
       let y2 = domRect.y;
       if (offsetX == null && data.x && isXAxis) {
@@ -4528,16 +4596,9 @@ function createVirtualElement(domElement, data) {
       }
       x2 -= offsetX || 0;
       y2 -= offsetY || 0;
-      width = 0;
-      height = 0;
       if (!isAutoUpdateEvent || canTrackCursorOnAutoUpdate) {
-        width = data.axis === "y" ? domRect.width : 0;
-        height = data.axis === "x" ? domRect.height : 0;
         x2 = isXAxis && data.x != null ? data.x : x2;
         y2 = isYAxis && data.y != null ? data.y : y2;
-      } else if (isAutoUpdateEvent && !canTrackCursorOnAutoUpdate) {
-        height = data.axis === "x" ? domRect.height : height;
-        width = data.axis === "y" ? domRect.width : width;
       }
       isAutoUpdateEvent = true;
       return {
@@ -4556,20 +4617,19 @@ function createVirtualElement(domElement, data) {
 function isMouseBasedEvent(event) {
   return event != null && event.clientX != null;
 }
-function useClientPoint(context, props = {}) {
+function useClientPoint(store, props = {}) {
   const {
     enabled = true,
     axis = "both"
   } = props;
-  const store = "rootStore" in context ? context.rootStore : context;
   const open2 = store.useState("open");
   const floating = store.useState("floatingElement");
   const domReference = store.useState("domReferenceElement");
   const dataRef = store.context.dataRef;
-  const initialRef = React24.useRef(false);
-  const cleanupListenerRef = React24.useRef(null);
-  const [pointerType, setPointerType] = React24.useState();
-  const [reactive, setReactive] = React24.useState([]);
+  const initialRef = React25.useRef(false);
+  const cleanupListenerRef = React25.useRef(null);
+  const [pointerType, setPointerType] = React25.useState();
+  const [reactive, setReactive] = React25.useState([]);
   const resetReference = useStableCallback((reference2) => {
     store.set("positionReference", reference2);
   });
@@ -4597,7 +4657,7 @@ function useClientPoint(context, props = {}) {
     }
   });
   const openCheck = isMouseLikePointerType(pointerType) ? floating : open2;
-  React24.useEffect(() => {
+  React25.useEffect(() => {
     if (!enabled) {
       resetReference(domReference);
       return void 0;
@@ -4625,20 +4685,20 @@ function useClientPoint(context, props = {}) {
     }
     return cleanupListener;
   }, [openCheck, enabled, floating, dataRef, domReference, store, setReference, resetReference, reactive]);
-  React24.useEffect(() => () => {
+  React25.useEffect(() => () => {
     store.set("positionReference", null);
   }, [store]);
-  React24.useEffect(() => {
+  React25.useEffect(() => {
     if (enabled && !floating) {
       initialRef.current = false;
     }
   }, [enabled, floating]);
-  React24.useEffect(() => {
+  React25.useEffect(() => {
     if (!enabled && open2) {
       initialRef.current = true;
     }
   }, [enabled, open2]);
-  const reference = React24.useMemo(() => {
+  const reference = React25.useMemo(() => {
     function setPointerTypeRef(event) {
       setPointerType(event.pointerType);
     }
@@ -4649,14 +4709,14 @@ function useClientPoint(context, props = {}) {
       onMouseEnter: handleReferenceEnterOrMove
     };
   }, [handleReferenceEnterOrMove]);
-  return React24.useMemo(() => enabled ? {
+  return React25.useMemo(() => enabled ? {
     reference,
     trigger: reference
   } : {}, [enabled, reference]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
-var React25 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
+var React26 = __toESM(require_react(), 1);
 function alwaysFalse() {
   return false;
 }
@@ -4666,7 +4726,7 @@ function normalizeProp(normalizable) {
     outsidePress: typeof normalizable === "boolean" ? normalizable : normalizable?.outsidePress ?? true
   };
 }
-function useDismiss(context, props = {}) {
+function useDismiss(store, props = {}) {
   const {
     enabled = true,
     escapeKey: escapeKey2 = true,
@@ -4676,7 +4736,6 @@ function useDismiss(context, props = {}) {
     bubbles,
     externalTree
   } = props;
-  const store = "rootStore" in context ? context.rootStore : context;
   const open2 = store.useState("open");
   const floatingElement = store.useState("floatingElement");
   const {
@@ -4692,15 +4751,16 @@ function useDismiss(context, props = {}) {
     escapeKey: escapeKeyBubbles,
     outsidePress: outsidePressBubbles
   } = normalizeProp(bubbles);
-  const pressStartedInsideRef = React25.useRef(false);
-  const pressStartPreventedRef = React25.useRef(false);
-  const suppressNextOutsideClickRef = React25.useRef(false);
-  const sawPressWhileOpenRef = React25.useRef(false);
-  const isComposingRef = React25.useRef(false);
-  const currentPointerTypeRef = React25.useRef("");
-  const touchStateRef = React25.useRef(null);
+  const pressStartedInsideRef = React26.useRef(false);
+  const pressStartPreventedRef = React26.useRef(false);
+  const suppressNextOutsideClickRef = React26.useRef(false);
+  const sawPressWhileOpenRef = React26.useRef(false);
+  const isComposingRef = React26.useRef(false);
+  const currentPointerTypeRef = React26.useRef("");
+  const touchStateRef = React26.useRef(null);
   const cancelDismissOnEndTimeout = useTimeout();
   const clearInsideReactTreeTimeout = useTimeout();
+  const compositionTimeout = useTimeout();
   const clearInsideReactTree = useStableCallback(() => {
     clearInsideReactTreeTimeout.clear();
     dataRef.current.insideReactTree = false;
@@ -4723,13 +4783,13 @@ function useDismiss(context, props = {}) {
     if (!open2 || !enabled || !escapeKey2 || event.key !== "Escape") {
       return;
     }
-    if (isComposingRef.current) {
+    const native = isReactEvent(event) ? event.nativeEvent : event;
+    if (isComposingRef.current || native.isComposing) {
       return;
     }
     if (!escapeKeyBubbles && hasBlockingChild("__escapeKeyBubbles")) {
       return;
     }
-    const native = isReactEvent(event) ? event.nativeEvent : event;
     const eventDetails = createChangeEventDetails(reason_parts_exports.escapeKey, native);
     store.setOpen(false, eventDetails);
     if (!eventDetails.isCanceled) {
@@ -4767,7 +4827,7 @@ function useDismiss(context, props = {}) {
       pressStartPreventedRef.current = true;
     }
   });
-  React25.useEffect(() => {
+  React26.useEffect(() => {
     function handleOpenChange(details) {
       if (!details.open) {
         sawPressWhileOpenRef.current = false;
@@ -4778,16 +4838,19 @@ function useDismiss(context, props = {}) {
       events.off("openchange", handleOpenChange);
     };
   }, [events]);
-  React25.useEffect(() => {
+  React26.useEffect(() => clearInsideReactTree, [clearInsideReactTree]);
+  React26.useEffect(() => {
     if (!open2 || !enabled) {
       if (!open2) {
         sawPressWhileOpenRef.current = false;
+        isComposingRef.current = false;
+        currentPointerTypeRef.current = "";
+        touchStateRef.current = null;
       }
       return clearInsideReactTree;
     }
     dataRef.current.__escapeKeyBubbles = escapeKeyBubbles;
     dataRef.current.__outsidePressBubbles = outsidePressBubbles;
-    const compositionTimeout = new Timeout();
     const preventedPressSuppressionTimeout = new Timeout();
     const doc = ownerDocument(floatingElement);
     function handleCompositionStart() {
@@ -4795,6 +4858,7 @@ function useDismiss(context, props = {}) {
       isComposingRef.current = true;
     }
     function handleCompositionEnd() {
+      isComposingRef.current = true;
       compositionTimeout.start(
         // 0ms or 1ms don't work in Safari. 5ms appears to consistently work.
         // Only apply to WebKit for the test to remain 0ms.
@@ -5045,19 +5109,17 @@ function useDismiss(context, props = {}) {
     })));
     return () => {
       unsubscribe();
-      compositionTimeout.clear();
       preventedPressSuppressionTimeout.clear();
       resetPressStartState();
       suppressNextOutsideClickRef.current = false;
-      clearInsideReactTree();
     };
-  }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open2, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout]);
-  const reference = React25.useMemo(() => ({
+  }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open2, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout, compositionTimeout]);
+  const reference = React26.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     onPointerDown: closeOnReferencePress,
     onClick: closeOnReferencePress
   }), [closeOnEscapeKeyDown, closeOnReferencePress]);
-  const floating = React25.useMemo(() => ({
+  const floating = React26.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     // `onMouseDown` may be blocked if `event.preventDefault()` is called in
     // `onPointerDown`, such as with <NumberField.ScrubArea>.
@@ -5077,15 +5139,2740 @@ function useDismiss(context, props = {}) {
     onTouchEndCapture: markInsideReactTree,
     onTouchMoveCapture: markInsideReactTree
   }), [closeOnEscapeKeyDown, markInsideReactTree, markPressStartedInsideReactTree, markInsidePressStartPrevented]);
-  return React25.useMemo(() => enabled ? {
+  return React26.useMemo(() => enabled ? {
     reference,
     floating,
     trigger: reference
   } : {}, [enabled, reference, floating]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupHandle.mjs
+var BasePopupHandle = class {
+  /**
+   * Stores of every root currently using this handle, in attach order. A handle is meant to be used
+   * by a single mounted root, but roots can transiently overlap (e.g. during an animated route
+   * transition), so this stack lets `attachStore`'s cleanup restore the previous root instead of
+   * leaving a still-mounted root uncontrollable when a newer overlapping root detaches first.
+   */
+  attachedStores = [];
+  /**
+   * Store of the root that currently controls the handle: the most recently attached one still
+   * mounted, or `null` when no root is attached. Imperative methods are no-ops while this is `null`.
+   */
+  attachedStoreValue = null;
+  /**
+   * Listeners notified when `attachedStore` changes, so detached triggers can follow the store pointer.
+   */
+  storeListeners = /* @__PURE__ */ new Set();
+  /**
+   * Creates a handle backed by the store used while no root is attached.
+   *
+   * @param fallbackStore Inert, closed store handed to detached triggers while no root is attached,
+   * so they can render and register without a mounted root. Triggers register into whichever store
+   * `store` currently resolves to, so while detached they live in this store's trigger map and
+   * migrate themselves to the root's store (and back) as it attaches/detaches.
+   * @param componentName Component name used to prefix dev warnings, e.g. `'Menu'` produces
+   * `MenuHandle.open()` in warning text.
+   * @param throwOnMissingTrigger Whether `open(triggerId)` throws when no trigger with that id is
+   * registered. Anchored popups (Menu, Popover, Tooltip, PreviewCard) need a trigger to anchor to,
+   * so they throw; Dialog is not anchored and instead opens unassociated with a dev warning.
+   */
+  constructor(fallbackStore, componentName, throwOnMissingTrigger = true) {
+    this.fallbackStore = fallbackStore;
+    this.componentName = componentName;
+    this.throwOnMissingTrigger = throwOnMissingTrigger;
+  }
+  get attachedStore() {
+    return this.attachedStoreValue;
+  }
+  /**
+   * Store that detached triggers read from: the attached root's store, or an inert fallback store
+   * used while no root is attached.
+   * @internal
+   */
+  get store() {
+    return this.attachedStoreValue ?? this.fallbackStore;
+  }
+  /**
+   * Stable fallback store used for server rendering and hydration. Root stores cannot be recorded on
+   * the handle during render because a handle can be shared by concurrent server-rendered requests.
+   * @internal
+   */
+  get serverStore() {
+    return this.fallbackStore;
+  }
+  /**
+   * Subscribes to changes of the attached store pointer so detached triggers re-render and re-bind
+   * when a root attaches or detaches. Returns a function that removes the listener.
+   * @internal
+   */
+  subscribeStore(listener) {
+    this.storeListeners.add(listener);
+    return () => {
+      this.storeListeners.delete(listener);
+    };
+  }
+  /**
+   * Points the handle at a root's store and notifies subscribers so detached triggers re-render and
+   * re-register into it (their registration effect migrates them when the store pointer changes).
+   * Returns a cleanup function that detaches the store again.
+   * @internal
+   */
+  attachStore(newStore) {
+    this.attachedStores.push(newStore);
+    this.setActiveStore(newStore);
+    if (true) {
+      if (this.attachedStores.length > 1) {
+        const dev = this;
+        (dev.overlapWarningFrame ??= AnimationFrame.create()).request(() => {
+          if (this.attachedStores.length > 1) {
+            console.warn("Base UI: A handle is attached to more than one mounted root at the same time. The most recently mounted root takes over and the previous one stops being controlled by the handle. A handle should be used by a single root that stays mounted for the lifetime of the handle.");
+          }
+        });
+      }
+    }
+    return () => {
+      const index2 = this.attachedStores.lastIndexOf(newStore);
+      if (index2 !== -1) {
+        this.attachedStores.splice(index2, 1);
+      }
+      this.setActiveStore(this.attachedStores[this.attachedStores.length - 1] ?? null);
+    };
+  }
+  /**
+   * Sets the store that currently controls the handle and notifies subscribers when it changes, so
+   * detached triggers re-render and migrate their registration to the new store.
+   */
+  setActiveStore(store) {
+    if (this.attachedStoreValue !== store) {
+      this.attachedStoreValue = store;
+      this.storeListeners.forEach((listener) => {
+        listener();
+      });
+    }
+  }
+  /**
+   * Opens the attached root's store and associates it with the trigger with the given id, or a
+   * no-op (with a dev warning) while no root is attached. Shared by every concrete handle's public
+   * `open()` method, which only narrows the parameter type.
+   *
+   * When a trigger id is given but no matching trigger is registered, anchored popups throw (see
+   * `throwOnMissingTrigger`); Dialog opens unassociated with a dev warning instead.
+   *
+   * This method should only be called in an event handler or an effect (not during rendering).
+   *
+   * @param triggerId ID of the trigger to associate with the popup, or `null`/`undefined` to open
+   * without associating any trigger.
+   */
+  openByTrigger(triggerId) {
+    const attachedStore = this.attachedStore;
+    if (attachedStore === null) {
+      if (true) {
+        console.warn(`Base UI: ${this.componentName}Handle.open() was called while no root using this handle is mounted. The call was ignored; mount a root with this handle before opening it imperatively.`);
+      }
+      return;
+    }
+    let triggerElement;
+    if (triggerId) {
+      for (let i = this.attachedStores.length - 1; i >= 0 && !triggerElement; i -= 1) {
+        triggerElement = this.attachedStores[i].context.triggerElements.getById(triggerId);
+      }
+      triggerElement ??= this.fallbackStore.context.triggerElements.getById(triggerId);
+    }
+    if (triggerId && !triggerElement) {
+      if (this.throwOnMissingTrigger) {
+        throw new Error(true ? `Base UI: ${this.componentName}Handle.open() was called with the trigger id "${triggerId}", but no matching trigger is registered with this handle. An anchored popup cannot open without a trigger to anchor to. Pass the id of a mounted ${this.componentName}.Trigger that has this handle set on its "handle" prop.` : formatErrorMessage_default(99, this.componentName, triggerId, this.componentName));
+      }
+      if (true) {
+        console.warn(`Base UI: ${this.componentName}Handle.open: No trigger found with id "${triggerId}". The popup will open, but the trigger will not be associated with it.`);
+      }
+    }
+    attachedStore.setOpen(true, createChangeEventDetails(reason_parts_exports.imperativeAction, void 0, triggerElement));
+  }
+  /**
+   * Closes the popup by setting the attached root's store to closed, or a no-op (with a dev warning)
+   * while no root is attached. Shared by every concrete handle's public `close()` method.
+   *
+   * This method should only be called in an event handler or an effect (not during rendering).
+   */
+  closePopup() {
+    const attachedStore = this.attachedStore;
+    if (attachedStore === null) {
+      if (true) {
+        console.warn(`Base UI: ${this.componentName}Handle.close() was called while no root using this handle is mounted. The call was ignored.`);
+      }
+      return;
+    }
+    attachedStore.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
+  }
+};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+var React28 = __toESM(require_react(), 1);
+var ReactDOM3 = __toESM(require_react_dom(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
+function useSyncedFloatingRootContext(options) {
+  const {
+    popupStore,
+    treatPopupAsFloatingElement = false,
+    floatingRootContext: store,
+    floatingId,
+    nested,
+    onOpenChange
+  } = options;
+  const open2 = popupStore.useState("open");
+  const referenceElement = popupStore.useState("activeTriggerElement");
+  const floatingElement = popupStore.useState(treatPopupAsFloatingElement ? "popupElement" : "positionerElement");
+  const handleOpenChange = onOpenChange;
+  popupStore.useSyncedValue("floatingId", floatingId);
+  useIsoLayoutEffect(() => {
+    const valuesToSync = {
+      open: open2,
+      floatingId,
+      referenceElement,
+      floatingElement
+    };
+    if (isElement(referenceElement)) {
+      valuesToSync.domReferenceElement = referenceElement;
+    }
+    if (store.state.positionReference === store.state.referenceElement) {
+      valuesToSync.positionReference = referenceElement;
+    }
+    store.update(valuesToSync);
+  }, [open2, floatingId, referenceElement, floatingElement, store]);
+  store.context.onOpenChange = handleOpenChange;
+  store.context.nested = nested;
+  return store;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useUnmountAfterClose.mjs
+var React27 = __toESM(require_react(), 1);
+function useUnmountAfterClose(parameters) {
+  const {
+    open: open2,
+    ref,
+    preventUnmountOnClose,
+    setPreventUnmountOnClose: setPreventUnmountOnCloseParam,
+    onUnmount,
+    animateInitialOpen
+  } = parameters;
+  const setPreventUnmountOnClose = useStableCallback(setPreventUnmountOnCloseParam);
+  const {
+    mounted,
+    setMounted,
+    transitionStatus
+  } = useTransitionStatus(open2, false, false, animateInitialOpen);
+  const preventUnmountingOnClose = open2 ? false : preventUnmountOnClose;
+  useIsoLayoutEffect(() => {
+    if (open2) {
+      setPreventUnmountOnClose(false);
+    }
+  }, [open2, setPreventUnmountOnClose]);
+  const mountedRef = React27.useRef(mounted);
+  const pendingUnmountRef = React27.useRef(false);
+  const rerender = useForcedRerendering();
+  const unmount = () => {
+    mountedRef.current = false;
+    setMounted(false);
+    onUnmount();
+  };
+  useIsoLayoutEffect(() => {
+    mountedRef.current = mounted;
+    if (pendingUnmountRef.current) {
+      pendingUnmountRef.current = false;
+      if (!open2 && mounted) {
+        unmount();
+      }
+    }
+  });
+  const forceUnmount = useStableCallback(() => {
+    if (!mountedRef.current) {
+      return;
+    }
+    if (open2) {
+      pendingUnmountRef.current = true;
+      rerender();
+      return;
+    }
+    unmount();
+  });
+  useOpenChangeComplete({
+    enabled: mounted && !open2 && !preventUnmountingOnClose,
+    open: open2,
+    ref,
+    onComplete() {
+      if (!open2) {
+        forceUnmount();
+      }
+    }
+  });
+  return {
+    mounted,
+    transitionStatus,
+    preventUnmountingOnClose,
+    forceUnmount
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+var FOCUSABLE_POPUP_PROPS = {
+  tabIndex: -1,
+  [FOCUSABLE_ATTRIBUTE]: ""
+};
+function usePopupRootStore(createStore, treatPopupAsFloatingElement = false) {
+  const floatingId = useId();
+  const nested = useFloatingParentNodeId() != null;
+  const store = useRefWithInit(() => createStore(floatingId, nested)).current;
+  useSyncedFloatingRootContext({
+    popupStore: store,
+    treatPopupAsFloatingElement,
+    floatingRootContext: store.state.floatingRootContext,
+    floatingId,
+    nested,
+    onOpenChange: store.setOpen
+  });
+  return store;
+}
+function PopupHandleAttachment({
+  handle,
+  store
+}) {
+  useIsoLayoutEffect(() => {
+    return handle.attachStore(store);
+  }, [handle, store]);
+  return null;
+}
+function syncTriggerCount(store) {
+  const triggerCount = store.context.triggerElements.size;
+  if (store.select("open") && store.state.triggerCount !== triggerCount) {
+    store.set("triggerCount", triggerCount);
+  }
+}
+function useTriggerRegistration(id, store) {
+  const registrationRef = React28.useRef(null);
+  return useStableCallback((element) => {
+    const registration = registrationRef.current;
+    if (registration !== null) {
+      if (registration.element === element && registration.store === store && registration.id === id) {
+        return;
+      }
+      registrationRef.current = null;
+      const registeredStore = registration.store;
+      if (registeredStore.context.triggerElements.getById(registration.id) === registration.element) {
+        registeredStore.context.triggerElements.delete(registration.id);
+        syncTriggerCount(registeredStore);
+      }
+    }
+    if (element !== null && id !== void 0) {
+      registrationRef.current = {
+        store,
+        id,
+        element
+      };
+      store.context.triggerElements.add(id, element);
+      syncTriggerCount(store);
+    }
+  });
+}
+function createPopupOpenState(state, open2, trigger, preventUnmountOnClose = false) {
+  let preventUnmountingOnClose = state.preventUnmountingOnClose;
+  if (open2) {
+    preventUnmountingOnClose = false;
+  } else if (preventUnmountOnClose) {
+    preventUnmountingOnClose = true;
+  }
+  const triggerId = trigger?.id ?? null;
+  let activeTriggerId = state.activeTriggerId;
+  let activeTriggerElement = state.activeTriggerElement;
+  if (triggerId || open2) {
+    activeTriggerId = triggerId;
+    activeTriggerElement = trigger ?? null;
+  }
+  return {
+    open: open2,
+    preventUnmountingOnClose,
+    activeTriggerId,
+    activeTriggerElement,
+    // An open request without a trigger (a handle's `open(null)` or `openWithPayload()`) must not
+    // be reassociated with a lone registered trigger later on. Controlled and default opens never
+    // pass through here, so they keep claiming a lone trigger. A close request keeps the flag: a
+    // controlled root may decline it and stay open, so the Root clears the flag only once the
+    // popup is effectively closed.
+    openedWithoutTrigger: open2 ? trigger == null : state.openedWithoutTrigger
+  };
+}
+function attachPreventUnmountOnClose(eventDetails) {
+  let preventUnmountOnClose = false;
+  eventDetails.preventUnmountOnClose = () => {
+    preventUnmountOnClose = true;
+  };
+  return () => preventUnmountOnClose;
+}
+function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
+  const reason = eventDetails.reason;
+  const isHover = reason === reason_parts_exports.triggerHover;
+  const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
+  const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
+  const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
+  store.context.onOpenChange?.(nextOpen, eventDetails);
+  if (eventDetails.isCanceled) {
+    return;
+  }
+  options.onBeforeDispatch?.();
+  store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
+  const changeState = () => {
+    const popupOpenState = createPopupOpenState(store.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
+    const updatedState = {
+      ...options.extraState,
+      ...popupOpenState
+    };
+    if (isFocusOpen) {
+      updatedState.instantType = "focus";
+    } else if (isDismissClose) {
+      updatedState.instantType = "dismiss";
+    } else if (isHover) {
+      updatedState.instantType = void 0;
+    }
+    store.update(updatedState);
+  };
+  if (isHover) {
+    ReactDOM3.flushSync(changeState);
+  } else {
+    changeState();
+  }
+}
+function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
+  const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
+  const baseRegisterTrigger = useTriggerRegistration(triggerId, store);
+  const applyTriggerData = useStableCallback((element) => {
+    const open2 = store.select("open");
+    const activeTriggerId = store.select("activeTriggerId");
+    if (activeTriggerId === triggerId) {
+      const changes = {
+        activeTriggerElement: element,
+        ...open2 ? stateUpdates : null
+      };
+      store.update(changes);
+      return;
+    }
+    if (activeTriggerId == null && open2 && !store.state.openedWithoutTrigger) {
+      const changes = {
+        activeTriggerId: triggerId ?? null,
+        activeTriggerElement: element,
+        ...stateUpdates
+      };
+      store.update(changes);
+    }
+  });
+  const registerTrigger = useStableCallback((element) => {
+    baseRegisterTrigger(element);
+    if (element) {
+      applyTriggerData(element);
+    }
+  });
+  useIsoLayoutEffect(() => {
+    registerTrigger(triggerElementRef.current);
+    return () => registerTrigger(null);
+  }, [registerTrigger, triggerElementRef, store, triggerId]);
+  useIsoLayoutEffect(() => {
+    if (isMountedByThisTrigger) {
+      const changes = {
+        activeTriggerElement: triggerElementRef.current,
+        ...stateUpdates
+      };
+      store.update(changes);
+    }
+  }, [isMountedByThisTrigger, store, triggerElementRef, ...Object.values(stateUpdates)]);
+  return {
+    registerTrigger,
+    isMountedByThisTrigger
+  };
+}
+function useImplicitActiveTrigger(store, options = {}) {
+  const {
+    closeOnActiveTriggerUnmount = false
+  } = options;
+  const resolvedActiveTriggerIdRef = React28.useRef(null);
+  const open2 = store.useState("open");
+  const reactiveTriggerCount = store.useState("triggerCount");
+  const activeTriggerId = store.useState("activeTriggerId");
+  const reactiveActiveTriggerElement = store.useState("activeTriggerElement");
+  useIsoLayoutEffect(() => {
+    if (!open2) {
+      resolvedActiveTriggerIdRef.current = null;
+      if (store.state.triggerCount !== 0) {
+        store.set("triggerCount", 0);
+      }
+      if (store.state.openedWithoutTrigger) {
+        store.set("openedWithoutTrigger", false);
+      }
+      return;
+    }
+    const triggerCount = store.context.triggerElements.size;
+    const stateUpdates = {};
+    if (store.state.triggerCount !== triggerCount) {
+      stateUpdates.triggerCount = triggerCount;
+    }
+    const currentActiveTriggerId = store.select("activeTriggerId");
+    let lostActiveTriggerId = null;
+    if (currentActiveTriggerId) {
+      const activeTriggerElement = store.context.triggerElements.getById(currentActiveTriggerId);
+      if (!activeTriggerElement) {
+        for (const [triggerId, triggerElement] of store.context.triggerElements.entries()) {
+          if (triggerElement === store.state.activeTriggerElement) {
+            stateUpdates.activeTriggerId = triggerId;
+            stateUpdates.activeTriggerElement = triggerElement;
+            resolvedActiveTriggerIdRef.current = triggerId;
+            break;
+          }
+        }
+        if (stateUpdates.activeTriggerId === void 0) {
+          if (resolvedActiveTriggerIdRef.current === currentActiveTriggerId) {
+            lostActiveTriggerId = currentActiveTriggerId;
+          } else {
+            resolvedActiveTriggerIdRef.current = null;
+          }
+        }
+      } else {
+        resolvedActiveTriggerIdRef.current = currentActiveTriggerId;
+        if (activeTriggerElement !== store.state.activeTriggerElement) {
+          stateUpdates.activeTriggerElement = activeTriggerElement;
+        }
+      }
+    } else {
+      resolvedActiveTriggerIdRef.current = null;
+    }
+    if (!lostActiveTriggerId && !currentActiveTriggerId && !store.state.openedWithoutTrigger && triggerCount === 1) {
+      const iteratorResult = store.context.triggerElements.entries().next();
+      if (!iteratorResult.done) {
+        const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
+        stateUpdates.activeTriggerId = implicitTriggerId;
+        stateUpdates.activeTriggerElement = implicitTriggerElement;
+        resolvedActiveTriggerIdRef.current = implicitTriggerId;
+      }
+    }
+    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
+      store.update(stateUpdates);
+    }
+    if (lostActiveTriggerId) {
+      if (closeOnActiveTriggerUnmount) {
+        queueMicrotask(() => {
+          if (store.select("open") && store.select("activeTriggerId") === lostActiveTriggerId && !store.context.triggerElements.getById(lostActiveTriggerId)) {
+            const eventDetails = createChangeEventDetails(reason_parts_exports.none);
+            store.setOpen(false, eventDetails);
+            if (!eventDetails.isCanceled) {
+              store.update({
+                activeTriggerId: null,
+                activeTriggerElement: null
+              });
+            }
+          }
+        });
+      }
+    }
+  }, [open2, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
+}
+function useOpenStateTransitions(open2, store, onUnmount, animateInitialOpen) {
+  const {
+    mounted,
+    transitionStatus,
+    forceUnmount
+  } = useUnmountAfterClose({
+    open: open2,
+    ref: store.context.popupRef,
+    preventUnmountOnClose: store.useState("preventUnmountingOnClose"),
+    setPreventUnmountOnClose: (preventUnmountOnClose) => store.set("preventUnmountingOnClose", preventUnmountOnClose),
+    animateInitialOpen,
+    onUnmount() {
+      store.update({
+        activeTriggerId: null,
+        activeTriggerElement: null,
+        mounted: false,
+        preventUnmountingOnClose: false
+      });
+      onUnmount?.();
+      store.context.onOpenChangeComplete?.(false);
+    }
+  });
+  useRefWithInit(() => {
+    store.set("mounted", mounted);
+    return null;
+  });
+  store.useSyncedValues({
+    mounted,
+    transitionStatus
+  });
+  return {
+    forceUnmount,
+    transitionStatus
+  };
+}
+function usePopupInteractionProps(store, statePart) {
+  store.useSyncedValues(statePart);
+  useIsoLayoutEffect(() => () => {
+    store.update({
+      activeTriggerProps: EMPTY_OBJECT,
+      inactiveTriggerProps: EMPTY_OBJECT,
+      popupProps: EMPTY_OBJECT
+    });
+  }, [store]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
+var devElementIdsByMap;
+function getDevElementIds(map) {
+  devElementIdsByMap ??= /* @__PURE__ */ new WeakMap();
+  let elementIds = devElementIdsByMap.get(map);
+  if (!elementIds) {
+    elementIds = /* @__PURE__ */ new WeakMap();
+    devElementIdsByMap.set(map, elementIds);
+  }
+  return elementIds;
+}
+var PopupTriggerMap = class {
+  idMap = /* @__PURE__ */ new Map();
+  /**
+   * Adds a trigger element with the given ID.
+   *
+   * Note: The provided element is assumed to not be registered under multiple IDs.
+   */
+  add(id, element) {
+    if (true) {
+      const elementIds = getDevElementIds(this);
+      const existingId = elementIds.get(element);
+      if (existingId !== void 0 && existingId !== id) {
+        throw new Error("Base UI: A trigger element cannot be registered under multiple IDs in PopupTriggerMap.");
+      }
+      const previousElement = this.idMap.get(id);
+      if (previousElement !== void 0 && previousElement !== element) {
+        elementIds.delete(previousElement);
+      }
+      elementIds.set(element, id);
+    }
+    this.idMap.set(id, element);
+  }
+  /**
+   * Removes the trigger element with the given ID.
+   */
+  delete(id) {
+    if (true) {
+      const element = this.idMap.get(id);
+      if (element !== void 0) {
+        devElementIdsByMap?.get(this)?.delete(element);
+      }
+    }
+    this.idMap.delete(id);
+  }
+  /**
+   * Whether the given element is registered as a trigger.
+   */
+  hasElement(element) {
+    for (const registered of this.idMap.values()) {
+      if (registered === element) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
+   * Whether there is a registered trigger element matching the given predicate.
+   */
+  hasMatchingElement(predicate) {
+    for (const element of this.idMap.values()) {
+      if (predicate(element)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
+   * Returns the trigger element associated with the given ID, or undefined if no such element exists.
+   */
+  getById(id) {
+    return this.idMap.get(id);
+  }
+  /**
+   * Returns an iterable of all registered trigger entries, where each entry is a tuple of [id, element].
+   */
+  entries() {
+    return this.idMap.entries();
+  }
+  /**
+   * Returns an iterable of all registered trigger elements.
+   */
+  elements() {
+    return this.idMap.values();
+  }
+  /**
+   * Returns the number of registered trigger elements.
+   */
+  get size() {
+    return this.idMap.size;
+  }
+};
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/useStore.mjs
+var React30 = __toESM(require_react(), 1);
+var import_shim = __toESM(require_shim(), 1);
+var import_with_selector = __toESM(require_with_selector(), 1);
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/fastHooks.mjs
+var React29 = __toESM(require_react(), 1);
+var hooks = [];
+var currentInstance = void 0;
+function getInstance() {
+  return currentInstance;
+}
+function register(hook) {
+  hooks.push(hook);
+}
+function fastComponent(fn) {
+  const FastComponent = (props, forwardedRef) => {
+    const instance = useRefWithInit(createInstance).current;
+    let result;
+    try {
+      currentInstance = instance;
+      for (const hook of hooks) {
+        hook.before(instance);
+      }
+      result = fn(props, forwardedRef);
+      for (const hook of hooks) {
+        hook.after(instance);
+      }
+      instance.didInitialize = true;
+    } finally {
+      currentInstance = void 0;
+    }
+    return result;
+  };
+  FastComponent.displayName = fn.displayName || fn.name;
+  return FastComponent;
+}
+function fastComponentRef(fn) {
+  return /* @__PURE__ */ React29.forwardRef(fastComponent(fn));
+}
+function createInstance() {
+  return {
+    didInitialize: false
+  };
+}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/useStore.mjs
+var canUseRawUseSyncExternalStore = isReactVersionAtLeast(19);
+var useStoreImplementation = canUseRawUseSyncExternalStore ? useStoreFast : useStoreLegacy;
+function useStore(store, selector, a1, a2, a3) {
+  return useStoreImplementation(store, selector, a1, a2, a3);
+}
+function useStoreR19(store, selector, a1, a2, a3) {
+  const getSelection = React30.useCallback(() => selector(store.getSnapshot(), a1, a2, a3), [store, selector, a1, a2, a3]);
+  return (0, import_shim.useSyncExternalStore)(store.subscribe, getSelection, getSelection);
+}
+register({
+  before(instance) {
+    instance.syncIndex = 0;
+    if (!instance.didInitialize) {
+      instance.syncTick = 1;
+      instance.syncHooks = [];
+      instance.didChangeStore = true;
+      instance.getSnapshot = () => {
+        let didChange2 = false;
+        for (let i = 0; i < instance.syncHooks.length; i += 1) {
+          const hook = instance.syncHooks[i];
+          const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
+          if (!Object.is(hook.value, value)) {
+            didChange2 = true;
+            hook.value = value;
+          }
+        }
+        if (didChange2) {
+          instance.syncTick += 1;
+        }
+        return instance.syncTick;
+      };
+    }
+  },
+  after(instance) {
+    if (instance.syncHooks.length > 0) {
+      if (instance.didChangeStore) {
+        instance.didChangeStore = false;
+        instance.subscribe = (onStoreChange) => {
+          const stores = /* @__PURE__ */ new Set();
+          for (const hook of instance.syncHooks) {
+            stores.add(hook.store);
+          }
+          const unsubscribes = [];
+          for (const store of stores) {
+            unsubscribes.push(store.subscribe(onStoreChange));
+          }
+          return () => {
+            for (const unsubscribe of unsubscribes) {
+              unsubscribe();
+            }
+          };
+        };
+      }
+      (0, import_shim.useSyncExternalStore)(instance.subscribe, instance.getSnapshot, instance.getSnapshot);
+    }
+  }
+});
+function useStoreFast(store, selector, a1, a2, a3) {
+  const instance = getInstance();
+  if (!instance) {
+    return useStoreR19(store, selector, a1, a2, a3);
+  }
+  const index2 = instance.syncIndex;
+  instance.syncIndex += 1;
+  let hook;
+  if (!instance.didInitialize) {
+    hook = {
+      store,
+      selector,
+      a1,
+      a2,
+      a3,
+      value: selector(store.getSnapshot(), a1, a2, a3)
+    };
+    instance.syncHooks.push(hook);
+  } else {
+    hook = instance.syncHooks[index2];
+    if (hook.store !== store || hook.selector !== selector || !Object.is(hook.a1, a1) || !Object.is(hook.a2, a2) || !Object.is(hook.a3, a3)) {
+      if (hook.store !== store) {
+        instance.didChangeStore = true;
+      }
+      hook.store = store;
+      hook.selector = selector;
+      hook.a1 = a1;
+      hook.a2 = a2;
+      hook.a3 = a3;
+      hook.value = selector(store.getSnapshot(), a1, a2, a3);
+    }
+  }
+  return hook.value;
+}
+function useStoreLegacy(store, selector, a1, a2, a3) {
+  return (0, import_with_selector.useSyncExternalStoreWithSelector)(store.subscribe, store.getSnapshot, store.getSnapshot, (state) => selector(state, a1, a2, a3));
+}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/Store.mjs
+var Store = class {
+  /**
+   * Creates a store with the given initial state, constructing the class it is called on.
+   * Calling it on a generic base class (e.g. `ReactStore.create(...)`) constructs that
+   * class but degrades the inferred instance type to `Store`; use `new` there instead.
+   */
+  static create(state) {
+    return new this(state);
+  }
+  /**
+   * The current state of the store.
+   * This property is updated immediately when the state changes as a result of calling {@link setState}, {@link update}, or {@link set}.
+   * To subscribe to state changes, use the {@link useState} method. The value returned by {@link useState} is updated after the component renders (similarly to React's useState).
+   * The values can be used directly (to avoid subscribing to the store) in effects or event handlers.
+   *
+   * Do not modify properties in state directly. Instead, use the provided methods to ensure proper state management and listener notification.
+   */
+  // Internal state to handle recursive `setState()` calls
+  constructor(state) {
+    this.state = state;
+    this.listeners = /* @__PURE__ */ new Set();
+    this.updateTick = 0;
+  }
+  /**
+   * Registers a listener that will be called whenever the store's state changes.
+   *
+   * @param fn The listener function to be called on state changes.
+   * @returns A function to unsubscribe the listener.
+   */
+  subscribe = (fn) => {
+    this.listeners.add(fn);
+    return () => {
+      this.listeners.delete(fn);
+    };
+  };
+  /**
+   * Returns the current state of the store.
+   */
+  getSnapshot = () => {
+    return this.state;
+  };
+  /**
+   * Updates the entire store's state and notifies all registered listeners.
+   *
+   * @param newState The new state to set for the store.
+   */
+  setState(newState) {
+    if (this.state === newState) {
+      return;
+    }
+    this.state = newState;
+    this.updateTick += 1;
+    const currentTick = this.updateTick;
+    for (const listener of this.listeners) {
+      if (currentTick !== this.updateTick) {
+        return;
+      }
+      listener(newState);
+    }
+  }
+  /**
+   * Merges the provided changes into the current state and notifies listeners if there are changes.
+   * Each value must match its state key. Pass an exact known subset rather than a broad
+   * `Partial<State>`, which may contain `undefined` for required state fields.
+   *
+   * @param changes An object containing the changes to apply to the current state.
+   */
+  update(changes) {
+    for (const key in changes) {
+      if (!Object.is(this.state[key], changes[key])) {
+        this.setState({
+          ...this.state,
+          ...changes
+        });
+        return;
+      }
+    }
+  }
+  /**
+   * Sets a specific key in the store's state to a new value and notifies listeners if the value has changed.
+   *
+   * @param key The key in the store's state to update.
+   * @param value The new value to set for the specified key.
+   */
+  set(key, value) {
+    if (!Object.is(this.state[key], value)) {
+      this.setState({
+        ...this.state,
+        [key]: value
+      });
+    }
+  }
+  /**
+   * Gives the state a new reference and updates all registered listeners.
+   */
+  notifyAll() {
+    const newState = {
+      ...this.state
+    };
+    this.setState(newState);
+  }
+  use(selector, a1, a2, a3) {
+    return useStore(this, selector, a1, a2, a3);
+  }
+};
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/ReactStore.mjs
+var React31 = __toESM(require_react(), 1);
+var ReactStore = class extends Store {
+  /**
+   * Creates a new ReactStore instance.
+   *
+   * @param state Initial state of the store.
+   * @param context Non-reactive context values.
+   * @param selectors Optional selectors for use with `useState`.
+   */
+  constructor(state, context = {}, selectors5) {
+    super(state);
+    this.context = context;
+    this.selectors = selectors5;
+  }
+  /**
+   * Non-reactive values such as refs, callbacks, etc.
+   */
+  /**
+   * Synchronizes a single external value into the store.
+   *
+   * Note that the while the value in `state` is updated immediately, the value returned
+   * by `useState` is updated before the next render (similarly to React's `useState`).
+   */
+  useSyncedValue(key, value) {
+    React31.useDebugValue(key);
+    const store = this;
+    useIsoLayoutEffect(() => {
+      if (store.state[key] !== value) {
+        store.set(key, value);
+      }
+    }, [store, key, value]);
+  }
+  /**
+   * Synchronizes a single external value into the store and
+   * cleans it up (sets to `undefined`) on unmount.
+   *
+   * Note that the while the value in `state` is updated immediately, the value returned
+   * by `useState` is updated before the next render (similarly to React's `useState`).
+   */
+  useSyncedValueWithCleanup(key, value) {
+    const store = this;
+    useIsoLayoutEffect(() => {
+      if (store.state[key] !== value) {
+        store.set(key, value);
+      }
+      return () => {
+        store.set(key, void 0);
+      };
+    }, [store, key, value]);
+  }
+  /**
+   * Synchronizes multiple external values into the store.
+   * Each value must match its state key. Pass an exact known subset rather than a broad
+   * `Partial<State>`, which may contain `undefined` for required state fields.
+   *
+   * Note that the while the values in `state` are updated immediately, the values returned
+   * by `useState` are updated before the next render (similarly to React's `useState`).
+   *
+   * @param statePart An exact subset of state fields to synchronize. Unknown keys are not accepted.
+   */
+  useSyncedValues(statePart) {
+    const store = this;
+    if (true) {
+      React31.useDebugValue(statePart, (p3) => Object.keys(p3));
+      const keys = React31.useRef(Object.keys(statePart)).current;
+      const nextKeys = Object.keys(statePart);
+      if (keys.length !== nextKeys.length || keys.some((key, index2) => key !== nextKeys[index2])) {
+        console.error("ReactStore.useSyncedValues expects the same prop keys on every render. Keys should be stable.");
+      }
+    }
+    const dependencies = Object.values(statePart);
+    useIsoLayoutEffect(() => {
+      store.update(statePart);
+    }, [store, ...dependencies]);
+  }
+  /**
+   * Registers a controllable prop pair (`controlled`, `defaultValue`) for a specific key. If `controlled`
+   * is non-undefined, the store's state at `key` is updated to match `controlled`.
+   */
+  useControlledProp(key, controlled) {
+    React31.useDebugValue(key);
+    const store = this;
+    const isControlled = controlled !== void 0;
+    useIsoLayoutEffect(() => {
+      if (isControlled && !Object.is(store.state[key], controlled)) {
+        store.setState({
+          ...store.state,
+          [key]: controlled
+        });
+      }
+    }, [store, key, controlled, isControlled]);
+    if (true) {
+      const cache2 = this.controlledValues ??= /* @__PURE__ */ new Map();
+      if (!cache2.has(key)) {
+        cache2.set(key, isControlled);
+      }
+      const previouslyControlled = cache2.get(key);
+      if (previouslyControlled !== void 0 && previouslyControlled !== isControlled) {
+        console.error(`A component is changing the ${previouslyControlled ? "" : "un"}controlled state of ${key.toString()} to be ${previouslyControlled ? "un" : ""}controlled. Elements should not switch from uncontrolled to controlled (or vice versa).`);
+      }
+    }
+  }
+  /** Gets the current value from the store using a selector with the provided key.
+   *
+   * @param key Key of the selector to use.
+   */
+  select(key, a1, a2, a3) {
+    const selector = this.selectors[key];
+    return selector(this.state, a1, a2, a3);
+  }
+  /**
+   * Returns a value from the store's state using a selector function.
+   * Used to subscribe to specific parts of the state.
+   * This methods causes a rerender whenever the selected state changes.
+   *
+   * @param key Key of the selector to use.
+   */
+  useState(key, a1, a2, a3) {
+    React31.useDebugValue(key);
+    return useStore(this, this.selectors[key], a1, a2, a3);
+  }
+  /**
+   * Wraps a function with `useStableCallback` to ensure it has a stable reference
+   * and assigns it to the context.
+   *
+   * @param key Key of the event callback. Must be a function in the context.
+   * @param fn Function to assign.
+   */
+  useContextCallback(key, fn) {
+    React31.useDebugValue(key);
+    const stableFunction = useStableCallback(fn ?? NOOP);
+    this.context[key] = stableFunction;
+  }
+  /**
+   * Returns a stable setter function for a specific key in the store's state.
+   * It's commonly used to pass as a ref callback to React elements.
+   *
+   * @param key Key of the state to set.
+   */
+  useStateSetter(key) {
+    const ref = React31.useRef(void 0);
+    if (ref.current === void 0) {
+      ref.current = (value) => {
+        this.set(key, value);
+      };
+    }
+    return ref.current;
+  }
+  /**
+   * Observes changes derived from the store's selectors and calls the listener when the selected value changes.
+   *
+   * @param key Key of the selector to observe.
+   * @param listener Listener function called when the selector result changes.
+   */
+  observe(selector, listener) {
+    let selectFn;
+    if (typeof selector === "function") {
+      selectFn = selector;
+    } else {
+      selectFn = this.selectors[selector];
+    }
+    let prevValue = selectFn(this.state);
+    listener(prevValue, prevValue, this);
+    return this.subscribe((nextState) => {
+      const nextValue = selectFn(nextState);
+      if (!Object.is(prevValue, nextValue)) {
+        const oldValue = prevValue;
+        prevValue = nextValue;
+        listener(nextValue, oldValue, this);
+      }
+    });
+  }
+};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
+var selectors = {
+  open: (state) => state.open,
+  transitionStatus: (state) => state.transitionStatus,
+  domReferenceElement: (state) => state.domReferenceElement,
+  referenceElement: (state) => state.positionReference ?? state.referenceElement,
+  floatingElement: (state) => state.floatingElement,
+  floatingId: (state) => state.floatingId
+};
+var FloatingRootStore = class extends ReactStore {
+  constructor(options) {
+    const {
+      syncOnly,
+      nested,
+      onOpenChange,
+      triggerElements,
+      ...initialState
+    } = options;
+    super({
+      ...initialState,
+      positionReference: initialState.referenceElement,
+      domReferenceElement: initialState.referenceElement
+    }, {
+      onOpenChange,
+      dataRef: {
+        current: {}
+      },
+      events: createEventEmitter(),
+      nested,
+      triggerElements
+    }, selectors);
+    this.syncOnly = syncOnly;
+  }
+  /**
+   * Syncs the event used by hover logic to distinguish hover-open from click-like interaction.
+   */
+  syncOpenEvent = (newOpen, event) => {
+    if (!newOpen || !this.state.open || // Prevent a pending hover-open from overwriting a click-open event, while allowing
+    // click events to upgrade a hover-open.
+    event != null && isClickLikeEvent(event)) {
+      this.context.dataRef.current.openEvent = newOpen ? event : void 0;
+    }
+  };
+  /**
+   * Runs the root-owned side effects for an open state change.
+   */
+  dispatchOpenChange = (newOpen, eventDetails) => {
+    this.syncOpenEvent(newOpen, eventDetails.event);
+    const details = {
+      open: newOpen,
+      reason: eventDetails.reason,
+      nativeEvent: eventDetails.event,
+      nested: this.context.nested,
+      triggerElement: eventDetails.trigger
+    };
+    this.context.events.emit("openchange", details);
+  };
+  /**
+   * Emits the `openchange` event through the internal event emitter and calls the `onOpenChange` handler with the provided arguments.
+   *
+   * @param newOpen The new open state.
+   * @param eventDetails Details about the event that triggered the open state change.
+   */
+  setOpen = (newOpen, eventDetails) => {
+    if (this.syncOnly) {
+      this.context.onOpenChange?.(newOpen, eventDetails);
+      return;
+    }
+    this.dispatchOpenChange(newOpen, eventDetails);
+    this.context.onOpenChange?.(newOpen, eventDetails);
+  };
+};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/store.mjs
+function createInitialPopupStoreState(triggerElements, floatingId, nested = false) {
+  return {
+    open: false,
+    openProp: void 0,
+    mounted: false,
+    transitionStatus: void 0,
+    floatingRootContext: new FloatingRootStore({
+      open: false,
+      transitionStatus: void 0,
+      floatingElement: null,
+      referenceElement: null,
+      triggerElements,
+      floatingId,
+      syncOnly: true,
+      nested,
+      onOpenChange: void 0
+    }),
+    floatingId,
+    triggerCount: 0,
+    preventUnmountingOnClose: false,
+    payload: void 0,
+    activeTriggerId: null,
+    activeTriggerElement: null,
+    openedWithoutTrigger: false,
+    triggerIdProp: void 0,
+    popupElement: null,
+    positionerElement: null,
+    activeTriggerProps: EMPTY_OBJECT,
+    inactiveTriggerProps: EMPTY_OBJECT,
+    popupProps: EMPTY_OBJECT
+  };
+}
+var activeTriggerIdSelector = (state) => state.triggerIdProp ?? state.activeTriggerId;
+var openSelector = (state) => state.openProp ?? state.open;
+var popupIdSelector = (state) => {
+  const popupId = state.popupElement?.id ?? state.floatingId;
+  return popupId || void 0;
+};
+function triggerOwnsOpenPopup(state, triggerId) {
+  return triggerId !== void 0 && openSelector(state) && activeTriggerIdSelector(state) === triggerId;
+}
+function triggerOwnsOpenPopupOrIsOnlyTrigger(state, triggerId) {
+  if (triggerOwnsOpenPopup(state, triggerId)) {
+    return true;
+  }
+  return triggerId !== void 0 && openSelector(state) && activeTriggerIdSelector(state) == null && !state.openedWithoutTrigger && state.triggerCount === 1;
+}
+var popupStoreSelectors = {
+  open: openSelector,
+  mounted: (state) => state.mounted,
+  // `open` is written synchronously on an open change; `mounted`/`transitionStatus` sync in a
+  // layout effect. Match useTransitionStatus so a retained popup does not miss its starting phase.
+  transitionStatus: (state) => openSelector(state) && !state.mounted ? "starting" : state.transitionStatus,
+  floatingRootContext: (state) => state.floatingRootContext,
+  triggerCount: (state) => state.triggerCount,
+  preventUnmountingOnClose: (state) => state.preventUnmountingOnClose,
+  payload: (state) => state.payload,
+  activeTriggerId: activeTriggerIdSelector,
+  activeTriggerElement: (state) => state.mounted ? state.activeTriggerElement : null,
+  popupId: popupIdSelector,
+  /**
+   * Whether the trigger with the given ID was used to open the popup.
+   */
+  isTriggerActive: (state, triggerId) => triggerId !== void 0 && activeTriggerIdSelector(state) === triggerId,
+  /**
+   * Whether the popup is open and was activated by a trigger with the given ID.
+   */
+  isOpenedByTrigger: (state, triggerId) => triggerOwnsOpenPopup(state, triggerId),
+  /**
+   * Whether the popup is mounted and was activated by a trigger with the given ID.
+   */
+  isMountedByTrigger: (state, triggerId) => triggerId !== void 0 && activeTriggerIdSelector(state) === triggerId && state.mounted,
+  triggerProps: (state, isActive) => isActive ? state.activeTriggerProps : state.inactiveTriggerProps,
+  /**
+   * Popup id for the trigger that currently owns the open popup.
+   */
+  triggerPopupId: (state, triggerId) => triggerOwnsOpenPopupOrIsOnlyTrigger(state, triggerId) ? popupIdSelector(state) : void 0,
+  popupProps: (state) => state.popupProps,
+  popupElement: (state) => state.popupElement,
+  positionerElement: (state) => state.positionerElement
+};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/usePopupHandleStore.mjs
+var React32 = __toESM(require_react(), 1);
+var import_shim2 = __toESM(require_shim(), 1);
+function usePopupHandleStore(handle) {
+  const subscribe = React32.useCallback((listener) => {
+    if (handle === void 0) {
+      return NOOP;
+    }
+    return handle.subscribeStore(listener);
+  }, [handle]);
+  const getSnapshot = React32.useCallback(() => {
+    return handle === void 0 ? void 0 : handle.store;
+  }, [handle]);
+  return (0, import_shim2.useSyncExternalStore)(subscribe, getSnapshot, () => handle?.serverStore);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
 var React33 = __toESM(require_react(), 1);
+var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
+function useFocus(store, props = {}) {
+  const {
+    enabled = true,
+    delay
+  } = props;
+  const {
+    events,
+    dataRef
+  } = store.context;
+  const blockFocusRef = React33.useRef(false);
+  const blockedReferenceRef = React33.useRef(null);
+  const keyboardModalityRef = React33.useRef(true);
+  const timeout = useTimeout();
+  React33.useEffect(() => {
+    const domReference = store.select("domReferenceElement");
+    if (!enabled) {
+      return void 0;
+    }
+    const win = getWindow(domReference);
+    function onBlur() {
+      const currentDomReference = store.select("domReferenceElement");
+      if (!store.select("open") && isHTMLElement(currentDomReference) && currentDomReference === activeElement(ownerDocument(currentDomReference))) {
+        blockFocusRef.current = true;
+        blockedReferenceRef.current = currentDomReference;
+      }
+    }
+    function onKeyDown() {
+      keyboardModalityRef.current = true;
+    }
+    function onPointerDown() {
+      keyboardModalityRef.current = false;
+    }
+    return mergeCleanups(addEventListener(win, "blur", onBlur), isMacSafari && addEventListener(win, "keydown", onKeyDown, true), isMacSafari && addEventListener(win, "pointerdown", onPointerDown, true));
+  }, [store, enabled]);
+  React33.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    function onOpenChangeLocal(details) {
+      if (details.reason === reason_parts_exports.triggerPress || details.reason === reason_parts_exports.escapeKey) {
+        const referenceElement = store.select("domReferenceElement");
+        if (isElement(referenceElement)) {
+          blockedReferenceRef.current = referenceElement;
+          blockFocusRef.current = true;
+        }
+      }
+    }
+    events.on("openchange", onOpenChangeLocal);
+    return () => {
+      events.off("openchange", onOpenChangeLocal);
+    };
+  }, [events, enabled, store]);
+  const reference = React33.useMemo(() => {
+    function resetBlockedFocus() {
+      blockFocusRef.current = false;
+      blockedReferenceRef.current = null;
+    }
+    return {
+      onMouseLeave() {
+        resetBlockedFocus();
+      },
+      onFocus(event) {
+        const focusTarget = event.currentTarget;
+        if (blockFocusRef.current) {
+          if (blockedReferenceRef.current === focusTarget) {
+            return;
+          }
+          resetBlockedFocus();
+        }
+        const target = getTarget(event.nativeEvent);
+        if (isElement(target)) {
+          if (isMacSafari && !event.relatedTarget) {
+            if (!keyboardModalityRef.current && !isTypeableElement(target)) {
+              return;
+            }
+          } else if (!matchesFocusVisible(target)) {
+            return;
+          }
+        }
+        const movedFromOtherEnabledTrigger = isTargetInsideEnabledTrigger(event.relatedTarget, store.context.triggerElements);
+        const {
+          nativeEvent,
+          currentTarget
+        } = event;
+        if (store.select("open") && movedFromOtherEnabledTrigger || !delay) {
+          store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerFocus, nativeEvent, currentTarget));
+          return;
+        }
+        timeout.start(delay, () => {
+          if (blockFocusRef.current) {
+            return;
+          }
+          store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerFocus, nativeEvent, currentTarget));
+        });
+      },
+      onBlur(event) {
+        resetBlockedFocus();
+        const relatedTarget = event.relatedTarget;
+        const nativeEvent = event.nativeEvent;
+        const movedToFocusGuard = isElement(relatedTarget) && relatedTarget.hasAttribute(createAttribute("focus-guard")) && relatedTarget.getAttribute("data-type") === "outside";
+        timeout.start(0, () => {
+          const domReference = store.select("domReferenceElement");
+          const activeEl = activeElement(ownerDocument(domReference));
+          if (!relatedTarget && activeEl === domReference) {
+            return;
+          }
+          if (contains(dataRef.current.floatingContext?.refs.floating.current, activeEl) || contains(domReference, activeEl) || movedToFocusGuard) {
+            return;
+          }
+          const nextFocusedElement = relatedTarget ?? activeEl;
+          if (isTargetInsideEnabledTrigger(nextFocusedElement, store.context.triggerElements)) {
+            return;
+          }
+          store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerFocus, nativeEvent));
+        });
+      }
+    };
+  }, [dataRef, delay, store, timeout]);
+  return React33.useMemo(() => enabled ? {
+    reference,
+    trigger: reference
+  } : {}, [enabled, reference]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+var React34 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
+var HoverInteraction = class _HoverInteraction {
+  pointerType = void 0;
+  interactedInside = false;
+  handler = void 0;
+  blockMouseMove = true;
+  performedPointerEventsMutation = false;
+  pointerEventsScopeElement = null;
+  pointerEventsReferenceElement = null;
+  pointerEventsFloatingElement = null;
+  restTimeoutPending = false;
+  openChangeTimeout = new Timeout();
+  restTimeout = new Timeout();
+  handleCloseOptions = void 0;
+  static create() {
+    return new _HoverInteraction();
+  }
+  dispose = () => {
+    this.openChangeTimeout.clear();
+    this.restTimeout.clear();
+  };
+  disposeEffect = () => {
+    return this.dispose;
+  };
+};
+var pointerEventsMutationOwnerByScopeElement = /* @__PURE__ */ new WeakMap();
+function clearSafePolygonPointerEventsMutation(instance) {
+  if (!instance.performedPointerEventsMutation) {
+    return;
+  }
+  const scopeElement = instance.pointerEventsScopeElement;
+  if (scopeElement && pointerEventsMutationOwnerByScopeElement.get(scopeElement) === instance) {
+    instance.pointerEventsScopeElement?.style.removeProperty("pointer-events");
+    instance.pointerEventsReferenceElement?.style.removeProperty("pointer-events");
+    instance.pointerEventsFloatingElement?.style.removeProperty("pointer-events");
+    pointerEventsMutationOwnerByScopeElement.delete(scopeElement);
+  }
+  instance.performedPointerEventsMutation = false;
+  instance.pointerEventsScopeElement = null;
+  instance.pointerEventsReferenceElement = null;
+  instance.pointerEventsFloatingElement = null;
+}
+function applySafePolygonPointerEventsMutation(instance, options) {
+  const {
+    scopeElement,
+    referenceElement,
+    floatingElement
+  } = options;
+  const existingOwner = pointerEventsMutationOwnerByScopeElement.get(scopeElement);
+  if (existingOwner && existingOwner !== instance) {
+    clearSafePolygonPointerEventsMutation(existingOwner);
+  }
+  clearSafePolygonPointerEventsMutation(instance);
+  instance.performedPointerEventsMutation = true;
+  instance.pointerEventsScopeElement = scopeElement;
+  instance.pointerEventsReferenceElement = referenceElement;
+  instance.pointerEventsFloatingElement = floatingElement;
+  pointerEventsMutationOwnerByScopeElement.set(scopeElement, instance);
+  scopeElement.style.pointerEvents = "none";
+  referenceElement.style.pointerEvents = "auto";
+  floatingElement.style.pointerEvents = "auto";
+}
+function useHoverInteractionSharedState(store) {
+  const data = store.context.dataRef.current;
+  const instance = useRefWithInit(() => data.hoverInteractionState ?? HoverInteraction.create()).current;
+  if (!data.hoverInteractionState) {
+    data.hoverInteractionState = instance;
+  }
+  useOnMount(data.hoverInteractionState.disposeEffect);
+  return data.hoverInteractionState;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+function useHoverFloatingInteraction(store, parameters = {}) {
+  const {
+    enabled = true,
+    closeDelay: closeDelayProp = 0,
+    nodeId: nodeIdProp
+  } = parameters;
+  const open2 = store.useState("open");
+  const floatingElement = store.useState("floatingElement");
+  const domReferenceElement = store.useState("domReferenceElement");
+  const {
+    dataRef
+  } = store.context;
+  const tree = useFloatingTree();
+  const parentId = useFloatingParentNodeId();
+  const instance = useHoverInteractionSharedState(store);
+  const childClosedTimeout = useTimeout();
+  const isClickLikeOpenEvent2 = useStableCallback(() => {
+    return isClickLikeOpenEvent(dataRef.current.openEvent?.type, instance.interactedInside);
+  });
+  const isHoverOpen = useStableCallback(() => {
+    return isHoverOpenEvent(dataRef.current.openEvent?.type);
+  });
+  const clearPointerEvents = useStableCallback(() => {
+    clearSafePolygonPointerEventsMutation(instance);
+  });
+  useIsoLayoutEffect(() => {
+    if (!open2) {
+      instance.pointerType = void 0;
+      instance.restTimeoutPending = false;
+      instance.interactedInside = false;
+      clearPointerEvents();
+    }
+  }, [open2, instance, clearPointerEvents]);
+  React34.useEffect(() => {
+    return clearPointerEvents;
+  }, [clearPointerEvents]);
+  useIsoLayoutEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    if (open2 && instance.handleCloseOptions?.blockPointerEvents && isHoverOpen() && isElement(domReferenceElement) && floatingElement) {
+      const ref = domReferenceElement;
+      const floatingEl = floatingElement;
+      const doc = ownerDocument(floatingElement);
+      const parentFloating = tree?.nodesRef.current.find((node) => node.id === parentId)?.context?.elements.floating;
+      if (parentFloating) {
+        parentFloating.style.pointerEvents = "";
+      }
+      const cachedScopeElement = instance.pointerEventsScopeElement !== floatingEl ? instance.pointerEventsScopeElement : null;
+      const parentScopeElement = parentFloating !== floatingEl ? parentFloating : null;
+      const scopeElement = instance.handleCloseOptions?.getScope?.() ?? cachedScopeElement ?? parentScopeElement ?? closest(ref, "[data-rootownerid]") ?? doc.body;
+      applySafePolygonPointerEventsMutation(instance, {
+        scopeElement,
+        referenceElement: ref,
+        floatingElement: floatingEl
+      });
+      return () => {
+        clearPointerEvents();
+      };
+    }
+    return void 0;
+  }, [enabled, open2, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
+  React34.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    function hasParentChildren() {
+      return !!(tree && parentId && getNodeChildren(tree.nodesRef.current, parentId).length > 0);
+    }
+    function closeWithDelay(event) {
+      const closeDelay = getDelay(closeDelayProp, "close", instance.pointerType);
+      const close = () => {
+        store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerHover, event));
+        tree?.events.emit("floating.closed", event);
+      };
+      if (closeDelay) {
+        instance.openChangeTimeout.start(closeDelay, close);
+      } else {
+        instance.openChangeTimeout.clear();
+        close();
+      }
+    }
+    function handleInteractInside(event) {
+      const target = getTarget(event);
+      if (!isInteractiveElement(target)) {
+        instance.interactedInside = false;
+        return;
+      }
+      instance.interactedInside = closest(target, "[aria-haspopup]") != null;
+    }
+    function onFloatingMouseEnter() {
+      instance.openChangeTimeout.clear();
+      childClosedTimeout.clear();
+      tree?.events.off("floating.closed", onNodeClosed);
+      clearPointerEvents();
+    }
+    function onFloatingMouseLeave(event) {
+      if (hasParentChildren() && tree) {
+        tree.events.on("floating.closed", onNodeClosed);
+        return;
+      }
+      if (isTargetInsideEnabledTrigger(event.relatedTarget, store.context.triggerElements)) {
+        return;
+      }
+      const currentNodeId = dataRef.current.floatingContext?.nodeId ?? nodeIdProp;
+      const relatedTarget = event.relatedTarget;
+      const isMovingIntoDescendantFloating = tree && currentNodeId && isElement(relatedTarget) && getNodeChildren(tree.nodesRef.current, currentNodeId, false).some((node) => contains(node.context?.elements.floating, relatedTarget));
+      if (isMovingIntoDescendantFloating) {
+        return;
+      }
+      if (instance.handler) {
+        instance.handler(event);
+        return;
+      }
+      clearPointerEvents();
+      if (isHoverOpen() && !isClickLikeOpenEvent2()) {
+        closeWithDelay(event);
+      }
+    }
+    function onNodeClosed(event) {
+      if (!tree || !parentId || hasParentChildren()) {
+        return;
+      }
+      childClosedTimeout.start(0, () => {
+        tree.events.off("floating.closed", onNodeClosed);
+        store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerHover, event));
+        tree.events.emit("floating.closed", event);
+      });
+    }
+    const floating = floatingElement;
+    return mergeCleanups(floating && addEventListener(floating, "mouseenter", onFloatingMouseEnter), floating && addEventListener(floating, "mouseleave", onFloatingMouseLeave), floating && addEventListener(floating, "pointerdown", handleInteractInside, true), () => {
+      tree?.events.off("floating.closed", onNodeClosed);
+    });
+  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isHoverOpen, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
+var React35 = __toESM(require_react(), 1);
+var ReactDOM4 = __toESM(require_react_dom(), 1);
+var EMPTY_REF = {
+  current: null
+};
+function useHoverReferenceInteraction(store, props = {}) {
+  const {
+    enabled = true,
+    delay = 0,
+    handleClose = null,
+    mouseOnly = false,
+    restMs = 0,
+    move = true,
+    triggerElementRef = EMPTY_REF,
+    externalTree,
+    isActiveTrigger = true,
+    getHandleCloseContext,
+    isClosing,
+    shouldOpen: shouldOpenProp,
+    guardStaleOpen = false
+  } = props;
+  const {
+    dataRef,
+    events
+  } = store.context;
+  const tree = useFloatingTree(externalTree);
+  const instance = useHoverInteractionSharedState(store);
+  const isHoverCloseActiveRef = React35.useRef(false);
+  const handleCloseRef = useValueAsRef(handleClose);
+  const delayRef = useValueAsRef(delay);
+  const restMsRef = useValueAsRef(restMs);
+  const enabledRef = useValueAsRef(enabled);
+  const shouldOpenRef = useValueAsRef(shouldOpenProp);
+  const isClosingRef = useValueAsRef(isClosing);
+  const isClickLikeOpenEvent2 = useStableCallback(() => {
+    return isClickLikeOpenEvent(dataRef.current.openEvent?.type, instance.interactedInside);
+  });
+  const checkShouldOpen = useStableCallback(() => {
+    return shouldOpenRef.current?.() !== false;
+  });
+  const isOverInactiveTrigger = useStableCallback((currentDomReference, currentTarget, target) => {
+    const allTriggers = store.context.triggerElements;
+    if (allTriggers.hasElement(currentTarget)) {
+      return !currentDomReference || !contains(currentDomReference, currentTarget);
+    }
+    if (!isElement(target)) {
+      return false;
+    }
+    const targetElement = target;
+    return allTriggers.hasMatchingElement((trigger) => contains(trigger, targetElement)) && (!currentDomReference || !contains(currentDomReference, targetElement));
+  });
+  const cleanupMouseMoveHandler = useStableCallback(() => {
+    if (!instance.handler) {
+      return;
+    }
+    const doc = ownerDocument(store.select("domReferenceElement"));
+    doc.removeEventListener("mousemove", instance.handler);
+    instance.handler = void 0;
+  });
+  const clearPointerEvents = useStableCallback(() => {
+    clearSafePolygonPointerEventsMutation(instance);
+  });
+  if (isActiveTrigger) {
+    instance.handleCloseOptions = handleClose?.__options;
+  }
+  React35.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
+  React35.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    function onOpenChangeLocal(details) {
+      if (!details.open) {
+        isHoverCloseActiveRef.current = details.reason === reason_parts_exports.triggerHover;
+        cleanupMouseMoveHandler();
+        instance.openChangeTimeout.clear();
+        instance.restTimeout.clear();
+        instance.blockMouseMove = true;
+        instance.restTimeoutPending = false;
+      } else {
+        isHoverCloseActiveRef.current = false;
+      }
+    }
+    events.on("openchange", onOpenChangeLocal);
+    return () => {
+      events.off("openchange", onOpenChangeLocal);
+    };
+  }, [enabled, events, instance, cleanupMouseMoveHandler]);
+  React35.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    function closeWithDelay(event, runElseBranch = true) {
+      const closeDelay = getDelay(delayRef.current, "close", instance.pointerType);
+      if (closeDelay) {
+        instance.openChangeTimeout.start(closeDelay, () => {
+          store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerHover, event));
+          tree?.events.emit("floating.closed", event);
+        });
+      } else if (runElseBranch) {
+        instance.openChangeTimeout.clear();
+        store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerHover, event));
+        tree?.events.emit("floating.closed", event);
+      }
+    }
+    const trigger = triggerElementRef.current ?? (isActiveTrigger ? store.select("domReferenceElement") : null);
+    if (!isElement(trigger)) {
+      return void 0;
+    }
+    function onMouseEnter(event) {
+      instance.openChangeTimeout.clear();
+      instance.blockMouseMove = false;
+      if (mouseOnly && !isMouseLikePointerType(instance.pointerType)) {
+        return;
+      }
+      const restMsValue = getRestMs(restMsRef.current);
+      const openDelay = getDelay(delayRef.current, "open", instance.pointerType);
+      const eventTarget = getTarget(event);
+      const currentTarget = event.currentTarget ?? null;
+      const currentDomReference = store.select("domReferenceElement");
+      let triggerNode = currentTarget;
+      if (isElement(eventTarget) && !store.context.triggerElements.hasElement(eventTarget)) {
+        for (const triggerElement of store.context.triggerElements.elements()) {
+          if (contains(triggerElement, eventTarget)) {
+            triggerNode = triggerElement;
+            break;
+          }
+        }
+      }
+      if (isElement(currentTarget) && isElement(currentDomReference) && !store.context.triggerElements.hasElement(currentTarget) && contains(currentTarget, currentDomReference)) {
+        triggerNode = currentDomReference;
+      }
+      const isOverInactive = triggerNode == null ? false : isOverInactiveTrigger(currentDomReference, triggerNode, eventTarget);
+      const isOpen = store.select("open");
+      const isInClosingTransition = isClosingRef.current?.() ?? store.select("transitionStatus") === "ending";
+      const isHoverCloseTransition = !isOpen && isInClosingTransition && isHoverCloseActiveRef.current;
+      const isReenteringSameTriggerDuringCloseTransition = !isOverInactive && isElement(triggerNode) && isElement(currentDomReference) && contains(currentDomReference, triggerNode) && isHoverCloseTransition;
+      const isRestOnlyDelay = restMsValue > 0 && !openDelay;
+      const shouldOpenImmediately = isOverInactive && (isOpen || isHoverCloseTransition) || isReenteringSameTriggerDuringCloseTransition;
+      const shouldOpen = !isOpen || isOverInactive;
+      if (shouldOpenImmediately) {
+        if (checkShouldOpen()) {
+          store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, event, triggerNode));
+        }
+        return;
+      }
+      if (isRestOnlyDelay) {
+        return;
+      }
+      if (openDelay) {
+        instance.openChangeTimeout.start(openDelay, () => {
+          if (shouldOpen && checkShouldOpen()) {
+            store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, event, triggerNode));
+          }
+        });
+      } else if (shouldOpen) {
+        if (checkShouldOpen()) {
+          store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, event, triggerNode));
+        }
+      }
+    }
+    function onMouseLeave(event) {
+      if (isClickLikeOpenEvent2()) {
+        clearPointerEvents();
+        return;
+      }
+      cleanupMouseMoveHandler();
+      const domReferenceElement = store.select("domReferenceElement");
+      const doc = ownerDocument(domReferenceElement);
+      instance.restTimeout.clear();
+      instance.restTimeoutPending = false;
+      const handleCloseContextBase = dataRef.current.floatingContext ?? getHandleCloseContext?.();
+      if (isTargetInsideEnabledTrigger(event.relatedTarget, store.context.triggerElements)) {
+        return;
+      }
+      if (handleCloseRef.current && handleCloseContextBase) {
+        if (!store.select("open")) {
+          instance.openChangeTimeout.clear();
+        }
+        const currentTrigger = triggerElementRef.current;
+        instance.handler = handleCloseRef.current({
+          ...handleCloseContextBase,
+          tree,
+          x: event.clientX,
+          y: event.clientY,
+          onClose() {
+            clearPointerEvents();
+            cleanupMouseMoveHandler();
+            if (enabledRef.current && !isClickLikeOpenEvent2() && currentTrigger === store.select("domReferenceElement")) {
+              closeWithDelay(event, true);
+            }
+          }
+        });
+        doc.addEventListener("mousemove", instance.handler);
+        instance.handler(event);
+        return;
+      }
+      const shouldClose = instance.pointerType === "touch" ? !contains(store.select("floatingElement"), event.relatedTarget) : true;
+      if (shouldClose) {
+        closeWithDelay(event);
+      }
+    }
+    function onMouseOut(event) {
+      if (contains(trigger, event.relatedTarget)) {
+        return;
+      }
+      instance.openChangeTimeout.clear();
+      instance.restTimeout.clear();
+      instance.restTimeoutPending = false;
+    }
+    const staleOpenGuard = guardStaleOpen ? addEventListener(trigger, "mouseout", onMouseOut) : void 0;
+    if (move) {
+      return mergeCleanups(addEventListener(trigger, "mousemove", onMouseEnter, {
+        once: true
+      }), addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
+    }
+    return mergeCleanups(addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
+  }, [cleanupMouseMoveHandler, clearPointerEvents, dataRef, delayRef, store, enabled, handleCloseRef, instance, isActiveTrigger, isOverInactiveTrigger, isClickLikeOpenEvent2, mouseOnly, move, restMsRef, triggerElementRef, tree, enabledRef, getHandleCloseContext, isClosingRef, checkShouldOpen, guardStaleOpen]);
+  return React35.useMemo(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    function setPointerRef(event) {
+      instance.pointerType = event.pointerType;
+    }
+    return {
+      onPointerDown: setPointerRef,
+      onPointerEnter: setPointerRef,
+      onMouseMove(event) {
+        const {
+          nativeEvent
+        } = event;
+        const trigger = event.currentTarget;
+        const currentDomReference = store.select("domReferenceElement");
+        const currentOpen = store.select("open");
+        const isOverInactive = isOverInactiveTrigger(currentDomReference, trigger, event.target);
+        if (mouseOnly && !isMouseLikePointerType(instance.pointerType)) {
+          return;
+        }
+        if (currentOpen && isOverInactive && instance.handleCloseOptions?.blockPointerEvents) {
+          const floatingElement = store.select("floatingElement");
+          if (floatingElement) {
+            const scopeElement = instance.handleCloseOptions?.getScope?.() ?? trigger.ownerDocument.body;
+            applySafePolygonPointerEventsMutation(instance, {
+              scopeElement,
+              referenceElement: trigger,
+              floatingElement
+            });
+          }
+        }
+        const restMsValue = getRestMs(restMsRef.current);
+        if (currentOpen && !isOverInactive || restMsValue === 0) {
+          return;
+        }
+        if (!isOverInactive && instance.restTimeoutPending && event.movementX ** 2 + event.movementY ** 2 < 2) {
+          return;
+        }
+        instance.restTimeout.clear();
+        function handleMouseMove() {
+          instance.restTimeoutPending = false;
+          if (isClickLikeOpenEvent2()) {
+            return;
+          }
+          const latestOpen = store.select("open");
+          if (!instance.blockMouseMove && (!latestOpen || isOverInactive) && checkShouldOpen()) {
+            store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, nativeEvent, trigger));
+          }
+        }
+        if (instance.pointerType === "touch") {
+          ReactDOM4.flushSync(() => {
+            handleMouseMove();
+          });
+        } else if (isOverInactive && currentOpen) {
+          handleMouseMove();
+        } else {
+          instance.restTimeoutPending = true;
+          instance.restTimeout.start(restMsValue, handleMouseMove);
+        }
+      }
+    };
+  }, [enabled, instance, isClickLikeOpenEvent2, isOverInactiveTrigger, mouseOnly, store, restMsRef, checkShouldOpen]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useListNavigation.mjs
+var React36 = __toESM(require_react(), 1);
+function isStationaryWebKitPointer(event) {
+  return parts_exports.engine.webkit && event.movementX === 0 && event.movementY === 0;
+}
+function doSwitch(orientation, vertical, horizontal) {
+  switch (orientation) {
+    case "vertical":
+      return vertical;
+    case "horizontal":
+      return horizontal;
+    default:
+      return vertical || horizontal;
+  }
+}
+function isMainOrientationKey(key, orientation) {
+  const vertical = key === ARROW_UP || key === ARROW_DOWN;
+  const horizontal = key === ARROW_LEFT || key === ARROW_RIGHT;
+  return doSwitch(orientation, vertical, horizontal);
+}
+function isMainOrientationToEndKey(key, orientation, rtl) {
+  const vertical = key === ARROW_DOWN;
+  const horizontal = rtl ? key === ARROW_LEFT : key === ARROW_RIGHT;
+  return doSwitch(orientation, vertical, horizontal) || key === "Enter" || key === " " || key === "";
+}
+function isCrossOrientationOpenKey(key, orientation, rtl) {
+  const vertical = rtl ? key === ARROW_LEFT : key === ARROW_RIGHT;
+  const horizontal = key === ARROW_DOWN;
+  return doSwitch(orientation, vertical, horizontal);
+}
+function isCrossOrientationCloseKey(key, orientation, rtl, grid) {
+  const vertical = rtl ? key === ARROW_RIGHT : key === ARROW_LEFT;
+  const horizontal = key === ARROW_UP;
+  if (orientation === "both" || orientation === "horizontal" && grid) {
+    return key === "Escape";
+  }
+  return doSwitch(orientation, vertical, horizontal);
+}
+function useListNavigation(store, props) {
+  const {
+    listRef,
+    activeIndex,
+    onNavigate: onNavigateProp = () => {
+    },
+    enabled = true,
+    selectedIndex = null,
+    allowEscape = false,
+    loopFocus = false,
+    nested = false,
+    rtl = false,
+    virtual = false,
+    focusItemOnOpen = "auto",
+    focusItemOnHover = true,
+    openOnArrowKeyDown = true,
+    disabledIndices = void 0,
+    orientation = "vertical",
+    triggerOrientation = orientation,
+    parentOrientation,
+    id,
+    resetOnPointerLeave = true,
+    externalTree,
+    nestedReturnFocusRef,
+    grid: navigateGrid
+  } = props;
+  const isGrid = navigateGrid != null;
+  if (true) {
+    if (allowEscape) {
+      if (!loopFocus) {
+        console.warn("`useListNavigation` looping must be enabled to allow escaping.");
+      }
+      if (!virtual) {
+        console.warn("`useListNavigation` must be virtual to allow escaping.");
+      }
+    }
+    if (orientation === "vertical" && isGrid) {
+      console.warn("In grid list navigation mode, the `orientation` should", 'be either "horizontal" or "both".');
+    }
+  }
+  const open2 = store.useState("open");
+  const floatingElement = store.useState("floatingElement");
+  const domReferenceElement = store.useState("domReferenceElement");
+  const dataRef = store.context.dataRef;
+  const floatingFocusElement = getFloatingFocusElement(floatingElement);
+  const typeableComboboxReference = isTypeableCombobox(domReferenceElement);
+  const floatingFocusElementRef = useValueAsRef(floatingFocusElement);
+  const parentId = useFloatingParentNodeId();
+  const tree = useFloatingTree(externalTree);
+  const focusItemOnOpenRef = React36.useRef(focusItemOnOpen);
+  const indexRef = React36.useRef(selectedIndex ?? -1);
+  const keyRef = React36.useRef(null);
+  const isPointerModalityRef = React36.useRef(true);
+  const onNavigate = useStableCallback((event) => {
+    onNavigateProp(indexRef.current === -1 ? null : indexRef.current, event);
+  });
+  const previousMountedRef = React36.useRef(!!floatingElement);
+  const previousOpenRef = React36.useRef(open2);
+  const forceSyncFocusRef = React36.useRef(false);
+  const forceScrollIntoViewRef = React36.useRef(false);
+  const cancelQueuedFocusRef = React36.useRef(null);
+  const disabledIndicesRef = useValueAsRef(disabledIndices);
+  const latestOpenRef = useValueAsRef(open2);
+  const selectedIndexRef = useValueAsRef(selectedIndex);
+  const resetOnPointerLeaveRef = useValueAsRef(resetOnPointerLeave);
+  const focusFrame = useAnimationFrame();
+  const waitForListPopulatedFrame = useAnimationFrame();
+  const focusItem = useStableCallback(() => {
+    focusFrame.cancel();
+    function runFocus(item2) {
+      if (!virtual) {
+        cancelQueuedFocusRef.current = enqueueFocus(item2, {
+          sync: forceSyncFocusRef.current,
+          preventScroll: true
+        });
+      }
+    }
+    const initialItem = listRef.current[indexRef.current];
+    const forceScrollIntoView = forceScrollIntoViewRef.current;
+    if (initialItem) {
+      runFocus(initialItem);
+    }
+    const scheduler2 = forceSyncFocusRef.current ? (callback) => callback() : (callback) => focusFrame.request(callback);
+    scheduler2(() => {
+      const waitedItem = listRef.current[indexRef.current] || initialItem;
+      if (!waitedItem) {
+        return;
+      }
+      if (!initialItem) {
+        runFocus(waitedItem);
+      }
+      const shouldScrollIntoView = (
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        item && (forceScrollIntoView || !isPointerModalityRef.current)
+      );
+      if (shouldScrollIntoView) {
+        waitedItem.scrollIntoView?.({
+          block: "nearest",
+          inline: "nearest"
+        });
+      }
+    });
+  });
+  useIsoLayoutEffect(() => {
+    dataRef.current.orientation = orientation;
+  }, [dataRef, orientation]);
+  useIsoLayoutEffect(() => {
+    if (!open2) {
+      keyRef.current = null;
+    }
+    if (!open2 || focusItemOnOpen !== "auto") {
+      focusItemOnOpenRef.current = focusItemOnOpen;
+    }
+  }, [open2, focusItemOnOpen]);
+  useIsoLayoutEffect(() => {
+    if (!enabled) {
+      return;
+    }
+    if (open2 && floatingElement) {
+      indexRef.current = selectedIndex ?? -1;
+      if (focusItemOnOpenRef.current && selectedIndex != null) {
+        forceScrollIntoViewRef.current = true;
+        onNavigate();
+      }
+    } else if (previousMountedRef.current) {
+      indexRef.current = -1;
+      onNavigate();
+    }
+  }, [enabled, open2, floatingElement, selectedIndex, onNavigate]);
+  useIsoLayoutEffect(() => {
+    if (!enabled) {
+      return;
+    }
+    if (!open2) {
+      forceSyncFocusRef.current = false;
+      return;
+    }
+    if (!floatingElement) {
+      return;
+    }
+    if (activeIndex == null) {
+      forceSyncFocusRef.current = false;
+      if (selectedIndexRef.current != null) {
+        return;
+      }
+      if (previousMountedRef.current) {
+        indexRef.current = -1;
+        focusItem();
+      }
+      if ((!previousOpenRef.current || !previousMountedRef.current) && focusItemOnOpenRef.current && (keyRef.current != null || focusItemOnOpenRef.current === true && keyRef.current == null)) {
+        let runs = 0;
+        const waitForListPopulated = () => {
+          if (listRef.current[0] == null) {
+            if (runs < 2) {
+              const scheduler2 = runs ? (callback) => waitForListPopulatedFrame.request(callback) : queueMicrotask;
+              scheduler2(waitForListPopulated);
+            }
+            runs += 1;
+          } else {
+            indexRef.current = keyRef.current == null || isMainOrientationToEndKey(keyRef.current, triggerOrientation, rtl) || nested ? getMinListIndex(listRef) : getMaxListIndex(listRef);
+            keyRef.current = null;
+            onNavigate();
+          }
+        };
+        waitForListPopulated();
+      }
+    } else if (!isIndexOutOfListBounds(listRef.current, activeIndex)) {
+      indexRef.current = activeIndex;
+      focusItem();
+      forceScrollIntoViewRef.current = false;
+    }
+  }, [enabled, open2, floatingElement, activeIndex, selectedIndexRef, nested, listRef, triggerOrientation, rtl, onNavigate, focusItem, waitForListPopulatedFrame]);
+  useIsoLayoutEffect(() => {
+    if (!enabled || floatingElement || !tree || virtual || !previousMountedRef.current) {
+      return;
+    }
+    const nodes = tree.nodesRef.current;
+    const parent = nodes.find((node) => node.id === parentId)?.context?.elements.floating;
+    const activeEl = activeElement(ownerDocument(domReferenceElement ?? parent ?? null));
+    const treeContainsActiveEl = nodes.some((node) => node.context && contains(node.context.elements.floating, activeEl));
+    if (parent && !treeContainsActiveEl && isPointerModalityRef.current) {
+      parent.focus({
+        preventScroll: true
+      });
+    }
+  }, [enabled, floatingElement, domReferenceElement, tree, parentId, virtual]);
+  useIsoLayoutEffect(() => {
+    previousOpenRef.current = open2;
+    previousMountedRef.current = !!floatingElement;
+  });
+  const hasActiveIndex = activeIndex != null;
+  const syncCurrentTarget = useStableCallback((event) => {
+    if (!latestOpenRef.current) {
+      return;
+    }
+    const index2 = listRef.current.indexOf(event.currentTarget);
+    if (index2 !== -1 && (indexRef.current !== index2 || activeIndex !== index2)) {
+      indexRef.current = index2;
+      onNavigate(event);
+    }
+  });
+  const getParentOrientation = useStableCallback(() => {
+    return parentOrientation ?? tree?.nodesRef.current.find((node) => node.id === parentId)?.context?.dataRef?.current.orientation;
+  });
+  const getMinEnabledIndex = useStableCallback(() => {
+    return getMinListIndex(listRef, disabledIndicesRef.current);
+  });
+  const commonOnKeyDown = useStableCallback((event) => {
+    isPointerModalityRef.current = false;
+    forceSyncFocusRef.current = true;
+    if (event.which === 229) {
+      return;
+    }
+    if (!latestOpenRef.current && event.currentTarget === floatingFocusElementRef.current) {
+      return;
+    }
+    if (nested && isCrossOrientationCloseKey(event.key, orientation, rtl, isGrid)) {
+      if (!isMainOrientationKey(event.key, getParentOrientation())) {
+        stopEvent(event);
+      }
+      store.setOpen(false, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
+      const returnElement = nestedReturnFocusRef?.current ?? domReferenceElement;
+      if (isHTMLElement(returnElement)) {
+        returnElement.focus();
+      }
+      return;
+    }
+    if (activeIndex != null && activeIndex !== indexRef.current && !isIndexOutOfListBounds(listRef.current, activeIndex)) {
+      indexRef.current = activeIndex;
+    }
+    const currentIndex = indexRef.current;
+    const minIndex = getMinListIndex(listRef, disabledIndices);
+    const maxIndex = getMaxListIndex(listRef, disabledIndices);
+    if (!typeableComboboxReference) {
+      if (event.key === "Home") {
+        stopEvent(event);
+        indexRef.current = minIndex;
+        onNavigate(event);
+      }
+      if (event.key === "End") {
+        stopEvent(event);
+        indexRef.current = maxIndex;
+        onNavigate(event);
+      }
+    }
+    if (navigateGrid != null) {
+      const index2 = navigateGrid(event, indexRef.current, listRef, orientation, loopFocus, rtl, disabledIndices, minIndex, maxIndex);
+      if (index2 != null && index2 !== indexRef.current) {
+        indexRef.current = index2;
+        onNavigate(event);
+      }
+      if (orientation === "both") {
+        return;
+      }
+    }
+    if (isMainOrientationKey(event.key, orientation)) {
+      stopEvent(event);
+      const focusedElement = activeElement(event.currentTarget.ownerDocument);
+      if (open2 && !virtual && contains(event.currentTarget, focusedElement) && !listRef.current.some((item2) => item2 != null && contains(item2, focusedElement))) {
+        indexRef.current = isMainOrientationToEndKey(event.key, orientation, rtl) ? minIndex : maxIndex;
+        onNavigate(event);
+        if (activeIndex === indexRef.current) {
+          focusItem();
+        }
+        return;
+      }
+      const {
+        index: index2,
+        wrapped
+      } = getNextListIndex(listRef.current, currentIndex, {
+        decrement: !isMainOrientationToEndKey(event.key, orientation, rtl),
+        loopFocus,
+        allowEscape,
+        disabledIndices,
+        minIndex,
+        maxIndex
+      });
+      if (wrapped) {
+        forceSyncFocusRef.current = false;
+      }
+      indexRef.current = index2;
+      onNavigate(event);
+    }
+  });
+  const item = React36.useMemo(() => {
+    const itemProps = {
+      onFocus(event) {
+        forceSyncFocusRef.current = true;
+        syncCurrentTarget(event);
+      },
+      onClick({
+        currentTarget
+      }) {
+        if (!virtual) {
+          currentTarget.focus({
+            preventScroll: true
+          });
+        }
+      },
+      onMouseMove(event) {
+        if (isStationaryWebKitPointer(event)) {
+          return;
+        }
+        forceSyncFocusRef.current = true;
+        forceScrollIntoViewRef.current = false;
+        if (focusItemOnHover) {
+          syncCurrentTarget(event);
+        }
+      },
+      onPointerLeave(event) {
+        if (!latestOpenRef.current || !isPointerModalityRef.current || event.pointerType === "touch") {
+          return;
+        }
+        forceSyncFocusRef.current = true;
+        const relatedTarget = event.relatedTarget;
+        if (!focusItemOnHover || listRef.current.includes(relatedTarget)) {
+          return;
+        }
+        if (!resetOnPointerLeaveRef.current) {
+          return;
+        }
+        cancelQueuedFocusRef.current?.();
+        cancelQueuedFocusRef.current = null;
+        indexRef.current = -1;
+        onNavigate(event);
+        if (!virtual) {
+          const floatingFocusEl = floatingFocusElementRef.current;
+          const activeEl = activeElement(ownerDocument(floatingFocusEl));
+          if (floatingFocusEl && contains(floatingFocusEl, activeEl)) {
+            floatingFocusEl.focus({
+              preventScroll: true
+            });
+          }
+        }
+      }
+    };
+    return itemProps;
+  }, [syncCurrentTarget, latestOpenRef, floatingFocusElementRef, focusItemOnHover, listRef, onNavigate, resetOnPointerLeaveRef, virtual]);
+  const ariaActiveDescendantProp = React36.useMemo(() => {
+    return virtual && open2 && hasActiveIndex && {
+      "aria-activedescendant": `${id}-${activeIndex}`
+    };
+  }, [virtual, open2, hasActiveIndex, id, activeIndex]);
+  const floating = React36.useMemo(() => {
+    return {
+      ...!typeableComboboxReference ? ariaActiveDescendantProp : {},
+      onKeyDown(event) {
+        if (event.key === "Tab" && event.shiftKey && open2 && !virtual) {
+          const target = getTarget(event.nativeEvent);
+          if (target && !contains(floatingFocusElementRef.current, target)) {
+            return;
+          }
+          stopEvent(event);
+          const details = createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent);
+          store.setOpen(false, details);
+          const returnElement = nestedReturnFocusRef?.current ?? domReferenceElement;
+          if (!details.isCanceled && isHTMLElement(returnElement)) {
+            returnElement.focus();
+          }
+          return;
+        }
+        commonOnKeyDown(event);
+      },
+      onPointerMove(event) {
+        if (isStationaryWebKitPointer(event)) {
+          return;
+        }
+        isPointerModalityRef.current = true;
+      }
+    };
+  }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, typeableComboboxReference, store, open2, virtual, domReferenceElement, nestedReturnFocusRef]);
+  const trigger = React36.useMemo(() => {
+    function openOnNavigationKeyDown(event) {
+      store.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
+    }
+    function checkVirtualMouse(event) {
+      if (focusItemOnOpen === "auto" && isVirtualClick(event.nativeEvent)) {
+        focusItemOnOpenRef.current = !virtual;
+      }
+    }
+    function checkVirtualPointer(event) {
+      focusItemOnOpenRef.current = focusItemOnOpen;
+      if (focusItemOnOpen === "auto" && isVirtualPointerEvent(event.nativeEvent)) {
+        focusItemOnOpenRef.current = true;
+      }
+    }
+    return {
+      onKeyDown(event) {
+        const currentOpen = store.select("open");
+        isPointerModalityRef.current = false;
+        const isArrowKey = event.key.startsWith("Arrow");
+        const isParentCrossOpenKey = isCrossOrientationOpenKey(event.key, getParentOrientation(), rtl);
+        const isMainKey = isMainOrientationKey(event.key, currentOpen ? orientation : triggerOrientation);
+        const isNavigationKey = (nested ? isParentCrossOpenKey : isMainKey) || event.key === "Enter" || event.key.trim() === "";
+        if (virtual && currentOpen && (!nested || isTypeableElement(event.currentTarget))) {
+          return commonOnKeyDown(event);
+        }
+        if (!currentOpen && !openOnArrowKeyDown && isArrowKey) {
+          return void 0;
+        }
+        if (isNavigationKey) {
+          const isParentMainKey = isMainOrientationKey(event.key, getParentOrientation());
+          keyRef.current = nested && isParentMainKey ? null : event.key;
+        }
+        if (nested) {
+          if (isParentCrossOpenKey) {
+            stopEvent(event);
+            if (currentOpen) {
+              indexRef.current = getMinEnabledIndex();
+              onNavigate(event);
+              if (virtual) {
+                floatingFocusElementRef.current?.focus();
+              }
+            } else {
+              openOnNavigationKeyDown(event);
+            }
+          }
+          return void 0;
+        }
+        if (isMainKey) {
+          if (selectedIndexRef.current != null) {
+            indexRef.current = selectedIndexRef.current;
+          }
+          stopEvent(event);
+          if (!currentOpen && openOnArrowKeyDown) {
+            openOnNavigationKeyDown(event);
+          } else {
+            commonOnKeyDown(event);
+          }
+          if (currentOpen) {
+            onNavigate(event);
+          }
+        }
+        return void 0;
+      },
+      onFocus(event) {
+        if (event.target !== event.currentTarget) {
+          return;
+        }
+        if (store.select("open") && !virtual) {
+          indexRef.current = -1;
+          onNavigate(event);
+        }
+      },
+      onPointerDown: checkVirtualPointer,
+      onPointerEnter: checkVirtualPointer,
+      onMouseDown: checkVirtualMouse,
+      onClick: checkVirtualMouse
+    };
+  }, [commonOnKeyDown, focusItemOnOpen, getMinEnabledIndex, nested, onNavigate, store, openOnArrowKeyDown, orientation, triggerOrientation, getParentOrientation, rtl, selectedIndexRef, virtual, floatingFocusElementRef]);
+  const reference = React36.useMemo(() => {
+    return {
+      ...ariaActiveDescendantProp,
+      ...trigger
+    };
+  }, [ariaActiveDescendantProp, trigger]);
+  return React36.useMemo(() => enabled ? {
+    reference,
+    floating,
+    item,
+    trigger
+  } : {}, [enabled, reference, floating, trigger, item]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useTypeahead.mjs
+var React37 = __toESM(require_react(), 1);
+function useTypeahead(store, props) {
+  const {
+    listRef,
+    elementsRef,
+    activeIndex,
+    onMatch: onMatchProp,
+    disabledIndices,
+    onTyping: onTypingProp,
+    enabled = true,
+    resetMs = 750,
+    selectedIndex = null
+  } = props;
+  const onTyping = useStableCallback(onTypingProp);
+  const open2 = store.useState("open");
+  const timeout = useTimeout();
+  const stringRef = React37.useRef("");
+  const prevIndexRef = React37.useRef(selectedIndex ?? activeIndex ?? -1);
+  const matchIndexRef = React37.useRef(null);
+  const onKeyDown = useStableCallback((event) => {
+    function getElement(index3) {
+      return elementsRef?.current[index3];
+    }
+    function isItemAvailable(index3) {
+      const element = getElement(index3);
+      if (element && !isElementVisible(element) || element?.matches(":disabled")) {
+        return false;
+      }
+      return disabledIndices == null || !isListIndexDisabled(EMPTY_ARRAY, index3, disabledIndices);
+    }
+    function getMatchingIndex(list, string, startIndex2 = 0) {
+      if (list.length === 0) {
+        return -1;
+      }
+      const normalizedStartIndex = (startIndex2 % list.length + list.length) % list.length;
+      const lowerString = string.toLowerCase();
+      for (let offset4 = 0; offset4 < list.length; offset4 += 1) {
+        const index3 = (normalizedStartIndex + offset4) % list.length;
+        const text = list[index3];
+        if (!text?.toLowerCase().startsWith(lowerString) || !isItemAvailable(index3)) {
+          continue;
+        }
+        return index3;
+      }
+      return -1;
+    }
+    const listContent = listRef.current;
+    if (stringRef.current.length > 0 && event.key === " ") {
+      stopEvent(event);
+      onTyping?.(true);
+    }
+    if (stringRef.current.length > 0 && stringRef.current[0] !== " ") {
+      if (getMatchingIndex(listContent, stringRef.current) === -1 && event.key !== " ") {
+        onTyping?.(false);
+      }
+    }
+    if (listContent == null || // Character key.
+    event.key.length !== 1 || // Modifier key.
+    event.ctrlKey || event.metaKey || event.altKey) {
+      return;
+    }
+    if (open2 && event.key !== " ") {
+      stopEvent(event);
+      onTyping?.(true);
+    }
+    const isNewSession = stringRef.current === "";
+    if (isNewSession) {
+      prevIndexRef.current = selectedIndex ?? activeIndex ?? -1;
+    }
+    const allowRapidSuccessionOfFirstLetter = listContent.every((text, index3) => text && isItemAvailable(index3) ? text[0]?.toLowerCase() !== text[1]?.toLowerCase() : true);
+    if (allowRapidSuccessionOfFirstLetter && stringRef.current === event.key) {
+      stringRef.current = "";
+      prevIndexRef.current = matchIndexRef.current;
+    }
+    stringRef.current += event.key;
+    timeout.start(resetMs, () => {
+      stringRef.current = "";
+      prevIndexRef.current = matchIndexRef.current;
+      onTyping?.(false);
+    });
+    const prevIndex = isNewSession ? selectedIndex ?? activeIndex ?? -1 : prevIndexRef.current;
+    const startIndex = (prevIndex ?? 0) + 1;
+    const index2 = getMatchingIndex(listContent, stringRef.current, startIndex);
+    if (index2 !== -1) {
+      onMatchProp?.(index2, event);
+      matchIndexRef.current = index2;
+    } else if (event.key !== " ") {
+      stringRef.current = "";
+      onTyping?.(false);
+    }
+  });
+  const onBlur = useStableCallback((event) => {
+    const next = event.relatedTarget;
+    const currentDomReferenceElement = store.select("domReferenceElement");
+    const currentFloatingElement = store.select("floatingElement");
+    const withinComposite = contains(currentDomReferenceElement, next) || contains(currentFloatingElement, next);
+    if (withinComposite) {
+      return;
+    }
+    timeout.clear();
+    stringRef.current = "";
+    prevIndexRef.current = matchIndexRef.current;
+    onTyping?.(false);
+  });
+  useIsoLayoutEffect(() => {
+    if (!open2 && selectedIndex !== null) {
+      return;
+    }
+    timeout.clear();
+    matchIndexRef.current = null;
+    if (stringRef.current !== "") {
+      stringRef.current = "";
+      onTyping?.(false);
+    }
+  }, [open2, selectedIndex, timeout, onTyping]);
+  const sharedProps = React37.useMemo(() => ({
+    onKeyDown,
+    onBlur
+  }), [onKeyDown, onBlur]);
+  return React37.useMemo(() => enabled ? {
+    reference: sharedProps,
+    floating: sharedProps
+  } : {}, [enabled, sharedProps]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
+var CURSOR_SPEED_THRESHOLD = 0.1;
+var CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
+var POLYGON_BUFFER = 0.5;
+function hasIntersectingEdge(pointX, pointY, xi, yi, xj, yj) {
+  return yi >= pointY !== yj >= pointY && pointX <= (xj - xi) * (pointY - yi) / (yj - yi) + xi;
+}
+function isPointInQuadrilateral(pointX, pointY, x1, y1, x2, y2, x3, y3, x4, y4) {
+  let isInsideValue = false;
+  if (hasIntersectingEdge(pointX, pointY, x1, y1, x2, y2)) {
+    isInsideValue = !isInsideValue;
+  }
+  if (hasIntersectingEdge(pointX, pointY, x2, y2, x3, y3)) {
+    isInsideValue = !isInsideValue;
+  }
+  if (hasIntersectingEdge(pointX, pointY, x3, y3, x4, y4)) {
+    isInsideValue = !isInsideValue;
+  }
+  if (hasIntersectingEdge(pointX, pointY, x4, y4, x1, y1)) {
+    isInsideValue = !isInsideValue;
+  }
+  return isInsideValue;
+}
+function isInsideRect(pointX, pointY, rect) {
+  return pointX >= rect.x && pointX <= rect.x + rect.width && pointY >= rect.y && pointY <= rect.y + rect.height;
+}
+function isInsideAxisAlignedRect(pointX, pointY, x1, y1, x2, y2) {
+  const minX = Math.min(x1, x2);
+  const maxX = Math.max(x1, x2);
+  const minY = Math.min(y1, y2);
+  const maxY = Math.max(y1, y2);
+  return pointX >= minX && pointX <= maxX && pointY >= minY && pointY <= maxY;
+}
+function safePolygon(options = {}) {
+  const {
+    blockPointerEvents = false
+  } = options;
+  const timeout = new Timeout();
+  const fn = ({
+    x: x2,
+    y: y2,
+    placement,
+    elements: elements2,
+    onClose,
+    nodeId,
+    tree
+  }) => {
+    const side = placement?.split("-")[0];
+    let hasLanded = false;
+    let lastX = null;
+    let lastY = null;
+    let lastCursorTime = typeof performance !== "undefined" ? performance.now() : 0;
+    function isCursorMovingSlowly(nextX, nextY) {
+      const currentTime = performance.now();
+      const elapsedTime = currentTime - lastCursorTime;
+      if (lastX === null || lastY === null || elapsedTime === 0) {
+        lastX = nextX;
+        lastY = nextY;
+        lastCursorTime = currentTime;
+        return false;
+      }
+      const deltaX = nextX - lastX;
+      const deltaY = nextY - lastY;
+      const distanceSquared = deltaX * deltaX + deltaY * deltaY;
+      const thresholdSquared = elapsedTime * elapsedTime * CURSOR_SPEED_THRESHOLD_SQUARED;
+      lastX = nextX;
+      lastY = nextY;
+      lastCursorTime = currentTime;
+      return distanceSquared < thresholdSquared;
+    }
+    function close() {
+      timeout.clear();
+      onClose();
+    }
+    return function onMouseMove(event) {
+      timeout.clear();
+      const domReference = elements2.domReference;
+      const floating = elements2.floating;
+      if (!domReference || !floating || side == null || x2 == null || y2 == null) {
+        return void 0;
+      }
+      const {
+        clientX,
+        clientY
+      } = event;
+      const target = getTarget(event);
+      const isLeave = event.type === "mouseleave";
+      const isOverFloatingEl = contains(floating, target);
+      const isOverReferenceEl = contains(domReference, target);
+      if (isOverFloatingEl) {
+        hasLanded = true;
+        if (!isLeave) {
+          return void 0;
+        }
+      }
+      if (isOverReferenceEl) {
+        hasLanded = false;
+        if (!isLeave) {
+          hasLanded = true;
+          return void 0;
+        }
+      }
+      if (isLeave && isElement(event.relatedTarget) && contains(floating, event.relatedTarget)) {
+        return void 0;
+      }
+      function hasOpenChildNode() {
+        return Boolean(tree && getNodeChildren(tree.nodesRef.current, nodeId).length > 0);
+      }
+      function closeIfNoOpenChild() {
+        if (!hasOpenChildNode()) {
+          close();
+        }
+      }
+      if (hasOpenChildNode()) {
+        return void 0;
+      }
+      const refRect = domReference.getBoundingClientRect();
+      const rect = floating.getBoundingClientRect();
+      const cursorLeaveFromRight = x2 > rect.right - rect.width / 2;
+      const cursorLeaveFromBottom = y2 > rect.bottom - rect.height / 2;
+      const isFloatingWider = rect.width > refRect.width;
+      const isFloatingTaller = rect.height > refRect.height;
+      const left = (isFloatingWider ? refRect : rect).left;
+      const right = (isFloatingWider ? refRect : rect).right;
+      const top = (isFloatingTaller ? refRect : rect).top;
+      const bottom = (isFloatingTaller ? refRect : rect).bottom;
+      if (side === "top" && y2 >= refRect.bottom - 1 || side === "bottom" && y2 <= refRect.top + 1 || side === "left" && x2 >= refRect.right - 1 || side === "right" && x2 <= refRect.left + 1) {
+        closeIfNoOpenChild();
+        return void 0;
+      }
+      let isInsideTroughRect = false;
+      switch (side) {
+        case "top":
+          isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, left, refRect.top + 1, right, rect.bottom - 1);
+          break;
+        case "bottom":
+          isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, left, rect.top + 1, right, refRect.bottom - 1);
+          break;
+        case "left":
+          isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, rect.right - 1, bottom, refRect.left + 1, top);
+          break;
+        case "right":
+          isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, refRect.right - 1, bottom, rect.left + 1, top);
+          break;
+        default:
+      }
+      if (isInsideTroughRect) {
+        return void 0;
+      }
+      if (hasLanded && !isInsideRect(clientX, clientY, refRect)) {
+        closeIfNoOpenChild();
+        return void 0;
+      }
+      if (!isLeave && isCursorMovingSlowly(clientX, clientY)) {
+        closeIfNoOpenChild();
+        return void 0;
+      }
+      let isInsidePolygon = false;
+      switch (side) {
+        case "top": {
+          const cursorXOffset = isFloatingWider ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
+          const cursorPointOneX = isFloatingWider ? x2 + cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
+          const cursorPointTwoX = isFloatingWider ? x2 - cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
+          const cursorPointY = y2 + POLYGON_BUFFER + 1;
+          const commonYLeft = cursorLeaveFromRight ? rect.bottom - POLYGON_BUFFER : isFloatingWider ? rect.bottom - POLYGON_BUFFER : rect.top;
+          const commonYRight = cursorLeaveFromRight ? isFloatingWider ? rect.bottom - POLYGON_BUFFER : rect.top : rect.bottom - POLYGON_BUFFER;
+          isInsidePolygon = isPointInQuadrilateral(clientX, clientY, cursorPointOneX, cursorPointY, cursorPointTwoX, cursorPointY, rect.left, commonYLeft, rect.right, commonYRight);
+          break;
+        }
+        case "bottom": {
+          const cursorXOffset = isFloatingWider ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
+          const cursorPointOneX = isFloatingWider ? x2 + cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
+          const cursorPointTwoX = isFloatingWider ? x2 - cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
+          const cursorPointY = y2 - POLYGON_BUFFER;
+          const commonYLeft = cursorLeaveFromRight ? rect.top + POLYGON_BUFFER : isFloatingWider ? rect.top + POLYGON_BUFFER : rect.bottom;
+          const commonYRight = cursorLeaveFromRight ? isFloatingWider ? rect.top + POLYGON_BUFFER : rect.bottom : rect.top + POLYGON_BUFFER;
+          isInsidePolygon = isPointInQuadrilateral(clientX, clientY, cursorPointOneX, cursorPointY, cursorPointTwoX, cursorPointY, rect.left, commonYLeft, rect.right, commonYRight);
+          break;
+        }
+        case "left": {
+          const cursorYOffset = isFloatingTaller ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
+          const cursorPointOneY = isFloatingTaller ? y2 + cursorYOffset : cursorLeaveFromBottom ? y2 + cursorYOffset : y2 - cursorYOffset;
+          const cursorPointTwoY = isFloatingTaller ? y2 - cursorYOffset : cursorLeaveFromBottom ? y2 + cursorYOffset : y2 - cursorYOffset;
+          const cursorPointX = x2 + POLYGON_BUFFER + 1;
+          const commonXTop = cursorLeaveFromBottom ? rect.right - POLYGON_BUFFER : isFloatingTaller ? rect.right - POLYGON_BUFFER : rect.left;
+          const commonXBottom = cursorLeaveFromBottom ? isFloatingTaller ? rect.right - POLYGON_BUFFER : rect.left : rect.right - POLYGON_BUFFER;
+          isInsidePolygon = isPointInQuadrilateral(clientX, clientY, commonXTop, rect.top, commonXBottom, rect.bottom, cursorPointX, cursorPointOneY, cursorPointX, cursorPointTwoY);
+          break;
+        }
+        case "right": {
+          const cursorYOffset = isFloatingTaller ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
+          const cursorPointOneY = isFloatingTaller ? y2 + cursorYOffset : cursorLeaveFromBottom ? y2 + cursorYOffset : y2 - cursorYOffset;
+          const cursorPointTwoY = isFloatingTaller ? y2 - cursorYOffset : cursorLeaveFromBottom ? y2 + cursorYOffset : y2 - cursorYOffset;
+          const cursorPointX = x2 - POLYGON_BUFFER;
+          const commonXTop = cursorLeaveFromBottom ? rect.left + POLYGON_BUFFER : isFloatingTaller ? rect.left + POLYGON_BUFFER : rect.right;
+          const commonXBottom = cursorLeaveFromBottom ? isFloatingTaller ? rect.left + POLYGON_BUFFER : rect.right : rect.left + POLYGON_BUFFER;
+          isInsidePolygon = isPointInQuadrilateral(clientX, clientY, cursorPointX, cursorPointOneY, cursorPointX, cursorPointTwoY, commonXTop, rect.top, commonXBottom, rect.bottom);
+          break;
+        }
+        default:
+      }
+      if (!isInsidePolygon) {
+        closeIfNoOpenChild();
+      } else if (!hasLanded) {
+        timeout.start(40, closeIfNoOpenChild);
+      }
+      return void 0;
+    };
+  };
+  fn.__options = {
+    ...options,
+    blockPointerEvents
+  };
+  return fn;
+}
 
 // node_modules/.store/@floating-ui/core@1.8.0-3V8aS7jJHHGcsCINjP9-5A/node_modules/@floating-ui/core/dist/floating-ui.core.mjs
 function computeCoordsFromPlacement(_ref, placement, rtl) {
@@ -6271,9 +9058,9 @@ var computePosition2 = (reference, floating, options) => {
 };
 
 // node_modules/.store/@floating-ui/react-dom@2.1.9-AxWcAwqlMfOrAFOinFKSVg/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
-var React26 = __toESM(require_react(), 1);
+var React38 = __toESM(require_react(), 1);
 var import_react2 = __toESM(require_react(), 1);
-var ReactDOM3 = __toESM(require_react_dom(), 1);
+var ReactDOM5 = __toESM(require_react_dom(), 1);
 var isClient = typeof document !== "undefined";
 var noop2 = function noop3() {
 };
@@ -6337,7 +9124,7 @@ function roundByDPR(element, value) {
   return Math.round(value * dpr) / dpr;
 }
 function useLatestRef(value) {
-  const ref = React26.useRef(value);
+  const ref = React38.useRef(value);
   index(() => {
     ref.current = value;
   });
@@ -6360,7 +9147,7 @@ function useFloating(options) {
     whileElementsMounted,
     open: open2
   } = options;
-  const [data, setData] = React26.useState({
+  const [data, setData] = React38.useState({
     x: 0,
     y: 0,
     strategy,
@@ -6368,19 +9155,19 @@ function useFloating(options) {
     middlewareData: {},
     isPositioned: false
   });
-  const [latestMiddleware, setLatestMiddleware] = React26.useState(middleware);
+  const [latestMiddleware, setLatestMiddleware] = React38.useState(middleware);
   if (!deepEqual(latestMiddleware, middleware)) {
     setLatestMiddleware(middleware);
   }
-  const [_reference, _setReference] = React26.useState(null);
-  const [_floating, _setFloating] = React26.useState(null);
-  const setReference = React26.useCallback((node) => {
+  const [_reference, _setReference] = React38.useState(null);
+  const [_floating, _setFloating] = React38.useState(null);
+  const setReference = React38.useCallback((node) => {
     if (node !== referenceRef.current) {
       referenceRef.current = node;
       _setReference(node);
     }
   }, []);
-  const setFloating = React26.useCallback((node) => {
+  const setFloating = React38.useCallback((node) => {
     if (node !== floatingRef.current) {
       floatingRef.current = node;
       _setFloating(node);
@@ -6388,14 +9175,14 @@ function useFloating(options) {
   }, []);
   const referenceEl = externalReference || _reference;
   const floatingEl = externalFloating || _floating;
-  const referenceRef = React26.useRef(null);
-  const floatingRef = React26.useRef(null);
-  const dataRef = React26.useRef(data);
+  const referenceRef = React38.useRef(null);
+  const floatingRef = React38.useRef(null);
+  const dataRef = React38.useRef(data);
   const hasWhileElementsMounted = whileElementsMounted != null;
   const whileElementsMountedRef = useLatestRef(whileElementsMounted);
   const platformRef = useLatestRef(platform3);
   const openRef = useLatestRef(open2);
-  const update2 = React26.useCallback(() => {
+  const update2 = React38.useCallback(() => {
     if (!referenceRef.current || !floatingRef.current) {
       return;
     }
@@ -6418,7 +9205,7 @@ function useFloating(options) {
       };
       if (isMountedRef.current && !deepEqual(dataRef.current, fullData)) {
         dataRef.current = fullData;
-        ReactDOM3.flushSync(() => {
+        ReactDOM5.flushSync(() => {
           setData(fullData);
         });
       }
@@ -6433,7 +9220,7 @@ function useFloating(options) {
       }));
     }
   }, [open2]);
-  const isMountedRef = React26.useRef(false);
+  const isMountedRef = React38.useRef(false);
   index(() => {
     isMountedRef.current = true;
     return () => {
@@ -6450,17 +9237,17 @@ function useFloating(options) {
       update2();
     }
   }, [referenceEl, floatingEl, update2, whileElementsMountedRef, hasWhileElementsMounted]);
-  const refs = React26.useMemo(() => ({
+  const refs = React38.useMemo(() => ({
     reference: referenceRef,
     floating: floatingRef,
     setReference,
     setFloating
   }), [setReference, setFloating]);
-  const elements2 = React26.useMemo(() => ({
+  const elements2 = React38.useMemo(() => ({
     reference: referenceEl,
     floating: floatingEl
   }), [referenceEl, floatingEl]);
-  const floatingStyles = React26.useMemo(() => {
+  const floatingStyles = React38.useMemo(() => {
     const initialStyles = {
       position: strategy,
       left: 0,
@@ -6486,7 +9273,7 @@ function useFloating(options) {
       top: y2
     };
   }, [strategy, transform, elements2.floating, data.x, data.y]);
-  return React26.useMemo(() => ({
+  return React38.useMemo(() => ({
     ...data,
     update: update2,
     refs,
@@ -6534,2806 +9321,7 @@ var size3 = (options, deps) => {
   };
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/popupHandle.mjs
-var BasePopupHandle = class {
-  /**
-   * Stores of every root currently using this handle, in attach order. A handle is meant to be used
-   * by a single mounted root, but roots can transiently overlap (e.g. during an animated route
-   * transition), so this stack lets `attachStore`'s cleanup restore the previous root instead of
-   * leaving a still-mounted root uncontrollable when a newer overlapping root detaches first.
-   */
-  attachedStores = [];
-  /**
-   * Store of the root that currently controls the handle: the most recently attached one still
-   * mounted, or `null` when no root is attached. Imperative methods are no-ops while this is `null`.
-   */
-  attachedStoreValue = null;
-  /**
-   * Listeners notified when `attachedStore` changes, so detached triggers can follow the store pointer.
-   */
-  storeListeners = /* @__PURE__ */ new Set();
-  /**
-   * Creates a handle backed by the store used while no root is attached.
-   *
-   * @param fallbackStore Inert, closed store handed to detached triggers while no root is attached,
-   * so they can render and register without a mounted root. Triggers register into whichever store
-   * `store` currently resolves to, so while detached they live in this store's trigger map and
-   * migrate themselves to the root's store (and back) as it attaches/detaches.
-   * @param componentName Component name used to prefix dev warnings, e.g. `'Menu'` produces
-   * `MenuHandle.open()` in warning text.
-   * @param throwOnMissingTrigger Whether `open(triggerId)` throws when no trigger with that id is
-   * registered. Anchored popups (Menu, Popover, Tooltip, PreviewCard) need a trigger to anchor to,
-   * so they throw; Dialog is not anchored and instead opens unassociated with a dev warning.
-   */
-  constructor(fallbackStore, componentName, throwOnMissingTrigger = true) {
-    this.fallbackStore = fallbackStore;
-    this.componentName = componentName;
-    this.throwOnMissingTrigger = throwOnMissingTrigger;
-  }
-  get attachedStore() {
-    return this.attachedStoreValue;
-  }
-  /**
-   * Store that detached triggers read from: the attached root's store, or an inert fallback store
-   * used while no root is attached.
-   * @internal
-   */
-  get store() {
-    return this.attachedStoreValue ?? this.fallbackStore;
-  }
-  /**
-   * Stable fallback store used for server rendering and hydration. Root stores cannot be recorded on
-   * the handle during render because a handle can be shared by concurrent server-rendered requests.
-   * @internal
-   */
-  get serverStore() {
-    return this.fallbackStore;
-  }
-  /**
-   * Subscribes to changes of the attached store pointer so detached triggers re-render and re-bind
-   * when a root attaches or detaches. Returns a function that removes the listener.
-   * @internal
-   */
-  subscribeStore(listener) {
-    this.storeListeners.add(listener);
-    return () => {
-      this.storeListeners.delete(listener);
-    };
-  }
-  /**
-   * Points the handle at a root's store and notifies subscribers so detached triggers re-render and
-   * re-register into it (their registration effect migrates them when the store pointer changes).
-   * Returns a cleanup function that detaches the store again.
-   * @internal
-   */
-  attachStore(newStore) {
-    this.attachedStores.push(newStore);
-    this.setActiveStore(newStore);
-    if (true) {
-      if (this.attachedStores.length > 1) {
-        const dev = this;
-        (dev.overlapWarningFrame ??= AnimationFrame.create()).request(() => {
-          if (this.attachedStores.length > 1) {
-            console.warn("Base UI: A handle is attached to more than one mounted root at the same time. The most recently mounted root takes over and the previous one stops being controlled by the handle. A handle should be used by a single root that stays mounted for the lifetime of the handle.");
-          }
-        });
-      }
-    }
-    return () => {
-      const index2 = this.attachedStores.lastIndexOf(newStore);
-      if (index2 !== -1) {
-        this.attachedStores.splice(index2, 1);
-      }
-      this.setActiveStore(this.attachedStores[this.attachedStores.length - 1] ?? null);
-    };
-  }
-  /**
-   * Sets the store that currently controls the handle and notifies subscribers when it changes, so
-   * detached triggers re-render and migrate their registration to the new store.
-   */
-  setActiveStore(store) {
-    if (this.attachedStoreValue !== store) {
-      this.attachedStoreValue = store;
-      this.storeListeners.forEach((listener) => {
-        listener();
-      });
-    }
-  }
-  /**
-   * Opens the attached root's store and associates it with the trigger with the given id, or a
-   * no-op (with a dev warning) while no root is attached. Shared by every concrete handle's public
-   * `open()` method, which only narrows the parameter type.
-   *
-   * When a trigger id is given but no matching trigger is registered, anchored popups throw (see
-   * `throwOnMissingTrigger`); Dialog opens unassociated with a dev warning instead.
-   *
-   * This method should only be called in an event handler or an effect (not during rendering).
-   *
-   * @param triggerId ID of the trigger to associate with the popup, or `null`/`undefined` to open
-   * without associating any trigger.
-   */
-  openByTrigger(triggerId) {
-    const attachedStore = this.attachedStore;
-    if (attachedStore === null) {
-      if (true) {
-        console.warn(`Base UI: ${this.componentName}Handle.open() was called while no root using this handle is mounted. The call was ignored; mount a root with this handle before opening it imperatively.`);
-      }
-      return;
-    }
-    let triggerElement;
-    if (triggerId) {
-      for (let i = this.attachedStores.length - 1; i >= 0 && !triggerElement; i -= 1) {
-        triggerElement = this.attachedStores[i].context.triggerElements.getById(triggerId);
-      }
-      triggerElement ??= this.fallbackStore.context.triggerElements.getById(triggerId);
-    }
-    if (triggerId && !triggerElement) {
-      if (this.throwOnMissingTrigger) {
-        throw new Error(true ? `Base UI: ${this.componentName}Handle.open() was called with the trigger id "${triggerId}", but no matching trigger is registered with this handle. An anchored popup cannot open without a trigger to anchor to. Pass the id of a mounted ${this.componentName}.Trigger that has this handle set on its "handle" prop.` : formatErrorMessage_default(99, this.componentName, triggerId, this.componentName));
-      }
-      if (true) {
-        console.warn(`Base UI: ${this.componentName}Handle.open: No trigger found with id "${triggerId}". The popup will open, but the trigger will not be associated with it.`);
-      }
-    }
-    attachedStore.setOpen(true, createChangeEventDetails(reason_parts_exports.imperativeAction, void 0, triggerElement));
-  }
-  /**
-   * Closes the popup by setting the attached root's store to closed, or a no-op (with a dev warning)
-   * while no root is attached. Shared by every concrete handle's public `close()` method.
-   *
-   * This method should only be called in an event handler or an effect (not during rendering).
-   */
-  closePopup() {
-    const attachedStore = this.attachedStore;
-    if (attachedStore === null) {
-      if (true) {
-        console.warn(`Base UI: ${this.componentName}Handle.close() was called while no root using this handle is mounted. The call was ignored.`);
-      }
-      return;
-    }
-    attachedStore.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
-  }
-};
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
-var React31 = __toESM(require_react(), 1);
-var ReactDOM4 = __toESM(require_react_dom(), 1);
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
-var React30 = __toESM(require_react(), 1);
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/store/useStore.mjs
-var React28 = __toESM(require_react(), 1);
-var import_shim = __toESM(require_shim(), 1);
-var import_with_selector = __toESM(require_with_selector(), 1);
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/fastHooks.mjs
-var React27 = __toESM(require_react(), 1);
-var hooks = [];
-var currentInstance = void 0;
-function getInstance() {
-  return currentInstance;
-}
-function register(hook) {
-  hooks.push(hook);
-}
-function fastComponent(fn) {
-  const FastComponent = (props, forwardedRef) => {
-    const instance = useRefWithInit(createInstance).current;
-    let result;
-    try {
-      currentInstance = instance;
-      for (const hook of hooks) {
-        hook.before(instance);
-      }
-      result = fn(props, forwardedRef);
-      for (const hook of hooks) {
-        hook.after(instance);
-      }
-      instance.didInitialize = true;
-    } finally {
-      currentInstance = void 0;
-    }
-    return result;
-  };
-  FastComponent.displayName = fn.displayName || fn.name;
-  return FastComponent;
-}
-function fastComponentRef(fn) {
-  return /* @__PURE__ */ React27.forwardRef(fastComponent(fn));
-}
-function createInstance() {
-  return {
-    didInitialize: false
-  };
-}
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/store/useStore.mjs
-var canUseRawUseSyncExternalStore = isReactVersionAtLeast(19);
-var useStoreImplementation = canUseRawUseSyncExternalStore ? useStoreFast : useStoreLegacy;
-function useStore(store, selector, a1, a2, a3) {
-  return useStoreImplementation(store, selector, a1, a2, a3);
-}
-function useStoreR19(store, selector, a1, a2, a3) {
-  const getSelection = React28.useCallback(() => selector(store.getSnapshot(), a1, a2, a3), [store, selector, a1, a2, a3]);
-  return (0, import_shim.useSyncExternalStore)(store.subscribe, getSelection, getSelection);
-}
-register({
-  before(instance) {
-    instance.syncIndex = 0;
-    if (!instance.didInitialize) {
-      instance.syncTick = 1;
-      instance.syncHooks = [];
-      instance.didChangeStore = true;
-      instance.getSnapshot = () => {
-        let didChange2 = false;
-        for (let i = 0; i < instance.syncHooks.length; i += 1) {
-          const hook = instance.syncHooks[i];
-          const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
-          if (!Object.is(hook.value, value)) {
-            didChange2 = true;
-            hook.value = value;
-          }
-        }
-        if (didChange2) {
-          instance.syncTick += 1;
-        }
-        return instance.syncTick;
-      };
-    }
-  },
-  after(instance) {
-    if (instance.syncHooks.length > 0) {
-      if (instance.didChangeStore) {
-        instance.didChangeStore = false;
-        instance.subscribe = (onStoreChange) => {
-          const stores = /* @__PURE__ */ new Set();
-          for (const hook of instance.syncHooks) {
-            stores.add(hook.store);
-          }
-          const unsubscribes = [];
-          for (const store of stores) {
-            unsubscribes.push(store.subscribe(onStoreChange));
-          }
-          return () => {
-            for (const unsubscribe of unsubscribes) {
-              unsubscribe();
-            }
-          };
-        };
-      }
-      (0, import_shim.useSyncExternalStore)(instance.subscribe, instance.getSnapshot, instance.getSnapshot);
-    }
-  }
-});
-function useStoreFast(store, selector, a1, a2, a3) {
-  const instance = getInstance();
-  if (!instance) {
-    return useStoreR19(store, selector, a1, a2, a3);
-  }
-  const index2 = instance.syncIndex;
-  instance.syncIndex += 1;
-  let hook;
-  if (!instance.didInitialize) {
-    hook = {
-      store,
-      selector,
-      a1,
-      a2,
-      a3,
-      value: selector(store.getSnapshot(), a1, a2, a3)
-    };
-    instance.syncHooks.push(hook);
-  } else {
-    hook = instance.syncHooks[index2];
-    if (hook.store !== store || hook.selector !== selector || !Object.is(hook.a1, a1) || !Object.is(hook.a2, a2) || !Object.is(hook.a3, a3)) {
-      if (hook.store !== store) {
-        instance.didChangeStore = true;
-      }
-      hook.store = store;
-      hook.selector = selector;
-      hook.a1 = a1;
-      hook.a2 = a2;
-      hook.a3 = a3;
-      hook.value = selector(store.getSnapshot(), a1, a2, a3);
-    }
-  }
-  return hook.value;
-}
-function useStoreLegacy(store, selector, a1, a2, a3) {
-  return (0, import_with_selector.useSyncExternalStoreWithSelector)(store.subscribe, store.getSnapshot, store.getSnapshot, (state) => selector(state, a1, a2, a3));
-}
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/store/Store.mjs
-var Store = class {
-  /**
-   * Creates a store with the given initial state, constructing the class it is called on.
-   * Calling it on a generic base class (e.g. `ReactStore.create(...)`) constructs that
-   * class but degrades the inferred instance type to `Store`; use `new` there instead.
-   */
-  static create(state) {
-    return new this(state);
-  }
-  /**
-   * The current state of the store.
-   * This property is updated immediately when the state changes as a result of calling {@link setState}, {@link update}, or {@link set}.
-   * To subscribe to state changes, use the {@link useState} method. The value returned by {@link useState} is updated after the component renders (similarly to React's useState).
-   * The values can be used directly (to avoid subscribing to the store) in effects or event handlers.
-   *
-   * Do not modify properties in state directly. Instead, use the provided methods to ensure proper state management and listener notification.
-   */
-  // Internal state to handle recursive `setState()` calls
-  constructor(state) {
-    this.state = state;
-    this.listeners = /* @__PURE__ */ new Set();
-    this.updateTick = 0;
-  }
-  /**
-   * Registers a listener that will be called whenever the store's state changes.
-   *
-   * @param fn The listener function to be called on state changes.
-   * @returns A function to unsubscribe the listener.
-   */
-  subscribe = (fn) => {
-    this.listeners.add(fn);
-    return () => {
-      this.listeners.delete(fn);
-    };
-  };
-  /**
-   * Returns the current state of the store.
-   */
-  getSnapshot = () => {
-    return this.state;
-  };
-  /**
-   * Updates the entire store's state and notifies all registered listeners.
-   *
-   * @param newState The new state to set for the store.
-   */
-  setState(newState) {
-    if (this.state === newState) {
-      return;
-    }
-    this.state = newState;
-    this.updateTick += 1;
-    const currentTick = this.updateTick;
-    for (const listener of this.listeners) {
-      if (currentTick !== this.updateTick) {
-        return;
-      }
-      listener(newState);
-    }
-  }
-  /**
-   * Merges the provided changes into the current state and notifies listeners if there are changes.
-   * Each value must match its state key. Pass an exact known subset rather than a broad
-   * `Partial<State>`, which may contain `undefined` for required state fields.
-   *
-   * @param changes An object containing the changes to apply to the current state.
-   */
-  update(changes) {
-    for (const key in changes) {
-      if (!Object.is(this.state[key], changes[key])) {
-        this.setState({
-          ...this.state,
-          ...changes
-        });
-        return;
-      }
-    }
-  }
-  /**
-   * Sets a specific key in the store's state to a new value and notifies listeners if the value has changed.
-   *
-   * @param key The key in the store's state to update.
-   * @param value The new value to set for the specified key.
-   */
-  set(key, value) {
-    if (!Object.is(this.state[key], value)) {
-      this.setState({
-        ...this.state,
-        [key]: value
-      });
-    }
-  }
-  /**
-   * Gives the state a new reference and updates all registered listeners.
-   */
-  notifyAll() {
-    const newState = {
-      ...this.state
-    };
-    this.setState(newState);
-  }
-  use(selector, a1, a2, a3) {
-    return useStore(this, selector, a1, a2, a3);
-  }
-};
-
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/store/ReactStore.mjs
-var React29 = __toESM(require_react(), 1);
-var ReactStore = class extends Store {
-  /**
-   * Creates a new ReactStore instance.
-   *
-   * @param state Initial state of the store.
-   * @param context Non-reactive context values.
-   * @param selectors Optional selectors for use with `useState`.
-   */
-  constructor(state, context = {}, selectors4) {
-    super(state);
-    this.context = context;
-    this.selectors = selectors4;
-  }
-  /**
-   * Non-reactive values such as refs, callbacks, etc.
-   */
-  /**
-   * Synchronizes a single external value into the store.
-   *
-   * Note that the while the value in `state` is updated immediately, the value returned
-   * by `useState` is updated before the next render (similarly to React's `useState`).
-   */
-  useSyncedValue(key, value) {
-    React29.useDebugValue(key);
-    const store = this;
-    useIsoLayoutEffect(() => {
-      if (store.state[key] !== value) {
-        store.set(key, value);
-      }
-    }, [store, key, value]);
-  }
-  /**
-   * Synchronizes a single external value into the store and
-   * cleans it up (sets to `undefined`) on unmount.
-   *
-   * Note that the while the value in `state` is updated immediately, the value returned
-   * by `useState` is updated before the next render (similarly to React's `useState`).
-   */
-  useSyncedValueWithCleanup(key, value) {
-    const store = this;
-    useIsoLayoutEffect(() => {
-      if (store.state[key] !== value) {
-        store.set(key, value);
-      }
-      return () => {
-        store.set(key, void 0);
-      };
-    }, [store, key, value]);
-  }
-  /**
-   * Synchronizes multiple external values into the store.
-   * Each value must match its state key. Pass an exact known subset rather than a broad
-   * `Partial<State>`, which may contain `undefined` for required state fields.
-   *
-   * Note that the while the values in `state` are updated immediately, the values returned
-   * by `useState` are updated before the next render (similarly to React's `useState`).
-   *
-   * @param statePart An exact subset of state fields to synchronize. Unknown keys are not accepted.
-   */
-  useSyncedValues(statePart) {
-    const store = this;
-    if (true) {
-      React29.useDebugValue(statePart, (p3) => Object.keys(p3));
-      const keys = React29.useRef(Object.keys(statePart)).current;
-      const nextKeys = Object.keys(statePart);
-      if (keys.length !== nextKeys.length || keys.some((key, index2) => key !== nextKeys[index2])) {
-        console.error("ReactStore.useSyncedValues expects the same prop keys on every render. Keys should be stable.");
-      }
-    }
-    const dependencies = Object.values(statePart);
-    useIsoLayoutEffect(() => {
-      store.update(statePart);
-    }, [store, ...dependencies]);
-  }
-  /**
-   * Registers a controllable prop pair (`controlled`, `defaultValue`) for a specific key. If `controlled`
-   * is non-undefined, the store's state at `key` is updated to match `controlled`.
-   */
-  useControlledProp(key, controlled) {
-    React29.useDebugValue(key);
-    const store = this;
-    const isControlled = controlled !== void 0;
-    useIsoLayoutEffect(() => {
-      if (isControlled && !Object.is(store.state[key], controlled)) {
-        store.setState({
-          ...store.state,
-          [key]: controlled
-        });
-      }
-    }, [store, key, controlled, isControlled]);
-    if (true) {
-      const cache2 = this.controlledValues ??= /* @__PURE__ */ new Map();
-      if (!cache2.has(key)) {
-        cache2.set(key, isControlled);
-      }
-      const previouslyControlled = cache2.get(key);
-      if (previouslyControlled !== void 0 && previouslyControlled !== isControlled) {
-        console.error(`A component is changing the ${isControlled ? "" : "un"}controlled state of ${key.toString()} to be ${isControlled ? "un" : ""}controlled. Elements should not switch from uncontrolled to controlled (or vice versa).`);
-      }
-    }
-  }
-  /** Gets the current value from the store using a selector with the provided key.
-   *
-   * @param key Key of the selector to use.
-   */
-  select(key, a1, a2, a3) {
-    const selector = this.selectors[key];
-    return selector(this.state, a1, a2, a3);
-  }
-  /**
-   * Returns a value from the store's state using a selector function.
-   * Used to subscribe to specific parts of the state.
-   * This methods causes a rerender whenever the selected state changes.
-   *
-   * @param key Key of the selector to use.
-   */
-  useState(key, a1, a2, a3) {
-    React29.useDebugValue(key);
-    return useStore(this, this.selectors[key], a1, a2, a3);
-  }
-  /**
-   * Wraps a function with `useStableCallback` to ensure it has a stable reference
-   * and assigns it to the context.
-   *
-   * @param key Key of the event callback. Must be a function in the context.
-   * @param fn Function to assign.
-   */
-  useContextCallback(key, fn) {
-    React29.useDebugValue(key);
-    const stableFunction = useStableCallback(fn ?? NOOP);
-    this.context[key] = stableFunction;
-  }
-  /**
-   * Returns a stable setter function for a specific key in the store's state.
-   * It's commonly used to pass as a ref callback to React elements.
-   *
-   * @param key Key of the state to set.
-   */
-  useStateSetter(key) {
-    const ref = React29.useRef(void 0);
-    if (ref.current === void 0) {
-      ref.current = (value) => {
-        this.set(key, value);
-      };
-    }
-    return ref.current;
-  }
-  /**
-   * Observes changes derived from the store's selectors and calls the listener when the selected value changes.
-   *
-   * @param key Key of the selector to observe.
-   * @param listener Listener function called when the selector result changes.
-   */
-  observe(selector, listener) {
-    let selectFn;
-    if (typeof selector === "function") {
-      selectFn = selector;
-    } else {
-      selectFn = this.selectors[selector];
-    }
-    let prevValue = selectFn(this.state);
-    listener(prevValue, prevValue, this);
-    return this.subscribe((nextState) => {
-      const nextValue = selectFn(nextState);
-      if (!Object.is(prevValue, nextValue)) {
-        const oldValue = prevValue;
-        prevValue = nextValue;
-        listener(nextValue, oldValue, this);
-      }
-    });
-  }
-};
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
-var selectors = {
-  open: (state) => state.open,
-  transitionStatus: (state) => state.transitionStatus,
-  domReferenceElement: (state) => state.domReferenceElement,
-  referenceElement: (state) => state.positionReference ?? state.referenceElement,
-  floatingElement: (state) => state.floatingElement,
-  floatingId: (state) => state.floatingId
-};
-var FloatingRootStore = class extends ReactStore {
-  constructor(options) {
-    const {
-      syncOnly,
-      nested,
-      onOpenChange,
-      triggerElements,
-      ...initialState
-    } = options;
-    super({
-      ...initialState,
-      positionReference: initialState.referenceElement,
-      domReferenceElement: initialState.referenceElement
-    }, {
-      onOpenChange,
-      dataRef: {
-        current: {}
-      },
-      events: createEventEmitter(),
-      nested,
-      triggerElements
-    }, selectors);
-    this.syncOnly = syncOnly;
-  }
-  /**
-   * Syncs the event used by hover logic to distinguish hover-open from click-like interaction.
-   */
-  syncOpenEvent = (newOpen, event) => {
-    if (!newOpen || !this.state.open || // Prevent a pending hover-open from overwriting a click-open event, while allowing
-    // click events to upgrade a hover-open.
-    event != null && isClickLikeEvent(event)) {
-      this.context.dataRef.current.openEvent = newOpen ? event : void 0;
-    }
-  };
-  /**
-   * Runs the root-owned side effects for an open state change.
-   */
-  dispatchOpenChange = (newOpen, eventDetails) => {
-    this.syncOpenEvent(newOpen, eventDetails.event);
-    const details = {
-      open: newOpen,
-      reason: eventDetails.reason,
-      nativeEvent: eventDetails.event,
-      nested: this.context.nested,
-      triggerElement: eventDetails.trigger
-    };
-    this.context.events.emit("openchange", details);
-  };
-  /**
-   * Emits the `openchange` event through the internal event emitter and calls the `onOpenChange` handler with the provided arguments.
-   *
-   * @param newOpen The new open state.
-   * @param eventDetails Details about the event that triggered the open state change.
-   */
-  setOpen = (newOpen, eventDetails) => {
-    if (this.syncOnly) {
-      this.context.onOpenChange?.(newOpen, eventDetails);
-      return;
-    }
-    this.dispatchOpenChange(newOpen, eventDetails);
-    this.context.onOpenChange?.(newOpen, eventDetails);
-  };
-};
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
-function useSyncedFloatingRootContext(options) {
-  const {
-    popupStore,
-    treatPopupAsFloatingElement = false,
-    floatingRootContext: floatingRootContextProp,
-    floatingId,
-    nested,
-    onOpenChange
-  } = options;
-  const open2 = popupStore.useState("open");
-  const referenceElement = popupStore.useState("activeTriggerElement");
-  const floatingElement = popupStore.useState(treatPopupAsFloatingElement ? "popupElement" : "positionerElement");
-  const triggerElements = popupStore.context.triggerElements;
-  const handleOpenChange = onOpenChange;
-  const internalStoreRef = React30.useRef(null);
-  if (floatingRootContextProp === void 0 && internalStoreRef.current === null) {
-    internalStoreRef.current = new FloatingRootStore({
-      open: open2,
-      transitionStatus: void 0,
-      referenceElement,
-      floatingElement,
-      triggerElements,
-      onOpenChange: handleOpenChange,
-      floatingId,
-      syncOnly: true,
-      nested
-    });
-  }
-  const store = floatingRootContextProp ?? internalStoreRef.current;
-  popupStore.useSyncedValue("floatingId", floatingId);
-  useIsoLayoutEffect(() => {
-    const valuesToSync = {
-      open: open2,
-      floatingId,
-      referenceElement,
-      floatingElement
-    };
-    if (isElement(referenceElement)) {
-      valuesToSync.domReferenceElement = referenceElement;
-    }
-    if (store.state.positionReference === store.state.referenceElement) {
-      valuesToSync.positionReference = referenceElement;
-    }
-    store.update(valuesToSync);
-  }, [open2, floatingId, referenceElement, floatingElement, store]);
-  store.context.onOpenChange = handleOpenChange;
-  store.context.nested = nested;
-  return store;
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
-var FOCUSABLE_POPUP_PROPS = {
-  tabIndex: -1,
-  [FOCUSABLE_ATTRIBUTE]: ""
-};
-function usePopupRootStore(createStore, treatPopupAsFloatingElement = false) {
-  const floatingId = useId();
-  const nested = useFloatingParentNodeId() != null;
-  const store = useRefWithInit(() => createStore(floatingId, nested)).current;
-  useSyncedFloatingRootContext({
-    popupStore: store,
-    treatPopupAsFloatingElement,
-    floatingRootContext: store.state.floatingRootContext,
-    floatingId,
-    nested,
-    onOpenChange: store.setOpen
-  });
-  return store;
-}
-function PopupHandleAttachment({
-  handle,
-  store
-}) {
-  useIsoLayoutEffect(() => {
-    return handle.attachStore(store);
-  }, [handle, store]);
-  return null;
-}
-function syncTriggerCount(store) {
-  const triggerCount = store.context.triggerElements.size;
-  if (store.select("open") && store.state.triggerCount !== triggerCount) {
-    store.set("triggerCount", triggerCount);
-  }
-}
-function useTriggerRegistration(id, store) {
-  const registrationRef = React31.useRef(null);
-  return useStableCallback((element) => {
-    const registration = registrationRef.current;
-    if (registration !== null) {
-      if (registration.element === element && registration.store === store && registration.id === id) {
-        return;
-      }
-      registrationRef.current = null;
-      const registeredStore = registration.store;
-      if (registeredStore.context.triggerElements.getById(registration.id) === registration.element) {
-        registeredStore.context.triggerElements.delete(registration.id);
-        syncTriggerCount(registeredStore);
-      }
-    }
-    if (element !== null && id !== void 0) {
-      registrationRef.current = {
-        store,
-        id,
-        element
-      };
-      store.context.triggerElements.add(id, element);
-      syncTriggerCount(store);
-    }
-  });
-}
-function createPopupOpenState(state, open2, trigger, preventUnmountOnClose = false) {
-  let preventUnmountingOnClose = state.preventUnmountingOnClose;
-  if (open2) {
-    preventUnmountingOnClose = false;
-  } else if (preventUnmountOnClose) {
-    preventUnmountingOnClose = true;
-  }
-  const triggerId = trigger?.id ?? null;
-  let activeTriggerId = state.activeTriggerId;
-  let activeTriggerElement = state.activeTriggerElement;
-  if (triggerId || open2) {
-    activeTriggerId = triggerId;
-    activeTriggerElement = trigger ?? null;
-  }
-  return {
-    open: open2,
-    preventUnmountingOnClose,
-    activeTriggerId,
-    activeTriggerElement
-  };
-}
-function attachPreventUnmountOnClose(eventDetails) {
-  let preventUnmountOnClose = false;
-  eventDetails.preventUnmountOnClose = () => {
-    preventUnmountOnClose = true;
-  };
-  return () => preventUnmountOnClose;
-}
-function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
-  const reason = eventDetails.reason;
-  const isHover = reason === reason_parts_exports.triggerHover;
-  const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
-  const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
-  const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
-  store.context.onOpenChange?.(nextOpen, eventDetails);
-  if (eventDetails.isCanceled) {
-    return;
-  }
-  options.onBeforeDispatch?.();
-  store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
-  const changeState = () => {
-    const popupOpenState = createPopupOpenState(store.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
-    const updatedState = {
-      ...options.extraState,
-      ...popupOpenState
-    };
-    if (isFocusOpen) {
-      updatedState.instantType = "focus";
-    } else if (isDismissClose) {
-      updatedState.instantType = "dismiss";
-    } else if (isHover) {
-      updatedState.instantType = void 0;
-    }
-    store.update(updatedState);
-  };
-  if (isHover) {
-    ReactDOM4.flushSync(changeState);
-  } else {
-    changeState();
-  }
-}
-function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
-  const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
-  const baseRegisterTrigger = useTriggerRegistration(triggerId, store);
-  const applyTriggerData = useStableCallback((element) => {
-    const open2 = store.select("open");
-    const activeTriggerId = store.select("activeTriggerId");
-    if (activeTriggerId === triggerId) {
-      const changes = {
-        activeTriggerElement: element,
-        ...open2 ? stateUpdates : null
-      };
-      store.update(changes);
-      return;
-    }
-    if (activeTriggerId == null && open2) {
-      const changes = {
-        activeTriggerId: triggerId ?? null,
-        activeTriggerElement: element,
-        ...stateUpdates
-      };
-      store.update(changes);
-    }
-  });
-  const registerTrigger = useStableCallback((element) => {
-    baseRegisterTrigger(element);
-    if (element) {
-      applyTriggerData(element);
-    }
-  });
-  useIsoLayoutEffect(() => {
-    registerTrigger(triggerElementRef.current);
-    return () => registerTrigger(null);
-  }, [registerTrigger, triggerElementRef, store, triggerId]);
-  useIsoLayoutEffect(() => {
-    if (isMountedByThisTrigger) {
-      const changes = {
-        activeTriggerElement: triggerElementRef.current,
-        ...stateUpdates
-      };
-      store.update(changes);
-    }
-  }, [isMountedByThisTrigger, store, triggerElementRef, ...Object.values(stateUpdates)]);
-  return {
-    registerTrigger,
-    isMountedByThisTrigger
-  };
-}
-function useImplicitActiveTrigger(store, options = {}) {
-  const {
-    closeOnActiveTriggerUnmount = false
-  } = options;
-  const resolvedActiveTriggerIdRef = React31.useRef(null);
-  const open2 = store.useState("open");
-  const reactiveTriggerCount = store.useState("triggerCount");
-  const activeTriggerId = store.useState("activeTriggerId");
-  const reactiveActiveTriggerElement = store.useState("activeTriggerElement");
-  useIsoLayoutEffect(() => {
-    if (!open2) {
-      resolvedActiveTriggerIdRef.current = null;
-      if (store.state.triggerCount !== 0) {
-        store.set("triggerCount", 0);
-      }
-      return;
-    }
-    const triggerCount = store.context.triggerElements.size;
-    const stateUpdates = {};
-    if (store.state.triggerCount !== triggerCount) {
-      stateUpdates.triggerCount = triggerCount;
-    }
-    const currentActiveTriggerId = store.select("activeTriggerId");
-    let lostActiveTriggerId = null;
-    if (currentActiveTriggerId) {
-      const activeTriggerElement = store.context.triggerElements.getById(currentActiveTriggerId);
-      if (!activeTriggerElement) {
-        for (const [triggerId, triggerElement] of store.context.triggerElements.entries()) {
-          if (triggerElement === store.state.activeTriggerElement) {
-            stateUpdates.activeTriggerId = triggerId;
-            stateUpdates.activeTriggerElement = triggerElement;
-            resolvedActiveTriggerIdRef.current = triggerId;
-            break;
-          }
-        }
-        if (stateUpdates.activeTriggerId === void 0) {
-          if (resolvedActiveTriggerIdRef.current === currentActiveTriggerId) {
-            lostActiveTriggerId = currentActiveTriggerId;
-          } else {
-            resolvedActiveTriggerIdRef.current = null;
-          }
-        }
-      } else {
-        resolvedActiveTriggerIdRef.current = currentActiveTriggerId;
-        if (activeTriggerElement !== store.state.activeTriggerElement) {
-          stateUpdates.activeTriggerElement = activeTriggerElement;
-        }
-      }
-    } else {
-      resolvedActiveTriggerIdRef.current = null;
-    }
-    if (!lostActiveTriggerId && !currentActiveTriggerId && triggerCount === 1) {
-      const iteratorResult = store.context.triggerElements.entries().next();
-      if (!iteratorResult.done) {
-        const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
-        stateUpdates.activeTriggerId = implicitTriggerId;
-        stateUpdates.activeTriggerElement = implicitTriggerElement;
-        resolvedActiveTriggerIdRef.current = implicitTriggerId;
-      }
-    }
-    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
-      store.update(stateUpdates);
-    }
-    if (lostActiveTriggerId) {
-      if (closeOnActiveTriggerUnmount) {
-        queueMicrotask(() => {
-          if (store.select("open") && store.select("activeTriggerId") === lostActiveTriggerId && !store.context.triggerElements.getById(lostActiveTriggerId)) {
-            const eventDetails = createChangeEventDetails(reason_parts_exports.none);
-            store.setOpen(false, eventDetails);
-            if (!eventDetails.isCanceled) {
-              store.update({
-                activeTriggerId: null,
-                activeTriggerElement: null
-              });
-            }
-          }
-        });
-      }
-    }
-  }, [open2, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
-}
-function useOpenStateTransitions(open2, store, onUnmount, animateInitialOpen) {
-  const {
-    mounted,
-    setMounted,
-    transitionStatus
-  } = useTransitionStatus(open2, false, false, animateInitialOpen);
-  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
-  const syncedPreventUnmountingOnClose = open2 ? false : preventUnmountingOnClose;
-  store.useSyncedValues({
-    mounted,
-    transitionStatus,
-    preventUnmountingOnClose: syncedPreventUnmountingOnClose
-  });
-  const forceUnmount = useStableCallback(() => {
-    setMounted(false);
-    store.update({
-      activeTriggerId: null,
-      activeTriggerElement: null,
-      mounted: false,
-      preventUnmountingOnClose: false
-    });
-    onUnmount?.();
-    store.context.onOpenChangeComplete?.(false);
-  });
-  useOpenChangeComplete({
-    enabled: mounted && !open2 && !syncedPreventUnmountingOnClose,
-    open: open2,
-    ref: store.context.popupRef,
-    onComplete() {
-      if (!open2) {
-        forceUnmount();
-      }
-    }
-  });
-  return {
-    forceUnmount,
-    transitionStatus
-  };
-}
-function usePopupInteractionProps(store, statePart) {
-  store.useSyncedValues(statePart);
-  useIsoLayoutEffect(() => () => {
-    store.update({
-      activeTriggerProps: EMPTY_OBJECT,
-      inactiveTriggerProps: EMPTY_OBJECT,
-      popupProps: EMPTY_OBJECT
-    });
-  }, [store]);
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
-var devElementIdsByMap;
-function getDevElementIds(map) {
-  devElementIdsByMap ??= /* @__PURE__ */ new WeakMap();
-  let elementIds = devElementIdsByMap.get(map);
-  if (!elementIds) {
-    elementIds = /* @__PURE__ */ new WeakMap();
-    devElementIdsByMap.set(map, elementIds);
-  }
-  return elementIds;
-}
-var PopupTriggerMap = class {
-  constructor() {
-    this.idMap = /* @__PURE__ */ new Map();
-  }
-  /**
-   * Adds a trigger element with the given ID.
-   *
-   * Note: The provided element is assumed to not be registered under multiple IDs.
-   */
-  add(id, element) {
-    if (true) {
-      const elementIds = getDevElementIds(this);
-      const existingId = elementIds.get(element);
-      if (existingId !== void 0 && existingId !== id) {
-        throw new Error("Base UI: A trigger element cannot be registered under multiple IDs in PopupTriggerMap.");
-      }
-      const previousElement = this.idMap.get(id);
-      if (previousElement !== void 0 && previousElement !== element) {
-        elementIds.delete(previousElement);
-      }
-      elementIds.set(element, id);
-    }
-    this.idMap.set(id, element);
-  }
-  /**
-   * Removes the trigger element with the given ID.
-   */
-  delete(id) {
-    if (true) {
-      const element = this.idMap.get(id);
-      if (element !== void 0) {
-        devElementIdsByMap?.get(this)?.delete(element);
-      }
-    }
-    this.idMap.delete(id);
-  }
-  /**
-   * Whether the given element is registered as a trigger.
-   */
-  hasElement(element) {
-    for (const registered of this.idMap.values()) {
-      if (registered === element) {
-        return true;
-      }
-    }
-    return false;
-  }
-  /**
-   * Whether there is a registered trigger element matching the given predicate.
-   */
-  hasMatchingElement(predicate) {
-    for (const element of this.idMap.values()) {
-      if (predicate(element)) {
-        return true;
-      }
-    }
-    return false;
-  }
-  /**
-   * Returns the trigger element associated with the given ID, or undefined if no such element exists.
-   */
-  getById(id) {
-    return this.idMap.get(id);
-  }
-  /**
-   * Returns an iterable of all registered trigger entries, where each entry is a tuple of [id, element].
-   */
-  entries() {
-    return this.idMap.entries();
-  }
-  /**
-   * Returns an iterable of all registered trigger elements.
-   */
-  elements() {
-    return this.idMap.values();
-  }
-  /**
-   * Returns the number of registered trigger elements.
-   */
-  get size() {
-    return this.idMap.size;
-  }
-};
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/store.mjs
-function createInitialPopupStoreState(triggerElements, floatingId, nested = false) {
-  return {
-    open: false,
-    openProp: void 0,
-    mounted: false,
-    transitionStatus: void 0,
-    floatingRootContext: new FloatingRootStore({
-      open: false,
-      transitionStatus: void 0,
-      floatingElement: null,
-      referenceElement: null,
-      triggerElements,
-      floatingId,
-      syncOnly: true,
-      nested,
-      onOpenChange: void 0
-    }),
-    floatingId,
-    triggerCount: 0,
-    preventUnmountingOnClose: false,
-    payload: void 0,
-    activeTriggerId: null,
-    activeTriggerElement: null,
-    triggerIdProp: void 0,
-    popupElement: null,
-    positionerElement: null,
-    activeTriggerProps: EMPTY_OBJECT,
-    inactiveTriggerProps: EMPTY_OBJECT,
-    popupProps: EMPTY_OBJECT
-  };
-}
-var activeTriggerIdSelector = (state) => state.triggerIdProp ?? state.activeTriggerId;
-var openSelector = (state) => state.openProp ?? state.open;
-var popupIdSelector = (state) => {
-  const popupId = state.popupElement?.id ?? state.floatingId;
-  return popupId || void 0;
-};
-function triggerOwnsOpenPopup(state, triggerId) {
-  return triggerId !== void 0 && openSelector(state) && activeTriggerIdSelector(state) === triggerId;
-}
-function triggerOwnsOpenPopupOrIsOnlyTrigger(state, triggerId) {
-  if (triggerOwnsOpenPopup(state, triggerId)) {
-    return true;
-  }
-  return triggerId !== void 0 && openSelector(state) && activeTriggerIdSelector(state) == null && state.triggerCount === 1;
-}
-var popupStoreSelectors = {
-  open: openSelector,
-  mounted: (state) => state.mounted,
-  transitionStatus: (state) => state.transitionStatus,
-  floatingRootContext: (state) => state.floatingRootContext,
-  triggerCount: (state) => state.triggerCount,
-  preventUnmountingOnClose: (state) => state.preventUnmountingOnClose,
-  payload: (state) => state.payload,
-  activeTriggerId: activeTriggerIdSelector,
-  activeTriggerElement: (state) => state.mounted ? state.activeTriggerElement : null,
-  popupId: popupIdSelector,
-  /**
-   * Whether the trigger with the given ID was used to open the popup.
-   */
-  isTriggerActive: (state, triggerId) => triggerId !== void 0 && activeTriggerIdSelector(state) === triggerId,
-  /**
-   * Whether the popup is open and was activated by a trigger with the given ID.
-   */
-  isOpenedByTrigger: (state, triggerId) => triggerOwnsOpenPopup(state, triggerId),
-  /**
-   * Whether the popup is mounted and was activated by a trigger with the given ID.
-   */
-  isMountedByTrigger: (state, triggerId) => triggerId !== void 0 && activeTriggerIdSelector(state) === triggerId && state.mounted,
-  triggerProps: (state, isActive) => isActive ? state.activeTriggerProps : state.inactiveTriggerProps,
-  /**
-   * Popup id for the trigger that currently owns the open popup.
-   */
-  triggerPopupId: (state, triggerId) => triggerOwnsOpenPopupOrIsOnlyTrigger(state, triggerId) ? popupIdSelector(state) : void 0,
-  popupProps: (state) => state.popupProps,
-  popupElement: (state) => state.popupElement,
-  positionerElement: (state) => state.positionerElement
-};
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/usePopupHandleStore.mjs
-var React32 = __toESM(require_react(), 1);
-var import_shim2 = __toESM(require_shim(), 1);
-function usePopupHandleStore(handle) {
-  const subscribe = React32.useCallback((listener) => {
-    if (handle === void 0) {
-      return NOOP;
-    }
-    return handle.subscribeStore(listener);
-  }, [handle]);
-  const getSnapshot = React32.useCallback(() => {
-    return handle === void 0 ? void 0 : handle.store;
-  }, [handle]);
-  return (0, import_shim2.useSyncExternalStore)(subscribe, getSnapshot, () => handle?.serverStore);
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
-function useBaseUIFloating(options) {
-  return useFloatingWithStore(options, options.rootContext);
-}
-function useFloatingWithStore(options, store) {
-  const {
-    nodeId,
-    externalTree
-  } = options;
-  const referenceElement = store.useState("referenceElement");
-  const floatingElement = store.useState("floatingElement");
-  const domReferenceElement = store.useState("domReferenceElement");
-  const open2 = store.useState("open");
-  const floatingId = store.useState("floatingId");
-  const [positionReference, setPositionReferenceRaw] = React33.useState(null);
-  const [localDomReference, setLocalDomReference] = React33.useState(void 0);
-  const [localFloatingElement, setLocalFloatingElement] = React33.useState(void 0);
-  const domReferenceRef = React33.useRef(null);
-  const tree = useFloatingTree(externalTree);
-  const storeElements = React33.useMemo(() => ({
-    reference: referenceElement,
-    floating: floatingElement,
-    domReference: domReferenceElement
-  }), [referenceElement, floatingElement, domReferenceElement]);
-  const position = useFloating({
-    ...options,
-    elements: {
-      ...storeElements,
-      ...positionReference && {
-        reference: positionReference
-      }
-    }
-  });
-  const localDomReferenceElement = isElement(localDomReference) ? localDomReference : null;
-  const syncedFloatingElement = localFloatingElement === void 0 ? store.state.floatingElement : localFloatingElement;
-  store.useSyncedValue("referenceElement", localDomReference ?? null);
-  store.useSyncedValue("domReferenceElement", localDomReference === void 0 ? domReferenceElement : localDomReferenceElement);
-  store.useSyncedValue("floatingElement", syncedFloatingElement);
-  const setPositionReference = React33.useCallback((node) => {
-    const computedPositionReference = isElement(node) ? {
-      getBoundingClientRect: () => node.getBoundingClientRect(),
-      getClientRects: () => node.getClientRects(),
-      contextElement: node
-    } : node;
-    setPositionReferenceRaw(computedPositionReference);
-    position.refs.setReference(computedPositionReference);
-  }, [position.refs]);
-  const setReference = React33.useCallback((node) => {
-    if (isElement(node) || node === null) {
-      domReferenceRef.current = node;
-      setLocalDomReference(node);
-    }
-    if (isElement(position.refs.reference.current) || position.refs.reference.current === null || // Don't allow setting virtual elements using the old technique back to
-    // `null` to support `positionReference` + an unstable `reference`
-    // callback ref.
-    node !== null && !isElement(node)) {
-      position.refs.setReference(node);
-    }
-  }, [position.refs, setLocalDomReference]);
-  const setFloating = React33.useCallback((node) => {
-    setLocalFloatingElement(node);
-    position.refs.setFloating(node);
-  }, [position.refs]);
-  const refs = React33.useMemo(() => ({
-    ...position.refs,
-    setReference,
-    setFloating,
-    setPositionReference,
-    domReference: domReferenceRef
-  }), [position.refs, setReference, setFloating, setPositionReference]);
-  const elements2 = React33.useMemo(() => ({
-    ...position.elements,
-    domReference: domReferenceElement
-  }), [position.elements, domReferenceElement]);
-  const context = React33.useMemo(() => ({
-    ...position,
-    dataRef: store.context.dataRef,
-    open: open2,
-    onOpenChange: store.setOpen,
-    events: store.context.events,
-    floatingId,
-    refs,
-    elements: elements2,
-    nodeId,
-    rootStore: store
-  }), [position, refs, elements2, nodeId, store, open2, floatingId]);
-  useIsoLayoutEffect(() => {
-    if (domReferenceElement) {
-      domReferenceRef.current = domReferenceElement;
-    }
-  }, [domReferenceElement]);
-  useIsoLayoutEffect(() => {
-    store.context.dataRef.current.floatingContext = context;
-    const node = tree?.nodesRef.current.find((n) => n.id === nodeId);
-    if (node) {
-      node.context = context;
-    }
-  });
-  return React33.useMemo(() => ({
-    ...position,
-    context,
-    refs,
-    elements: elements2,
-    rootStore: store
-  }), [position, refs, elements2, context, store]);
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
-var React34 = __toESM(require_react(), 1);
-var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
-function useFocus(context, props = {}) {
-  const {
-    enabled = true,
-    delay
-  } = props;
-  const store = "rootStore" in context ? context.rootStore : context;
-  const {
-    events,
-    dataRef
-  } = store.context;
-  const blockFocusRef = React34.useRef(false);
-  const blockedReferenceRef = React34.useRef(null);
-  const keyboardModalityRef = React34.useRef(true);
-  const timeout = useTimeout();
-  React34.useEffect(() => {
-    const domReference = store.select("domReferenceElement");
-    if (!enabled) {
-      return void 0;
-    }
-    const win = getWindow(domReference);
-    function onBlur() {
-      const currentDomReference = store.select("domReferenceElement");
-      if (!store.select("open") && isHTMLElement(currentDomReference) && currentDomReference === activeElement(ownerDocument(currentDomReference))) {
-        blockFocusRef.current = true;
-        blockedReferenceRef.current = currentDomReference;
-      }
-    }
-    function onKeyDown() {
-      keyboardModalityRef.current = true;
-    }
-    function onPointerDown() {
-      keyboardModalityRef.current = false;
-    }
-    return mergeCleanups(addEventListener(win, "blur", onBlur), isMacSafari && addEventListener(win, "keydown", onKeyDown, true), isMacSafari && addEventListener(win, "pointerdown", onPointerDown, true));
-  }, [store, enabled]);
-  React34.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    function onOpenChangeLocal(details) {
-      if (details.reason === reason_parts_exports.triggerPress || details.reason === reason_parts_exports.escapeKey) {
-        const referenceElement = store.select("domReferenceElement");
-        if (isElement(referenceElement)) {
-          blockedReferenceRef.current = referenceElement;
-          blockFocusRef.current = true;
-        }
-      }
-    }
-    events.on("openchange", onOpenChangeLocal);
-    return () => {
-      events.off("openchange", onOpenChangeLocal);
-    };
-  }, [events, enabled, store]);
-  const reference = React34.useMemo(() => {
-    function resetBlockedFocus() {
-      blockFocusRef.current = false;
-      blockedReferenceRef.current = null;
-    }
-    return {
-      onMouseLeave() {
-        resetBlockedFocus();
-      },
-      onFocus(event) {
-        const focusTarget = event.currentTarget;
-        if (blockFocusRef.current) {
-          if (blockedReferenceRef.current === focusTarget) {
-            return;
-          }
-          resetBlockedFocus();
-        }
-        const target = getTarget(event.nativeEvent);
-        if (isElement(target)) {
-          if (isMacSafari && !event.relatedTarget) {
-            if (!keyboardModalityRef.current && !isTypeableElement(target)) {
-              return;
-            }
-          } else if (!matchesFocusVisible(target)) {
-            return;
-          }
-        }
-        const movedFromOtherEnabledTrigger = isTargetInsideEnabledTrigger(event.relatedTarget, store.context.triggerElements);
-        const {
-          nativeEvent,
-          currentTarget
-        } = event;
-        const delayValue = typeof delay === "function" ? delay() : delay;
-        if (store.select("open") && movedFromOtherEnabledTrigger || delayValue === 0 || delayValue === void 0) {
-          store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerFocus, nativeEvent, currentTarget));
-          return;
-        }
-        timeout.start(delayValue, () => {
-          if (blockFocusRef.current) {
-            return;
-          }
-          store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerFocus, nativeEvent, currentTarget));
-        });
-      },
-      onBlur(event) {
-        resetBlockedFocus();
-        const relatedTarget = event.relatedTarget;
-        const nativeEvent = event.nativeEvent;
-        const movedToFocusGuard = isElement(relatedTarget) && relatedTarget.hasAttribute(createAttribute("focus-guard")) && relatedTarget.getAttribute("data-type") === "outside";
-        timeout.start(0, () => {
-          const domReference = store.select("domReferenceElement");
-          const activeEl = activeElement(ownerDocument(domReference));
-          if (!relatedTarget && activeEl === domReference) {
-            return;
-          }
-          if (contains(dataRef.current.floatingContext?.refs.floating.current, activeEl) || contains(domReference, activeEl) || movedToFocusGuard) {
-            return;
-          }
-          const nextFocusedElement = relatedTarget ?? activeEl;
-          if (isTargetInsideEnabledTrigger(nextFocusedElement, store.context.triggerElements)) {
-            return;
-          }
-          store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerFocus, nativeEvent));
-        });
-      }
-    };
-  }, [dataRef, delay, store, timeout]);
-  return React34.useMemo(() => enabled ? {
-    reference,
-    trigger: reference
-  } : {}, [enabled, reference]);
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
-var React35 = __toESM(require_react(), 1);
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
-var HoverInteraction = class _HoverInteraction {
-  constructor() {
-    this.pointerType = void 0;
-    this.interactedInside = false;
-    this.handler = void 0;
-    this.blockMouseMove = true;
-    this.performedPointerEventsMutation = false;
-    this.pointerEventsScopeElement = null;
-    this.pointerEventsReferenceElement = null;
-    this.pointerEventsFloatingElement = null;
-    this.restTimeoutPending = false;
-    this.openChangeTimeout = new Timeout();
-    this.restTimeout = new Timeout();
-    this.handleCloseOptions = void 0;
-  }
-  static create() {
-    return new _HoverInteraction();
-  }
-  dispose = () => {
-    this.openChangeTimeout.clear();
-    this.restTimeout.clear();
-  };
-  disposeEffect = () => {
-    return this.dispose;
-  };
-};
-var pointerEventsMutationOwnerByScopeElement = /* @__PURE__ */ new WeakMap();
-function clearSafePolygonPointerEventsMutation(instance) {
-  if (!instance.performedPointerEventsMutation) {
-    return;
-  }
-  const scopeElement = instance.pointerEventsScopeElement;
-  if (scopeElement && pointerEventsMutationOwnerByScopeElement.get(scopeElement) === instance) {
-    instance.pointerEventsScopeElement?.style.removeProperty("pointer-events");
-    instance.pointerEventsReferenceElement?.style.removeProperty("pointer-events");
-    instance.pointerEventsFloatingElement?.style.removeProperty("pointer-events");
-    pointerEventsMutationOwnerByScopeElement.delete(scopeElement);
-  }
-  instance.performedPointerEventsMutation = false;
-  instance.pointerEventsScopeElement = null;
-  instance.pointerEventsReferenceElement = null;
-  instance.pointerEventsFloatingElement = null;
-}
-function applySafePolygonPointerEventsMutation(instance, options) {
-  const {
-    scopeElement,
-    referenceElement,
-    floatingElement
-  } = options;
-  const existingOwner = pointerEventsMutationOwnerByScopeElement.get(scopeElement);
-  if (existingOwner && existingOwner !== instance) {
-    clearSafePolygonPointerEventsMutation(existingOwner);
-  }
-  clearSafePolygonPointerEventsMutation(instance);
-  instance.performedPointerEventsMutation = true;
-  instance.pointerEventsScopeElement = scopeElement;
-  instance.pointerEventsReferenceElement = referenceElement;
-  instance.pointerEventsFloatingElement = floatingElement;
-  pointerEventsMutationOwnerByScopeElement.set(scopeElement, instance);
-  scopeElement.style.pointerEvents = "none";
-  referenceElement.style.pointerEvents = "auto";
-  floatingElement.style.pointerEvents = "auto";
-}
-function useHoverInteractionSharedState(store) {
-  const data = store.context.dataRef.current;
-  const instance = useRefWithInit(() => data.hoverInteractionState ?? HoverInteraction.create()).current;
-  if (!data.hoverInteractionState) {
-    data.hoverInteractionState = instance;
-  }
-  useOnMount(data.hoverInteractionState.disposeEffect);
-  return data.hoverInteractionState;
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
-function useHoverFloatingInteraction(context, parameters = {}) {
-  const {
-    enabled = true,
-    closeDelay: closeDelayProp = 0,
-    nodeId: nodeIdProp
-  } = parameters;
-  const store = "rootStore" in context ? context.rootStore : context;
-  const open2 = store.useState("open");
-  const floatingElement = store.useState("floatingElement");
-  const domReferenceElement = store.useState("domReferenceElement");
-  const {
-    dataRef
-  } = store.context;
-  const tree = useFloatingTree();
-  const parentId = useFloatingParentNodeId();
-  const instance = useHoverInteractionSharedState(store);
-  const childClosedTimeout = useTimeout();
-  const isClickLikeOpenEvent2 = useStableCallback(() => {
-    return isClickLikeOpenEvent(dataRef.current.openEvent?.type, instance.interactedInside);
-  });
-  const isHoverOpen = useStableCallback(() => {
-    return isHoverOpenEvent(dataRef.current.openEvent?.type);
-  });
-  const clearPointerEvents = useStableCallback(() => {
-    clearSafePolygonPointerEventsMutation(instance);
-  });
-  useIsoLayoutEffect(() => {
-    if (!open2) {
-      instance.pointerType = void 0;
-      instance.restTimeoutPending = false;
-      instance.interactedInside = false;
-      clearPointerEvents();
-    }
-  }, [open2, instance, clearPointerEvents]);
-  React35.useEffect(() => {
-    return clearPointerEvents;
-  }, [clearPointerEvents]);
-  useIsoLayoutEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    if (open2 && instance.handleCloseOptions?.blockPointerEvents && isHoverOpen() && isElement(domReferenceElement) && floatingElement) {
-      const ref = domReferenceElement;
-      const floatingEl = floatingElement;
-      const doc = ownerDocument(floatingElement);
-      const parentFloating = tree?.nodesRef.current.find((node) => node.id === parentId)?.context?.elements.floating;
-      if (parentFloating) {
-        parentFloating.style.pointerEvents = "";
-      }
-      const cachedScopeElement = instance.pointerEventsScopeElement !== floatingEl ? instance.pointerEventsScopeElement : null;
-      const parentScopeElement = parentFloating !== floatingEl ? parentFloating : null;
-      const scopeElement = instance.handleCloseOptions?.getScope?.() ?? cachedScopeElement ?? parentScopeElement ?? ref.closest("[data-rootownerid]") ?? doc.body;
-      applySafePolygonPointerEventsMutation(instance, {
-        scopeElement,
-        referenceElement: ref,
-        floatingElement: floatingEl
-      });
-      return () => {
-        clearPointerEvents();
-      };
-    }
-    return void 0;
-  }, [enabled, open2, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
-  React35.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    function hasParentChildren() {
-      return !!(tree && parentId && getNodeChildren(tree.nodesRef.current, parentId).length > 0);
-    }
-    function closeWithDelay(event) {
-      const closeDelay = getDelay(closeDelayProp, "close", instance.pointerType);
-      const close = () => {
-        store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerHover, event));
-        tree?.events.emit("floating.closed", event);
-      };
-      if (closeDelay) {
-        instance.openChangeTimeout.start(closeDelay, close);
-      } else {
-        instance.openChangeTimeout.clear();
-        close();
-      }
-    }
-    function handleInteractInside(event) {
-      const target = getTarget(event);
-      if (!isInteractiveElement(target)) {
-        instance.interactedInside = false;
-        return;
-      }
-      instance.interactedInside = target?.closest("[aria-haspopup]") != null;
-    }
-    function onFloatingMouseEnter() {
-      instance.openChangeTimeout.clear();
-      childClosedTimeout.clear();
-      tree?.events.off("floating.closed", onNodeClosed);
-      clearPointerEvents();
-    }
-    function onFloatingMouseLeave(event) {
-      if (hasParentChildren() && tree) {
-        tree.events.on("floating.closed", onNodeClosed);
-        return;
-      }
-      if (isTargetInsideEnabledTrigger(event.relatedTarget, store.context.triggerElements)) {
-        return;
-      }
-      const currentNodeId = dataRef.current.floatingContext?.nodeId ?? nodeIdProp;
-      const relatedTarget = event.relatedTarget;
-      const isMovingIntoDescendantFloating = tree && currentNodeId && isElement(relatedTarget) && getNodeChildren(tree.nodesRef.current, currentNodeId, false).some((node) => contains(node.context?.elements.floating, relatedTarget));
-      if (isMovingIntoDescendantFloating) {
-        return;
-      }
-      if (instance.handler) {
-        instance.handler(event);
-        return;
-      }
-      clearPointerEvents();
-      if (isHoverOpen() && !isClickLikeOpenEvent2()) {
-        closeWithDelay(event);
-      }
-    }
-    function onNodeClosed(event) {
-      if (!tree || !parentId || hasParentChildren()) {
-        return;
-      }
-      childClosedTimeout.start(0, () => {
-        tree.events.off("floating.closed", onNodeClosed);
-        store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerHover, event));
-        tree.events.emit("floating.closed", event);
-      });
-    }
-    const floating = floatingElement;
-    return mergeCleanups(floating && addEventListener(floating, "mouseenter", onFloatingMouseEnter), floating && addEventListener(floating, "mouseleave", onFloatingMouseLeave), floating && addEventListener(floating, "pointerdown", handleInteractInside, true), () => {
-      tree?.events.off("floating.closed", onNodeClosed);
-    });
-  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isHoverOpen, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
-var React36 = __toESM(require_react(), 1);
-var ReactDOM5 = __toESM(require_react_dom(), 1);
-var EMPTY_REF = {
-  current: null
-};
-function useHoverReferenceInteraction(context, props = {}) {
-  const {
-    enabled = true,
-    delay = 0,
-    handleClose = null,
-    mouseOnly = false,
-    restMs = 0,
-    move = true,
-    triggerElementRef = EMPTY_REF,
-    externalTree,
-    isActiveTrigger = true,
-    getHandleCloseContext,
-    isClosing,
-    shouldOpen: shouldOpenProp,
-    guardStaleOpen = false
-  } = props;
-  const store = "rootStore" in context ? context.rootStore : context;
-  const {
-    dataRef,
-    events
-  } = store.context;
-  const tree = useFloatingTree(externalTree);
-  const instance = useHoverInteractionSharedState(store);
-  const isHoverCloseActiveRef = React36.useRef(false);
-  const handleCloseRef = useValueAsRef(handleClose);
-  const delayRef = useValueAsRef(delay);
-  const restMsRef = useValueAsRef(restMs);
-  const enabledRef = useValueAsRef(enabled);
-  const shouldOpenRef = useValueAsRef(shouldOpenProp);
-  const isClosingRef = useValueAsRef(isClosing);
-  const isClickLikeOpenEvent2 = useStableCallback(() => {
-    return isClickLikeOpenEvent(dataRef.current.openEvent?.type, instance.interactedInside);
-  });
-  const checkShouldOpen = useStableCallback(() => {
-    return shouldOpenRef.current?.() !== false;
-  });
-  const isOverInactiveTrigger = useStableCallback((currentDomReference, currentTarget, target) => {
-    const allTriggers = store.context.triggerElements;
-    if (allTriggers.hasElement(currentTarget)) {
-      return !currentDomReference || !contains(currentDomReference, currentTarget);
-    }
-    if (!isElement(target)) {
-      return false;
-    }
-    const targetElement = target;
-    return allTriggers.hasMatchingElement((trigger) => contains(trigger, targetElement)) && (!currentDomReference || !contains(currentDomReference, targetElement));
-  });
-  const cleanupMouseMoveHandler = useStableCallback(() => {
-    if (!instance.handler) {
-      return;
-    }
-    const doc = ownerDocument(store.select("domReferenceElement"));
-    doc.removeEventListener("mousemove", instance.handler);
-    instance.handler = void 0;
-  });
-  const clearPointerEvents = useStableCallback(() => {
-    clearSafePolygonPointerEventsMutation(instance);
-  });
-  if (isActiveTrigger) {
-    instance.handleCloseOptions = handleClose?.__options;
-  }
-  React36.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
-  React36.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    function onOpenChangeLocal(details) {
-      if (!details.open) {
-        isHoverCloseActiveRef.current = details.reason === reason_parts_exports.triggerHover;
-        cleanupMouseMoveHandler();
-        instance.openChangeTimeout.clear();
-        instance.restTimeout.clear();
-        instance.blockMouseMove = true;
-        instance.restTimeoutPending = false;
-      } else {
-        isHoverCloseActiveRef.current = false;
-      }
-    }
-    events.on("openchange", onOpenChangeLocal);
-    return () => {
-      events.off("openchange", onOpenChangeLocal);
-    };
-  }, [enabled, events, instance, cleanupMouseMoveHandler]);
-  React36.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    function closeWithDelay(event, runElseBranch = true) {
-      const closeDelay = getDelay(delayRef.current, "close", instance.pointerType);
-      if (closeDelay) {
-        instance.openChangeTimeout.start(closeDelay, () => {
-          store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerHover, event));
-          tree?.events.emit("floating.closed", event);
-        });
-      } else if (runElseBranch) {
-        instance.openChangeTimeout.clear();
-        store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerHover, event));
-        tree?.events.emit("floating.closed", event);
-      }
-    }
-    const trigger = triggerElementRef.current ?? (isActiveTrigger ? store.select("domReferenceElement") : null);
-    if (!isElement(trigger)) {
-      return void 0;
-    }
-    function onMouseEnter(event) {
-      instance.openChangeTimeout.clear();
-      instance.blockMouseMove = false;
-      if (mouseOnly && !isMouseLikePointerType(instance.pointerType)) {
-        return;
-      }
-      const restMsValue = getRestMs(restMsRef.current);
-      const openDelay = getDelay(delayRef.current, "open", instance.pointerType);
-      const eventTarget = getTarget(event);
-      const currentTarget = event.currentTarget ?? null;
-      const currentDomReference = store.select("domReferenceElement");
-      let triggerNode = currentTarget;
-      if (isElement(eventTarget) && !store.context.triggerElements.hasElement(eventTarget)) {
-        for (const triggerElement of store.context.triggerElements.elements()) {
-          if (contains(triggerElement, eventTarget)) {
-            triggerNode = triggerElement;
-            break;
-          }
-        }
-      }
-      if (isElement(currentTarget) && isElement(currentDomReference) && !store.context.triggerElements.hasElement(currentTarget) && contains(currentTarget, currentDomReference)) {
-        triggerNode = currentDomReference;
-      }
-      const isOverInactive = triggerNode == null ? false : isOverInactiveTrigger(currentDomReference, triggerNode, eventTarget);
-      const isOpen = store.select("open");
-      const isInClosingTransition = isClosingRef.current?.() ?? store.select("transitionStatus") === "ending";
-      const isHoverCloseTransition = !isOpen && isInClosingTransition && isHoverCloseActiveRef.current;
-      const isReenteringSameTriggerDuringCloseTransition = !isOverInactive && isElement(triggerNode) && isElement(currentDomReference) && contains(currentDomReference, triggerNode) && isHoverCloseTransition;
-      const isRestOnlyDelay = restMsValue > 0 && !openDelay;
-      const shouldOpenImmediately = isOverInactive && (isOpen || isHoverCloseTransition) || isReenteringSameTriggerDuringCloseTransition;
-      const shouldOpen = !isOpen || isOverInactive;
-      if (shouldOpenImmediately) {
-        if (checkShouldOpen()) {
-          store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, event, triggerNode));
-        }
-        return;
-      }
-      if (isRestOnlyDelay) {
-        return;
-      }
-      if (openDelay) {
-        instance.openChangeTimeout.start(openDelay, () => {
-          if (shouldOpen && checkShouldOpen()) {
-            store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, event, triggerNode));
-          }
-        });
-      } else if (shouldOpen) {
-        if (checkShouldOpen()) {
-          store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, event, triggerNode));
-        }
-      }
-    }
-    function onMouseLeave(event) {
-      if (isClickLikeOpenEvent2()) {
-        clearPointerEvents();
-        return;
-      }
-      cleanupMouseMoveHandler();
-      const domReferenceElement = store.select("domReferenceElement");
-      const doc = ownerDocument(domReferenceElement);
-      instance.restTimeout.clear();
-      instance.restTimeoutPending = false;
-      const handleCloseContextBase = dataRef.current.floatingContext ?? getHandleCloseContext?.();
-      if (isTargetInsideEnabledTrigger(event.relatedTarget, store.context.triggerElements)) {
-        return;
-      }
-      if (handleCloseRef.current && handleCloseContextBase) {
-        if (!store.select("open")) {
-          instance.openChangeTimeout.clear();
-        }
-        const currentTrigger = triggerElementRef.current;
-        instance.handler = handleCloseRef.current({
-          ...handleCloseContextBase,
-          tree,
-          x: event.clientX,
-          y: event.clientY,
-          onClose() {
-            clearPointerEvents();
-            cleanupMouseMoveHandler();
-            if (enabledRef.current && !isClickLikeOpenEvent2() && currentTrigger === store.select("domReferenceElement")) {
-              closeWithDelay(event, true);
-            }
-          }
-        });
-        doc.addEventListener("mousemove", instance.handler);
-        instance.handler(event);
-        return;
-      }
-      const shouldClose = instance.pointerType === "touch" ? !contains(store.select("floatingElement"), event.relatedTarget) : true;
-      if (shouldClose) {
-        closeWithDelay(event);
-      }
-    }
-    function onMouseOut(event) {
-      if (contains(trigger, event.relatedTarget)) {
-        return;
-      }
-      instance.openChangeTimeout.clear();
-      instance.restTimeout.clear();
-      instance.restTimeoutPending = false;
-    }
-    const staleOpenGuard = guardStaleOpen ? addEventListener(trigger, "mouseout", onMouseOut) : void 0;
-    if (move) {
-      return mergeCleanups(addEventListener(trigger, "mousemove", onMouseEnter, {
-        once: true
-      }), addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
-    }
-    return mergeCleanups(addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
-  }, [cleanupMouseMoveHandler, clearPointerEvents, dataRef, delayRef, store, enabled, handleCloseRef, instance, isActiveTrigger, isOverInactiveTrigger, isClickLikeOpenEvent2, mouseOnly, move, restMsRef, triggerElementRef, tree, enabledRef, getHandleCloseContext, isClosingRef, checkShouldOpen, guardStaleOpen]);
-  return React36.useMemo(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    function setPointerRef(event) {
-      instance.pointerType = event.pointerType;
-    }
-    return {
-      onPointerDown: setPointerRef,
-      onPointerEnter: setPointerRef,
-      onMouseMove(event) {
-        const {
-          nativeEvent
-        } = event;
-        const trigger = event.currentTarget;
-        const currentDomReference = store.select("domReferenceElement");
-        const currentOpen = store.select("open");
-        const isOverInactive = isOverInactiveTrigger(currentDomReference, trigger, event.target);
-        if (mouseOnly && !isMouseLikePointerType(instance.pointerType)) {
-          return;
-        }
-        if (currentOpen && isOverInactive && instance.handleCloseOptions?.blockPointerEvents) {
-          const floatingElement = store.select("floatingElement");
-          if (floatingElement) {
-            const scopeElement = instance.handleCloseOptions?.getScope?.() ?? trigger.ownerDocument.body;
-            applySafePolygonPointerEventsMutation(instance, {
-              scopeElement,
-              referenceElement: trigger,
-              floatingElement
-            });
-          }
-        }
-        const restMsValue = getRestMs(restMsRef.current);
-        if (currentOpen && !isOverInactive || restMsValue === 0) {
-          return;
-        }
-        if (!isOverInactive && instance.restTimeoutPending && event.movementX ** 2 + event.movementY ** 2 < 2) {
-          return;
-        }
-        instance.restTimeout.clear();
-        function handleMouseMove() {
-          instance.restTimeoutPending = false;
-          if (isClickLikeOpenEvent2()) {
-            return;
-          }
-          const latestOpen = store.select("open");
-          if (!instance.blockMouseMove && (!latestOpen || isOverInactive) && checkShouldOpen()) {
-            store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, nativeEvent, trigger));
-          }
-        }
-        if (instance.pointerType === "touch") {
-          ReactDOM5.flushSync(() => {
-            handleMouseMove();
-          });
-        } else if (isOverInactive && currentOpen) {
-          handleMouseMove();
-        } else {
-          instance.restTimeoutPending = true;
-          instance.restTimeout.start(restMsValue, handleMouseMove);
-        }
-      }
-    };
-  }, [enabled, instance, isClickLikeOpenEvent2, isOverInactiveTrigger, mouseOnly, store, restMsRef, checkShouldOpen]);
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useListNavigation.mjs
-var React37 = __toESM(require_react(), 1);
-var ESCAPE = "Escape";
-function isStationaryWebKitPointer(event) {
-  return parts_exports.engine.webkit && event.movementX === 0 && event.movementY === 0;
-}
-function doSwitch(orientation, vertical, horizontal) {
-  switch (orientation) {
-    case "vertical":
-      return vertical;
-    case "horizontal":
-      return horizontal;
-    default:
-      return vertical || horizontal;
-  }
-}
-function isMainOrientationKey(key, orientation) {
-  const vertical = key === ARROW_UP || key === ARROW_DOWN;
-  const horizontal = key === ARROW_LEFT || key === ARROW_RIGHT;
-  return doSwitch(orientation, vertical, horizontal);
-}
-function isMainOrientationToEndKey(key, orientation, rtl) {
-  const vertical = key === ARROW_DOWN;
-  const horizontal = rtl ? key === ARROW_LEFT : key === ARROW_RIGHT;
-  return doSwitch(orientation, vertical, horizontal) || key === "Enter" || key === " " || key === "";
-}
-function isCrossOrientationOpenKey(key, orientation, rtl) {
-  const vertical = rtl ? key === ARROW_LEFT : key === ARROW_RIGHT;
-  const horizontal = key === ARROW_DOWN;
-  return doSwitch(orientation, vertical, horizontal);
-}
-function isCrossOrientationCloseKey(key, orientation, rtl, grid) {
-  const vertical = rtl ? key === ARROW_RIGHT : key === ARROW_LEFT;
-  const horizontal = key === ARROW_UP;
-  if (orientation === "both" || orientation === "horizontal" && grid) {
-    return key === ESCAPE;
-  }
-  return doSwitch(orientation, vertical, horizontal);
-}
-function useListNavigation(context, props) {
-  const {
-    listRef,
-    activeIndex,
-    onNavigate: onNavigateProp = () => {
-    },
-    enabled = true,
-    selectedIndex = null,
-    allowEscape = false,
-    loopFocus = false,
-    nested = false,
-    rtl = false,
-    virtual = false,
-    focusItemOnOpen = "auto",
-    focusItemOnHover = true,
-    openOnArrowKeyDown = true,
-    disabledIndices = void 0,
-    orientation = "vertical",
-    parentOrientation,
-    id,
-    resetOnPointerLeave = true,
-    externalTree,
-    grid: navigateGrid
-  } = props;
-  const isGrid = navigateGrid != null;
-  if (true) {
-    if (allowEscape) {
-      if (!loopFocus) {
-        console.warn("`useListNavigation` looping must be enabled to allow escaping.");
-      }
-      if (!virtual) {
-        console.warn("`useListNavigation` must be virtual to allow escaping.");
-      }
-    }
-    if (orientation === "vertical" && isGrid) {
-      console.warn("In grid list navigation mode, the `orientation` should", 'be either "horizontal" or "both".');
-    }
-  }
-  const store = "rootStore" in context ? context.rootStore : context;
-  const open2 = store.useState("open");
-  const floatingElement = store.useState("floatingElement");
-  const domReferenceElement = store.useState("domReferenceElement");
-  const dataRef = store.context.dataRef;
-  const floatingFocusElement = getFloatingFocusElement(floatingElement);
-  const typeableComboboxReference = isTypeableCombobox(domReferenceElement);
-  const floatingFocusElementRef = useValueAsRef(floatingFocusElement);
-  const parentId = useFloatingParentNodeId();
-  const tree = useFloatingTree(externalTree);
-  const focusItemOnOpenRef = React37.useRef(focusItemOnOpen);
-  const indexRef = React37.useRef(selectedIndex ?? -1);
-  const keyRef = React37.useRef(null);
-  const isPointerModalityRef = React37.useRef(true);
-  const onNavigate = useStableCallback((event) => {
-    onNavigateProp(indexRef.current === -1 ? null : indexRef.current, event);
-  });
-  const previousMountedRef = React37.useRef(!!floatingElement);
-  const previousOpenRef = React37.useRef(open2);
-  const forceSyncFocusRef = React37.useRef(false);
-  const forceScrollIntoViewRef = React37.useRef(false);
-  const cancelQueuedFocusRef = React37.useRef(null);
-  const disabledIndicesRef = useValueAsRef(disabledIndices);
-  const latestOpenRef = useValueAsRef(open2);
-  const selectedIndexRef = useValueAsRef(selectedIndex);
-  const resetOnPointerLeaveRef = useValueAsRef(resetOnPointerLeave);
-  const focusFrame = useAnimationFrame();
-  const waitForListPopulatedFrame = useAnimationFrame();
-  const focusItem = useStableCallback(() => {
-    function runFocus(item2) {
-      if (virtual) {
-        tree?.events.emit("virtualfocus", item2);
-      } else {
-        cancelQueuedFocusRef.current = enqueueFocus(item2, {
-          sync: forceSyncFocusRef.current,
-          preventScroll: true
-        });
-      }
-    }
-    const initialItem = listRef.current[indexRef.current];
-    const forceScrollIntoView = forceScrollIntoViewRef.current;
-    if (initialItem) {
-      runFocus(initialItem);
-    }
-    const scheduler2 = forceSyncFocusRef.current ? (callback) => callback() : (callback) => focusFrame.request(callback);
-    scheduler2(() => {
-      const waitedItem = listRef.current[indexRef.current] || initialItem;
-      if (!waitedItem) {
-        return;
-      }
-      if (!initialItem) {
-        runFocus(waitedItem);
-      }
-      const shouldScrollIntoView = (
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        item && (forceScrollIntoView || !isPointerModalityRef.current)
-      );
-      if (shouldScrollIntoView) {
-        waitedItem.scrollIntoView?.({
-          block: "nearest",
-          inline: "nearest"
-        });
-      }
-    });
-  });
-  useIsoLayoutEffect(() => {
-    dataRef.current.orientation = orientation;
-  }, [dataRef, orientation]);
-  useIsoLayoutEffect(() => {
-    if (!enabled) {
-      return;
-    }
-    if (open2 && floatingElement) {
-      indexRef.current = selectedIndex ?? -1;
-      if (focusItemOnOpenRef.current && selectedIndex != null) {
-        forceScrollIntoViewRef.current = true;
-        onNavigate();
-      }
-    } else if (previousMountedRef.current) {
-      indexRef.current = -1;
-      onNavigate();
-    }
-  }, [enabled, open2, floatingElement, selectedIndex, onNavigate]);
-  useIsoLayoutEffect(() => {
-    if (!enabled) {
-      return;
-    }
-    if (!open2) {
-      forceSyncFocusRef.current = false;
-      return;
-    }
-    if (!floatingElement) {
-      return;
-    }
-    if (activeIndex == null) {
-      forceSyncFocusRef.current = false;
-      if (selectedIndexRef.current != null) {
-        return;
-      }
-      if (previousMountedRef.current) {
-        indexRef.current = -1;
-        focusItem();
-      }
-      if ((!previousOpenRef.current || !previousMountedRef.current) && focusItemOnOpenRef.current && (keyRef.current != null || focusItemOnOpenRef.current === true && keyRef.current == null)) {
-        let runs = 0;
-        const waitForListPopulated = () => {
-          if (listRef.current[0] == null) {
-            if (runs < 2) {
-              const scheduler2 = runs ? (callback) => waitForListPopulatedFrame.request(callback) : queueMicrotask;
-              scheduler2(waitForListPopulated);
-            }
-            runs += 1;
-          } else {
-            indexRef.current = keyRef.current == null || isMainOrientationToEndKey(keyRef.current, orientation, rtl) || nested ? getMinListIndex(listRef) : getMaxListIndex(listRef);
-            keyRef.current = null;
-            onNavigate();
-          }
-        };
-        waitForListPopulated();
-      }
-    } else if (!isIndexOutOfListBounds(listRef.current, activeIndex)) {
-      indexRef.current = activeIndex;
-      focusItem();
-      forceScrollIntoViewRef.current = false;
-    }
-  }, [enabled, open2, floatingElement, activeIndex, selectedIndexRef, nested, listRef, orientation, rtl, onNavigate, focusItem, waitForListPopulatedFrame]);
-  useIsoLayoutEffect(() => {
-    if (!enabled || floatingElement || !tree || virtual || !previousMountedRef.current) {
-      return;
-    }
-    const nodes = tree.nodesRef.current;
-    const parent = nodes.find((node) => node.id === parentId)?.context?.elements.floating;
-    const activeEl = activeElement(ownerDocument(domReferenceElement ?? parent ?? null));
-    const treeContainsActiveEl = nodes.some((node) => node.context && contains(node.context.elements.floating, activeEl));
-    if (parent && !treeContainsActiveEl && isPointerModalityRef.current) {
-      parent.focus({
-        preventScroll: true
-      });
-    }
-  }, [enabled, floatingElement, domReferenceElement, tree, parentId, virtual]);
-  useIsoLayoutEffect(() => {
-    previousOpenRef.current = open2;
-    previousMountedRef.current = !!floatingElement;
-  });
-  useIsoLayoutEffect(() => {
-    if (!open2) {
-      keyRef.current = null;
-      focusItemOnOpenRef.current = focusItemOnOpen;
-    }
-  }, [open2, focusItemOnOpen]);
-  const hasActiveIndex = activeIndex != null;
-  const syncCurrentTarget = useStableCallback((event) => {
-    if (!latestOpenRef.current) {
-      return;
-    }
-    const index2 = listRef.current.indexOf(event.currentTarget);
-    if (index2 !== -1 && (indexRef.current !== index2 || activeIndex !== index2)) {
-      indexRef.current = index2;
-      onNavigate(event);
-    }
-  });
-  const getParentOrientation = useStableCallback(() => {
-    return parentOrientation ?? tree?.nodesRef.current.find((node) => node.id === parentId)?.context?.dataRef?.current.orientation;
-  });
-  const getMinEnabledIndex = useStableCallback(() => {
-    return getMinListIndex(listRef, disabledIndicesRef.current);
-  });
-  const commonOnKeyDown = useStableCallback((event) => {
-    isPointerModalityRef.current = false;
-    forceSyncFocusRef.current = true;
-    if (event.which === 229) {
-      return;
-    }
-    if (!latestOpenRef.current && event.currentTarget === floatingFocusElementRef.current) {
-      return;
-    }
-    if (nested && isCrossOrientationCloseKey(event.key, orientation, rtl, isGrid)) {
-      if (!isMainOrientationKey(event.key, getParentOrientation())) {
-        stopEvent(event);
-      }
-      store.setOpen(false, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
-      if (isHTMLElement(domReferenceElement)) {
-        if (virtual) {
-          tree?.events.emit("virtualfocus", domReferenceElement);
-        } else {
-          domReferenceElement.focus();
-        }
-      }
-      return;
-    }
-    const currentIndex = indexRef.current;
-    const minIndex = getMinListIndex(listRef, disabledIndices);
-    const maxIndex = getMaxListIndex(listRef, disabledIndices);
-    if (!typeableComboboxReference) {
-      if (event.key === "Home") {
-        stopEvent(event);
-        indexRef.current = minIndex;
-        onNavigate(event);
-      }
-      if (event.key === "End") {
-        stopEvent(event);
-        indexRef.current = maxIndex;
-        onNavigate(event);
-      }
-    }
-    if (navigateGrid != null) {
-      const index2 = navigateGrid(event, indexRef.current, listRef, orientation, loopFocus, rtl, disabledIndices, minIndex, maxIndex);
-      if (index2 != null) {
-        indexRef.current = index2;
-        onNavigate(event);
-      }
-      if (orientation === "both") {
-        return;
-      }
-    }
-    if (isMainOrientationKey(event.key, orientation)) {
-      stopEvent(event);
-      if (open2 && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
-        indexRef.current = isMainOrientationToEndKey(event.key, orientation, rtl) ? minIndex : maxIndex;
-        onNavigate(event);
-        return;
-      }
-      if (isMainOrientationToEndKey(event.key, orientation, rtl)) {
-        if (loopFocus) {
-          if (currentIndex >= maxIndex) {
-            if (allowEscape && currentIndex !== listRef.current.length) {
-              indexRef.current = -1;
-            } else {
-              forceSyncFocusRef.current = false;
-              indexRef.current = minIndex;
-            }
-          } else {
-            indexRef.current = findNonDisabledListIndex(listRef.current, {
-              startingIndex: currentIndex,
-              disabledIndices
-            });
-          }
-        } else {
-          indexRef.current = Math.min(maxIndex, findNonDisabledListIndex(listRef.current, {
-            startingIndex: currentIndex,
-            disabledIndices
-          }));
-        }
-      } else if (loopFocus) {
-        if (currentIndex <= minIndex) {
-          if (allowEscape && currentIndex !== -1) {
-            indexRef.current = listRef.current.length;
-          } else {
-            forceSyncFocusRef.current = false;
-            indexRef.current = maxIndex;
-          }
-        } else {
-          indexRef.current = findNonDisabledListIndex(listRef.current, {
-            startingIndex: currentIndex,
-            decrement: true,
-            disabledIndices
-          });
-        }
-      } else {
-        indexRef.current = Math.max(minIndex, findNonDisabledListIndex(listRef.current, {
-          startingIndex: currentIndex,
-          decrement: true,
-          disabledIndices
-        }));
-      }
-      if (isIndexOutOfListBounds(listRef.current, indexRef.current)) {
-        indexRef.current = -1;
-      }
-      onNavigate(event);
-    }
-  });
-  const item = React37.useMemo(() => {
-    const itemProps = {
-      onFocus(event) {
-        forceSyncFocusRef.current = true;
-        syncCurrentTarget(event);
-      },
-      onClick: ({
-        currentTarget
-      }) => currentTarget.focus({
-        preventScroll: true
-      }),
-      // Safari
-      onMouseMove(event) {
-        if (isStationaryWebKitPointer(event)) {
-          return;
-        }
-        forceSyncFocusRef.current = true;
-        forceScrollIntoViewRef.current = false;
-        if (focusItemOnHover) {
-          syncCurrentTarget(event);
-        }
-      },
-      onPointerLeave(event) {
-        if (!latestOpenRef.current || !isPointerModalityRef.current || event.pointerType === "touch") {
-          return;
-        }
-        forceSyncFocusRef.current = true;
-        const relatedTarget = event.relatedTarget;
-        if (!focusItemOnHover || listRef.current.includes(relatedTarget)) {
-          return;
-        }
-        if (!resetOnPointerLeaveRef.current) {
-          return;
-        }
-        cancelQueuedFocusRef.current?.();
-        cancelQueuedFocusRef.current = null;
-        indexRef.current = -1;
-        onNavigate(event);
-        if (!virtual) {
-          const floatingFocusEl = floatingFocusElementRef.current;
-          const activeEl = activeElement(ownerDocument(floatingFocusEl));
-          if (floatingFocusEl && contains(floatingFocusEl, activeEl)) {
-            floatingFocusEl.focus({
-              preventScroll: true
-            });
-          }
-        }
-      }
-    };
-    return itemProps;
-  }, [syncCurrentTarget, latestOpenRef, floatingFocusElementRef, focusItemOnHover, listRef, onNavigate, resetOnPointerLeaveRef, virtual]);
-  const ariaActiveDescendantProp = React37.useMemo(() => {
-    return virtual && open2 && hasActiveIndex && {
-      "aria-activedescendant": `${id}-${activeIndex}`
-    };
-  }, [virtual, open2, hasActiveIndex, id, activeIndex]);
-  const floating = React37.useMemo(() => {
-    return {
-      ...!typeableComboboxReference ? ariaActiveDescendantProp : {},
-      onKeyDown(event) {
-        if (event.key === "Tab" && event.shiftKey && open2 && !virtual) {
-          const target = getTarget(event.nativeEvent);
-          if (target && !contains(floatingFocusElementRef.current, target)) {
-            return;
-          }
-          stopEvent(event);
-          store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent));
-          if (isHTMLElement(domReferenceElement)) {
-            domReferenceElement.focus();
-          }
-          return;
-        }
-        commonOnKeyDown(event);
-      },
-      onPointerMove(event) {
-        if (isStationaryWebKitPointer(event)) {
-          return;
-        }
-        isPointerModalityRef.current = true;
-      }
-    };
-  }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, typeableComboboxReference, store, open2, virtual, domReferenceElement]);
-  const trigger = React37.useMemo(() => {
-    function openOnNavigationKeyDown(event) {
-      store.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
-    }
-    function checkVirtualMouse(event) {
-      if (focusItemOnOpen === "auto" && isVirtualClick(event.nativeEvent)) {
-        focusItemOnOpenRef.current = !virtual;
-      }
-    }
-    function checkVirtualPointer(event) {
-      focusItemOnOpenRef.current = focusItemOnOpen;
-      if (focusItemOnOpen === "auto" && isVirtualPointerEvent(event.nativeEvent)) {
-        focusItemOnOpenRef.current = true;
-      }
-    }
-    return {
-      onKeyDown(event) {
-        const currentOpen = store.select("open");
-        isPointerModalityRef.current = false;
-        const isArrowKey = event.key.startsWith("Arrow");
-        const isParentCrossOpenKey = isCrossOrientationOpenKey(event.key, getParentOrientation(), rtl);
-        const isMainKey = isMainOrientationKey(event.key, orientation);
-        const isNavigationKey = (nested ? isParentCrossOpenKey : isMainKey) || event.key === "Enter" || event.key.trim() === "";
-        if (virtual && currentOpen) {
-          return commonOnKeyDown(event);
-        }
-        if (!currentOpen && !openOnArrowKeyDown && isArrowKey) {
-          return void 0;
-        }
-        if (isNavigationKey) {
-          const isParentMainKey = isMainOrientationKey(event.key, getParentOrientation());
-          keyRef.current = nested && isParentMainKey ? null : event.key;
-        }
-        if (nested) {
-          if (isParentCrossOpenKey) {
-            stopEvent(event);
-            if (currentOpen) {
-              indexRef.current = getMinEnabledIndex();
-              onNavigate(event);
-            } else {
-              openOnNavigationKeyDown(event);
-            }
-          }
-          return void 0;
-        }
-        if (isMainKey) {
-          if (selectedIndexRef.current != null) {
-            indexRef.current = selectedIndexRef.current;
-          }
-          stopEvent(event);
-          if (!currentOpen && openOnArrowKeyDown) {
-            openOnNavigationKeyDown(event);
-          } else {
-            commonOnKeyDown(event);
-          }
-          if (currentOpen) {
-            onNavigate(event);
-          }
-        }
-        return void 0;
-      },
-      onFocus(event) {
-        if (store.select("open") && !virtual) {
-          indexRef.current = -1;
-          onNavigate(event);
-        }
-      },
-      onPointerDown: checkVirtualPointer,
-      onPointerEnter: checkVirtualPointer,
-      onMouseDown: checkVirtualMouse,
-      onClick: checkVirtualMouse
-    };
-  }, [commonOnKeyDown, focusItemOnOpen, getMinEnabledIndex, nested, onNavigate, store, openOnArrowKeyDown, orientation, getParentOrientation, rtl, selectedIndexRef, virtual]);
-  const reference = React37.useMemo(() => {
-    return {
-      ...ariaActiveDescendantProp,
-      ...trigger
-    };
-  }, [ariaActiveDescendantProp, trigger]);
-  return React37.useMemo(() => enabled ? {
-    reference,
-    floating,
-    item,
-    trigger
-  } : {}, [enabled, reference, floating, trigger, item]);
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/hooks/useTypeahead.mjs
-var React38 = __toESM(require_react(), 1);
-function useTypeahead(context, props) {
-  const {
-    listRef,
-    elementsRef,
-    activeIndex,
-    onMatch: onMatchProp,
-    disabledIndices,
-    onTyping,
-    enabled = true,
-    resetMs = 750,
-    selectedIndex = null
-  } = props;
-  const store = "rootStore" in context ? context.rootStore : context;
-  const open2 = store.useState("open");
-  const timeout = useTimeout();
-  const stringRef = React38.useRef("");
-  const prevIndexRef = React38.useRef(selectedIndex ?? activeIndex ?? -1);
-  const matchIndexRef = React38.useRef(null);
-  const onKeyDown = useStableCallback((event) => {
-    function getElement(index3) {
-      return elementsRef?.current[index3];
-    }
-    function isItemAvailable(index3) {
-      const element = getElement(index3);
-      if (element && !isElementVisible(element) || element?.matches(":disabled")) {
-        return false;
-      }
-      return disabledIndices == null || !isListIndexDisabled(EMPTY_ARRAY, index3, disabledIndices);
-    }
-    function getMatchingIndex(list, string, startIndex2 = 0) {
-      if (list.length === 0) {
-        return -1;
-      }
-      const normalizedStartIndex = (startIndex2 % list.length + list.length) % list.length;
-      const lowerString = string.toLowerCase();
-      for (let offset4 = 0; offset4 < list.length; offset4 += 1) {
-        const index3 = (normalizedStartIndex + offset4) % list.length;
-        const text = list[index3];
-        if (!text?.toLowerCase().startsWith(lowerString) || !isItemAvailable(index3)) {
-          continue;
-        }
-        return index3;
-      }
-      return -1;
-    }
-    const listContent = listRef.current;
-    if (stringRef.current.length > 0 && event.key === " ") {
-      stopEvent(event);
-      onTyping?.(true);
-    }
-    if (stringRef.current.length > 0 && stringRef.current[0] !== " ") {
-      if (getMatchingIndex(listContent, stringRef.current) === -1 && event.key !== " ") {
-        onTyping?.(false);
-      }
-    }
-    if (listContent == null || // Character key.
-    event.key.length !== 1 || // Modifier key.
-    event.ctrlKey || event.metaKey || event.altKey) {
-      return;
-    }
-    if (open2 && event.key !== " ") {
-      stopEvent(event);
-      onTyping?.(true);
-    }
-    const isNewSession = stringRef.current === "";
-    if (isNewSession) {
-      prevIndexRef.current = selectedIndex ?? activeIndex ?? -1;
-    }
-    const allowRapidSuccessionOfFirstLetter = listContent.every((text, index3) => text && isItemAvailable(index3) ? text[0]?.toLowerCase() !== text[1]?.toLowerCase() : true);
-    if (allowRapidSuccessionOfFirstLetter && stringRef.current === event.key) {
-      stringRef.current = "";
-      prevIndexRef.current = matchIndexRef.current;
-    }
-    stringRef.current += event.key;
-    timeout.start(resetMs, () => {
-      stringRef.current = "";
-      prevIndexRef.current = matchIndexRef.current;
-      onTyping?.(false);
-    });
-    const prevIndex = isNewSession ? selectedIndex ?? activeIndex ?? -1 : prevIndexRef.current;
-    const startIndex = (prevIndex ?? 0) + 1;
-    const index2 = getMatchingIndex(listContent, stringRef.current, startIndex);
-    if (index2 !== -1) {
-      onMatchProp?.(index2);
-      matchIndexRef.current = index2;
-    } else if (event.key !== " ") {
-      stringRef.current = "";
-      onTyping?.(false);
-    }
-  });
-  const onBlur = useStableCallback((event) => {
-    const next = event.relatedTarget;
-    const currentDomReferenceElement = store.select("domReferenceElement");
-    const currentFloatingElement = store.select("floatingElement");
-    const withinComposite = contains(currentDomReferenceElement, next) || contains(currentFloatingElement, next);
-    if (withinComposite) {
-      return;
-    }
-    timeout.clear();
-    stringRef.current = "";
-    prevIndexRef.current = matchIndexRef.current;
-    onTyping?.(false);
-  });
-  useIsoLayoutEffect(() => {
-    if (!open2 && selectedIndex !== null) {
-      return;
-    }
-    timeout.clear();
-    matchIndexRef.current = null;
-    if (stringRef.current !== "") {
-      stringRef.current = "";
-    }
-  }, [open2, selectedIndex, timeout]);
-  const sharedProps = React38.useMemo(() => ({
-    onKeyDown,
-    onBlur
-  }), [onKeyDown, onBlur]);
-  return React38.useMemo(() => enabled ? {
-    reference: sharedProps,
-    floating: sharedProps
-  } : {}, [enabled, sharedProps]);
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
-var CURSOR_SPEED_THRESHOLD = 0.1;
-var CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
-var POLYGON_BUFFER = 0.5;
-function hasIntersectingEdge(pointX, pointY, xi, yi, xj, yj) {
-  return yi >= pointY !== yj >= pointY && pointX <= (xj - xi) * (pointY - yi) / (yj - yi) + xi;
-}
-function isPointInQuadrilateral(pointX, pointY, x1, y1, x2, y2, x3, y3, x4, y4) {
-  let isInsideValue = false;
-  if (hasIntersectingEdge(pointX, pointY, x1, y1, x2, y2)) {
-    isInsideValue = !isInsideValue;
-  }
-  if (hasIntersectingEdge(pointX, pointY, x2, y2, x3, y3)) {
-    isInsideValue = !isInsideValue;
-  }
-  if (hasIntersectingEdge(pointX, pointY, x3, y3, x4, y4)) {
-    isInsideValue = !isInsideValue;
-  }
-  if (hasIntersectingEdge(pointX, pointY, x4, y4, x1, y1)) {
-    isInsideValue = !isInsideValue;
-  }
-  return isInsideValue;
-}
-function isInsideRect(pointX, pointY, rect) {
-  return pointX >= rect.x && pointX <= rect.x + rect.width && pointY >= rect.y && pointY <= rect.y + rect.height;
-}
-function isInsideAxisAlignedRect(pointX, pointY, x1, y1, x2, y2) {
-  const minX = Math.min(x1, x2);
-  const maxX = Math.max(x1, x2);
-  const minY = Math.min(y1, y2);
-  const maxY = Math.max(y1, y2);
-  return pointX >= minX && pointX <= maxX && pointY >= minY && pointY <= maxY;
-}
-function safePolygon(options = {}) {
-  const {
-    blockPointerEvents = false
-  } = options;
-  const timeout = new Timeout();
-  const fn = ({
-    x: x2,
-    y: y2,
-    placement,
-    elements: elements2,
-    onClose,
-    nodeId,
-    tree
-  }) => {
-    const side = placement?.split("-")[0];
-    let hasLanded = false;
-    let lastX = null;
-    let lastY = null;
-    let lastCursorTime = typeof performance !== "undefined" ? performance.now() : 0;
-    function isCursorMovingSlowly(nextX, nextY) {
-      const currentTime = performance.now();
-      const elapsedTime = currentTime - lastCursorTime;
-      if (lastX === null || lastY === null || elapsedTime === 0) {
-        lastX = nextX;
-        lastY = nextY;
-        lastCursorTime = currentTime;
-        return false;
-      }
-      const deltaX = nextX - lastX;
-      const deltaY = nextY - lastY;
-      const distanceSquared = deltaX * deltaX + deltaY * deltaY;
-      const thresholdSquared = elapsedTime * elapsedTime * CURSOR_SPEED_THRESHOLD_SQUARED;
-      lastX = nextX;
-      lastY = nextY;
-      lastCursorTime = currentTime;
-      return distanceSquared < thresholdSquared;
-    }
-    function close() {
-      timeout.clear();
-      onClose();
-    }
-    return function onMouseMove(event) {
-      timeout.clear();
-      const domReference = elements2.domReference;
-      const floating = elements2.floating;
-      if (!domReference || !floating || side == null || x2 == null || y2 == null) {
-        return void 0;
-      }
-      const {
-        clientX,
-        clientY
-      } = event;
-      const target = getTarget(event);
-      const isLeave = event.type === "mouseleave";
-      const isOverFloatingEl = contains(floating, target);
-      const isOverReferenceEl = contains(domReference, target);
-      if (isOverFloatingEl) {
-        hasLanded = true;
-        if (!isLeave) {
-          return void 0;
-        }
-      }
-      if (isOverReferenceEl) {
-        hasLanded = false;
-        if (!isLeave) {
-          hasLanded = true;
-          return void 0;
-        }
-      }
-      if (isLeave && isElement(event.relatedTarget) && contains(floating, event.relatedTarget)) {
-        return void 0;
-      }
-      function hasOpenChildNode() {
-        return Boolean(tree && getNodeChildren(tree.nodesRef.current, nodeId).length > 0);
-      }
-      function closeIfNoOpenChild() {
-        if (!hasOpenChildNode()) {
-          close();
-        }
-      }
-      if (hasOpenChildNode()) {
-        return void 0;
-      }
-      const refRect = domReference.getBoundingClientRect();
-      const rect = floating.getBoundingClientRect();
-      const cursorLeaveFromRight = x2 > rect.right - rect.width / 2;
-      const cursorLeaveFromBottom = y2 > rect.bottom - rect.height / 2;
-      const isFloatingWider = rect.width > refRect.width;
-      const isFloatingTaller = rect.height > refRect.height;
-      const left = (isFloatingWider ? refRect : rect).left;
-      const right = (isFloatingWider ? refRect : rect).right;
-      const top = (isFloatingTaller ? refRect : rect).top;
-      const bottom = (isFloatingTaller ? refRect : rect).bottom;
-      if (side === "top" && y2 >= refRect.bottom - 1 || side === "bottom" && y2 <= refRect.top + 1 || side === "left" && x2 >= refRect.right - 1 || side === "right" && x2 <= refRect.left + 1) {
-        closeIfNoOpenChild();
-        return void 0;
-      }
-      let isInsideTroughRect = false;
-      switch (side) {
-        case "top":
-          isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, left, refRect.top + 1, right, rect.bottom - 1);
-          break;
-        case "bottom":
-          isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, left, rect.top + 1, right, refRect.bottom - 1);
-          break;
-        case "left":
-          isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, rect.right - 1, bottom, refRect.left + 1, top);
-          break;
-        case "right":
-          isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, refRect.right - 1, bottom, rect.left + 1, top);
-          break;
-        default:
-      }
-      if (isInsideTroughRect) {
-        return void 0;
-      }
-      if (hasLanded && !isInsideRect(clientX, clientY, refRect)) {
-        closeIfNoOpenChild();
-        return void 0;
-      }
-      if (!isLeave && isCursorMovingSlowly(clientX, clientY)) {
-        closeIfNoOpenChild();
-        return void 0;
-      }
-      let isInsidePolygon = false;
-      switch (side) {
-        case "top": {
-          const cursorXOffset = isFloatingWider ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
-          const cursorPointOneX = isFloatingWider ? x2 + cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
-          const cursorPointTwoX = isFloatingWider ? x2 - cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
-          const cursorPointY = y2 + POLYGON_BUFFER + 1;
-          const commonYLeft = cursorLeaveFromRight ? rect.bottom - POLYGON_BUFFER : isFloatingWider ? rect.bottom - POLYGON_BUFFER : rect.top;
-          const commonYRight = cursorLeaveFromRight ? isFloatingWider ? rect.bottom - POLYGON_BUFFER : rect.top : rect.bottom - POLYGON_BUFFER;
-          isInsidePolygon = isPointInQuadrilateral(clientX, clientY, cursorPointOneX, cursorPointY, cursorPointTwoX, cursorPointY, rect.left, commonYLeft, rect.right, commonYRight);
-          break;
-        }
-        case "bottom": {
-          const cursorXOffset = isFloatingWider ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
-          const cursorPointOneX = isFloatingWider ? x2 + cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
-          const cursorPointTwoX = isFloatingWider ? x2 - cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
-          const cursorPointY = y2 - POLYGON_BUFFER;
-          const commonYLeft = cursorLeaveFromRight ? rect.top + POLYGON_BUFFER : isFloatingWider ? rect.top + POLYGON_BUFFER : rect.bottom;
-          const commonYRight = cursorLeaveFromRight ? isFloatingWider ? rect.top + POLYGON_BUFFER : rect.bottom : rect.top + POLYGON_BUFFER;
-          isInsidePolygon = isPointInQuadrilateral(clientX, clientY, cursorPointOneX, cursorPointY, cursorPointTwoX, cursorPointY, rect.left, commonYLeft, rect.right, commonYRight);
-          break;
-        }
-        case "left": {
-          const cursorYOffset = isFloatingTaller ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
-          const cursorPointOneY = isFloatingTaller ? y2 + cursorYOffset : cursorLeaveFromBottom ? y2 + cursorYOffset : y2 - cursorYOffset;
-          const cursorPointTwoY = isFloatingTaller ? y2 - cursorYOffset : cursorLeaveFromBottom ? y2 + cursorYOffset : y2 - cursorYOffset;
-          const cursorPointX = x2 + POLYGON_BUFFER + 1;
-          const commonXTop = cursorLeaveFromBottom ? rect.right - POLYGON_BUFFER : isFloatingTaller ? rect.right - POLYGON_BUFFER : rect.left;
-          const commonXBottom = cursorLeaveFromBottom ? isFloatingTaller ? rect.right - POLYGON_BUFFER : rect.left : rect.right - POLYGON_BUFFER;
-          isInsidePolygon = isPointInQuadrilateral(clientX, clientY, commonXTop, rect.top, commonXBottom, rect.bottom, cursorPointX, cursorPointOneY, cursorPointX, cursorPointTwoY);
-          break;
-        }
-        case "right": {
-          const cursorYOffset = isFloatingTaller ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
-          const cursorPointOneY = isFloatingTaller ? y2 + cursorYOffset : cursorLeaveFromBottom ? y2 + cursorYOffset : y2 - cursorYOffset;
-          const cursorPointTwoY = isFloatingTaller ? y2 - cursorYOffset : cursorLeaveFromBottom ? y2 + cursorYOffset : y2 - cursorYOffset;
-          const cursorPointX = x2 - POLYGON_BUFFER;
-          const commonXTop = cursorLeaveFromBottom ? rect.left + POLYGON_BUFFER : isFloatingTaller ? rect.left + POLYGON_BUFFER : rect.right;
-          const commonXBottom = cursorLeaveFromBottom ? isFloatingTaller ? rect.left + POLYGON_BUFFER : rect.right : rect.left + POLYGON_BUFFER;
-          isInsidePolygon = isPointInQuadrilateral(clientX, clientY, cursorPointX, cursorPointOneY, cursorPointX, cursorPointTwoY, commonXTop, rect.top, commonXBottom, rect.bottom);
-          break;
-        }
-        default:
-      }
-      if (!isInsidePolygon) {
-        closeIfNoOpenChild();
-      } else if (!hasLanded) {
-        timeout.start(40, closeIfNoOpenChild);
-      }
-      return void 0;
-    };
-  };
-  fn.__options = {
-    ...options,
-    blockPointerEvents
-  };
-  return fn;
-}
-
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/NullStore.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/NullStore.mjs
 var NullStore = class extends ReactStore {
   // `update`/`set`/`notifyAll` funnel through `setState` in the base `Store`, so overriding
   // `setState` alone would neutralize them today. They are overridden explicitly so the store stays
@@ -9348,7 +9336,7 @@ var NullStore = class extends ReactStore {
   }
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/composite.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/composite.mjs
 var ARROW_UP2 = "ArrowUp";
 var ARROW_DOWN2 = "ArrowDown";
 var ARROW_LEFT2 = "ArrowLeft";
@@ -9357,7 +9345,7 @@ var HOME = "Home";
 var END = "End";
 var COMPOSITE_KEYS = /* @__PURE__ */ new Set([ARROW_UP2, ARROW_DOWN2, ARROW_LEFT2, ARROW_RIGHT2, HOME, END]);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/inertValue.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/inertValue.mjs
 function inertValue(value) {
   if (isReactVersionAtLeast(19)) {
     return value;
@@ -9365,7 +9353,7 @@ function inertValue(value) {
   return value ? "true" : void 0;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/InternalBackdrop.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/InternalBackdrop.mjs
 var React39 = __toESM(require_react(), 1);
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var InternalBackdrop = /* @__PURE__ */ React39.forwardRef(function InternalBackdrop2(props, ref) {
@@ -9394,10 +9382,10 @@ var InternalBackdrop = /* @__PURE__ */ React39.forwardRef(function InternalBackd
 });
 if (true) InternalBackdrop.displayName = "InternalBackdrop";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
 var React42 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/useEnhancedClickHandler.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useEnhancedClickHandler.mjs
 var React40 = __toESM(require_react(), 1);
 function useEnhancedClickHandler(handler) {
   const lastClickInteractionTypeRef = React40.useRef("");
@@ -9426,7 +9414,7 @@ function useEnhancedClickHandler(handler) {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useValueChanged.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useValueChanged.mjs
 var React41 = __toESM(require_react(), 1);
 function useValueChanged(value, onChange) {
   const valueRef = React41.useRef(value);
@@ -9439,7 +9427,7 @@ function useValueChanged(value, onChange) {
   }, [value, onChangeCallback]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
 function useOpenMethodTriggerProps(open2, setOpenMethod) {
   const handleTriggerClick = useStableCallback((_, interactionType) => {
     const isOpen = typeof open2 === "function" ? open2() : open2;
@@ -9473,7 +9461,56 @@ function useOpenInteractionType(open2) {
   }), [openMethod, triggerProps]);
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/stringifyLocale.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getHighlightReason.mjs
+function getHighlightReason(event) {
+  if (event == null) {
+    return reason_parts_exports.none;
+  }
+  if (event.type.startsWith("key")) {
+    return reason_parts_exports.keyboard;
+  }
+  if (event.type.startsWith("mouse") || event.type.startsWith("pointer")) {
+    return reason_parts_exports.pointer;
+  }
+  return reason_parts_exports.none;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveValueLabel.mjs
+var React43 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/serializeValue.mjs
+function serializeValue(value) {
+  if (value == null) {
+    return "";
+  }
+  if (typeof value === "string") {
+    return value;
+  }
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return String(value);
+  }
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveValueLabel.mjs
+var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+function stringifyAsLabel(item, itemToStringLabel) {
+  if (itemToStringLabel && item != null) {
+    return itemToStringLabel(item) ?? "";
+  }
+  if (item && typeof item === "object") {
+    if ("label" in item && item.label != null) {
+      return String(item.label);
+    }
+    if ("value" in item) {
+      return String(item.value);
+    }
+  }
+  return serializeValue(item);
+}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/stringifyLocale.mjs
 function stringifyLocale(locale) {
   if (Array.isArray(locale)) {
     return locale.map((value) => stringifyLocale(value)).join(",");
@@ -9484,16 +9521,68 @@ function stringifyLocale(locale) {
   return String(locale);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
-var React43 = __toESM(require_react(), 1);
-var DirectionContext = /* @__PURE__ */ React43.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/filter.mjs
+var filterCache = /* @__PURE__ */ new Map();
+function getFilter(options = {}) {
+  const {
+    locale,
+    ...restOptions
+  } = options;
+  const collatorOptions = {
+    usage: "search",
+    sensitivity: "base",
+    ignorePunctuation: true,
+    ...restOptions
+  };
+  const cacheKey = `${stringifyLocale(locale)}|${JSON.stringify(collatorOptions)}`;
+  const cachedFilter = filterCache.get(cacheKey);
+  if (cachedFilter) {
+    return cachedFilter;
+  }
+  const collator = new Intl.Collator(locale, collatorOptions);
+  const filter = {
+    contains(item, query, itemToString) {
+      if (!query) {
+        return true;
+      }
+      const itemString = stringifyAsLabel(item, itemToString);
+      for (let i = 0; i <= itemString.length - query.length; i += 1) {
+        if (collator.compare(itemString.slice(i, i + query.length), query) === 0) {
+          return true;
+        }
+      }
+      return false;
+    },
+    startsWith(item, query, itemToString) {
+      if (!query) {
+        return true;
+      }
+      const itemString = stringifyAsLabel(item, itemToString);
+      return collator.compare(itemString.slice(0, query.length), query) === 0;
+    },
+    endsWith(item, query, itemToString) {
+      if (!query) {
+        return true;
+      }
+      const itemString = stringifyAsLabel(item, itemToString);
+      const queryLength = query.length;
+      return itemString.length >= queryLength && collator.compare(itemString.slice(itemString.length - queryLength), query) === 0;
+    }
+  };
+  filterCache.set(cacheKey, filter);
+  return filter;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
+var React44 = __toESM(require_react(), 1);
+var DirectionContext = /* @__PURE__ */ React44.createContext(void 0);
 if (true) DirectionContext.displayName = "DirectionContext";
 function useDirection() {
-  const context = React43.useContext(DirectionContext);
+  const context = React44.useContext(DirectionContext);
   return context?.direction ?? "ltr";
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/getPseudoElementBounds.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getPseudoElementBounds.mjs
 var BOUNDARY_OFFSET = 5;
 function isMouseWithinBounds(event, element) {
   const bounds = getPseudoElementBounds(element);
@@ -9527,10 +9616,139 @@ function getPseudoElementBounds(element) {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
-var React44 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useInitialLiveRegionTextMutation.mjs
+var React45 = __toESM(require_react(), 1);
+var LIVE_REGION_MARKER = "\u2060";
+var INITIAL_LIVE_REGION_TEXT_MUTATION_RESET_DELAY = 200;
+function findLastTextNode(root) {
+  const walker = root.ownerDocument.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let lastTextNode = null;
+  while (walker.nextNode()) {
+    const textNode = walker.currentNode;
+    if (textNode.nodeValue !== "") {
+      lastTextNode = textNode;
+    }
+  }
+  return lastTextNode;
+}
+function useInitialLiveRegionTextMutation(present = true) {
+  const timeout = useTimeout();
+  const rootRef = React45.useRef(null);
+  React45.useEffect(() => {
+    if (!present || parts_exports.os.ios) {
+      return void 0;
+    }
+    const root = rootRef.current;
+    if (root == null) {
+      return void 0;
+    }
+    const textNode = findLastTextNode(root);
+    if (textNode == null) {
+      return void 0;
+    }
+    const originalValue = textNode.data;
+    const markedValue = `${originalValue}${LIVE_REGION_MARKER}`;
+    textNode.nodeValue = markedValue;
+    timeout.start(INITIAL_LIVE_REGION_TEXT_MUTATION_RESET_DELAY, () => {
+      if (textNode.nodeValue === markedValue) {
+        textNode.nodeValue = originalValue;
+      }
+    });
+    return () => {
+      timeout.clear();
+      if (textNode.nodeValue === markedValue) {
+        textNode.nodeValue = originalValue;
+      }
+    };
+  }, [present, rootRef, timeout]);
+  return rootRef;
+}
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
+var React47 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+var React46 = __toESM(require_react(), 1);
+function useBaseUIFloating(options) {
+  const {
+    nodeId,
+    externalTree,
+    rootContext: store
+  } = options;
+  const referenceElement = store.useState("referenceElement");
+  const floatingElement = store.useState("floatingElement");
+  const domReferenceElement = store.useState("domReferenceElement");
+  const open2 = store.useState("open");
+  const floatingId = store.useState("floatingId");
+  const [positionReference, setPositionReferenceRaw] = React46.useState(null);
+  const domReferenceRef = React46.useRef(null);
+  const tree = useFloatingTree(externalTree);
+  const storeElements = React46.useMemo(() => ({
+    reference: referenceElement,
+    floating: floatingElement,
+    domReference: domReferenceElement
+  }), [referenceElement, floatingElement, domReferenceElement]);
+  const position = useFloating({
+    ...options,
+    elements: {
+      ...storeElements,
+      ...positionReference && {
+        reference: positionReference
+      }
+    }
+  });
+  const setPositionReference = React46.useCallback((node) => {
+    const computedPositionReference = isElement(node) ? {
+      getBoundingClientRect: () => node.getBoundingClientRect(),
+      getClientRects: () => node.getClientRects(),
+      contextElement: node
+    } : node;
+    setPositionReferenceRaw(computedPositionReference);
+    position.refs.setReference(computedPositionReference);
+  }, [position.refs]);
+  const refs = React46.useMemo(() => ({
+    ...position.refs,
+    setPositionReference,
+    domReference: domReferenceRef
+  }), [position.refs, setPositionReference]);
+  const elements2 = React46.useMemo(() => ({
+    ...position.elements,
+    domReference: domReferenceElement
+  }), [position.elements, domReferenceElement]);
+  const context = React46.useMemo(() => ({
+    ...position,
+    dataRef: store.context.dataRef,
+    open: open2,
+    onOpenChange: store.setOpen,
+    events: store.context.events,
+    floatingId,
+    refs,
+    elements: elements2,
+    nodeId,
+    rootStore: store
+  }), [position, refs, elements2, nodeId, store, open2, floatingId]);
+  useIsoLayoutEffect(() => {
+    if (domReferenceElement) {
+      domReferenceRef.current = domReferenceElement;
+    }
+  }, [domReferenceElement]);
+  useIsoLayoutEffect(() => {
+    store.context.dataRef.current.floatingContext = context;
+    const node = tree?.nodesRef.current.find((n) => n.id === nodeId);
+    if (node) {
+      node.context = context;
+    }
+  });
+  return React46.useMemo(() => ({
+    ...position,
+    context,
+    refs,
+    elements: elements2,
+    rootStore: store
+  }), [position, refs, elements2, context, store]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
 var baseArrow = (options) => ({
   name: "arrow",
   options,
@@ -9546,8 +9764,7 @@ var baseArrow = (options) => ({
     } = state;
     const {
       element,
-      padding = 0,
-      offsetParent = "real"
+      padding = 0
     } = evaluate(options, state) || {};
     if (element == null) {
       return {};
@@ -9566,11 +9783,7 @@ var baseArrow = (options) => ({
     const clientProp = isYAxis ? "clientHeight" : "clientWidth";
     const endDiff = rects.reference[length] + rects.reference[axis] - coords[axis] - rects.floating[length];
     const startDiff = coords[axis] - rects.reference[axis];
-    const arrowOffsetParent = offsetParent === "real" ? await platform3.getOffsetParent?.(element) : elements2.floating;
-    let clientSize = elements2.floating[clientProp] || rects.floating[length];
-    if (!clientSize || !await platform3.isElement?.(arrowOffsetParent)) {
-      clientSize = elements2.floating[clientProp] || rects.floating[length];
-    }
+    const clientSize = elements2.floating[clientProp] || rects.floating[length];
     const centerToReference = endDiff / 2 - startDiff / 2;
     const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
     const minPadding = Math.min(paddingObject[minProp], largestPossiblePadding);
@@ -9606,7 +9819,7 @@ var arrow4 = (options, deps) => {
   };
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/hideMiddleware.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/hideMiddleware.mjs
 var hide4 = {
   name: "hide",
   async fn(state) {
@@ -9629,13 +9842,13 @@ var hide4 = {
   }
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/adaptiveOriginConstants.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/adaptiveOriginConstants.mjs
 var DEFAULT_SIDES = {
   sideX: "left",
   sideY: "top"
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonPositionerCssVars.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonPositionerCssVars.mjs
 var availableWidth = "--available-width";
 var availableHeight = "--available-height";
 var anchorWidth = "--anchor-width";
@@ -9644,7 +9857,7 @@ var transformOrigin = "--transform-origin";
 var positionerWidth = "--positioner-width";
 var positionerHeight = "--positioner-height";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
 var AVAILABLE_WIDTH_VAR = availableWidth;
 var AVAILABLE_HEIGHT_VAR = availableHeight;
 function getLogicalSide(sideParam, renderedSide, isRtl) {
@@ -9706,10 +9919,6 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     lazyFlip = false,
     externalTree
   } = params;
-  const [mountSide, setMountSide] = React44.useState(null);
-  if (!mounted && mountSide !== null) {
-    setMountSide(null);
-  }
   const collisionAvoidanceSide = collisionAvoidance.side || "flip";
   const collisionAvoidanceAlign = collisionAvoidance.align || "flip";
   const collisionAvoidanceFallbackAxisSide = collisionAvoidance.fallbackAxisSide || "end";
@@ -9722,6 +9931,13 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
   const mountedRef = useValueAsRef(mounted);
   const direction = useDirection();
   const isRtl = direction === "rtl";
+  const [mountPlacement, setMountPlacement] = React47.useState(null);
+  if (!mounted && mountPlacement !== null) {
+    setMountPlacement(null);
+  }
+  const lockAlign = lazyFlip === "placement";
+  const mountSide = mountPlacement ? getSide(mountPlacement) : null;
+  const mountAlign = mountPlacement && lockAlign ? getAlignment(mountPlacement) || "center" : null;
   const side = mountSide || {
     top: "top",
     right: "right",
@@ -9730,7 +9946,8 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     "inline-end": isRtl ? "left" : "right",
     "inline-start": isRtl ? "right" : "left"
   }[sideParam];
-  const placement = align === "center" ? side : `${side}-${align}`;
+  const placementAlign = mountAlign || align;
+  const placement = placementAlign === "center" ? side : `${side}-${placementAlign}`;
   let collisionPadding = collisionPaddingParam;
   if (typeof collisionPadding === "number") {
     collisionPadding = {
@@ -9756,7 +9973,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     boundary: collisionBoundary === "clipping-ancestors" ? "clippingAncestors" : collisionBoundary,
     padding: collisionPadding
   };
-  const arrowRef = React44.useRef(null);
+  const arrowRef = React47.useRef(null);
   const sideOffsetRef = useValueAsRef(sideOffset);
   const alignOffsetRef = useValueAsRef(alignOffset);
   const sideOffsetDep = typeof sideOffset !== "function" ? sideOffset : 0;
@@ -9813,7 +10030,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
       };
     })
   }, [commonCollisionProps, sticky, shiftCrossAxis, shiftRootBoundary, collisionPadding, collisionAvoidanceAlign]);
-  if (collisionAvoidanceSide === "shift" || collisionAvoidanceAlign === "shift" || align === "center") {
+  if (collisionAvoidanceSide === "shift" || collisionAvoidanceAlign === "shift" || placementAlign === "center") {
     middleware.push(shiftMiddleware, flipMiddleware);
   } else {
     middleware.push(flipMiddleware, shiftMiddleware);
@@ -9851,8 +10068,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     // we'll create a fake element.
     element: arrowRef.current || ownerDocument(state.elements.floating).createElement("div"),
     // No padding for the fake arrow: it would displace aligned popups on narrow anchors.
-    padding: arrowRef.current ? arrowPadding : 0,
-    offsetParent: "floating"
+    padding: arrowRef.current ? arrowPadding : 0
   }), [arrowPadding]), {
     name: "transformOrigin",
     fn(state) {
@@ -9897,7 +10113,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
       });
     }
   }, [mounted, floatingRootContext]);
-  const autoUpdateOptions = React44.useMemo(() => ({
+  const autoUpdateOptions = React47.useMemo(() => ({
     ancestorScroll: !disableAnchorTracking,
     elementResize: !disableAnchorTracking && typeof ResizeObserver !== "undefined",
     layoutShift: !disableAnchorTracking && typeof IntersectionObserver !== "undefined"
@@ -9928,7 +10144,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     sideY
   } = middlewareData.adaptiveOrigin || DEFAULT_SIDES;
   const resolvedPosition = isPositioned ? positionMethod : "fixed";
-  const floatingStyles = React44.useMemo(() => {
+  const floatingStyles = React47.useMemo(() => {
     let base;
     if (!isPositioned) {
       base = {
@@ -9955,7 +10171,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     }
     return base;
   }, [adaptiveOrigin2, resolvedPosition, sideX, x2, sideY, y2, originalFloatingStyles, isPositioned]);
-  const registeredPositionReferenceRef = React44.useRef(null);
+  const registeredPositionReferenceRef = React47.useRef(null);
   useIsoLayoutEffect(() => {
     if (!mounted) {
       return;
@@ -9969,7 +10185,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
       registeredPositionReferenceRef.current = finalAnchor;
     }
   }, [mounted, refs, anchorDep, anchorValueRef]);
-  React44.useEffect(() => {
+  React47.useEffect(() => {
     if (!mounted) {
       return;
     }
@@ -9982,7 +10198,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
       registeredPositionReferenceRef.current = anchorValue.current;
     }
   }, [mounted, refs, anchorDep, anchorValueRef]);
-  React44.useEffect(() => {
+  React47.useEffect(() => {
     if (keepMounted && mounted && elements2.reference && elements2.floating) {
       return autoUpdate(elements2.reference, elements2.floating, update2, autoUpdateOptions);
     }
@@ -9993,17 +10209,17 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
   const renderedAlign = getAlignment(renderedPlacement) || "center";
   const anchorHidden2 = Boolean(middlewareData.hide?.referenceHidden);
   useIsoLayoutEffect(() => {
-    if (lazyFlip && mounted && isPositioned && renderedSide !== side) {
-      setMountSide(renderedSide);
+    if (lazyFlip && mounted && isPositioned && (renderedSide !== side || lockAlign && renderedAlign !== placementAlign)) {
+      setMountPlacement(renderedPlacement);
     }
-  }, [lazyFlip, mounted, isPositioned, renderedSide, side]);
-  const arrowStyles = React44.useMemo(() => ({
+  }, [lazyFlip, lockAlign, mounted, isPositioned, renderedPlacement, renderedSide, renderedAlign, side, placementAlign]);
+  const arrowStyles = React47.useMemo(() => ({
     position: "absolute",
     top: middlewareData.arrow?.y,
     left: middlewareData.arrow?.x
   }), [middlewareData.arrow]);
   const arrowUncentered = middlewareData.arrow?.centerOffset !== 0;
-  return React44.useMemo(() => ({
+  return React47.useMemo(() => ({
     positionerStyles: floatingStyles,
     arrowStyles,
     arrowRef,
@@ -10022,12 +10238,12 @@ function isRef(param) {
   return param != null && "current" in param;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/getDisabledMountTransitionStyles.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/getDisabledMountTransitionStyles.mjs
 function getDisabledMountTransitionStyles(transitionStatus) {
   return transitionStatus === "starting" ? DISABLED_TRANSITIONS_STYLE : EMPTY_OBJECT;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePositioner.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePositioner.mjs
 function usePositioner(componentProps, state, {
   styles,
   transitionStatus,
@@ -10054,11 +10270,11 @@ function usePositioner(componentProps, state, {
   });
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useAnchoredPopupScrollLock.mjs
-var React45 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useAnchoredPopupScrollLock.mjs
+var React48 = __toESM(require_react(), 1);
 var VIEWPORT_WIDTH_TOLERANCE_PX = 20;
 function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, referenceElement) {
-  const [touchOpenShouldLockScroll, setTouchOpenShouldLockScroll] = React45.useState(false);
+  const [touchOpenShouldLockScroll, setTouchOpenShouldLockScroll] = React48.useState(false);
   useIsoLayoutEffect(() => {
     if (!enabled || !touchOpen || positionerElement == null) {
       setTouchOpenShouldLockScroll(false);
@@ -10071,7 +10287,7 @@ function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, refer
   useScrollLock(enabled && (!touchOpen || touchOpenShouldLockScroll), referenceElement);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useRegisteredLabelId.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useRegisteredLabelId.mjs
 function useRegisteredLabelId(idProp, setLabelId) {
   const id = useBaseUiId(idProp);
   useIsoLayoutEffect(() => {
@@ -10083,30 +10299,35 @@ function useRegisteredLabelId(idProp, setLabelId) {
   return id;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/context-menu/root/ContextMenuRootContext.mjs
-var React46 = __toESM(require_react(), 1);
-var ContextMenuRootContext = /* @__PURE__ */ React46.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/context-menu/root/ContextMenuRootContext.mjs
+var React49 = __toESM(require_react(), 1);
+var ContextMenuRootContext = /* @__PURE__ */ React49.createContext(void 0);
 if (true) ContextMenuRootContext.displayName = "ContextMenuRootContext";
 function useContextMenuRootContext(optional = true) {
-  const context = React46.useContext(ContextMenuRootContext);
+  const context = React49.useContext(ContextMenuRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: ContextMenuRootContext is missing. ContextMenu parts must be placed within <ContextMenu.Root>." : formatErrorMessage_default(25));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/index.parts.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/index.parts.mjs
 var index_parts_exports = {};
 __export(index_parts_exports, {
   Arrow: () => MenuArrow,
   Backdrop: () => MenuBackdrop,
   CheckboxItem: () => MenuCheckboxItem,
   CheckboxItemIndicator: () => MenuCheckboxItemIndicator,
+  Clear: () => MenuClear,
+  Empty: () => MenuEmpty,
+  FilterProvider: () => MenuFilterProvider,
   Group: () => MenuGroup,
   GroupLabel: () => MenuGroupLabel,
   Handle: () => MenuHandle,
+  Input: () => MenuInput,
   Item: () => MenuItem,
   LinkItem: () => MenuLinkItem,
+  List: () => MenuList,
   Popup: () => MenuPopup,
   Portal: () => MenuPortal,
   Positioner: () => MenuPositioner,
@@ -10119,38 +10340,39 @@ __export(index_parts_exports, {
   SubmenuTrigger: () => MenuSubmenuTrigger,
   Trigger: () => MenuTrigger,
   Viewport: () => MenuViewport,
-  createHandle: () => createMenuHandle
+  createHandle: () => createMenuHandle,
+  useFilter: () => getFilter
 });
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
-var React49 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
+var React52 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/positioner/MenuPositionerContext.mjs
-var React47 = __toESM(require_react(), 1);
-var MenuPositionerContext = /* @__PURE__ */ React47.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositionerContext.mjs
+var React50 = __toESM(require_react(), 1);
+var MenuPositionerContext = /* @__PURE__ */ React50.createContext(void 0);
 if (true) MenuPositionerContext.displayName = "MenuPositionerContext";
 function useMenuPositionerContext(optional) {
-  const context = React47.useContext(MenuPositionerContext);
+  const context = React50.useContext(MenuPositionerContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: MenuPositionerContext is missing. MenuPositioner parts must be placed within <Menu.Positioner>." : formatErrorMessage_default(33));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/root/MenuRootContext.mjs
-var React48 = __toESM(require_react(), 1);
-var MenuRootContext = /* @__PURE__ */ React48.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/root/MenuRootContext.mjs
+var React51 = __toESM(require_react(), 1);
+var MenuRootContext = /* @__PURE__ */ React51.createContext(void 0);
 if (true) MenuRootContext.displayName = "MenuRootContext";
 function useMenuRootContext(optional) {
-  const context = React48.useContext(MenuRootContext);
+  const context = React51.useContext(MenuRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: MenuRootContext is missing. Menu parts must be placed within <Menu.Root>." : formatErrorMessage_default(36));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
-var MenuArrow = /* @__PURE__ */ React49.forwardRef(function MenuArrow2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
+var MenuArrow = /* @__PURE__ */ React52.forwardRef(function MenuArrow2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -10187,9 +10409,9 @@ var MenuArrow = /* @__PURE__ */ React49.forwardRef(function MenuArrow2(component
 });
 if (true) MenuArrow.displayName = "MenuArrow";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/backdrop/MenuBackdrop.mjs
-var React50 = __toESM(require_react(), 1);
-var MenuBackdrop = /* @__PURE__ */ React50.forwardRef(function MenuBackdrop2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/backdrop/MenuBackdrop.mjs
+var React53 = __toESM(require_react(), 1);
+var MenuBackdrop = /* @__PURE__ */ React53.forwardRef(function MenuBackdrop2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -10225,26 +10447,70 @@ var MenuBackdrop = /* @__PURE__ */ React50.forwardRef(function MenuBackdrop2(com
 });
 if (true) MenuBackdrop.displayName = "MenuBackdrop";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
-var React54 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
+var React58 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemContext.mjs
-var React51 = __toESM(require_react(), 1);
-var MenuCheckboxItemContext = /* @__PURE__ */ React51.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterContext.mjs
+var React54 = __toESM(require_react(), 1);
+var MenuFilterImplContext = /* @__PURE__ */ React54.createContext(null);
+if (true) MenuFilterImplContext.displayName = "MenuFilterImplContext";
+function useMenuFilterImpl(scope = "root") {
+  const impl = React54.useContext(MenuFilterImplContext);
+  const root = React54.useContext(MenuRootContext);
+  if (impl === null || root === void 0) {
+    return null;
+  }
+  const filterable = scope === "submenu-trigger" ? root.virtualFocus || root.parentVirtualFocus : root.virtualFocus;
+  return filterable ? impl : null;
+}
+function useMenuFilterPart(part) {
+  if (useMenuFilterImpl() === null) {
+    throw new Error(true ? `Base UI: <Menu.${part}> must be placed in a menu wrapped in <Menu.FilterProvider>. It reads the filter query and the matching items from the provider, which a plain menu does not have. Wrap the <Menu.Root> or <Menu.SubmenuRoot> it belongs to in <Menu.FilterProvider>. See https://base-ui.com/react/components/menu#filtering` : formatErrorMessage_default(104, part));
+  }
+}
+var UNFILTERED = {
+  visible: true,
+  ref: null
+};
+function useUnfilteredItem() {
+  return UNFILTERED;
+}
+function useMenuFilterItem(props, forwardedRef, scope = "root") {
+  const impl = useMenuFilterImpl(scope);
+  const useItem = (scope === "submenu-trigger" ? impl?.useSubmenuTrigger : impl?.useItem) ?? useUnfilteredItem;
+  const item = useItem({
+    label: props.label,
+    children: props.children,
+    render: props.render
+  });
+  const ref = useMergedRefs(forwardedRef, item.ref);
+  return {
+    visible: item.visible,
+    ref,
+    props: item.props
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemContext.mjs
+var React55 = __toESM(require_react(), 1);
+var MenuCheckboxItemContext = /* @__PURE__ */ React55.createContext(void 0);
 if (true) MenuCheckboxItemContext.displayName = "MenuCheckboxItemContext";
 function useMenuCheckboxItemContext() {
-  const context = React51.useContext(MenuCheckboxItemContext);
+  const context = React55.useContext(MenuCheckboxItemContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: MenuCheckboxItemContext is missing. MenuCheckboxItem parts must be placed within <Menu.CheckboxItem>." : formatErrorMessage_default(30));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
-var React53 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
+var React57 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/item/useMenuItemCommonProps.mjs
-var React52 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/useMenuItemCommonProps.mjs
+var React56 = __toESM(require_react(), 1);
+function preventMouseDownDefault(event) {
+  event.preventDefault();
+}
 function useMenuItemCommonProps(params) {
   const {
     closeOnClick,
@@ -10256,16 +10522,25 @@ function useMenuItemCommonProps(params) {
     itemRef,
     itemMetadata
   } = params;
+  const rootContext = useMenuRootContext();
+  const contextMenuContext = useContextMenuRootContext(true);
+  const isSubmenuTrigger = itemMetadata.type === "submenu-trigger";
+  const virtualFocus = isSubmenuTrigger ? rootContext.parentVirtualFocus : rootContext.virtualFocus;
+  const selectionStore = isSubmenuTrigger && rootContext.parent.type === "menu" ? rootContext.parent.store : rootContext.store;
+  const ariaSelected = selectionStore.useState("webkitAriaSelected", highlighted);
   const {
     events: menuEvents
   } = store.useState("floatingTreeRoot");
   const open2 = store.useState("open");
-  const contextMenuContext = useContextMenuRootContext(true);
   const isContextMenu = contextMenuContext !== void 0;
-  return React52.useMemo(() => ({
+  const tabIndex = !virtualFocus && open2 && highlighted ? 0 : -1;
+  return React56.useMemo(() => ({
     id,
     role: "menuitem",
-    tabIndex: open2 && highlighted ? 0 : -1,
+    tabIndex,
+    "aria-selected": ariaSelected,
+    // Real focus stays on the input or list that owns virtual navigation.
+    onMouseDown: virtualFocus ? preventMouseDownDefault : void 0,
     onKeyDown(event) {
       if (event.key === " " && typingRef?.current) {
         event.preventDefault();
@@ -10283,7 +10558,7 @@ function useMenuItemCommonProps(params) {
     onClick(event) {
       if (closeOnClick) {
         menuEvents.emit("close", {
-          domEvent: event,
+          domEvent: event.nativeEvent,
           reason: reason_parts_exports.itemPress
         });
       }
@@ -10302,15 +10577,16 @@ function useMenuItemCommonProps(params) {
       if (itemRef.current && store.context.allowMouseUpTriggerRef.current && (!isContextMenu || event.button === 2)) {
         if (itemMetadata.type === "regular-item") {
           dispatchClickWithModifiers(itemRef.current, event, {
-            detail: 1
+            detail: 1,
+            pointerType: "mouse"
           });
         }
       }
     }
-  }), [closeOnClick, highlighted, id, menuEvents, nodeId, open2, store, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata]);
+  }), [closeOnClick, tabIndex, id, menuEvents, nodeId, store.context.allowMouseUpTriggerRef, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata.type, ariaSelected, virtualFocus]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
 var REGULAR_ITEM = {
   type: "regular-item"
 };
@@ -10326,7 +10602,7 @@ function useMenuItem(params) {
     itemMetadata,
     nodeId
   } = params;
-  const itemRef = React53.useRef(null);
+  const itemRef = React57.useRef(null);
   const {
     getButtonProps,
     buttonRef
@@ -10346,28 +10622,28 @@ function useMenuItem(params) {
     itemRef,
     itemMetadata
   });
-  const getItemProps = React53.useCallback((externalProps) => {
+  const getItemProps = React57.useCallback((externalProps) => {
     return mergeProps(commonProps, {
-      onMouseEnter() {
+      onMouseEnter(event) {
         if (itemMetadata.type !== "submenu-trigger") {
           return;
         }
-        itemMetadata.setActive();
+        itemMetadata.setActive(event.nativeEvent);
       }
     }, externalProps, getButtonProps);
   }, [commonProps, getButtonProps, itemMetadata]);
   const mergedRef = useMergedRefs(itemRef, buttonRef);
-  return React53.useMemo(() => ({
+  return React57.useMemo(() => ({
     getItemProps,
     itemRef: mergedRef
   }), [getItemProps, mergedRef]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemDataAttributes.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemDataAttributes.mjs
 var checked = "data-checked";
 var unchecked = "data-unchecked";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/utils/stateAttributesMapping.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/utils/stateAttributesMapping.mjs
 var itemMapping = {
   checked(value) {
     if (value) {
@@ -10382,9 +10658,9 @@ var itemMapping = {
   ...transitionStatusMapping
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
-var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-var MenuCheckboxItem = /* @__PURE__ */ React54.forwardRef(function MenuCheckboxItem2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+var MenuCheckboxItemPlain = /* @__PURE__ */ React58.forwardRef(function MenuCheckboxItemPlain2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -10393,31 +10669,24 @@ var MenuCheckboxItem = /* @__PURE__ */ React54.forwardRef(function MenuCheckboxI
     nativeButton = false,
     disabled: disabledProp = false,
     closeOnClick = false,
-    checked: checkedProp,
-    defaultChecked,
+    checked: checked2 = false,
     onCheckedChange,
     style,
     ...elementProps
   } = componentProps;
+  const {
+    store
+  } = useMenuRootContext();
   const listItem = useCompositeListItem({
     guess: true,
     label
   });
-  const menuPositionerContext = useMenuPositionerContext(true);
   const id = useBaseUiId(idProp);
-  const {
-    store
-  } = useMenuRootContext();
   const rootDisabled = store.useState("disabled");
-  const disabled2 = disabledProp || rootDisabled;
   const highlighted = store.useState("isActive", listItem.index);
+  const nodeId = store.useState("floatingNodeId");
   const itemProps = store.useState("itemProps");
-  const [checked2, setChecked] = useControlled({
-    controlled: checkedProp,
-    default: defaultChecked ?? false,
-    name: "MenuCheckboxItem",
-    state: "checked"
-  });
+  const disabled2 = disabledProp || rootDisabled;
   const {
     getItemProps,
     itemRef
@@ -10428,10 +10697,10 @@ var MenuCheckboxItem = /* @__PURE__ */ React54.forwardRef(function MenuCheckboxI
     id,
     store,
     nativeButton,
-    nodeId: menuPositionerContext?.context.nodeId,
+    nodeId,
     itemMetadata: REGULAR_ITEM
   });
-  const state = React54.useMemo(() => ({
+  const state = React58.useMemo(() => ({
     disabled: disabled2,
     highlighted,
     checked: checked2
@@ -10441,10 +10710,6 @@ var MenuCheckboxItem = /* @__PURE__ */ React54.forwardRef(function MenuCheckboxI
       preventUnmountOnClose: NOOP
     });
     onCheckedChange?.(!checked2, details);
-    if (details.isCanceled) {
-      return;
-    }
-    setChecked((currentlyChecked) => !currentlyChecked);
   }
   const element = useRenderElement("div", componentProps, {
     state,
@@ -10456,16 +10721,47 @@ var MenuCheckboxItem = /* @__PURE__ */ React54.forwardRef(function MenuCheckboxI
     }, elementProps, getItemProps],
     ref: [itemRef, forwardedRef, listItem.ref]
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(MenuCheckboxItemContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(MenuCheckboxItemContext.Provider, {
     value: state,
     children: element
   });
 });
+if (true) MenuCheckboxItemPlain.displayName = "MenuCheckboxItemPlain";
+var MenuCheckboxItem = /* @__PURE__ */ React58.forwardRef(function MenuCheckboxItem2(props, forwardedRef) {
+  const {
+    checked: checkedProp,
+    defaultChecked,
+    onCheckedChange,
+    ...plainProps
+  } = props;
+  const [checked2, setChecked] = useControlled({
+    controlled: checkedProp,
+    default: defaultChecked ?? false,
+    name: "MenuCheckboxItem",
+    state: "checked"
+  });
+  const filterItem = useMenuFilterItem(props, forwardedRef);
+  function handleCheckedChange(nextChecked, eventDetails) {
+    onCheckedChange?.(nextChecked, eventDetails);
+    if (!eventDetails.isCanceled) {
+      setChecked(nextChecked);
+    }
+  }
+  if (!filterItem.visible) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(MenuCheckboxItemPlain, {
+    ...plainProps,
+    checked: checked2,
+    onCheckedChange: handleCheckedChange,
+    ref: filterItem.ref
+  });
+});
 if (true) MenuCheckboxItem.displayName = "MenuCheckboxItem";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/checkbox-item-indicator/MenuCheckboxItemIndicator.mjs
-var React55 = __toESM(require_react(), 1);
-var MenuCheckboxItemIndicator = /* @__PURE__ */ React55.forwardRef(function MenuCheckboxItemIndicator2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item-indicator/MenuCheckboxItemIndicator.mjs
+var React59 = __toESM(require_react(), 1);
+var MenuCheckboxItemIndicator = /* @__PURE__ */ React59.forwardRef(function MenuCheckboxItemIndicator2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -10474,7 +10770,7 @@ var MenuCheckboxItemIndicator = /* @__PURE__ */ React55.forwardRef(function Menu
     ...elementProps
   } = componentProps;
   const item = useMenuCheckboxItemContext();
-  const indicatorRef = React55.useRef(null);
+  const indicatorRef = React59.useRef(null);
   const {
     transitionStatus,
     mounted,
@@ -10511,31 +10807,31 @@ var MenuCheckboxItemIndicator = /* @__PURE__ */ React55.forwardRef(function Menu
 });
 if (true) MenuCheckboxItemIndicator.displayName = "MenuCheckboxItemIndicator";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
-var React57 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
+var React61 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/group/MenuGroupContext.mjs
-var React56 = __toESM(require_react(), 1);
-var MenuGroupContext = /* @__PURE__ */ React56.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroupContext.mjs
+var React60 = __toESM(require_react(), 1);
+var MenuGroupContext = /* @__PURE__ */ React60.createContext(void 0);
 if (true) MenuGroupContext.displayName = "MenuGroupContext";
 function useMenuGroupRootContext() {
-  const context = React56.useContext(MenuGroupContext);
+  const context = React60.useContext(MenuGroupContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: MenuGroupContext is missing. Menu group parts must be used within <Menu.Group> or <Menu.RadioGroup>." : formatErrorMessage_default(31));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
-var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
-var MenuGroup = /* @__PURE__ */ React57.forwardRef(function MenuGroup2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var MenuGroupPlain = /* @__PURE__ */ React61.forwardRef(function MenuGroupPlain2(componentProps, forwardedRef) {
   const {
     render,
     className,
     style,
     ...elementProps
   } = componentProps;
-  const [labelId, setLabelId] = React57.useState(void 0);
+  const [labelId, setLabelId] = React61.useState(void 0);
   const element = useRenderElement("div", componentProps, {
     ref: forwardedRef,
     props: {
@@ -10544,16 +10840,24 @@ var MenuGroup = /* @__PURE__ */ React57.forwardRef(function MenuGroup2(component
       ...elementProps
     }
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(MenuGroupContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(MenuGroupContext.Provider, {
     value: setLabelId,
     children: element
   });
 });
+if (true) MenuGroupPlain.displayName = "MenuGroupPlain";
+var MenuGroup = /* @__PURE__ */ React61.forwardRef(function MenuGroup2(props, forwardedRef) {
+  const Group2 = useMenuFilterImpl()?.Group ?? MenuGroupPlain;
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Group2, {
+    ...props,
+    ref: forwardedRef
+  });
+});
 if (true) MenuGroup.displayName = "MenuGroup";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/group-label/MenuGroupLabel.mjs
-var React58 = __toESM(require_react(), 1);
-var MenuGroupLabel = /* @__PURE__ */ React58.forwardRef(function MenuGroupLabel2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group-label/MenuGroupLabel.mjs
+var React62 = __toESM(require_react(), 1);
+var MenuGroupLabel = /* @__PURE__ */ React62.forwardRef(function MenuGroupLabel2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -10580,9 +10884,10 @@ var MenuGroupLabel = /* @__PURE__ */ React58.forwardRef(function MenuGroupLabel2
 });
 if (true) MenuGroupLabel.displayName = "MenuGroupLabel";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/item/MenuItem.mjs
-var React59 = __toESM(require_react(), 1);
-var MenuItem = /* @__PURE__ */ React59.forwardRef(function MenuItem2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/MenuItem.mjs
+var React63 = __toESM(require_react(), 1);
+var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+var MenuItemPlain = /* @__PURE__ */ React63.forwardRef(function MenuItemPlain2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -10594,19 +10899,19 @@ var MenuItem = /* @__PURE__ */ React59.forwardRef(function MenuItem2(componentPr
     style,
     ...elementProps
   } = componentProps;
+  const {
+    store
+  } = useMenuRootContext();
   const listItem = useCompositeListItem({
     guess: true,
     label
   });
-  const menuPositionerContext = useMenuPositionerContext(true);
   const id = useBaseUiId(idProp);
-  const {
-    store
-  } = useMenuRootContext();
   const rootDisabled = store.useState("disabled");
-  const disabled2 = disabledProp || rootDisabled;
   const highlighted = store.useState("isActive", listItem.index);
+  const nodeId = store.useState("floatingNodeId");
   const itemProps = store.useState("itemProps");
+  const disabled2 = disabledProp || rootDisabled;
   const {
     getItemProps,
     itemRef
@@ -10617,7 +10922,7 @@ var MenuItem = /* @__PURE__ */ React59.forwardRef(function MenuItem2(componentPr
     id,
     store,
     nativeButton,
-    nodeId: menuPositionerContext?.context.nodeId,
+    nodeId,
     itemMetadata: REGULAR_ITEM
   });
   const state = {
@@ -10630,11 +10935,23 @@ var MenuItem = /* @__PURE__ */ React59.forwardRef(function MenuItem2(componentPr
     ref: [itemRef, forwardedRef, listItem.ref]
   });
 });
+if (true) MenuItemPlain.displayName = "MenuItemPlain";
+var MenuItem = /* @__PURE__ */ React63.forwardRef(function MenuItem2(props, forwardedRef) {
+  const filterItem = useMenuFilterItem(props, forwardedRef);
+  if (!filterItem.visible) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(MenuItemPlain, {
+    ...props,
+    ref: filterItem.ref
+  });
+});
 if (true) MenuItem.displayName = "MenuItem";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/link-item/MenuLinkItem.mjs
-var React60 = __toESM(require_react(), 1);
-var MenuLinkItem = /* @__PURE__ */ React60.forwardRef(function MenuLinkItem2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/link-item/MenuLinkItem.mjs
+var React64 = __toESM(require_react(), 1);
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+var MenuLinkItemPlain = /* @__PURE__ */ React64.forwardRef(function MenuLinkItemPlain2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -10644,18 +10961,17 @@ var MenuLinkItem = /* @__PURE__ */ React60.forwardRef(function MenuLinkItem2(com
     style,
     ...elementProps
   } = componentProps;
-  const linkRef = React60.useRef(null);
+  const {
+    store
+  } = useMenuRootContext();
+  const linkRef = React64.useRef(null);
   const listItem = useCompositeListItem({
     guess: true,
     label
   });
-  const menuPositionerContext = useMenuPositionerContext(true);
-  const nodeId = menuPositionerContext?.context.nodeId;
   const id = useBaseUiId(idProp);
-  const {
-    store
-  } = useMenuRootContext();
   const highlighted = store.useState("isActive", listItem.index);
+  const nodeId = store.useState("floatingNodeId");
   const itemProps = store.useState("itemProps");
   const typingRef = store.context.typingRef;
   const {
@@ -10687,36 +11003,94 @@ var MenuLinkItem = /* @__PURE__ */ React60.forwardRef(function MenuLinkItem2(com
     ref: [linkRef, buttonRef, forwardedRef, listItem.ref]
   });
 });
+if (true) MenuLinkItemPlain.displayName = "MenuLinkItemPlain";
+var MenuLinkItem = /* @__PURE__ */ React64.forwardRef(function MenuLinkItem2(props, forwardedRef) {
+  const filterItem = useMenuFilterItem(props, forwardedRef);
+  if (!filterItem.visible) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(MenuLinkItemPlain, {
+    ...props,
+    ref: filterItem.ref
+  });
+});
 if (true) MenuLinkItem.displayName = "MenuLinkItem";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
-var React62 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
+var React69 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/toolbar/root/ToolbarRootContext.mjs
-var React61 = __toESM(require_react(), 1);
-var ToolbarRootContext = /* @__PURE__ */ React61.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/toolbar/root/ToolbarRootContext.mjs
+var React65 = __toESM(require_react(), 1);
+var ToolbarRootContext = /* @__PURE__ */ React65.createContext(void 0);
 if (true) ToolbarRootContext.displayName = "ToolbarRootContext";
 function useToolbarRootContext(optional) {
-  const context = React61.useContext(ToolbarRootContext);
+  const context = React65.useContext(ToolbarRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: ToolbarRootContext is missing. Toolbar parts must be placed within <Toolbar.Root>." : formatErrorMessage_default(69));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
-var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
-var MenuPopup = /* @__PURE__ */ React62.forwardRef(function MenuPopup2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRootContext.mjs
+var React66 = __toESM(require_react(), 1);
+var MenuSubmenuRootContext = /* @__PURE__ */ React66.createContext(void 0);
+if (true) MenuSubmenuRootContext.displayName = "MenuSubmenuRootContext";
+function useMenuSubmenuRootContext() {
+  return React66.useContext(MenuSubmenuRootContext);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveRenderedId.mjs
+var React67 = __toESM(require_react(), 1);
+function resolveRenderedId(props, fallbackId) {
+  const render = unwrapLazyRenderProp(props.render);
+  if (/* @__PURE__ */ React67.isValidElement(render)) {
+    const renderProps = render.props;
+    if (Object.hasOwn(renderProps, "id")) {
+      return renderProps.id ?? "";
+    }
+  }
+  return props.id ?? fallbackId;
+}
+function useRenderedId(props, defaultId, setId) {
+  const id = resolveRenderedId(props, defaultId);
+  const registeredId = id === defaultId ? void 0 : id;
+  const ref = React67.useCallback((element) => setId?.(element ? registeredId : void 0), [registeredId, setId]);
+  return [id, ref];
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolvePopupLabel.mjs
+var React68 = __toESM(require_react(), 1);
+function resolvePopupLabel(props, activeTriggerElement, activeTriggerId) {
+  const render = unwrapLazyRenderProp(props.render);
+  const renderedElementProps = /* @__PURE__ */ React68.isValidElement(render) ? render.props : void 0;
+  const ariaLabel = props["aria-label"] ?? renderedElementProps?.["aria-label"];
+  let ariaLabelledBy = props["aria-labelledby"] ?? renderedElementProps?.["aria-labelledby"];
+  if (ariaLabelledBy == null && !ariaLabel) {
+    ariaLabelledBy = activeTriggerElement ? activeTriggerElement.id || void 0 : activeTriggerId || void 0;
+  }
+  return ariaLabelledBy;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
+var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var MenuPopupPlain = /* @__PURE__ */ React69.forwardRef(function MenuPopupPlain2(componentProps, forwardedRef) {
   const {
     render,
     className,
     style,
     finalFocus,
+    id: idProp,
+    initialFocus: initialFocusProp,
     ...elementProps
   } = componentProps;
   const {
-    store
+    store,
+    defaultFloatingId,
+    setRenderedFloatingId,
+    virtualFocus,
+    orientation
   } = useMenuRootContext();
+  const inheritedSubmenuRootContext = useMenuSubmenuRootContext();
   const {
     side,
     align
@@ -10737,7 +11111,21 @@ var MenuPopup = /* @__PURE__ */ React62.forwardRef(function MenuPopup2(component
   const hoverEnabled = store.useState("hoverEnabled");
   const disabled2 = store.useState("disabled");
   const openMethod = store.useState("openMethod");
+  const activeTriggerId = store.useState("activeTriggerId");
+  const listElement = store.useState("listElement");
+  const [id, registerIdRef] = useRenderedId(componentProps, defaultFloatingId, setRenderedFloatingId);
+  const ariaLabelledBy = resolvePopupLabel(componentProps, activeTriggerElement, activeTriggerId);
+  const submenuRootContext = parent.type === "menu" ? inheritedSubmenuRootContext : void 0;
   const isContextMenu = parent.type === "context-menu";
+  let initialFocus = initialFocusProp ?? parent.type !== "menu";
+  if (initialFocusProp === void 0 && listElement && parent.type !== "menu") {
+    initialFocus = () => {
+      if (store.state.activeIndex !== null) {
+        return false;
+      }
+      return listElement;
+    };
+  }
   useOpenChangeComplete({
     open: open2,
     ref: store.context.popupRef,
@@ -10747,7 +11135,7 @@ var MenuPopup = /* @__PURE__ */ React62.forwardRef(function MenuPopup2(component
       }
     }
   });
-  React62.useEffect(() => {
+  React69.useEffect(() => {
     function handleClose(event) {
       store.setOpen(false, createChangeEventDetails(event.reason, event.domEvent));
     }
@@ -10761,6 +11149,11 @@ var MenuPopup = /* @__PURE__ */ React62.forwardRef(function MenuPopup2(component
     closeDelay
   });
   const setPopupElement = store.useStateSetter("popupElement");
+  const useParentHandoff = React69.useContext(MenuFilterImplContext)?.useParentHandoff ?? useNoParentHandoff;
+  const {
+    parentVirtualFocusRef,
+    handleFocus
+  } = useParentHandoff(store, parent, open2, virtualFocus);
   const state = {
     transitionStatus,
     side,
@@ -10771,14 +11164,27 @@ var MenuPopup = /* @__PURE__ */ React62.forwardRef(function MenuPopup2(component
   };
   const element = useRenderElement("div", componentProps, {
     state,
-    ref: [forwardedRef, store.context.popupRef, setPopupElement],
+    ref: [forwardedRef, store.context.popupRef, setPopupElement, registerIdRef],
     stateAttributesMapping: popupTransitionStateMapping,
     props: [popupProps, {
+      id,
+      // A rendered `Menu.List` carries the `menu` semantics instead.
+      ...listElement ? {
+        role: "presentation"
+      } : {
+        role: "menu",
+        // `menu` is implicitly vertical, so only the non-default value needs to be
+        // rendered.
+        "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
+        "aria-labelledby": ariaLabelledBy
+      },
       onKeyDown(event) {
+        submenuRootContext?.onPopupKeyDown?.(event);
         if (insideToolbar && COMPOSITE_KEYS.has(event.key)) {
           event.stopPropagation();
         }
-      }
+      },
+      onFocus: handleFocus
     }, getDisabledMountTransitionStyles(transitionStatus), elementProps, {
       "data-rootownerid": rootId
     }]
@@ -10787,41 +11193,59 @@ var MenuPopup = /* @__PURE__ */ React62.forwardRef(function MenuPopup2(component
   if (activeTriggerElement || parent.type === "menubar" && lastOpenChangeReason !== reason_parts_exports.outsidePress) {
     returnFocus = true;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(FloatingFocusManager, {
+  const dynamicReturnFocus = submenuRootContext?.getReturnElement ?? parentVirtualFocusRef;
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(FloatingFocusManager, {
     context: floatingContext,
     openInteractionType: openMethod,
     modal: isContextMenu,
     disabled: !mounted,
-    returnFocus: finalFocus === void 0 ? returnFocus : finalFocus,
-    initialFocus: parent.type !== "menu",
+    returnFocus: finalFocus ?? dynamicReturnFocus ?? returnFocus,
+    explicitReturnFocus: finalFocus === void 0 && dynamicReturnFocus ? false : void 0,
+    initialFocus,
     restoreFocus: true,
+    getInsideElements: parent.type === void 0 ? () => [store.context.beforeTriggerFocusGuardRef.current] : void 0,
     externalTree: parent.type !== "menubar" ? floatingTreeRoot : void 0,
     previousFocusableElement: activeTriggerElement,
     nextFocusableElement: parent.type === void 0 ? store.context.triggerFocusTargetRef : void 0,
-    beforeContentFocusGuardRef: parent.type === void 0 ? store.context.beforeContentFocusGuardRef : void 0,
+    beforeContentFocusGuardRef: store.context.beforeContentFocusGuardRef,
     children: element
+  });
+});
+if (true) MenuPopupPlain.displayName = "MenuPopupPlain";
+var NO_PARENT_HANDOFF = {
+  parentVirtualFocusRef: void 0,
+  handleFocus: void 0
+};
+function useNoParentHandoff() {
+  return NO_PARENT_HANDOFF;
+}
+var MenuPopup = /* @__PURE__ */ React69.forwardRef(function MenuPopup2(props, forwardedRef) {
+  const Popup3 = useMenuFilterImpl()?.Popup ?? MenuPopupPlain;
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Popup3, {
+    ...props,
+    ref: forwardedRef
   });
 });
 if (true) MenuPopup.displayName = "MenuPopup";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
-var React64 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
+var React71 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/portal/MenuPortalContext.mjs
-var React63 = __toESM(require_react(), 1);
-var MenuPortalContext = /* @__PURE__ */ React63.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortalContext.mjs
+var React70 = __toESM(require_react(), 1);
+var MenuPortalContext = /* @__PURE__ */ React70.createContext(void 0);
 if (true) MenuPortalContext.displayName = "MenuPortalContext";
 function useMenuPortalContext() {
-  const value = React63.useContext(MenuPortalContext);
+  const value = React70.useContext(MenuPortalContext);
   if (value === void 0) {
     throw new Error(true ? "Base UI: <Menu.Portal> is missing." : formatErrorMessage_default(32));
   }
   return value;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
-var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-var MenuPortal = /* @__PURE__ */ React64.forwardRef(function MenuPortal2(props, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
+var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var MenuPortal = /* @__PURE__ */ React71.forwardRef(function MenuPortal2(props, forwardedRef) {
   const {
     keepMounted = false,
     ...portalProps
@@ -10836,9 +11260,9 @@ var MenuPortal = /* @__PURE__ */ React64.forwardRef(function MenuPortal2(props, 
     return null;
   }
   const portalOwnerRole = parent.type === "menu" || parent.type === "menubar" ? "group" : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(MenuPortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(MenuPortalContext.Provider, {
     value: keepMounted,
-    children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(FloatingPortal, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(FloatingPortal, {
       ref: forwardedRef,
       ...portalProps,
       portalOwnerRole
@@ -10847,10 +11271,60 @@ var MenuPortal = /* @__PURE__ */ React64.forwardRef(function MenuPortal2(props, 
 });
 if (true) MenuPortal.displayName = "MenuPortal";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/positioner/MenuPositioner.mjs
-var React65 = __toESM(require_react(), 1);
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositioner.mjs
+var React73 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useTriggerSwitchTransition.mjs
+var React72 = __toESM(require_react(), 1);
+function useTriggerSwitchTransition(parameters) {
+  const {
+    store,
+    domReference,
+    positionerElement,
+    open: open2
+  } = parameters;
+  const previousTriggerRef = React72.useRef(null);
+  const pendingSwitchRef = React72.useRef(null);
+  const runOnceAnimationsFinish = useAnimationsFinished(positionerElement);
+  useIsoLayoutEffect(() => {
+    if (open2) {
+      return;
+    }
+    pendingSwitchRef.current?.abort();
+    pendingSwitchRef.current = null;
+    if (store.state.instantType === "trigger-change") {
+      store.set("instantType", void 0);
+    }
+  }, [open2, store]);
+  useIsoLayoutEffect(() => {
+    const currentTrigger = domReference;
+    const previousTrigger = previousTriggerRef.current;
+    if (currentTrigger) {
+      previousTriggerRef.current = currentTrigger;
+    }
+    if (!previousTrigger || !currentTrigger || currentTrigger === previousTrigger) {
+      return void 0;
+    }
+    if (!store.select("open")) {
+      return void 0;
+    }
+    store.set("instantType", void 0);
+    const abortController = new AbortController();
+    pendingSwitchRef.current = abortController;
+    runOnceAnimationsFinish(() => {
+      if (store.select("open")) {
+        store.set("instantType", "trigger-change");
+      }
+    }, abortController.signal);
+    return () => {
+      abortController.abort();
+    };
+  }, [domReference, runOnceAnimationsFinish, store]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositioner.mjs
+var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var MenuPositioner = /* @__PURE__ */ React73.forwardRef(function MenuPositioner2(componentProps, forwardedRef) {
   const {
     anchor: anchorProp,
     positionMethod: positionMethodProp = "absolute",
@@ -10870,7 +11344,9 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
     ...elementProps
   } = componentProps;
   const {
-    store
+    store,
+    virtualFocus,
+    syncHighlightedItem
   } = useMenuRootContext();
   const keepMounted = useMenuPortalContext();
   const contextMenuContext = useContextMenuRootContext(true);
@@ -10890,8 +11366,6 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
   const floatingNodeId = store.useState("floatingNodeId");
   const floatingParentNodeId = store.useState("floatingParentNodeId");
   const domReference = floatingRootContext.useState("domReferenceElement");
-  const previousTriggerRef = React65.useRef(null);
-  const runOnceAnimationsFinish = useAnimationsFinished(positionerElement);
   let anchor = anchorProp;
   let sideOffset = sideOffsetProp;
   let alignOffset = alignOffsetProp;
@@ -10938,9 +11412,10 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
       rootBoundary: "layoutViewport"
     } : void 0,
     externalTree: floatingTreeRoot,
-    adaptiveOrigin: adaptiveOrigin2
+    adaptiveOrigin: adaptiveOrigin2,
+    lazyFlip: virtualFocus ? "placement" : false
   });
-  React65.useEffect(() => {
+  React73.useEffect(() => {
     function onMenuOpenChange(details) {
       if (details.open) {
         if (details.parentNodeId === floatingNodeId) {
@@ -10956,7 +11431,7 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
       floatingTreeRoot.events.off("menuopenchange", onMenuOpenChange);
     };
   }, [store, floatingTreeRoot.events, floatingNodeId]);
-  React65.useEffect(() => {
+  React73.useEffect(() => {
     if (store.select("floatingParentNodeId") == null) {
       return void 0;
     }
@@ -10973,12 +11448,12 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
     };
   }, [floatingTreeRoot.events, store]);
   const closeTimeout = useTimeout();
-  React65.useEffect(() => {
+  React73.useEffect(() => {
     if (!open2) {
       closeTimeout.clear();
     }
   }, [open2, closeTimeout]);
-  React65.useEffect(() => {
+  React73.useEffect(() => {
     function onItemHover(event) {
       if (!open2 || event.nodeId !== store.select("floatingParentNodeId")) {
         return;
@@ -11003,7 +11478,7 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
       floatingTreeRoot.events.off("itemhover", onItemHover);
     };
   }, [floatingTreeRoot.events, open2, triggerElement, store, closeTimeout]);
-  React65.useEffect(() => {
+  React73.useEffect(() => {
     const eventDetails = {
       open: open2,
       nodeId: floatingNodeId,
@@ -11012,24 +11487,12 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
     };
     floatingTreeRoot.events.emit("menuopenchange", eventDetails);
   }, [floatingTreeRoot.events, open2, store, floatingNodeId, floatingParentNodeId]);
-  useIsoLayoutEffect(() => {
-    const currentTrigger = domReference;
-    const previousTrigger = previousTriggerRef.current;
-    if (currentTrigger) {
-      previousTriggerRef.current = currentTrigger;
-    }
-    if (previousTrigger && currentTrigger && currentTrigger !== previousTrigger) {
-      store.set("instantType", void 0);
-      const abortController = new AbortController();
-      runOnceAnimationsFinish(() => {
-        store.set("instantType", "trigger-change");
-      }, abortController.signal);
-      return () => {
-        abortController.abort();
-      };
-    }
-    return void 0;
-  }, [domReference, runOnceAnimationsFinish, store]);
+  useTriggerSwitchTransition({
+    store,
+    domReference,
+    positionerElement,
+    open: open2
+  });
   const state = {
     open: open2,
     side: positioner.side,
@@ -11056,17 +11519,18 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
   } else if (parent.type === void 0) {
     backdropCutout = triggerElement;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(MenuPositionerContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(MenuPositionerContext.Provider, {
     value: positioner,
-    children: [shouldRenderBackdrop && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(InternalBackdrop, {
+    children: [shouldRenderBackdrop && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(InternalBackdrop, {
       ref: parent.type === "context-menu" || parent.type === "nested-context-menu" ? parent.context.internalBackdropRef : null,
       inert: inertValue(!open2),
       cutout: backdropCutout
-    }), /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(FloatingNode, {
+    }), /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(FloatingNode, {
       id: floatingNodeId,
-      children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(CompositeList, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(CompositeList, {
         elementsRef: store.context.itemDomElements,
         labelsRef: store.context.itemLabels,
+        onMapChange: syncHighlightedItem,
         children: element
       })
     })]
@@ -11074,24 +11538,24 @@ var MenuPositioner = /* @__PURE__ */ React65.forwardRef(function MenuPositioner2
 });
 if (true) MenuPositioner.displayName = "MenuPositioner";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
-var React67 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
+var React75 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroupContext.mjs
-var React66 = __toESM(require_react(), 1);
-var MenuRadioGroupContext = /* @__PURE__ */ React66.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroupContext.mjs
+var React74 = __toESM(require_react(), 1);
+var MenuRadioGroupContext = /* @__PURE__ */ React74.createContext(void 0);
 if (true) MenuRadioGroupContext.displayName = "MenuRadioGroupContext";
 function useMenuRadioGroupContext() {
-  const context = React66.useContext(MenuRadioGroupContext);
+  const context = React74.useContext(MenuRadioGroupContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: MenuRadioGroupContext is missing. MenuRadioGroup parts must be placed within <Menu.RadioGroup>." : formatErrorMessage_default(34));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-var MenuRadioGroup = /* @__PURE__ */ React67.memo(/* @__PURE__ */ React67.forwardRef(function MenuRadioGroup2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var MenuRadioGroupPlain = /* @__PURE__ */ React75.forwardRef(function MenuRadioGroupPlain2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -11103,7 +11567,7 @@ var MenuRadioGroup = /* @__PURE__ */ React67.memo(/* @__PURE__ */ React67.forwar
     "aria-labelledby": ariaLabelledByProp,
     ...elementProps
   } = componentProps;
-  const [labelId, setLabelId] = React67.useState(void 0);
+  const [labelId, setLabelId] = React75.useState(void 0);
   const [value, setValueUnwrapped] = useControlled({
     controlled: valueProp,
     default: defaultValue,
@@ -11129,39 +11593,47 @@ var MenuRadioGroup = /* @__PURE__ */ React67.memo(/* @__PURE__ */ React67.forwar
       ...elementProps
     }
   });
-  const context = React67.useMemo(() => ({
+  const context = React75.useMemo(() => ({
     value,
     setValue,
     disabled: disabled2
   }), [value, setValue, disabled2]);
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(MenuGroupContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(MenuGroupContext.Provider, {
     value: setLabelId,
-    children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(MenuRadioGroupContext.Provider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(MenuRadioGroupContext.Provider, {
       value: context,
       children: element
     })
   });
+});
+if (true) MenuRadioGroupPlain.displayName = "MenuRadioGroupPlain";
+var MenuRadioGroup = /* @__PURE__ */ React75.memo(/* @__PURE__ */ React75.forwardRef(function MenuRadioGroup2(props, forwardedRef) {
+  const RadioGroup2 = useMenuFilterImpl()?.RadioGroup ?? MenuRadioGroupPlain;
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(RadioGroup2, {
+    ...props,
+    ref: forwardedRef
+  });
 }));
 if (true) MenuRadioGroup.displayName = "MenuRadioGroup";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
-var React69 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
+var React77 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-item/MenuRadioItemContext.mjs
-var React68 = __toESM(require_react(), 1);
-var MenuRadioItemContext = /* @__PURE__ */ React68.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItemContext.mjs
+var React76 = __toESM(require_react(), 1);
+var MenuRadioItemContext = /* @__PURE__ */ React76.createContext(void 0);
 if (true) MenuRadioItemContext.displayName = "MenuRadioItemContext";
 function useMenuRadioItemContext() {
-  const context = React68.useContext(MenuRadioItemContext);
+  const context = React76.useContext(MenuRadioItemContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: MenuRadioItemContext is missing. MenuRadioItem parts must be placed within <Menu.RadioItem>." : formatErrorMessage_default(35));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-var MenuRadioItem = /* @__PURE__ */ React69.forwardRef(function MenuRadioItem2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+var MenuRadioItemPlain = /* @__PURE__ */ React77.forwardRef(function MenuRadioItemPlain2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -11174,22 +11646,22 @@ var MenuRadioItem = /* @__PURE__ */ React69.forwardRef(function MenuRadioItem2(c
     style,
     ...elementProps
   } = componentProps;
-  const listItem = useCompositeListItem({
-    guess: true,
-    label
-  });
-  const menuPositionerContext = useMenuPositionerContext(true);
-  const id = useBaseUiId(idProp);
   const {
     store
   } = useMenuRootContext();
-  const highlighted = store.useState("isActive", listItem.index);
-  const itemProps = store.useState("itemProps");
   const {
     value: selectedValue,
     setValue: setSelectedValue,
     disabled: groupDisabled
   } = useMenuRadioGroupContext();
+  const listItem = useCompositeListItem({
+    guess: true,
+    label
+  });
+  const id = useBaseUiId(idProp);
+  const highlighted = store.useState("isActive", listItem.index);
+  const nodeId = store.useState("floatingNodeId");
+  const itemProps = store.useState("itemProps");
   const rootDisabled = store.useState("disabled");
   const disabled2 = disabledProp || groupDisabled || rootDisabled;
   const checked2 = selectedValue === value;
@@ -11203,10 +11675,10 @@ var MenuRadioItem = /* @__PURE__ */ React69.forwardRef(function MenuRadioItem2(c
     id,
     store,
     nativeButton,
-    nodeId: menuPositionerContext?.context.nodeId,
+    nodeId,
     itemMetadata: REGULAR_ITEM
   });
-  const state = React69.useMemo(() => ({
+  const state = React77.useMemo(() => ({
     disabled: disabled2,
     highlighted,
     checked: checked2
@@ -11227,16 +11699,27 @@ var MenuRadioItem = /* @__PURE__ */ React69.forwardRef(function MenuRadioItem2(c
     }, elementProps, getItemProps],
     ref: [itemRef, forwardedRef, listItem.ref]
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(MenuRadioItemContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(MenuRadioItemContext.Provider, {
     value: state,
     children: element
   });
 });
+if (true) MenuRadioItemPlain.displayName = "MenuRadioItemPlain";
+var MenuRadioItem = /* @__PURE__ */ React77.forwardRef(function MenuRadioItem2(props, forwardedRef) {
+  const filterItem = useMenuFilterItem(props, forwardedRef);
+  if (!filterItem.visible) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(MenuRadioItemPlain, {
+    ...props,
+    ref: filterItem.ref
+  });
+});
 if (true) MenuRadioItem.displayName = "MenuRadioItem";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/radio-item-indicator/MenuRadioItemIndicator.mjs
-var React70 = __toESM(require_react(), 1);
-var MenuRadioItemIndicator = /* @__PURE__ */ React70.forwardRef(function MenuRadioItemIndicator2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item-indicator/MenuRadioItemIndicator.mjs
+var React78 = __toESM(require_react(), 1);
+var MenuRadioItemIndicator = /* @__PURE__ */ React78.forwardRef(function MenuRadioItemIndicator2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -11245,7 +11728,7 @@ var MenuRadioItemIndicator = /* @__PURE__ */ React70.forwardRef(function MenuRad
     ...elementProps
   } = componentProps;
   const item = useMenuRadioItemContext();
-  const indicatorRef = React70.useRef(null);
+  const indicatorRef = React78.useRef(null);
   const {
     transitionStatus,
     mounted,
@@ -11282,28 +11765,29 @@ var MenuRadioItemIndicator = /* @__PURE__ */ React70.forwardRef(function MenuRad
 });
 if (true) MenuRadioItemIndicator.displayName = "MenuRadioItemIndicator";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
-var React74 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
+var React82 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menubar/MenubarContext.mjs
-var React71 = __toESM(require_react(), 1);
-var MenubarContext = /* @__PURE__ */ React71.createContext(null);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menubar/MenubarContext.mjs
+var React79 = __toESM(require_react(), 1);
+var MenubarContext = /* @__PURE__ */ React79.createContext(null);
 if (true) MenubarContext.displayName = "MenubarContext";
 function useMenubarContext(optional) {
-  const context = React71.useContext(MenubarContext);
+  const context = React79.useContext(MenubarContext);
   if (context === null && !optional) {
     throw new Error(true ? "Base UI: MenubarContext is missing. Menubar parts must be placed within <Menubar>." : formatErrorMessage_default(5));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/store/MenuStore.mjs
-var React72 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/store/MenuStore.mjs
+var React80 = __toESM(require_react(), 1);
 var selectors2 = {
   ...popupStoreSelectors,
   disabled: (state) => state.parent.type === "menubar" ? state.parent.context.disabled || state.disabled : state.disabled,
   modal: (state) => (state.parent.type === void 0 || state.parent.type === "context-menu") && (state.modal ?? true),
   openMethod: (state) => state.openMethod,
+  keyboardOpen: (state) => state.keyboardOpen,
   allowMouseEnter: (state) => state.allowMouseEnter,
   highlightItemOnHover: (state) => state.highlightItemOnHover,
   parent: (state) => state.parent,
@@ -11314,9 +11798,27 @@ var selectors2 = {
     return state.parent.type !== void 0 ? state.parent.context.rootId : state.rootId;
   },
   activeIndex: (state) => state.activeIndex,
+  listElement: (state) => state.listElement,
+  /** The trigger's `aria-controls`: the list when one holds the `menu` role, else the popup. */
+  triggerControlsId: (state, triggerId) => {
+    const popupId = popupStoreSelectors.triggerPopupId(state, triggerId);
+    return popupId ? state.listElement?.id || popupId : void 0;
+  },
+  filterTriggerProps: (state) => state.filterTriggerProps,
+  inputProps: (state) => state.inputProps,
+  // `aria-selected` is invalid on `menuitem`, but Safari VoiceOver needs it for arrow-key
+  // navigation. Limit it to WebKit while the input has focus so normal VoiceOver navigation
+  // does not encounter the invalid attribute.
+  webkitAriaSelected: (state, highlighted) => parts_exports.engine.webkit && state.inputFocused && highlighted ? true : void 0,
+  highlightedItemId: (state) => state.highlightedItem?.id || void 0,
   isActive: (state, itemIndex) => state.activeIndex === itemIndex,
   hoverEnabled: (state) => state.hoverEnabled,
-  instantType: (state) => state.instantType,
+  // `trigger-change` describes a popup moving between triggers, which only has
+  // meaning while it is open. Dropping it once closed keeps a late or stale
+  // restoration from marking a closing popup instant and skipping its exit
+  // transition, including on close paths that never reach `setOpen` — a
+  // controlled consumer committing `open={false}` goes straight through the prop.
+  instantType: (state) => state.instantType === "trigger-change" && !popupStoreSelectors.open(state) ? void 0 : state.instantType,
   lastOpenChangeReason: (state) => state.openChangeReason,
   floatingTreeRoot: (state) => {
     if (state.parent.type === "menu") {
@@ -11344,31 +11846,39 @@ var MenuStore = class extends ReactStore {
     const triggerElements = new PopupTriggerMap();
     const state = createInitialState(triggerElements, floatingId, nested, initialState);
     super(state, createInitialContext(triggerElements), selectors2);
-    this.unsubscribeParentListener = this.observe("parent", (parent) => {
-      this.unsubscribeParentListener?.();
+    void this.observe("parent", (parent) => {
       if (parent.type === "menu") {
-        let rootId = parent.store.select("rootId");
-        let floatingTreeRoot = parent.store.select("floatingTreeRoot");
-        let keyboardEventRelay = parent.store.select("keyboardEventRelay");
-        this.unsubscribeParentListener = parent.store.subscribe(() => {
-          const nextRootId = parent.store.select("rootId");
-          const nextFloatingTreeRoot = parent.store.select("floatingTreeRoot");
-          const nextKeyboardEventRelay = parent.store.select("keyboardEventRelay");
-          if (rootId === nextRootId && floatingTreeRoot === nextFloatingTreeRoot && keyboardEventRelay === nextKeyboardEventRelay) {
-            return;
-          }
-          rootId = nextRootId;
-          floatingTreeRoot = nextFloatingTreeRoot;
-          keyboardEventRelay = nextKeyboardEventRelay;
-          this.notifyAll();
-        });
         this.context.allowMouseUpTriggerRef = parent.store.context.allowMouseUpTriggerRef;
-        return;
-      }
-      if (parent.type !== void 0) {
+      } else if (parent.type !== void 0) {
         this.context.allowMouseUpTriggerRef = parent.context.allowMouseUpTriggerRef;
       }
-      this.unsubscribeParentListener = null;
+    });
+  }
+  /**
+   * Propagates changes of the parent menu's shared tree state to this store's subscribers.
+   * The owning `Menu.Root` calls it from an effect so the parent store subscription is released
+   * when the submenu unmounts.
+   * @returns A function that removes the parent store subscription.
+   */
+  subscribeToParentMenu() {
+    const parent = this.state.parent;
+    if (parent.type !== "menu") {
+      return void 0;
+    }
+    let rootId = parent.store.select("rootId");
+    let floatingTreeRoot = parent.store.select("floatingTreeRoot");
+    let keyboardEventRelay = parent.store.select("keyboardEventRelay");
+    return parent.store.subscribe(() => {
+      const nextRootId = parent.store.select("rootId");
+      const nextFloatingTreeRoot = parent.store.select("floatingTreeRoot");
+      const nextKeyboardEventRelay = parent.store.select("keyboardEventRelay");
+      if (rootId === nextRootId && floatingTreeRoot === nextFloatingTreeRoot && keyboardEventRelay === nextKeyboardEventRelay) {
+        return;
+      }
+      rootId = nextRootId;
+      floatingTreeRoot = nextFloatingTreeRoot;
+      keyboardEventRelay = nextKeyboardEventRelay;
+      this.notifyAll();
     });
   }
   setOpen(open2, eventDetails) {
@@ -11377,7 +11887,21 @@ var MenuStore = class extends ReactStore {
       eventDetails
     });
   }
-  unsubscribeParentListener = null;
+  setActiveIndex(activeIndex, reason, event) {
+    if (this.state.activeIndex !== activeIndex) {
+      const item = activeIndex === null ? void 0 : this.context.itemDomElements.current[activeIndex];
+      const isWriteBack = item === this.context.reportedItem;
+      this.context.highlightReason = isWriteBack ? "none" : reason;
+      this.context.highlightEvent = isWriteBack ? void 0 : event;
+    }
+    this.set("activeIndex", activeIndex);
+  }
+  highlightItem(element, reason, event) {
+    const index2 = this.context.itemDomElements.current.indexOf(element);
+    if (index2 > -1) {
+      this.setActiveIndex(index2, reason, event);
+    }
+  }
 };
 function createNullMenuStore() {
   const triggerElements = new PopupTriggerMap();
@@ -11388,8 +11912,8 @@ function createNullMenuStore() {
 }
 function createInitialContext(triggerElements) {
   return {
-    positionerRef: /* @__PURE__ */ React72.createRef(),
-    popupRef: /* @__PURE__ */ React72.createRef(),
+    positionerRef: /* @__PURE__ */ React80.createRef(),
+    popupRef: /* @__PURE__ */ React80.createRef(),
     typingRef: {
       current: false
     },
@@ -11399,11 +11923,16 @@ function createInitialContext(triggerElements) {
     itemLabels: {
       current: []
     },
+    highlightReason: "none",
+    highlightEvent: void 0,
+    reportedItem: void 0,
     allowMouseUpTriggerRef: {
       current: false
     },
-    triggerFocusTargetRef: /* @__PURE__ */ React72.createRef(),
-    beforeContentFocusGuardRef: /* @__PURE__ */ React72.createRef(),
+    virtualFocusRef: void 0,
+    triggerFocusTargetRef: /* @__PURE__ */ React80.createRef(),
+    beforeTriggerFocusGuardRef: /* @__PURE__ */ React80.createRef(),
+    beforeContentFocusGuardRef: /* @__PURE__ */ React80.createRef(),
     onOpenChangeComplete: void 0,
     triggerElements
   };
@@ -11414,6 +11943,7 @@ function createInitialState(triggerElements, floatingId, nested = false, initial
     disabled: false,
     modal: true,
     openMethod: null,
+    keyboardOpen: false,
     allowMouseEnter: false,
     highlightItemOnHover: true,
     parent: {
@@ -11421,6 +11951,11 @@ function createInitialState(triggerElements, floatingId, nested = false, initial
     },
     rootId: void 0,
     activeIndex: null,
+    listElement: null,
+    filterTriggerProps: EMPTY_OBJECT,
+    inputProps: EMPTY_OBJECT,
+    inputFocused: false,
+    highlightedItem: void 0,
     hoverEnabled: true,
     instantType: void 0,
     openChangeReason: null,
@@ -11435,22 +11970,28 @@ function createInitialState(triggerElements, floatingId, nested = false, initial
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRootContext.mjs
-var React73 = __toESM(require_react(), 1);
-var MenuSubmenuRootContext = /* @__PURE__ */ React73.createContext(void 0);
-if (true) MenuSubmenuRootContext.displayName = "MenuSubmenuRootContext";
-function useMenuSubmenuRootContext() {
-  return React73.useContext(MenuSubmenuRootContext);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-provider/MenuFilterProviderContext.mjs
+var React81 = __toESM(require_react(), 1);
+var MenuFilterProviderContext = /* @__PURE__ */ React81.createContext(null);
+if (true) MenuFilterProviderContext.displayName = "MenuFilterProviderContext";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/utils/isKeyboardOpen.mjs
+function isKeyboardClick(reason, event) {
+  return (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.itemPress) && event?.detail === 0;
+}
+function isKeyboardOpen(reason, event) {
+  return reason === reason_parts_exports.listNavigation || isKeyboardClick(reason, event);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-var MenuRoot = fastComponent(function MenuRoot2(props) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
+var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var MenuRootInternal = fastComponent(function MenuRootInternal2(props) {
   const {
     children,
     open: openProp,
     onOpenChange,
     onOpenChangeComplete,
+    onItemHighlighted: onItemHighlightedProp,
     defaultOpen = false,
     disabled: disabledProp = false,
     modal: modalProp,
@@ -11461,17 +12002,23 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     handle,
     triggerId: triggerIdProp,
     defaultTriggerId: defaultTriggerIdProp = null,
-    highlightItemOnHover = true
+    highlightItemOnHover = true,
+    isSubmenu = false,
+    virtualFocus = false,
+    virtualFocusRef,
+    allowEscape = true,
+    resetOnPointerLeave = true
   } = props;
   const contextMenuContext = useContextMenuRootContext(true);
   const parentMenuRootContext = useMenuRootContext(true);
   const menubarContext = useMenubarContext(true);
-  const isSubmenu = useMenuSubmenuRootContext();
-  const parentFromContext = React74.useMemo(() => {
-    if (isSubmenu && parentMenuRootContext) {
+  const enclosingMenuStore = parentMenuRootContext?.store;
+  const parentVirtualFocus = parentMenuRootContext?.virtualFocus ?? false;
+  const parentFromContext = React82.useMemo(() => {
+    if (isSubmenu && enclosingMenuStore) {
       return {
         type: "menu",
-        store: parentMenuRootContext.store
+        store: enclosingMenuStore
       };
     }
     if (menubarContext) {
@@ -11480,7 +12027,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
         context: menubarContext
       };
     }
-    if (contextMenuContext && !parentMenuRootContext) {
+    if (contextMenuContext && !enclosingMenuStore) {
       return {
         type: "context-menu",
         context: contextMenuContext
@@ -11489,25 +12036,31 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     return {
       type: void 0
     };
-  }, [contextMenuContext, parentMenuRootContext, menubarContext, isSubmenu]);
-  const rootId = useId();
-  const floatingId = useId();
+  }, [contextMenuContext, enclosingMenuStore, menubarContext, isSubmenu]);
+  const rootId = useBaseUiId();
+  const defaultFloatingId = useBaseUiId();
+  const [renderedFloatingId, setRenderedFloatingId] = React82.useState(void 0);
+  const floatingId = (renderedFloatingId ?? defaultFloatingId) || void 0;
   const floatingParentNodeIdFromContext = useFloatingParentNodeId();
   const parentMenuStore = parentFromContext.type === "menu" ? parentFromContext.store : void 0;
   const animateInitialOpen = (openProp ?? defaultOpen) && parentMenuStore?.state.transitionStatus === "starting";
   const seededInstantType = useRefWithInit(() => animateInitialOpen ? parentMenuStore?.state.instantType : void 0).current;
-  const store = useMenuRootStore({
-    open: defaultOpen,
-    openProp,
-    activeTriggerId: defaultTriggerIdProp,
-    triggerIdProp,
-    parent: parentFromContext,
-    disabled: disabledProp,
-    highlightItemOnHover,
-    modal: parentFromContext.type === void 0 ? modalProp : void 0,
-    rootId,
-    instantType: seededInstantType
-  }, floatingId, floatingParentNodeIdFromContext != null);
+  const store = useRefWithInit(() => {
+    const menuStore = new MenuStore({
+      open: defaultOpen,
+      openProp,
+      activeTriggerId: defaultTriggerIdProp,
+      triggerIdProp,
+      parent: parentFromContext,
+      disabled: disabledProp,
+      highlightItemOnHover,
+      modal: parentFromContext.type === void 0 ? modalProp : void 0,
+      rootId,
+      instantType: seededInstantType
+    }, floatingId, floatingParentNodeIdFromContext != null);
+    menuStore.context.virtualFocusRef = virtualFocusRef;
+    return menuStore;
+  }).current;
   store.useControlledProp("openProp", openProp);
   store.useControlledProp("triggerIdProp", triggerIdProp);
   store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
@@ -11521,12 +12074,13 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
   const parent = store.useState("parent");
   const activeIndex = store.useState("activeIndex");
+  const keyboardOpen = store.useState("keyboardOpen");
   const payload = store.useState("payload");
   const floatingParentNodeId = store.useState("floatingParentNodeId");
-  const openEventRef = React74.useRef(null);
-  const allowOutsidePressDismissalRef = React74.useRef(parent.type !== "context-menu");
+  const openEventRef = React82.useRef(null);
+  const allowOutsidePressDismissalRef = React82.useRef(parent.type !== "context-menu");
   const allowOutsidePressDismissalTimeout = useTimeout();
-  const allowTouchToCloseRef = React74.useRef(true);
+  const allowTouchToCloseRef = React82.useRef(true);
   const allowTouchToCloseTimeout = useTimeout();
   const nested = floatingParentNodeId != null;
   if (true) {
@@ -11553,7 +12107,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     store.set("allowMouseEnter", false);
   }, animateInitialOpen);
   const runOnceAnimationsFinish = useAnimationsFinished(store.context.popupRef);
-  React74.useEffect(() => {
+  React82.useEffect(() => {
     if (seededInstantType === void 0) {
       return void 0;
     }
@@ -11589,14 +12143,14 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
         floatingNodeId: floatingNodeIdFromContext,
         floatingParentNodeId: floatingParentNodeIdFromContext
       });
-    } else if (parentMenuRootContext) {
+    } else if (parentMenuRootContext || !store.select("activeTriggerElement")) {
       store.update({
         floatingNodeId: floatingNodeIdFromContext,
         floatingParentNodeId: floatingParentNodeIdFromContext
       });
     }
-  }, [contextMenuContext, parentMenuRootContext, floatingNodeIdFromContext, floatingParentNodeIdFromContext, store]);
-  React74.useEffect(() => {
+  }, [contextMenuContext, parentMenuRootContext, floatingNodeIdFromContext, floatingParentNodeIdFromContext, activeTriggerElement, store]);
+  React82.useEffect(() => {
     if (!open2) {
       openEventRef.current = null;
     }
@@ -11635,7 +12189,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     }
     store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
     const nativeEvent = eventDetails.event;
-    if (nextOpen === false && nativeEvent?.type === "click" && nativeEvent.pointerType === "touch" && !allowTouchToCloseRef.current) {
+    if (nextOpen === false && reason !== reason_parts_exports.itemPress && nativeEvent?.type === "click" && nativeEvent.pointerType === "touch" && !allowTouchToCloseRef.current) {
       return;
     }
     if (nextOpen && reason === reason_parts_exports.triggerFocus) {
@@ -11647,15 +12201,17 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
       allowTouchToCloseRef.current = true;
       allowTouchToCloseTimeout.clear();
     }
-    const isKeyboardClick = (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.itemPress) && nativeEvent.detail === 0;
     const isDismissClose = !nextOpen && (reason === reason_parts_exports.escapeKey || reason == null);
     openEventRef.current = eventDetails.event;
     const popupOpenState = createPopupOpenState(store.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
     popupOpenState.openChangeReason = reason;
+    popupOpenState.keyboardOpen = nextOpen && isKeyboardOpen(reason, nativeEvent);
     if (parent.type === "menubar" && (reason === reason_parts_exports.triggerFocus || reason === reason_parts_exports.focusOut || reason === reason_parts_exports.triggerHover || reason === reason_parts_exports.listNavigation || reason === reason_parts_exports.siblingOpen)) {
       popupOpenState.instantType = "group";
-    } else if (isKeyboardClick || isDismissClose) {
-      popupOpenState.instantType = isKeyboardClick ? "click" : "dismiss";
+    } else if (isKeyboardClick(reason, nativeEvent)) {
+      popupOpenState.instantType = "click";
+    } else if (isDismissClose) {
+      popupOpenState.instantType = "dismiss";
     } else {
       popupOpenState.instantType = void 0;
     }
@@ -11679,10 +12235,11 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
       floatingEvents?.off("setOpen", handleSetOpenEvent);
     };
   }, [floatingEvents, setOpen]);
-  const handleImperativeClose = React74.useCallback(() => {
+  useIsoLayoutEffect(() => store.subscribeToParentMenu(), [store]);
+  const handleImperativeClose = React82.useCallback(() => {
     store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
   }, [store]);
-  React74.useImperativeHandle(actionsRef, () => ({
+  React82.useImperativeHandle(actionsRef, () => ({
     unmount: forceUnmount,
     close: handleImperativeClose
   }), [forceUnmount, handleImperativeClose]);
@@ -11690,8 +12247,8 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
   if (parent.type === "context-menu") {
     ctx = parent.context;
   }
-  React74.useImperativeHandle(ctx?.positionerRef, () => positionerElement, [positionerElement]);
-  React74.useImperativeHandle(ctx?.actionsRef, () => ({
+  React82.useImperativeHandle(ctx?.positionerRef, () => positionerElement, [positionerElement]);
+  React82.useImperativeHandle(ctx?.actionsRef, () => ({
     setOpen
   }), [setOpen]);
   const dismiss = useDismiss(floatingRootContext, {
@@ -11708,45 +12265,103 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     externalTree: nested ? floatingTreeRoot : void 0
   });
   const direction = useDirection();
-  const setActiveIndex = React74.useCallback((index2) => {
-    if (store.select("activeIndex") === index2) {
-      return;
-    }
-    store.set("activeIndex", index2);
-  }, [store]);
   const listNavigation2 = useListNavigation(floatingRootContext, {
     enabled: !disabled2,
     listRef: store.context.itemDomElements,
     activeIndex,
-    nested: parent.type !== void 0,
-    loopFocus,
-    orientation,
+    virtual: virtualFocus,
+    nested: parent.type === "menubar" || !virtualFocus && parent.type !== void 0,
     parentOrientation: parent.type === "menubar" ? parent.context.orientation : void 0,
+    loopFocus,
+    // Filtered menus keep DOM focus on the input, while keyboard and virtual opens initially
+    // highlight an item as ordinary menus do. The input stays in the arrow-key loop unless the
+    // filter highlights automatically.
+    focusItemOnOpen: virtualFocus ? keyboardOpen : void 0,
+    allowEscape: virtualFocus && loopFocus && allowEscape,
+    orientation,
+    // A virtual-focus list can navigate on either axis, but its trigger always opens on the
+    // vertical one.
+    triggerOrientation: virtualFocus ? "vertical" : orientation,
     rtl: direction === "rtl",
     disabledIndices: EMPTY_ARRAY,
-    onNavigate: setActiveIndex,
-    openOnArrowKeyDown: parent.type !== "context-menu",
-    externalTree: nested ? floatingTreeRoot : void 0,
-    focusItemOnHover: highlightItemOnHover
+    onNavigate(nextActiveIndex, event) {
+      store.setActiveIndex(nextActiveIndex, getHighlightReason(event), event?.nativeEvent);
+    },
+    // A virtual-focus submenu's keyboard opening is orchestrated by its navigation wrapper based
+    // on both menus' orientations; the generic arrow-key opening would also react to the parent's
+    // forwarded cross-axis keys while closed.
+    openOnArrowKeyDown: parent.type !== "context-menu" && !(virtualFocus && isSubmenu),
+    externalTree: !virtualFocus && nested ? floatingTreeRoot : void 0,
+    nestedReturnFocusRef: parentMenuStore?.context.virtualFocusRef,
+    focusItemOnHover: highlightItemOnHover,
+    resetOnPointerLeave
   });
-  const onTyping = React74.useCallback((nextTyping) => {
+  const onTyping = React82.useCallback((nextTyping) => {
     store.context.typingRef.current = nextTyping;
   }, [store]);
   const typeahead = useTypeahead(floatingRootContext, {
-    enabled: !disabled2,
+    // Under virtual focus the input owns typing, so typeahead would race the filter query.
+    enabled: !disabled2 && !virtualFocus,
     listRef: store.context.itemLabels,
     elementsRef: store.context.itemDomElements,
     activeIndex,
     resetMs: TYPEAHEAD_RESET_MS,
-    onMatch: (index2) => {
+    onMatch: (index2, event) => {
       if (open2 && index2 !== activeIndex) {
-        store.set("activeIndex", index2);
+        store.setActiveIndex(index2, reason_parts_exports.keyboard, event.nativeEvent);
       }
     },
     onTyping
   });
-  const activeTriggerProps = React74.useMemo(() => {
-    const mergedProps = mergeProps(typeahead.reference, listNavigation2.reference, dismiss.reference, {
+  const onItemHighlighted = useStableCallback(onItemHighlightedProp);
+  const lastHighlightIndexRef = React82.useRef(-1);
+  const syncHighlightedItem = useStableCallback(() => {
+    const index2 = store.state.activeIndex;
+    const item = index2 === null ? void 0 : store.context.itemDomElements.current[index2] ?? void 0;
+    if (item?.isConnected === false) {
+      return;
+    }
+    const itemIndex = item === void 0 ? -1 : index2;
+    if (lastHighlightIndexRef.current === itemIndex && store.context.reportedItem === item) {
+      return;
+    }
+    lastHighlightIndexRef.current = itemIndex;
+    store.context.reportedItem = item;
+    if (virtualFocus) {
+      store.set("highlightedItem", item);
+    }
+    const {
+      highlightReason,
+      highlightEvent
+    } = store.context;
+    store.context.highlightReason = reason_parts_exports.none;
+    store.context.highlightEvent = void 0;
+    if (!onItemHighlightedProp) {
+      return;
+    }
+    onItemHighlighted(item, createGenericEventDetails(highlightReason, highlightEvent, {
+      label: item === void 0 ? void 0 : store.context.itemLabels.current[itemIndex] ?? void 0
+    }));
+  });
+  useIsoLayoutEffect(() => {
+    syncHighlightedItem();
+  }, [activeIndex, syncHighlightedItem]);
+  const openTriggerProps = React82.useMemo(() => {
+    if (!virtualFocus) {
+      return listNavigation2.reference;
+    }
+    if (!listNavigation2.trigger) {
+      return EMPTY_OBJECT;
+    }
+    const {
+      onFocus,
+      ...rest
+    } = listNavigation2.trigger;
+    return rest;
+  }, [virtualFocus, listNavigation2.reference, listNavigation2.trigger]);
+  store.useSyncedValue("inputProps", virtualFocus ? listNavigation2.reference ?? EMPTY_OBJECT : EMPTY_OBJECT);
+  const activeTriggerProps = React82.useMemo(() => {
+    const mergedProps = mergeProps(typeahead.reference, openTriggerProps, dismiss.reference, {
       onMouseMove() {
         store.set("allowMouseEnter", true);
       }
@@ -11754,8 +12369,8 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     mergedProps["aria-haspopup"] = "menu";
     mergedProps["aria-expanded"] = open2;
     return mergedProps;
-  }, [store, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps, open2]);
-  const inactiveTriggerProps = React74.useMemo(() => {
+  }, [store, typeahead.reference, openTriggerProps, dismiss.reference, interactionTypeProps, open2]);
+  const inactiveTriggerProps = React82.useMemo(() => {
     const mergedProps = mergeProps(listNavigation2.trigger, dismiss.trigger, interactionTypeProps);
     mergedProps["aria-haspopup"] = "menu";
     mergedProps["aria-expanded"] = false;
@@ -11767,12 +12382,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     });
     return null;
   });
-  const popupProps = React74.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, {
-    id: floatingId,
-    role: "menu",
-    // `menu` is implicitly vertical, so only the non-default value needs to be rendered.
-    "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
-    "aria-labelledby": activeTriggerElement?.id,
+  const popupProps = React82.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, {
     onMouseMove() {
       store.set("allowMouseEnter", true);
       if (parent.type === "menu") {
@@ -11790,7 +12400,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
         relay(event);
       }
     }
-  }, typeahead.floating, listNavigation2.floating, dismiss.floating), [activeTriggerElement, floatingId, orientation, parent.type, store, typeahead.floating, listNavigation2.floating, dismiss.floating]);
+  }, typeahead.floating, listNavigation2.floating, dismiss.floating), [parent.type, store, typeahead.floating, listNavigation2.floating, dismiss.floating]);
   const itemProps = listNavigation2.item ?? EMPTY_OBJECT;
   usePopupInteractionProps(store, {
     floatingRootContext,
@@ -11799,54 +12409,88 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     popupProps,
     itemProps
   });
-  const context = React74.useMemo(() => ({
+  const context = React82.useMemo(() => ({
     store,
-    parent: parentFromContext
-  }), [store, parentFromContext]);
-  const content = /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(MenuRootContext.Provider, {
+    parent: parentFromContext,
+    orientation,
+    loopFocus,
+    allowEscape,
+    defaultFloatingId,
+    setRenderedFloatingId,
+    virtualFocus,
+    parentVirtualFocus,
+    syncHighlightedItem
+  }), [store, parentFromContext, orientation, loopFocus, allowEscape, defaultFloatingId, virtualFocus, parentVirtualFocus, syncHighlightedItem]);
+  const renderedChildren = typeof children === "function" ? children({
+    payload
+  }) : children;
+  let content = /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(MenuRootContext.Provider, {
     value: context,
-    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(PopupHandleAttachment, {
+    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(PopupHandleAttachment, {
       handle,
       store
-    }), typeof children === "function" ? children({
-      payload
-    }) : children]
+    }), renderedChildren]
   });
   if (parent.type === void 0 || parent.type === "context-menu") {
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(FloatingTree, {
+    content = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(FloatingTree, {
       externalTree: floatingTreeRoot,
       children: content
     });
   }
   return content;
 });
-if (true) MenuRoot.displayName = "MenuRoot";
-function useMenuRootStore(initialState, floatingId, nested) {
-  const store = useRefWithInit(() => new MenuStore(initialState, floatingId, nested)).current;
-  return store;
+if (true) MenuRootInternal.displayName = "MenuRootInternal";
+function MenuRoot(props) {
+  const filterProvider = React82.useContext(MenuFilterProviderContext);
+  if (filterProvider === null) {
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(MenuRootInternal, {
+      ...props
+    });
+  }
+  const FilterRoot = filterProvider.Root;
+  return (
+    // The root consumes its provider so a plain submenu inside doesn't inherit it.
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(MenuFilterProviderContext.Provider, {
+      value: null,
+      children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(FilterRoot, {
+        ...filterProvider.options,
+        ...props
+      })
+    })
+  );
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRoot.mjs
-var React75 = __toESM(require_react(), 1);
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRoot.mjs
+var React83 = __toESM(require_react(), 1);
+var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var EMPTY_SUBMENU_ROOT_CONTEXT = {};
 function MenuSubmenuRoot(props) {
-  const parentMenu = useMenuRootContext().store;
-  const contextValue = React75.useMemo(() => ({
-    parentMenu
-  }), [parentMenu]);
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(MenuSubmenuRootContext.Provider, {
-    value: contextValue,
-    children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(MenuRoot, {
-      ...props
+  useMenuRootContext();
+  const filterProvider = React83.useContext(MenuFilterProviderContext);
+  if (filterProvider !== null) {
+    const FilterSubmenuRoot = filterProvider.SubmenuRoot;
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(MenuFilterProviderContext.Provider, {
+      value: null,
+      children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(FilterSubmenuRoot, {
+        ...filterProvider.options,
+        ...props
+      })
+    });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(MenuSubmenuRootContext.Provider, {
+    value: EMPTY_SUBMENU_ROOT_CONTEXT,
+    children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(MenuRootInternal, {
+      ...props,
+      isSubmenu: true
     })
   });
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
-var React79 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
+var React86 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
-var React76 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
+var React84 = __toESM(require_react(), 1);
 function useCompositeItem(params = {}) {
   const {
     highlightItemOnHover,
@@ -11858,7 +12502,7 @@ function useCompositeItem(params = {}) {
     index: index2
   } = useCompositeListItem(params);
   const isHighlighted = highlightedIndex === index2;
-  const itemRef = React76.useRef(null);
+  const itemRef = React84.useRef(null);
   const mergedRef = useMergedRefs(ref, itemRef);
   const compositeProps = {
     tabIndex: isHighlighted ? 0 : -1,
@@ -11883,7 +12527,7 @@ function useCompositeItem(params = {}) {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/composite/item/CompositeItem.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/item/CompositeItem.mjs
 function CompositeItem(componentProps) {
   const {
     render,
@@ -11912,7 +12556,7 @@ function CompositeItem(componentProps) {
   });
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/utils/findRootOwnerId.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/utils/findRootOwnerId.mjs
 function findRootOwnerId(node) {
   if (isHTMLElement(node) && node.hasAttribute("data-rootownerid")) {
     return node.getAttribute("data-rootownerid");
@@ -11923,54 +12567,43 @@ function findRootOwnerId(node) {
   return findRootOwnerId(getParentNode(node));
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/popups/useTriggerFocusGuards.mjs
-var React77 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/useTriggerFocusGuards.mjs
 var ReactDOM6 = __toESM(require_react_dom(), 1);
 function useTriggerFocusGuards(store, triggerElementRef) {
-  const preFocusGuardRef = React77.useRef(null);
-  function handlePreFocusGuardFocus(event) {
+  function closeAndFocus(event, direction, positionerElement) {
+    const guard = event.currentTarget;
     ReactDOM6.flushSync(() => {
-      store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent, event.currentTarget));
+      store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent, guard));
     });
-    const previousTabbable = getTabbableBeforeElement(preFocusGuardRef.current);
-    previousTabbable?.focus();
+    getTabbableNearElement(guard.isConnected ? guard : triggerElementRef.current, direction, positionerElement)?.focus();
+  }
+  function handlePreFocusGuardFocus(event) {
+    closeAndFocus(event, -1, store.select("positionerElement"));
   }
   function handleFocusTargetFocus(event) {
     const positionerElement = store.select("positionerElement");
     if (positionerElement && isOutsideEvent(event, positionerElement)) {
       store.context.beforeContentFocusGuardRef.current?.focus();
     } else {
-      ReactDOM6.flushSync(() => {
-        store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent, event.currentTarget));
-      });
-      let nextTabbable = getTabbableAfterElement(store.context.triggerFocusTargetRef.current || triggerElementRef.current);
-      while (nextTabbable !== null && contains(positionerElement, nextTabbable)) {
-        const prevTabbable = nextTabbable;
-        nextTabbable = getNextTabbable(nextTabbable);
-        if (nextTabbable === prevTabbable) {
-          break;
-        }
-      }
-      nextTabbable?.focus();
+      closeAndFocus(event, 1, positionerElement);
     }
   }
   return {
-    preFocusGuardRef,
     handlePreFocusGuardFocus,
     handleFocusTargetFocus
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/useMixedToggleClickHandler.mjs
-var React78 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useMixedToggleClickHandler.mjs
+var React85 = __toESM(require_react(), 1);
 function useMixedToggleClickHandler(params) {
   const {
     enabled = true,
     mouseDownAction,
     open: open2
   } = params;
-  const ignoreClickRef = React78.useRef(false);
-  return React78.useMemo(() => {
+  const ignoreClickRef = React85.useRef(false);
+  return React85.useMemo(() => {
     if (!enabled) {
       return EMPTY_OBJECT;
     }
@@ -11995,8 +12628,8 @@ function useMixedToggleClickHandler(params) {
   }, [enabled, mouseDownAction, open2]);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
-var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
+var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
 var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forwardedRef) {
   const {
     render,
@@ -12022,12 +12655,12 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
   const isTriggerActive = store.useState("isTriggerActive", thisTriggerId);
   const floatingRootContext = store.useState("floatingRootContext");
   const isOpenedByThisTrigger = store.useState("isOpenedByTrigger", thisTriggerId);
-  const popupId = store.useState("triggerPopupId", thisTriggerId);
-  const triggerElementRef = React79.useRef(null);
+  const controlsId = store.useState("triggerControlsId", thisTriggerId);
+  const triggerElementRef = React86.useRef(null);
   const parent = useMenuParent();
   const compositeRootContext = useCompositeRootContext(true);
   const floatingTreeRootFromContext = useFloatingTree();
-  const floatingTreeRoot = React79.useMemo(() => {
+  const floatingTreeRoot = React86.useMemo(() => {
     return floatingTreeRootFromContext ?? new FloatingTreeStore();
   }, [floatingTreeRootFromContext]);
   const floatingNodeId = useFloatingNodeId(floatingTreeRoot);
@@ -12054,12 +12687,12 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
     disabled: disabled2,
     native: nativeButton
   });
-  React79.useEffect(() => {
+  React86.useEffect(() => {
     if (!isOpenedByThisTrigger && parent.type === void 0) {
       store.context.allowMouseUpTriggerRef.current = false;
     }
   }, [store, isOpenedByThisTrigger, parent.type]);
-  const triggerRef = React79.useRef(null);
+  const triggerRef = React86.useRef(null);
   const allowMouseUpTriggerTimeout = useTimeout();
   const handleDocumentMouseUp = useStableCallback((mouseEvent) => {
     if (!triggerRef.current) {
@@ -12082,13 +12715,17 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
       reason: reason_parts_exports.cancelOpen
     });
   });
-  React79.useEffect(() => {
+  React86.useEffect(() => {
+    const doc = ownerDocument(triggerRef.current);
     if (isOpenedByThisTrigger && store.select("lastOpenChangeReason") === reason_parts_exports.triggerHover) {
-      const doc = ownerDocument(triggerRef.current);
       doc.addEventListener("mouseup", handleDocumentMouseUp, {
         once: true
       });
+      return () => {
+        doc.removeEventListener("mouseup", handleDocumentMouseUp);
+      };
     }
+    return void 0;
   }, [isOpenedByThisTrigger, handleDocumentMouseUp, store]);
   const parentMenubarHasSubmenuOpen = isInMenubar && parent.context.hasSubmenuOpen;
   const openOnHover = openOnHoverProp ?? parentMenubarHasSubmenuOpen;
@@ -12124,10 +12761,10 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
     enabled: isInMenubar,
     mouseDownAction: "open"
   });
-  const localInteractionProps = React79.useMemo(() => mergeProps(focus.reference, click.reference), [focus.reference, click.reference]);
+  const localInteractionProps = React86.useMemo(() => mergeProps(focus.reference, click.reference), [focus.reference, click.reference]);
   const rootTriggerProps = store.useState("triggerProps", isMountedByThisTrigger);
+  const filterTriggerProps = store.useState("filterTriggerProps");
   const {
-    preFocusGuardRef,
     handlePreFocusGuardFocus,
     handleFocusTargetFocus
   } = useTriggerFocusGuards(store, triggerElementRef);
@@ -12138,7 +12775,7 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
   const ref = [triggerRef, forwardedRef, buttonRef, registerTrigger, triggerElementRef];
   const props = [localInteractionProps, hoverProps ?? EMPTY_OBJECT, rootTriggerProps, {
     "aria-haspopup": "menu",
-    "aria-controls": popupId,
+    "aria-controls": controlsId,
     id: thisTriggerId,
     onMouseDown: (event) => {
       if (store.select("open")) {
@@ -12152,7 +12789,7 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
         once: true
       });
     }
-  }, isInMenubar ? {
+  }, filterTriggerProps, isInMenubar ? {
     role: "menuitem"
   } : {}, mixedToggleHandlers, elementProps, getButtonProps];
   const element = useRenderElement("button", componentProps, {
@@ -12163,7 +12800,7 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
     props
   });
   if (isInMenubar) {
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(CompositeItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(CompositeItem, {
       tag: "button",
       render,
       className,
@@ -12175,26 +12812,26 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
     });
   }
   if (isOpenedByThisTrigger) {
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(React79.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(FocusGuard, {
-        ref: preFocusGuardRef,
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(React86.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime20.jsx)(FocusGuard, {
+        ref: store.context.beforeTriggerFocusGuardRef,
         onFocus: handlePreFocusGuardFocus
-      }, `${thisTriggerId}-pre-focus-guard`), /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(React79.Fragment, {
+      }, `${thisTriggerId}-pre-focus-guard`), /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(React86.Fragment, {
         children: element
-      }, thisTriggerId), /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(FocusGuard, {
+      }, thisTriggerId), /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(FocusGuard, {
         ref: store.context.triggerFocusTargetRef,
         onFocus: handleFocusTargetFocus
       }, `${thisTriggerId}-post-focus-guard`)]
     });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(React79.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(React86.Fragment, {
     children: element
   }, thisTriggerId);
 });
 if (true) MenuTrigger.displayName = "MenuTrigger";
 function useStickIfOpen(open2, openReason) {
   const stickIfOpenTimeout = useTimeout();
-  const [stickIfOpen, setStickIfOpen] = React79.useState(false);
+  const [stickIfOpen, setStickIfOpen] = React86.useState(false);
   useIsoLayoutEffect(() => {
     if (open2 && openReason === reason_parts_exports.triggerHover) {
       setStickIfOpen(true);
@@ -12210,7 +12847,7 @@ function useStickIfOpen(open2, openReason) {
 }
 function useMenuParent() {
   const menubarContext = useMenubarContext(true);
-  const parent = React79.useMemo(() => {
+  const parent = React86.useMemo(() => {
     if (menubarContext) {
       return {
         type: "menubar",
@@ -12224,17 +12861,17 @@ function useMenuParent() {
   return parent;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
-var React84 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
+var React91 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePopupViewport.mjs
-var React83 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupViewport.mjs
+var React90 = __toESM(require_react(), 1);
 var ReactDOM7 = __toESM(require_react_dom(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/usePreviousValue.mjs
-var React80 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/usePreviousValue.mjs
+var React87 = __toESM(require_react(), 1);
 function usePreviousValue(value) {
-  const [state, setState] = React80.useState({
+  const [state, setState] = React87.useState({
     current: value,
     previous: null
   });
@@ -12247,10 +12884,10 @@ function usePreviousValue(value) {
   return state.previous;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
-var React81 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+var React88 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/getCssDimensions.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getCssDimensions.mjs
 function getCssDimensions2(element) {
   const css = getComputedStyle2(element);
   let width = parseFloat(css.width) || 0;
@@ -12269,11 +12906,11 @@ function getCssDimensions2(element) {
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonPopupCssVars.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonPopupCssVars.mjs
 var popupWidth = "--popup-width";
 var popupHeight = "--popup-height";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
 function usePopupAutoResize(parameters) {
   const {
     popupElement,
@@ -12287,23 +12924,19 @@ function usePopupAutoResize(parameters) {
   } = parameters;
   const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true);
   const animationFrame = useAnimationFrame();
-  const committedDimensionsRef = React81.useRef(null);
-  const isInitialRenderRef = React81.useRef(true);
-  const restoreAnchoringStylesRef = React81.useRef(NOOP);
+  const committedDimensionsRef = React88.useRef(null);
   const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
   const onMeasureLayoutComplete = useStableCallback(onMeasureLayoutCompleteParam);
-  const anchoringStyles = React81.useMemo(() => getPopupAnchoringStyles(side, direction), [side, direction]);
+  const anchoringStyles = React88.useMemo(() => getPopupAnchoringStyles(side, direction), [side, direction]);
   useIsoLayoutEffect(() => {
     if (!mounted) {
-      restoreAnchoringStylesRef.current = NOOP;
-      isInitialRenderRef.current = true;
       committedDimensionsRef.current = null;
       return void 0;
     }
     if (!popupElement || !positionerElement) {
       return void 0;
     }
-    restoreAnchoringStylesRef.current = applyElementStyles(popupElement, anchoringStyles);
+    const restoreAnchoringStyles = applyElementStyles(popupElement, anchoringStyles);
     setPopupCssSize(popupElement, "auto");
     const restorePopupPosition = overrideElementStyle(popupElement, "position", "static");
     const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
@@ -12316,31 +12949,24 @@ function usePopupAutoResize(parameters) {
       restorePopupPosition();
       restorePopupTransform();
       restorePositionerAvailableSize();
-    }
-    function restoreMeasurementOverridesIncludingScale() {
-      restoreMeasurementOverrides();
       restorePopupScale();
     }
     onMeasureLayout?.();
-    if (isInitialRenderRef.current || committedDimensionsRef.current === null) {
+    if (committedDimensionsRef.current === null) {
       setPositionerCssSize(positionerElement, "max-content");
       const dimensions = getCssDimensions2(popupElement);
       committedDimensionsRef.current = dimensions;
       setPositionerCssSize(positionerElement, dimensions);
-      restoreMeasurementOverridesIncludingScale();
+      restoreMeasurementOverrides();
       onMeasureLayoutComplete?.(null, dimensions);
-      isInitialRenderRef.current = false;
-      return () => {
-        restoreAnchoringStylesRef.current();
-        restoreAnchoringStylesRef.current = NOOP;
-      };
+      return restoreAnchoringStyles;
     }
     setPositionerCssSize(positionerElement, "max-content");
     const previousDimensions = committedDimensionsRef.current;
     const newDimensions = getCssDimensions2(popupElement);
     committedDimensionsRef.current = newDimensions;
     setPopupCssSize(popupElement, previousDimensions);
-    restoreMeasurementOverridesIncludingScale();
+    restoreMeasurementOverrides();
     onMeasureLayoutComplete?.(previousDimensions, newDimensions);
     setPositionerCssSize(positionerElement, newDimensions);
     const abortController = new AbortController();
@@ -12354,8 +12980,7 @@ function usePopupAutoResize(parameters) {
     return () => {
       abortController.abort();
       animationFrame.cancel();
-      restoreAnchoringStylesRef.current();
-      restoreAnchoringStylesRef.current = NOOP;
+      restoreAnchoringStyles();
     };
   }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
 }
@@ -12400,24 +13025,24 @@ function setPositionerCssSize(positionerElement, size4) {
   positionerElement.style.setProperty(positionerHeight, height);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
-var React82 = __toESM(require_react(), 1);
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
+var React89 = __toESM(require_react(), 1);
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
 var DirectionProvider = function DirectionProvider2(props) {
   const {
     direction = "ltr"
   } = props;
-  const contextValue = React82.useMemo(() => ({
+  const contextValue = React89.useMemo(() => ({
     direction
   }), [direction]);
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(DirectionContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(DirectionContext.Provider, {
     value: contextValue,
     children: props.children
   });
 };
 if (true) DirectionProvider.displayName = "DirectionProvider";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
 var adaptiveOrigin = {
   name: "adaptiveOrigin",
   async fn(state) {
@@ -12485,11 +13110,11 @@ var adaptiveOrigin = {
   }
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/CommonViewportDataAttributes.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonViewportDataAttributes.mjs
 var activationDirection = "data-activation-direction";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/usePopupViewport.mjs
-var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupViewport.mjs
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 var popupViewportStateMapping = {
   activationDirection: (value) => value ? {
     [activationDirection]: value
@@ -12511,16 +13136,16 @@ function usePopupViewport(parameters) {
   const positionerElement = store.useState("positionerElement");
   const previousActiveTrigger = usePreviousValue(open2 ? activeTrigger : null);
   const currentContentKey = usePopupContentKey(activeTriggerId, payload);
-  const capturedNodeRef = React83.useRef(null);
-  const [previousContentNode, setPreviousContentNode] = React83.useState(null);
-  const [newTriggerOffset, setNewTriggerOffset] = React83.useState(null);
-  const currentContainerRef = React83.useRef(null);
-  const previousContainerRef = React83.useRef(null);
+  const capturedNodeRef = React90.useRef(null);
+  const [previousContentNode, setPreviousContentNode] = React90.useState(null);
+  const [newTriggerOffset, setNewTriggerOffset] = React90.useState(null);
+  const currentContainerRef = React90.useRef(null);
+  const previousContainerRef = React90.useRef(null);
   const onAnimationsFinished = useAnimationsFinished(currentContainerRef, true);
   const cleanupFrame = useAnimationFrame();
-  const cleanupControllerRef = React83.useRef(null);
-  const [previousContentDimensions, setPreviousContentDimensions] = React83.useState(null);
-  const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React83.useState(false);
+  const cleanupControllerRef = React90.useRef(null);
+  const [previousContentDimensions, setPreviousContentDimensions] = React90.useState(null);
+  const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React90.useState(false);
   useIsoLayoutEffect(() => {
     store.set("adaptiveOrigin", adaptiveOrigin);
     return () => {
@@ -12550,21 +13175,21 @@ function usePopupViewport(parameters) {
       capturedNodeRef.current = null;
     }, controller.signal);
   });
-  const lastHandledTriggerRef = React83.useRef(null);
+  const lastHandledTriggerRef = React90.useRef(null);
   useIsoLayoutEffect(() => {
     if (!open2 || !mounted) {
       lastHandledTriggerRef.current = null;
     }
   }, [open2, mounted]);
   useIsoLayoutEffect(() => {
-    if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
+    if (open2 && activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
       setPreviousContentNode(capturedNodeRef.current);
       setShowStartingStyleAttribute(true);
       const offset4 = calculateRelativePosition(previousActiveTrigger, activeTrigger);
       setNewTriggerOffset(offset4);
       lastHandledTriggerRef.current = activeTrigger;
     }
-  }, [activeTrigger, previousActiveTrigger]);
+  }, [open2, activeTrigger, previousActiveTrigger]);
   useIsoLayoutEffect(() => {
     if (previousContentNode == null) {
       return;
@@ -12592,14 +13217,14 @@ function usePopupViewport(parameters) {
   const isTransitioning = previousContentNode != null;
   let childrenToRender;
   if (!isTransitioning) {
-    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", {
+    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", {
       "data-current": true,
       ref: currentContainerRef,
       children
     }, currentContentKey);
   } else {
-    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(React83.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", {
+    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(React90.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", {
         "data-previous": true,
         inert: inertValue(true),
         ref: previousContainerRef,
@@ -12611,7 +13236,7 @@ function usePopupViewport(parameters) {
           position: "absolute"
         },
         "data-ending-style": showStartingStyleAttribute ? void 0 : ""
-      }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", {
+      }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", {
         "data-current": true,
         ref: currentContainerRef,
         "data-starting-style": showStartingStyleAttribute ? "" : void 0,
@@ -12677,10 +13302,10 @@ function calculateRelativePosition(from, to) {
   };
 }
 function usePopupContentKey(activeTriggerId, payload) {
-  const [contentKey, setContentKey] = React83.useState(0);
-  const previousActiveTriggerIdRef = React83.useRef(activeTriggerId);
-  const previousPayloadRef = React83.useRef(payload);
-  const pendingPayloadUpdateRef = React83.useRef(false);
+  const [contentKey, setContentKey] = React90.useState(0);
+  const previousActiveTriggerIdRef = React90.useRef(activeTriggerId);
+  const previousPayloadRef = React90.useRef(payload);
+  const pendingPayloadUpdateRef = React90.useRef(false);
   useIsoLayoutEffect(() => {
     const previousActiveTriggerId = previousActiveTriggerIdRef.current;
     const previousPayload = previousPayloadRef.current;
@@ -12699,8 +13324,8 @@ function usePopupContentKey(activeTriggerId, payload) {
   return `${activeTriggerId ?? "current"}-${contentKey}`;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
-var MenuViewport = /* @__PURE__ */ React84.forwardRef(function MenuViewport2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
+var MenuViewport = /* @__PURE__ */ React91.forwardRef(function MenuViewport2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -12739,9 +13364,9 @@ var MenuViewport = /* @__PURE__ */ React84.forwardRef(function MenuViewport2(com
 });
 if (true) MenuViewport.displayName = "MenuViewport";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/separator/Separator.mjs
-var React85 = __toESM(require_react(), 1);
-var Separator = /* @__PURE__ */ React85.forwardRef(function SeparatorComponent(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/separator/Separator.mjs
+var React92 = __toESM(require_react(), 1);
+var Separator = /* @__PURE__ */ React92.forwardRef(function SeparatorComponent(componentProps, forwardedRef) {
   const {
     className,
     render,
@@ -12764,19 +13389,20 @@ var Separator = /* @__PURE__ */ React85.forwardRef(function SeparatorComponent(c
 });
 if (true) Separator.displayName = "Separator";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
-var React86 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
+var React93 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/isElementDisabled.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/isElementDisabled.mjs
 function isElementDisabled(element) {
   return element == null || element.hasAttribute("disabled") || element.getAttribute("aria-disabled") === "true";
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 var VOICE_OVER_EXPANDED_PROPS = {
   "aria-expanded": void 0
 };
-var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenuTrigger2(componentProps, forwardedRef) {
+var MenuSubmenuTriggerPlain = /* @__PURE__ */ React93.forwardRef(function MenuSubmenuTriggerPlain2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -12790,27 +13416,33 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenu
     disabled: disabledProp = false,
     ...elementProps
   } = componentProps;
-  const submenuRootContext = useMenuSubmenuRootContext();
-  if (!submenuRootContext?.parentMenu) {
+  const context = useMenuRootContext(true);
+  if (context?.parent.type !== "menu") {
     throw new Error(true ? "Base UI: <Menu.SubmenuTrigger> must be placed in <Menu.SubmenuRoot>." : formatErrorMessage_default(37));
   }
+  const menuPositionerContext = useMenuPositionerContext();
+  const submenuRootContext = useMenuSubmenuRootContext();
+  const {
+    store,
+    parentVirtualFocus
+  } = context;
+  const parentMenuStore = context.parent.store;
   const listItem = useCompositeListItem({
     guess: true,
     label
   });
-  const menuPositionerContext = useMenuPositionerContext();
-  const {
-    store
-  } = useMenuRootContext();
   const thisTriggerId = useBaseUiId(idProp);
   const open2 = store.useState("open");
+  const focusReturnedThroughGuardRef = React93.useRef(false);
+  const positionerElement = store.useState("positionerElement");
   const floatingRootContext = store.useState("floatingRootContext");
   const floatingTreeRoot = store.useState("floatingTreeRoot");
   const popupId = store.useState("triggerPopupId", thisTriggerId);
   const baseRegisterTrigger = useTriggerRegistration(thisTriggerId, store);
   const registerTrigger = useStableCallback((element2) => {
     baseRegisterTrigger(element2);
-    if (element2 !== null && store.select("open") && store.select("activeTriggerId") == null) {
+    const activeTriggerElement = store.select("activeTriggerElement");
+    if (element2 !== null && store.select("open") && (activeTriggerElement === element2 || store.select("activeTriggerId") == null)) {
       store.update({
         activeTriggerId: thisTriggerId ?? null,
         activeTriggerElement: element2,
@@ -12818,8 +13450,8 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenu
       });
     }
   });
-  const triggerElementRef = React86.useRef(null);
-  const handleTriggerElementRef = React86.useCallback((el) => {
+  const triggerElementRef = React93.useRef(null);
+  const handleTriggerElementRef = React93.useCallback((el) => {
     triggerElementRef.current = el;
     store.set("activeTriggerElement", el);
   }, [store]);
@@ -12827,13 +13459,27 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenu
     registerTrigger(triggerElementRef.current);
     return () => registerTrigger(null);
   }, [registerTrigger, thisTriggerId, store]);
+  useIsoLayoutEffect(() => {
+    if (!open2 || !positionerElement) {
+      return void 0;
+    }
+    function handleGuardFocusOut(event) {
+      if (getTarget(event) === store.context.beforeContentFocusGuardRef.current) {
+        focusReturnedThroughGuardRef.current = event.relatedTarget === triggerElementRef.current;
+      }
+    }
+    positionerElement.addEventListener("focusout", handleGuardFocusOut, true);
+    return () => {
+      focusReturnedThroughGuardRef.current = false;
+      positionerElement.removeEventListener("focusout", handleGuardFocusOut, true);
+    };
+  }, [open2, positionerElement, store]);
   store.useSyncedValue("closeDelay", closeDelay);
-  const parentMenuStore = submenuRootContext.parentMenu;
   const rootDisabled = store.useState("disabled");
   const parentDisabled = parentMenuStore.useState("disabled");
   const disabled2 = disabledProp || rootDisabled || parentDisabled;
   if (true) {
-    React86.useEffect(() => {
+    React93.useEffect(() => {
       const element2 = triggerElementRef.current;
       if (element2 && isElementDisabled(element2) && !disabled2) {
         const ownerStackMessage = SafeReact.captureOwnerStack?.() || "";
@@ -12843,11 +13489,11 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenu
   }
   const itemProps = parentMenuStore.useState("itemProps");
   const highlighted = parentMenuStore.useState("isActive", listItem.index);
-  const itemMetadata = React86.useMemo(() => ({
+  const itemMetadata = React93.useMemo(() => ({
     type: "submenu-trigger",
-    setActive() {
+    setActive(event) {
       if (parentMenuStore.select("highlightItemOnHover")) {
-        parentMenuStore.set("activeIndex", listItem.index);
+        parentMenuStore.setActiveIndex(listItem.index, reason_parts_exports.pointer, event);
       }
     }
   }), [parentMenuStore, listItem.index]);
@@ -12889,9 +13535,14 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenu
   const click = useClick(floatingRootContext, {
     enabled: !disabled2,
     event: "mousedown",
-    toggle: !openOnHover,
+    // Without toggling, TalkBack users cannot close the submenu to reach the next parent menu
+    // item: moving the virtual cursor outside does not close it, and moving forward again
+    // re-enters the still-open submenu. Keep toggling enabled so activating its trigger closes it.
+    // Toggling applies to touch and keyboard activation. In hover mode, mouse presses are
+    // ignored and the first activation after hover-opening keeps the submenu open.
+    toggle: true,
     ignoreMouse: openOnHover,
-    stickIfOpen: false
+    stickIfOpen: openOnHover
   });
   const localInteractionProps = click.reference ?? EMPTY_OBJECT;
   const rootTriggerProps = store.useState("triggerProps", true);
@@ -12905,6 +13556,9 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenu
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
   const openedByKeyboard = lastOpenChangeReason === reason_parts_exports.listNavigation || openMethod === "keyboard";
   const shouldOmitExpanded = open2 && openedByKeyboard && parts_exports.screenReader.voiceOver;
+  const submenuKeyDownProps = submenuRootContext?.onTriggerKeyDown ? {
+    onKeyDown: submenuRootContext.onTriggerKeyDown
+  } : void 0;
   const element = useRenderElement("div", componentProps, {
     state,
     stateAttributesMapping: triggerOpenStateMapping,
@@ -12912,6 +13566,9 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenu
       localInteractionProps,
       hoverProps,
       rootTriggerProps,
+      // MenuFilterSubmenuRoot overrides the generic trigger handler because entry and exit
+      // depend on both the parent and child menu orientations.
+      submenuKeyDownProps,
       itemProps,
       // Opening a submenu changes the trigger's expanded state while the trigger still holds
       // focus, and VoiceOver announces that state change instead of the submenu item that focus
@@ -12921,23 +13578,44 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React86.forwardRef(function MenuSubmenu
       shouldOmitExpanded ? VOICE_OVER_EXPANDED_PROPS : void 0,
       {
         "aria-controls": popupId,
-        tabIndex: open2 || highlighted ? 0 : -1,
+        // A virtually focused parent keeps real focus on its input, so the trigger must stay out
+        // of the tab order.
+        tabIndex: parentVirtualFocus || !(open2 || highlighted) ? -1 : 0,
+        onFocus(event) {
+          if (store.select("open") && focusReturnedThroughGuardRef.current) {
+            focusReturnedThroughGuardRef.current = false;
+            store.setOpen(false, createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent));
+          }
+        },
         onBlur() {
           if (highlighted) {
-            parentMenuStore.set("activeIndex", null);
+            parentMenuStore.setActiveIndex(null, reason_parts_exports.none);
           }
         }
       },
       elementProps,
+      // `getItemProps` stays last so `useButton` keeps gating consumer handlers while disabled.
       getItemProps
     ],
     ref: [forwardedRef, listItem.ref, itemRef, registerTrigger, handleTriggerElementRef]
   });
   return element;
 });
+if (true) MenuSubmenuTriggerPlain.displayName = "MenuSubmenuTriggerPlain";
+var MenuSubmenuTrigger = /* @__PURE__ */ React93.forwardRef(function MenuSubmenuTrigger2(props, forwardedRef) {
+  const filterItem = useMenuFilterItem(props, forwardedRef, "submenu-trigger");
+  if (!filterItem.visible) {
+    return null;
+  }
+  const mergedProps = filterItem.props ? mergeProps(filterItem.props, props) : props;
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MenuSubmenuTriggerPlain, {
+    ...mergedProps,
+    ref: filterItem.ref
+  });
+});
 if (true) MenuSubmenuTrigger.displayName = "MenuSubmenuTrigger";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/menu/store/MenuHandle.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/store/MenuHandle.mjs
 var MenuHandle = class extends BasePopupHandle {
   constructor() {
     super(createNullMenuStore(), "Menu");
@@ -12972,12 +13650,1694 @@ function createMenuHandle() {
   return new MenuHandle();
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/clamp.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-provider/MenuFilterProvider.mjs
+var React110 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterRoot.mjs
+var React108 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterDropdown.mjs
+var React106 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/FilterDropdownRoot.mjs
+var React96 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useItemRegistry.mjs
+var React94 = __toESM(require_react(), 1);
+function useItemRegistry() {
+  const itemRegistry = useRefWithInit(() => /* @__PURE__ */ new Map()).current;
+  const [registryVersion, setRegistryVersion] = React94.useState(0);
+  const isUpdateScheduledRef = React94.useRef(false);
+  const scheduleRegistryUpdate = useStableCallback(() => {
+    if (isUpdateScheduledRef.current) {
+      return;
+    }
+    isUpdateScheduledRef.current = true;
+    setRegistryVersion((version2) => version2 + 1);
+  });
+  const registerItem = useStableCallback((key, item) => {
+    itemRegistry.set(key, item);
+    scheduleRegistryUpdate();
+    return () => {
+      itemRegistry.delete(key);
+      scheduleRegistryUpdate();
+    };
+  });
+  const registeredItems = React94.useMemo(
+    () => new Map(itemRegistry),
+    // The mutable registry is stable. Its version explicitly controls when to publish a copy.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [registryVersion]
+  );
+  useIsoLayoutEffect(() => {
+    isUpdateScheduledRef.current = false;
+  }, [registryVersion]);
+  return {
+    items: registeredItems,
+    registerItem,
+    liveItems: itemRegistry
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/FilterDropdownRootContext.mjs
+var React95 = __toESM(require_react(), 1);
+function throwMissingFilterRoot() {
+  throw new Error(true ? "Base UI: Filter parts are missing their filter context and cannot access the query or items. Wrap the component root in its filter provider." : formatErrorMessage_default(103));
+}
+var FilterDropdownItemContext = /* @__PURE__ */ React95.createContext(null);
+if (true) FilterDropdownItemContext.displayName = "FilterDropdownItemContext";
+function useFilterDropdownItemContext(optional = false) {
+  const context = React95.useContext(FilterDropdownItemContext);
+  if (context === null && !optional) {
+    throwMissingFilterRoot();
+  }
+  return context;
+}
+var FilterDropdownRootContext = /* @__PURE__ */ React95.createContext(null);
+if (true) FilterDropdownRootContext.displayName = "FilterDropdownRootContext";
+function useFilterDropdownRootContext(optional = false) {
+  const context = React95.useContext(FilterDropdownRootContext);
+  if (context === null && !optional) {
+    throwMissingFilterRoot();
+  }
+  return context;
+}
+function useFilterContextForList(listRef) {
+  let context = React95.useContext(FilterDropdownItemContext);
+  if (listRef === null) {
+    return null;
+  }
+  while (context !== null && context.listRef !== listRef) {
+    context = context.parent;
+  }
+  return context;
+}
+var FilterDropdownValueContext = /* @__PURE__ */ React95.createContext("");
+if (true) FilterDropdownValueContext.displayName = "FilterDropdownValueContext";
+function useFilterDropdownValueContext() {
+  return React95.useContext(FilterDropdownValueContext);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/store.mjs
+var selectors3 = {
+  // A null `visibleItemIds` means no query, so fall back to whether anything registered.
+  isEmpty: (state) => state.visibleItemIds === null ? state.registeredItemCount === 0 : state.visibleItemIds.size === 0,
+  isItemVisible: (state, id) => state.visibleItemIds === null || state.visibleItemIds.has(id)
+};
+var FilterDropdownStore = class extends ReactStore {
+  constructor() {
+    super({
+      visibleItemIds: null,
+      registeredItemCount: 0
+    }, EMPTY_OBJECT, selectors3);
+  }
+};
+var DETACHED_OWNER = {
+  registerItem: () => NOOP,
+  store: new FilterDropdownStore()
+};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/FilterDropdownRoot.mjs
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+function FilterDropdownRoot(props) {
+  const {
+    children,
+    open: open2,
+    disabled: disabled2 = false,
+    openedByKeyboard = false,
+    locale,
+    value,
+    query,
+    onValueChange,
+    filter,
+    autoHighlight = false,
+    triggerId: triggerIdProp,
+    listRef,
+    getActiveIndex,
+    setActiveIndex,
+    focusOwnerRef: focusOwnerRefProp
+  } = props;
+  const parentItemContext = React96.useContext(FilterDropdownItemContext);
+  const [renderedListId, setRenderedListId] = React96.useState(void 0);
+  const [inputFocusVisible, setInputFocusVisible] = React96.useState(openedByKeyboard);
+  const [keyboardModality, setKeyboardModality] = React96.useState(openedByKeyboard);
+  const [previousOpenedByKeyboard, setPreviousOpenedByKeyboard] = React96.useState(openedByKeyboard);
+  if (openedByKeyboard !== previousOpenedByKeyboard) {
+    setPreviousOpenedByKeyboard(openedByKeyboard);
+    setInputFocusVisible(openedByKeyboard);
+    setKeyboardModality(openedByKeyboard);
+  }
+  const {
+    items: registeredItems,
+    registerItem: registerInRegistry,
+    liveItems
+  } = useItemRegistry();
+  const defaultId = useBaseUiId();
+  const store = useRefWithInit(() => new FilterDropdownStore()).current;
+  const registerItem = useStableCallback((id, item) => {
+    const unregister = registerInRegistry(id, item);
+    store.set("registeredItemCount", liveItems.size);
+    return () => {
+      unregister();
+      store.set("registeredItemCount", liveItems.size);
+    };
+  });
+  const fallbackFocusOwnerRef = React96.useRef(null);
+  const lastFilterQueryRef = React96.useRef(null);
+  const defaultMatchItem = React96.useMemo(() => getFilter({
+    locale
+  }).contains, [locale]);
+  const focusOwnerRef = focusOwnerRefProp ?? fallbackFocusOwnerRef;
+  const filterQuery = (query ?? value).trim();
+  const matchItem = filterQuery === "" || filter === null ? null : filter ?? defaultMatchItem;
+  const autoHighlightEnabled = open2 && (autoHighlight === "always" || autoHighlight && filterQuery !== "");
+  const defaultListId = defaultId ? `${defaultId}-list` : void 0;
+  const listId = (renderedListId ?? defaultListId) || void 0;
+  const triggerId = triggerIdProp || void 0;
+  const handleValueChange = useStableCallback((nextValue, eventDetails) => {
+    onValueChange?.(nextValue, eventDetails);
+    if (!eventDetails.isCanceled && !autoHighlight) {
+      setActiveIndex(null);
+    }
+  });
+  const handleItemsChange = useStableCallback((previousItems) => {
+    const items = listRef.current;
+    const activeIndex = getActiveIndex();
+    if (activeIndex != null && items[activeIndex] != null && items[activeIndex] === previousItems[activeIndex]) {
+      return;
+    }
+    setActiveIndex(autoHighlightEnabled && items.length > 0 ? 0 : null);
+  });
+  useIsoLayoutEffect(() => {
+    if (!open2 && query === void 0) {
+      return;
+    }
+    const queryChanged = lastFilterQueryRef.current !== null && lastFilterQueryRef.current !== filterQuery;
+    lastFilterQueryRef.current = filterQuery;
+    if (matchItem === null) {
+      store.set("visibleItemIds", null);
+      if (autoHighlightEnabled && liveItems.size > 0) {
+        if (queryChanged || getActiveIndex() == null) {
+          setActiveIndex(0);
+        }
+      } else if (filterQuery === "" && queryChanged) {
+        setActiveIndex(null);
+      }
+      return;
+    }
+    const currentIds = store.state.visibleItemIds;
+    if (currentIds === null && liveItems.size === 0) {
+      return;
+    }
+    const nextIds = /* @__PURE__ */ new Set();
+    let hasNewMatch = currentIds === null;
+    liveItems.forEach(({
+      getText
+    }, id) => {
+      const text = getText();
+      if (text != null && matchItem(text, filterQuery)) {
+        nextIds.add(id);
+        hasNewMatch ||= !currentIds?.has(id);
+      }
+    });
+    if (hasNewMatch || currentIds?.size !== nextIds.size) {
+      if (autoHighlightEnabled && nextIds.size > 0) {
+        setActiveIndex(0);
+      } else if (currentIds !== null || queryChanged) {
+        setActiveIndex(null);
+      }
+      store.set("visibleItemIds", nextIds);
+    } else if (autoHighlightEnabled && queryChanged && nextIds.size > 0) {
+      setActiveIndex(0);
+    }
+  }, [open2, query, filterQuery, registeredItems, liveItems, matchItem, autoHighlightEnabled, store, setActiveIndex, getActiveIndex]);
+  const contextValue = React96.useMemo(() => ({
+    open: open2,
+    disabled: disabled2,
+    inputFocusVisible,
+    setInputFocusVisible,
+    keyboardModality,
+    setKeyboardModality,
+    autoHighlight,
+    triggerId,
+    defaultListId,
+    listId,
+    setRenderedListId,
+    focusOwnerRef,
+    setActiveIndex,
+    onItemsChange: handleItemsChange,
+    onValueChange: handleValueChange
+  }), [open2, disabled2, inputFocusVisible, keyboardModality, autoHighlight, triggerId, defaultListId, listId, focusOwnerRef, setActiveIndex, handleItemsChange, handleValueChange]);
+  const itemContextValue = React96.useMemo(() => ({
+    parent: parentItemContext,
+    store,
+    registerItem,
+    listRef
+  }), [parentItemContext, store, registerItem, listRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(FilterDropdownItemContext.Provider, {
+    value: itemContextValue,
+    children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(FilterDropdownRootContext.Provider, {
+      value: contextValue,
+      children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(FilterDropdownValueContext.Provider, {
+        value: query ?? value,
+        children
+      })
+    })
+  });
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/useFilterDropdownCloseQuery.mjs
+var React97 = __toESM(require_react(), 1);
+function useFilterDropdownCloseQuery(parameters) {
+  const {
+    open: open2,
+    mounted,
+    value,
+    onValueChange
+  } = parameters;
+  const [closeQuery, setCloseQuery] = React97.useState(null);
+  const previousOpenRef = React97.useRef(open2);
+  useIsoLayoutEffect(() => {
+    const wasOpen = previousOpenRef.current;
+    previousOpenRef.current = open2;
+    if (wasOpen && !open2 && value !== "") {
+      setCloseQuery(value);
+      onValueChange("", createChangeEventDetails(reason_parts_exports.popupClose));
+    } else if ((open2 || !mounted) && closeQuery !== null) {
+      setCloseQuery(null);
+    }
+  }, [open2, mounted, value, closeQuery, onValueChange]);
+  return !open2 && closeQuery !== null ? closeQuery : value;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterPopup.mjs
+var React99 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterPopup.mjs
+var React98 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/utils/refocusOwner.mjs
+var refocusing = false;
+function refocusOwner(owner) {
+  refocusing = true;
+  try {
+    owner.focus({
+      preventScroll: true
+    });
+  } finally {
+    refocusing = false;
+  }
+}
+function isRefocusingOwner() {
+  return refocusing;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterPopup.mjs
+function useMenuFilterPopup(orientation) {
+  const context = useFilterDropdownRootContext();
+  const direction = useDirection();
+  const {
+    focusOwnerRef
+  } = context;
+  const nestedFocusRef = React98.useRef(null);
+  const pointerTypeRef = React98.useRef("mouse");
+  function trackPointerType(event) {
+    pointerTypeRef.current = event.pointerType || "mouse";
+  }
+  if (true) {
+    React98.useEffect(() => {
+      if (context.open && focusOwnerRef.current === null) {
+        warn("A filterable menu opened without a <Menu.Input>. Render the input inside <Menu.Popup>, or drop <Menu.FilterProvider> for a menu that does not filter.");
+      }
+    }, [context.open, focusOwnerRef]);
+  }
+  function restoreInputFocus(event, enteredTrigger) {
+    const focusOwner = focusOwnerRef.current;
+    if (!context.open || !focusOwner) {
+      return;
+    }
+    const activeEl = activeElement(ownerDocument(event.currentTarget));
+    if (activeEl === focusOwner || contains(event.currentTarget, activeEl)) {
+      return;
+    }
+    let submenuTrigger = null;
+    const nearestPopup = event.nativeEvent.composedPath().find((node) => {
+      if (!isHTMLElement(node)) {
+        return false;
+      }
+      if (node.getAttribute("role") === "dialog" || node.hasAttribute("data-rootownerid")) {
+        return true;
+      }
+      if (node.hasAttribute("aria-haspopup")) {
+        submenuTrigger = node;
+      }
+      return false;
+    });
+    if (nearestPopup !== event.currentTarget) {
+      return;
+    }
+    if (nestedFocusRef.current && !(enteredTrigger && submenuTrigger)) {
+      return;
+    }
+    if (enteredTrigger && submenuTrigger && isElement(event.relatedTarget) && contains(submenuTrigger, event.relatedTarget)) {
+      return;
+    }
+    refocusOwner(focusOwner);
+  }
+  return {
+    // The input owns virtual focus.
+    "aria-activedescendant": void 0,
+    // Not valid on a dialog; the list's implicit orientation is already vertical.
+    "aria-orientation": void 0,
+    onMouseDown(event) {
+      if (getTarget(event.nativeEvent) === event.currentTarget) {
+        event.preventDefault();
+      }
+    },
+    onPointerDown: trackPointerType,
+    // `pointerover` precedes the compatibility `mouseover`, so a mouse entering right after a tap
+    // is recognized before the handoff below.
+    onPointerOver: trackPointerType,
+    onPointerMove: trackPointerType,
+    onMouseMove(event) {
+      if (pointerTypeRef.current === "mouse") {
+        restoreInputFocus(event, false);
+      }
+    },
+    onMouseOver(event) {
+      if (pointerTypeRef.current === "mouse" && nestedFocusRef.current) {
+        restoreInputFocus(event, true);
+      }
+    },
+    onFocus(event) {
+      const target = getTarget(event.nativeEvent);
+      if (target === focusOwnerRef.current) {
+        nestedFocusRef.current = null;
+      } else if (isHTMLElement(target) && !contains(event.currentTarget, target) && !isRefocusingOwner()) {
+        nestedFocusRef.current = target;
+      }
+      if (context.open && target === event.currentTarget) {
+        focusOwnerRef.current?.focus({
+          preventScroll: true
+        });
+      }
+    },
+    onKeyDown(event) {
+      const target = getTarget(event.nativeEvent);
+      if (target === focusOwnerRef.current || isTypeableElement(target)) {
+        return;
+      }
+      if (isCrossOrientationCloseKey(event.key, orientation, direction === "rtl", false)) {
+        focusOwnerRef.current?.focus({
+          preventScroll: true
+        });
+        event.stopPropagation();
+      }
+    }
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterPopup.mjs
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var MenuFilterPopup = /* @__PURE__ */ React99.forwardRef(function MenuFilterPopup2(props, forwardedRef) {
+  const {
+    store,
+    orientation
+  } = useMenuRootContext();
+  const open2 = store.useState("open");
+  const parent = store.useState("parent");
+  const openMethod = store.useState("openMethod");
+  const lastOpenChangeReason = store.useState("lastOpenChangeReason");
+  const interactionProps = useMenuFilterPopup(orientation);
+  const openedByHover = open2 && lastOpenChangeReason === reason_parts_exports.triggerHover;
+  const mayFocusInput = parent.type !== "menu" || open2 && (openMethod === "keyboard" || lastOpenChangeReason === reason_parts_exports.listNavigation || lastOpenChangeReason === reason_parts_exports.triggerHover || lastOpenChangeReason === reason_parts_exports.triggerPress);
+  let initialFocus = false;
+  if (mayFocusInput) {
+    initialFocus = () => {
+      const touchOpen = (openMethod === "touch" || openMethod === "pen") && !store.context.virtualPress;
+      if (openedByHover || touchOpen) {
+        return false;
+      }
+      return store.context.virtualFocusRef?.current ?? false;
+    };
+  }
+  const popupProps = mergeProps(interactionProps, props);
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(MenuPopupPlain, {
+    ...popupProps,
+    role: "dialog",
+    initialFocus,
+    ref: forwardedRef
+  });
+});
+if (true) MenuFilterPopup.displayName = "MenuFilterPopup";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterList.mjs
+var React102 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/list/FilterDropdownList.mjs
+var React101 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/group/FilterDropdownGroupContext.mjs
+var React100 = __toESM(require_react(), 1);
+var FilterDropdownGroupContext = /* @__PURE__ */ React100.createContext(null);
+if (true) FilterDropdownGroupContext.displayName = "FilterDropdownGroupContext";
+function useFilterDropdownGroupContext() {
+  return React100.useContext(FilterDropdownGroupContext);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/list/FilterDropdownList.mjs
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var FilterDropdownList = /* @__PURE__ */ React101.forwardRef(function FilterDropdownList2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    id: idProp,
+    ...elementProps
+  } = componentProps;
+  const context = useFilterDropdownRootContext();
+  const [id, registerIdRef] = useRenderedId(componentProps, context.defaultListId, context.setRenderedListId);
+  const defaultProps = {
+    // Chromium includes scrollable elements in sequential focus navigation by default.
+    tabIndex: -1,
+    id,
+    onFocus(event) {
+      const owner = context.focusOwnerRef.current;
+      if (owner && event.relatedTarget === owner && getTarget(event.nativeEvent) === event.currentTarget) {
+        refocusOwner(owner);
+      }
+    },
+    onPointerMove() {
+      context.setKeyboardModality(false);
+    },
+    onPointerDown() {
+      context.setKeyboardModality(false);
+    }
+  };
+  return useRenderElement("div", componentProps, {
+    ref: [forwardedRef, registerIdRef],
+    props: [defaultProps, elementProps, {
+      // The list's groups and items belong to this root's query. A nested root's list renders
+      // inside an enclosing group, which must not count them as its own members.
+      children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(FilterDropdownGroupContext.Provider, {
+        value: null,
+        children: elementProps.children
+      })
+    }]
+  });
+});
+if (true) FilterDropdownList.displayName = "FilterDropdownList";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterKeyDown.mjs
+function getMenuFilterKeyAction(event, context) {
+  const {
+    orientation,
+    rtl,
+    hasActiveItem,
+    activeItemOpensSubmenu,
+    hasValue
+  } = context;
+  const {
+    key
+  } = event;
+  if (event.which === 229) {
+    return "ignore";
+  }
+  if (key === "Tab") {
+    return event.shiftKey ? "close" : "ignore";
+  }
+  if (key === "Enter") {
+    return hasActiveItem ? "activate" : "navigate";
+  }
+  const isArrow = key.startsWith("Arrow");
+  const isBoundary = key === "Home" || key === "End";
+  if (event.shiftKey || event.ctrlKey || event.altKey || event.metaKey) {
+    return isArrow || isBoundary || key.length === 1 ? "edit" : "navigate";
+  }
+  if (key.length === 1) {
+    return "edit";
+  }
+  if (isBoundary) {
+    return hasActiveItem && !hasValue ? "navigate" : "edit";
+  }
+  if (!isArrow) {
+    return "navigate";
+  }
+  if (isMainOrientationKey(key, orientation)) {
+    return orientation === "horizontal" && !hasActiveItem && hasValue ? "edit" : "navigate";
+  }
+  if (activeItemOpensSubmenu && (isCrossOrientationOpenKey(key, orientation, rtl) || isCrossOrientationCloseKey(key, orientation, rtl, false))) {
+    return "submenu";
+  }
+  if (orientation === "horizontal" && !hasActiveItem) {
+    return "enter-list";
+  }
+  return hasValue ? "edit" : "navigate";
+}
+function useMenuFilterKeyDown(hasValue) {
+  const {
+    orientation,
+    store
+  } = useMenuRootContext();
+  const submenuContext = useMenuSubmenuRootContext();
+  const direction = useDirection();
+  return useStableCallback((event) => {
+    if (!store.select("open")) {
+      return;
+    }
+    const activeItem = store.state.highlightedItem;
+    const action = getMenuFilterKeyAction(event, {
+      orientation,
+      rtl: direction === "rtl",
+      hasActiveItem: activeItem != null,
+      activeItemOpensSubmenu: activeItem?.hasAttribute("aria-haspopup") ?? false,
+      hasValue
+    });
+    switch (action) {
+      case "edit":
+        event.stopPropagation();
+        if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+          store.state.inputProps.onKeyDown?.(event);
+        }
+        break;
+      case "navigate": {
+        if (isMainOrientationKey(event.key, orientation)) {
+          event.stopPropagation();
+        }
+        store.state.inputProps.onKeyDown?.(event);
+        break;
+      }
+      case "enter-list": {
+        event.stopPropagation();
+        const listRef = store.context.itemDomElements;
+        const index2 = event.key === "ArrowDown" ? getMinListIndex(listRef, EMPTY_ARRAY) : getMaxListIndex(listRef, EMPTY_ARRAY);
+        if (listRef.current[index2]) {
+          event.preventDefault();
+          store.setActiveIndex(index2, reason_parts_exports.keyboard, event.nativeEvent);
+        }
+        break;
+      }
+      case "submenu": {
+        stopEvent(event);
+        const KeyboardEventConstructor = getWindow(activeItem).KeyboardEvent;
+        activeItem.dispatchEvent(new KeyboardEventConstructor(event.type, event.nativeEvent));
+        break;
+      }
+      case "activate":
+        event.preventDefault();
+        dispatchClickWithModifiers(activeItem, event);
+        break;
+      case "close": {
+        stopEvent(event);
+        const returnElement = store.state.parent.type === "menu" && submenuContext?.getReturnElement?.() || store.state.activeTriggerElement;
+        const details = createChangeEventDetails(reason_parts_exports.focusOut, event.nativeEvent);
+        store.setOpen(false, details);
+        if (!details.isCanceled && isHTMLElement(returnElement)) {
+          returnElement.focus();
+        }
+        break;
+      }
+      default:
+        break;
+    }
+  });
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/moveHighlightFrom.mjs
+function moveHighlightFrom(store, item, event, options) {
+  const {
+    orientation,
+    rtl,
+    loopFocus,
+    allowEscape
+  } = options;
+  const listRef = store.context.itemDomElements;
+  const items = listRef.current;
+  const {
+    index: index2
+  } = getNextListIndex(items, items.indexOf(item), {
+    decrement: !isMainOrientationToEndKey(event.key, orientation, rtl),
+    loopFocus,
+    allowEscape,
+    // Match the menu's list navigation: `aria-disabled` items stay reachable.
+    disabledIndices: EMPTY_ARRAY,
+    minIndex: getMinListIndex(listRef, EMPTY_ARRAY),
+    maxIndex: getMaxListIndex(listRef, EMPTY_ARRAY)
+  });
+  const next = items[index2];
+  if (next) {
+    store.setActiveIndex(index2, reason_parts_exports.keyboard, event.nativeEvent);
+    next.scrollIntoView?.({
+      block: "nearest",
+      inline: "nearest"
+    });
+  }
+  return next ?? void 0;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterList.mjs
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+var MenuFilterList = /* @__PURE__ */ React102.forwardRef(function MenuFilterList2(componentProps, forwardedRef) {
+  const {
+    store,
+    orientation,
+    loopFocus,
+    allowEscape
+  } = useMenuRootContext();
+  const direction = useDirection();
+  const {
+    onItemsChange,
+    focusOwnerRef,
+    triggerId
+  } = useFilterDropdownRootContext();
+  const {
+    listRef
+  } = useFilterDropdownItemContext();
+  const {
+    subscribeMapChange
+  } = useCompositeListContext();
+  const value = useFilterDropdownValueContext();
+  const handleInputKeyDown = useMenuFilterKeyDown(value !== "");
+  const handleKeyDown = useStableCallback((event) => {
+    const owner = focusOwnerRef.current;
+    const target = getTarget(event.nativeEvent);
+    const ownerFocused = owner != null && activeElement(ownerDocument(owner)) === owner;
+    const fromNestedPopup = !contains(event.currentTarget, target);
+    if (owner == null || ownerFocused || fromNestedPopup) {
+      if (event.which !== 229 && !event.shiftKey && !event.ctrlKey && !event.metaKey && !event.altKey && isMainOrientationKey(event.key, orientation)) {
+        event.stopPropagation();
+        const trigger = fromNestedPopup && ownerFocused ? getNestedPopupTrigger(target) : void 0;
+        if (trigger) {
+          moveHighlightFrom(store, trigger, event, {
+            orientation,
+            rtl: direction === "rtl",
+            loopFocus,
+            allowEscape
+          });
+        }
+      }
+      return;
+    }
+    if (event.defaultPrevented) {
+      return;
+    }
+    refocusOwner(owner);
+    handleInputKeyDown(event);
+  });
+  function getNestedPopupTrigger(target) {
+    const root = target.getRootNode();
+    return listRef.current.find((item) => {
+      const popupId = item?.getAttribute("aria-controls");
+      return popupId != null && isHTMLElement(item) && contains(root.getElementById(popupId), target);
+    });
+  }
+  const previousItemsRef = React102.useRef(null);
+  const handleItemMapChange = useStableCallback(() => {
+    const items = [...listRef.current];
+    const previousItems = previousItemsRef.current;
+    const changed = previousItems === null || previousItems.length !== items.length || items.some((item, index2) => item !== previousItems[index2]);
+    if (changed && previousItems !== null) {
+      onItemsChange(previousItems);
+    }
+    previousItemsRef.current = items;
+  });
+  useIsoLayoutEffect(() => {
+    return subscribeMapChange(handleItemMapChange);
+  }, [subscribeMapChange, handleItemMapChange]);
+  const ariaLabelledBy = resolvePopupLabel(componentProps, null, triggerId ?? null);
+  const listProps = mergeProps({
+    role: "menu",
+    "aria-labelledby": ariaLabelledBy,
+    "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
+    onKeyDown: handleKeyDown
+  }, componentProps);
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(FilterDropdownList, {
+    ...listProps,
+    ref: forwardedRef
+  });
+});
+if (true) MenuFilterList.displayName = "MenuFilterList";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterGroup.mjs
+var React104 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/group/useFilterDropdownGroup.mjs
+var React103 = __toESM(require_react(), 1);
+function isGroupHidden(state, items) {
+  if (state.visibleItemIds === null || items.size === 0) {
+    return false;
+  }
+  for (const [id, retained] of items) {
+    if (retained || state.visibleItemIds.has(id)) {
+      return false;
+    }
+  }
+  return true;
+}
+function useFilterDropdownGroup() {
+  const {
+    store
+  } = useFilterDropdownItemContext();
+  const parentContext = useFilterDropdownGroupContext();
+  const {
+    items,
+    registerItem
+  } = useItemRegistry();
+  const hidden = useStore(store, isGroupHidden, items);
+  const groupId = useRefWithInit(() => /* @__PURE__ */ Symbol("filter-dropdown-group")).current;
+  const registerInParent = parentContext?.registerItem;
+  useIsoLayoutEffect(() => registerInParent?.(groupId, !hidden), [registerInParent, groupId, hidden]);
+  const context = React103.useMemo(() => ({
+    registerItem
+  }), [registerItem]);
+  return {
+    hidden,
+    context
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterGroup.mjs
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var MenuFilterGroup = /* @__PURE__ */ React104.forwardRef(function MenuFilterGroup2(props, forwardedRef) {
+  const {
+    hidden,
+    context
+  } = useFilterDropdownGroup();
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(FilterDropdownGroupContext.Provider, {
+    value: context,
+    children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(MenuGroupPlain, {
+      ...props,
+      hidden: hidden || props.hidden || void 0,
+      ref: forwardedRef
+    })
+  });
+});
+if (true) MenuFilterGroup.displayName = "MenuFilterGroup";
+var MenuFilterRadioGroup = /* @__PURE__ */ React104.forwardRef(function MenuFilterRadioGroup2(props, forwardedRef) {
+  const {
+    hidden,
+    context
+  } = useFilterDropdownGroup();
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(FilterDropdownGroupContext.Provider, {
+    value: context,
+    children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(MenuRadioGroupPlain, {
+      ...props,
+      hidden: hidden || props.hidden || void 0,
+      ref: forwardedRef
+    })
+  });
+});
+if (true) MenuFilterRadioGroup.displayName = "MenuFilterRadioGroup";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/item/useFilterDropdownItem.mjs
+var React105 = __toESM(require_react(), 1);
+function childrenText(children) {
+  if (typeof children === "string" || typeof children === "number") {
+    return String(children);
+  }
+  if (Array.isArray(children)) {
+    return children.map(childrenText).join("");
+  }
+  if (/* @__PURE__ */ React105.isValidElement(children)) {
+    return childrenText(children.props.children);
+  }
+  return "";
+}
+function useFilterDropdownItem(params) {
+  const {
+    label,
+    retainGroup = false,
+    children,
+    render,
+    context
+  } = params;
+  const nearestContext = useFilterDropdownItemContext(context !== void 0);
+  const groupContext = useFilterDropdownGroupContext();
+  const owner = context === void 0 ? nearestContext : context;
+  const {
+    registerItem,
+    store
+  } = owner ?? DETACHED_OWNER;
+  const registerGroupItem = groupContext?.registerItem;
+  const itemId = useRefWithInit(() => /* @__PURE__ */ Symbol("filter-dropdown-item")).current;
+  const ref = React105.useRef(null);
+  const registeredTextRef = React105.useRef(void 0);
+  const matched = useStore(store, selectors3.isItemVisible, itemId);
+  const [registered, setRegistered] = React105.useState(matched);
+  const childrenRef = useValueAsRef(children);
+  const renderRef = useValueAsRef(render);
+  const childrenTextRef = React105.useRef(void 0);
+  const resolveText = React105.useCallback(() => {
+    if (label != null) {
+      return label;
+    }
+    const fromChildren = childrenText(childrenRef.current ?? unwrapLazyRenderProp(renderRef.current));
+    const previousChildrenText = childrenTextRef.current;
+    childrenTextRef.current = fromChildren;
+    if (ref.current !== null) {
+      return ref.current.textContent ?? "";
+    }
+    if (registeredTextRef.current !== void 0 && fromChildren === previousChildrenText) {
+      return registeredTextRef.current;
+    }
+    return fromChildren;
+  }, [label, childrenRef, renderRef]);
+  const register2 = React105.useCallback((resolvedText) => {
+    const text = resolvedText ?? resolveText();
+    if (text) {
+      registeredTextRef.current = text;
+    }
+    return registerItem(itemId, {
+      getText() {
+        if (label == null && ref.current) {
+          registeredTextRef.current = ref.current.textContent ?? "";
+        }
+        return registeredTextRef.current;
+      }
+    });
+  }, [itemId, label, registerItem, resolveText]);
+  useIsoLayoutEffect(() => {
+    const unregister = register2();
+    setRegistered(true);
+    return unregister;
+  }, [register2]);
+  useIsoLayoutEffect(() => registerGroupItem?.(itemId, retainGroup), [registerGroupItem, itemId, retainGroup]);
+  useIsoLayoutEffect(() => {
+    const text = resolveText();
+    if (text !== registeredTextRef.current) {
+      registeredTextRef.current = text;
+      void register2(text);
+    }
+  }, [register2, resolveText, children, render, label]);
+  return {
+    visible: !registered || matched,
+    ref
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterSubmenuTrigger.mjs
+function useMenuFilterSubmenuTrigger(params) {
+  const {
+    store,
+    virtualFocus
+  } = useMenuRootContext();
+  const open2 = store.useState("open");
+  const mounted = store.useState("mounted");
+  const parent = store.useState("parent");
+  const parentListRef = parent.type === "menu" ? parent.store.context.itemDomElements : null;
+  const parentContext = useFilterContextForList(parentListRef);
+  const {
+    visible,
+    ref
+  } = useFilterDropdownItem({
+    ...params,
+    context: parentContext,
+    retainGroup: mounted
+  });
+  useIsoLayoutEffect(() => {
+    if (visible || !open2) {
+      return;
+    }
+    store.setOpen(false, createChangeEventDetails(reason_parts_exports.none));
+  }, [visible, open2, store]);
+  const clickProps = useEnhancedClickHandler((event, interactionType) => {
+    if (event.type === "click" && store.select("open") && (interactionType === "keyboard" || interactionType === "mouse" && store.select("lastOpenChangeReason") === reason_parts_exports.triggerPress)) {
+      store.context.virtualFocusRef?.current?.focus({
+        preventScroll: true
+      });
+    }
+  });
+  const props = {
+    // Omitted rather than `undefined`, which would clear the `'menu'` the root puts on every
+    // trigger.
+    ...virtualFocus ? {
+      "aria-haspopup": "dialog"
+    } : void 0,
+    ...clickProps,
+    onPointerDown(event) {
+      clickProps.onPointerDown(event);
+      store.context.virtualPress = isVirtualPointerEvent(event.nativeEvent);
+    },
+    onFocus(event) {
+      const focusOwner = store.context.virtualFocusRef?.current;
+      if (focusOwner && store.select("open") && event.relatedTarget === focusOwner) {
+        event.preventBaseUIHandler();
+        focusOwner.focus({
+          preventScroll: true
+        });
+      }
+    }
+  };
+  if (parentContext === null) {
+    return {
+      visible: true,
+      ref: null,
+      props
+    };
+  }
+  return {
+    visible: visible || mounted,
+    ref,
+    props
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useVirtualFocusParentHandoff.mjs
+function useVirtualFocusParentHandoff(store, parent, open2, virtualFocus) {
+  const parentStore = parent.type === "menu" ? parent.store : null;
+  const parentVirtualFocusRef = parentStore?.context.virtualFocusRef;
+  const returnToParent = useStableCallback((trigger, reason) => {
+    const focusOwner = parentVirtualFocusRef?.current;
+    if (virtualFocus || store.select("open") || !parentStore?.select("open") || !focusOwner) {
+      return;
+    }
+    if (contains(store.context.popupRef.current, activeElement(ownerDocument(focusOwner)))) {
+      focusOwner.focus({
+        preventScroll: true
+      });
+    }
+    if ((reason === reason_parts_exports.listNavigation || reason === reason_parts_exports.escapeKey) && parentStore.state.activeIndex == null) {
+      parentStore.highlightItem(trigger, reason_parts_exports.none);
+    }
+  });
+  useIsoLayoutEffect(() => {
+    if (!open2) {
+      const trigger = store.state.activeTriggerElement;
+      const reason = store.select("lastOpenChangeReason");
+      queueMicrotask(() => returnToParent(trigger, reason));
+    }
+  }, [open2, store, returnToParent]);
+  function handleFocus() {
+    if (!virtualFocus && parentVirtualFocusRef && parentStore?.state.activeIndex != null) {
+      parentStore.setActiveIndex(null, reason_parts_exports.none);
+    }
+  }
+  return {
+    parentVirtualFocusRef,
+    handleFocus
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterImpl.mjs
+var MENU_FILTER_IMPL = {
+  Popup: MenuFilterPopup,
+  List: MenuFilterList,
+  Group: MenuFilterGroup,
+  RadioGroup: MenuFilterRadioGroup,
+  useItem: useFilterDropdownItem,
+  useSubmenuTrigger: useMenuFilterSubmenuTrigger,
+  useParentHandoff: useVirtualFocusParentHandoff
+};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterDropdown.mjs
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+function MenuFilterDropdown(props) {
+  const {
+    value: valueProp,
+    defaultValue = "",
+    onValueChange,
+    ...dropdownProps
+  } = props;
+  const {
+    store
+  } = useMenuRootContext();
+  const open2 = store.useState("open");
+  const mounted = store.useState("mounted");
+  const keyboardOpen = store.useState("keyboardOpen");
+  const activeTriggerId = store.useState("activeTriggerId");
+  const activeTriggerElement = store.useState("activeTriggerElement");
+  const disabled2 = store.useState("disabled");
+  const [value, setValue] = useControlled({
+    controlled: valueProp,
+    default: defaultValue,
+    name: "MenuFilterProvider",
+    state: "value"
+  });
+  const handleValueChange = useStableCallback((nextValue, eventDetails) => {
+    onValueChange?.(nextValue, eventDetails);
+    if (!eventDetails.isCanceled) {
+      setValue(nextValue);
+    }
+  });
+  const getActiveIndex = useStableCallback(() => store.state.activeIndex);
+  const setActiveIndex = useStableCallback((index2) => {
+    store.setActiveIndex(index2, reason_parts_exports.none);
+  });
+  const query = useFilterDropdownCloseQuery({
+    open: open2,
+    mounted,
+    value,
+    onValueChange: handleValueChange
+  });
+  const filterTriggerProps = useFilterTriggerProps(value !== "");
+  useRefWithInit(() => {
+    store.set("filterTriggerProps", filterTriggerProps);
+    return null;
+  });
+  store.useSyncedValue("filterTriggerProps", filterTriggerProps);
+  useIsoLayoutEffect(() => {
+    if (!open2) {
+      store.set("keyboardOpen", false);
+    }
+  }, [open2, store]);
+  const triggerId = activeTriggerElement ? activeTriggerElement.id || null : activeTriggerId;
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(MenuFilterImplContext.Provider, {
+    value: MENU_FILTER_IMPL,
+    children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(FilterDropdownRoot, {
+      ...dropdownProps,
+      open: open2,
+      openedByKeyboard: keyboardOpen,
+      disabled: disabled2,
+      value,
+      query,
+      onValueChange: handleValueChange,
+      triggerId,
+      listRef: store.context.itemDomElements,
+      getActiveIndex,
+      setActiveIndex,
+      focusOwnerRef: store.context.virtualFocusRef
+    })
+  });
+}
+function useFilterTriggerProps(hasValue) {
+  const {
+    store
+  } = useMenuRootContext();
+  const isInMenubar = useMenubarContext(true) != null;
+  const handleInputKeyDown = useMenuFilterKeyDown(hasValue);
+  return React106.useMemo(() => ({
+    "aria-haspopup": "dialog",
+    onPointerDown(event) {
+      store.context.virtualPress = isVirtualPointerEvent(event.nativeEvent);
+    },
+    onKeyDown(event) {
+      const focusOwner = store.context.virtualFocusRef?.current;
+      if (!store.select("open") || !focusOwner || isInMenubar) {
+        return;
+      }
+      if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+        focusOwner.focus({
+          preventScroll: true
+        });
+        handleInputKeyDown(event);
+        event.preventDefault();
+        event.preventBaseUIHandler();
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventBaseUIHandler();
+      } else if (isTypeaheadKey(event)) {
+        focusOwner.focus({
+          preventScroll: true
+        });
+      }
+    }
+  }), [store, isInMenubar, handleInputKeyDown]);
+}
+function isTypeaheadKey(event) {
+  return event.key.length === 1 && event.key !== " " && !event.ctrlKey && !event.metaKey && !event.altKey;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterRoot.mjs
+var React107 = __toESM(require_react(), 1);
+function useMenuFilterRoot(props) {
+  const {
+    children,
+    value,
+    defaultValue,
+    onValueChange,
+    filter,
+    autoHighlight = false,
+    locale,
+    ...otherProps
+  } = props;
+  const virtualFocusRef = React107.useRef(null);
+  return {
+    children,
+    rootProps: {
+      ...otherProps,
+      virtualFocus: true,
+      virtualFocusRef,
+      allowEscape: !autoHighlight,
+      resetOnPointerLeave: autoHighlight !== "always"
+    },
+    dropdownProps: {
+      value,
+      defaultValue,
+      onValueChange,
+      filter,
+      autoHighlight,
+      locale
+    }
+  };
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterRoot.mjs
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+function MenuFilterRoot(props) {
+  const {
+    children,
+    rootProps,
+    dropdownProps
+  } = useMenuFilterRoot(props);
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(MenuRootInternal, {
+    ...rootProps,
+    children: (payload) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(MenuFilterDropdown, {
+      ...dropdownProps,
+      children: typeof children === "function" ? children(payload) : children
+    })
+  });
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-submenu-root/MenuFilterSubmenuRoot.mjs
+var React109 = __toESM(require_react(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+function MenuFilterSubmenuRoot(props) {
+  const parent = useMenuRootContext();
+  const parentStore = parent.store;
+  const parentDisabled = parentStore.useState("disabled");
+  const {
+    rootProps,
+    dropdownProps
+  } = useMenuFilterRoot(props);
+  const parentReferenceRef = React109.useRef(null);
+  function handleSubmenuEnter(trigger, event) {
+    const focusedElement = parent.virtualFocus ? parentStore.context.virtualFocusRef?.current : activeElement(ownerDocument(trigger));
+    if (isHTMLElement(focusedElement)) {
+      parentReferenceRef.current = {
+        reference: focusedElement,
+        trigger
+      };
+      parentStore.setActiveIndex(null, event ? reason_parts_exports.keyboard : reason_parts_exports.none, event);
+    }
+  }
+  function highlightTrigger(trigger, event) {
+    parentStore.highlightItem(trigger, reason_parts_exports.keyboard, event);
+  }
+  function handleSubmenuExit(event) {
+    const parentReference = parentReferenceRef.current;
+    if (!parentReference) {
+      return;
+    }
+    parentReference.reference.focus({
+      preventScroll: true
+    });
+    highlightTrigger(parentReference.trigger, event);
+  }
+  function handleOpenChange(nextOpen, details) {
+    rootProps.onOpenChange?.(nextOpen, details);
+    if (details.isCanceled) {
+      return;
+    }
+    if (!nextOpen) {
+      if (details.reason === reason_parts_exports.escapeKey && isHTMLElement(details.trigger)) {
+        highlightTrigger(details.trigger, details.event);
+        parentReferenceRef.current = {
+          reference: parent.virtualFocus ? parentStore.context.virtualFocusRef?.current ?? details.trigger : details.trigger,
+          trigger: details.trigger
+        };
+      }
+      return;
+    }
+    parentReferenceRef.current = null;
+    if (isHTMLElement(details.trigger) && isKeyboardOpen(details.reason, details.event)) {
+      handleSubmenuEnter(details.trigger, details.reason === reason_parts_exports.listNavigation ? details.event : void 0);
+    }
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(MenuRootInternal, {
+    ...rootProps,
+    isSubmenu: true,
+    disabled: parentDisabled || props.disabled,
+    onOpenChange: handleOpenChange,
+    children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(MenuFilterSubmenuNavigation, {
+      parentStore,
+      parentVirtualFocus: parent.virtualFocus,
+      parentAllowEscape: parent.virtualFocus && parent.allowEscape,
+      parentOrientation: parent.orientation,
+      parentLoopFocus: parent.loopFocus,
+      getReturnElement: () => parentReferenceRef.current?.reference ?? (parent.virtualFocus ? parentStore.context.virtualFocusRef?.current : null) ?? null,
+      onSubmenuEnter: handleSubmenuEnter,
+      onSubmenuExit: handleSubmenuExit,
+      children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(MenuFilterDropdown, {
+        ...dropdownProps,
+        children: props.children
+      })
+    })
+  });
+}
+function MenuFilterSubmenuNavigation(props) {
+  const {
+    children,
+    parentStore,
+    parentVirtualFocus,
+    parentAllowEscape,
+    parentOrientation,
+    parentLoopFocus,
+    onSubmenuEnter,
+    onSubmenuExit,
+    getReturnElement
+  } = props;
+  const {
+    store,
+    orientation
+  } = useMenuRootContext();
+  const direction = useDirection();
+  const mounted = store.useState("mounted");
+  const wasMountedRef = React109.useRef(false);
+  const handleReturnFocus = useStableCallback(() => {
+    const [ownTrigger] = store.context.triggerElements.elements();
+    return getReturnElement() ?? (isHTMLElement(ownTrigger) ? ownTrigger : null);
+  });
+  useIsoLayoutEffect(() => {
+    const wasMounted = wasMountedRef.current;
+    wasMountedRef.current = mounted;
+    if (mounted || !wasMounted) {
+      return;
+    }
+    const returnElement = handleReturnFocus();
+    if (!returnElement || !parentStore.select("open")) {
+      return;
+    }
+    const doc = ownerDocument(returnElement);
+    const activeEl = activeElement(doc);
+    if (activeEl === doc.body || contains(store.select("popupElement"), activeEl)) {
+      returnElement.focus({
+        preventScroll: true
+      });
+    }
+  }, [mounted, store, parentStore, handleReturnFocus]);
+  function moveInParent(from, event) {
+    const item = moveHighlightFrom(parentStore, from, event, {
+      orientation: parentOrientation,
+      rtl: direction === "rtl",
+      loopFocus: parentLoopFocus,
+      allowEscape: parentAllowEscape
+    });
+    if (!parentVirtualFocus) {
+      item?.focus({
+        preventScroll: true
+      });
+    }
+  }
+  function close(event) {
+    if (!store.select("open")) {
+      return;
+    }
+    stopEvent(event);
+    const trigger = store.select("activeTriggerElement");
+    const eventDetails = createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent);
+    store.setOpen(false, eventDetails);
+    if (!eventDetails.isCanceled) {
+      onSubmenuExit(event.nativeEvent);
+    }
+    const returnElement = getReturnElement() ?? store.select("activeTriggerElement");
+    if (!store.select("open") && isHTMLElement(returnElement) && activeElement(ownerDocument(returnElement)) !== returnElement) {
+      returnElement.focus();
+    }
+    if (!store.select("open") && isHTMLElement(trigger) && isMainOrientationKey(event.key, parentOrientation)) {
+      moveInParent(trigger, event);
+    }
+  }
+  const handleTriggerKeyDown = useStableCallback((event) => {
+    if (isMainOrientationKey(event.key, parentOrientation)) {
+      moveInParent(event.currentTarget, event);
+      event.preventBaseUIHandler();
+      stopEvent(event);
+      return;
+    }
+    const open2 = store.select("open");
+    const isRtl = direction === "rtl";
+    const isCloseKey = isCrossOrientationCloseKey(event.key, orientation, isRtl, false);
+    if (open2 && isCloseKey) {
+      close(event);
+      return;
+    }
+    const isOpenKey = isCrossOrientationOpenKey(event.key, parentOrientation, isRtl);
+    if (!isOpenKey) {
+      return;
+    }
+    stopEvent(event);
+    if (open2) {
+      onSubmenuEnter(event.currentTarget, event.nativeEvent);
+      store.context.virtualFocusRef?.current?.focus({
+        preventScroll: true
+      });
+      return;
+    }
+    store.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
+  });
+  const handlePopupKeyDown = useStableCallback((event) => {
+    if (event.which === 229) {
+      return;
+    }
+    const isCloseKey = isCrossOrientationCloseKey(event.key, orientation, direction === "rtl", false);
+    if (isCloseKey) {
+      close(event);
+    }
+  });
+  const contextValue = React109.useMemo(() => ({
+    getReturnElement: handleReturnFocus,
+    onTriggerKeyDown: handleTriggerKeyDown,
+    onPopupKeyDown: handlePopupKeyDown
+  }), [handleReturnFocus, handleTriggerKeyDown, handlePopupKeyDown]);
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(MenuSubmenuRootContext.Provider, {
+    value: contextValue,
+    children
+  });
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-provider/MenuFilterProvider.mjs
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+function MenuFilterProvider(props) {
+  const {
+    children,
+    filter,
+    value,
+    defaultValue,
+    onValueChange,
+    autoHighlight,
+    locale
+  } = props;
+  const contextValue = React110.useMemo(() => ({
+    Root: MenuFilterRoot,
+    SubmenuRoot: MenuFilterSubmenuRoot,
+    options: {
+      filter,
+      value,
+      defaultValue,
+      onValueChange,
+      autoHighlight,
+      locale
+    }
+  }), [filter, value, defaultValue, onValueChange, autoHighlight, locale]);
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(MenuFilterProviderContext.Provider, {
+    value: contextValue,
+    children
+  });
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/input/MenuInput.mjs
+var React112 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/input/FilterDropdownInput.mjs
+var React111 = __toESM(require_react(), 1);
+var FilterDropdownInput = /* @__PURE__ */ React111.forwardRef(function FilterDropdownInput2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    id: idProp,
+    disabled: disabled2,
+    activeItemId,
+    navigationProps,
+    ...elementProps
+  } = componentProps;
+  const id = useBaseUiId(idProp);
+  const context = useFilterDropdownRootContext();
+  const {
+    listRef
+  } = useFilterDropdownItemContext();
+  const value = useFilterDropdownValueContext();
+  const [composingValue, setComposingValue] = React111.useState(null);
+  const isComposingRef = React111.useRef(false);
+  function commitValue(nextValue, nativeEvent) {
+    if (!context.open) {
+      return;
+    }
+    const reason = nextValue === "" ? reason_parts_exports.inputClear : reason_parts_exports.inputChange;
+    context.onValueChange(nextValue, createChangeEventDetails(reason, nativeEvent));
+  }
+  const state = {
+    highlighted: context.inputFocusVisible && (!context.keyboardModality || activeItemId == null)
+  };
+  return useRenderElement("input", componentProps, {
+    state,
+    ref: [forwardedRef, context.focusOwnerRef],
+    props: [navigationProps, {
+      id,
+      type: "text",
+      disabled: context.disabled || disabled2,
+      "aria-activedescendant": activeItemId,
+      role: "searchbox",
+      inputMode: "search",
+      autoComplete: "off",
+      spellCheck: "false",
+      autoCorrect: "off",
+      autoCapitalize: "none",
+      // The aria-autocomplete 'list' value is only valid with `aria-haspopup` so we depend
+      // on the searchbox role to communicate affordance, with an input label as fallback
+      // https://w3c.github.io/aria/#aria-autocomplete
+      "aria-autocomplete": void 0,
+      "aria-controls": context.listId,
+      value: composingValue ?? value,
+      onCompositionStart(event) {
+        if (parts_exports.os.android) {
+          return;
+        }
+        isComposingRef.current = true;
+        setComposingValue(event.currentTarget.value);
+      },
+      onCompositionEnd(event) {
+        if (!isComposingRef.current) {
+          return;
+        }
+        isComposingRef.current = false;
+        setComposingValue(null);
+        commitValue(event.currentTarget.value, event.nativeEvent);
+      },
+      onChange(event) {
+        if (isComposingRef.current) {
+          setComposingValue(event.currentTarget.value);
+          return;
+        }
+        commitValue(event.currentTarget.value, event.nativeEvent);
+      },
+      onKeyDown() {
+        context.setKeyboardModality(true);
+      },
+      onPointerDown() {
+        context.setKeyboardModality(false);
+      },
+      onMouseEnter(event) {
+        context.setKeyboardModality(false);
+        if (context.open) {
+          refocusOwner(event.currentTarget);
+        }
+      },
+      onFocus(event) {
+        context.setInputFocusVisible(true);
+        if (context.autoHighlight === "always" || isRefocusingOwner()) {
+          return;
+        }
+        const from = event.relatedTarget;
+        if (from !== null && listRef.current.includes(from)) {
+          context.setActiveIndex(null);
+        }
+      },
+      onBlur() {
+        context.setInputFocusVisible(false);
+      }
+    }, elementProps]
+  });
+});
+if (true) FilterDropdownInput.displayName = "FilterDropdownInput";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/input/MenuInput.mjs
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+var MenuInput = /* @__PURE__ */ React112.forwardRef(function MenuInput2(componentProps, forwardedRef) {
+  useMenuFilterPart("Input");
+  const {
+    store
+  } = useMenuRootContext();
+  const value = useFilterDropdownValueContext();
+  const {
+    onKeyDown,
+    ...navigationProps
+  } = store.useState("inputProps");
+  const activeItemId = store.useState("highlightedItemId");
+  const handleKeyDown = useMenuFilterKeyDown(value !== "");
+  const handleInputRef = React112.useCallback((input) => {
+    store.set("inputFocused", input !== null && activeElement(ownerDocument(input)) === input);
+  }, [store]);
+  const mergedRefs = useMergedRefs(forwardedRef, handleInputRef);
+  const inputProps = mergeProps({
+    onKeyDown: handleKeyDown,
+    onFocus() {
+      store.set("inputFocused", true);
+    },
+    onBlur() {
+      store.set("inputFocused", false);
+    }
+  }, componentProps);
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(FilterDropdownInput, {
+    ...inputProps,
+    activeItemId,
+    navigationProps,
+    ref: mergedRefs
+  });
+});
+if (true) MenuInput.displayName = "MenuInput";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/list/MenuList.mjs
+var React113 = __toESM(require_react(), 1);
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var MenuListPlain = /* @__PURE__ */ React113.forwardRef(function MenuListPlain2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    id: idProp,
+    ...elementProps
+  } = componentProps;
+  const {
+    store,
+    orientation
+  } = useMenuRootContext();
+  const activeTriggerId = store.useState("activeTriggerId");
+  const activeTriggerElement = store.useState("activeTriggerElement");
+  const setListElement = store.useStateSetter("listElement");
+  const id = useBaseUiId(idProp);
+  const renderedIdRef = React113.useRef(id);
+  useIsoLayoutEffect(() => {
+    if (renderedIdRef.current !== id) {
+      renderedIdRef.current = id;
+      store.notifyAll();
+    }
+  }, [id, store]);
+  const ariaLabelledBy = resolvePopupLabel(componentProps, activeTriggerElement, activeTriggerId);
+  return useRenderElement("div", componentProps, {
+    ref: [forwardedRef, setListElement],
+    props: [{
+      id,
+      role: "menu",
+      // The popup focuses the list on a pointer open in place of itself.
+      tabIndex: -1,
+      // `menu` is implicitly vertical, so only the non-default value needs to be rendered.
+      "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
+      "aria-labelledby": ariaLabelledBy
+    }, elementProps]
+  });
+});
+if (true) MenuListPlain.displayName = "MenuListPlain";
+var MenuList = /* @__PURE__ */ React113.forwardRef(function MenuList2(props, forwardedRef) {
+  const List = useMenuFilterImpl()?.List ?? MenuListPlain;
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(List, {
+    ...props,
+    ref: forwardedRef
+  });
+});
+if (true) MenuList.displayName = "MenuList";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/clear/MenuClear.mjs
+var React115 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/clear/FilterDropdownClear.mjs
+var React114 = __toESM(require_react(), 1);
+var FilterDropdownClear = /* @__PURE__ */ React114.forwardRef(function FilterDropdownClear2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    disabled: disabledProp = false,
+    nativeButton = true,
+    ...elementProps
+  } = componentProps;
+  const context = useFilterDropdownRootContext();
+  const value = useFilterDropdownValueContext();
+  const disabled2 = context.disabled || disabledProp;
+  const visible = value !== "";
+  const {
+    buttonRef,
+    getButtonProps
+  } = useButton({
+    disabled: disabled2,
+    native: nativeButton
+  });
+  const state = {
+    disabled: disabled2
+  };
+  return useRenderElement("button", componentProps, {
+    enabled: visible,
+    state,
+    ref: [forwardedRef, buttonRef],
+    props: [{
+      tabIndex: -1,
+      "aria-hidden": true,
+      onMouseDown(event) {
+        event.preventDefault();
+      },
+      onClick(event) {
+        const eventDetails = createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent);
+        context.onValueChange("", eventDetails);
+        context.focusOwnerRef.current?.focus({
+          preventScroll: true
+        });
+      }
+    }, elementProps, getButtonProps]
+  });
+});
+if (true) FilterDropdownClear.displayName = "FilterDropdownClear";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/clear/MenuClear.mjs
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var MenuClear = /* @__PURE__ */ React115.forwardRef(function MenuClear2(props, forwardedRef) {
+  useMenuFilterPart("Clear");
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(FilterDropdownClear, {
+    ...props,
+    ref: forwardedRef
+  });
+});
+if (true) MenuClear.displayName = "MenuClear";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/empty/MenuEmpty.mjs
+var React117 = __toESM(require_react(), 1);
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/empty/FilterDropdownEmpty.mjs
+var React116 = __toESM(require_react(), 1);
+var FilterDropdownEmpty = /* @__PURE__ */ React116.forwardRef(function FilterDropdownEmpty2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    ...elementProps
+  } = componentProps;
+  const {
+    store
+  } = useFilterDropdownItemContext();
+  const isEmpty = useStore(store, selectors3.isEmpty);
+  const [ready, setReady] = React116.useState(false);
+  useIsoLayoutEffect(() => {
+    setReady(true);
+  }, []);
+  const visible = ready && isEmpty;
+  const emptyRef = useInitialLiveRegionTextMutation(visible);
+  return useRenderElement("div", componentProps, {
+    enabled: visible,
+    ref: [forwardedRef, emptyRef],
+    props: [{
+      role: "status",
+      "aria-live": "polite",
+      "aria-atomic": true
+    }, elementProps]
+  });
+});
+if (true) FilterDropdownEmpty.displayName = "FilterDropdownEmpty";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/empty/MenuEmpty.mjs
+var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var MenuEmpty = /* @__PURE__ */ React117.forwardRef(function MenuEmpty2(props, forwardedRef) {
+  useMenuFilterPart("Empty");
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(FilterDropdownEmpty, {
+    ...props,
+    ref: forwardedRef
+  });
+});
+if (true) MenuEmpty.displayName = "MenuEmpty";
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/clamp.mjs
 function clamp2(val, min2 = Number.MIN_SAFE_INTEGER, max2 = Number.MAX_SAFE_INTEGER) {
   return Math.max(min2, Math.min(val, max2));
 }
 
-// node_modules/.store/@base-ui/utils@0.4.0-Z81C5N42agUorsFwt3T4Yw/node_modules/@base-ui/utils/formatNumber.mjs
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/formatNumber.mjs
 var cache = /* @__PURE__ */ new Map();
 function getFormatter(locale, options) {
   const optionsString = JSON.stringify({
@@ -12999,16 +15359,16 @@ function formatNumber(value, locale, options) {
   return getFormatter(locale, options).format(value);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/valueToPercent.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/valueToPercent.mjs
 function valueToPercent(value, min2, max2) {
   return (value - min2) * 100 / (max2 - min2);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
-var React87 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
+var React118 = __toESM(require_react(), 1);
 var ReactDOM8 = __toESM(require_react_dom(), 1);
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-var FloatingPortalLite = /* @__PURE__ */ React87.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
+var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var FloatingPortalLite = /* @__PURE__ */ React118.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
   const {
     children,
     container,
@@ -13029,13 +15389,13 @@ var FloatingPortalLite = /* @__PURE__ */ React87.forwardRef(function FloatingPor
   if (!portalSubtree && !portalNode) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(React87.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(React118.Fragment, {
     children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM8.createPortal(children, portalNode)]
   });
 });
 if (true) FloatingPortalLite.displayName = "FloatingPortalLite";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/index.parts.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/index.parts.mjs
 var index_parts_exports2 = {};
 __export(index_parts_exports2, {
   Indicator: () => ProgressIndicator,
@@ -13045,27 +15405,27 @@ __export(index_parts_exports2, {
   Value: () => ProgressValue
 });
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/root/ProgressRoot.mjs
-var React89 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/root/ProgressRoot.mjs
+var React120 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/root/ProgressRootContext.mjs
-var React88 = __toESM(require_react(), 1);
-var ProgressRootContext = /* @__PURE__ */ React88.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/root/ProgressRootContext.mjs
+var React119 = __toESM(require_react(), 1);
+var ProgressRootContext = /* @__PURE__ */ React119.createContext(void 0);
 if (true) ProgressRootContext.displayName = "ProgressRootContext";
 function useProgressRootContext() {
-  const context = React88.useContext(ProgressRootContext);
+  const context = React119.useContext(ProgressRootContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: ProgressRootContext is missing. Progress parts must be placed within <Progress.Root>." : formatErrorMessage_default(51));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/root/ProgressRootDataAttributes.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/root/ProgressRootDataAttributes.mjs
 var complete = "data-complete";
 var indeterminate = "data-indeterminate";
 var progressing = "data-progressing";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/root/stateAttributesMapping.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/root/stateAttributesMapping.mjs
 var progressStateAttributesMapping = {
   status(value) {
     if (value === "progressing") {
@@ -13087,9 +15447,9 @@ var progressStateAttributesMapping = {
   }
 };
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/root/ProgressRoot.mjs
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
-var ProgressRoot = /* @__PURE__ */ React89.forwardRef(function ProgressRoot2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/root/ProgressRoot.mjs
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var ProgressRoot = /* @__PURE__ */ React120.forwardRef(function ProgressRoot2(componentProps, forwardedRef) {
   const {
     format,
     getAriaValueText,
@@ -13103,7 +15463,7 @@ var ProgressRoot = /* @__PURE__ */ React89.forwardRef(function ProgressRoot2(com
     style,
     ...elementProps
   } = componentProps;
-  const [labelId, setLabelId] = React89.useState();
+  const [labelId, setLabelId] = React120.useState();
   let status = "indeterminate";
   let percentageValue = null;
   let clampedValue = null;
@@ -13119,7 +15479,7 @@ var ProgressRoot = /* @__PURE__ */ React89.forwardRef(function ProgressRoot2(com
     });
     defaultAriaValueText = formattedValue;
   }
-  const state = React89.useMemo(() => ({
+  const state = React120.useMemo(() => ({
     status
   }), [status]);
   const defaultProps = {
@@ -13129,15 +15489,15 @@ var ProgressRoot = /* @__PURE__ */ React89.forwardRef(function ProgressRoot2(com
     "aria-valuenow": clampedValue ?? void 0,
     "aria-valuetext": getAriaValueText ? getAriaValueText(formattedValue, value) : defaultAriaValueText,
     role: "progressbar",
-    children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(React89.Fragment, {
-      children: [children, /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", {
+    children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(React120.Fragment, {
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", {
         role: "presentation",
         style: visuallyHidden,
         children: "x"
       })]
     })
   };
-  const contextValue = React89.useMemo(() => ({
+  const contextValue = React120.useMemo(() => ({
     formattedValue,
     percentageValue,
     setLabelId,
@@ -13150,16 +15510,16 @@ var ProgressRoot = /* @__PURE__ */ React89.forwardRef(function ProgressRoot2(com
     props: [defaultProps, elementProps],
     stateAttributesMapping: progressStateAttributesMapping
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProgressRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(ProgressRootContext.Provider, {
     value: contextValue,
     children: element
   });
 });
 if (true) ProgressRoot.displayName = "ProgressRoot";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/track/ProgressTrack.mjs
-var React90 = __toESM(require_react(), 1);
-var ProgressTrack = /* @__PURE__ */ React90.forwardRef(function ProgressTrack2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/track/ProgressTrack.mjs
+var React121 = __toESM(require_react(), 1);
+var ProgressTrack = /* @__PURE__ */ React121.forwardRef(function ProgressTrack2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13179,9 +15539,9 @@ var ProgressTrack = /* @__PURE__ */ React90.forwardRef(function ProgressTrack2(c
 });
 if (true) ProgressTrack.displayName = "ProgressTrack";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/indicator/ProgressIndicator.mjs
-var React91 = __toESM(require_react(), 1);
-var ProgressIndicator = /* @__PURE__ */ React91.forwardRef(function ProgressIndicator2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/indicator/ProgressIndicator.mjs
+var React122 = __toESM(require_react(), 1);
+var ProgressIndicator = /* @__PURE__ */ React122.forwardRef(function ProgressIndicator2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13209,9 +15569,9 @@ var ProgressIndicator = /* @__PURE__ */ React91.forwardRef(function ProgressIndi
 });
 if (true) ProgressIndicator.displayName = "ProgressIndicator";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/value/ProgressValue.mjs
-var React92 = __toESM(require_react(), 1);
-var ProgressValue = /* @__PURE__ */ React92.forwardRef(function ProgressValue2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/value/ProgressValue.mjs
+var React123 = __toESM(require_react(), 1);
+var ProgressValue = /* @__PURE__ */ React123.forwardRef(function ProgressValue2(componentProps, forwardedRef) {
   const {
     className,
     render,
@@ -13240,9 +15600,9 @@ var ProgressValue = /* @__PURE__ */ React92.forwardRef(function ProgressValue2(c
 });
 if (true) ProgressValue.displayName = "ProgressValue";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/progress/label/ProgressLabel.mjs
-var React93 = __toESM(require_react(), 1);
-var ProgressLabel = /* @__PURE__ */ React93.forwardRef(function ProgressLabel2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/progress/label/ProgressLabel.mjs
+var React124 = __toESM(require_react(), 1);
+var ProgressLabel = /* @__PURE__ */ React124.forwardRef(function ProgressLabel2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13268,7 +15628,7 @@ var ProgressLabel = /* @__PURE__ */ React93.forwardRef(function ProgressLabel2(c
 });
 if (true) ProgressLabel.displayName = "ProgressLabel";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/index.parts.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/index.parts.mjs
 var index_parts_exports3 = {};
 __export(index_parts_exports3, {
   Arrow: () => TooltipArrow,
@@ -13283,24 +15643,24 @@ __export(index_parts_exports3, {
   createHandle: () => createTooltipHandle
 });
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-var React96 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
+var React127 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
-var React94 = __toESM(require_react(), 1);
-var TooltipRootContext = /* @__PURE__ */ React94.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
+var React125 = __toESM(require_react(), 1);
+var TooltipRootContext = /* @__PURE__ */ React125.createContext(void 0);
 if (true) TooltipRootContext.displayName = "TooltipRootContext";
 function useTooltipRootContext(optional) {
-  const context = React94.useContext(TooltipRootContext);
+  const context = React125.useContext(TooltipRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: TooltipRootContext is missing. Tooltip parts must be placed within <Tooltip.Root>." : formatErrorMessage_default(72));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
-var React95 = __toESM(require_react(), 1);
-var selectors3 = {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
+var React126 = __toESM(require_react(), 1);
+var selectors4 = {
   ...popupStoreSelectors,
   disabled: (state) => state.disabled,
   instantType: (state) => state.instantType,
@@ -13309,13 +15669,16 @@ var selectors3 = {
   disableHoverablePopup: (state) => state.disableHoverablePopup,
   lastOpenChangeReason: (state) => state.openChangeReason,
   closeOnClick: (state) => state.closeOnClick,
+  // Active and inactive trigger props are the same object, so a constant for triggers that discard
+  // them keeps those triggers from re-rendering when the props change.
+  appliedTriggerProps: (state, apply) => apply ? state.activeTriggerProps : void 0,
   closeDelay: (state) => state.closeDelay,
   adaptiveOrigin: (state) => state.adaptiveOrigin
 };
 var TooltipStore = class extends ReactStore {
   constructor(initialState, floatingId, nested) {
     const triggerElements = new PopupTriggerMap();
-    super(createInitialState2(initialState, triggerElements, floatingId, nested), createInitialContext2(triggerElements), selectors3);
+    super(createInitialState2(initialState, triggerElements, floatingId, nested), createInitialContext2(triggerElements), selectors4);
   }
   setOpen = (nextOpen, eventDetails) => {
     applyPopupOpenChange(this, nextOpen, eventDetails, {
@@ -13331,7 +15694,7 @@ var TooltipStore = class extends ReactStore {
 };
 function createNullTooltipStore() {
   const triggerElements = new PopupTriggerMap();
-  const store = new NullStore(Object.freeze(createInitialState2(void 0, triggerElements)), Object.freeze(createInitialContext2(triggerElements)), selectors3);
+  const store = new NullStore(Object.freeze(createInitialState2(void 0, triggerElements)), Object.freeze(createInitialContext2(triggerElements)), selectors4);
   return Object.assign(store, {
     setOpen: NOOP,
     cancelPendingOpen: NOOP
@@ -13355,15 +15718,15 @@ function createInitialState2(initialState, triggerElements, floatingId, nested =
 }
 function createInitialContext2(triggerElements) {
   return {
-    popupRef: /* @__PURE__ */ React95.createRef(),
+    popupRef: /* @__PURE__ */ React126.createRef(),
     onOpenChange: void 0,
     onOpenChangeComplete: void 0,
     triggerElements
   };
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
     disabled: disabled2 = false,
@@ -13409,7 +15772,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const isInstantPhase = store.useState("isInstantPhase");
   const instantType = store.useState("instantType");
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
-  const previousInstantTypeRef = React96.useRef(null);
+  const previousInstantTypeRef = React127.useRef(null);
   useIsoLayoutEffect(() => {
     if (openState && disabled2) {
       store.setOpen(false, createChangeEventDetails(reason_parts_exports.disabled));
@@ -13433,17 +15796,17 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
       }
     }
   }, [store, activeTriggerId, open2]);
-  React96.useImperativeHandle(actionsRef, () => ({
+  React127.useImperativeHandle(actionsRef, () => ({
     unmount: forceUnmount,
     close: () => store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction))
   }), [forceUnmount, store]);
   const shouldRenderInteractions = open2 || mounted || !disabled2 && trackCursorAxis !== "none";
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(TooltipRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(TooltipRootContext.Provider, {
     value: store,
-    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(PopupHandleAttachment, {
+    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(PopupHandleAttachment, {
       handle,
       store
-    }), shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TooltipInteractions, {
+    }), shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(TooltipInteractions, {
       store,
       disabled: disabled2,
       trackCursorAxis
@@ -13467,7 +15830,7 @@ function TooltipInteractions({
     enabled: !disabled2 && trackCursorAxis !== "none",
     axis: trackCursorAxis === "none" ? void 0 : trackCursorAxis
   });
-  const triggerProps = React96.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
+  const triggerProps = React127.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
   usePopupInteractionProps(store, {
     activeTriggerProps: triggerProps,
     inactiveTriggerProps: triggerProps,
@@ -13476,49 +15839,25 @@ function TooltipInteractions({
   return null;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
-var React98 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
+var React129 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
-var React97 = __toESM(require_react(), 1);
-var TooltipProviderContext = /* @__PURE__ */ React97.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
+var React128 = __toESM(require_react(), 1);
+var TooltipProviderContext = /* @__PURE__ */ React128.createContext(void 0);
 if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
 function useTooltipProviderContext() {
-  return React97.useContext(TooltipProviderContext);
+  return React128.useContext(TooltipProviderContext);
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/utils/constants.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/utils/constants.mjs
 var OPEN_DELAY = 600;
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
 var TOOLTIP_TRIGGER_IDENTIFIER = "data-base-ui-tooltip-trigger";
 function getTargetElement(event) {
-  if ("composedPath" in event) {
-    const path = event.composedPath();
-    for (let i = 0; i < path.length; i += 1) {
-      const element = path[i];
-      if (isElement(element)) {
-        return element;
-      }
-    }
-  }
-  const target = event.target;
-  if (isElement(target)) {
-    return target;
-  }
-  return null;
-}
-function closestEnabledTooltipTrigger(element) {
-  let current = element;
-  while (current) {
-    const trigger = current.closest(`[${TOOLTIP_TRIGGER_IDENTIFIER}]`);
-    if (trigger) {
-      return trigger;
-    }
-    const root = current.getRootNode();
-    current = "host" in root && isElement(root.host) ? root.host : null;
-  }
-  return null;
+  const target = getTarget(event);
+  return isElement(target) ? target : null;
 }
 var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, forwardedRef) {
   const {
@@ -13544,7 +15883,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const isTriggerActive = store.useState("isTriggerActive", thisTriggerId);
   const isOpenedByThisTrigger = store.useState("isOpenedByTrigger", thisTriggerId);
   const floatingRootContext = store.useState("floatingRootContext");
-  const triggerElementRef = React98.useRef(null);
+  const triggerElementRef = React129.useRef(null);
   const closeDelayWithDefault = closeDelay ?? 0;
   const {
     registerTrigger,
@@ -13570,9 +15909,9 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const disabledRef = useValueAsRef(disabled2);
   const trackCursorAxis = store.useState("trackCursorAxis");
   const disableHoverablePopup = store.useState("disableHoverablePopup");
-  const isNestedTriggerHoveredRef = React98.useRef(false);
+  const isNestedTriggerHoveredRef = React129.useRef(false);
   const nestedTriggerOpenTimeout = useTimeout();
-  const pointerTypeRef = React98.useRef(void 0);
+  const pointerTypeRef = React129.useRef(void 0);
   function getOpenDelay() {
     if (hasProvider && activeIdRef.current != null) {
       return 0;
@@ -13584,7 +15923,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
     if (!triggerEl || !target) {
       return false;
     }
-    const nearestTrigger = closestEnabledTooltipTrigger(target);
+    const nearestTrigger = closest(target, `[${TOOLTIP_TRIGGER_IDENTIFIER}]`);
     return nearestTrigger !== null && nearestTrigger !== triggerEl && contains(triggerEl, nearestTrigger);
   }
   function detectNestedTriggerHover(target) {
@@ -13650,15 +15989,14 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
       }
     }
   };
-  const rootTriggerProps = store.useState("triggerProps", isMountedByThisTrigger);
-  const shouldApplyRootTriggerProps = isMountedByThisTrigger || trackCursorAxis !== "none";
+  const rootTriggerProps = store.useState("appliedTriggerProps", isMountedByThisTrigger || trackCursorAxis !== "none");
   const state = {
     open: isOpenedByThisTrigger
   };
   const element = useRenderElement("button", componentProps, {
     state,
     ref: [forwardedRef, registerTrigger, triggerElementRef],
-    props: [hoverProps, focusProps, shouldApplyRootTriggerProps ? rootTriggerProps : void 0, {
+    props: [hoverProps, focusProps, rootTriggerProps, {
       onMouseOver(event) {
         handleNestedTriggerHover(event.nativeEvent);
       },
@@ -13697,24 +16035,24 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
 });
 if (true) TooltipTrigger.displayName = "TooltipTrigger";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-var React100 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
+var React131 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
-var React99 = __toESM(require_react(), 1);
-var TooltipPortalContext = /* @__PURE__ */ React99.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
+var React130 = __toESM(require_react(), 1);
+var TooltipPortalContext = /* @__PURE__ */ React130.createContext(void 0);
 if (true) TooltipPortalContext.displayName = "TooltipPortalContext";
 function useTooltipPortalContext() {
-  const value = React99.useContext(TooltipPortalContext);
+  const value = React130.useContext(TooltipPortalContext);
   if (value === void 0) {
     throw new Error(true ? "Base UI: <Tooltip.Portal> is missing." : formatErrorMessage_default(70));
   }
   return value;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-var TooltipPortal = /* @__PURE__ */ React100.forwardRef(function TooltipPortal2(props, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var TooltipPortal = /* @__PURE__ */ React131.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
     keepMounted = false,
     ...portalProps
@@ -13725,9 +16063,9 @@ var TooltipPortal = /* @__PURE__ */ React100.forwardRef(function TooltipPortal2(
   if (!shouldRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(TooltipPortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(TooltipPortalContext.Provider, {
     value: keepMounted,
-    children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(FloatingPortalLite, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(FloatingPortalLite, {
       ref: forwardedRef,
       ...portalProps
     })
@@ -13735,24 +16073,24 @@ var TooltipPortal = /* @__PURE__ */ React100.forwardRef(function TooltipPortal2(
 });
 if (true) TooltipPortal.displayName = "TooltipPortal";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-var React102 = __toESM(require_react(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
+var React133 = __toESM(require_react(), 1);
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
-var React101 = __toESM(require_react(), 1);
-var TooltipPositionerContext = /* @__PURE__ */ React101.createContext(void 0);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
+var React132 = __toESM(require_react(), 1);
+var TooltipPositionerContext = /* @__PURE__ */ React132.createContext(void 0);
 if (true) TooltipPositionerContext.displayName = "TooltipPositionerContext";
 function useTooltipPositionerContext() {
-  const context = React101.useContext(TooltipPositionerContext);
+  const context = React132.useContext(TooltipPositionerContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: TooltipPositionerContext is missing. TooltipPositioner parts must be placed within <Tooltip.Positioner>." : formatErrorMessage_default(71));
   }
   return context;
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-var TooltipPositioner = /* @__PURE__ */ React102.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var TooltipPositioner = /* @__PURE__ */ React133.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13799,7 +16137,7 @@ var TooltipPositioner = /* @__PURE__ */ React102.forwardRef(function TooltipPosi
     collisionAvoidance,
     adaptiveOrigin: adaptiveOrigin2
   });
-  const state = React102.useMemo(() => ({
+  const state = React133.useMemo(() => ({
     open: open2,
     side: positioning.side,
     align: positioning.align,
@@ -13814,16 +16152,16 @@ var TooltipPositioner = /* @__PURE__ */ React102.forwardRef(function TooltipPosi
     hidden: !mounted,
     inert: !open2 || trackCursorAxis === "both" || disableHoverablePopup
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(TooltipPositionerContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(TooltipPositionerContext.Provider, {
     value: positioning,
     children: element
   });
 });
 if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
-var React103 = __toESM(require_react(), 1);
-var TooltipPopup = /* @__PURE__ */ React103.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
+var React134 = __toESM(require_react(), 1);
+var TooltipPopup = /* @__PURE__ */ React134.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13873,9 +16211,9 @@ var TooltipPopup = /* @__PURE__ */ React103.forwardRef(function TooltipPopup2(co
 });
 if (true) TooltipPopup.displayName = "TooltipPopup";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
-var React104 = __toESM(require_react(), 1);
-var TooltipArrow = /* @__PURE__ */ React104.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
+var React135 = __toESM(require_react(), 1);
+var TooltipArrow = /* @__PURE__ */ React135.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13912,22 +16250,22 @@ var TooltipArrow = /* @__PURE__ */ React104.forwardRef(function TooltipArrow2(co
 });
 if (true) TooltipArrow.displayName = "TooltipArrow";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
-var React105 = __toESM(require_react(), 1);
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
+var React136 = __toESM(require_react(), 1);
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
   const {
     delay,
     closeDelay,
     timeout = 400
   } = props;
-  const delayValue = React105.useMemo(() => ({
+  const delayValue = React136.useMemo(() => ({
     open: delay,
     close: closeDelay
   }), [delay, closeDelay]);
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(TooltipProviderContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(TooltipProviderContext.Provider, {
     value: delay,
-    children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(FloatingDelayGroup, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(FloatingDelayGroup, {
       delay: delayValue,
       timeoutMs: timeout,
       children: props.children
@@ -13936,9 +16274,9 @@ var TooltipProvider = function TooltipProvider2(props) {
 };
 if (true) TooltipProvider.displayName = "TooltipProvider";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
-var React106 = __toESM(require_react(), 1);
-var TooltipViewport = /* @__PURE__ */ React106.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
+var React137 = __toESM(require_react(), 1);
+var TooltipViewport = /* @__PURE__ */ React137.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13973,7 +16311,7 @@ var TooltipViewport = /* @__PURE__ */ React106.forwardRef(function TooltipViewpo
 });
 if (true) TooltipViewport.displayName = "TooltipViewport";
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/tooltip/store/TooltipHandle.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/store/TooltipHandle.mjs
 var TooltipHandle = class extends BasePopupHandle {
   constructor() {
     super(createNullTooltipStore(), "Tooltip");
@@ -14008,7 +16346,7 @@ function createTooltipHandle() {
   return new TooltipHandle();
 }
 
-// node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/use-render/useRender.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/use-render/useRender.mjs
 function useRender(params) {
   return useRenderElement(params.defaultTagName ?? "div", params, params);
 }
@@ -14126,11 +16464,11 @@ var Text = (0, import_element14.forwardRef)(
 // packages/ui/build-module/icon/icon.mjs
 var import_element15 = __toESM(require_element(), 1);
 var import_primitives = __toESM(require_primitives(), 1);
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
 var Icon = (0, import_element15.forwardRef)(
   function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
     const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
       import_primitives.SVG,
       {
         ref,
@@ -14191,45 +16529,45 @@ var icon_default = (0, import_element16.forwardRef)(
 
 // packages/icons/build-module/library/check.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-var check_default = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives2.Path, { d: "M7 12L10 15L17 8" }) });
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var check_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives2.Path, { d: "M7 12L10 15L17 8" }) });
 
 // packages/icons/build-module/library/chevron-left.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
-var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives3.Path, { d: "M14 6.5L9 12L14 17.5" }) });
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives3.Path, { d: "M14 6.5L9 12L14 17.5" }) });
 
 // packages/icons/build-module/library/chevron-right-small.mjs
 var import_primitives4 = __toESM(require_primitives(), 1);
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
-var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives4.Path, { d: "M10.5 8.5L13.5 12L10.5 15.5" }) });
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives4.Path, { d: "M10.5 8.5L13.5 12L10.5 15.5" }) });
 
 // packages/icons/build-module/library/chevron-right.mjs
 var import_primitives5 = __toESM(require_primitives(), 1);
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives5.Path, { d: "M10 6.5L15 12L10 17.5" }) });
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives5.Path, { d: "M10 6.5L15 12L10 17.5" }) });
 
 // packages/icons/build-module/library/more-vertical.mjs
 var import_primitives6 = __toESM(require_primitives(), 1);
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
-var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-  /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives6.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives6.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives6.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", fill: "currentColor", stroke: "none" }),
-  /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives6.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z" }),
-  /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives6.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z" }),
-  /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives6.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z" })
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives6.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives6.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives6.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives6.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z" }),
+  /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives6.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z" }),
+  /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives6.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z" })
 ] });
 
 // packages/icons/build-module/library/next.mjs
 var import_primitives7 = __toESM(require_primitives(), 1);
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
-var next_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives7.Path, { d: "M7 17.5L12 12L7 6.5M13 17.5L18 12L13 6.5" }) });
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var next_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives7.Path, { d: "M7 17.5L12 12L7 6.5M13 17.5L18 12L13 6.5" }) });
 
 // packages/icons/build-module/library/previous.mjs
 var import_primitives8 = __toESM(require_primitives(), 1);
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-var previous_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives8.Path, { d: "M17 6.5L12 12L17 17.5M11 6.5L6 12L11 17.5" }) });
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var previous_default = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives8.Path, { d: "M17 6.5L12 12L17 17.5M11 6.5L6 12L11 17.5" }) });
 
 // packages/ui/build-module/menu/context.mjs
 var import_element17 = __toESM(require_element(), 1);
@@ -14356,7 +16694,7 @@ var VisuallyHidden = (0, import_element18.forwardRef)(
 );
 
 // packages/ui/build-module/utils/keyboard-shortcut.mjs
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 function useKeyboardShortcutProps({
   "aria-describedby": ariaDescribedBy,
   "aria-keyshortcuts": ariaKeyShortcuts,
@@ -14374,12 +16712,12 @@ function useKeyboardShortcutProps({
   };
 }
 var KeyboardShortcutDescription = (0, import_element19.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
     VisuallyHidden,
     {
       id: descriptionId,
       "aria-hidden": "true",
-      render: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("span", { ref }),
+      render: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("span", { ref }),
       children: (0, import_i18n.sprintf)(
         /* translators: %s: keyboard shortcut. */
         (0, import_i18n.__)("Keyboard shortcut: %s"),
@@ -14389,7 +16727,7 @@ var KeyboardShortcutDescription = (0, import_element19.forwardRef)(function Unfo
   );
 });
 var KeyboardShortcutDisplay = (0, import_element19.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
+  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
 });
 
 // packages/ui/build-module/utils/item-popup/item-content.mjs
@@ -14471,7 +16809,7 @@ function useItemContent(children, components, {
 
 // packages/ui/build-module/menu/item-description.mjs
 var import_element21 = __toESM(require_element(), 1);
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
 function getRuntime3() {
   const globalScope = globalThis;
@@ -14565,7 +16903,7 @@ var ItemDescription = (0, import_element21.forwardRef)(
         "Menu.ItemDescription: Missing direct menu item parent. Render <Menu.ItemDescription> as a direct child of a menu item."
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
       Text,
       {
         ref,
@@ -14580,7 +16918,7 @@ var ItemDescription = (0, import_element21.forwardRef)(
 
 // packages/ui/build-module/menu/item-label.mjs
 var import_element22 = __toESM(require_element(), 1);
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE4 = "data-wp-hash";
 function getRuntime4() {
   const globalScope = globalThis;
@@ -14668,7 +17006,7 @@ var style_default4 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_
 var ItemLabel = (0, import_element22.forwardRef)(
   function MenuItemLabel({ children, className, id, ...props }, ref) {
     const itemContentContext = useMenuItemContentContext();
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
       Text,
       {
         ref,
@@ -14686,7 +17024,7 @@ var ItemLabel = (0, import_element22.forwardRef)(
 );
 
 // packages/ui/build-module/menu/item.mjs
-var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
 function getRuntime5() {
   const globalScope = globalThis;
@@ -14840,8 +17178,8 @@ function ItemContent({
     (child) => child !== ""
   );
   const [label, ...descriptions] = import_element23.Children.toArray(children);
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(import_jsx_runtime54.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
       "span",
       {
         className: clsx_default(
@@ -14850,7 +17188,7 @@ function ItemContent({
         ),
         children: [
           label,
-          hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+          hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
             Text,
             {
               variant: "body-sm",
@@ -14858,21 +17196,21 @@ function ItemContent({
               children: suffix
             }
           ),
-          shortcut && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+          shortcut && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
             Text,
             {
               variant: "body-sm",
               className: style_default5["item-shortcut"],
-              children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(KeyboardShortcutDisplay, { shortcut })
+              children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(KeyboardShortcutDisplay, { shortcut })
             }
           ),
-          hasTrailing && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: style_default5["item-trailing"], children: trailing })
+          hasTrailing && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("span", { className: style_default5["item-trailing"], children: trailing })
         ]
       }
     ),
-    descriptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: style_default5["item-descriptions"], children: descriptions }),
-    hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { "aria-hidden": "true", className: style_default5["item-prefix"], children: prefix }),
-    shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    descriptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("span", { className: style_default5["item-descriptions"], children: descriptions }),
+    hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("span", { "aria-hidden": "true", className: style_default5["item-prefix"], children: prefix }),
+    shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
       KeyboardShortcutDescription,
       {
         descriptionId: shortcutDescriptionId,
@@ -14905,7 +17243,7 @@ var Item = (0, import_element23.forwardRef)(function MenuItem3({
     "aria-labelledby": ariaLabelledBy,
     shortcut
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
     index_parts_exports.Item,
     {
       ref,
@@ -14917,7 +17255,7 @@ var Item = (0, import_element23.forwardRef)(function MenuItem3({
         className
       ),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
         ItemContent,
         {
           prefix,
@@ -14932,7 +17270,7 @@ var Item = (0, import_element23.forwardRef)(function MenuItem3({
 });
 
 // packages/ui/build-module/menu/checkbox-item.mjs
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE6 = "data-wp-hash";
 function getRuntime6() {
   const globalScope = globalThis;
@@ -15050,7 +17388,7 @@ var CheckboxItem = (0, import_element24.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(
       index_parts_exports.CheckboxItem,
       {
         ref,
@@ -15063,12 +17401,12 @@ var CheckboxItem = (0, import_element24.forwardRef)(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
             index_parts_exports.CheckboxItemIndicator,
             {
               keepMounted: true,
               className: style_default6["item-selection-indicator"],
-              children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
                 Icon,
                 {
                   icon: check_default,
@@ -15079,7 +17417,7 @@ var CheckboxItem = (0, import_element24.forwardRef)(
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
             ItemContent,
             {
               prefix,
@@ -15097,7 +17435,7 @@ var CheckboxItem = (0, import_element24.forwardRef)(
 
 // packages/ui/build-module/menu/group.mjs
 var import_element25 = __toESM(require_element(), 1);
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
 function getRuntime7() {
   const globalScope = globalThis;
@@ -15189,7 +17527,7 @@ var Group = (0, import_element25.forwardRef)(function MenuGroup3({ className, ..
       "Menu.Group: Cannot be nested inside Menu.RadioGroup. Remove Menu.Group and put Menu.GroupLabel and Menu.RadioItem directly inside Menu.RadioGroup."
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(MenuGroupContext2.Provider, { value: "group", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(MenuGroupContext2.Provider, { value: "group", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
     index_parts_exports.Group,
     {
       ref,
@@ -15201,7 +17539,7 @@ var Group = (0, import_element25.forwardRef)(function MenuGroup3({ className, ..
 
 // packages/ui/build-module/menu/group-label.mjs
 var import_element26 = __toESM(require_element(), 1);
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
 function getRuntime8() {
   const globalScope = globalThis;
@@ -15288,7 +17626,7 @@ if (typeof process === "undefined" || true) {
 var style_default8 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var GroupLabel = (0, import_element26.forwardRef)(
   function MenuGroupLabel3({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
       index_parts_exports.GroupLabel,
       {
         ref,
@@ -15302,7 +17640,7 @@ var GroupLabel = (0, import_element26.forwardRef)(
 // packages/ui/build-module/menu/link-item.mjs
 var import_element27 = __toESM(require_element(), 1);
 var import_i18n2 = __toESM(require_i18n(), 1);
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
 function getRuntime9() {
   const globalScope = globalThis;
@@ -15411,7 +17749,7 @@ var LinkItem = (0, import_element27.forwardRef)(function MenuLinkItem3({
   ...props
 }, ref) {
   const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
-  const externalLinkIndicator = shouldShowNewTabIndicator ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+  const externalLinkIndicator = shouldShowNewTabIndicator ? /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
     "span",
     {
       className: style_default9["external-link-indicator"],
@@ -15435,7 +17773,7 @@ var LinkItem = (0, import_element27.forwardRef)(function MenuLinkItem3({
     labelTrailing: externalLinkIndicator,
     shortcut
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
     index_parts_exports.LinkItem,
     {
       ref,
@@ -15449,7 +17787,7 @@ var LinkItem = (0, import_element27.forwardRef)(function MenuLinkItem3({
         style_default9.item,
         className
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
         ItemContent,
         {
           prefix,
@@ -15619,9 +17957,9 @@ function getWpCompatOverlaySlot() {
 }
 
 // packages/ui/build-module/menu/portal.mjs
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
 var Portal = (0, import_element29.forwardRef)(function MenuPortal3({ container, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
     index_parts_exports.Portal,
     {
       ref,
@@ -15643,7 +17981,7 @@ var ITEM_POPUP_POSITIONER_PROPS = {
 };
 
 // packages/ui/build-module/menu/positioner.mjs
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
 function getRuntime11() {
   const globalScope = globalThis;
@@ -15834,7 +18172,7 @@ var Positioner = (0, import_element30.forwardRef)(
       props.disableAnchorTracking,
       submenuTriggerRef
     ]);
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
       index_parts_exports.Positioner,
       {
         ...defaultProps,
@@ -15853,7 +18191,7 @@ var Positioner = (0, import_element30.forwardRef)(
 );
 
 // packages/ui/build-module/menu/popup.mjs
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
 function getRuntime12() {
   const globalScope = globalThis;
@@ -15940,7 +18278,7 @@ if (typeof process === "undefined" || true) {
 var style_default11 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var Popup = (0, import_element31.forwardRef)(function MenuPopup3({ children, className, portal, positioner, ...props }, ref) {
   const { isSubmenu } = useMenuContext();
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
     index_parts_exports.Popup,
     {
       ref,
@@ -15950,7 +18288,7 @@ var Popup = (0, import_element31.forwardRef)(function MenuPopup3({ children, cla
         className
       ),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
         "div",
         {
           className: style_default11.list,
@@ -15961,15 +18299,15 @@ var Popup = (0, import_element31.forwardRef)(function MenuPopup3({ children, cla
   );
   const positionedPopup = renderSlotWithChildren(
     positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Positioner, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Positioner, {}),
     popupContent
   );
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Portal, {}), positionedPopup);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Portal, {}), positionedPopup);
 });
 
 // packages/ui/build-module/menu/prefix-icon.mjs
 var import_element32 = __toESM(require_element(), 1);
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
 function getRuntime13() {
   const globalScope = globalThis;
@@ -16056,7 +18394,7 @@ if (typeof process === "undefined" || true) {
 var style_default12 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var PrefixIcon = (0, import_element32.forwardRef)(
   function MenuPrefixIcon({ className, size: size4 = 16, style, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
       Icon,
       {
         ...props,
@@ -16075,7 +18413,7 @@ PrefixIcon.displayName = "Menu.PrefixIcon";
 
 // packages/ui/build-module/menu/radio-group.mjs
 var import_element33 = __toESM(require_element(), 1);
-var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
 function getRuntime14() {
   const globalScope = globalThis;
@@ -16168,7 +18506,7 @@ var RadioGroup = (0, import_element33.forwardRef)(
         "Menu.RadioGroup: Cannot be nested inside Menu.Group. Move Menu.RadioGroup outside Menu.Group and put its Menu.GroupLabel inside Menu.RadioGroup."
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(MenuGroupContext2.Provider, { value: "radio-group", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(MenuGroupContext2.Provider, { value: "radio-group", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
       index_parts_exports.RadioGroup,
       {
         ref,
@@ -16182,7 +18520,7 @@ var RadioGroup = (0, import_element33.forwardRef)(
 // packages/ui/build-module/menu/radio-item.mjs
 var import_element34 = __toESM(require_element(), 1);
 var import_primitives9 = __toESM(require_primitives(), 1);
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
 function getRuntime15() {
   const globalScope = globalThis;
@@ -16275,7 +18613,7 @@ if (typeof process === "undefined" || true) {
   registerStyle15("5e71ea1d52", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-sm,320px);--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}._33f07ab17005471d__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText;--_gcd-a-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid Highlight;--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._99c5bd141cbf516f__checkbox-selection-icon{translate:0 1px}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._64924ecabf65a5d6__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.a836378335a4cbf1__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}.af879698ede76757__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._5c211f9edfe0ed66__has-prefix{grid-column:content-start/content-end}}._76f3e69cf2228139__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}.af879698ede76757__item-content>._091406749ed93e6e__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}.af879698ede76757__item-content>._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing,.af879698ede76757__item-content>._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._06be17a91bf434a0__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._5ed41da4abcf8958__item-label+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default14 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
-var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives9.Circle, { cx: 12, cy: 12, r: 3 }) });
+var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives9.Circle, { cx: 12, cy: 12, r: 3 }) });
 var RadioItem = (0, import_element34.forwardRef)(
   function MenuRadioItem3({
     children,
@@ -16301,7 +18639,7 @@ var RadioItem = (0, import_element34.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsxs)(
       index_parts_exports.RadioItem,
       {
         ref,
@@ -16314,12 +18652,12 @@ var RadioItem = (0, import_element34.forwardRef)(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
             index_parts_exports.RadioItemIndicator,
             {
               keepMounted: true,
               className: style_default14["item-selection-indicator"],
-              children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
                 Icon,
                 {
                   icon: radioCheck,
@@ -16329,7 +18667,7 @@ var RadioItem = (0, import_element34.forwardRef)(
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
             ItemContent,
             {
               prefix,
@@ -16347,9 +18685,9 @@ var RadioItem = (0, import_element34.forwardRef)(
 
 // packages/ui/build-module/utils/direction-provider.mjs
 var import_i18n3 = __toESM(require_i18n(), 1);
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
 function DirectionProvider3({ children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(DirectionProvider, { direction: (0, import_i18n3.isRTL)() ? "rtl" : "ltr", children });
+  return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(DirectionProvider, { direction: (0, import_i18n3.isRTL)() ? "rtl" : "ltr", children });
 }
 
 // packages/ui/build-module/utils/use-iframe-dismissal-bridge.mjs
@@ -16512,7 +18850,7 @@ function useIframeDismissalBridge({
 }
 
 // packages/ui/build-module/menu/root.mjs
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
 function Root(props) {
   const { onOpenChange } = props;
   const handleOpenChange = (nextOpen, eventDetails) => {
@@ -16534,12 +18872,12 @@ function Root(props) {
     onOpenChange: handleOpenChange,
     open: props.open
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(index_parts_exports.Root, { ...props, ...iframeDismissalProps }) }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(index_parts_exports.Root, { ...props, ...iframeDismissalProps }) }) }) });
 }
 
 // packages/ui/build-module/menu/separator.mjs
 var import_element36 = __toESM(require_element(), 1);
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
 function getRuntime16() {
   const globalScope = globalThis;
@@ -16626,7 +18964,7 @@ if (typeof process === "undefined" || true) {
 var style_default15 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "checkbox-selection-icon": "_99c5bd141cbf516f__checkbox-selection-icon", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "prefix-icon": "a836378335a4cbf1__prefix-icon", "has-prefix": "_5c211f9edfe0ed66__has-prefix", "item-descriptions": "_76f3e69cf2228139__item-descriptions", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var Separator2 = (0, import_element36.forwardRef)(
   function MenuSeparator({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
       index_parts_exports.Separator,
       {
         ref,
@@ -16639,16 +18977,16 @@ var Separator2 = (0, import_element36.forwardRef)(
 
 // packages/ui/build-module/menu/submenu-root.mjs
 var import_element37 = __toESM(require_element(), 1);
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
 function SubmenuRoot(props) {
   const submenuTriggerRef = (0, import_element37.useRef)(null);
-  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(MenuContext.Provider, { value: { isSubmenu: true, submenuTriggerRef }, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(index_parts_exports.SubmenuRoot, { ...props }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(MenuContext.Provider, { value: { isSubmenu: true, submenuTriggerRef }, children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(index_parts_exports.SubmenuRoot, { ...props }) }) });
 }
 
 // packages/ui/build-module/menu/submenu-trigger.mjs
 var import_element38 = __toESM(require_element(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
 function getRuntime17() {
   const globalScope = globalThis;
@@ -16768,7 +19106,7 @@ var SubmenuTrigger = (0, import_element38.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
       index_parts_exports.SubmenuTrigger,
       {
         ref: mergedRef,
@@ -16780,14 +19118,14 @@ var SubmenuTrigger = (0, import_element38.forwardRef)(
           className
         ),
         ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
           ItemContent,
           {
             prefix,
             shortcut,
             shortcutDescriptionId,
             suffix,
-            trailing: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+            trailing: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
               Icon,
               {
                 className: style_default16["submenu-chevron"],
@@ -16806,10 +19144,10 @@ var SubmenuTrigger = (0, import_element38.forwardRef)(
 
 // packages/ui/build-module/menu/trigger.mjs
 var import_element39 = __toESM(require_element(), 1);
-var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
 var Trigger = (0, import_element39.forwardRef)(
   function MenuTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(index_parts_exports.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(index_parts_exports.Trigger, { ref, ...props });
   }
 );
 
@@ -16829,10 +19167,10 @@ var import_element42 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/tooltip/portal.mjs
 var import_element40 = __toESM(require_element(), 1);
-var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
 var Portal2 = (0, import_element40.forwardRef)(
   function TooltipPortal3({ container, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
       index_parts_exports3.Portal,
       {
         container: container === void 0 ? getWpCompatOverlaySlot() : container,
@@ -16845,7 +19183,7 @@ var Portal2 = (0, import_element40.forwardRef)(
 
 // packages/ui/build-module/tooltip/positioner.mjs
 var import_element41 = __toESM(require_element(), 1);
-var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
 function getRuntime18() {
   const globalScope = globalThis;
@@ -16936,7 +19274,7 @@ if (typeof process === "undefined" || true) {
 var style_default17 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var Positioner2 = (0, import_element41.forwardRef)(
   function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
       index_parts_exports3.Positioner,
       {
         ref,
@@ -16982,7 +19320,7 @@ function getThemeProvider() {
 var ThemeProvider = getThemeProvider();
 
 // packages/ui/build-module/tooltip/popup.mjs
-var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
 function getRuntime19() {
   const globalScope = globalThis;
@@ -17069,7 +19407,7 @@ if (typeof process === "undefined" || true) {
 var style_default18 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup2 = (0, import_element42.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
     index_parts_exports3.Popup,
     {
       ref,
@@ -17080,37 +19418,37 @@ var Popup2 = (0, import_element42.forwardRef)(function TooltipPopup3({ portal, p
   ) });
   const positionedPopup = renderSlotWithChildren(
     positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Positioner2, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Positioner2, {}),
     popupContent
   );
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Portal2, {}), positionedPopup);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Portal2, {}), positionedPopup);
 });
 
 // packages/ui/build-module/tooltip/trigger.mjs
 var import_element43 = __toESM(require_element(), 1);
-var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 var Trigger2 = (0, import_element43.forwardRef)(
   function TooltipTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(index_parts_exports3.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(index_parts_exports3.Trigger, { ref, ...props });
   }
 );
 
 // packages/ui/build-module/tooltip/root.mjs
-var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 function Root2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(index_parts_exports3.Root, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(index_parts_exports3.Root, { ...props }) });
 }
 
 // packages/ui/build-module/tooltip/provider.mjs
-var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 function Provider({ ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(index_parts_exports3.Provider, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(index_parts_exports3.Provider, { ...props });
 }
 
 // packages/ui/build-module/link/link.mjs
 var import_element44 = __toESM(require_element(), 1);
 var import_i18n4 = __toESM(require_i18n(), 1);
-var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
 function getRuntime20() {
   const globalScope = globalThis;
@@ -17234,9 +19572,9 @@ var Link = (0, import_element44.forwardRef)(
           className
         ),
         target: target ?? (openInNewTab ? "_blank" : void 0),
-        children: /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(import_jsx_runtime60.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(import_jsx_runtime77.Fragment, { children: [
           children,
-          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
             "span",
             {
               className: style_default19["link-icon"],
@@ -17383,7 +19721,7 @@ __export(progress_exports, {
 // packages/ui/build-module/progress/root.mjs
 var import_element46 = __toESM(require_element(), 1);
 var import_i18n5 = __toESM(require_i18n(), 1);
-var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
 function getRuntime22() {
   const globalScope = globalThis;
@@ -17472,9 +19810,9 @@ if (typeof process === "undefined" || true) {
   registerStyle22("4fcc1f90de", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0c8146c357ee3082__root{width:160px}._94b93b4b54f86af8__label,.d444d83093168104__value{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.d444d83093168104__value{font-variant-numeric:tabular-nums}.f08088bb628044ff__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);height:1.5px;overflow:hidden;position:relative;width:100%;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid CanvasText;outline-offset:var(--wpds-border-width-xs,1px)}}._288dbe846a740467__indicator{background-color:currentColor;border-radius:inherit;color:var(--wpds-color-background-thumb-neutral,#1e1e1e);height:100%;inset-block-start:0;position:absolute;@media not (prefers-reduced-motion){transition:width var(--wpds-motion-duration-xl,.4s) ease-in-out}&[data-indeterminate]{animation:_412bd854b144d653__progress-slide 1.5s ease-in-out infinite;transition:none;width:50%;@media (prefers-reduced-motion:reduce){animation-duration:3s;animation-timing-function:steps(4)}}}@media (forced-colors:active){._288dbe846a740467__indicator{background-color:CanvasText;forced-color-adjust:none}}@keyframes _412bd854b144d653__progress-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}}}");
 }
 var style_default21 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
-var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
 var Root3 = (0, import_element46.forwardRef)(function ProgressRoot3({ className, render = DEFAULT_RENDER, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
     index_parts_exports2.Root,
     {
       ref,
@@ -17492,7 +19830,7 @@ var Root3 = (0, import_element46.forwardRef)(function ProgressRoot3({ className,
 
 // packages/ui/build-module/progress/track.mjs
 var import_element47 = __toESM(require_element(), 1);
-var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
 function getRuntime23() {
   const globalScope = globalThis;
@@ -17582,7 +19920,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default22 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
 var Track = (0, import_element47.forwardRef)(function ProgressTrack3({ className, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
     index_parts_exports2.Track,
     {
       ref,
@@ -17598,7 +19936,7 @@ var Track = (0, import_element47.forwardRef)(function ProgressTrack3({ className
 
 // packages/ui/build-module/progress/indicator.mjs
 var import_element48 = __toESM(require_element(), 1);
-var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
 function getRuntime24() {
   const globalScope = globalThis;
@@ -17689,7 +20027,7 @@ if (typeof process === "undefined" || true) {
 var style_default23 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
 var Indicator = (0, import_element48.forwardRef)(
   function ProgressIndicator3({ color, className, style, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
       index_parts_exports2.Indicator,
       {
         ref,
@@ -17707,7 +20045,7 @@ var Indicator = (0, import_element48.forwardRef)(
 
 // packages/ui/build-module/progress/label.mjs
 var import_element49 = __toESM(require_element(), 1);
-var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
 function getRuntime25() {
   const globalScope = globalThis;
@@ -17792,9 +20130,9 @@ if (typeof process === "undefined" || true) {
   registerStyle25("4fcc1f90de", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0c8146c357ee3082__root{width:160px}._94b93b4b54f86af8__label,.d444d83093168104__value{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.d444d83093168104__value{font-variant-numeric:tabular-nums}.f08088bb628044ff__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);height:1.5px;overflow:hidden;position:relative;width:100%;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid CanvasText;outline-offset:var(--wpds-border-width-xs,1px)}}._288dbe846a740467__indicator{background-color:currentColor;border-radius:inherit;color:var(--wpds-color-background-thumb-neutral,#1e1e1e);height:100%;inset-block-start:0;position:absolute;@media not (prefers-reduced-motion){transition:width var(--wpds-motion-duration-xl,.4s) ease-in-out}&[data-indeterminate]{animation:_412bd854b144d653__progress-slide 1.5s ease-in-out infinite;transition:none;width:50%;@media (prefers-reduced-motion:reduce){animation-duration:3s;animation-timing-function:steps(4)}}}@media (forced-colors:active){._288dbe846a740467__indicator{background-color:CanvasText;forced-color-adjust:none}}@keyframes _412bd854b144d653__progress-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}}}");
 }
 var style_default24 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
-var DEFAULT_RENDER2 = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(Text, {});
+var DEFAULT_RENDER2 = /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(Text, {});
 var Label = (0, import_element49.forwardRef)(function ProgressLabel3({ className, render = DEFAULT_RENDER2, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
     index_parts_exports2.Label,
     {
       ref,
@@ -17807,7 +20145,7 @@ var Label = (0, import_element49.forwardRef)(function ProgressLabel3({ className
 
 // packages/ui/build-module/progress/value.mjs
 var import_element50 = __toESM(require_element(), 1);
-var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
 function getRuntime26() {
   const globalScope = globalThis;
@@ -17892,9 +20230,9 @@ if (typeof process === "undefined" || true) {
   registerStyle26("4fcc1f90de", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0c8146c357ee3082__root{width:160px}._94b93b4b54f86af8__label,.d444d83093168104__value{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.d444d83093168104__value{font-variant-numeric:tabular-nums}.f08088bb628044ff__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);height:1.5px;overflow:hidden;position:relative;width:100%;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid CanvasText;outline-offset:var(--wpds-border-width-xs,1px)}}._288dbe846a740467__indicator{background-color:currentColor;border-radius:inherit;color:var(--wpds-color-background-thumb-neutral,#1e1e1e);height:100%;inset-block-start:0;position:absolute;@media not (prefers-reduced-motion){transition:width var(--wpds-motion-duration-xl,.4s) ease-in-out}&[data-indeterminate]{animation:_412bd854b144d653__progress-slide 1.5s ease-in-out infinite;transition:none;width:50%;@media (prefers-reduced-motion:reduce){animation-duration:3s;animation-timing-function:steps(4)}}}@media (forced-colors:active){._288dbe846a740467__indicator{background-color:CanvasText;forced-color-adjust:none}}@keyframes _412bd854b144d653__progress-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}}}");
 }
 var style_default25 = { "root": "_0c8146c357ee3082__root", "label": "_94b93b4b54f86af8__label", "value": "d444d83093168104__value", "track": "f08088bb628044ff__track", "indicator": "_288dbe846a740467__indicator", "progress-slide": "_412bd854b144d653__progress-slide" };
-var DEFAULT_RENDER3 = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(Text, {});
+var DEFAULT_RENDER3 = /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(Text, {});
 var Value = (0, import_element50.forwardRef)(function ProgressValue3({ className, render = DEFAULT_RENDER3, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
     index_parts_exports2.Value,
     {
       ref,
@@ -18019,10 +20357,10 @@ var Skeleton = (0, import_element51.forwardRef)(
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
 var import_element52 = __toESM(require_element(), 1);
-var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
 var NavigableRegion = (0, import_element52.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
       Tag,
       {
         ref,
@@ -18041,7 +20379,7 @@ var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/navigation/index.mjs
 var import_i18n6 = __toESM(require_i18n(), 1);
-var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
 function getRuntime28() {
   const globalScope = globalThis;
@@ -18155,25 +20493,25 @@ var Navigation = ({
       );
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
     Stack,
     {
-      render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("ul", { role: "list" }),
+      render: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("ul", { role: "list" }),
       direction: "row",
       align: "center",
       gap: "md",
       className: style_default27.list,
-      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("li", { className: style_default27.li, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("li", { className: style_default27.li, children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
         Text,
         {
           variant: "body-md",
           className: style_default27.item,
-          render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
             Link,
             {
               variant: "unstyled",
               "aria-current": item.href === currentHref ? "page" : void 0,
-              render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(LinkComponent, { href: item.href })
+              render: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(LinkComponent, { href: item.href })
             }
           ),
           children: item.label
@@ -18189,7 +20527,7 @@ var import_components = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
 
 // packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
 function getRuntime29() {
   const globalScope = globalThis;
@@ -18288,7 +20626,7 @@ function Header({
 }) {
   const HeadingTag = `h${headingLevel}`;
   const hasNavigation = !!navigation?.items?.length;
-  return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
     Stack,
     {
       direction: "column",
@@ -18297,7 +20635,7 @@ function Header({
         hasNavigation && style_default28["has-navigation"]
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
           Stack,
           {
             className: style_default28["header-content"],
@@ -18305,7 +20643,7 @@ function Header({
             gap: "sm",
             justify: "space-between",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
                 Stack,
                 {
                   direction: "row",
@@ -18314,14 +20652,14 @@ function Header({
                   justify: "start",
                   className: style_default28["header-lockup"],
                   children: [
-                    showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                    showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
                       SidebarToggleSlot,
                       {
                         bubblesVirtually: true,
                         className: style_default28["sidebar-toggle-slot"]
                       }
                     ),
-                    visual && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                    visual && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
                       "div",
                       {
                         className: style_default28["header-visual"],
@@ -18329,11 +20667,11 @@ function Header({
                         children: visual
                       }
                     ),
-                    title && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                    title && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
                       Text,
                       {
                         className: style_default28["header-title"],
-                        render: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(HeadingTag, {}),
+                        render: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(HeadingTag, {}),
                         variant: "heading-lg",
                         children: title
                       }
@@ -18343,7 +20681,7 @@ function Header({
                   ]
                 }
               ),
-              actions && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+              actions && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
                 Stack,
                 {
                   align: "center",
@@ -18356,16 +20694,16 @@ function Header({
             ]
           }
         ),
-        subTitle && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+        subTitle && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
           Text,
           {
-            render: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("p", {}),
+            render: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)("p", {}),
             variant: "body-md",
             className: style_default28["header-subtitle"],
             children: subTitle
           }
         ),
-        hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+        hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
           navigation_default,
           {
             ...navigation,
@@ -18379,7 +20717,7 @@ function Header({
 }
 
 // packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
 function getRuntime30() {
   const globalScope = globalThis;
@@ -18482,8 +20820,8 @@ function Page({
 }) {
   const classes = clsx_default(style_default29.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual || !!navigation?.items?.length) && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual || !!navigation?.items?.length) && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
       Header,
       {
         headingLevel,
@@ -18498,7 +20836,7 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
       "div",
       {
         className: clsx_default(
@@ -19955,7 +22293,7 @@ var GlobalStylesContext = (0, import_element53.createContext)({
 });
 
 // packages/global-styles-ui/build-module/provider.mjs
-var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 function GlobalStylesProvider({
   children,
   value,
@@ -19976,7 +22314,7 @@ function GlobalStylesProvider({
     }),
     [value, baseValue, merged, onChange, fontLibraryEnabled]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(GlobalStylesContext.Provider, { value: contextValue, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(GlobalStylesContext.Provider, { value: contextValue, children });
 }
 
 // packages/global-styles-ui/build-module/screen-root.mjs
@@ -19986,12 +22324,12 @@ var import_data2 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 
 // packages/global-styles-ui/build-module/icon-with-current-color.mjs
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 function IconWithCurrentColor({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
     icon_default,
     {
       className: clsx_default(
@@ -20005,22 +22343,22 @@ function IconWithCurrentColor({
 
 // packages/global-styles-ui/build-module/navigation-button.mjs
 var import_components2 = __toESM(require_components(), 1);
-var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 function GenericNavigationButton({
   icon,
   children,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components2.__experimentalItem, { ...props, children: [
-    icon && /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components2.__experimentalHStack, { justify: "flex-start", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(IconWithCurrentColor, { icon, size: 24 }),
-      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components2.FlexItem, { children })
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(import_components2.__experimentalItem, { ...props, children: [
+    icon && /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(import_components2.__experimentalHStack, { justify: "flex-start", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(IconWithCurrentColor, { icon, size: 24 }),
+      /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components2.FlexItem, { children })
     ] }),
     !icon && children
   ] });
 }
 function NavigationButtonAsItem(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components2.Navigator.Button, { as: GenericNavigationButton, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components2.Navigator.Button, { as: GenericNavigationButton, ...props });
 }
 
 // packages/global-styles-ui/build-module/root-menu.mjs
@@ -20294,7 +22632,7 @@ function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
 }
 
 // packages/global-styles-ui/build-module/root-menu.mjs
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel,
   useHasTypographyPanel,
@@ -20437,7 +22775,7 @@ function getFacePreviewStyle(face) {
 }
 
 // packages/global-styles-ui/build-module/typography-example.mjs
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 function PreviewTypography({
   fontSize,
   variation
@@ -20459,7 +22797,7 @@ function PreviewTypography({
     bodyPreviewStyle.fontSize = fontSize;
     headingPreviewStyle.fontSize = fontSize;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(
     import_components4.__unstableMotion.div,
     {
       animate: {
@@ -20479,8 +22817,8 @@ function PreviewTypography({
         lineHeight: 1
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { style: headingPreviewStyle, children: (0, import_i18n10._x)("A", "Uppercase letter A") }),
-        /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { style: bodyPreviewStyle, children: (0, import_i18n10._x)("a", "Lowercase letter A") })
+        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("span", { style: headingPreviewStyle, children: (0, import_i18n10._x)("A", "Uppercase letter A") }),
+        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("span", { style: bodyPreviewStyle, children: (0, import_i18n10._x)("a", "Lowercase letter A") })
       ]
     }
   );
@@ -20488,14 +22826,14 @@ function PreviewTypography({
 
 // packages/global-styles-ui/build-module/highlighted-colors.mjs
 var import_components5 = __toESM(require_components(), 1);
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 function HighlightedColors({
   normalizedColorSwatchSize,
   ratio
 }) {
   const { highlightedColors } = useStylesPreviewColors();
   const scaledSwatchSize = normalizedColorSwatchSize * ratio;
-  return highlightedColors.map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+  return highlightedColors.map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
     import_components5.__unstableMotion.div,
     {
       style: {
@@ -20524,7 +22862,7 @@ function HighlightedColors({
 var import_components6 = __toESM(require_components(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 var import_element57 = __toESM(require_element(), 1);
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 var normalizedWidth = 248;
 var normalizedHeight = 152;
 var THROTTLE_OPTIONS = {
@@ -20565,10 +22903,10 @@ function PreviewWrapper({
   const fallbackRatio = width ? width / normalizedWidth : 1;
   const ratio = ratioState ? ratioState : fallbackRatio;
   const isReady = !!width;
-  return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(import_jsx_runtime76.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)("div", { style: { position: "relative" }, children: containerResizeListener }),
+  return /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(import_jsx_runtime93.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("div", { style: { position: "relative" }, children: containerResizeListener }),
     !isReady && // Match the preview aspect ratio so layout doesn't jump once width is measured.
-    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
       Skeleton,
       {
         className: "global-styles-ui-preview__wrapper",
@@ -20577,7 +22915,7 @@ function PreviewWrapper({
         }
       }
     ),
-    isReady && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+    isReady && /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
       "div",
       {
         className: clsx_default("global-styles-ui-preview__wrapper", {
@@ -20589,7 +22927,7 @@ function PreviewWrapper({
         onMouseEnter: () => setIsHovered(true),
         onMouseLeave: () => setIsHovered(false),
         tabIndex: -1,
-        children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
           import_components6.__unstableMotion.div,
           {
             style: {
@@ -20611,7 +22949,7 @@ function PreviewWrapper({
 var preview_wrapper_default = PreviewWrapper;
 
 // packages/global-styles-ui/build-module/preview-styles.mjs
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 var firstFrameVariants = {
   start: {
     scale: 1,
@@ -20661,14 +22999,14 @@ function PreviewStyles({
     "elements.h1.color.text"
   );
   const { paletteColors } = useStylesPreviewColors();
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(
     preview_wrapper_default,
     {
       label,
       isFocused,
       withHoverView,
       children: [
-        ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+        ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
           import_components7.__unstableMotion.div,
           {
             variants: firstFrameVariants,
@@ -20676,7 +23014,7 @@ function PreviewStyles({
               height: "100%",
               overflow: "hidden"
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(
               import_components7.__experimentalHStack,
               {
                 spacing: 10 * ratio,
@@ -20686,14 +23024,14 @@ function PreviewStyles({
                   overflow: "hidden"
                 },
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                     PreviewTypography,
                     {
                       fontSize: 65 * ratio,
                       variation
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_components7.__experimentalVStack, { spacing: 4 * ratio, children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components7.__experimentalVStack, { spacing: 4 * ratio, children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                     HighlightedColors,
                     {
                       normalizedColorSwatchSize: 32,
@@ -20706,7 +23044,7 @@ function PreviewStyles({
           },
           key
         ),
-        ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+        ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
           import_components7.__unstableMotion.div,
           {
             variants: withHoverView ? midFrameVariants : void 0,
@@ -20719,7 +23057,7 @@ function PreviewStyles({
               filter: "blur(60px)",
               opacity: 0.1
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
               import_components7.__experimentalHStack,
               {
                 spacing: 0,
@@ -20728,7 +23066,7 @@ function PreviewStyles({
                   height: "100%",
                   overflow: "hidden"
                 },
-                children: paletteColors.slice(0, 4).map(({ color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+                children: paletteColors.slice(0, 4).map(({ color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   "div",
                   {
                     style: {
@@ -20744,7 +23082,7 @@ function PreviewStyles({
           },
           key
         ),
-        ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+        ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
           import_components7.__unstableMotion.div,
           {
             variants: secondFrameVariants,
@@ -20755,7 +23093,7 @@ function PreviewStyles({
               position: "absolute",
               top: 0
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
               import_components7.__experimentalVStack,
               {
                 spacing: 3 * ratio,
@@ -20766,7 +23104,7 @@ function PreviewStyles({
                   padding: 10 * ratio,
                   boxSizing: "border-box"
                 },
-                children: label && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+                children: label && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                   "div",
                   {
                     style: {
@@ -20792,7 +23130,7 @@ function PreviewStyles({
 var preview_styles_default = PreviewStyles;
 
 // packages/global-styles-ui/build-module/screen-root.mjs
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
 var import_blocks2 = __toESM(require_blocks(), 1);
@@ -20808,7 +23146,7 @@ import { speak } from "@wordpress/a11y";
 var import_blocks = __toESM(require_blocks(), 1);
 var import_data3 = __toESM(require_data(), 1);
 var import_components9 = __toESM(require_components(), 1);
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function getFilteredBlockStyles(blockStyles, variations) {
   return blockStyles?.filter(
     (style) => style.source === "block" || variations.includes(style.name)
@@ -20831,11 +23169,11 @@ function useBlockVariations(name2) {
 var import_components10 = __toESM(require_components(), 1);
 var import_i18n12 = __toESM(require_i18n(), 1);
 var import_block_editor2 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 var { StateControl, StateControlBadges } = unlock3(import_block_editor2.privateApis);
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel: useHasDimensionsPanel2,
   useHasTypographyPanel: useHasTypographyPanel2,
@@ -20895,22 +23233,22 @@ function BlockMenuItem({ block, isCustomized }) {
   if (!hasBlockMenuItem) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
     NavigationButtonAsItem,
     {
       path: "/blocks/" + encodeURIComponent(block.name),
-      children: /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_components11.__experimentalHStack, { justify: "flex-start", spacing: 2, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_components11.__experimentalHStack, { justify: "flex-start", spacing: 2, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
           import_block_editor3.BlockIcon,
           {
             className: "global-styles-ui-block-types-item__icon",
             icon: block.icon
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components11.FlexItem, { children: block.title }),
-        isCustomized && /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_jsx_runtime81.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(VisuallyHidden, { children: (0, import_i18n13.__)("Has custom styles") }),
-          /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components11.FlexItem, { children: block.title }),
+        isCustomized && /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_jsx_runtime98.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(VisuallyHidden, { children: (0, import_i18n13.__)("Has custom styles") }),
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
             "span",
             {
               "aria-hidden": "true",
@@ -20927,7 +23265,7 @@ function EmptyBlockList({
   styleFilter
 }) {
   const label = "customized" === styleFilter && !filterValue ? (0, import_i18n13.__)("You haven't customized any blocks yet.") : (0, import_i18n13.__)("No blocks found.");
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
     import_components11.__experimentalText,
     {
       align: "center",
@@ -20975,19 +23313,19 @@ function BlockList({ filterValue, styleFilter }) {
     );
     debouncedSpeak(resultsFoundMessage, "polite");
   }, [filterValue, styleFilter, hasResults, debouncedSpeak]);
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
     "div",
     {
       ref: blockTypesListRef,
       className: "global-styles-ui-block-types-item-list",
       role: "list",
-      children: filteredBlockTypes.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+      children: filteredBlockTypes.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
         EmptyBlockList,
         {
           filterValue,
           styleFilter
         }
-      ) : filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+      ) : filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
         BlockMenuItem,
         {
           block,
@@ -21014,20 +23352,20 @@ var import_block_editor4 = __toESM(require_block_editor(), 1);
 var import_blocks3 = __toESM(require_blocks(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_element59 = __toESM(require_element(), 1);
-var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 var { getViewportBreakpoints: getViewportBreakpoints3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels2 } = unlock3(
   privateApis
 );
 
 // packages/global-styles-ui/build-module/subtitle.mjs
 var import_components13 = __toESM(require_components(), 1);
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 function Subtitle({ children, level = 2 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components13.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components13.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
 }
 
 // packages/global-styles-ui/build-module/screen-block.mjs
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel: useHasDimensionsPanel3,
   useHasTypographyPanel: useHasTypographyPanel3,
@@ -21053,31 +23391,31 @@ var import_element72 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-body.mjs
 var import_components15 = __toESM(require_components(), 1);
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/typography-elements.mjs
 var import_i18n15 = __toESM(require_i18n(), 1);
 var import_components16 = __toESM(require_components(), 1);
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/variations/variations-typography.mjs
 var import_components18 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/preview-typography.mjs
 var import_components17 = __toESM(require_components(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 var StylesPreviewTypography = ({
   variation,
   isFocused,
   withHoverView
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
     preview_wrapper_default,
     {
       label: variation.title,
       isFocused,
       withHoverView,
-      children: ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+      children: ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
         import_components17.__experimentalHStack,
         {
           spacing: 10 * ratio,
@@ -21086,7 +23424,7 @@ var StylesPreviewTypography = ({
             height: "100%",
             overflow: "hidden"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
             PreviewTypography,
             {
               variation,
@@ -21105,7 +23443,7 @@ var preview_typography_default = StylesPreviewTypography;
 var import_element61 = __toESM(require_element(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 var import_i18n16 = __toESM(require_i18n(), 1);
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 function Variation({
   variation,
   children,
@@ -21152,7 +23490,7 @@ function Variation({
       variation?.description
     );
   }
-  const content = /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+  const content = /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
     "div",
     {
       className: clsx_default("global-styles-ui-variations_item", {
@@ -21166,7 +23504,7 @@ function Variation({
       "aria-current": isActive,
       onFocus: () => setIsFocused(true),
       onBlur: () => setIsFocused(false),
-      children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
         "div",
         {
           className: clsx_default("global-styles-ui-variations_item-preview", {
@@ -21177,14 +23515,14 @@ function Variation({
       )
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(tooltip_exports.Trigger, { render: content }),
-    /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(tooltip_exports.Popup, { children: variation?.title })
+  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime105.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(tooltip_exports.Trigger, { render: content }),
+    /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(tooltip_exports.Popup, { children: variation?.title })
   ] }) : content });
 }
 
 // packages/global-styles-ui/build-module/variations/variations-typography.mjs
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 var propertiesToFilter = ["typography"];
 function TypographyVariations({
   title,
@@ -21194,9 +23532,9 @@ function TypographyVariations({
   if (typographyVariations?.length <= 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(import_components18.__experimentalVStack, { spacing: 3, children: [
-    title && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Subtitle, { level: 3, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(import_components18.__experimentalVStack, { spacing: 3, children: [
+    title && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(Subtitle, { level: 3, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
       import_components18.__experimentalGrid,
       {
         columns: 3,
@@ -21204,13 +23542,13 @@ function TypographyVariations({
         className: "global-styles-ui-style-variations-container",
         children: typographyVariations.map(
           (variation, index2) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
               Variation,
               {
                 variation,
                 properties: propertiesToFilter,
                 showTooltip: true,
-                children: () => /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+                children: () => /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
                   preview_typography_default,
                   {
                     variation
@@ -21650,7 +23988,7 @@ function toggleFont(font2, face, initialfonts = []) {
 }
 
 // packages/global-styles-ui/build-module/font-library/context.mjs
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 var FontLibraryContext = (0, import_element62.createContext)(
   {}
 );
@@ -21963,7 +24301,7 @@ function FontLibraryProvider({ children }) {
     loadFontFaceInBrowser(fontFace, src, "document");
     loadedFontUrls.add(src);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     FontLibraryContext.Provider,
     {
       value: {
@@ -22010,7 +24348,7 @@ var import_components19 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-demo.mjs
 var import_element63 = __toESM(require_element(), 1);
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 var loadedPreviews = /* @__PURE__ */ new Set();
 function getPreviewUrl(fontFace) {
   if (fontFace.preview) {
@@ -22086,15 +24424,15 @@ function FontDemo({ font: font2, text }) {
     };
     loadAsset();
   }, [fontFace, isIntersecting, loadFontFaceAsset, isPreviewImage]);
-  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("div", { ref, className: "font-library__font-demo", children: isPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_jsx_runtime91.Fragment, { children: [
-    !isAssetLoaded && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", { ref, className: "font-library__font-demo", children: isPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(import_jsx_runtime108.Fragment, { children: [
+    !isAssetLoaded && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
       Skeleton,
       {
         className: "font-library__font-variant-demo-skeleton",
         style: { width: estimatedImageWidth }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
       "img",
       {
         src: previewUrl,
@@ -22113,7 +24451,7 @@ function FontDemo({ font: font2, text }) {
         )
       }
     )
-  ] }) : /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+  ] }) : /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
     "span",
     {
       style: textDemoStyle,
@@ -22125,7 +24463,7 @@ function FontDemo({ font: font2, text }) {
 var font_demo_default = FontDemo;
 
 // packages/global-styles-ui/build-module/font-library/font-card.mjs
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 function FontCard({
   font: font2,
   onClick,
@@ -22144,7 +24482,7 @@ function FontCard({
       ref.current?.focus();
     }
   }, [shouldFocus]);
-  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
     import_components19.Button,
     {
       ref,
@@ -22157,10 +24495,10 @@ function FontCard({
       },
       style,
       className: "font-library__font-card",
-      children: /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(import_components19.Flex, { justify: "space-between", wrap: false, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(font_demo_default, { font: font2 }),
-        /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(import_components19.Flex, { justify: "flex-end", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components19.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components19.__experimentalText, { className: "font-library__font-card__count", children: variantsText || (0, import_i18n19.sprintf)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(import_components19.Flex, { justify: "space-between", wrap: false, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(font_demo_default, { font: font2 }),
+        /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(import_components19.Flex, { justify: "flex-end", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_components19.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_components19.__experimentalText, { className: "font-library__font-card__count", children: variantsText || (0, import_i18n19.sprintf)(
             /* translators: %d: Number of font variants. */
             (0, import_i18n19._n)(
               "%d variant",
@@ -22169,7 +24507,7 @@ function FontCard({
             ),
             variantsCount
           ) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components19.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(icon_default, { icon: (0, import_i18n19.isRTL)() ? chevron_left_default : chevron_right_default }) })
+          /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_components19.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(icon_default, { icon: (0, import_i18n19.isRTL)() ? chevron_left_default : chevron_right_default }) })
         ] })
       ] })
     }
@@ -22180,7 +24518,7 @@ var font_card_default = FontCard;
 // packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
 var import_element65 = __toESM(require_element(), 1);
 var import_components20 = __toESM(require_components(), 1);
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 function LibraryFontVariant({
   face,
   font: font2
@@ -22201,8 +24539,8 @@ function LibraryFontVariant({
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
   const checkboxId = (0, import_element65.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(import_components20.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_components20.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       import_components20.CheckboxControl,
       {
         checked: isInstalled,
@@ -22210,7 +24548,7 @@ function LibraryFontVariant({
         id: checkboxId
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       font_demo_default,
       {
         font: face,
@@ -22256,7 +24594,7 @@ function sortFontFaces(faces) {
 }
 
 // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
 function getFontFamiliesKey(fontFamilies) {
   if (!fontFamilies) {
     return "";
@@ -22412,23 +24750,23 @@ function InstalledFonts() {
     }
   };
   const hasFonts = baseThemeFonts.length > 0 || baseCustomFonts.length > 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
       progress_exports.Root,
       {
         value: null,
         "aria-label": (0, import_i18n20.__)("Loading fonts"),
-        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(progress_exports.Indicator, {}) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(progress_exports.Indicator, {}) })
       }
     ) }),
-    !isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_jsx_runtime94.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(
+    !isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_jsx_runtime111.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(
         import_components21.Navigator,
         {
           initialPath: libraryFontSelected ? "/fontFamily" : "/",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalVStack, { spacing: "8", children: [
-              notice && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components21.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components21.__experimentalVStack, { spacing: "8", children: [
+              notice && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                 import_components21.Notice,
                 {
                   status: notice.type,
@@ -22436,23 +24774,23 @@ function InstalledFonts() {
                   children: notice.message
                 }
               ),
-              !hasFonts && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalText, { as: "p", children: (0, import_i18n20.__)("No fonts installed.") }),
-              baseThemeFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalVStack, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)("h2", {
+              !hasFonts && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components21.__experimentalText, { as: "p", children: (0, import_i18n20.__)("No fonts installed.") }),
+              baseThemeFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components21.__experimentalVStack, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("h2", {
                   className: "font-library__fonts-title",
                   /* translators: Heading for a list of fonts provided by the theme. */
                   children: (0, import_i18n20._x)("Theme", "font source")
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
-                    children: baseThemeFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                    children: baseThemeFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                           font_card_default,
                           {
                             font: font2,
@@ -22475,22 +24813,22 @@ function InstalledFonts() {
                   }
                 )
               ] }),
-              baseCustomFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalVStack, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)("h2", {
+              baseCustomFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components21.__experimentalVStack, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("h2", {
                   className: "font-library__fonts-title",
                   /* translators: Heading for a list of fonts installed by the user. */
                   children: (0, import_i18n20._x)("Custom", "font source")
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
-                    children: baseCustomFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                    children: baseCustomFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                           font_card_default,
                           {
                             font: font2,
@@ -22514,8 +24852,8 @@ function InstalledFonts() {
                 )
               ] })
             ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.Navigator.Screen, { path: "/fontFamily", children: [
-              libraryFontSelected && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components21.Navigator.Screen, { path: "/fontFamily", children: [
+              libraryFontSelected && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                 ConfirmDeleteDialog,
                 {
                   font: libraryFontSelected,
@@ -22526,8 +24864,8 @@ function InstalledFonts() {
                   handleSetLibraryFontSelected
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.Flex, { justify: "flex-start", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components21.Flex, { justify: "flex-start", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                   import_components21.Navigator.BackButton,
                   {
                     icon: (0, import_i18n20.isRTL)() ? chevron_right_default : chevron_left_default,
@@ -22544,7 +24882,7 @@ function InstalledFonts() {
                     label: (0, import_i18n20.__)("Back")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                   import_components21.__experimentalHeading,
                   {
                     level: 2,
@@ -22554,9 +24892,9 @@ function InstalledFonts() {
                   }
                 )
               ] }),
-              notice && /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_jsx_runtime94.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 1 }),
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+              notice && /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_jsx_runtime111.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components21.__experimentalSpacer, { margin: 1 }),
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                   import_components21.Notice,
                   {
                     status: notice.type,
@@ -22564,15 +24902,15 @@ function InstalledFonts() {
                     children: notice.message
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 1 })
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components21.__experimentalSpacer, { margin: 1 })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalText, { children: (0, import_i18n20.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components21.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components21.__experimentalText, { children: (0, import_i18n20.__)(
                 "Choose font variants. Keep in mind that too many variants could make your site slower."
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalVStack, { spacing: 0, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components21.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components21.__experimentalVStack, { spacing: 0, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                   import_components21.CheckboxControl,
                   {
                     className: "font-library__select-all",
@@ -22582,19 +24920,19 @@ function InstalledFonts() {
                     indeterminate: isIndeterminate
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components21.__experimentalSpacer, { margin: 8 }),
-                /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components21.__experimentalSpacer, { margin: 8 }),
+                /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
                     children: libraryFontSelected && getFontFacesToDisplay(
                       libraryFontSelected
-                    ).map((face, i) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                    ).map((face, i) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                           library_font_variant_default,
                           {
                             font: libraryFontSelected,
@@ -22612,16 +24950,16 @@ function InstalledFonts() {
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components21.__experimentalHStack, { justify: "flex-end", className: "font-library__footer", children: [
-        isInstalling && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components21.__experimentalHStack, { justify: "flex-end", className: "font-library__footer", children: [
+        isInstalling && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
           progress_exports.Root,
           {
             value: null,
             "aria-label": (0, import_i18n20.__)("Installing fonts"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(progress_exports.Indicator, {}) })
+            children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(progress_exports.Indicator, {}) })
           }
         ),
-        shouldDisplayDeleteButton && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+        shouldDisplayDeleteButton && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
           import_components21.Button,
           {
             __next40pxDefaultSize: true,
@@ -22631,7 +24969,7 @@ function InstalledFonts() {
             children: (0, import_i18n20.__)("Delete")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
           import_components21.Button,
           {
             __next40pxDefaultSize: true,
@@ -22676,7 +25014,7 @@ function ConfirmDeleteDialog({
   const handleCancelUninstall = () => {
     setIsOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
     import_components21.__experimentalConfirmDialog,
     {
       isOpen,
@@ -22747,7 +25085,7 @@ function isFontFontFaceInOutline(slug, face, outline) {
 // packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.mjs
 var import_i18n21 = __toESM(require_i18n(), 1);
 var import_components22 = __toESM(require_components(), 1);
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 function GoogleFontsConfirmDialog() {
   const handleConfirm = () => {
     window.localStorage.setItem(
@@ -22756,18 +25094,18 @@ function GoogleFontsConfirmDialog() {
     );
     window.dispatchEvent(new Event("storage"));
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("div", { className: "font-library__google-fonts-confirm", children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.Card, { children: /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(import_components22.CardBody, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalHeading, { level: 2, children: (0, import_i18n21.__)("Connect to Google Fonts") }),
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalSpacer, { margin: 6 }),
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalText, { as: "p", children: (0, import_i18n21.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)("div", { className: "font-library__google-fonts-confirm", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components22.Card, { children: /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(import_components22.CardBody, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components22.__experimentalHeading, { level: 2, children: (0, import_i18n21.__)("Connect to Google Fonts") }),
+    /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components22.__experimentalSpacer, { margin: 6 }),
+    /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components22.__experimentalText, { as: "p", children: (0, import_i18n21.__)(
       "To install fonts from Google you must give permission to connect directly to Google servers. The fonts you install will be downloaded from Google and stored on your site. Your site will then use these locally-hosted fonts."
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalSpacer, { margin: 3 }),
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalText, { as: "p", children: (0, import_i18n21.__)(
+    /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components22.__experimentalSpacer, { margin: 3 }),
+    /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components22.__experimentalText, { as: "p", children: (0, import_i18n21.__)(
       "You can alternatively upload files directly on the Upload tab."
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components22.__experimentalSpacer, { margin: 6 }),
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components22.__experimentalSpacer, { margin: 6 }),
+    /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
       import_components22.Button,
       {
         __next40pxDefaultSize: true,
@@ -22783,7 +25121,7 @@ var google_fonts_confirm_dialog_default = GoogleFontsConfirmDialog;
 // packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
 var import_element67 = __toESM(require_element(), 1);
 var import_components23 = __toESM(require_components(), 1);
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function CollectionFontVariant({
   face,
   font: font2,
@@ -22799,8 +25137,8 @@ function CollectionFontVariant({
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
   const checkboxId = (0, import_element67.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(import_components23.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components23.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
       import_components23.CheckboxControl,
       {
         checked: selected,
@@ -22808,7 +25146,7 @@ function CollectionFontVariant({
         id: checkboxId
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
       font_demo_default,
       {
         font: face,
@@ -22821,7 +25159,7 @@ function CollectionFontVariant({
 var collection_font_variant_default = CollectionFontVariant;
 
 // packages/global-styles-ui/build-module/font-library/font-collection.mjs
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_CATEGORY = {
   slug: "all",
   name: (0, import_i18n22._x)("All", "font categories")
@@ -22969,36 +25307,36 @@ function FontCollection({ slug }) {
     return sortFontFaces(fontFamily.fontFace);
   };
   if (renderConfirmDialog) {
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(google_fonts_confirm_dialog_default, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(google_fonts_confirm_dialog_default, {});
   }
   const showActions = slug === "google-fonts" && !renderConfirmDialog && !selectedFont;
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    isLoading && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    isLoading && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
       progress_exports.Root,
       {
         value: null,
         "aria-label": (0, import_i18n22.__)("Loading fonts"),
-        children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(progress_exports.Indicator, {}) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(progress_exports.Indicator, {}) })
       }
     ) }),
-    !isLoading && selectedCollection && /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
+    !isLoading && selectedCollection && /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_jsx_runtime114.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(
         import_components24.Navigator,
         {
           initialPath: "/",
           className: "font-library__tabpanel-layout",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.Navigator.Screen, { path: "/", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.__experimentalHStack, { justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.__experimentalVStack, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
-                  /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalText, { children: selectedCollection.description })
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_components24.Navigator.Screen, { path: "/", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_components24.__experimentalHStack, { justify: "space-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_components24.__experimentalVStack, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
+                  /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalText, { children: selectedCollection.description })
                 ] }),
-                showActions && /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(menu_exports.Root, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                showActions && /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(menu_exports.Root, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                     menu_exports.Trigger,
                     {
-                      render: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                      render: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                         import_components24.Button,
                         {
                           size: "small",
@@ -23008,26 +25346,26 @@ function FontCollection({ slug }) {
                       )
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                     menu_exports.Popup,
                     {
-                      positioner: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                      positioner: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                         menu_exports.Positioner,
                         {
                           side: "bottom",
                           align: "end"
                         }
                       ),
-                      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(menu_exports.Item, { onClick: revokeAccess, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n22.__)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(menu_exports.Item, { onClick: revokeAccess, children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n22.__)(
                         "Revoke access to Google Fonts"
                       ) }) })
                     }
                   )
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.__experimentalHStack, { spacing: 4, justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_components24.__experimentalHStack, { spacing: 4, justify: "space-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                   import_components24.SearchControl,
                   {
                     className: "font-library__search",
@@ -23038,13 +25376,13 @@ function FontCollection({ slug }) {
                     hideLabelFromVision: false
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                   import_components24.SelectControl,
                   {
                     label: (0, import_i18n22.__)("Category"),
                     value: filters.category,
                     onChange: handleCategoryFilter,
-                    children: categories && categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                    children: categories && categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                       "option",
                       {
                         value: category.slug,
@@ -23055,20 +25393,20 @@ function FontCollection({ slug }) {
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              !!selectedCollection?.font_families?.length && !fonts.length && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalText, { children: (0, import_i18n22.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
+              !!selectedCollection?.font_families?.length && !fonts.length && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalText, { children: (0, import_i18n22.__)(
                 "No fonts found. Try with a different search term."
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "font-library__fonts-grid__main", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "font-library__fonts-grid__main", children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                 "ul",
                 {
                   role: "list",
                   className: "font-library__fonts-list",
-                  children: items.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                  children: items.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                     "li",
                     {
                       className: "font-library__fonts-list-item",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                         font_card_default,
                         {
                           font: font2.font_family_settings,
@@ -23087,9 +25425,9 @@ function FontCollection({ slug }) {
                 }
               ) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.Navigator.Screen, { path: "/fontFamily", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.Flex, { justify: "flex-start", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_components24.Navigator.Screen, { path: "/fontFamily", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_components24.Flex, { justify: "flex-start", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                   import_components24.Navigator.BackButton,
                   {
                     icon: (0, import_i18n22.isRTL)() ? chevron_right_default : chevron_left_default,
@@ -23104,7 +25442,7 @@ function FontCollection({ slug }) {
                     label: (0, import_i18n22.__)("Back")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                   import_components24.__experimentalHeading,
                   {
                     level: 2,
@@ -23114,9 +25452,9 @@ function FontCollection({ slug }) {
                   }
                 )
               ] }),
-              notice && /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 1 }),
-                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+              notice && /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_jsx_runtime114.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 1 }),
+                /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                   import_components24.Notice,
                   {
                     status: notice.type,
@@ -23124,12 +25462,12 @@ function FontCollection({ slug }) {
                     children: notice.message
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 1 })
+                /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 1 })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalText, { children: (0, import_i18n22.__)("Select font variants to install.") }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalText, { children: (0, import_i18n22.__)("Select font variants to install.") }),
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                 import_components24.CheckboxControl,
                 {
                   className: "font-library__select-all",
@@ -23139,17 +25477,17 @@ function FontCollection({ slug }) {
                   indeterminate: isIndeterminate
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                 "ul",
                 {
                   role: "list",
                   className: "font-library__fonts-list",
                   children: selectedFont && getSortedFontFaces(selectedFont).map(
-                    (face, i) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                    (face, i) => /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                           collection_font_variant_default,
                           {
                             font: selectedFont,
@@ -23169,17 +25507,17 @@ function FontCollection({ slug }) {
                   )
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components24.__experimentalSpacer, { margin: 16 })
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 16 })
             ] })
           ]
         }
       ),
-      selectedFont && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+      selectedFont && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
         import_components24.Flex,
         {
           justify: "flex-end",
           className: "font-library__footer",
-          children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
             import_components24.Button,
             {
               __next40pxDefaultSize: true,
@@ -23193,7 +25531,7 @@ function FontCollection({ slug }) {
           )
         }
       ),
-      !selectedFont && /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
+      !selectedFont && /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(
         import_components24.__experimentalHStack,
         {
           expanded: false,
@@ -23201,7 +25539,7 @@ function FontCollection({ slug }) {
           justify: "end",
           spacing: 6,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
               import_components24.__experimentalHStack,
               {
                 justify: "flex-start",
@@ -23219,9 +25557,9 @@ function FontCollection({ slug }) {
                     totalPages
                   ),
                   {
-                    div: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { "aria-hidden": true }),
+                    div: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { "aria-hidden": true }),
                     // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
-                    CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+                    CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                       import_components24.SelectControl,
                       {
                         "aria-label": (0, import_i18n22.__)(
@@ -23247,8 +25585,8 @@ function FontCollection({ slug }) {
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components24.__experimentalHStack, { expanded: false, spacing: 1, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_components24.__experimentalHStack, { expanded: false, spacing: 1, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                 import_components24.Button,
                 {
                   onClick: () => setPage(page - 1),
@@ -23261,7 +25599,7 @@ function FontCollection({ slug }) {
                   tooltipPosition: "top"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                 import_components24.Button,
                 {
                   onClick: () => setPage(page + 1),
@@ -33341,7 +35679,7 @@ function makeFamiliesFromFaces(fontFaces) {
 }
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 function UploadFonts() {
   const { installFonts } = (0, import_element69.useContext)(FontLibraryContext);
   const [isUploading, setIsUploading] = (0, import_element69.useState)(false);
@@ -33463,10 +35801,10 @@ function UploadFonts() {
     }
     setIsUploading(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components25.DropZone, { onFilesDrop: handleDropZone }),
-    /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_components25.__experimentalVStack, { className: "font-library__local-fonts", justify: "start", children: [
-      notice && /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components25.DropZone, { onFilesDrop: handleDropZone }),
+    /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(import_components25.__experimentalVStack, { className: "font-library__local-fonts", justify: "start", children: [
+      notice && /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(
         import_components25.Notice,
         {
           status: notice.type,
@@ -33474,19 +35812,19 @@ function UploadFonts() {
           onRemove: () => setNotice(null),
           children: [
             notice.message,
-            notice.errors && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("ul", { children: notice.errors.map((error2, index2) => /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("li", { children: error2 }, index2)) })
+            notice.errors && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("ul", { children: notice.errors.map((error2, index2) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("li", { children: error2 }, index2)) })
           ]
         }
       ),
-      isUploading && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components25.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { className: "font-library__upload-area", children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+      isUploading && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components25.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { className: "font-library__upload-area", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
         progress_exports.Root,
         {
           value: null,
           "aria-label": (0, import_i18n23.__)("Uploading fonts"),
-          children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(progress_exports.Indicator, {}) })
+          children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(progress_exports.Indicator, {}) })
         }
       ) }) }),
-      !isUploading && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+      !isUploading && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
         import_components25.FormFileUpload,
         {
           accept: ALLOWED_FILE_EXTENSIONS.map(
@@ -33494,7 +35832,7 @@ function UploadFonts() {
           ).join(","),
           multiple: true,
           onChange: onFilesUpload,
-          render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+          render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
             import_components25.Button,
             {
               __next40pxDefaultSize: true,
@@ -33505,7 +35843,7 @@ function UploadFonts() {
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components25.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n23.__)(
+      /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components25.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n23.__)(
         "Uploaded fonts appear in your library and can be used in your theme. Supported formats: .ttf, .otf, .woff, and .woff2."
       ) })
     ] })
@@ -33514,7 +35852,7 @@ function UploadFonts() {
 var upload_fonts_default = UploadFonts;
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 var { Tabs } = unlock3(import_components26.privateApis);
 var DEFAULT_TAB = {
   id: "installed-fonts",
@@ -33529,23 +35867,23 @@ var UPLOAD_TAB = {
 var import_i18n25 = __toESM(require_i18n(), 1);
 var import_components27 = __toESM(require_components(), 1);
 var import_element70 = __toESM(require_element(), 1);
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-families.mjs
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
 var import_i18n27 = __toESM(require_i18n(), 1);
 var import_components29 = __toESM(require_components(), 1);
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/text-shadows.mjs
 var import_i18n28 = __toESM(require_i18n(), 1);
 var import_components30 = __toESM(require_components(), 1);
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
-var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-typography-element.mjs
 var import_i18n30 = __toESM(require_i18n(), 1);
@@ -33554,14 +35892,14 @@ var import_element73 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/typography-panel.mjs
 var import_block_editor6 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock3(import_block_editor6.privateApis);
 
 // packages/global-styles-ui/build-module/typography-preview.mjs
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-typography-element.mjs
-var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
 var elements = {
   text: {
     description: (0, import_i18n30.__)("Manage the fonts used on the site."),
@@ -33608,13 +35946,13 @@ var import_i18n31 = __toESM(require_i18n(), 1);
 var import_element74 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
-var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/palette.mjs
-var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-colors.mjs
-var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock3(
   import_block_editor7.privateApis
 );
@@ -33639,10 +35977,10 @@ var import_components35 = __toESM(require_components(), 1);
 var import_components34 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/preset-colors.mjs
-var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 function PresetColors() {
   const { paletteColors } = useStylesPreviewColors();
-  return paletteColors.slice(0, 4).map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+  return paletteColors.slice(0, 4).map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
     "div",
     {
       style: {
@@ -33656,7 +35994,7 @@ function PresetColors() {
 }
 
 // packages/global-styles-ui/build-module/preview-colors.mjs
-var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 var firstFrameVariants2 = {
   start: {
     scale: 1,
@@ -33672,13 +36010,13 @@ var StylesPreviewColors = ({
   isFocused,
   withHoverView
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
     preview_wrapper_default,
     {
       label,
       isFocused,
       withHoverView,
-      children: ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+      children: ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
         import_components34.__unstableMotion.div,
         {
           variants: firstFrameVariants2,
@@ -33686,7 +36024,7 @@ var StylesPreviewColors = ({
             height: "100%",
             overflow: "hidden"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
             import_components34.__experimentalHStack,
             {
               spacing: 0,
@@ -33695,7 +36033,7 @@ var StylesPreviewColors = ({
                 height: "100%",
                 overflow: "hidden"
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(PresetColors, {})
+              children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(PresetColors, {})
             }
           )
         },
@@ -33707,7 +36045,7 @@ var StylesPreviewColors = ({
 var preview_colors_default = StylesPreviewColors;
 
 // packages/global-styles-ui/build-module/variations/variations-color.mjs
-var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 var propertiesToFilter2 = ["color"];
 function ColorVariations({
   title,
@@ -33717,16 +36055,16 @@ function ColorVariations({
   if (colorVariations?.length <= 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components35.__experimentalVStack, { spacing: 3, children: [
-    title && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Subtitle, { level: 3, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components35.__experimentalGrid, { gap, children: colorVariations.map((variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_components35.__experimentalVStack, { spacing: 3, children: [
+    title && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(Subtitle, { level: 3, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components35.__experimentalGrid, { gap, children: colorVariations.map((variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       Variation,
       {
         variation,
         isPill: true,
         properties: propertiesToFilter2,
         showTooltip: true,
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(preview_colors_default, {})
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(preview_colors_default, {})
       },
       index2
     )) })
@@ -33734,23 +36072,23 @@ function ColorVariations({
 }
 
 // packages/global-styles-ui/build-module/color-palette-panel.mjs
-var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
 var import_compose7 = __toESM(require_compose(), 1);
 var import_components37 = __toESM(require_components(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
-var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/duotone-palette-panel.mjs
 var import_compose8 = __toESM(require_compose(), 1);
 var import_element75 = __toESM(require_element(), 1);
 var import_components38 = __toESM(require_components(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
-var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
-var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-background.mjs
 var import_i18n37 = __toESM(require_i18n(), 1);
@@ -33759,13 +36097,13 @@ var import_components39 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/background-panel.mjs
 var import_block_editor8 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
 var { BackgroundPanel: StylesBackgroundPanel2 } = unlock3(
   import_block_editor8.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-background.mjs
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock3(import_block_editor9.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
@@ -33779,13 +36117,13 @@ var import_element76 = __toESM(require_element(), 1);
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-reset-dialog.mjs
 var import_components40 = __toESM(require_components(), 1);
 var import_i18n38 = __toESM(require_i18n(), 1);
-var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
-var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
-var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
 var import_components45 = __toESM(require_components(), 1);
@@ -33794,34 +36132,34 @@ var import_element78 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
 var import_components42 = __toESM(require_components(), 1);
-var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
 var import_components43 = __toESM(require_components(), 1);
 var import_i18n41 = __toESM(require_i18n(), 1);
-var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/rename-dialog.mjs
 var import_components44 = __toESM(require_components(), 1);
 var import_i18n42 = __toESM(require_i18n(), 1);
 var import_element77 = __toESM(require_element(), 1);
-var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
-var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-shadows.mjs
-var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows.mjs
 var import_i18n44 = __toESM(require_i18n(), 1);
-var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows-edit.mjs
 var import_components46 = __toESM(require_components(), 1);
 var import_i18n45 = __toESM(require_i18n(), 1);
 var import_element79 = __toESM(require_element(), 1);
-var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
 var import_i18n46 = __toESM(require_i18n(), 1);
@@ -33830,11 +36168,11 @@ var import_block_editor11 = __toESM(require_block_editor(), 1);
 // packages/global-styles-ui/build-module/dimensions-panel.mjs
 var import_block_editor10 = __toESM(require_block_editor(), 1);
 var import_element80 = __toESM(require_element(), 1);
-var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock3(import_block_editor10.privateApis);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
 var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock3(
   import_block_editor11.privateApis
 );
@@ -33853,7 +36191,7 @@ var import_data9 = __toESM(require_data(), 1);
 var import_element81 = __toESM(require_element(), 1);
 var import_components47 = __toESM(require_components(), 1);
 var import_i18n47 = __toESM(require_i18n(), 1);
-var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
 function StyleVariationsContainer({
   gap = 2
 }) {
@@ -33919,14 +36257,14 @@ function StyleVariationsContainer({
   if (!fullStyleVariations || fullStyleVariations.length < 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
     import_components47.__experimentalGrid,
     {
       columns: 2,
       className: "global-styles-ui-style-variations-container",
       gap,
       children: themeVariations.map(
-        (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+        (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
           preview_styles_default,
           {
             label: variation?.title,
@@ -33942,16 +36280,16 @@ function StyleVariationsContainer({
 var style_variations_container_default = StyleVariationsContainer;
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
-var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-css.mjs
 var import_i18n50 = __toESM(require_i18n(), 1);
 var import_components50 = __toESM(require_components(), 1);
 var import_block_editor12 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
 var { AdvancedPanel: StylesAdvancedPanel2 } = unlock3(import_block_editor12.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
@@ -33970,16 +36308,16 @@ var import_date = __toESM(require_date(), 1);
 var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data11 = __toESM(require_data(), 1);
 var import_element83 = __toESM(require_element(), 1);
-var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
 var import_i18n53 = __toESM(require_i18n(), 1);
 var import_components52 = __toESM(require_components(), 1);
-var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_i18n55 = __toESM(require_i18n(), 1);
@@ -33989,20 +36327,20 @@ var import_element85 = __toESM(require_element(), 1);
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor13 = __toESM(require_block_editor(), 1);
 var import_i18n54 = __toESM(require_i18n(), 1);
-var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/size-control/index.mjs
 var import_components53 = __toESM(require_components(), 1);
-var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/with-global-styles-provider.mjs
-var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
 function withGlobalStylesProvider(Component) {
   return function WrappedComponent({
     value,
@@ -34010,13 +36348,13 @@ function withGlobalStylesProvider(Component) {
     onChange,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
       GlobalStylesProvider,
       {
         value,
         baseValue,
         onChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(Component, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(Component, { ...props })
       }
     );
   };
@@ -34032,7 +36370,7 @@ var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
 // packages/global-styles-ui/build-module/font-library/font-library.mjs
-var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
 function FontLibrary({
   value,
   baseValue,
@@ -34042,21 +36380,21 @@ function FontLibrary({
   let content;
   switch (activeTab) {
     case "upload-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(upload_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(upload_fonts_default, {});
       break;
     case "installed-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(installed_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(installed_fonts_default, {});
       break;
     default:
-      content = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(font_collection_default, { slug: activeTab });
+      content = /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(font_collection_default, { slug: activeTab });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
     GlobalStylesProvider,
     {
       value,
       baseValue,
       onChange,
-      children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(context_default, { children: content })
+      children: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(context_default, { children: content })
     }
   );
 }
@@ -34077,7 +36415,7 @@ if (typeof document !== "undefined" && (typeof process === "undefined" || true) 
 }
 
 // routes/font-list/stage.tsx
-var import_jsx_runtime145 = __toESM(require_jsx_runtime());
+var import_jsx_runtime162 = __toESM(require_jsx_runtime());
 var { Tabs: Tabs2 } = unlock4(import_components56.privateApis);
 var { useGlobalStyles } = unlock4(import_editor.privateApis);
 function FontLibraryPage() {
@@ -34113,20 +36451,20 @@ function FontLibraryPage() {
       }))
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(page_default, { title: (0, import_i18n56.__)("Fonts"), className: "font-library-page", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { className: "font-library-page__content", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(page_default, { title: (0, import_i18n56.__)("Fonts"), className: "font-library-page", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: "font-library-page__content", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
     Tabs2,
     {
       selectedTabId: activeTab,
       onSelect: (tabId) => setActiveTab(tabId),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { className: "font-library-page__tablist", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Tabs2.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Tabs2.Tab, { tabId: id, children: title }, id)) }) }),
-        tabs.map(({ id }) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: "font-library-page__tablist", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(Tabs2.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(Tabs2.Tab, { tabId: id, children: title }, id)) }) }),
+        tabs.map(({ id }) => /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
           Tabs2.TabPanel,
           {
             tabId: id,
             focusable: false,
             className: "font-library-page__tab-panel",
-            children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
               FontLibrary,
               {
                 value: user,
@@ -34143,7 +36481,7 @@ function FontLibraryPage() {
   ) }) });
 }
 function Stage() {
-  return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(FontLibraryPage, {});
+  return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(FontLibraryPage, {});
 }
 var stage = Stage;
 export {
