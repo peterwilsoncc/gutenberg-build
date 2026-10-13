@@ -82336,7 +82336,7 @@ var wp;
           !isPlaceholder && !isMultiToolbar && canEdit && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(EditSectionButton, { clientId: blockClientIds[0] }),
           !areSelectedBlocksHiddenOnViewport && showShuffleButton && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(ChangeDesign, { clientId: blockClientIds[0] }),
           !areSelectedBlocksHiddenOnViewport && showSwitchSectionStyleButton && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(switch_section_style_default, { clientId: blockClientIds[0] }),
-          !areSelectedBlocksHiddenOnViewport && shouldShowVisualToolbar && /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(import_jsx_runtime409.Fragment, { children: [
+          !isPlaceholder && !areSelectedBlocksHiddenOnViewport && shouldShowVisualToolbar && /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(import_jsx_runtime409.Fragment, { children: [
             !isSectionContainer && /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(import_jsx_runtime409.Fragment, { children: [
               showSlots && /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(import_jsx_runtime409.Fragment, { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
