@@ -2992,6 +2992,9 @@ function parseDirectiveName(directiveName) {
     return null;
   }
   const suffixIndex = name.indexOf("--");
+  if (suffixIndex === 0 || name[0] === "-") {
+    return null;
+  }
   if (suffixIndex === -1) {
     return { prefix: name, suffix: null, uniqueId: null };
   }
