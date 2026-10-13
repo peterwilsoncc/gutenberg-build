@@ -12859,6 +12859,17 @@ var wp;
     }
   );
 
+  // packages/ui/build-module/utils/use-enable-wp-compat-overlay-slot.mjs
+  function useEnableWpCompatOverlaySlot() {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const internalWindow = window;
+    if (internalWindow.__wpUiCompatOverlaySlotEnabled !== true) {
+      internalWindow.__wpUiCompatOverlaySlotEnabled = true;
+    }
+  }
+
   // packages/admin-ui/build-module/admin-theme-colors/index.mjs
   var DEFAULT_THEME_COLORS = {
     primary: "#3858e9",
@@ -14378,7 +14389,7 @@ ${content}
             // 1. Make sure there are blocks being selected.
             (hasSelectedBlock() || hasMultiSelection()) && // 2. The element should exist in the DOM (not deleted).
             element && ownerDocument2.contains(element) && // 3. It should also not exist in the container, the popover, nor the dialog.
-            !container.contains(element) && !popoverRef.current.contains(element) && !element.closest('[role="dialog"]') && // 4. The inspector should not be opened.
+            !container.contains(element) && !popoverRef.current.contains(element) && !element.closest("[data-wp-compat-overlay-slot]") && !element.closest('[role="dialog"]') && // 4. The inspector should not be opened.
             !inspector.expanded()
           ) {
             clearSelectedBlock();
@@ -14424,6 +14435,7 @@ ${content}
     );
     const popoverRef = (0, import_element60.useRef)();
     const adminPrimary = (0, import_element60.useMemo)(() => getAdminThemeColors().primary, []);
+    useEnableWpCompatOverlaySlot();
     useClearSelectedBlock(activeSidebarControl, popoverRef);
     (0, import_element60.useEffect)(() => {
       const unsubscribers = sidebarControls.map(
