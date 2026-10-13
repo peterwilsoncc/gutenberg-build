@@ -31093,23 +31093,23 @@ var import_i18n14 = __toESM(require_i18n(), 1);
 function getFooterMessage(selectionCount, itemsCount, totalItems, onlyTotalCount = false) {
   if (selectionCount > 0) {
     return (0, import_i18n14.sprintf)(
-      /* translators: %d: number of items. */
-      (0, import_i18n14._n)("%d Item selected", "%d Items selected", selectionCount),
-      selectionCount
+      /* translators: %s: formatted number of items. */
+      (0, import_i18n14._n)("%s Item selected", "%s Items selected", selectionCount),
+      selectionCount.toLocaleString()
     );
   }
   if (onlyTotalCount || totalItems <= itemsCount) {
     return (0, import_i18n14.sprintf)(
-      /* translators: %d: number of items. */
-      (0, import_i18n14._n)("%d Item", "%d Items", totalItems),
-      totalItems
+      /* translators: %s: formatted number of items. */
+      (0, import_i18n14._n)("%s Item", "%s Items", totalItems),
+      totalItems.toLocaleString()
     );
   }
   return (0, import_i18n14.sprintf)(
-    /* translators: %1$d: number of items. %2$d: total number of items. */
-    (0, import_i18n14._n)("%1$d of %2$d Item", "%1$d of %2$d Items", totalItems),
-    itemsCount,
-    totalItems
+    /* translators: %1$s: formatted number of items. %2$s: formatted total number of items. */
+    (0, import_i18n14._n)("%1$s of %2$s Item", "%1$s of %2$s Items", totalItems),
+    itemsCount.toLocaleString(),
+    totalItems.toLocaleString()
   );
 }
 
