@@ -3353,6 +3353,7 @@ return array(
 			'className' => true,
 			'splitting' => true,
 			'background' => array(
+				'backgroundClip' => true,
 				'backgroundImage' => true,
 				'backgroundSize' => true,
 				'gradient' => true,
@@ -5340,6 +5341,7 @@ return array(
 			'anchor' => true,
 			'className' => false,
 			'background' => array(
+				'backgroundClip' => true,
 				'backgroundImage' => true,
 				'backgroundSize' => true,
 				'gradient' => true

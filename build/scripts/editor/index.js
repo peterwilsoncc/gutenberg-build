@@ -3702,6 +3702,23 @@ var wp;
     });
     return declarations;
   };
+  function getStateDeclarationsWithTextClipEscapes(declarations, stateStyles, baseStyles) {
+    const baseClip = baseStyles?.find(
+      (baseStyle) => baseStyle?.background?.backgroundClip
+    )?.background?.backgroundClip;
+    if ("text" !== baseClip) {
+      return declarations;
+    }
+    const stateClip = stateStyles?.background?.backgroundClip;
+    const paintsItsOwnBackground = !!stateStyles?.background?.gradient || !!stateStyles?.background?.backgroundImage || !!stateStyles?.color?.gradient;
+    if (stateClip && "text" !== stateClip) {
+      return paintsItsOwnBackground ? declarations : [...declarations, "background-image: unset"];
+    }
+    if (!stateClip && !paintsItsOwnBackground && !!stateStyles?.color?.text) {
+      return [...declarations, "-webkit-text-fill-color: currentColor"];
+    }
+    return declarations;
+  }
   function getStylesDeclarations(blockStyles = {}, selector2 = "", useRootPaddingAlign, tree = {}, disableRootPadding = false) {
     const isRoot = ROOT_BLOCK_SELECTOR === selector2;
     const output = Object.entries(
@@ -3911,6 +3928,7 @@ var wp;
   function getPseudoStyleNodes(node) {
     const {
       styles,
+      baseStyles,
       selector: selector2,
       featureSelectors,
       name: name2,
@@ -3930,6 +3948,7 @@ var wp;
       return [
         {
           styles: JSON.parse(JSON.stringify(pseudoStyles)),
+          baseStyles: [styles, ...baseStyles ?? []],
           selector: selector2,
           selectorSuffix: pseudoSelector,
           mediaQuery,
@@ -3944,6 +3963,7 @@ var wp;
   function getResponsiveStyleNodes(node, responsiveMediaQueries) {
     const {
       styles,
+      baseStyles,
       selector: selector2,
       fallbackGapValue,
       featureSelectors,
@@ -3967,6 +3987,7 @@ var wp;
         return [
           {
             styles: JSON.parse(JSON.stringify(breakpointStyles)),
+            baseStyles: [styles, ...baseStyles ?? []],
             selector: selector2,
             mediaQuery,
             featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
@@ -4055,6 +4076,7 @@ var wp;
                 const blockSelector = blockSelectors[blockName];
                 variationStyleNodesToAdd.push({
                   styles: variationStyles,
+                  baseStyles: [typedNode],
                   selector: variationSelector,
                   featureSelectors: blockSelector?.featureSelectors,
                   fallbackGapValue: blockSelector?.fallbackGapValue,
@@ -4325,6 +4347,7 @@ var wp;
       mediaQuery,
       duotoneSelector,
       styles,
+      baseStyles,
       fallbackGapValue,
       hasLayoutSupport,
       featureSelectors,
@@ -4351,14 +4374,14 @@ var wp;
         tree.settings
       );
       Object.entries(featureDeclarations).forEach(
-        ([featureSelector, declarations]) => {
-          if (declarations.length) {
+        ([featureSelector, declarations2]) => {
+          if (declarations2.length) {
             let selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
               variationName,
               featureSelector
             ) : featureSelector;
             selectorForRule = selectorSuffix ? appendToSelector(selectorForRule, selectorSuffix) : selectorForRule;
-            const rules = declarations.join(";");
+            const rules = declarations2.join(";");
             ruleset += `:root :where(${selectorForRule}){${rules};}`;
           }
         }
@@ -4388,12 +4411,17 @@ var wp;
         fallbackGapValue
       });
     }
-    const styleDeclarations = getStylesDeclarations(
+    const declarations = getStylesDeclarations(
       styles,
       effectiveSelector,
       useRootPaddingAlign,
       tree,
       disableRootPadding
+    );
+    const styleDeclarations = getStateDeclarationsWithTextClipEscapes(
+      declarations,
+      styles,
+      baseStyles
     );
     if (styleDeclarations?.length) {
       const generalSelector = skipSelectorWrapper ? effectiveSelector : `:root :where(${effectiveSelector})`;
@@ -84940,6 +84968,8 @@ If there's a particular need for this, please submit a feature request at https:
       false,
       hasSelectedState ? stateParam : void 0
     );
+    const [baseStyle] = useStyle(prefix2, name2, "merged", false);
+    const baseValue = hasSelectedState ? baseStyle : void 0;
     const inheritedStyleWithResolvedBackground = useStyleWithResolvedBackground(inheritedStyle);
     const [userSettings] = useSetting("", name2, "user");
     const [rawSettings, setSettings] = useSetting("", name2);
@@ -85108,6 +85138,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           inheritedValue: inheritedStyle,
           value: style,
+          baseValue,
           onChange: onChangeTypography,
           settings,
           isGlobalStyles: !hasSelectedState,
@@ -85119,6 +85150,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           inheritedValue: inheritedStyleWithResolvedBackground,
           value: style,
+          baseValue,
           onChange: setStyle2,
           settings,
           defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES2,

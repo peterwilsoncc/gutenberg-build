@@ -52557,6 +52557,7 @@ ${url}
       className: true,
       splitting: true,
       background: {
+        backgroundClip: true,
         backgroundImage: true,
         backgroundSize: true,
         gradient: true,
@@ -72842,6 +72843,7 @@ ${text}
       anchor: true,
       className: false,
       background: {
+        backgroundClip: true,
         backgroundImage: true,
         backgroundSize: true,
         gradient: true

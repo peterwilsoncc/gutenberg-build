@@ -1537,6 +1537,23 @@ var getFeatureDeclarations = (selectors, styles) => {
   });
   return declarations;
 };
+function getStateDeclarationsWithTextClipEscapes(declarations, stateStyles, baseStyles) {
+  const baseClip = baseStyles?.find(
+    (baseStyle) => baseStyle?.background?.backgroundClip
+  )?.background?.backgroundClip;
+  if ("text" !== baseClip) {
+    return declarations;
+  }
+  const stateClip = stateStyles?.background?.backgroundClip;
+  const paintsItsOwnBackground = !!stateStyles?.background?.gradient || !!stateStyles?.background?.backgroundImage || !!stateStyles?.color?.gradient;
+  if (stateClip && "text" !== stateClip) {
+    return paintsItsOwnBackground ? declarations : [...declarations, "background-image: unset"];
+  }
+  if (!stateClip && !paintsItsOwnBackground && !!stateStyles?.color?.text) {
+    return [...declarations, "-webkit-text-fill-color: currentColor"];
+  }
+  return declarations;
+}
 function getStylesDeclarations(blockStyles = {}, selector = "", useRootPaddingAlign, tree = {}, disableRootPadding = false) {
   const isRoot = ROOT_BLOCK_SELECTOR === selector;
   const output = Object.entries(
@@ -1746,6 +1763,7 @@ function pickStyleAndPseudoKeys(treeToPickFrom, blockName, responsiveMediaQuerie
 function getPseudoStyleNodes(node) {
   const {
     styles,
+    baseStyles,
     selector,
     featureSelectors,
     name,
@@ -1765,6 +1783,7 @@ function getPseudoStyleNodes(node) {
     return [
       {
         styles: JSON.parse(JSON.stringify(pseudoStyles)),
+        baseStyles: [styles, ...baseStyles ?? []],
         selector,
         selectorSuffix: pseudoSelector,
         mediaQuery,
@@ -1779,6 +1798,7 @@ function getPseudoStyleNodes(node) {
 function getResponsiveStyleNodes(node, responsiveMediaQueries) {
   const {
     styles,
+    baseStyles,
     selector,
     fallbackGapValue,
     featureSelectors,
@@ -1802,6 +1822,7 @@ function getResponsiveStyleNodes(node, responsiveMediaQueries) {
       return [
         {
           styles: JSON.parse(JSON.stringify(breakpointStyles)),
+          baseStyles: [styles, ...baseStyles ?? []],
           selector,
           mediaQuery,
           featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
@@ -1890,6 +1911,7 @@ var getNodesWithStyles = (tree, blockSelectors) => {
               const blockSelector = blockSelectors[blockName];
               variationStyleNodesToAdd.push({
                 styles: variationStyles,
+                baseStyles: [typedNode],
                 selector: variationSelector,
                 featureSelectors: blockSelector?.featureSelectors,
                 fallbackGapValue: blockSelector?.fallbackGapValue,
@@ -2160,6 +2182,7 @@ function renderStylesNode(node, {
     mediaQuery,
     duotoneSelector,
     styles,
+    baseStyles,
     fallbackGapValue,
     hasLayoutSupport,
     featureSelectors,
@@ -2186,14 +2209,14 @@ function renderStylesNode(node, {
       tree.settings
     );
     Object.entries(featureDeclarations).forEach(
-      ([featureSelector, declarations]) => {
-        if (declarations.length) {
+      ([featureSelector, declarations2]) => {
+        if (declarations2.length) {
           let selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
             variationName,
             featureSelector
           ) : featureSelector;
           selectorForRule = selectorSuffix ? appendToSelector(selectorForRule, selectorSuffix) : selectorForRule;
-          const rules = declarations.join(";");
+          const rules = declarations2.join(";");
           ruleset += `:root :where(${selectorForRule}){${rules};}`;
         }
       }
@@ -2223,12 +2246,17 @@ function renderStylesNode(node, {
       fallbackGapValue
     });
   }
-  const styleDeclarations = getStylesDeclarations(
+  const declarations = getStylesDeclarations(
     styles,
     effectiveSelector,
     useRootPaddingAlign,
     tree,
     disableRootPadding
+  );
+  const styleDeclarations = getStateDeclarationsWithTextClipEscapes(
+    declarations,
+    styles,
+    baseStyles
   );
   if (styleDeclarations?.length) {
     const generalSelector = skipSelectorWrapper ? effectiveSelector : `:root :where(${effectiveSelector})`;

@@ -137,6 +137,39 @@ body.admin-color-fresh {
   color: inherit !important;
 }
 
+.block-editor-background-clip-control__option::before {
+  content: "";
+  flex-shrink: 0;
+  align-self: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  background-color: rgba(30, 30, 30, 0.55);
+  border: 3px dashed #ddd;
+  background-clip: border-box;
+}
+
+.block-editor-background-clip-control__option.is-default::before {
+  visibility: hidden;
+}
+
+.block-editor-background-clip-control__option.is-padding-box::before {
+  background-clip: padding-box;
+}
+
+.block-editor-background-clip-control__option.is-content-box::before {
+  padding: 3px;
+  background-clip: content-box;
+}
+
+.block-editor-background-clip-control__option.is-text::before {
+  border: none;
+  mask-image: repeating-linear-gradient(to bottom, #000 0 5px, transparent 5px 9px);
+  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0 5px, transparent 5px 9px);
+}
+
 .block-editor-global-styles-background-panel__inspector-media-replace-container {
   position: relative;
 }
@@ -3765,6 +3798,13 @@ iframe[name=editor-canvas] {
 .background-block-support-panel.background-block-support-panel .background-block-support-panel__inner-wrapper {
   row-gap: 0;
 }
+.background-block-support-panel.background-block-support-panel .block-editor-background-panel__clip-item:not(.first) {
+  margin-top: 16px;
+}
+.background-block-support-panel.background-block-support-panel .block-editor-background-panel__clips-to-text-notice {
+  grid-column: 1/-1;
+  margin-top: 16px;
+}
 
 .block-editor-hooks__block-hooks {
   /**
@@ -3858,6 +3898,15 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 
 .typography-block-support-panel .single-column {
   grid-column: span 1;
+}
+
+.typography-block-support-panel .block-editor-color-gradient-item + .block-editor-color-gradient-item,
+.block-editor-typography-panel--flush-color-items .block-editor-color-gradient-item + .block-editor-color-gradient-item {
+  margin-top: -16px;
+}
+.typography-block-support-panel .block-editor-typography-panel__text-gradient-notice,
+.block-editor-typography-panel--flush-color-items .block-editor-typography-panel__text-gradient-notice {
+  grid-column: 1/-1;
 }
 
 /**
