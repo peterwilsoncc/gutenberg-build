@@ -501,6 +501,9 @@ var wp;
     __unstableInputRule(value) {
       const BACKTICK = "`";
       const { start, text } = value;
+      if (start === void 0) {
+        return value;
+      }
       const characterBefore = text[start - 1];
       if (characterBefore !== BACKTICK) {
         return value;
@@ -17343,6 +17346,10 @@ var wp;
           {
             className: "block-editor-format-toolbar__image-container-content",
             onSubmit: (event) => {
+              event.preventDefault();
+              if (value.start === void 0) {
+                return;
+              }
               const newReplacements = value.replacements.slice();
               newReplacements[value.start] = {
                 type: name3,
@@ -17356,7 +17363,6 @@ var wp;
                 ...value,
                 replacements: newReplacements
               });
-              event.preventDefault();
             },
             children: /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
@@ -17633,7 +17639,7 @@ var wp;
     const { formats } = value;
     let targetFormat;
     let initialIndex;
-    if (!formats?.length) {
+    if (!formats?.length || startIndex === void 0 || endIndex === void 0) {
       return EMPTY_BOUNDARIES;
     }
     const newFormats = formats.slice();
@@ -17836,7 +17842,7 @@ var wp;
       });
       const newText = nextValue.title || newUrl;
       let newValue;
-      if ((0, import_rich_text5.isCollapsed)(value) && !isActive) {
+      if ((0, import_rich_text5.isCollapsed)(value) && value.start !== void 0 && !isActive) {
         const inserted = (0, import_rich_text5.insert)(value, newText);
         newValue = (0, import_rich_text5.applyFormat)(
           inserted,
@@ -18821,6 +18827,9 @@ var wp;
         }
       } else {
         setError(null);
+      }
+      if (value.start === void 0) {
+        return;
       }
       const newReplacements = value.replacements.slice();
       newReplacements[value.start] = {

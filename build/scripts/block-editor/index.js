@@ -69166,18 +69166,14 @@ var wp;
         );
         return;
       }
-      if (parts.length !== 1) {
+      const { start: start2, end } = newValue;
+      if (parts.length !== 1 || start2 === void 0 || end === void 0) {
         return;
       }
       const [clientId] = clientIds;
       const block = registry.select(store).getBlock(clientId);
       registry.batch(() => {
-        selectionChange2(
-          clientId,
-          keys[0],
-          newValue.start,
-          newValue.end
-        );
+        selectionChange2(clientId, keys[0], start2, end);
         replaceBlocks2(
           clientIds,
           {

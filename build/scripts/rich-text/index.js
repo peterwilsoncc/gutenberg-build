@@ -298,6 +298,17 @@ var wp;
   function applyFormat(value, format, startIndex = value.start, endIndex = value.end) {
     const { formats, activeFormats } = value;
     const newFormats = formats.slice();
+    const newActiveFormats = [
+      ...activeFormats?.filter(({ type }) => type !== format.type) || [],
+      format
+    ];
+    if (startIndex === void 0 || endIndex === void 0) {
+      return normaliseFormats({
+        ...value,
+        formats: newFormats,
+        activeFormats: newActiveFormats
+      });
+    }
     if (startIndex === endIndex) {
       const startFormat = newFormats[startIndex]?.find(
         ({ type }) => type === format.type
@@ -345,15 +356,7 @@ var wp;
     return normaliseFormats({
       ...value,
       formats: newFormats,
-      // Always revise active formats. This serves as a placeholder for new
-      // inputs with the format so new input appears with the format applied,
-      // and ensures a format of the same type uses the latest values.
-      activeFormats: [
-        ...activeFormats?.filter(
-          ({ type }) => type !== format.type
-        ) || [],
-        format
-      ]
+      activeFormats: newActiveFormats
     });
   }
 
@@ -361,12 +364,13 @@ var wp;
   var import_data5 = __toESM(require_data(), 1);
 
   // packages/rich-text/build-module/create-element.mjs
+  var body;
   function createElement({ implementation }, html) {
-    if (!createElement.body) {
-      createElement.body = implementation.createHTMLDocument("").body;
+    if (!body) {
+      body = implementation.createHTMLDocument("").body;
     }
-    createElement.body.innerHTML = html;
-    return createElement.body;
+    body.innerHTML = html;
+    return body;
   }
 
   // packages/rich-text/build-module/special-characters.mjs
@@ -379,7 +383,7 @@ var wp;
   // packages/rich-text/build-module/get-active-formats.mjs
   function getActiveFormats(value, EMPTY_ACTIVE_FORMATS3 = []) {
     const { formats, start, end, activeFormats } = value;
-    if (start === void 0) {
+    if (start === void 0 || end === void 0) {
       return EMPTY_ACTIVE_FORMATS3;
     }
     if (start === end) {
@@ -1229,7 +1233,7 @@ var wp;
     replacements,
     text
   }) {
-    if (start + 1 !== end || text[start] !== OBJECT_REPLACEMENT_CHARACTER) {
+    if (start === void 0 || start + 1 !== end || text[start] !== OBJECT_REPLACEMENT_CHARACTER) {
       return;
     }
     return replacements[start];
@@ -1334,7 +1338,7 @@ var wp;
       );
       return;
     }
-    if ("keywords" in formatType && formatType.keywords.length > 3) {
+    if ((formatType.keywords?.length ?? 0) > 3) {
       window.console.error(
         'The format "' + formatType.name + '" can have a maximum of 3 keywords.'
       );
@@ -1352,6 +1356,14 @@ var wp;
   function removeFormat(value, formatType, startIndex = value.start, endIndex = value.end) {
     const { formats, activeFormats } = value;
     const newFormats = formats.slice();
+    const newActiveFormats = activeFormats?.filter(({ type }) => type !== formatType) || [];
+    if (startIndex === void 0 || endIndex === void 0) {
+      return normaliseFormats({
+        ...value,
+        formats: newFormats,
+        activeFormats: newActiveFormats
+      });
+    }
     if (startIndex === endIndex) {
       const format = newFormats[startIndex]?.find(
         ({ type }) => type === formatType
@@ -1381,7 +1393,7 @@ var wp;
     return normaliseFormats({
       ...value,
       formats: newFormats,
-      activeFormats: activeFormats?.filter(({ type }) => type !== formatType) || []
+      activeFormats: newActiveFormats
     });
   }
   function filterFormats(formats, index, formatType) {
@@ -1396,7 +1408,7 @@ var wp;
   }
 
   // packages/rich-text/build-module/insert.mjs
-  function insert(value, valueToInsert, startIndex = value.start, endIndex = value.end) {
+  function insert(value, valueToInsert, startIndex = value.start ?? value.text.length, endIndex = value.end ?? startIndex) {
     const { formats, replacements, text } = value;
     if (typeof valueToInsert === "string") {
       valueToInsert = create({ text: valueToInsert });
@@ -1422,7 +1434,8 @@ var wp;
   // packages/rich-text/build-module/replace.mjs
   function replace2({ formats, replacements, text, start, end }, pattern, replacement) {
     text = text.replace(pattern, (match, ...rest) => {
-      const offset = rest[rest.length - 2];
+      const hasGroups = typeof rest[rest.length - 1] === "object";
+      const offset = rest[rest.length - (hasGroups ? 3 : 2)];
       let newText = replacement;
       let newFormats;
       let newReplacements;
@@ -1445,7 +1458,7 @@ var wp;
         newReplacements,
         replacements.slice(offset + match.length)
       );
-      if (start) {
+      if (start !== void 0) {
         start = end = offset + newText.length;
       }
       return newText;
@@ -1510,7 +1523,7 @@ var wp;
     });
   }
   function splitAtSelection({ formats, replacements, text, start, end }, startIndex = start, endIndex = end) {
-    if (start === void 0 || end === void 0) {
+    if (startIndex === void 0 || endIndex === void 0) {
       return;
     }
     const before = {
@@ -1644,13 +1657,13 @@ var wp;
       getText: getText2,
       remove: remove3,
       appendText: appendText2,
-      onStartIndex(body, pointer) {
-        startPath = createPathToNode(pointer, body, [
+      onStartIndex(body2, pointer) {
+        startPath = createPathToNode(pointer, body2, [
           pointer.nodeValue.length
         ]);
       },
-      onEndIndex(body, pointer) {
-        endPath = createPathToNode(pointer, body, [
+      onEndIndex(body2, pointer) {
+        endPath = createPathToNode(pointer, body2, [
           pointer.nodeValue.length
         ]);
       },
@@ -1684,13 +1697,13 @@ var wp;
     __unstableDomOnly,
     placeholder
   }) {
-    const { body, selection } = toDom({
+    const { body: body2, selection } = toDom({
       value,
       prepareEditableTree,
       placeholder,
       doc: current.ownerDocument
     });
-    applyValue(body, current);
+    applyValue(body2, current);
     if (value.start !== void 0 && !__unstableDomOnly) {
       applySelection(selection, current);
     }
@@ -2001,7 +2014,7 @@ var wp;
   }) {
     const ref = (0, import_element2.useRef)(void 0);
     const { activeFormats = [], replacements, start } = record.current;
-    const activeReplacement = replacements[start];
+    const activeReplacement = start === void 0 ? void 0 : replacements[start];
     (0, import_element2.useEffect)(() => {
       if ((!activeFormats || !activeFormats.length) && !activeReplacement) {
         return;
@@ -2049,7 +2062,10 @@ var wp;
     if (!activeElement || activeElement.contentEditable !== "true" || element.contentEditable !== "true" || !activeElement.contains(element)) {
       return false;
     }
-    const selection = ownerDocument.defaultView.getSelection();
+    const selection = ownerDocument.defaultView?.getSelection();
+    if (!selection) {
+      return false;
+    }
     const { anchorNode, focusNode } = selection;
     return !!anchorNode && !!focusNode && element.contains(anchorNode) && element.contains(focusNode);
   }
@@ -2220,7 +2236,7 @@ var wp;
           return;
         }
       }
-      if (!collapsed) {
+      if (!collapsed || start === void 0) {
         return;
       }
       const formatsBefore = formats[start - 1] || EMPTY_ACTIVE_FORMATS;
@@ -2360,6 +2376,10 @@ var wp;
       }
       const currentValue = createRecord();
       const { start, activeFormats: oldActiveFormats = [] } = record.current;
+      if (start === void 0 || currentValue.start === void 0) {
+        handleChange(currentValue);
+        return;
+      }
       const clearFormats = !isCollapsed(record.current) && currentValue.start <= start;
       const change = updateFormats({
         value: currentValue,
@@ -2694,7 +2714,7 @@ var wp;
     "video"
   ]);
   function prefixSelectKeys(selected, prefix) {
-    if (typeof selected !== "object") {
+    if (typeof selected !== "object" || selected === null) {
       return { [prefix]: selected };
     }
     return Object.fromEntries(
@@ -3051,9 +3071,9 @@ var wp;
 
   // packages/rich-text/build-module/contexts.mjs
   var import_element6 = __toESM(require_element(), 1);
-  var KeyboardShortcutContext = (0, import_element6.createContext)(void 0);
+  var KeyboardShortcutContext = (0, import_element6.createContext)(/* @__PURE__ */ new Set());
   KeyboardShortcutContext.displayName = "KeyboardShortcutContext";
-  var InputEventContext = (0, import_element6.createContext)(void 0);
+  var InputEventContext = (0, import_element6.createContext)(/* @__PURE__ */ new Set());
   InputEventContext.displayName = "InputEventContext";
 
   // packages/rich-text/build-module/keyboard-shortcut.mjs
