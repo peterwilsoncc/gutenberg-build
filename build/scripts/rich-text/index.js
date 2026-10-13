@@ -773,7 +773,7 @@ var wp;
 
   // packages/rich-text/build-module/get-text-content.mjs
   function getTextContent({ text }) {
-    return text.replace(OBJECT_REPLACEMENT_CHARACTER, "");
+    return text.replaceAll(OBJECT_REPLACEMENT_CHARACTER, "");
   }
 
   // packages/rich-text/build-module/create.mjs
