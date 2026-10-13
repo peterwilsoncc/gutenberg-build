@@ -31526,7 +31526,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/border-box-control/border-box-control/component.mjs
-  var import_i18n26 = __toESM(require_i18n(), 1);
+  var import_i18n28 = __toESM(require_i18n(), 1);
   var import_element85 = __toESM(require_element(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
 
@@ -31647,7 +31647,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default10 = ConnectedBorderBoxControlLinkedButton;
 
   // packages/components/build-module/border-box-control/border-box-control-split-controls/component.mjs
-  var import_i18n25 = __toESM(require_i18n(), 1);
+  var import_i18n27 = __toESM(require_i18n(), 1);
   var import_element83 = __toESM(require_element(), 1);
   var import_compose35 = __toESM(require_compose(), 1);
 
@@ -31780,10 +31780,10 @@ This message will only show in development mode. It won't appear in production. 
   var component_default11 = ConnectedBorderBoxControlVisualizer;
 
   // packages/components/build-module/border-control/border-control/component.mjs
-  var import_i18n24 = __toESM(require_i18n(), 1);
+  var import_i18n26 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/border-control/border-control-dropdown/component.mjs
-  var import_i18n22 = __toESM(require_i18n(), 1);
+  var import_i18n24 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/border-control/border-control-style-picker/component.mjs
   var import_i18n11 = __toESM(require_i18n(), 1);
@@ -32543,7 +32543,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/color-palette/index.mjs
   var import_compose34 = __toESM(require_compose(), 1);
-  var import_i18n20 = __toESM(require_i18n(), 1);
+  var import_i18n22 = __toESM(require_i18n(), 1);
   var import_element79 = __toESM(require_element(), 1);
 
   // packages/components/build-module/dropdown/index.mjs
@@ -32636,7 +32636,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/color-picker/component.mjs
   var import_element74 = __toESM(require_element(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
-  var import_i18n16 = __toESM(require_i18n(), 1);
+  var import_i18n18 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/select-control/index.mjs
   var import_compose28 = __toESM(require_compose(), 1);
@@ -32951,6 +32951,9 @@ This message will only show in development mode. It won't appear in production. 
       })
     });
   };
+
+  // packages/components/build-module/color-picker/rgb-input.mjs
+  var import_i18n15 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/range-control/index.mjs
   var import_i18n14 = __toESM(require_i18n(), 1);
@@ -33781,7 +33784,7 @@ This message will only show in development mode. It won't appear in production. 
       children: [/* @__PURE__ */ (0, import_jsx_runtime133.jsx)(InputWithSlider, {
         min: 0,
         max: 255,
-        label: "Red",
+        label: (0, import_i18n15.__)("Red"),
         abbreviation: "R",
         value: r4,
         onChange: (nextR) => onChange(A({
@@ -33793,7 +33796,7 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(InputWithSlider, {
         min: 0,
         max: 255,
-        label: "Green",
+        label: (0, import_i18n15.__)("Green"),
         abbreviation: "G",
         value: g3,
         onChange: (nextG) => onChange(A({
@@ -33805,7 +33808,7 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(InputWithSlider, {
         min: 0,
         max: 255,
-        label: "Blue",
+        label: (0, import_i18n15.__)("Blue"),
         abbreviation: "B",
         value: b2,
         onChange: (nextB) => onChange(A({
@@ -33817,7 +33820,7 @@ This message will only show in development mode. It won't appear in production. 
       }), enableAlpha && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(InputWithSlider, {
         min: 0,
         max: 100,
-        label: "Alpha",
+        label: (0, import_i18n15.__)("Alpha (RGB A value)"),
         abbreviation: "A",
         value: Math.trunc(a2 * 100),
         onChange: (nextA) => onChange(A({
@@ -33831,6 +33834,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/color-picker/hsl-input.mjs
+  var import_i18n16 = __toESM(require_i18n(), 1);
   var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
   var HslInput = ({
     hsla: hsla2,
@@ -33847,7 +33851,7 @@ This message will only show in development mode. It won't appear in production. 
       children: [/* @__PURE__ */ (0, import_jsx_runtime134.jsx)(InputWithSlider, {
         min: 0,
         max: 359,
-        label: "Hue",
+        label: (0, import_i18n16.__)("Hue (HSL H value)"),
         abbreviation: "H",
         value: hsla2.h,
         onChange: (nextH) => {
@@ -33858,7 +33862,7 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(InputWithSlider, {
         min: 0,
         max: 100,
-        label: "Saturation",
+        label: (0, import_i18n16.__)("Saturation"),
         abbreviation: "S",
         value: hsla2.s,
         onChange: (nextS) => {
@@ -33869,7 +33873,7 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(InputWithSlider, {
         min: 0,
         max: 100,
-        label: "Lightness",
+        label: (0, import_i18n16.__)("Lightness"),
         abbreviation: "L",
         value: hsla2.l,
         onChange: (nextL) => {
@@ -33880,7 +33884,7 @@ This message will only show in development mode. It won't appear in production. 
       }), enableAlpha && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(InputWithSlider, {
         min: 0,
         max: 100,
-        label: "Alpha",
+        label: (0, import_i18n16.__)("Alpha (HSL A value)"),
         abbreviation: "A",
         value: Math.trunc(100 * hsla2.a),
         onChange: (nextA) => {
@@ -33893,7 +33897,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/color-picker/hex-input.mjs
-  var import_i18n15 = __toESM(require_i18n(), 1);
+  var import_i18n17 = __toESM(require_i18n(), 1);
   var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
   var HexInput = ({
     color: color2,
@@ -33931,7 +33935,7 @@ This message will only show in development mode. It won't appear in production. 
       value: color2.toHex().slice(1).toUpperCase(),
       onChange: handleChange,
       maxLength: enableAlpha ? 9 : 7,
-      label: (0, import_i18n15.__)("Hex color"),
+      label: (0, import_i18n17.__)("Hex color"),
       hideLabelFromVision: true,
       __unstableStateReducer: stateReducer,
       __unstableInputWidth: "9em"
@@ -34495,7 +34499,7 @@ This message will only show in development mode. It won't appear in production. 
             options,
             value: colorType,
             onChange: (nextColorType) => setColorType(nextColorType),
-            label: (0, import_i18n16.__)("Color format"),
+            label: (0, import_i18n18.__)("Color format"),
             hideLabelFromVision: true,
             variant: "minimal"
           }), /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(ColorCopyButton, {
@@ -34585,7 +34589,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/circular-option-picker/circular-option-picker.mjs
   var import_compose33 = __toESM(require_compose(), 1);
-  var import_i18n18 = __toESM(require_i18n(), 1);
+  var import_i18n20 = __toESM(require_i18n(), 1);
   var import_element78 = __toESM(require_element(), 1);
 
   // packages/components/build-module/circular-option-picker/circular-option-picker-context.mjs
@@ -34731,7 +34735,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/circular-option-picker/utils.mjs
-  var import_i18n17 = __toESM(require_i18n(), 1);
+  var import_i18n19 = __toESM(require_i18n(), 1);
   var import_deprecated8 = __toESM(require_deprecated(), 1);
   function warnIfCircularOptionPickerAsButtonsIsSet(componentName, asButtons) {
     if (asButtons === void 0) {
@@ -34756,7 +34760,7 @@ This message will only show in development mode. It won't appear in production. 
     };
     const labelProps = {
       "aria-labelledby": ariaLabelledby,
-      "aria-label": ariaLabelledby ? void 0 : ariaLabel || (0, import_i18n17.__)("Custom color picker")
+      "aria-label": ariaLabelledby ? void 0 : ariaLabel || (0, import_i18n19.__)("Custom color picker")
     };
     return {
       metaProps,
@@ -34792,7 +34796,7 @@ This message will only show in development mode. It won't appear in production. 
           ...additionalProps,
           id: baseId,
           focusLoop: loop,
-          rtl: (0, import_i18n18.isRTL)(),
+          rtl: (0, import_i18n20.isRTL)(),
           role: "listbox",
           activeId,
           setActiveId,
@@ -35046,7 +35050,7 @@ This message will only show in development mode. It won't appear in production. 
   var dropdown_content_wrapper_default = DropdownContentWrapper;
 
   // packages/components/build-module/color-palette/utils.mjs
-  var import_i18n19 = __toESM(require_i18n(), 1);
+  var import_i18n21 = __toESM(require_i18n(), 1);
   D([e, r2]);
   var isSimpleCSSColor = (value) => {
     const valueIsCssVariable = /var\(/.test(value ?? "");
@@ -35082,7 +35086,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       }
     }
-    return (0, import_i18n19.__)("Custom");
+    return (0, import_i18n21.__)("Custom");
   };
   var isMultiplePaletteObject = (obj) => Array.isArray(obj.colors) && !("color" in obj);
   var isMultiplePaletteArray = (arr) => {
@@ -35208,7 +35212,7 @@ This message will only show in development mode. It won't appear in production. 
             color: colordColor.contrast() > colordColor.contrast("#000") ? "#fff" : "#000"
           } : {},
           tooltipText: name || // translators: %s: color hex code e.g: "#f00".
-          (0, import_i18n20.sprintf)((0, import_i18n20.__)("Color code: %s"), color2),
+          (0, import_i18n22.sprintf)((0, import_i18n22.__)("Color code: %s"), color2),
           style: {
             backgroundColor: color2,
             color: color2
@@ -35330,12 +35334,12 @@ This message will only show in development mode. It won't appear in production. 
     });
     const isHex = value?.startsWith("#");
     const displayValue = value?.replace(/^var\((.+)\)$/, "$1");
-    const customColorAccessibleLabel = !!displayValue ? (0, import_i18n20.sprintf)(
+    const customColorAccessibleLabel = !!displayValue ? (0, import_i18n22.sprintf)(
       // translators: 1: The name of the color e.g: "vivid red". 2: The color's hex code e.g: "#f00".
-      (0, import_i18n20.__)('Custom color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'),
+      (0, import_i18n22.__)('Custom color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'),
       buttonLabelName,
       displayValue
-    ) : (0, import_i18n20.__)("Custom color picker");
+    ) : (0, import_i18n22.__)("Custom color picker");
     const {
       metaProps,
       labelProps,
@@ -35352,7 +35356,7 @@ This message will only show in development mode. It won't appear in production. 
       onClick: clearColor,
       accessibleWhenDisabled: true,
       disabled: !value,
-      children: (0, import_i18n20.__)("Clear")
+      children: (0, import_i18n22.__)("Clear")
     });
     if (disableCustomColors && colors.length === 0 && !actions) {
       return null;
@@ -35386,7 +35390,7 @@ This message will only show in development mode. It won't appear in production. 
             spacing: 0.5,
             children: [/* @__PURE__ */ (0, import_jsx_runtime147.jsx)(component_default7, {
               className: "components-color-palette__custom-color-name",
-              children: value ? buttonLabelName : (0, import_i18n20.__)("No color selected")
+              children: value ? buttonLabelName : (0, import_i18n22.__)("No color selected")
             }), /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(component_default7, {
               className: clsx_default("components-color-palette__custom-color-value", {
                 "components-color-palette__custom-color-value--is-hex": isHex
@@ -35417,204 +35421,204 @@ This message will only show in development mode. It won't appear in production. 
   var color_palette_default = ColorPalette;
 
   // packages/components/build-module/unit-control/utils.mjs
-  var import_i18n21 = __toESM(require_i18n(), 1);
+  var import_i18n23 = __toESM(require_i18n(), 1);
   var allUnits = {
     px: {
       value: "px",
       label: "px",
-      a11yLabel: (0, import_i18n21.__)("Pixels (px)"),
+      a11yLabel: (0, import_i18n23.__)("Pixels (px)"),
       step: 1
     },
     "%": {
       value: "%",
       label: "%",
-      a11yLabel: (0, import_i18n21.__)("Percent (%)"),
+      a11yLabel: (0, import_i18n23.__)("Percent (%)"),
       step: 0.1
     },
     em: {
       value: "em",
       label: "em",
-      a11yLabel: (0, import_i18n21._x)("ems", "Relative to parent font size (em)"),
+      a11yLabel: (0, import_i18n23._x)("ems", "Relative to parent font size (em)"),
       step: 0.01
     },
     rem: {
       value: "rem",
       label: "rem",
-      a11yLabel: (0, import_i18n21._x)("rems", "Relative to root font size (rem)"),
+      a11yLabel: (0, import_i18n23._x)("rems", "Relative to root font size (rem)"),
       step: 0.01
     },
     vw: {
       value: "vw",
       label: "vw",
-      a11yLabel: (0, import_i18n21.__)("Viewport width (vw)"),
+      a11yLabel: (0, import_i18n23.__)("Viewport width (vw)"),
       step: 0.1
     },
     vh: {
       value: "vh",
       label: "vh",
-      a11yLabel: (0, import_i18n21.__)("Viewport height (vh)"),
+      a11yLabel: (0, import_i18n23.__)("Viewport height (vh)"),
       step: 0.1
     },
     vmin: {
       value: "vmin",
       label: "vmin",
-      a11yLabel: (0, import_i18n21.__)("Viewport smallest dimension (vmin)"),
+      a11yLabel: (0, import_i18n23.__)("Viewport smallest dimension (vmin)"),
       step: 0.1
     },
     vmax: {
       value: "vmax",
       label: "vmax",
-      a11yLabel: (0, import_i18n21.__)("Viewport largest dimension (vmax)"),
+      a11yLabel: (0, import_i18n23.__)("Viewport largest dimension (vmax)"),
       step: 0.1
     },
     ch: {
       value: "ch",
       label: "ch",
-      a11yLabel: (0, import_i18n21.__)("Width of the zero (0) character (ch)"),
+      a11yLabel: (0, import_i18n23.__)("Width of the zero (0) character (ch)"),
       step: 0.01
     },
     ex: {
       value: "ex",
       label: "ex",
-      a11yLabel: (0, import_i18n21.__)("x-height of the font (ex)"),
+      a11yLabel: (0, import_i18n23.__)("x-height of the font (ex)"),
       step: 0.01
     },
     cm: {
       value: "cm",
       label: "cm",
-      a11yLabel: (0, import_i18n21.__)("Centimeters (cm)"),
+      a11yLabel: (0, import_i18n23.__)("Centimeters (cm)"),
       step: 1e-3
     },
     mm: {
       value: "mm",
       label: "mm",
-      a11yLabel: (0, import_i18n21.__)("Millimeters (mm)"),
+      a11yLabel: (0, import_i18n23.__)("Millimeters (mm)"),
       step: 0.1
     },
     in: {
       value: "in",
       label: "in",
-      a11yLabel: (0, import_i18n21.__)("Inches (in)"),
+      a11yLabel: (0, import_i18n23.__)("Inches (in)"),
       step: 1e-3
     },
     pc: {
       value: "pc",
       label: "pc",
-      a11yLabel: (0, import_i18n21.__)("Picas (pc)"),
+      a11yLabel: (0, import_i18n23.__)("Picas (pc)"),
       step: 1
     },
     pt: {
       value: "pt",
       label: "pt",
-      a11yLabel: (0, import_i18n21.__)("Points (pt)"),
+      a11yLabel: (0, import_i18n23.__)("Points (pt)"),
       step: 1
     },
     svw: {
       value: "svw",
       label: "svw",
-      a11yLabel: (0, import_i18n21.__)("Small viewport width (svw)"),
+      a11yLabel: (0, import_i18n23.__)("Small viewport width (svw)"),
       step: 0.1
     },
     svh: {
       value: "svh",
       label: "svh",
-      a11yLabel: (0, import_i18n21.__)("Small viewport height (svh)"),
+      a11yLabel: (0, import_i18n23.__)("Small viewport height (svh)"),
       step: 0.1
     },
     svi: {
       value: "svi",
       label: "svi",
-      a11yLabel: (0, import_i18n21.__)("Small viewport width or height (svi)"),
+      a11yLabel: (0, import_i18n23.__)("Small viewport width or height (svi)"),
       step: 0.1
     },
     svb: {
       value: "svb",
       label: "svb",
-      a11yLabel: (0, import_i18n21.__)("Small viewport width or height (svb)"),
+      a11yLabel: (0, import_i18n23.__)("Small viewport width or height (svb)"),
       step: 0.1
     },
     svmin: {
       value: "svmin",
       label: "svmin",
-      a11yLabel: (0, import_i18n21.__)("Small viewport smallest dimension (svmin)"),
+      a11yLabel: (0, import_i18n23.__)("Small viewport smallest dimension (svmin)"),
       step: 0.1
     },
     lvw: {
       value: "lvw",
       label: "lvw",
-      a11yLabel: (0, import_i18n21.__)("Large viewport width (lvw)"),
+      a11yLabel: (0, import_i18n23.__)("Large viewport width (lvw)"),
       step: 0.1
     },
     lvh: {
       value: "lvh",
       label: "lvh",
-      a11yLabel: (0, import_i18n21.__)("Large viewport height (lvh)"),
+      a11yLabel: (0, import_i18n23.__)("Large viewport height (lvh)"),
       step: 0.1
     },
     lvi: {
       value: "lvi",
       label: "lvi",
-      a11yLabel: (0, import_i18n21.__)("Large viewport width or height (lvi)"),
+      a11yLabel: (0, import_i18n23.__)("Large viewport width or height (lvi)"),
       step: 0.1
     },
     lvb: {
       value: "lvb",
       label: "lvb",
-      a11yLabel: (0, import_i18n21.__)("Large viewport width or height (lvb)"),
+      a11yLabel: (0, import_i18n23.__)("Large viewport width or height (lvb)"),
       step: 0.1
     },
     lvmin: {
       value: "lvmin",
       label: "lvmin",
-      a11yLabel: (0, import_i18n21.__)("Large viewport smallest dimension (lvmin)"),
+      a11yLabel: (0, import_i18n23.__)("Large viewport smallest dimension (lvmin)"),
       step: 0.1
     },
     dvw: {
       value: "dvw",
       label: "dvw",
-      a11yLabel: (0, import_i18n21.__)("Dynamic viewport width (dvw)"),
+      a11yLabel: (0, import_i18n23.__)("Dynamic viewport width (dvw)"),
       step: 0.1
     },
     dvh: {
       value: "dvh",
       label: "dvh",
-      a11yLabel: (0, import_i18n21.__)("Dynamic viewport height (dvh)"),
+      a11yLabel: (0, import_i18n23.__)("Dynamic viewport height (dvh)"),
       step: 0.1
     },
     dvi: {
       value: "dvi",
       label: "dvi",
-      a11yLabel: (0, import_i18n21.__)("Dynamic viewport width or height (dvi)"),
+      a11yLabel: (0, import_i18n23.__)("Dynamic viewport width or height (dvi)"),
       step: 0.1
     },
     dvb: {
       value: "dvb",
       label: "dvb",
-      a11yLabel: (0, import_i18n21.__)("Dynamic viewport width or height (dvb)"),
+      a11yLabel: (0, import_i18n23.__)("Dynamic viewport width or height (dvb)"),
       step: 0.1
     },
     dvmin: {
       value: "dvmin",
       label: "dvmin",
-      a11yLabel: (0, import_i18n21.__)("Dynamic viewport smallest dimension (dvmin)"),
+      a11yLabel: (0, import_i18n23.__)("Dynamic viewport smallest dimension (dvmin)"),
       step: 0.1
     },
     dvmax: {
       value: "dvmax",
       label: "dvmax",
-      a11yLabel: (0, import_i18n21.__)("Dynamic viewport largest dimension (dvmax)"),
+      a11yLabel: (0, import_i18n23.__)("Dynamic viewport largest dimension (dvmax)"),
       step: 0.1
     },
     svmax: {
       value: "svmax",
       label: "svmax",
-      a11yLabel: (0, import_i18n21.__)("Small viewport largest dimension (svmax)"),
+      a11yLabel: (0, import_i18n23.__)("Small viewport largest dimension (svmax)"),
       step: 0.1
     },
     lvmax: {
       value: "lvmax",
       label: "lvmax",
-      a11yLabel: (0, import_i18n21.__)("Large viewport largest dimension (lvmax)"),
+      a11yLabel: (0, import_i18n23.__)("Large viewport largest dimension (lvmax)"),
       step: 0.1
     }
   };
@@ -35861,50 +35865,50 @@ This message will only show in development mode. It won't appear in production. 
     if (isStyleEnabled) {
       if (colorObject) {
         const ariaLabelValue = getAriaLabelColorValue(colorObject.color);
-        return style2 ? (0, import_i18n22.sprintf)(
+        return style2 ? (0, import_i18n24.sprintf)(
           // translators: 1: The name of the color e.g. "vivid red". 2: The color's hex code e.g.: "#f00:". 3: The current border style selection e.g. "solid".
-          (0, import_i18n22.__)('Border color and style picker. The currently selected color is called "%1$s" and has a value of "%2$s". The currently selected style is "%3$s".'),
+          (0, import_i18n24.__)('Border color and style picker. The currently selected color is called "%1$s" and has a value of "%2$s". The currently selected style is "%3$s".'),
           colorObject.name,
           ariaLabelValue,
           style2
-        ) : (0, import_i18n22.sprintf)(
+        ) : (0, import_i18n24.sprintf)(
           // translators: 1: The name of the color e.g. "vivid red". 2: The color's hex code e.g.: "#f00:".
-          (0, import_i18n22.__)('Border color and style picker. The currently selected color is called "%1$s" and has a value of "%2$s".'),
+          (0, import_i18n24.__)('Border color and style picker. The currently selected color is called "%1$s" and has a value of "%2$s".'),
           colorObject.name,
           ariaLabelValue
         );
       }
       if (colorValue) {
         const ariaLabelValue = getAriaLabelColorValue(colorValue);
-        return style2 ? (0, import_i18n22.sprintf)(
+        return style2 ? (0, import_i18n24.sprintf)(
           // translators: 1: The color's hex code e.g.: "#f00:". 2: The current border style selection e.g. "solid".
-          (0, import_i18n22.__)('Border color and style picker. The currently selected color has a value of "%1$s". The currently selected style is "%2$s".'),
+          (0, import_i18n24.__)('Border color and style picker. The currently selected color has a value of "%1$s". The currently selected style is "%2$s".'),
           ariaLabelValue,
           style2
-        ) : (0, import_i18n22.sprintf)(
+        ) : (0, import_i18n24.sprintf)(
           // translators: %s: The color's hex code e.g: "#f00".
-          (0, import_i18n22.__)('Border color and style picker. The currently selected color has a value of "%s".'),
+          (0, import_i18n24.__)('Border color and style picker. The currently selected color has a value of "%s".'),
           ariaLabelValue
         );
       }
-      return (0, import_i18n22.__)("Border color and style picker.");
+      return (0, import_i18n24.__)("Border color and style picker.");
     }
     if (colorObject) {
-      return (0, import_i18n22.sprintf)(
+      return (0, import_i18n24.sprintf)(
         // translators: 1: The name of the color e.g. "vivid red". 2: The color's hex code e.g: "#f00".
-        (0, import_i18n22.__)('Border color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'),
+        (0, import_i18n24.__)('Border color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'),
         colorObject.name,
         getAriaLabelColorValue(colorObject.color)
       );
     }
     if (colorValue) {
-      return (0, import_i18n22.sprintf)(
+      return (0, import_i18n24.sprintf)(
         // translators: %s: The color's hex code e.g: "#f00".
-        (0, import_i18n22.__)('Border color picker. The currently selected color has a value of "%s".'),
+        (0, import_i18n24.__)('Border color picker. The currently selected color has a value of "%s".'),
         getAriaLabelColorValue(colorValue)
       );
     }
-    return (0, import_i18n22.__)("Border color picker.");
+    return (0, import_i18n24.__)("Border color picker.");
   };
   var BorderControlDropdown = (props, forwardedRef) => {
     const {
@@ -35942,7 +35946,7 @@ This message will only show in development mode. It won't appear in production. 
       variant: "tertiary",
       "aria-label": toggleAriaLabel,
       tooltipPosition: dropdownPosition,
-      label: (0, import_i18n22.__)("Border color and style picker"),
+      label: (0, import_i18n24.__)("Border color and style picker"),
       showTooltip: true,
       __next40pxDefaultSize: true,
       children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("span", {
@@ -35968,7 +35972,7 @@ This message will only show in development mode. It won't appear in production. 
             clearable: false,
             enableAlpha
           }), enableStyle && isStyleSettable && /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(component_default16, {
-            label: (0, import_i18n22.__)("Style"),
+            label: (0, import_i18n24.__)("Style"),
             value: style2,
             onChange: onStyleChange
           })]
@@ -35982,7 +35986,7 @@ This message will only show in development mode. It won't appear in production. 
             disabled: !enableResetButton,
             accessibleWhenDisabled: true,
             __next40pxDefaultSize: true,
-            children: (0, import_i18n22.__)("Reset")
+            children: (0, import_i18n24.__)("Reset")
           })
         })]
       })
@@ -36003,7 +36007,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/unit-control/index.mjs
   var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_element81 = __toESM(require_element(), 1);
-  var import_i18n23 = __toESM(require_i18n(), 1);
+  var import_i18n25 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/unit-control/styles/unit-control-styles.mjs
   var ValueInput = /* @__PURE__ */ createStyled(number_control_default, false ? {
@@ -36187,7 +36191,7 @@ This message will only show in development mode. It won't appear in production. 
     const refInputSuffix = (0, import_element81.useRef)(null);
     const inputSuffix = !disableUnits ? /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(unit_select_control_default, {
       ref: refInputSuffix,
-      "aria-label": (0, import_i18n23.__)("Select unit"),
+      "aria-label": (0, import_i18n25.__)("Select unit"),
       disabled: disabled2,
       isUnitSelectTabbable,
       onChange: handleOnUnitChange,
@@ -36470,7 +36474,7 @@ This message will only show in development mode. It won't appear in production. 
               __experimentalIsRenderedInSidebar
             })
           }),
-          label: (0, import_i18n24.__)("Border width"),
+          label: (0, import_i18n26.__)("Border width"),
           hideLabelFromVision: true,
           min: 0,
           onChange: onWidthChange,
@@ -36480,7 +36484,7 @@ This message will only show in development mode. It won't appear in production. 
           disableUnits,
           __unstableInputWidth: inputWidth
         }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(range_control_default, {
-          label: (0, import_i18n24.__)("Border width"),
+          label: (0, import_i18n26.__)("Border width"),
           hideLabelFromVision: true,
           className: sliderClassName,
           initialPosition: 0,
@@ -36852,14 +36856,14 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default21, {
         className: centeredClassName,
         hideLabelFromVision: true,
-        label: (0, import_i18n25.__)("Top border"),
+        label: (0, import_i18n27.__)("Top border"),
         onChange: (newBorder) => onChange(newBorder, "top"),
         __unstablePopoverProps: popoverProps,
         value: value?.top,
         ...sharedBorderControlProps
       }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default21, {
         hideLabelFromVision: true,
-        label: (0, import_i18n25.__)("Left border"),
+        label: (0, import_i18n27.__)("Left border"),
         onChange: (newBorder) => onChange(newBorder, "left"),
         __unstablePopoverProps: popoverProps,
         value: value?.left,
@@ -36867,7 +36871,7 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default21, {
         className: rightAlignedClassName,
         hideLabelFromVision: true,
-        label: (0, import_i18n25.__)("Right border"),
+        label: (0, import_i18n27.__)("Right border"),
         onChange: (newBorder) => onChange(newBorder, "right"),
         __unstablePopoverProps: popoverProps,
         value: value?.right,
@@ -36875,7 +36879,7 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default21, {
         className: centeredClassName,
         hideLabelFromVision: true,
-        label: (0, import_i18n25.__)("Bottom border"),
+        label: (0, import_i18n27.__)("Bottom border"),
         onChange: (newBorder) => onChange(newBorder, "bottom"),
         __unstablePopoverProps: popoverProps,
         value: value?.bottom,
@@ -37296,7 +37300,7 @@ This message will only show in development mode. It won't appear in production. 
           enableAlpha,
           enableStyle,
           onChange: onLinkedChange,
-          placeholder: hasMixedBorders2 ? (0, import_i18n26.__)("Mixed") : void 0,
+          placeholder: hasMixedBorders2 ? (0, import_i18n28.__)("Mixed") : void 0,
           __unstablePopoverProps: popoverProps,
           shouldSanitizeBorder: false,
           value: linkedValue,
@@ -37326,16 +37330,16 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/box-control/index.mjs
   var import_compose38 = __toESM(require_compose(), 1);
   var import_element87 = __toESM(require_element(), 1);
-  var import_i18n30 = __toESM(require_i18n(), 1);
+  var import_i18n32 = __toESM(require_i18n(), 1);
   var import_warning6 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/box-control/box-input-control.mjs
   var import_compose37 = __toESM(require_compose(), 1);
-  var import_i18n28 = __toESM(require_i18n(), 1);
+  var import_i18n30 = __toESM(require_i18n(), 1);
   var import_element86 = __toESM(require_element(), 1);
 
   // packages/components/build-module/box-control/utils.mjs
-  var import_i18n27 = __toESM(require_i18n(), 1);
+  var import_i18n29 = __toESM(require_i18n(), 1);
   var CUSTOM_VALUE_SETTINGS = {
     px: {
       max: 300,
@@ -37451,13 +37455,13 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
   var LABELS = {
-    all: (0, import_i18n27.__)("All sides"),
-    top: (0, import_i18n27.__)("Top side"),
-    bottom: (0, import_i18n27.__)("Bottom side"),
-    left: (0, import_i18n27.__)("Left side"),
-    right: (0, import_i18n27.__)("Right side"),
-    vertical: (0, import_i18n27.__)("Top and bottom sides"),
-    horizontal: (0, import_i18n27.__)("Left and right sides")
+    all: (0, import_i18n29.__)("All sides"),
+    top: (0, import_i18n29.__)("Top side"),
+    bottom: (0, import_i18n29.__)("Bottom side"),
+    left: (0, import_i18n29.__)("Left side"),
+    right: (0, import_i18n29.__)("Right side"),
+    vertical: (0, import_i18n29.__)("Top and bottom sides"),
+    horizontal: (0, import_i18n29.__)("Left and right sides")
   };
   var DEFAULT_VALUES = {
     top: void 0,
@@ -37859,7 +37863,7 @@ This message will only show in development mode. It won't appear in production. 
     const inputId = [generatedId, side].join("-");
     const isMixedUnit = defaultValuesToModify.length > 1 && mergedValue === void 0 && defaultValuesToModify.some((s2) => selectedUnits[s2] !== computedUnit);
     const usedValue = mergedValue === void 0 && computedUnit ? computedUnit : mergedValue;
-    const mixedPlaceholder = isMixed || isMixedUnit ? (0, import_i18n28.__)("Mixed") : void 0;
+    const mixedPlaceholder = isMixed || isMixedUnit ? (0, import_i18n30.__)("Mixed") : void 0;
     const hasPresets = presets && presets.length > 0 && presetKey;
     const hasPresetValue = hasPresets && mergedValue !== void 0 && !isMixed && isValuePreset(mergedValue, presetKey);
     const [showCustomValueControl, setShowCustomValueControl] = (0, import_element86.useState)(!hasPresets || !hasPresetValue && !isMixed && mergedValue !== void 0);
@@ -37867,7 +37871,7 @@ This message will only show in development mode. It won't appear in production. 
     const marks = hasPresets ? [{
       value: 0,
       label: "",
-      tooltip: (0, import_i18n28.__)("None")
+      tooltip: (0, import_i18n30.__)("None")
     }, ...presets.map((preset, index2) => ({
       value: index2 + 1,
       label: "",
@@ -37930,7 +37934,7 @@ This message will only show in development mode. It won't appear in production. 
         label: LABELS[side],
         hideLabelFromVision: true
       }), hasPresets && /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(button_default, {
-        label: showCustomValueControl ? (0, import_i18n28.__)("Use size preset") : (0, import_i18n28.__)("Set custom size"),
+        label: showCustomValueControl ? (0, import_i18n30.__)("Use size preset") : (0, import_i18n30.__)("Set custom size"),
         icon: settings_default,
         onClick: () => {
           setShowCustomValueControl(!showCustomValueControl);
@@ -37943,13 +37947,13 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/box-control/linked-button.mjs
-  var import_i18n29 = __toESM(require_i18n(), 1);
+  var import_i18n31 = __toESM(require_i18n(), 1);
   var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
   function LinkedButton({
     isLinked,
     ...props
   }) {
-    const label = isLinked ? (0, import_i18n29.__)("Unlink sides") : (0, import_i18n29.__)("Link sides");
+    const label = isLinked ? (0, import_i18n31.__)("Unlink sides") : (0, import_i18n31.__)("Link sides");
     return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(button_default, {
       ...props,
       className: "component-box-control__linked-button",
@@ -38054,7 +38058,7 @@ This message will only show in development mode. It won't appear in production. 
     id: idProp,
     inputProps = defaultInputProps,
     onChange = noop11,
-    label = (0, import_i18n30.__)("Box Control"),
+    label = (0, import_i18n32.__)("Box Control"),
     values: valuesProp,
     units,
     sides: sides3,
@@ -38150,7 +38154,7 @@ This message will only show in development mode. It won't appear in production. 
         onClick: handleOnReset,
         disabled: !isDirty,
         accessibleWhenDisabled: true,
-        children: (0, import_i18n30.__)("Reset")
+        children: (0, import_i18n32.__)("Reset")
       })]
     });
   }
@@ -39757,7 +39761,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/palette-edit/index.mjs
   var import_element139 = __toESM(require_element(), 1);
-  var import_i18n41 = __toESM(require_i18n(), 1);
+  var import_i18n43 = __toESM(require_i18n(), 1);
   var import_compose46 = __toESM(require_compose(), 1);
 
   // node_modules/.store/@base-ui/react@1.8.0-AmwqKTN4N3wuPkzw6LPphA/node_modules/@base-ui/react/internals/useRenderElement.mjs
@@ -50409,7 +50413,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/utils/keyboard-shortcut.mjs
   var import_element108 = __toESM(require_element(), 1);
-  var import_i18n31 = __toESM(require_i18n(), 1);
+  var import_i18n33 = __toESM(require_i18n(), 1);
 
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
   var import_element107 = __toESM(require_element(), 1);
@@ -50540,9 +50544,9 @@ This message will only show in development mode. It won't appear in production. 
         id: descriptionId,
         "aria-hidden": "true",
         render: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("span", { ref }),
-        children: (0, import_i18n31.sprintf)(
+        children: (0, import_i18n33.sprintf)(
           /* translators: %s: keyboard shortcut. */
-          (0, import_i18n31.__)("Keyboard shortcut: %s"),
+          (0, import_i18n33.__)("Keyboard shortcut: %s"),
           shortcut.label ?? shortcut.ariaKeyShortcut
         )
       }
@@ -51461,7 +51465,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/menu/link-item.mjs
   var import_element116 = __toESM(require_element(), 1);
-  var import_i18n32 = __toESM(require_i18n(), 1);
+  var import_i18n34 = __toESM(require_i18n(), 1);
   var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE51 = "data-wp-hash";
   function getRuntime51() {
@@ -51578,7 +51582,7 @@ This message will only show in development mode. It won't appear in production. 
         role: "img",
         "aria-label": (
           /* translators: accessibility text appended to link text */
-          (0, import_i18n32.__)("(opens in a new tab)")
+          (0, import_i18n34.__)("(opens in a new tab)")
         )
       }
     ) : null;
@@ -52506,10 +52510,10 @@ This message will only show in development mode. It won't appear in production. 
   );
 
   // packages/ui/build-module/utils/direction-provider.mjs
-  var import_i18n33 = __toESM(require_i18n(), 1);
+  var import_i18n35 = __toESM(require_i18n(), 1);
   var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   function DirectionProvider3({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(DirectionProvider, { direction: (0, import_i18n33.isRTL)() ? "rtl" : "ltr", children });
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(DirectionProvider, { direction: (0, import_i18n35.isRTL)() ? "rtl" : "ltr", children });
   }
 
   // packages/ui/build-module/utils/use-iframe-dismissal-bridge.mjs
@@ -53420,7 +53424,7 @@ This message will only show in development mode. It won't appear in production. 
   );
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_i18n34 = __toESM(require_i18n(), 1);
+  var import_i18n36 = __toESM(require_i18n(), 1);
   var import_element130 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
@@ -53553,9 +53557,9 @@ This message will only show in development mode. It won't appear in production. 
   function appendRequiredIndicator(label, required, markWhenOptional) {
     let suffix;
     if (required && !markWhenOptional) {
-      suffix = `(${(0, import_i18n34.__)("Required")})`;
+      suffix = `(${(0, import_i18n36.__)("Required")})`;
     } else if (!required && markWhenOptional) {
-      suffix = `(${(0, import_i18n34.__)("Optional")})`;
+      suffix = `(${(0, import_i18n36.__)("Optional")})`;
     }
     if (!suffix) {
       return label;
@@ -54059,12 +54063,12 @@ This message will only show in development mode. It won't appear in production. 
   var component_default36 = ItemGroup;
 
   // packages/components/build-module/gradient-picker/index.mjs
-  var import_i18n38 = __toESM(require_i18n(), 1);
+  var import_i18n40 = __toESM(require_i18n(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
   var import_element136 = __toESM(require_element(), 1);
 
   // packages/components/build-module/custom-gradient-picker/index.mjs
-  var import_i18n37 = __toESM(require_i18n(), 1);
+  var import_i18n39 = __toESM(require_i18n(), 1);
   var import_element135 = __toESM(require_element(), 1);
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/index.mjs
@@ -54073,7 +54077,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/control-points.mjs
   var import_compose43 = __toESM(require_compose(), 1);
   var import_element133 = __toESM(require_element(), 1);
-  var import_i18n35 = __toESM(require_i18n(), 1);
+  var import_i18n37 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/constants.mjs
   var GRADIENT_MARKERS_WIDTH = 16;
@@ -54164,9 +54168,9 @@ This message will only show in development mode. It won't appear in production. 
     const descriptionId = `components-custom-gradient-picker__control-point-button-description-${instanceId}`;
     return /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(import_jsx_runtime216.Fragment, {
       children: [/* @__PURE__ */ (0, import_jsx_runtime216.jsx)(button_default, {
-        "aria-label": (0, import_i18n35.sprintf)(
+        "aria-label": (0, import_i18n37.sprintf)(
           // translators: 1: gradient position e.g: 70. 2: gradient color code e.g: rgb(52,121,151).
-          (0, import_i18n35.__)("Gradient control point at position %1$d%% with color code %2$s."),
+          (0, import_i18n37.__)("Gradient control point at position %1$d%% with color code %2$s."),
           position2,
           color2
         ),
@@ -54180,7 +54184,7 @@ This message will only show in development mode. It won't appear in production. 
         ...additionalProps
       }), /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default2, {
         id: descriptionId,
-        children: disablePositioning ? (0, import_i18n35.__)("Press the button to change the color.") : (0, import_i18n35.__)("Use your left or right arrow keys or drag and drop with the mouse to change the gradient position. Press the button to change the color or remove the control point.")
+        children: disablePositioning ? (0, import_i18n37.__)("Press the button to change the color.") : (0, import_i18n37.__)("Use your left or right arrow keys or drag and drop with the mouse to change the gradient position. Press the button to change the color or remove the control point.")
       })]
     });
   }
@@ -54324,7 +54328,7 @@ This message will only show in development mode. It won't appear in production. 
                   onClose();
                 },
                 variant: "link",
-                children: (0, import_i18n35.__)("Remove Control Point")
+                children: (0, import_i18n37.__)("Remove Control Point")
               })
             })]
           }),
@@ -54549,7 +54553,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_gradient_parser = __toESM(require_node(), 1);
 
   // packages/components/build-module/custom-gradient-picker/constants.mjs
-  var import_i18n36 = __toESM(require_i18n(), 1);
+  var import_i18n38 = __toESM(require_i18n(), 1);
   var DEFAULT_GRADIENT = "linear-gradient(135deg, rgba(6, 147, 227, 1) 0%, rgb(155, 81, 224) 100%)";
   var DEFAULT_LINEAR_GRADIENT_ANGLE = 180;
   var HORIZONTAL_GRADIENT_ORIENTATION = {
@@ -54558,10 +54562,10 @@ This message will only show in development mode. It won't appear in production. 
   };
   var GRADIENT_OPTIONS = [{
     value: "linear-gradient",
-    label: (0, import_i18n36.__)("Linear")
+    label: (0, import_i18n38.__)("Linear")
   }, {
     value: "radial-gradient",
-    label: (0, import_i18n36.__)("Radial")
+    label: (0, import_i18n38.__)("Radial")
   }];
   var DIRECTIONAL_ORIENTATION_ANGLE_MAP = {
     top: 0,
@@ -54883,7 +54887,7 @@ This message will only show in development mode. It won't appear in production. 
     };
     return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(select_control_default, {
       className: "components-custom-gradient-picker__type-picker",
-      label: (0, import_i18n37.__)("Type"),
+      label: (0, import_i18n39.__)("Type"),
       labelPosition: "top",
       onChange: handleOnChange,
       options: GRADIENT_OPTIONS,
@@ -55051,7 +55055,7 @@ This message will only show in development mode. It won't appear in production. 
           value: gradient,
           isSelected: isSelected2,
           tooltipText: name || // translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);".
-          (0, import_i18n38.sprintf)((0, import_i18n38.__)("Gradient code: %s"), gradient),
+          (0, import_i18n40.sprintf)((0, import_i18n40.__)("Gradient code: %s"), gradient),
           style: {
             color: "rgba( 0,0,0,0 )",
             background: gradient
@@ -55059,10 +55063,10 @@ This message will only show in development mode. It won't appear in production. 
           onClick: isSelected2 ? clearGradient : () => onChange(gradient, index2, slug),
           "aria-label": name ? (
             // translators: %s: The name of the gradient e.g: "Angular red to blue".
-            (0, import_i18n38.sprintf)((0, import_i18n38.__)("Gradient: %s"), name)
+            (0, import_i18n40.sprintf)((0, import_i18n40.__)("Gradient: %s"), name)
           ) : (
             // translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);".
-            (0, import_i18n38.sprintf)((0, import_i18n38.__)("Gradient code: %s"), gradient)
+            (0, import_i18n40.sprintf)((0, import_i18n40.__)("Gradient code: %s"), gradient)
           )
         }, slug);
       });
@@ -55175,7 +55179,7 @@ This message will only show in development mode. It won't appear in production. 
           onClick: clearGradient,
           accessibleWhenDisabled: true,
           disabled: !value,
-          children: (0, import_i18n38.__)("Clear")
+          children: (0, import_i18n40.__)("Clear")
         }),
         headingLevel
       })]
@@ -55186,11 +55190,11 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/duotone-picker/duotone-picker.mjs
   var import_es62 = __toESM(require_es6(), 1);
   var import_element138 = __toESM(require_element(), 1);
-  var import_i18n40 = __toESM(require_i18n(), 1);
+  var import_i18n42 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/duotone-picker/color-list-picker/index.mjs
   var import_element137 = __toESM(require_element(), 1);
-  var import_i18n39 = __toESM(require_i18n(), 1);
+  var import_i18n41 = __toESM(require_i18n(), 1);
   var import_compose45 = __toESM(require_compose(), 1);
   var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
   function ColorOption({
@@ -55226,7 +55230,7 @@ This message will only show in development mode. It won't appear in production. 
         "aria-labelledby": labelId,
         "aria-hidden": !isOpen,
         children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(color_palette_default, {
-          "aria-label": (0, import_i18n39.__)("Color options"),
+          "aria-label": (0, import_i18n41.__)("Color options"),
           className: "components-color-list-picker__color-picker",
           colors,
           value,
@@ -55356,7 +55360,7 @@ This message will only show in development mode. It won't appear in production. 
     const [defaultDark, defaultLight] = (0, import_element138.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
     const isUnset = value === "unset";
     const isUnsetSelected = resolvedPresentation !== "command-buttons" && isUnset;
-    const unsetOptionLabel = (0, import_i18n40.__)("Unset");
+    const unsetOptionLabel = (0, import_i18n42.__)("Unset");
     const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(circular_option_picker_default2.Option, {
       value: "unset",
       isSelected: isUnsetSelected,
@@ -55376,14 +55380,14 @@ This message will only show in development mode. It won't appear in production. 
         background: getGradientFromCSSColors(colors, "135deg"),
         color: "transparent"
       };
-      const tooltipText = name ?? (0, import_i18n40.sprintf)(
+      const tooltipText = name ?? (0, import_i18n42.sprintf)(
         // translators: %s: duotone code e.g: "dark-grayscale" or "7f7f7f-ffffff".
-        (0, import_i18n40.__)("Duotone code: %s"),
+        (0, import_i18n42.__)("Duotone code: %s"),
         slug
       );
-      const label = name ? (0, import_i18n40.sprintf)(
+      const label = name ? (0, import_i18n42.sprintf)(
         // translators: %s: The name of the option e.g: "Dark grayscale".
-        (0, import_i18n40.__)("Duotone: %s"),
+        (0, import_i18n42.__)("Duotone: %s"),
         name
       ) : tooltipText;
       const isSelected2 = resolvedPresentation !== "command-buttons" && (selectedSlug ? slug === selectedSlug : (0, import_es62.default)(colors, value));
@@ -55412,7 +55416,7 @@ This message will only show in development mode. It won't appear in production. 
         onClick: () => onChange(void 0),
         accessibleWhenDisabled: true,
         disabled: !value,
-        children: (0, import_i18n40.__)("Clear")
+        children: (0, import_i18n42.__)("Clear")
       }),
       children: !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(component_default6, {
         paddingTop: options2.length === 0 ? 0 : 4,
@@ -55422,7 +55426,7 @@ This message will only show in development mode. It won't appear in production. 
             value: isUnset ? void 0 : value,
             onChange
           }), /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(color_list_picker_default, {
-            labels: [(0, import_i18n40.__)("Shadows"), (0, import_i18n40.__)("Highlights")],
+            labels: [(0, import_i18n42.__)("Shadows"), (0, import_i18n42.__)("Highlights")],
             colors: colorPalette,
             value: isUnset ? void 0 : value,
             disableCustomColors,
@@ -55572,60 +55576,60 @@ This message will only show in development mode. It won't appear in production. 
   function getNameInputLabel(variant) {
     switch (variant) {
       case "duotone":
-        return (0, import_i18n41.__)("Duotone name");
+        return (0, import_i18n43.__)("Duotone name");
       case "gradient":
-        return (0, import_i18n41.__)("Gradient name");
+        return (0, import_i18n43.__)("Gradient name");
       default:
-        return (0, import_i18n41.__)("Color name");
+        return (0, import_i18n43.__)("Color name");
     }
   }
   function getRemoveLabelFormat(variant) {
     return variant === "duotone" ? (
       /* translators: %s is a duotone name, e.g. "Purple and yellow". */
-      (0, import_i18n41.__)("Remove duotone: %s")
+      (0, import_i18n43.__)("Remove duotone: %s")
     ) : (
       /* translators: %s is a color or gradient name, e.g. "Red". */
-      (0, import_i18n41.__)("Remove color: %s")
+      (0, import_i18n43.__)("Remove color: %s")
     );
   }
   function getAddLabel(variant) {
     switch (variant) {
       case "duotone":
-        return (0, import_i18n41.__)("Add duotone");
+        return (0, import_i18n43.__)("Add duotone");
       case "gradient":
-        return (0, import_i18n41.__)("Add gradient");
+        return (0, import_i18n43.__)("Add gradient");
       default:
-        return (0, import_i18n41.__)("Add color");
+        return (0, import_i18n43.__)("Add color");
     }
   }
   function getOptionsLabel(variant) {
     switch (variant) {
       case "duotone":
-        return (0, import_i18n41.__)("Duotone options");
+        return (0, import_i18n43.__)("Duotone options");
       case "gradient":
-        return (0, import_i18n41.__)("Gradient options");
+        return (0, import_i18n43.__)("Gradient options");
       default:
-        return (0, import_i18n41.__)("Color options");
+        return (0, import_i18n43.__)("Color options");
     }
   }
   function getRemoveAllLabel(variant) {
     switch (variant) {
       case "duotone":
-        return (0, import_i18n41.__)("Remove all duotones");
+        return (0, import_i18n43.__)("Remove all duotones");
       case "gradient":
-        return (0, import_i18n41.__)("Remove all gradients");
+        return (0, import_i18n43.__)("Remove all gradients");
       default:
-        return (0, import_i18n41.__)("Remove all colors");
+        return (0, import_i18n43.__)("Remove all colors");
     }
   }
   function getResetLabel(variant) {
     switch (variant) {
       case "duotone":
-        return (0, import_i18n41.__)("Reset duotones");
+        return (0, import_i18n43.__)("Reset duotones");
       case "gradient":
-        return (0, import_i18n41.__)("Reset gradient");
+        return (0, import_i18n43.__)("Reset gradient");
       default:
-        return (0, import_i18n41.__)("Reset colors");
+        return (0, import_i18n43.__)("Reset colors");
     }
   }
   function NameInput({
@@ -55675,13 +55679,13 @@ This message will only show in development mode. It won't appear in production. 
       return previousValue;
     }, 1);
     return {
-      name: variant === "duotone" ? (0, import_i18n41.sprintf)(
+      name: variant === "duotone" ? (0, import_i18n43.sprintf)(
         /* translators: %d: is an id for a custom duotone */
-        (0, import_i18n41.__)("Duotone %d"),
+        (0, import_i18n43.__)("Duotone %d"),
         position2
-      ) : (0, import_i18n41.sprintf)(
+      ) : (0, import_i18n43.sprintf)(
         /* translators: %d: is an id for a custom color */
-        (0, import_i18n41.__)("Color %d"),
+        (0, import_i18n43.__)("Color %d"),
         position2
       ),
       slug: `${slugPrefix}${stem}-${position2}`
@@ -55747,7 +55751,7 @@ This message will only show in development mode. It won't appear in production. 
               });
             }
           }), /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(color_list_picker_default, {
-            labels: [(0, import_i18n41.__)("Shadows"), (0, import_i18n41.__)("Highlights")],
+            labels: [(0, import_i18n43.__)("Shadows"), (0, import_i18n43.__)("Highlights")],
             colors: colorPalette ?? [],
             value: getDuotoneColors(element),
             enableAlpha: true,
@@ -55796,9 +55800,9 @@ This message will only show in development mode. It won't appear in production. 
           onClick: () => {
             setIsEditingColor(true);
           },
-          "aria-label": (0, import_i18n41.sprintf)(
+          "aria-label": (0, import_i18n43.sprintf)(
             // translators: %s is a color, gradient or duotone name, e.g. "Red".
-            (0, import_i18n41.__)("Edit: %s"),
+            (0, import_i18n43.__)("Edit: %s"),
             element.name.trim().length ? element.name : value || ""
           ),
           style: {
@@ -55828,7 +55832,7 @@ This message will only show in development mode. It won't appear in production. 
             className: style_module_default45.remove,
             size: "small",
             icon: line_solid_default,
-            label: (0, import_i18n41.sprintf)(getRemoveLabelFormat(variant), element.name.trim().length ? element.name : value || ""),
+            label: (0, import_i18n43.sprintf)(getRemoveLabelFormat(variant), element.name.trim().length ? element.name : value || ""),
             onClick: onRemove
           })
         })]
@@ -55956,7 +55960,7 @@ This message will only show in development mode. It won't appear in production. 
               setIsEditing(false);
               setEditingElement(null);
             },
-            children: (0, import_i18n41.__)("Done")
+            children: (0, import_i18n43.__)("Done")
           }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
             ref: addColorRef,
             size: "small",
@@ -56006,7 +56010,7 @@ This message will only show in development mode. It won't appear in production. 
               children: [!isEditing && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.Item, {
                 onClick: () => setIsEditing(true),
                 children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.ItemLabel, {
-                  children: (0, import_i18n41.__)("Show details")
+                  children: (0, import_i18n43.__)("Show details")
                 })
               }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(menu_exports.Item, {
                 onClick: () => {
@@ -56090,7 +56094,7 @@ This message will only show in development mode. It won't appear in production. 
   var palette_edit_default = PaletteEdit;
 
   // packages/components/build-module/combobox-control/index.mjs
-  var import_i18n43 = __toESM(require_i18n(), 1);
+  var import_i18n45 = __toESM(require_i18n(), 1);
   var import_element143 = __toESM(require_element(), 1);
   var import_compose49 = __toESM(require_compose(), 1);
   var import_a11y5 = __toESM(require_a11y(), 1);
@@ -56161,7 +56165,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/suggestions-list.mjs
   var import_compose47 = __toESM(require_compose(), 1);
-  var import_i18n42 = __toESM(require_i18n(), 1);
+  var import_i18n44 = __toESM(require_i18n(), 1);
   var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
   var handleMouseDown = (e3) => {
     e3.preventDefault();
@@ -56251,7 +56255,7 @@ This message will only show in development mode. It won't appear in production. 
         }, key);
       }), suggestions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("li", {
         className: "components-form-token-field__suggestion is-empty",
-        children: (0, import_i18n42.__)("No items found")
+        children: (0, import_i18n44.__)("No items found")
       })]
     });
   }
@@ -56491,7 +56495,7 @@ This message will only show in development mode. It won't appear in production. 
       className,
       isLoading = false,
       messages = {
-        selected: (0, import_i18n43.__)("Item selected.")
+        selected: (0, import_i18n45.__)("Item selected.")
       },
       __experimentalRenderItem,
       expandOnFocus = true,
@@ -56618,11 +56622,11 @@ This message will only show in development mode. It won't appear in production. 
     (0, import_element143.useEffect)(() => {
       const hasMatchingSuggestions = matchingSuggestions.length > 0;
       if (isExpanded) {
-        const message = hasMatchingSuggestions ? (0, import_i18n43.sprintf)(
+        const message = hasMatchingSuggestions ? (0, import_i18n45.sprintf)(
           /* translators: %d: number of results. */
-          (0, import_i18n43._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length),
+          (0, import_i18n45._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length),
           matchingSuggestions.length
-        ) : (0, import_i18n43.__)("No results.");
+        ) : (0, import_i18n45.__)("No results.");
         (0, import_a11y5.speak)(message, "polite");
       }
     }, [matchingSuggestions, isExpanded]);
@@ -56663,7 +56667,7 @@ This message will only show in development mode. It won't appear in production. 
               icon: close_small_default,
               onClick: handleOnReset,
               onKeyDown: handleResetStopPropagation,
-              label: (0, import_i18n43.__)("Reset")
+              label: (0, import_i18n45.__)("Reset")
             })]
           }), isExpanded && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(suggestions_list_default, {
             instanceId,
@@ -56801,13 +56805,13 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/confirm-dialog/component.mjs
-  var import_i18n45 = __toESM(require_i18n(), 1);
+  var import_i18n47 = __toESM(require_i18n(), 1);
   var import_element148 = __toESM(require_element(), 1);
 
   // packages/components/build-module/modal/index.mjs
   var import_element147 = __toESM(require_element(), 1);
   var import_compose52 = __toESM(require_compose(), 1);
-  var import_i18n44 = __toESM(require_i18n(), 1);
+  var import_i18n46 = __toESM(require_i18n(), 1);
   var import_dom25 = __toESM(require_dom(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
 
@@ -57097,7 +57101,7 @@ This message will only show in development mode. It won't appear in production. 
               role: "document",
               onScroll: onContentContainerScroll,
               ref: contentRef,
-              "aria-label": hasScrollableContent ? (0, import_i18n44.__)("Scrollable section") : void 0,
+              "aria-label": hasScrollableContent ? (0, import_i18n46.__)("Scrollable section") : void 0,
               tabIndex: hasScrollableContent ? 0 : void 0,
               children: [!__experimentalHideHeader && /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)("div", {
                 className: "components-modal__header",
@@ -57120,7 +57124,7 @@ This message will only show in development mode. It won't appear in production. 
                     size: "compact",
                     onClick: (event) => closeModal().then(() => onRequestClose(event)),
                     icon: close_default,
-                    label: closeButtonLabel || (0, import_i18n44.__)("Close")
+                    label: closeButtonLabel || (0, import_i18n46.__)("Close")
                   })]
                 })]
               }), /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
@@ -57258,8 +57262,8 @@ This message will only show in development mode. It won't appear in production. 
         handleEvent(onConfirm)(event);
       }
     }, [handleEvent, onConfirm]);
-    const cancelLabel = cancelButtonText ?? (0, import_i18n45.__)("Cancel");
-    const confirmLabel = confirmButtonText ?? (0, import_i18n45.__)("OK");
+    const cancelLabel = cancelButtonText ?? (0, import_i18n47.__)("Cancel");
+    const confirmLabel = confirmButtonText ?? (0, import_i18n47.__)("OK");
     return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(import_jsx_runtime232.Fragment, {
       children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(modal_default, {
         onRequestClose: handleEvent(onCancel),
@@ -57307,11 +57311,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/custom-select-control/index.mjs
   var import_compose53 = __toESM(require_compose(), 1);
-  var import_i18n47 = __toESM(require_i18n(), 1);
+  var import_i18n49 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/custom-select-control-v2/custom-select.mjs
   var import_element149 = __toESM(require_element(), 1);
-  var import_i18n46 = __toESM(require_i18n(), 1);
+  var import_i18n48 = __toESM(require_i18n(), 1);
   var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE70 = "data-wp-hash";
   function getRuntime70() {
@@ -57397,12 +57401,12 @@ This message will only show in development mode. It won't appear in production. 
   function defaultRenderSelectedValue(value) {
     const isValueEmpty2 = Array.isArray(value) ? value.length === 0 : value === void 0 || value === null;
     if (isValueEmpty2) {
-      return (0, import_i18n46.__)("Select an item");
+      return (0, import_i18n48.__)("Select an item");
     }
     if (Array.isArray(value)) {
-      return value.length === 1 ? value[0] : (0, import_i18n46.sprintf)(
+      return value.length === 1 ? value[0] : (0, import_i18n48.sprintf)(
         // translators: %d: number of items selected (it will always be 2 or more items)
-        (0, import_i18n46._n)("%d item selected", "%d items selected", value.length),
+        (0, import_i18n48._n)("%d item selected", "%d items selected", value.length),
         value.length
       );
     }
@@ -57703,7 +57707,7 @@ This message will only show in development mode. It won't appear in production. 
     if (describedBy) {
       return describedBy;
     }
-    return (0, import_i18n47.sprintf)((0, import_i18n47.__)("Currently selected: %s"), currentName);
+    return (0, import_i18n49.sprintf)((0, import_i18n49.__)("Currently selected: %s"), currentName);
   }
   function CustomSelectControl(props) {
     const {
@@ -57816,7 +57820,7 @@ This message will only show in development mode. It won't appear in production. 
   var custom_select_control_default = CustomSelectControl;
 
   // packages/components/build-module/date-time/date-picker/index.mjs
-  var import_i18n48 = __toESM(require_i18n(), 1);
+  var import_i18n50 = __toESM(require_i18n(), 1);
   var import_date3 = __toESM(require_date(), 1);
   var import_element152 = __toESM(require_element(), 1);
 
@@ -58179,12 +58183,12 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(Wrapper3, {
       className: "components-datetime__date",
       role: "application",
-      "aria-label": (0, import_i18n48.__)("Calendar"),
+      "aria-label": (0, import_i18n50.__)("Calendar"),
       children: [/* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(Navigator, {
         children: [/* @__PURE__ */ (0, import_jsx_runtime236.jsx)(ViewPreviousMonthButton, {
-          icon: (0, import_i18n48.isRTL)() ? arrow_right_default : arrow_left_default,
+          icon: (0, import_i18n50.isRTL)() ? arrow_right_default : arrow_left_default,
           variant: "tertiary",
-          "aria-label": (0, import_i18n48.__)("View previous month"),
+          "aria-label": (0, import_i18n50.__)("View previous month"),
           onClick: () => {
             viewPreviousMonth();
             setFocusable(subMonths(focusable2, 1));
@@ -58198,9 +58202,9 @@ This message will only show in development mode. It won't appear in production. 
             children: (0, import_date3.dateI18n)("F", viewing, -viewing.getTimezoneOffset())
           }), " ", (0, import_date3.dateI18n)("Y", viewing, -viewing.getTimezoneOffset())]
         }), /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(ViewNextMonthButton, {
-          icon: (0, import_i18n48.isRTL)() ? arrow_left_default : arrow_right_default,
+          icon: (0, import_i18n50.isRTL)() ? arrow_left_default : arrow_right_default,
           variant: "tertiary",
-          "aria-label": (0, import_i18n48.__)("View next month"),
+          "aria-label": (0, import_i18n50.__)("View next month"),
           onClick: () => {
             viewNextMonth();
             setFocusable(addMonths(focusable2, 1));
@@ -58240,10 +58244,10 @@ This message will only show in development mode. It won't appear in production. 
             onKeyDown: (event) => {
               let nextFocusable;
               if (event.key === "ArrowLeft") {
-                nextFocusable = addDays(day, (0, import_i18n48.isRTL)() ? 1 : -1);
+                nextFocusable = addDays(day, (0, import_i18n50.isRTL)() ? 1 : -1);
               }
               if (event.key === "ArrowRight") {
-                nextFocusable = addDays(day, (0, import_i18n48.isRTL)() ? -1 : 1);
+                nextFocusable = addDays(day, (0, import_i18n50.isRTL)() ? -1 : 1);
               }
               if (event.key === "ArrowUp") {
                 nextFocusable = subWeeks(day, 1);
@@ -58322,15 +58326,15 @@ This message will only show in development mode. It won't appear in production. 
     const localizedDate = (0, import_date3.dateI18n)(formats.date, date, -date.getTimezoneOffset());
     const parts = [localizedDate];
     if (isSelected2) {
-      parts.push((0, import_i18n48.__)("Selected"));
+      parts.push((0, import_i18n50.__)("Selected"));
     }
     if (isToday) {
-      parts.push((0, import_i18n48.__)("Today"));
+      parts.push((0, import_i18n50.__)("Today"));
     }
     if (numEvents > 0) {
-      parts.push((0, import_i18n48.sprintf)(
+      parts.push((0, import_i18n50.sprintf)(
         // translators: %d: Number of events on the calendar date.
-        (0, import_i18n48._n)("There is %d event", "There are %d events", numEvents),
+        (0, import_i18n50._n)("There is %d event", "There are %d events", numEvents),
         numEvents
       ));
     }
@@ -58340,11 +58344,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/date-time/time-picker/index.mjs
   var import_element154 = __toESM(require_element(), 1);
-  var import_i18n51 = __toESM(require_i18n(), 1);
+  var import_i18n53 = __toESM(require_i18n(), 1);
   var import_date5 = __toESM(require_date(), 1);
 
   // packages/components/build-module/date-time/time-picker/timezone.mjs
-  var import_i18n49 = __toESM(require_i18n(), 1);
+  var import_i18n51 = __toESM(require_i18n(), 1);
   var import_date4 = __toESM(require_date(), 1);
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE73 = "data-wp-hash";
@@ -58437,7 +58441,7 @@ This message will only show in development mode. It won't appear in production. 
     const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
     const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
     const prettyTimezoneString = timezone.string.replace("_", " ");
-    const timezoneDetail = "UTC" === timezone.string ? (0, import_i18n49.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
+    const timezoneDetail = "UTC" === timezone.string ? (0, import_i18n51.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
     const hasNoAdditionalTimezoneDetail = prettyTimezoneString.trim().length === 0;
     return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime237.jsx)("div", {
       className: clsx_default("components-datetime__timezone", style_module_default52["time-zone"]),
@@ -58454,7 +58458,7 @@ This message will only show in development mode. It won't appear in production. 
   var timezone_default = TimeZone;
 
   // packages/components/build-module/date-time/time-picker/time-input/index.mjs
-  var import_i18n50 = __toESM(require_i18n(), 1);
+  var import_i18n52 = __toESM(require_i18n(), 1);
   var import_element153 = __toESM(require_element(), 1);
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE74 = "data-wp-hash";
@@ -58597,7 +58601,7 @@ This message will only show in development mode. It won't appear in production. 
           className: clsx_default("components-datetime__time-field components-datetime__time-field-time", style_module_default53["time-wrapper"]),
           children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)(number_control_default, {
             className: clsx_default("components-datetime__time-field-hours-input", style_module_default53["hours-input"]),
-            label: (0, import_i18n50.__)("Hours"),
+            label: (0, import_i18n52.__)("Hours"),
             hideLabelFromVision: true,
             value: String(is12Hour ? hours12Format : value.hours).padStart(2, "0"),
             step: 1,
@@ -58615,7 +58619,7 @@ This message will only show in development mode. It won't appear in production. 
             "aria-hidden": "true",
             children: ":"
           }), /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(number_control_default, {
-            label: (0, import_i18n50.__)("Minutes"),
+            label: (0, import_i18n52.__)("Minutes"),
             hideLabelFromVision: true,
             value: String(value.minutes).padStart(2, "0"),
             step: 1,
@@ -58640,7 +58644,7 @@ This message will only show in development mode. It won't appear in production. 
           })]
         }), is12Hour && /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(component_default12, {
           isBlock: true,
-          label: (0, import_i18n50.__)("Select AM or PM"),
+          label: (0, import_i18n52.__)("Select AM or PM"),
           hideLabelFromVision: true,
           value: dayPeriod,
           onChange: (newValue) => {
@@ -58648,10 +58652,10 @@ This message will only show in development mode. It won't appear in production. 
           },
           children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)(component_default14, {
             value: "AM",
-            label: (0, import_i18n50.__)("AM")
+            label: (0, import_i18n52.__)("AM")
           }), /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(component_default14, {
             value: "PM",
-            label: (0, import_i18n50.__)("PM")
+            label: (0, import_i18n52.__)("PM")
           })]
         })]
       })]
@@ -58756,40 +58760,40 @@ This message will only show in development mode. It won't appear in production. 
     }, [currentTime]);
     const monthOptions = [{
       value: "01",
-      label: (0, import_i18n51.__)("January")
+      label: (0, import_i18n53.__)("January")
     }, {
       value: "02",
-      label: (0, import_i18n51.__)("February")
+      label: (0, import_i18n53.__)("February")
     }, {
       value: "03",
-      label: (0, import_i18n51.__)("March")
+      label: (0, import_i18n53.__)("March")
     }, {
       value: "04",
-      label: (0, import_i18n51.__)("April")
+      label: (0, import_i18n53.__)("April")
     }, {
       value: "05",
-      label: (0, import_i18n51.__)("May")
+      label: (0, import_i18n53.__)("May")
     }, {
       value: "06",
-      label: (0, import_i18n51.__)("June")
+      label: (0, import_i18n53.__)("June")
     }, {
       value: "07",
-      label: (0, import_i18n51.__)("July")
+      label: (0, import_i18n53.__)("July")
     }, {
       value: "08",
-      label: (0, import_i18n51.__)("August")
+      label: (0, import_i18n53.__)("August")
     }, {
       value: "09",
-      label: (0, import_i18n51.__)("September")
+      label: (0, import_i18n53.__)("September")
     }, {
       value: "10",
-      label: (0, import_i18n51.__)("October")
+      label: (0, import_i18n53.__)("October")
     }, {
       value: "11",
-      label: (0, import_i18n51.__)("November")
+      label: (0, import_i18n53.__)("November")
     }, {
       value: "12",
-      label: (0, import_i18n51.__)("December")
+      label: (0, import_i18n53.__)("December")
     }];
     const {
       day,
@@ -58833,7 +58837,7 @@ This message will only show in development mode. It won't appear in production. 
     };
     const dayField = /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(number_control_default, {
       className: clsx_default("components-datetime__time-field components-datetime__time-field-day", style_module_default54["day-input"]),
-      label: (0, import_i18n51.__)("Day"),
+      label: (0, import_i18n53.__)("Day"),
       hideLabelFromVision: true,
       value: day,
       step: 1,
@@ -58850,7 +58854,7 @@ This message will only show in development mode. It won't appear in production. 
       className: style_module_default54["month-select-wrapper"],
       children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(select_control_default, {
         className: "components-datetime__time-field components-datetime__time-field-month",
-        label: (0, import_i18n51.__)("Month"),
+        label: (0, import_i18n53.__)("Month"),
         hideLabelFromVision: true,
         value: month,
         options: monthOptions,
@@ -58865,7 +58869,7 @@ This message will only show in development mode. It won't appear in production. 
     }, "month");
     const yearField = /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(number_control_default, {
       className: clsx_default("components-datetime__time-field components-datetime__time-field-year", style_module_default54["year-input"]),
-      label: (0, import_i18n51.__)("Year"),
+      label: (0, import_i18n53.__)("Year"),
       hideLabelFromVision: true,
       value: year,
       step: 1,
@@ -58899,11 +58903,11 @@ This message will only show in development mode. It won't appear in production. 
         className: style_module_default54.fieldset,
         children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(component_default2, {
           as: "legend",
-          children: (0, import_i18n51.__)("Time")
+          children: (0, import_i18n53.__)("Time")
         }) : /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(base_control_default.VisualLabel, {
           as: "legend",
           className: "components-datetime__time-legend",
-          children: (0, import_i18n51.__)("Time")
+          children: (0, import_i18n53.__)("Time")
         }), /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(component_default9, {
           className: "components-datetime__time-wrapper",
           children: [/* @__PURE__ */ (0, import_jsx_runtime239.jsx)(TimeInput, {
@@ -58919,11 +58923,11 @@ This message will only show in development mode. It won't appear in production. 
         className: style_module_default54.fieldset,
         children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(component_default2, {
           as: "legend",
-          children: (0, import_i18n51.__)("Date")
+          children: (0, import_i18n53.__)("Date")
         }) : /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(base_control_default.VisualLabel, {
           as: "legend",
           className: "components-datetime__time-legend",
-          children: (0, import_i18n51.__)("Date")
+          children: (0, import_i18n53.__)("Date")
         }), /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(component_default9, {
           className: "components-datetime__time-wrapper",
           children: fields
@@ -59404,7 +59408,7 @@ This message will only show in development mode. It won't appear in production. 
   var draggable_default = Draggable;
 
   // packages/components/build-module/drop-zone/index.mjs
-  var import_i18n52 = __toESM(require_i18n(), 1);
+  var import_i18n54 = __toESM(require_i18n(), 1);
   var import_element159 = __toESM(require_element(), 1);
   var import_dom26 = __toESM(require_dom(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
@@ -59484,7 +59488,7 @@ This message will only show in development mode. It won't appear in production. 
             className: "components-drop-zone__content-icon"
           }), /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("span", {
             className: "components-drop-zone__content-text",
-            children: label ? label : (0, import_i18n52.__)("Drop files to upload")
+            children: label ? label : (0, import_i18n54.__)("Drop files to upload")
           })]
         })
       })
@@ -59833,7 +59837,7 @@ This message will only show in development mode. It won't appear in production. 
   var deprecated_default2 = DeprecatedElevation;
 
   // packages/components/build-module/external-link/index.mjs
-  var import_i18n53 = __toESM(require_i18n(), 1);
+  var import_i18n55 = __toESM(require_i18n(), 1);
   var import_element163 = __toESM(require_element(), 1);
   var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedExternalLink(props, ref) {
@@ -59873,9 +59877,9 @@ This message will only show in development mode. It won't appear in production. 
           ),
           "aria-label": (
             /* translators: accessibility text */
-            (0, import_i18n53.__)("(opens in a new tab)")
+            (0, import_i18n55.__)("(opens in a new tab)")
           ),
-          children: (0, import_i18n53.isRTL)() ? "\u2196" : "\u2197"
+          children: (0, import_i18n55.isRTL)() ? "\u2196" : "\u2197"
         })]
       })
     );
@@ -59885,12 +59889,12 @@ This message will only show in development mode. It won't appear in production. 
   var external_link_default = ExternalLink;
 
   // packages/components/build-module/focal-point-picker/index.mjs
-  var import_i18n55 = __toESM(require_i18n(), 1);
+  var import_i18n57 = __toESM(require_i18n(), 1);
   var import_element164 = __toESM(require_element(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/focal-point-picker/controls.mjs
-  var import_i18n54 = __toESM(require_i18n(), 1);
+  var import_i18n56 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/focal-point-picker/utils.mjs
   var INITIAL_BOUNDS = {
@@ -60060,14 +60064,14 @@ This message will only show in development mode. It won't appear in production. 
       hasHelpText,
       gap: 4,
       children: [/* @__PURE__ */ (0, import_jsx_runtime250.jsx)(FocalPointUnitControl, {
-        label: (0, import_i18n54.__)("Left"),
-        "aria-label": (0, import_i18n54.__)("Focal point left position"),
+        label: (0, import_i18n56.__)("Left"),
+        "aria-label": (0, import_i18n56.__)("Focal point left position"),
         value: [valueX, "%"].join(""),
         onChange: (next2) => handleChange(next2, "x"),
         dragDirection: "e"
       }), /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(FocalPointUnitControl, {
-        label: (0, import_i18n54.__)("Top"),
-        "aria-label": (0, import_i18n54.__)("Focal point top position"),
+        label: (0, import_i18n56.__)("Top"),
+        "aria-label": (0, import_i18n56.__)("Focal point top position"),
         value: [valueY, "%"].join(""),
         onChange: (next2) => handleChange(next2, "y"),
         dragDirection: "s"
@@ -60378,7 +60382,7 @@ This message will only show in development mode. It won't appear in production. 
             bounds,
             showOverlay: showGridOverlay
           }), /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(Media, {
-            alt: (0, import_i18n55.__)("Media preview"),
+            alt: (0, import_i18n57.__)("Media preview"),
             autoPlay,
             onLoad: refUpdateBounds.current,
             src: url
@@ -60423,12 +60427,12 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/font-size-picker/index.mjs
-  var import_i18n59 = __toESM(require_i18n(), 1);
+  var import_i18n61 = __toESM(require_i18n(), 1);
   var import_element166 = __toESM(require_element(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
-  var import_i18n56 = __toESM(require_i18n(), 1);
+  var import_i18n58 = __toESM(require_i18n(), 1);
   var import_element165 = __toESM(require_element(), 1);
 
   // packages/components/build-module/font-size-picker/utils.mjs
@@ -60529,7 +60533,7 @@ This message will only show in development mode. It won't appear in production. 
   var style_module_default58 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
   var DEFAULT_OPTION = {
     key: "default",
-    name: (0, import_i18n56.__)("Default"),
+    name: (0, import_i18n58.__)("Default"),
     value: void 0
   };
   var FontSizePickerSelect = (props) => {
@@ -60562,11 +60566,11 @@ This message will only show in development mode. It won't appear in production. 
     }, [value, valueMode, options2]);
     return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(custom_select_control_default, {
       className: clsx_default("components-font-size-picker__select", style_module_default58.select),
-      label: (0, import_i18n56.__)("Font size"),
+      label: (0, import_i18n58.__)("Font size"),
       hideLabelFromVision: true,
-      describedBy: (0, import_i18n56.sprintf)(
+      describedBy: (0, import_i18n58.sprintf)(
         // translators: %s: Currently selected font size.
-        (0, import_i18n56.__)("Currently selected font size: %s"),
+        (0, import_i18n58.__)("Currently selected font size: %s"),
         selectedOption.name
       ),
       options: options2,
@@ -60583,23 +60587,23 @@ This message will only show in development mode. It won't appear in production. 
   var font_size_picker_select_default = FontSizePickerSelect;
 
   // packages/components/build-module/font-size-picker/font-size-picker-toggle-group.mjs
-  var import_i18n58 = __toESM(require_i18n(), 1);
+  var import_i18n60 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/font-size-picker/constants.mjs
-  var import_i18n57 = __toESM(require_i18n(), 1);
+  var import_i18n59 = __toESM(require_i18n(), 1);
   var T_SHIRT_ABBREVIATIONS = [
     /* translators: S stands for 'small' and is a size label. */
-    (0, import_i18n57.__)("S"),
+    (0, import_i18n59.__)("S"),
     /* translators: M stands for 'medium' and is a size label. */
-    (0, import_i18n57.__)("M"),
+    (0, import_i18n59.__)("M"),
     /* translators: L stands for 'large' and is a size label. */
-    (0, import_i18n57.__)("L"),
+    (0, import_i18n59.__)("L"),
     /* translators: XL stands for 'extra large' and is a size label. */
-    (0, import_i18n57.__)("XL"),
+    (0, import_i18n59.__)("XL"),
     /* translators: XXL stands for 'extra extra large' and is a size label. */
-    (0, import_i18n57.__)("XXL")
+    (0, import_i18n59.__)("XXL")
   ];
-  var T_SHIRT_NAMES = [(0, import_i18n57.__)("Small"), (0, import_i18n57.__)("Medium"), (0, import_i18n57.__)("Large"), (0, import_i18n57.__)("Extra Large"), (0, import_i18n57.__)("Extra Extra Large")];
+  var T_SHIRT_NAMES = [(0, import_i18n59.__)("Small"), (0, import_i18n59.__)("Medium"), (0, import_i18n59.__)("Large"), (0, import_i18n59.__)("Extra Large"), (0, import_i18n59.__)("Extra Extra Large")];
 
   // packages/components/build-module/font-size-picker/font-size-picker-toggle-group.mjs
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
@@ -60625,7 +60629,7 @@ This message will only show in development mode. It won't appear in production. 
       return fontSizeBySize?.slug;
     })();
     return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(component_default12, {
-      label: (0, import_i18n58.__)("Font size"),
+      label: (0, import_i18n60.__)("Font size"),
       hideLabelFromVision: true,
       value: currentValue,
       onChange: (newSlug) => {
@@ -60783,10 +60787,10 @@ This message will only show in development mode. It won't appear in production. 
           children: [/* @__PURE__ */ (0, import_jsx_runtime258.jsx)(base_control_default.VisualLabel, {
             id: labelId,
             className: style_module_default59["header-label"],
-            children: (0, import_i18n59.__)("Font size")
+            children: (0, import_i18n61.__)("Font size")
           }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(Button3, {
             className: style_module_default59["header-toggle"],
-            label: currentPickerType === "custom" ? (0, import_i18n59.__)("Use size preset") : (0, import_i18n59.__)("Set custom size"),
+            label: currentPickerType === "custom" ? (0, import_i18n61.__)("Use size preset") : (0, import_i18n61.__)("Set custom size"),
             icon: settings_default,
             onClick: () => setUserRequestedCustom(!userRequestedCustom),
             isPressed: currentPickerType === "custom",
@@ -60823,7 +60827,7 @@ This message will only show in development mode. It won't appear in production. 
           children: [/* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default4, {
             isBlock: true,
             children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(unit_control_default, {
-              label: (0, import_i18n59.__)("Font size"),
+              label: (0, import_i18n61.__)("Font size"),
               labelPosition: "top",
               hideLabelFromVision: true,
               value: hasUnits2 ? `${valueQuantity ?? ""}${valueUnit ?? ""}` : resolvedValueForControls,
@@ -60845,7 +60849,7 @@ This message will only show in development mode. It won't appear in production. 
               marginBottom: 0,
               children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(range_control_default, {
                 className: "components-font-size-picker__custom-input",
-                label: (0, import_i18n59.__)("Font size"),
+                label: (0, import_i18n61.__)("Font size"),
                 hideLabelFromVision: true,
                 value: valueQuantity,
                 initialPosition: fallbackFontSize,
@@ -60875,7 +60879,7 @@ This message will only show in development mode. It won't appear in production. 
               variant: "secondary",
               __next40pxDefaultSize: true,
               size: "default",
-              children: (0, import_i18n59.__)("Reset")
+              children: (0, import_i18n61.__)("Reset")
             })
           })]
         })]
@@ -60977,7 +60981,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/index.mjs
   var import_element169 = __toESM(require_element(), 1);
-  var import_i18n61 = __toESM(require_i18n(), 1);
+  var import_i18n63 = __toESM(require_i18n(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
@@ -60986,7 +60990,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/token.mjs
   var import_compose60 = __toESM(require_compose(), 1);
-  var import_i18n60 = __toESM(require_i18n(), 1);
+  var import_i18n62 = __toESM(require_i18n(), 1);
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
   var noop18 = () => {
   };
@@ -61016,9 +61020,9 @@ This message will only show in development mode. It won't appear in production. 
       value
     });
     const transformedValue = displayTransform(value);
-    const termPositionAndCount = (0, import_i18n60.sprintf)(
+    const termPositionAndCount = (0, import_i18n62.sprintf)(
       /* translators: 1: term name, 2: term position in a set of terms, 3: total term set count. */
-      (0, import_i18n60.__)("%1$s (%2$d of %3$d)"),
+      (0, import_i18n62.__)("%1$s (%2$d of %3$d)"),
       transformedValue,
       termPosition,
       termsCount
@@ -61138,7 +61142,7 @@ This message will only show in development mode. It won't appear in production. 
       autoComplete,
       maxLength,
       placeholder,
-      label = (0, import_i18n61.__)("Add item"),
+      label = (0, import_i18n63.__)("Add item"),
       className,
       suggestions = [],
       maxSuggestions = 100,
@@ -61154,10 +61158,10 @@ This message will only show in development mode. It won't appear in production. 
       disabled: disabled2 = false,
       tokenizeOnSpace = false,
       messages = {
-        added: (0, import_i18n61.__)("Item added."),
-        removed: (0, import_i18n61.__)("Item removed."),
-        remove: (0, import_i18n61.__)("Remove item"),
-        __experimentalInvalid: (0, import_i18n61.__)("Invalid item")
+        added: (0, import_i18n63.__)("Item added."),
+        removed: (0, import_i18n63.__)("Item removed."),
+        remove: (0, import_i18n63.__)("Remove item"),
+        __experimentalInvalid: (0, import_i18n63.__)("Invalid item")
       },
       __experimentalRenderItem,
       __experimentalExpandOnFocus = false,
@@ -61167,7 +61171,7 @@ This message will only show in development mode. It won't appear in production. 
       tokenizeOnBlur = false,
       help
     } = props;
-    const defaultHelp = tokenizeOnSpace ? (0, import_i18n61.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n61.__)("Separate with commas or the Enter key.");
+    const defaultHelp = tokenizeOnSpace ? (0, import_i18n63.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n63.__)("Separate with commas or the Enter key.");
     let computedHelp = help !== void 0 ? help : defaultHelp;
     if (typeof __experimentalShowHowTo === "boolean") {
       (0, import_deprecated20.default)("`__experimentalShowHowTo` prop in wp.components.FormTokenField", {
@@ -61569,11 +61573,11 @@ This message will only show in development mode. It won't appear in production. 
         }
       }
       if (inputHasMinimumChars) {
-        const message = hasMatchingSuggestions ? (0, import_i18n61.sprintf)(
+        const message = hasMatchingSuggestions ? (0, import_i18n63.sprintf)(
           /* translators: %d: number of results. */
-          (0, import_i18n61._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions2.length),
+          (0, import_i18n63._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions2.length),
           matchingSuggestions2.length
-        ) : (0, import_i18n61.__)("No results.");
+        ) : (0, import_i18n63.__)("No results.");
         debouncedSpeak(message, "assertive");
       }
     }
@@ -61682,10 +61686,10 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/guide/index.mjs
   var import_element170 = __toESM(require_element(), 1);
   var import_deprecated21 = __toESM(require_deprecated(), 1);
-  var import_i18n63 = __toESM(require_i18n(), 1);
+  var import_i18n65 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/guide/page-control.mjs
-  var import_i18n62 = __toESM(require_i18n(), 1);
+  var import_i18n64 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/guide/icons.mjs
   var import_primitives34 = __toESM(require_primitives(), 1);
@@ -61711,7 +61715,7 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("ul", {
       className: "components-guide__page-control",
-      "aria-label": (0, import_i18n62.__)("Guide controls"),
+      "aria-label": (0, import_i18n64.__)("Guide controls"),
       children: Array.from({
         length: numberOfPages
       }).map((_2, page) => /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("li", {
@@ -61720,9 +61724,9 @@ This message will only show in development mode. It won't appear in production. 
         children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(button_default, {
           size: "small",
           icon: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(PageControlIcon, {}),
-          "aria-label": (0, import_i18n62.sprintf)(
+          "aria-label": (0, import_i18n64.sprintf)(
             /* translators: 1: current page number 2: total number of pages */
-            (0, import_i18n62.__)("Page %1$d of %2$d"),
+            (0, import_i18n64.__)("Page %1$d of %2$d"),
             page + 1,
             numberOfPages
           ),
@@ -61738,9 +61742,9 @@ This message will only show in development mode. It won't appear in production. 
     children,
     className,
     contentLabel,
-    finishButtonText = (0, import_i18n63.__)("Finish"),
-    nextButtonText = (0, import_i18n63.__)("Next"),
-    previousButtonText = (0, import_i18n63.__)("Previous"),
+    finishButtonText = (0, import_i18n65.__)("Finish"),
+    nextButtonText = (0, import_i18n65.__)("Next"),
+    previousButtonText = (0, import_i18n65.__)("Previous"),
     onFinish,
     pages = []
   }) {
@@ -62740,7 +62744,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.mjs
   var import_element178 = __toESM(require_element(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
-  var import_i18n64 = __toESM(require_i18n(), 1);
+  var import_i18n66 = __toESM(require_i18n(), 1);
   var ANIMATION_TIMEOUT_MARGIN = 1.2;
   var isEnterAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_IN" && animationName === ANIMATION_END_NAMES[animationDirection].in;
   var isExitAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_OUT" && animationName === ANIMATION_END_NAMES[animationDirection].out;
@@ -62750,7 +62754,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     isBack,
     onAnimationEnd
   }) {
-    const isRTL19 = (0, import_i18n64.isRTL)();
+    const isRTL19 = (0, import_i18n66.isRTL)();
     const prefersReducedMotion2 = (0, import_compose64.useReducedMotion)();
     const [animationStatus, setAnimationStatus] = (0, import_element178.useState)("INITIAL");
     const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
@@ -63124,7 +63128,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/notice/index.mjs
-  var import_i18n65 = __toESM(require_i18n(), 1);
+  var import_i18n67 = __toESM(require_i18n(), 1);
   var import_element183 = __toESM(require_element(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
   var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
@@ -63152,14 +63156,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function getStatusLabel(status) {
     switch (status) {
       case "warning":
-        return (0, import_i18n65.__)("Warning notice");
+        return (0, import_i18n67.__)("Warning notice");
       case "info":
-        return (0, import_i18n65.__)("Information notice");
+        return (0, import_i18n67.__)("Information notice");
       case "error":
-        return (0, import_i18n65.__)("Error notice");
+        return (0, import_i18n67.__)("Error notice");
       // The default will also catch the 'success' status.
       default:
-        return (0, import_i18n65.__)("Notice");
+        return (0, import_i18n67.__)("Notice");
     }
   }
   function Notice({
@@ -63229,7 +63233,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         size: "small",
         className: "components-notice__dismiss",
         icon: close_small_default,
-        label: (0, import_i18n65.__)("Close"),
+        label: (0, import_i18n67.__)("Close"),
         onClick: onDismissNotice
       })]
     });
@@ -63487,7 +63491,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var placeholder_default = Placeholder;
 
   // packages/components/build-module/progress-bar/index.mjs
-  var import_i18n66 = __toESM(require_i18n(), 1);
+  var import_i18n68 = __toESM(require_i18n(), 1);
   var import_element188 = __toESM(require_element(), 1);
   var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE82 = "data-wp-hash";
@@ -63589,7 +63593,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         className: style_module_default61["progress-element"],
         max: 100,
         value,
-        "aria-label": (0, import_i18n66.__)("Loading \u2026"),
+        "aria-label": (0, import_i18n68.__)("Loading \u2026"),
         ref,
         ...progressProps
       })]
@@ -63600,7 +63604,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var progress_bar_default = ProgressBar;
 
   // packages/components/build-module/query-controls/index.mjs
-  var import_i18n67 = __toESM(require_i18n(), 1);
+  var import_i18n69 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/query-controls/terms.mjs
   var ensureParentsAreDefined = (terms) => {
@@ -63734,18 +63738,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return "categorySuggestions" in props;
   }
   var defaultOrderByOptions = [{
-    label: (0, import_i18n67.__)("Newest to oldest"),
+    label: (0, import_i18n69.__)("Newest to oldest"),
     value: "date/desc"
   }, {
-    label: (0, import_i18n67.__)("Oldest to newest"),
+    label: (0, import_i18n69.__)("Oldest to newest"),
     value: "date/asc"
   }, {
     /* translators: Label for ordering posts by title in ascending order. */
-    label: (0, import_i18n67.__)("A \u2192 Z"),
+    label: (0, import_i18n69.__)("A \u2192 Z"),
     value: "title/asc"
   }, {
     /* translators: Label for ordering posts by title in descending order. */
-    label: (0, import_i18n67.__)("Z \u2192 A"),
+    label: (0, import_i18n69.__)("Z \u2192 A"),
     value: "title/desc"
   }];
   function QueryControls({
@@ -63769,7 +63773,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       spacing: "4",
       className: "components-query-controls",
       children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(select_control_default, {
-        label: (0, import_i18n67.__)("Order by"),
+        label: (0, import_i18n69.__)("Order by"),
         value: orderBy === void 0 || order === void 0 ? void 0 : `${orderBy}/${order}`,
         options: orderByOptions,
         onChange: (value) => {
@@ -63786,12 +63790,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(CategorySelect, {
         categoriesList: props.categoriesList,
-        label: (0, import_i18n67.__)("Category"),
-        noOptionLabel: (0, import_i18n67._x)("All", "categories"),
+        label: (0, import_i18n69.__)("Category"),
+        noOptionLabel: (0, import_i18n69._x)("All", "categories"),
         selectedCategoryId: props.selectedCategoryId,
         onChange: props.onCategoryChange
       }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(form_token_field_default, {
-        label: (0, import_i18n67.__)("Categories"),
+        label: (0, import_i18n69.__)("Categories"),
         value: props.selectedCategories && props.selectedCategories.map((item) => ({
           id: item.id,
           // Keeping the fallback to `item.value` for legacy reasons,
@@ -63805,12 +63809,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
       }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(AuthorSelect, {
         authorList,
-        label: (0, import_i18n67.__)("Author"),
-        noOptionLabel: (0, import_i18n67._x)("All", "authors"),
+        label: (0, import_i18n69.__)("Author"),
+        noOptionLabel: (0, import_i18n69._x)("All", "authors"),
         selectedAuthorId,
         onChange: onAuthorChange
       }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(range_control_default, {
-        label: (0, import_i18n67.__)("Number of items"),
+        label: (0, import_i18n69.__)("Number of items"),
         value: numberOfItems,
         onChange: onNumberOfItemsChange,
         min: minItems,
@@ -63866,7 +63870,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/radio-group/index.mjs
   var import_deprecated26 = __toESM(require_deprecated(), 1);
   var import_element193 = __toESM(require_element(), 1);
-  var import_i18n68 = __toESM(require_i18n(), 1);
+  var import_i18n70 = __toESM(require_i18n(), 1);
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedRadioGroup({
     label,
@@ -63883,7 +63887,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setValue: (newValue) => {
         onChange?.(newValue ?? void 0);
       },
-      rtl: (0, import_i18n68.isRTL)()
+      rtl: (0, import_i18n70.isRTL)()
     });
     const contextValue = (0, import_element193.useMemo)(() => ({
       store: radioStore,
@@ -64075,10 +64079,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       if (typeof b2 !== "function" && b2 !== null)
         throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
       extendStatics(d2, b2);
-      function __64() {
+      function __66() {
         this.constructor = d2;
       }
-      d2.prototype = b2 === null ? Object.create(b2) : (__64.prototype = b2.prototype, new __64());
+      d2.prototype = b2 === null ? Object.create(b2) : (__66.prototype = b2.prototype, new __66());
     };
   })();
   var __assign3 = function() {
@@ -64808,7 +64812,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
   var import_element195 = __toESM(require_element(), 1);
-  var import_i18n69 = __toESM(require_i18n(), 1);
+  var import_i18n71 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/resizable-box/resize-tooltip/utils.mjs
   var import_element194 = __toESM(require_element(), 1);
@@ -65046,8 +65050,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...style2,
         position: "absolute",
         top: CORNER_OFFSET,
-        right: (0, import_i18n69.isRTL)() ? void 0 : CORNER_OFFSET,
-        left: (0, import_i18n69.isRTL)() ? CORNER_OFFSET : void 0
+        right: (0, import_i18n71.isRTL)() ? void 0 : CORNER_OFFSET,
+        left: (0, import_i18n71.isRTL)() ? CORNER_OFFSET : void 0
       };
     }
     return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
@@ -65627,7 +65631,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/search-control/index.mjs
   var import_compose71 = __toESM(require_compose(), 1);
-  var import_i18n70 = __toESM(require_i18n(), 1);
+  var import_i18n72 = __toESM(require_i18n(), 1);
   var import_element200 = __toESM(require_element(), 1);
   var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
@@ -65729,7 +65733,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(button_default, {
         size: "small",
         icon: close_small_default,
-        label: onClose ? (0, import_i18n70.__)("Close search") : (0, import_i18n70.__)("Reset search"),
+        label: onClose ? (0, import_i18n72.__)("Close search") : (0, import_i18n72.__)("Reset search"),
         onClick: onClose ?? onReset
       })
     });
@@ -65741,8 +65745,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     className,
     onChange,
     value,
-    label = (0, import_i18n70.__)("Search"),
-    placeholder = (0, import_i18n70.__)("Search"),
+    label = (0, import_i18n72.__)("Search"),
+    placeholder = (0, import_i18n72.__)("Search"),
     hideLabelFromVision = true,
     onClose,
     size: size4 = "default",
@@ -65790,7 +65794,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/snackbar/index.mjs
   var import_a11y9 = __toESM(require_a11y(), 1);
   var import_element201 = __toESM(require_element(), 1);
-  var import_i18n71 = __toESM(require_i18n(), 1);
+  var import_i18n73 = __toESM(require_i18n(), 1);
   var import_warning10 = __toESM(require_warning(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_TIMEOUT = 6e3;
@@ -65871,7 +65875,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       tabIndex: 0,
       role: !explicitDismiss ? "button" : void 0,
       onKeyPress: !explicitDismiss ? dismissMe : void 0,
-      "aria-label": !explicitDismiss ? (0, import_i18n71.__)("Dismiss this notice") : void 0,
+      "aria-label": !explicitDismiss ? (0, import_i18n73.__)("Dismiss this notice") : void 0,
       "data-testid": "snackbar",
       children: /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", {
         className: snackbarContentClassnames,
@@ -65897,7 +65901,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           children: label
         }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("span", {
           role: "button",
-          "aria-label": (0, import_i18n71.__)("Dismiss this notice"),
+          "aria-label": (0, import_i18n73.__)("Dismiss this notice"),
           tabIndex: 0,
           className: "components-snackbar__dismiss-button",
           onClick: dismissMe,
@@ -66007,7 +66011,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tab-panel/index.mjs
   var import_element203 = __toESM(require_element(), 1);
   var import_compose73 = __toESM(require_compose(), 1);
-  var import_i18n72 = __toESM(require_i18n(), 1);
+  var import_i18n74 = __toESM(require_i18n(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   var extractTabName = (id3) => {
     if (typeof id3 === "undefined" || id3 === null) {
@@ -66050,7 +66054,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       orientation,
       selectOnMove,
       defaultSelectedId: prependInstanceId(initialTabName),
-      rtl: (0, import_i18n72.isRTL)()
+      rtl: (0, import_i18n74.isRTL)()
     });
     const selectedTabName = extractTabName(useStoreState(tabStore, "selectedId"));
     const setTabStoreSelectedId = (0, import_element203.useCallback)((tabName) => {
@@ -66135,7 +66139,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       // Prevent passing legacy props to `input`.
       __nextHasNoMarginBottom: _2,
-      __next40pxDefaultSize: __64,
+      __next40pxDefaultSize: __66,
       label,
       hideLabelFromVision,
       value,
@@ -66635,7 +66639,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar/toolbar-container.mjs
   var import_element213 = __toESM(require_element(), 1);
-  var import_i18n73 = __toESM(require_i18n(), 1);
+  var import_i18n75 = __toESM(require_i18n(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarContainer({
     label,
@@ -66643,7 +66647,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, ref) {
     const toolbarStore = useToolbarStore({
       focusLoop: true,
-      rtl: (0, import_i18n73.isRTL)()
+      rtl: (0, import_i18n75.isRTL)()
     });
     return (
       // This will provide state for `ToolbarButton`'s
@@ -66746,7 +66750,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
   var import_a11y10 = __toESM(require_a11y(), 1);
-  var import_i18n74 = __toESM(require_i18n(), 1);
+  var import_i18n76 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/tools-panel/context.mjs
   var import_element216 = __toESM(require_element(), 1);
@@ -66965,7 +66969,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("span", {
       "aria-hidden": true,
       className: style_module_default67["reset-label"],
-      children: (0, import_i18n74.__)("Reset")
+      children: (0, import_i18n76.__)("Reset")
     });
     return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_jsx_runtime317.Fragment, {
       children: items.map(([label, hasValue]) => {
@@ -66973,16 +66977,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
             className: itemClassName,
             role: "menuitem",
-            label: (0, import_i18n74.sprintf)(
+            label: (0, import_i18n76.sprintf)(
               // translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the reset action, to match the visible menu label order.
-              (0, import_i18n74.__)("%s, reset to default"),
+              (0, import_i18n76.__)("%s, reset to default"),
               label
             ),
             onClick: () => {
               toggleItem(label);
-              (0, import_a11y10.speak)((0, import_i18n74.sprintf)(
+              (0, import_a11y10.speak)((0, import_i18n76.sprintf)(
                 // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n74.__)("%s reset to default"),
+                (0, import_i18n76.__)("%s reset to default"),
                 label
               ), "assertive");
             },
@@ -67010,13 +67014,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_jsx_runtime317.Fragment, {
       children: items.map(([label, isSelected2]) => {
-        const itemLabel = isSelected2 ? (0, import_i18n74.sprintf)(
+        const itemLabel = isSelected2 ? (0, import_i18n76.sprintf)(
           // translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the hide and reset action.
-          (0, import_i18n74.__)("%s, hide and reset"),
+          (0, import_i18n76.__)("%s, hide and reset"),
           label
-        ) : (0, import_i18n74.sprintf)(
+        ) : (0, import_i18n76.sprintf)(
           // translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the show action.
-          (0, import_i18n74._x)("%s, show", "input control"),
+          (0, import_i18n76._x)("%s, show", "input control"),
           label
         );
         return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(menu_item_default, {
@@ -67025,15 +67029,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           label: itemLabel,
           onClick: () => {
             if (isSelected2) {
-              (0, import_a11y10.speak)((0, import_i18n74.sprintf)(
+              (0, import_a11y10.speak)((0, import_i18n76.sprintf)(
                 // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n74.__)("%s hidden and reset to default"),
+                (0, import_i18n76.__)("%s hidden and reset to default"),
                 label
               ), "assertive");
             } else {
-              (0, import_a11y10.speak)((0, import_i18n74.sprintf)(
+              (0, import_a11y10.speak)((0, import_i18n76.sprintf)(
                 // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n74.__)("%s is now visible"),
+                (0, import_i18n76.__)("%s is now visible"),
                 label
               ), "assertive");
             }
@@ -67066,12 +67070,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const defaultItems = Object.entries(menuItems?.default || {});
     const optionalItems = Object.entries(menuItems?.optional || {});
     const dropDownMenuIcon = areAllOptionalControlsHidden ? plus_default : more_vertical_default;
-    const dropDownMenuLabelText = (0, import_i18n74.sprintf)(
+    const dropDownMenuLabelText = (0, import_i18n76.sprintf)(
       // translators: %s: The name of the tool e.g. "Color" or "Typography".
-      (0, import_i18n74._x)("%s options", "Button label to reveal tool panel options"),
+      (0, import_i18n76._x)("%s options", "Button label to reveal tool panel options"),
       labelText
     );
-    const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n74.__)("All options are currently hidden") : void 0;
+    const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n76.__)("All options are currently hidden") : void 0;
     const canResetAll = [...defaultItems, ...optionalItems].some(([, isSelected2]) => isSelected2);
     return /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(component_default9, {
       ...headerProps,
@@ -67109,10 +67113,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
               onClick: () => {
                 if (canResetAll) {
                   resetAll();
-                  (0, import_a11y10.speak)((0, import_i18n74.__)("All options reset"), "assertive");
+                  (0, import_a11y10.speak)((0, import_i18n76.__)("All options reset"), "assertive");
                 }
               },
-              children: (0, import_i18n74.__)("Reset all")
+              children: (0, import_i18n76.__)("Reset all")
             })
           })]
         })
@@ -68528,7 +68532,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/index.mjs
   var import_element247 = __toESM(require_element(), 1);
-  var import_i18n75 = __toESM(require_i18n(), 1);
+  var import_i18n77 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/menu/context.mjs
   var import_element234 = __toESM(require_element(), 1);
@@ -69046,7 +69050,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       variant
     } = useContextSystem(props, "Menu");
     const parentContext = (0, import_element247.useContext)(Context2);
-    const rtl2 = (0, import_i18n75.isRTL)();
+    const rtl2 = (0, import_i18n77.isRTL)();
     let computedPlacement = placement ?? (parentContext?.store ? "right-start" : "bottom-start");
     if (rtl2) {
       if (/right/.test(computedPlacement)) {
@@ -69179,7 +69183,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tabs/index.mjs
   var import_compose88 = __toESM(require_compose(), 1);
   var import_element253 = __toESM(require_element(), 1);
-  var import_i18n76 = __toESM(require_i18n(), 1);
+  var import_i18n78 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/tabs/context.mjs
   var import_element248 = __toESM(require_element(), 1);
@@ -69670,7 +69674,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         onActiveTabIdChange?.(internalToExternalTabId(newActiveId, instanceId));
       },
       activeId: externalToInternalTabId(activeTabId, instanceId),
-      rtl: (0, import_i18n76.isRTL)()
+      rtl: (0, import_i18n78.isRTL)()
     });
     const contextValue = (0, import_element253.useMemo)(() => ({
       store,
