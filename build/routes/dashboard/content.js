@@ -39043,11 +39043,16 @@ var DialogValidationProvider = dialogTitleValidation.ValidationProvider;
 // packages/ui/build-module/dialog/portal.mjs
 var import_element90 = __toESM(require_element(), 1);
 var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
-var Portal4 = (0, import_element90.forwardRef)(
-  function DialogPortal3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(index_parts_exports5.Portal, { ref, ...props });
-  }
-);
+var Portal4 = (0, import_element90.forwardRef)(function DialogPortal3({ container, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
+    index_parts_exports5.Portal,
+    {
+      ref,
+      container: container === void 0 ? getWpCompatOverlaySlot() : container,
+      ...restProps
+    }
+  );
+});
 
 // packages/ui/build-module/dialog/popup.mjs
 var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
