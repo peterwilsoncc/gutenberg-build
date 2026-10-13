@@ -1,5 +1,5 @@
 // packages/block-library/build-module/cover/view.mjs
-import { getContext, store } from "@wordpress/interactivity";
+import { getContext, getElement, store } from "@wordpress/interactivity";
 
 // packages/block-library/build-module/utils/reduced-motion.mjs
 function prefersReducedMotion() {
@@ -17,6 +17,16 @@ store(
           return reducedMotionSrc;
         }
         return src;
+      }
+    },
+    callbacks: {
+      stopBackgroundVideo() {
+        if (!prefersReducedMotion()) {
+          return;
+        }
+        const { ref } = getElement();
+        ref.autoplay = false;
+        ref.pause();
       }
     }
   },
