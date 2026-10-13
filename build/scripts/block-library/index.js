@@ -68253,6 +68253,7 @@ ${text}
     attributes: attributes2,
     setAttributes,
     clientId,
+    name: name118,
     isSelected,
     className,
     backgroundColor,
@@ -68487,6 +68488,7 @@ ${text}
         setAttributes({
           submenuVisibility: "always",
           layout: {
+            ...(0, import_blocks56.getBlockSupport)(name118, "layout")?.default,
             ...attributes2.layout,
             orientation: "vertical"
           },
@@ -68496,6 +68498,7 @@ ${text}
     }, [
       attributes2.layout,
       isWithinOverlay,
+      name118,
       overlayMenu,
       ref,
       setAttributes
@@ -83369,16 +83372,16 @@ ${text}
     return (0, import_data119.useSelect)(
       (select10) => {
         const { getClientIdsOfDescendants, getBlockName } = select10(import_block_editor205.store);
-        const { getBlockSupport: getBlockSupport2, getBlockType: getBlockType6 } = select10(import_blocks85.store);
+        const { getBlockSupport: getBlockSupport3, getBlockType: getBlockType6 } = select10(import_blocks85.store);
         const blockTitles = /* @__PURE__ */ new Set();
         getClientIdsOfDescendants(clientId).forEach(
           (descendantClientId) => {
             const blockName = getBlockName(descendantClientId);
             const blockSupportsInteractivity = Object.is(
-              getBlockSupport2(blockName, "interactivity"),
+              getBlockSupport3(blockName, "interactivity"),
               true
             );
-            const blockSupportsInteractivityClientNavigation = getBlockSupport2(
+            const blockSupportsInteractivityClientNavigation = getBlockSupport3(
               blockName,
               "interactivity.clientNavigation"
             );
