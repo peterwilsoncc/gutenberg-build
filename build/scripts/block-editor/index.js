@@ -82055,7 +82055,7 @@ var wp;
   }
   function getBlockIcon({ select: select3, clientIds }) {
     if (!clientIds.length) {
-      return (0, import_blocks78.getBlockType)((0, import_blocks78.getDefaultBlockName)())?.icon;
+      return (0, import_blocks78.getBlockType)((0, import_blocks78.getDefaultBlockName)())?.icon ?? block_default_default;
     }
     const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, getBlock: getBlock2, isSectionBlock: isSectionBlock2 } = unlock(select3(store));
     const _isSingleBlock = clientIds.length === 1;
@@ -82105,7 +82105,7 @@ var wp;
     const showBlockTitle = isSingleBlock && isSynced && !showIconLabels;
     let label = isSingleBlock ? blockTitle : (0, import_i18n113.__)("Multiple blocks selected");
     if (!clientIds.length) {
-      label = (0, import_blocks78.getBlockType)((0, import_blocks78.getDefaultBlockName)())?.title;
+      label = (0, import_blocks78.getBlockType)((0, import_blocks78.getDefaultBlockName)())?.title ?? (0, import_i18n113.__)("Block");
     }
     const text = showBlockTitle && blockTitle ? blockTitle : void 0;
     const BlockIconElement = /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
