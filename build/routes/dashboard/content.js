@@ -39715,11 +39715,16 @@ var DrawerValidationProvider = drawerTitleValidation.ValidationProvider;
 // packages/ui/build-module/drawer/portal.mjs
 var import_element100 = __toESM(require_element(), 1);
 var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
-var Portal5 = (0, import_element100.forwardRef)(
-  function DrawerPortal2(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(index_parts_exports6.Portal, { ref, ...props });
-  }
-);
+var Portal5 = (0, import_element100.forwardRef)(function DrawerPortal2({ container, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+    index_parts_exports6.Portal,
+    {
+      ref,
+      container: container === void 0 ? getWpCompatOverlaySlot() : container,
+      ...restProps
+    }
+  );
+});
 
 // packages/ui/build-module/drawer/popup.mjs
 var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
