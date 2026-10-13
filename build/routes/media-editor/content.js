@@ -46566,14 +46566,11 @@ function mediaEditorReducer(state, action) {
         cropOptions: nextCropOptions
       };
     }
-    case "RESET_CROP_OPTIONS": {
-      if (state.cropOptions.aspectRatioValue === DEFAULT_CROP_OPTIONS.aspectRatioValue) {
-        return state;
-      }
-      return {
-        ...state,
-        cropOptions: { ...DEFAULT_CROP_OPTIONS }
-      };
+    case "RESET": {
+      const next = buildInitialMediaEditorState(
+        cropperReducer(state.cropper, { type: "RESET" })
+      );
+      return areMediaEditorStatesEqual(state, next) ? state : next;
     }
     case "SET_EDIT": {
       const { name, value } = action.payload;
@@ -46728,7 +46725,7 @@ function useMediaEditorState() {
     setHasUndo(false);
     setHasRedo(false);
   }, []);
-  const reset = (0, import_element154.useCallback)(
+  const resetCropper = (0, import_element154.useCallback)(
     (resetState) => {
       dispatchWithHistory({
         type: "CROPPER",
@@ -46754,8 +46751,8 @@ function useMediaEditorState() {
     },
     [dispatchWithHistory]
   );
-  const resetCropOptions = (0, import_element154.useCallback)(() => {
-    dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
+  const reset = (0, import_element154.useCallback)(() => {
+    dispatchWithHistory({ type: "RESET" });
   }, [dispatchWithHistory]);
   const setEdit = (0, import_element154.useCallback)(
     (name, value) => {
@@ -46830,7 +46827,7 @@ function useMediaEditorState() {
       ...cropperSetters,
       state: state.cropper,
       setImage: setSourceImage,
-      reset,
+      reset: resetCropper,
       isDirty: isCropperDirty,
       getCroppedImage,
       setVisualSize,
@@ -46840,7 +46837,7 @@ function useMediaEditorState() {
       cropperSetters,
       state.cropper,
       setSourceImage,
-      reset,
+      resetCropper,
       isCropperDirty,
       getCroppedImage,
       setVisualSize,
@@ -46852,10 +46849,10 @@ function useMediaEditorState() {
       cropper,
       cropOptions: state.cropOptions,
       setAspectRatioValue,
-      resetCropOptions,
       edits: state.edits,
       setEdit,
       setSourceImage,
+      reset,
       isDirty,
       // Only geometry changes the saved image so far.
       hasOutputEdits: isCropperDirty,
@@ -46870,10 +46867,10 @@ function useMediaEditorState() {
       cropper,
       state.cropOptions,
       setAspectRatioValue,
-      resetCropOptions,
       state.edits,
       setEdit,
       setSourceImage,
+      reset,
       isDirty,
       isCropperDirty,
       hasUndo,
@@ -47426,8 +47423,7 @@ function useCropOptions({
     aspectRatioValue,
     setAspectRatioValue: controller.setAspectRatioValue,
     aspectRatioOptions,
-    resolvedAspectRatio,
-    resetCropOptions: controller.resetCropOptions
+    resolvedAspectRatio
   };
 }
 
@@ -48216,16 +48212,14 @@ function HeaderActions({ showCloseButton = false }) {
   );
 }
 function HistoryActions() {
-  const { isImage, isUndoRedoDisabled, onReset, isWide, activePanel } = useMediaEditorFrameContext();
+  const { isImage, isUndoRedoDisabled, isWide, activePanel } = useMediaEditorFrameContext();
   const {
-    cropper: { reset },
+    reset,
     isDirty,
     hasUndo,
     hasRedo,
     undo: undoCrop,
-    redo: redoCrop,
-    beginGesture,
-    endGesture
+    redo: redoCrop
   } = useMediaEditor();
   if (!isImage || !isWide && !!activePanel) {
     return null;
@@ -48246,10 +48240,7 @@ function HistoryActions() {
     if (isUndoRedoDisabled) {
       return;
     }
-    beginGesture();
     reset();
-    onReset();
-    endGesture();
   };
   return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
     Stack,
@@ -48486,12 +48477,7 @@ function MediaEditorContent({
       setActivePanel(isWide ? lastPanelRef.current : null);
     }
   }, [isWide, isImage]);
-  const {
-    aspectRatioValue,
-    setAspectRatioValue,
-    aspectRatioOptions,
-    resetCropOptions
-  } = useCropOptions({ aspectRatioPresets });
+  const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
   const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
     session,
     id,
@@ -48692,7 +48678,6 @@ function MediaEditorContent({
     onTogglePanel: togglePanel,
     onCancel: handleRequestClose,
     onSave: saveMediaEditor,
-    onReset: resetCropOptions,
     canRestoreOriginal,
     isSourceReplaced,
     onRestoreOriginal: handleRestoreOriginal

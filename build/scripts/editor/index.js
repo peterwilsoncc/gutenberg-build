@@ -80457,14 +80457,11 @@ If there's a particular need for this, please submit a feature request at https:
           cropOptions: nextCropOptions
         };
       }
-      case "RESET_CROP_OPTIONS": {
-        if (state2.cropOptions.aspectRatioValue === DEFAULT_CROP_OPTIONS.aspectRatioValue) {
-          return state2;
-        }
-        return {
-          ...state2,
-          cropOptions: { ...DEFAULT_CROP_OPTIONS }
-        };
+      case "RESET": {
+        const next = buildInitialMediaEditorState(
+          cropperReducer(state2.cropper, { type: "RESET" })
+        );
+        return areMediaEditorStatesEqual(state2, next) ? state2 : next;
       }
       case "SET_EDIT": {
         const { name: name2, value } = action.payload;
@@ -80619,7 +80616,7 @@ If there's a particular need for this, please submit a feature request at https:
       setHasUndo(false);
       setHasRedo(false);
     }, []);
-    const reset = (0, import_element263.useCallback)(
+    const resetCropper = (0, import_element263.useCallback)(
       (resetState) => {
         dispatchWithHistory({
           type: "CROPPER",
@@ -80645,8 +80642,8 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [dispatchWithHistory]
     );
-    const resetCropOptions = (0, import_element263.useCallback)(() => {
-      dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
+    const reset = (0, import_element263.useCallback)(() => {
+      dispatchWithHistory({ type: "RESET" });
     }, [dispatchWithHistory]);
     const setEdit = (0, import_element263.useCallback)(
       (name2, value) => {
@@ -80721,7 +80718,7 @@ If there's a particular need for this, please submit a feature request at https:
         ...cropperSetters,
         state: state2.cropper,
         setImage: setSourceImage,
-        reset,
+        reset: resetCropper,
         isDirty: isCropperDirty,
         getCroppedImage,
         setVisualSize,
@@ -80731,7 +80728,7 @@ If there's a particular need for this, please submit a feature request at https:
         cropperSetters,
         state2.cropper,
         setSourceImage,
-        reset,
+        resetCropper,
         isCropperDirty,
         getCroppedImage,
         setVisualSize,
@@ -80743,10 +80740,10 @@ If there's a particular need for this, please submit a feature request at https:
         cropper,
         cropOptions: state2.cropOptions,
         setAspectRatioValue,
-        resetCropOptions,
         edits: state2.edits,
         setEdit,
         setSourceImage,
+        reset,
         isDirty,
         // Only geometry changes the saved image so far.
         hasOutputEdits: isCropperDirty,
@@ -80761,10 +80758,10 @@ If there's a particular need for this, please submit a feature request at https:
         cropper,
         state2.cropOptions,
         setAspectRatioValue,
-        resetCropOptions,
         state2.edits,
         setEdit,
         setSourceImage,
+        reset,
         isDirty,
         isCropperDirty,
         hasUndo,
@@ -81317,8 +81314,7 @@ If there's a particular need for this, please submit a feature request at https:
       aspectRatioValue,
       setAspectRatioValue: controller.setAspectRatioValue,
       aspectRatioOptions,
-      resolvedAspectRatio,
-      resetCropOptions: controller.resetCropOptions
+      resolvedAspectRatio
     };
   }
 
@@ -82107,16 +82103,14 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function HistoryActions() {
-    const { isImage, isUndoRedoDisabled, onReset, isWide, activePanel } = useMediaEditorFrameContext();
+    const { isImage, isUndoRedoDisabled, isWide, activePanel } = useMediaEditorFrameContext();
     const {
-      cropper: { reset },
+      reset,
       isDirty,
       hasUndo,
       hasRedo,
       undo: undoCrop,
-      redo: redoCrop,
-      beginGesture,
-      endGesture
+      redo: redoCrop
     } = useMediaEditor();
     if (!isImage || !isWide && !!activePanel) {
       return null;
@@ -82137,10 +82131,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (isUndoRedoDisabled) {
         return;
       }
-      beginGesture();
       reset();
-      onReset();
-      endGesture();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime426.jsxs)(
       Stack,
@@ -82377,12 +82368,7 @@ If there's a particular need for this, please submit a feature request at https:
         setActivePanel(isWide ? lastPanelRef.current : null);
       }
     }, [isWide, isImage]);
-    const {
-      aspectRatioValue,
-      setAspectRatioValue,
-      aspectRatioOptions,
-      resetCropOptions
-    } = useCropOptions({ aspectRatioPresets });
+    const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
     const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
       session,
       id,
@@ -82583,7 +82569,6 @@ If there's a particular need for this, please submit a feature request at https:
       onTogglePanel: togglePanel,
       onCancel: handleRequestClose,
       onSave: saveMediaEditor,
-      onReset: resetCropOptions,
       canRestoreOriginal,
       isSourceReplaced,
       onRestoreOriginal: handleRestoreOriginal
