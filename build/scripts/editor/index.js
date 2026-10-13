@@ -114899,7 +114899,18 @@ ${content}
   var itemToTermId = (item) => Number(item.value);
   var isSameTerm = (termA, termB) => termA.value === termB.value;
   var isSameTermName = (nameA, nameB) => nameA.toLowerCase() === nameB.toLowerCase();
+  var hasTermName = (terms, name2) => terms.some((term) => isSameTermName(term.label, name2));
   var isPendingTerm = (item) => item.value.startsWith(PENDING_TERM_PREFIX);
+  function parseTermNames(input) {
+    const names = [];
+    for (const part of input.split(",")) {
+      const name2 = part.trim();
+      if (name2 && !names.some((n2) => isSameTermName(n2, name2))) {
+        names.push(name2);
+      }
+    }
+    return names;
+  }
   function FlatTermSelector({ slug }) {
     const [values, setValues] = (0, import_element369.useState)(EMPTY_ARRAY16);
     const [inputValue, setInputValue] = (0, import_element369.useState)("");
@@ -114976,22 +114987,22 @@ ${content}
       [registry, slug]
     );
     const debouncedSearch = (0, import_compose67.useDebounce)(searchTerms, 500);
-    const newTermName = inputValue.trim();
-    const hasExactMatch = [...suggestions, ...values].some(
-      (term) => isSameTermName(term.label, newTermName)
+    const newTermNames = parseTermNames(inputValue).filter(
+      (name2) => !hasTermName(values, name2)
     );
-    const showCreatableItem = hasCreateAction && !!newTermName && !hasExactMatch && !isSearching;
+    const showCreatableItem = hasCreateAction && !isSearching && newTermNames.some((name2) => !hasTermName(suggestions, name2));
+    const newTermNamesLabel = newTermNames.join(", ");
     const creatableItem = (0, import_element369.useMemo)(
       () => showCreatableItem ? {
         value: CREATE_TERM_VALUE,
         label: (0, import_i18n272.sprintf)(
-          /* translators: %s: term name. */
+          /* translators: %s: term name, or a comma-separated list of term names. */
           (0, import_i18n272._x)("Create: %s", "term"),
-          newTermName
+          newTermNamesLabel
         ),
         creatable: true
       } : void 0,
-      [newTermName, showCreatableItem]
+      [newTermNamesLabel, showCreatableItem]
     );
     const items = (0, import_element369.useMemo)(
       () => creatableItem ? [...suggestions, creatableItem] : suggestions,
@@ -115047,10 +115058,10 @@ ${content}
             (item) => !isSameTerm(item, pendingTerm)
           )
         );
-        return;
+        return false;
       }
       if (!pendingTermsRef.current.has(pendingTerm.value)) {
-        return;
+        return false;
       }
       pendingTermsRef.current.delete(pendingTerm.value);
       setValues(
@@ -115061,14 +115072,33 @@ ${content}
         )
       );
       assignTerm(itemToTermId(savedTerm));
-      (0, import_a11y12.speak)(termAddedLabel, "assertive");
+      return true;
+    }
+    async function createTerms(names) {
+      const results = await Promise.all(
+        names.map((name2) => createTerm(name2))
+      );
+      if (results.includes(true)) {
+        (0, import_a11y12.speak)(termAddedLabel, "assertive");
+      }
+    }
+    function onKeyDownCapture(event) {
+      const { target } = event;
+      if (event.key !== "Enter" || // Enter confirms the composed text.
+      event.nativeEvent.isComposing || event.keyCode === 229 || !hasCreateAction || !inputValue.trim() || target.getAttribute("role") !== "combobox" || // The select picks a highlighted option.
+      target.getAttribute("aria-activedescendant")) {
+        return;
+      }
+      event.preventDefault();
+      onInputValueChange("");
+      createTerms(newTermNames);
     }
     async function onChange(newValues) {
       const isCreatingTerm = newValues.some(
         (item) => item.value === CREATE_TERM_VALUE
       );
       if (isCreatingTerm) {
-        await createTerm(newTermName);
+        await createTerms(newTermNames);
         return;
       }
       if (newValues.length !== values.length) {
@@ -115118,37 +115148,46 @@ ${content}
       setIsSearching(true);
       debouncedSearch(nextInputValue);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime595.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(
-        SearchableChipSelectControl2,
-        {
-          openOnInputClick: false,
-          filter: null,
-          label: newTermLabel,
-          items,
-          value: values,
-          onValueChange: onChange,
-          isItemEqualToValue: isSameTerm,
-          inputValue,
-          onInputValueChange,
-          statusContent: isSearching ? /* @__PURE__ */ (0, import_jsx_runtime595.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(Spinner, {}),
-            (0, import_i18n272.__)("Searching\u2026")
-          ] }) : suggestions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(VisuallyHidden, { children: (0, import_i18n272.sprintf)(
-            /* translators: %d: number of results. */
-            (0, import_i18n272._n)(
-              "%d result found.",
-              "%d results found.",
-              suggestions.length
-            ),
-            suggestions.length
-          ) }),
-          emptyContent: isSearching ? null : notFoundLabel,
-          showClearButton: false
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(MostUsedTerms, { taxonomy, onSelect: appendTerm })
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime595.jsxs)(
+      Stack,
+      {
+        direction: "column",
+        gap: "lg",
+        onKeyDownCapture,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(
+            SearchableChipSelectControl2,
+            {
+              openOnInputClick: false,
+              filter: null,
+              label: newTermLabel,
+              description: (0, import_i18n272.__)("Separate with commas or the Enter key."),
+              items,
+              value: values,
+              onValueChange: onChange,
+              isItemEqualToValue: isSameTerm,
+              inputValue,
+              onInputValueChange,
+              statusContent: isSearching ? /* @__PURE__ */ (0, import_jsx_runtime595.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(Spinner, {}),
+                (0, import_i18n272.__)("Searching\u2026")
+              ] }) : suggestions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(VisuallyHidden, { children: (0, import_i18n272.sprintf)(
+                /* translators: %d: number of results. */
+                (0, import_i18n272._n)(
+                  "%d result found.",
+                  "%d results found.",
+                  suggestions.length
+                ),
+                suggestions.length
+              ) }),
+              emptyContent: isSearching ? null : notFoundLabel,
+              showClearButton: false
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(MostUsedTerms, { taxonomy, onSelect: appendTerm })
+        ]
+      }
+    );
   }
   var flat_term_selector_default = (0, import_components193.withFilters)("editor.PostTaxonomyType")(FlatTermSelector);
 
