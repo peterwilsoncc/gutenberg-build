@@ -3015,11 +3015,16 @@ var wp;
   }
   function loaderStates(state = {}, action) {
     switch (action.type) {
-      case "SET_LOADER_LOADING":
-        return {
-          ...state,
-          [action.name]: action.isLoading
-        };
+      case "SET_LOADER_LOADING": {
+        if (action.isLoading) {
+          return { ...state, [action.name]: true };
+        }
+        if (!(action.name in state)) {
+          return state;
+        }
+        const { [action.name]: _, ...remainingState } = state;
+        return remainingState;
+      }
     }
     return state;
   }
@@ -3149,7 +3154,9 @@ var wp;
     isLoading: () => isLoading
   });
   function isLoading(state) {
-    return Object.values(state.loaderStates).some(Boolean);
+    return Object.entries(state.loaderStates).some(
+      ([name, loading]) => loading && !!state.commandLoaders[name]
+    );
   }
 
   // packages/commands/build-module/lock-unlock.mjs
@@ -3177,6 +3184,7 @@ var wp;
   var MAX_RECENTLY_SAVED = 30;
   var MAX_RECENTLY_DISPLAYED = 5;
   var EMPTY_ARRAY = [];
+  var EMPTY_COMMANDS = [];
   var EMPTY_SET = /* @__PURE__ */ new Set();
   function recordUsage(name) {
     const current = (0, import_data4.select)(import_preferences.store).get(
@@ -3189,13 +3197,22 @@ var wp;
     );
     (0, import_data4.dispatch)(import_preferences.store).set("core/commands", "recentlyUsed", next);
   }
-  function useLoaderCollector(hook, name, filterNames, onResolved) {
+  function useLoaderLoadingState(name, loading) {
     const { setLoaderLoading: setLoaderLoading2 } = unlock((0, import_data4.useDispatch)(store));
-    const { isLoading: loading, commands: commands2 = [] } = hook({ search: "" }) ?? {};
     (0, import_element2.useEffect)(() => {
       setLoaderLoading2(name, loading);
     }, [setLoaderLoading2, name, loading]);
-    const filtered = filterNames ? commands2.filter((c) => filterNames.has(c.name)) : commands2;
+    (0, import_element2.useEffect)(() => {
+      return () => setLoaderLoading2(name, false);
+    }, [setLoaderLoading2, name]);
+  }
+  function useLoaderCollector(hook, name, filterNames, onResolved) {
+    const { isLoading: loading, commands: commands2 = EMPTY_COMMANDS } = hook({ search: "" }) ?? {};
+    useLoaderLoadingState(name, loading);
+    const filtered = (0, import_element2.useMemo)(
+      () => filterNames ? commands2.filter((c) => filterNames.has(c.name)) : commands2,
+      [commands2, filterNames]
+    );
     (0, import_element2.useEffect)(() => {
       onResolved(name, filtered);
     }, [onResolved, name, filtered]);
@@ -3241,26 +3258,32 @@ var wp;
       const names = recentlyUsedNames.slice(0, MAX_RECENTLY_DISPLAYED);
       return { recentNames: names, recentSet: new Set(names) };
     }, [recentlyUsedNames]);
+    const loaders = (0, import_element2.useMemo)(
+      () => [...contextualLoaders, ...staticLoaders],
+      [contextualLoaders, staticLoaders]
+    );
+    const commands2 = (0, import_element2.useMemo)(() => {
+      const allByName = /* @__PURE__ */ new Map();
+      [...contextualCommands, ...staticCommands].forEach(
+        (c) => allByName.set(c.name, c)
+      );
+      for (const cmds of resolvedMap.values()) {
+        cmds.forEach((c) => {
+          if (!allByName.has(c.name)) {
+            allByName.set(c.name, c);
+          }
+        });
+      }
+      return recentNames.map((n) => allByName.get(n)).filter((c) => !!c);
+    }, [contextualCommands, staticCommands, resolvedMap, recentNames]);
     if (!recentlyUsedNames.length) {
       return {
-        commands: [],
+        commands: EMPTY_COMMANDS,
         loaders: [],
         recentSet: EMPTY_SET,
         onResolved
       };
     }
-    const allStaticCommands = [...contextualCommands, ...staticCommands];
-    const loaders = [...contextualLoaders, ...staticLoaders];
-    const allByName = /* @__PURE__ */ new Map();
-    allStaticCommands.forEach((c) => allByName.set(c.name, c));
-    for (const cmds of resolvedMap.values()) {
-      cmds.forEach((c) => {
-        if (!allByName.has(c.name)) {
-          allByName.set(c.name, c);
-        }
-      });
-    }
-    const commands2 = recentNames.map((n) => allByName.get(n)).filter((c) => !!c);
     return { commands: commands2, loaders, recentSet, onResolved };
   }
 
@@ -3279,7 +3302,7 @@ var wp;
     workflow: (0, import_i18n.__)("Workflow")
   };
   function isValidIcon(icon) {
-    return !!icon && (typeof icon === "string" || (0, import_element3.isValidElement)(icon) || typeof icon === "function" || icon instanceof import_element3.Component);
+    return typeof icon === "string" && icon !== "" || typeof icon === "function" || (0, import_element3.isValidElement)(icon);
   }
   function CommandItem({
     command,
@@ -3290,7 +3313,8 @@ var wp;
     const { close: close2 } = (0, import_data5.useDispatch)(store);
     const commandCategory = category ?? command.category;
     const categoryLabel = commandCategory ? CATEGORY_LABELS[commandCategory] : void 0;
-    const icon = command.icon ?? (commandCategory ? CATEGORY_FALLBACK_ICONS[commandCategory] : void 0);
+    const fallbackIcon = commandCategory ? CATEGORY_FALLBACK_ICONS[commandCategory] : void 0;
+    const icon = isValidIcon(command.icon) ? command.icon : fallbackIcon;
     const label = command.searchLabel ?? command.label;
     const value = valuePrefix ? `${valuePrefix}${command.name}` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
@@ -3311,7 +3335,7 @@ var wp;
               "has-icon": !!icon
             }),
             children: [
-              isValidIcon(icon) && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(icon_default, { icon }),
+              icon && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components.Icon, { icon, size: 24 }),
               /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "commands-command-menu__item-label", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
                 import_components.TextHighlight,
                 {
@@ -3334,11 +3358,8 @@ var wp;
     category,
     valuePrefix
   }) {
-    const { setLoaderLoading: setLoaderLoading2 } = unlock((0, import_data5.useDispatch)(store));
     const { isLoading: loading, commands: commands2 = [] } = hook({ search }) ?? {};
-    (0, import_element3.useEffect)(() => {
-      setLoaderLoading2(name, loading);
-    }, [setLoaderLoading2, name, loading]);
+    useLoaderLoadingState(name, loading);
     if (!commands2.length) {
       return null;
     }
