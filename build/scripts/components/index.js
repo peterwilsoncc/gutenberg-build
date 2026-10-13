@@ -65793,6 +65793,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/snackbar/index.mjs
   var import_a11y9 = __toESM(require_a11y(), 1);
+  var import_compose72 = __toESM(require_compose(), 1);
   var import_element201 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_warning10 = __toESM(require_warning(), 1);
@@ -65822,11 +65823,27 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     listRef
   }, ref) {
     const isPresent2 = useIsPresent();
+    const snackbarRef = (0, import_element201.useRef)(null);
+    const mergedRef = (0, import_compose72.useMergeRefs)([snackbarRef, ref]);
+    const focusReturnRef = (0, import_element201.useRef)(null);
+    function onFocus(event) {
+      if (!event.currentTarget.contains(event.relatedTarget)) {
+        focusReturnRef.current = event.relatedTarget;
+      }
+    }
     function dismissMe(event) {
       if (event && event.preventDefault) {
         event.preventDefault();
       }
-      listRef?.current?.focus();
+      if (listRef?.current) {
+        listRef.current.focus();
+      } else if (snackbarRef.current?.contains(snackbarRef.current.ownerDocument.activeElement)) {
+        if (focusReturnRef.current?.isConnected) {
+          focusReturnRef.current.focus({
+            preventScroll: true
+          });
+        }
+      }
       onDismiss?.();
       onRemove?.();
     }
@@ -65869,7 +65886,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       "components-snackbar__content-with-icon": !!icon
     });
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
-      ref,
+      ref: mergedRef,
+      onFocus,
       className: classes,
       onClick: !explicitDismiss ? dismissMe : void 0,
       tabIndex: 0,
@@ -65916,7 +65934,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var snackbar_default = Snackbar;
 
   // packages/components/build-module/snackbar/list.mjs
-  var import_compose72 = __toESM(require_compose(), 1);
+  var import_compose73 = __toESM(require_compose(), 1);
   var import_element202 = __toESM(require_element(), 1);
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
   var SNACKBAR_VARIANTS = {
@@ -65957,7 +65975,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onRemove
   }) {
     const listRef = (0, import_element202.useRef)(null);
-    const isReducedMotion = (0, import_compose72.useReducedMotion)();
+    const isReducedMotion = (0, import_compose73.useReducedMotion)();
     className = clsx_default("components-snackbar-list", className);
     const removeNotice = (notice) => () => onRemove?.(notice.id);
     return /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)("div", {
@@ -66010,7 +66028,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tab-panel/index.mjs
   var import_element203 = __toESM(require_element(), 1);
-  var import_compose73 = __toESM(require_compose(), 1);
+  var import_compose74 = __toESM(require_compose(), 1);
   var import_i18n74 = __toESM(require_i18n(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   var extractTabName = (id3) => {
@@ -66029,7 +66047,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     activeClass = "is-active",
     onSelect
   }, ref) => {
-    const instanceId = (0, import_compose73.useInstanceId)(TabPanel22, "tab-panel");
+    const instanceId = (0, import_compose74.useInstanceId)(TabPanel22, "tab-panel");
     const prependInstanceId = (0, import_element203.useCallback)((tabName) => {
       if (typeof tabName === "undefined") {
         return;
@@ -66063,7 +66081,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const selectedTab = tabs.find(({
       name
     }) => name === selectedTabName);
-    const previousSelectedTabName = (0, import_compose73.usePrevious)(selectedTabName);
+    const previousSelectedTabName = (0, import_compose74.usePrevious)(selectedTabName);
     (0, import_element203.useEffect)(() => {
       if (previousSelectedTabName !== selectedTabName && selectedTabName === initialTabName && !!selectedTabName) {
         onSelect?.(selectedTabName);
@@ -66132,7 +66150,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var tab_panel_default = TabPanel22;
 
   // packages/components/build-module/text-control/index.mjs
-  var import_compose74 = __toESM(require_compose(), 1);
+  var import_compose75 = __toESM(require_compose(), 1);
   var import_element204 = __toESM(require_element(), 1);
   var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTextControl(props, ref) {
@@ -66150,7 +66168,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       type = "text",
       ...additionalProps
     } = props;
-    const id3 = (0, import_compose74.useInstanceId)(TextControl, "inspector-text-control", idProp);
+    const id3 = (0, import_compose75.useInstanceId)(TextControl, "inspector-text-control", idProp);
     const onChangeValue = (event) => onChange(event.target.value);
     return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(base_control_default, {
       label,
@@ -66175,7 +66193,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var text_control_default = TextControl;
 
   // packages/components/build-module/textarea-control/index.mjs
-  var import_compose75 = __toESM(require_compose(), 1);
+  var import_compose76 = __toESM(require_compose(), 1);
   var import_element205 = __toESM(require_element(), 1);
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE86 = "data-wp-hash";
@@ -66270,7 +66288,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       className,
       ...additionalProps
     } = props;
-    const instanceId = (0, import_compose75.useInstanceId)(TextareaControl);
+    const instanceId = (0, import_compose76.useInstanceId)(TextareaControl);
     const id3 = `inspector-textarea-control-${instanceId}`;
     const onChangeValue = (event) => onChange(event.target.value);
     const classes = clsx_default("components-textarea-control", className);
@@ -66343,7 +66361,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toggle-control/index.mjs
   var import_element207 = __toESM(require_element(), 1);
-  var import_compose76 = __toESM(require_compose(), 1);
+  var import_compose77 = __toESM(require_compose(), 1);
   var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToggleControl({
     label,
@@ -66359,7 +66377,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     function onChangeToggle(event) {
       onChange(event.target.checked);
     }
-    const instanceId = (0, import_compose76.useInstanceId)(ToggleControl);
+    const instanceId = (0, import_compose77.useInstanceId)(ToggleControl);
     const id3 = `inspector-toggle-control-${instanceId}`;
     let describedBy, helpLabel;
     if (help) {
@@ -67511,7 +67529,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var component_default39 = ToolsPanel;
 
   // packages/components/build-module/tools-panel/tools-panel-item/hook.mjs
-  var import_compose77 = __toESM(require_compose(), 1);
+  var import_compose78 = __toESM(require_compose(), 1);
   var import_element218 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE90 = "data-wp-hash";
   function getRuntime90() {
@@ -67622,12 +67640,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalLastVisibleItemClass
     } = useToolsPanelContext();
     const hasValueCallback = (0, import_element218.useCallback)(hasValue, [panelId]);
-    const resetAllFilterCallback = (0, import_compose77.useEvent)(resetAllFilter);
+    const resetAllFilterCallback = (0, import_compose78.useEvent)(resetAllFilter);
     const defaultShownRef = (0, import_element218.useRef)(defaultShown);
     (0, import_element218.useLayoutEffect)(() => {
       defaultShownRef.current = defaultShown;
     });
-    const onShownChangeCallback = (0, import_compose77.useEvent)(onShownChange);
+    const onShownChangeCallback = (0, import_compose78.useEvent)(onShownChange);
     const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
     (0, import_element218.useLayoutEffect)(() => {
       if (!hasMatchingPanel) {
@@ -67742,7 +67760,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
 
   // packages/components/build-module/tree-grid/row.mjs
-  var import_compose78 = __toESM(require_compose(), 1);
+  var import_compose79 = __toESM(require_compose(), 1);
   var import_element222 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/use-validate-tree-grid-structure.mjs
@@ -67809,7 +67827,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...props
   }, ref) {
     const rowRef = (0, import_element222.useRef)(null);
-    const refs = (0, import_compose78.useMergeRefs)([rowRef, ref]);
+    const refs = (0, import_compose79.useMergeRefs)([rowRef, ref]);
     useValidateTreeGridStructure("TreeGridRow", rowRef);
     return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)("tr", {
       ...props,
@@ -68227,7 +68245,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/navigate-regions/index.mjs
   var import_element229 = __toESM(require_element(), 1);
-  var import_compose79 = __toESM(require_compose(), 1);
+  var import_compose80 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   var defaultShortcuts = {
@@ -68269,7 +68287,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       nextRegion.focus();
       setIsFocusingRegions(true);
     }
-    const clickRef = (0, import_compose79.useRefEffect)((element) => {
+    const clickRef = (0, import_compose80.useRefEffect)((element) => {
       function onClick() {
         setIsFocusingRegions(false);
       }
@@ -68279,7 +68297,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [setIsFocusingRegions]);
     return {
-      ref: (0, import_compose79.useMergeRefs)([ref, clickRef]),
+      ref: (0, import_compose80.useMergeRefs)([ref, clickRef]),
       className: isFocusingRegions ? "is-focusing-regions" : "",
       onKeyDown(event) {
         if (shortcuts.previous.some(({
@@ -68300,7 +68318,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     };
   }
-  var navigate_regions_default = (0, import_compose79.createHigherOrderComponent)((Component7) => function NavigateRegions({
+  var navigate_regions_default = (0, import_compose80.createHigherOrderComponent)((Component7) => function NavigateRegions({
     shortcuts,
     ...props
   }) {
@@ -68313,10 +68331,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "navigateRegions");
 
   // packages/components/build-module/higher-order/with-constrained-tabbing/index.mjs
-  var import_compose80 = __toESM(require_compose(), 1);
+  var import_compose81 = __toESM(require_compose(), 1);
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
-  var withConstrainedTabbing = (0, import_compose80.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
-    const ref = (0, import_compose80.useConstrainedTabbing)();
+  var withConstrainedTabbing = (0, import_compose81.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
+    const ref = (0, import_compose81.useConstrainedTabbing)();
     return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)("div", {
       ref,
       tabIndex: -1,
@@ -68330,13 +68348,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-fallback-styles/index.mjs
   var import_es63 = __toESM(require_es6(), 1);
   var import_element230 = __toESM(require_element(), 1);
-  var import_compose81 = __toESM(require_compose(), 1);
+  var import_compose82 = __toESM(require_compose(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
-  var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose81.createHigherOrderComponent)((WrappedComponent) => {
+  var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose82.createHigherOrderComponent)((WrappedComponent) => {
     return function WithFallbackStyles(props) {
       const [fallbackStyles, setFallbackStyles] = (0, import_element230.useState)(void 0);
       const nodeRef = (0, import_element230.useRef)(null);
-      (0, import_compose81.useIsomorphicLayoutEffect)(() => {
+      (0, import_compose82.useIsomorphicLayoutEffect)(() => {
         const node2 = props.node ?? nodeRef.current;
         const grabStylesCompleted = !!fallbackStyles && Object.values(fallbackStyles).every(Boolean);
         if (node2 && !grabStylesCompleted) {
@@ -68360,11 +68378,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-filters/index.mjs
   var import_element231 = __toESM(require_element(), 1);
   var import_hooks9 = __toESM(require_hooks(), 1);
-  var import_compose82 = __toESM(require_compose(), 1);
+  var import_compose83 = __toESM(require_compose(), 1);
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_FRAME_PERIOD = 16;
   function withFilters(hookName) {
-    return (0, import_compose82.createHigherOrderComponent)((OriginalComponent) => {
+    return (0, import_compose83.createHigherOrderComponent)((OriginalComponent) => {
       const namespace = "core/with-filters/" + hookName;
       let FilteredComponent;
       function ensureFilteredComponent() {
@@ -68398,7 +68416,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
       FilteredComponentRenderer.instances = [];
-      const throttledForceUpdate = (0, import_compose82.debounce)(() => {
+      const throttledForceUpdate = (0, import_compose83.debounce)(() => {
         FilteredComponent = (0, import_hooks9.applyFilters)(hookName, OriginalComponent);
         FilteredComponentRenderer.instances.forEach((instance) => {
           instance.forceUpdate();
@@ -68415,20 +68433,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
   var import_element232 = __toESM(require_element(), 1);
-  var import_compose83 = __toESM(require_compose(), 1);
+  var import_compose84 = __toESM(require_compose(), 1);
   var import_deprecated34 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element232.Component || typeof object === "function";
   }
-  var with_focus_return_default = (0, import_compose83.createHigherOrderComponent)(
+  var with_focus_return_default = (0, import_compose84.createHigherOrderComponent)(
     // @ts-expect-error TODO: Reconcile with intended `createHigherOrderComponent` types
     (options2) => {
       const HoC = ({
         onFocusReturn
       } = {}) => (WrappedComponent) => {
         const WithFocusReturn = (props) => {
-          const ref = (0, import_compose83.useFocusReturn)(onFocusReturn);
+          const ref = (0, import_compose84.useFocusReturn)(onFocusReturn);
           return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)("div", {
             ref,
             children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(WrappedComponent, {
@@ -68458,9 +68476,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-notices/index.mjs
   var import_element233 = __toESM(require_element(), 1);
-  var import_compose84 = __toESM(require_compose(), 1);
+  var import_compose85 = __toESM(require_compose(), 1);
   var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
-  var with_notices_default = (0, import_compose84.createHigherOrderComponent)((OriginalComponent) => {
+  var with_notices_default = (0, import_compose85.createHigherOrderComponent)((OriginalComponent) => {
     function Component7(props, ref) {
       const [noticeList, setNoticeList] = (0, import_element233.useState)([]);
       const noticeOperations = (0, import_element233.useMemo)(() => {
@@ -68516,14 +68534,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "withNotices");
 
   // packages/components/build-module/higher-order/with-spoken-messages/index.mjs
-  var import_compose85 = __toESM(require_compose(), 1);
+  var import_compose86 = __toESM(require_compose(), 1);
   var import_a11y11 = __toESM(require_a11y(), 1);
   var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
-  var with_spoken_messages_default = (0, import_compose85.createHigherOrderComponent)((Component7) => function WithSpokenMessages(props) {
+  var with_spoken_messages_default = (0, import_compose86.createHigherOrderComponent)((Component7) => function WithSpokenMessages(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(Component7, {
       ...props,
       speak: import_a11y11.speak,
-      debouncedSpeak: (0, import_compose85.useDebounce)(import_a11y11.speak, 500)
+      debouncedSpeak: (0, import_compose86.useDebounce)(import_a11y11.speak, 500)
     });
   }, "withSpokenMessages");
 
@@ -69181,7 +69199,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/index.mjs
-  var import_compose88 = __toESM(require_compose(), 1);
+  var import_compose89 = __toESM(require_compose(), 1);
   var import_element253 = __toESM(require_element(), 1);
   var import_i18n78 = __toESM(require_i18n(), 1);
 
@@ -69312,16 +69330,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tabs/tablist.mjs
   var import_warning13 = __toESM(require_warning(), 1);
   var import_element251 = __toESM(require_element(), 1);
-  var import_compose87 = __toESM(require_compose(), 1);
+  var import_compose88 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/tabs/use-track-overflow.mjs
   var import_element250 = __toESM(require_element(), 1);
-  var import_compose86 = __toESM(require_compose(), 1);
+  var import_compose87 = __toESM(require_compose(), 1);
   function useTrackOverflow(parent, children) {
     const [first, setFirst] = (0, import_element250.useState)(false);
     const [last, setLast] = (0, import_element250.useState)(false);
     const [observer, setObserver] = (0, import_element250.useState)();
-    const callback = (0, import_compose86.useEvent)((entries) => {
+    const callback = (0, import_compose87.useEvent)((entries) => {
       for (const entry of entries) {
         if (entry.target === children.first) {
           setFirst(!entry.isIntersecting);
@@ -69492,7 +69510,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const selectOnMove = useStoreState(store, "selectOnMove");
     const items = useStoreState(store, "items");
     const [parent, setParent] = (0, import_element251.useState)();
-    const refs = (0, import_compose87.useMergeRefs)([ref, setParent]);
+    const refs = (0, import_compose88.useMergeRefs)([ref, setParent]);
     const selectedItem = store?.item(selectedId);
     const renderedItems = useStoreState(store, "renderedItems");
     const selectedItemIndex = renderedItems && selectedItem ? renderedItems.indexOf(selectedItem) : -1;
@@ -69660,7 +69678,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     defaultActiveTabId,
     onActiveTabIdChange
   }) {
-    const instanceId = (0, import_compose88.useInstanceId)(TabsRoot, "tabs");
+    const instanceId = (0, import_compose89.useInstanceId)(TabsRoot, "tabs");
     const store = useTabStore({
       selectOnMove,
       orientation,
@@ -69767,7 +69785,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
   var import_element254 = __toESM(require_element(), 1);
-  var import_compose89 = __toESM(require_compose(), 1);
+  var import_compose90 = __toESM(require_compose(), 1);
   var import_deprecated36 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
@@ -69782,7 +69800,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
     });
     const validityTargetRef = (0, import_element254.useRef)(null);
-    const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(ControlWithError, {
       className: "components-validated-control",
       required,
@@ -69802,7 +69820,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element256 = __toESM(require_element(), 1);
 
   // packages/components/build-module/content-editable-control/index.mjs
-  var import_compose90 = __toESM(require_compose(), 1);
+  var import_compose91 = __toESM(require_compose(), 1);
   var import_element255 = __toESM(require_element(), 1);
   var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE95 = "data-wp-hash";
@@ -69905,7 +69923,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     const labelId = `${controlProps.id}__label`;
     const editableRef = (0, import_element255.useRef)(null);
-    const mergedRefs = (0, import_compose90.useMergeRefs)([editableRef, forwardedRef]);
+    const mergedRefs = (0, import_compose91.useMergeRefs)([editableRef, forwardedRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(base_control_default, {
       ...baseControlProps,
       children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(component_default2, {
@@ -69980,7 +69998,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element257 = __toESM(require_element(), 1);
-  var import_compose91 = __toESM(require_compose(), 1);
+  var import_compose92 = __toESM(require_compose(), 1);
   var import_deprecated37 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
@@ -69995,7 +70013,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
     });
     const validityTargetRef = (0, import_element257.useRef)(null);
-    const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(ControlWithError, {
       className: "components-validated-control",
       required,
