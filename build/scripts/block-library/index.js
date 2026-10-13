@@ -98457,7 +98457,7 @@ ${text}
     category: "theme",
     description: "Displays the post count of a taxonomy term.",
     textdomain: "default",
-    usesContext: ["termId", "taxonomy"],
+    usesContext: ["termId", "taxonomy", "termData"],
     attributes: {
       bracketType: {
         type: "string",

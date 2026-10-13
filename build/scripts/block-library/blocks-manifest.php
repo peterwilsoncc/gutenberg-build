@@ -9524,7 +9524,8 @@ return array(
 		'textdomain' => 'default',
 		'usesContext' => array(
 			'termId',
-			'taxonomy'
+			'taxonomy',
+			'termData'
 		),
 		'attributes' => array(
 			'bracketType' => array(
