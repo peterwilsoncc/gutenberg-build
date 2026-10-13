@@ -685,7 +685,10 @@ var wp;
   }
 
   // packages/rich-text/build-module/to-html-string.mjs
-  function toHTMLString({ value, preserveWhiteSpace }) {
+  function toHTMLString({
+    value,
+    preserveWhiteSpace
+  }) {
     const tree = toTree({
       value,
       preserveWhiteSpace,
@@ -734,7 +737,12 @@ var wp;
     }
     return object;
   }
-  function createElementHTML({ type, attributes, object, children }) {
+  function createElementHTML({
+    type,
+    attributes,
+    object,
+    children
+  }) {
     if (type === "#comment") {
       return `<!--${attributes["data-rich-text-comment"]}-->`;
     }
@@ -1067,7 +1075,7 @@ var wp;
       }
       if (node.nodeType === node.COMMENT_NODE || node.nodeType === node.ELEMENT_NODE && node.tagName === "SPAN" && node.hasAttribute("data-rich-text-comment")) {
         const value2 = {
-          formats: [,],
+          formats: Array(1),
           replacements: [
             {
               type: "#comment",
@@ -1094,7 +1102,7 @@ var wp;
       }
       if (tagName === "script") {
         const value2 = {
-          formats: [,],
+          formats: Array(1),
           replacements: [
             {
               type: tagName,
@@ -1126,7 +1134,7 @@ var wp;
         delete format.formatType;
         accumulateSelection(accumulator, node, range, createEmptyValue());
         mergePair(accumulator, {
-          formats: [,],
+          formats: Array(1),
           replacements: [
             {
               ...format,
@@ -1151,7 +1159,7 @@ var wp;
       } else if (value.text.length === 0) {
         if (format.attributes) {
           mergePair(accumulator, {
-            formats: [,],
+            formats: Array(1),
             replacements: [format],
             text: OBJECT_REPLACEMENT_CHARACTER
           });
@@ -1202,7 +1210,9 @@ var wp;
     return a;
   }
   function concat(...values) {
-    return normaliseFormats(values.reduce(mergePair, create()));
+    return normaliseFormats(
+      values.reduce(mergePair, create())
+    );
   }
 
   // packages/rich-text/build-module/get-active-format.mjs
@@ -1213,7 +1223,12 @@ var wp;
   }
 
   // packages/rich-text/build-module/get-active-object.mjs
-  function getActiveObject({ start, end, replacements, text }) {
+  function getActiveObject({
+    start,
+    end,
+    replacements,
+    text
+  }) {
     if (start + 1 !== end || text[start] !== OBJECT_REPLACEMENT_CHARACTER) {
       return;
     }
@@ -1412,7 +1427,7 @@ var wp;
       let newFormats;
       let newReplacements;
       if (typeof newText === "function") {
-        newText = replacement(match, ...rest);
+        newText = newText(match, ...rest);
       }
       if (typeof newText === "object") {
         newFormats = newText.formats;
@@ -1441,7 +1456,7 @@ var wp;
   // packages/rich-text/build-module/insert-object.mjs
   function insertObject(value, formatToInsert, startIndex, endIndex) {
     const valueToInsert = {
-      formats: [,],
+      formats: Array(1),
       replacements: [formatToInsert],
       text: OBJECT_REPLACEMENT_CHARACTER
     };
@@ -1462,10 +1477,11 @@ var wp;
   }
 
   // packages/rich-text/build-module/split.mjs
-  function split({ formats, replacements, text, start, end }, string) {
+  function split(richTextValue, string, endIndex) {
     if (typeof string !== "string") {
-      return splitAtSelection(...arguments);
+      return splitAtSelection(richTextValue, string, endIndex);
     }
+    const { formats, replacements, text, start, end } = richTextValue;
     let nextStart = 0;
     return text.split(string).map((substring) => {
       const startIndex = nextStart;
@@ -1574,7 +1590,10 @@ var wp;
           child = element.ownerDocument.createElement(type);
         }
         for (const key in attributes) {
-          child.setAttribute(key, attributes[key]);
+          child.setAttribute(
+            key,
+            attributes[key]
+          );
         }
       }
     }
@@ -1617,6 +1636,7 @@ var wp;
     const tree = toTree({
       value,
       createEmpty: createEmpty2,
+      // `toTree` only appends to elements, and appends text to text nodes.
       append: append2,
       getLastChild: getLastChild2,
       getParent: getParent2,
@@ -1701,7 +1721,10 @@ var wp;
             for (let ii = 0; ii < futureAttributes.length; ii++) {
               const { name, value } = futureAttributes[ii];
               if (currentChild.getAttribute(name) !== value) {
-                currentChild.setAttribute(name, value);
+                currentChild.setAttribute(
+                  name,
+                  value
+                );
               }
             }
           }
@@ -2253,7 +2276,12 @@ var wp;
   var import_compose4 = __toESM(require_compose(), 1);
 
   // packages/rich-text/build-module/update-formats.mjs
-  function updateFormats({ value, start, end, formats }) {
+  function updateFormats({
+    value,
+    start,
+    end,
+    formats
+  }) {
     const min = Math.min(start, end);
     const max = Math.max(start, end);
     const formatsBefore = value.formats[min - 1] || [];
@@ -2997,16 +3025,20 @@ var wp;
 
   // packages/rich-text/build-module/contexts.mjs
   var import_element6 = __toESM(require_element(), 1);
-  var KeyboardShortcutContext = (0, import_element6.createContext)();
+  var KeyboardShortcutContext = (0, import_element6.createContext)(void 0);
   KeyboardShortcutContext.displayName = "KeyboardShortcutContext";
-  var InputEventContext = (0, import_element6.createContext)();
+  var InputEventContext = (0, import_element6.createContext)(void 0);
   InputEventContext.displayName = "InputEventContext";
 
   // packages/rich-text/build-module/keyboard-shortcut.mjs
   var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_element7 = __toESM(require_element(), 1);
   var import_compose9 = __toESM(require_compose(), 1);
-  function RichTextShortcut({ character, type, onUse }) {
+  function RichTextShortcut({
+    character,
+    type,
+    onUse
+  }) {
     const keyboardShortcuts = (0, import_element7.useContext)(KeyboardShortcutContext);
     const stableOnUse = (0, import_compose9.useEvent)(onUse);
     (0, import_element7.useEffect)(() => {
@@ -3027,7 +3059,10 @@ var wp;
   // packages/rich-text/build-module/input-event.mjs
   var import_element8 = __toESM(require_element(), 1);
   var import_compose10 = __toESM(require_compose(), 1);
-  function RichTextInputEvent({ inputType, onInput }) {
+  function RichTextInputEvent({
+    inputType,
+    onInput
+  }) {
     const callbacks = (0, import_element8.useContext)(InputEventContext);
     const stableOnInput = (0, import_compose10.useEvent)(onInput);
     (0, import_element8.useEffect)(() => {
