@@ -36747,8 +36747,8 @@ This message will only show in development mode. It won't appear in production. 
       justifyContent: "center"
     },
     bottomLeft: {
-      alignItems: "flex-start",
-      justifyContent: "flex-end"
+      alignItems: "flex-end",
+      justifyContent: "flex-start"
     },
     bottomRight: {
       alignItems: "flex-end",
