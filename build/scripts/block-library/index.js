@@ -94664,7 +94664,10 @@ ${text}
     const [initialRowCount, setInitialRowCount] = (0, import_element199.useState)(2);
     const [initialColumnCount, setInitialColumnCount] = (0, import_element199.useState)(2);
     const [selectedCell, setSelectedCell] = (0, import_element199.useState)();
-    const colorProps = (0, import_block_editor254.__experimentalUseColorProps)(attributes2);
+    const colorProps = (0, import_block_editor254.__experimentalUseColorProps)({
+      ...attributes2,
+      style: { ...attributes2.style, elements: void 0 }
+    });
     const borderProps = (0, import_block_editor254.__experimentalUseBorderProps)(attributes2);
     const backgroundProps = (0, import_block_editor254.useBackgroundProps)(attributes2);
     const textAlign = attributes2?.style?.typography?.textAlign;
@@ -95269,8 +95272,13 @@ ${text}
         gradient: true
       },
       color: {
-        __experimentalSkipSerialization: true,
+        __experimentalSkipSerialization: [
+          "text",
+          "background",
+          "gradients"
+        ],
         gradients: true,
+        link: true,
         __experimentalDefaultControls: {
           background: true,
           text: true
@@ -95339,7 +95347,10 @@ ${text}
     if (isEmpty) {
       return null;
     }
-    const colorProps = (0, import_block_editor255.__experimentalGetColorClassesAndStyles)(attributes2);
+    const colorProps = (0, import_block_editor255.__experimentalGetColorClassesAndStyles)({
+      ...attributes2,
+      style: { ...style2, elements: void 0 }
+    });
     const borderProps = (0, import_block_editor255.__experimentalGetBorderClassesAndStyles)(attributes2);
     const backgroundProps = (0, import_block_editor255.getBackgroundClassesAndStyles)(attributes2);
     const textAlign = style2?.typography?.textAlign;

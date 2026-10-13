@@ -100012,6 +100012,9 @@ var wp;
       "has-background": serializeHasBackground && hasBackground,
       "has-link-color": shouldSerialize("link") && style?.elements?.link?.color
     });
+    if (!newClassName && !shouldSerialize("text") && !shouldSerialize("background") && !shouldSerialize("gradients")) {
+      return props;
+    }
     props.className = newClassName ? newClassName : void 0;
     return props;
   }

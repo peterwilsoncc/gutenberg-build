@@ -9152,8 +9152,13 @@ return array(
 				'gradient' => true
 			),
 			'color' => array(
-				'__experimentalSkipSerialization' => true,
+				'__experimentalSkipSerialization' => array(
+					'text',
+					'background',
+					'gradients'
+				),
 				'gradients' => true,
+				'link' => true,
 				'__experimentalDefaultControls' => array(
 					'background' => true,
 					'text' => true
