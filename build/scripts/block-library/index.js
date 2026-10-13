@@ -100879,7 +100879,8 @@ ${text}
         }
       },
       interactivity: {
-        clientNavigation: true
+        clientNavigation: true,
+        interactive: true
       },
       shadow: {
         __experimentalSkipSerialization: true

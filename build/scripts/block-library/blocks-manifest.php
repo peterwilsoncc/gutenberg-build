@@ -10147,7 +10147,8 @@ return array(
 				)
 			),
 			'interactivity' => array(
-				'clientNavigation' => true
+				'clientNavigation' => true,
+				'interactive' => true
 			),
 			'shadow' => array(
 				'__experimentalSkipSerialization' => true

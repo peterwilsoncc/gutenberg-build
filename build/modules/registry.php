@@ -68,6 +68,11 @@ return array(
 		'asset' => 'block-library/tabs/view.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/block-library/video/view',
+		'path' => 'block-library/video/view',
+		'asset' => 'block-library/video/view.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/boot',
 		'path' => 'boot/index',
 		'asset' => 'boot/index.min.asset.php',
