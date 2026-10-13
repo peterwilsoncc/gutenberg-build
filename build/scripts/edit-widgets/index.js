@@ -16475,7 +16475,13 @@ ${content}
             blockEditorSettings
           }
         ) }),
-        footer: hasBlockBreadCrumbsEnabled && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("div", { className: "edit-widgets-layout__footer", children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_block_editor17.BlockBreadcrumb, { rootLabelText: (0, import_i18n23.__)("Widgets") }) })
+        footer: hasBlockBreadCrumbsEnabled && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("div", { className: "edit-widgets-layout__footer", children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+          import_block_editor17.BlockBreadcrumb,
+          {
+            className: "edit-widgets-layout__breadcrumbs",
+            rootLabelText: (0, import_i18n23.__)("Widgets")
+          }
+        ) })
       }
     );
   }

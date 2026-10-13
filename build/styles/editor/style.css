@@ -486,16 +486,6 @@ body.is-fullscreen-mode .interface-interface-skeleton {
     display: flex;
   }
 }
-.interface-interface-skeleton__footer .block-editor-block-breadcrumb {
-  z-index: 30;
-  display: flex;
-  background: #fff;
-  height: var(--wpds-dimension-size-md, 32px);
-  align-items: center;
-  font-size: 13px;
-  padding: 0 18px;
-}
-
 .interface-interface-skeleton__actions {
   z-index: 100000;
   position: fixed !important;
@@ -6667,6 +6657,12 @@ mark.wp-note {
 
 .show-icon-labels .editor-document-tools__left > * + * {
   margin-left: 8px;
+}
+
+.editor-editor-interface__breadcrumbs {
+  flex: 1 1 auto;
+  height: var(--wpds-dimension-size-md, 32px);
+  padding: 0 18px;
 }
 
 .editor-editor-interface .entities-saved-states__panel-header {

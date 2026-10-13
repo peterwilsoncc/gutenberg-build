@@ -719,37 +719,6 @@ iframe[name=editor-canvas] {
   z-index: 1;
 }
 
-.block-editor-block-breadcrumb {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.block-editor-block-breadcrumb li {
-  display: inline-flex;
-  margin: 0;
-  white-space: nowrap;
-}
-.block-editor-block-breadcrumb li .block-editor-block-breadcrumb__separator {
-  fill: currentColor;
-  margin-right: -4px;
-  margin-left: -4px;
-  transform: scaleX(-1);;
-}
-.block-editor-block-breadcrumb li:last-child .block-editor-block-breadcrumb__separator {
-  display: none;
-}
-
-.block-editor-block-breadcrumb__current {
-  cursor: default;
-}
-
-.block-editor-block-breadcrumb__button.block-editor-block-breadcrumb__button,
-.block-editor-block-breadcrumb__current {
-  color: #1e1e1e;
-  padding: 0 8px;
-  font-size: inherit;
-}
-
 .block-editor-block-card {
   color: #1e1e1e;
   padding: 16px;

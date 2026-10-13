@@ -125236,6 +125236,7 @@ ${content}
         footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime663.jsx)(
           import_block_editor88.BlockBreadcrumb,
           {
+            className: "editor-editor-interface__breadcrumbs",
             rootLabelText: postTypeLabel ? (0, import_html_entities30.decodeEntities)(postTypeLabel) : void 0
           }
         ),
