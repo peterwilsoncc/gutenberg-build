@@ -58567,6 +58567,13 @@ This message will only show in development mode. It won't appear in production. 
     onClose = () => {
     }
   }) {
+    const dismissButton = /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(component_default2, {
+      as: "button",
+      type: "button",
+      tabIndex: -1,
+      onClick: onClose,
+      children: (0, import_i18n45.__)("Close")
+    });
     const popoverProps = (0, import_element139.useMemo)(() => ({
       shift: true,
       offset: 20,
@@ -58579,9 +58586,15 @@ This message will only show in development mode. It won't appear in production. 
       className: clsx_default("components-palette-edit__popover", receivedPopoverProps?.className)
     }), [receivedPopoverProps]);
     return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(popover_default, {
+      role: "dialog",
+      "aria-label": (0, import_i18n45.sprintf)(
+        // translators: %s is a color, gradient or duotone name, e.g. "Red".
+        (0, import_i18n45.__)("Edit: %s"),
+        element.name.trim().length ? element.name : getElementValue(element, variant) || ""
+      ),
       ...popoverProps,
       onClose,
-      children: [variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(LegacyAdapter, {
+      children: [dismissButton, variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(LegacyAdapter, {
         color: element.color,
         enableAlpha: true,
         onChange: (newColor) => {
@@ -58637,7 +58650,7 @@ This message will only show in development mode. It won't appear in production. 
             }
           })]
         })
-      })]
+      }), dismissButton]
     });
   }
   function Option2({
