@@ -1387,528 +1387,6 @@ var wp;
     }
   });
 
-  // node_modules/.store/gradient-parser@1.1.1-3RSOQhBpdfGWowEbzFTPxw/node_modules/gradient-parser/build/node.js
-  var require_node = __commonJS({
-    "node_modules/.store/gradient-parser@1.1.1-3RSOQhBpdfGWowEbzFTPxw/node_modules/gradient-parser/build/node.js"(exports) {
-      var GradientParser = GradientParser || {};
-      GradientParser.stringify = /* @__PURE__ */ (function() {
-        var visitor = {
-          "visit_linear-gradient": function(node2) {
-            return visitor.visit_gradient(node2);
-          },
-          "visit_repeating-linear-gradient": function(node2) {
-            return visitor.visit_gradient(node2);
-          },
-          "visit_radial-gradient": function(node2) {
-            return visitor.visit_gradient(node2);
-          },
-          "visit_repeating-radial-gradient": function(node2) {
-            return visitor.visit_gradient(node2);
-          },
-          "visit_gradient": function(node2) {
-            var orientation = visitor.visit(node2.orientation);
-            if (orientation) {
-              orientation += ", ";
-            }
-            return node2.type + "(" + orientation + visitor.visit(node2.colorStops) + ")";
-          },
-          "visit_shape": function(node2) {
-            var result = node2.value, at = visitor.visit(node2.at), style2 = visitor.visit(node2.style);
-            if (style2) {
-              result += " " + style2;
-            }
-            if (at) {
-              result += " at " + at;
-            }
-            return result;
-          },
-          "visit_default-radial": function(node2) {
-            var result = "", at = visitor.visit(node2.at);
-            if (at) {
-              result += at;
-            }
-            return result;
-          },
-          "visit_extent-keyword": function(node2) {
-            var result = node2.value, at = visitor.visit(node2.at);
-            if (at) {
-              result += " at " + at;
-            }
-            return result;
-          },
-          "visit_position-keyword": function(node2) {
-            return node2.value;
-          },
-          "visit_position": function(node2) {
-            return visitor.visit(node2.value.x) + " " + visitor.visit(node2.value.y);
-          },
-          "visit_%": function(node2) {
-            return node2.value + "%";
-          },
-          "visit_em": function(node2) {
-            return node2.value + "em";
-          },
-          "visit_px": function(node2) {
-            return node2.value + "px";
-          },
-          "visit_calc": function(node2) {
-            return "calc(" + node2.value + ")";
-          },
-          "visit_literal": function(node2) {
-            return visitor.visit_color(node2.value, node2);
-          },
-          "visit_hex": function(node2) {
-            return visitor.visit_color("#" + node2.value, node2);
-          },
-          "visit_rgb": function(node2) {
-            return visitor.visit_color("rgb(" + node2.value.join(", ") + ")", node2);
-          },
-          "visit_rgba": function(node2) {
-            return visitor.visit_color("rgba(" + node2.value.join(", ") + ")", node2);
-          },
-          "visit_hsl": function(node2) {
-            return visitor.visit_color("hsl(" + node2.value[0] + ", " + node2.value[1] + "%, " + node2.value[2] + "%)", node2);
-          },
-          "visit_hsla": function(node2) {
-            return visitor.visit_color("hsla(" + node2.value[0] + ", " + node2.value[1] + "%, " + node2.value[2] + "%, " + node2.value[3] + ")", node2);
-          },
-          "visit_var": function(node2) {
-            return visitor.visit_color("var(" + node2.value + ")", node2);
-          },
-          "visit_color": function(resultColor, node2) {
-            var result = resultColor, length2 = visitor.visit(node2.length);
-            if (length2) {
-              result += " " + length2;
-            }
-            return result;
-          },
-          "visit_angular": function(node2) {
-            return node2.value + "deg";
-          },
-          "visit_directional": function(node2) {
-            return "to " + node2.value;
-          },
-          "visit_array": function(elements2) {
-            var result = "", size4 = elements2.length;
-            elements2.forEach(function(element, i2) {
-              result += visitor.visit(element);
-              if (i2 < size4 - 1) {
-                result += ", ";
-              }
-            });
-            return result;
-          },
-          "visit_object": function(obj) {
-            if (obj.width && obj.height) {
-              return visitor.visit(obj.width) + " " + visitor.visit(obj.height);
-            }
-            return "";
-          },
-          "visit": function(element) {
-            if (!element) {
-              return "";
-            }
-            var result = "";
-            if (element instanceof Array) {
-              return visitor.visit_array(element);
-            } else if (typeof element === "object" && !element.type) {
-              return visitor.visit_object(element);
-            } else if (element.type) {
-              var nodeVisitor = visitor["visit_" + element.type];
-              if (nodeVisitor) {
-                return nodeVisitor(element);
-              } else {
-                throw Error("Missing visitor visit_" + element.type);
-              }
-            } else {
-              throw Error("Invalid node.");
-            }
-          }
-        };
-        return function(root) {
-          return visitor.visit(root);
-        };
-      })();
-      var GradientParser = GradientParser || {};
-      GradientParser.parse = /* @__PURE__ */ (function() {
-        var tokens = {
-          linearGradient: /^(\-(webkit|o|ms|moz)\-)?(linear\-gradient)/i,
-          repeatingLinearGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-linear\-gradient)/i,
-          radialGradient: /^(\-(webkit|o|ms|moz)\-)?(radial\-gradient)/i,
-          repeatingRadialGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-radial\-gradient)/i,
-          sideOrCorner: /^to (left (top|bottom)|right (top|bottom)|top (left|right)|bottom (left|right)|left|right|top|bottom)/i,
-          extentKeywords: /^(closest\-side|closest\-corner|farthest\-side|farthest\-corner|contain|cover)/,
-          positionKeywords: /^(left|center|right|top|bottom)/i,
-          pixelValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))px/,
-          percentageValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))\%/,
-          emValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))em/,
-          angleValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))deg/,
-          radianValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))rad/,
-          startCall: /^\(/,
-          endCall: /^\)/,
-          comma: /^,/,
-          hexColor: /^\#([0-9a-fA-F]+)/,
-          literalColor: /^([a-zA-Z]+)/,
-          rgbColor: /^rgb/i,
-          rgbaColor: /^rgba/i,
-          varColor: /^var/i,
-          calcValue: /^calc/i,
-          variableName: /^(--[a-zA-Z0-9-,\s\#]+)/,
-          number: /^(([0-9]*\.[0-9]+)|([0-9]+\.?))/,
-          hslColor: /^hsl/i,
-          hslaColor: /^hsla/i
-        };
-        var input = "";
-        function error2(msg) {
-          var err = new Error(input + ": " + msg);
-          err.source = input;
-          throw err;
-        }
-        function getAST() {
-          var ast = matchListDefinitions();
-          if (input.length > 0) {
-            error2("Invalid input not EOF");
-          }
-          return ast;
-        }
-        function matchListDefinitions() {
-          return matchListing(matchDefinition);
-        }
-        function matchDefinition() {
-          return matchGradient(
-            "linear-gradient",
-            tokens.linearGradient,
-            matchLinearOrientation
-          ) || matchGradient(
-            "repeating-linear-gradient",
-            tokens.repeatingLinearGradient,
-            matchLinearOrientation
-          ) || matchGradient(
-            "radial-gradient",
-            tokens.radialGradient,
-            matchListRadialOrientations
-          ) || matchGradient(
-            "repeating-radial-gradient",
-            tokens.repeatingRadialGradient,
-            matchListRadialOrientations
-          );
-        }
-        function matchGradient(gradientType, pattern, orientationMatcher) {
-          return matchCall(pattern, function(captures) {
-            var orientation = orientationMatcher();
-            if (orientation) {
-              if (!scan(tokens.comma)) {
-                error2("Missing comma before color stops");
-              }
-            }
-            return {
-              type: gradientType,
-              orientation,
-              colorStops: matchListing(matchColorStop)
-            };
-          });
-        }
-        function matchCall(pattern, callback) {
-          var captures = scan(pattern);
-          if (captures) {
-            if (!scan(tokens.startCall)) {
-              error2("Missing (");
-            }
-            var result = callback(captures);
-            if (!scan(tokens.endCall)) {
-              error2("Missing )");
-            }
-            return result;
-          }
-        }
-        function matchLinearOrientation() {
-          var sideOrCorner = matchSideOrCorner();
-          if (sideOrCorner) {
-            return sideOrCorner;
-          }
-          var legacyDirection = match3("position-keyword", tokens.positionKeywords, 1);
-          if (legacyDirection) {
-            return {
-              type: "directional",
-              value: legacyDirection.value
-            };
-          }
-          return matchAngle();
-        }
-        function matchSideOrCorner() {
-          return match3("directional", tokens.sideOrCorner, 1);
-        }
-        function matchAngle() {
-          return match3("angular", tokens.angleValue, 1) || match3("angular", tokens.radianValue, 1);
-        }
-        function matchListRadialOrientations() {
-          var radialOrientations, radialOrientation = matchRadialOrientation(), lookaheadCache;
-          if (radialOrientation) {
-            radialOrientations = [];
-            radialOrientations.push(radialOrientation);
-            lookaheadCache = input;
-            if (scan(tokens.comma)) {
-              radialOrientation = matchRadialOrientation();
-              if (radialOrientation) {
-                radialOrientations.push(radialOrientation);
-              } else {
-                input = lookaheadCache;
-              }
-            }
-          }
-          return radialOrientations;
-        }
-        function matchRadialOrientation() {
-          var radialType = matchCircle() || matchEllipse();
-          if (radialType) {
-            radialType.at = matchAtPosition();
-          } else {
-            var extent = matchExtentKeyword();
-            if (extent) {
-              radialType = extent;
-              var positionAt = matchAtPosition();
-              if (positionAt) {
-                radialType.at = positionAt;
-              }
-            } else {
-              var atPosition = matchAtPosition();
-              if (atPosition) {
-                radialType = {
-                  type: "default-radial",
-                  at: atPosition
-                };
-              } else {
-                var defaultPosition = matchPositioning();
-                if (defaultPosition) {
-                  radialType = {
-                    type: "default-radial",
-                    at: defaultPosition
-                  };
-                }
-              }
-            }
-          }
-          return radialType;
-        }
-        function matchCircle() {
-          var circle = match3("shape", /^(circle)/i, 0);
-          if (circle) {
-            circle.style = matchLength() || matchExtentKeyword();
-          }
-          return circle;
-        }
-        function matchEllipse() {
-          var ellipse = match3("shape", /^(ellipse)/i, 0);
-          if (ellipse) {
-            ellipse.style = matchPositioning() || matchDistance() || matchExtentKeyword();
-          }
-          return ellipse;
-        }
-        function matchExtentKeyword() {
-          return match3("extent-keyword", tokens.extentKeywords, 1);
-        }
-        function matchAtPosition() {
-          if (match3("position", /^at/, 0)) {
-            var positioning = matchPositioning();
-            if (!positioning) {
-              error2("Missing positioning value");
-            }
-            return positioning;
-          }
-        }
-        function matchPositioning() {
-          var location = matchCoordinates();
-          if (location.x || location.y) {
-            return {
-              type: "position",
-              value: location
-            };
-          }
-        }
-        function matchCoordinates() {
-          return {
-            x: matchDistance(),
-            y: matchDistance()
-          };
-        }
-        function matchListing(matcher) {
-          var captures = matcher(), result = [];
-          if (captures) {
-            result.push(captures);
-            while (scan(tokens.comma)) {
-              captures = matcher();
-              if (captures) {
-                result.push(captures);
-              } else {
-                error2("One extra comma");
-              }
-            }
-          }
-          return result;
-        }
-        function matchColorStop() {
-          var color2 = matchColor();
-          if (!color2) {
-            error2("Expected color definition");
-          }
-          color2.length = matchDistance();
-          return color2;
-        }
-        function matchColor() {
-          return matchHexColor() || matchHSLAColor() || matchHSLColor() || matchRGBAColor() || matchRGBColor() || matchVarColor() || matchLiteralColor();
-        }
-        function matchLiteralColor() {
-          return match3("literal", tokens.literalColor, 0);
-        }
-        function matchHexColor() {
-          return match3("hex", tokens.hexColor, 1);
-        }
-        function matchRGBColor() {
-          return matchCall(tokens.rgbColor, function() {
-            return {
-              type: "rgb",
-              value: matchListing(matchNumber)
-            };
-          });
-        }
-        function matchRGBAColor() {
-          return matchCall(tokens.rgbaColor, function() {
-            return {
-              type: "rgba",
-              value: matchListing(matchNumber)
-            };
-          });
-        }
-        function matchVarColor() {
-          return matchCall(tokens.varColor, function() {
-            return {
-              type: "var",
-              value: matchVariableName()
-            };
-          });
-        }
-        function matchHSLColor() {
-          return matchCall(tokens.hslColor, function() {
-            var lookahead = scan(tokens.percentageValue);
-            if (lookahead) {
-              error2("HSL hue value must be a number in degrees (0-360) or normalized (-360 to 360), not a percentage");
-            }
-            var hue = matchNumber();
-            scan(tokens.comma);
-            var captures = scan(tokens.percentageValue);
-            var sat = captures ? captures[1] : null;
-            scan(tokens.comma);
-            captures = scan(tokens.percentageValue);
-            var light = captures ? captures[1] : null;
-            if (!sat || !light) {
-              error2("Expected percentage value for saturation and lightness in HSL");
-            }
-            return {
-              type: "hsl",
-              value: [hue, sat, light]
-            };
-          });
-        }
-        function matchHSLAColor() {
-          return matchCall(tokens.hslaColor, function() {
-            var hue = matchNumber();
-            scan(tokens.comma);
-            var captures = scan(tokens.percentageValue);
-            var sat = captures ? captures[1] : null;
-            scan(tokens.comma);
-            captures = scan(tokens.percentageValue);
-            var light = captures ? captures[1] : null;
-            scan(tokens.comma);
-            var alpha2 = matchNumber();
-            if (!sat || !light) {
-              error2("Expected percentage value for saturation and lightness in HSLA");
-            }
-            return {
-              type: "hsla",
-              value: [hue, sat, light, alpha2]
-            };
-          });
-        }
-        function matchPercentage() {
-          var captures = scan(tokens.percentageValue);
-          return captures ? captures[1] : null;
-        }
-        function matchVariableName() {
-          return scan(tokens.variableName)[1];
-        }
-        function matchNumber() {
-          return scan(tokens.number)[1];
-        }
-        function matchDistance() {
-          return match3("%", tokens.percentageValue, 1) || matchPositionKeyword() || matchCalc() || matchLength();
-        }
-        function matchPositionKeyword() {
-          return match3("position-keyword", tokens.positionKeywords, 1);
-        }
-        function matchCalc() {
-          return matchCall(tokens.calcValue, function() {
-            var openParenCount = 1;
-            var i2 = 0;
-            while (openParenCount > 0 && i2 < input.length) {
-              var char2 = input.charAt(i2);
-              if (char2 === "(") {
-                openParenCount++;
-              } else if (char2 === ")") {
-                openParenCount--;
-              }
-              i2++;
-            }
-            if (openParenCount > 0) {
-              error2("Missing closing parenthesis in calc() expression");
-            }
-            var calcContent = input.substring(0, i2 - 1);
-            consume(i2 - 1);
-            return {
-              type: "calc",
-              value: calcContent
-            };
-          });
-        }
-        function matchLength() {
-          return match3("px", tokens.pixelValue, 1) || match3("em", tokens.emValue, 1);
-        }
-        function match3(type, pattern, captureIndex) {
-          var captures = scan(pattern);
-          if (captures) {
-            return {
-              type,
-              value: captures[captureIndex]
-            };
-          }
-        }
-        function scan(regexp) {
-          var captures, blankCaptures;
-          blankCaptures = /^[\n\r\t\s]+/.exec(input);
-          if (blankCaptures) {
-            consume(blankCaptures[0].length);
-          }
-          captures = regexp.exec(input);
-          if (captures) {
-            consume(captures[0].length);
-          }
-          return captures;
-        }
-        function consume(size4) {
-          input = input.substr(size4);
-        }
-        return function(code) {
-          input = code.toString().trim();
-          if (input.endsWith(";")) {
-            input = input.slice(0, -1);
-          }
-          return getAST();
-        };
-      })();
-      exports.parse = GradientParser.parse;
-      exports.stringify = GradientParser.stringify;
-    }
-  });
-
   // package-external:@wordpress/dom
   var require_dom = __commonJS({
     "package-external:@wordpress/dom"(exports, module) {
@@ -57288,8 +56766,646 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
 
-  // packages/components/build-module/custom-gradient-picker/utils.mjs
-  var import_gradient_parser = __toESM(require_node(), 1);
+  // node_modules/.store/gradient-parser@1.2.0-Lt7BUmBRZ-Dx1w5R8VbR3g/node_modules/gradient-parser/build/esm.mjs
+  var GradientParser = GradientParser || {};
+  GradientParser.stringify = /* @__PURE__ */ (function() {
+    var visitor = {
+      "visit_linear-gradient": function(node2) {
+        return visitor.visit_gradient(node2);
+      },
+      "visit_repeating-linear-gradient": function(node2) {
+        return visitor.visit_gradient(node2);
+      },
+      "visit_radial-gradient": function(node2) {
+        return visitor.visit_gradient(node2);
+      },
+      "visit_repeating-radial-gradient": function(node2) {
+        return visitor.visit_gradient(node2);
+      },
+      "visit_conic-gradient": function(node2) {
+        return visitor.visit_gradient(node2);
+      },
+      "visit_repeating-conic-gradient": function(node2) {
+        return visitor.visit_gradient(node2);
+      },
+      "visit_gradient": function(node2) {
+        var orientation = visitor.visit(node2.orientation);
+        if (orientation) {
+          orientation += ", ";
+        }
+        return node2.type + "(" + orientation + visitor.visit(node2.colorStops) + ")";
+      },
+      "visit_shape": function(node2) {
+        var result = node2.value, at = visitor.visit(node2.at), style2 = visitor.visit(node2.style);
+        if (style2) {
+          result += " " + style2;
+        }
+        if (at) {
+          result += " at " + at;
+        }
+        return result;
+      },
+      "visit_default-radial": function(node2) {
+        var result = "", at = visitor.visit(node2.at);
+        if (at) {
+          if (node2.hasAtKeyword) {
+            result += "at " + at;
+          } else {
+            result += at;
+          }
+        }
+        return result;
+      },
+      "visit_extent-keyword": function(node2) {
+        var result = node2.value, at = visitor.visit(node2.at);
+        if (at) {
+          result += " at " + at;
+        }
+        return result;
+      },
+      "visit_position-keyword": function(node2) {
+        return node2.value;
+      },
+      "visit_position": function(node2) {
+        return visitor.visit(node2.value.x) + " " + visitor.visit(node2.value.y);
+      },
+      "visit_%": function(node2) {
+        return node2.value + "%";
+      },
+      "visit_em": function(node2) {
+        return node2.value + "em";
+      },
+      "visit_px": function(node2) {
+        return node2.value + "px";
+      },
+      "visit_rem": function(node2) {
+        return node2.value + "rem";
+      },
+      "visit_vw": function(node2) {
+        return node2.value + "vw";
+      },
+      "visit_vh": function(node2) {
+        return node2.value + "vh";
+      },
+      "visit_vmin": function(node2) {
+        return node2.value + "vmin";
+      },
+      "visit_vmax": function(node2) {
+        return node2.value + "vmax";
+      },
+      "visit_ch": function(node2) {
+        return node2.value + "ch";
+      },
+      "visit_ex": function(node2) {
+        return node2.value + "ex";
+      },
+      "visit_calc": function(node2) {
+        return "calc(" + node2.value + ")";
+      },
+      "visit_literal": function(node2) {
+        return visitor.visit_color(node2.value, node2);
+      },
+      "visit_hex": function(node2) {
+        return visitor.visit_color("#" + node2.value, node2);
+      },
+      "visit_rgb": function(node2) {
+        return visitor.visit_color("rgb(" + node2.value.join(", ") + ")", node2);
+      },
+      "visit_rgba": function(node2) {
+        return visitor.visit_color("rgba(" + node2.value.join(", ") + ")", node2);
+      },
+      "visit_hsl": function(node2) {
+        return visitor.visit_color("hsl(" + node2.value[0] + ", " + node2.value[1] + "%, " + node2.value[2] + "%)", node2);
+      },
+      "visit_hsla": function(node2) {
+        return visitor.visit_color("hsla(" + node2.value[0] + ", " + node2.value[1] + "%, " + node2.value[2] + "%, " + node2.value[3] + ")", node2);
+      },
+      "visit_var": function(node2) {
+        return visitor.visit_color("var(" + node2.value + ")", node2);
+      },
+      "visit_color": function(resultColor, node2) {
+        var result = resultColor, length2 = visitor.visit(node2.length);
+        if (length2) {
+          result += " " + length2;
+        }
+        var length22 = visitor.visit(node2.length2);
+        if (length22) {
+          result += " " + length22;
+        }
+        return result;
+      },
+      "visit_angular": function(node2) {
+        return node2.value + (node2.unit || "deg");
+      },
+      "visit_directional": function(node2) {
+        return "to " + node2.value;
+      },
+      "visit_conic": function(node2) {
+        var result = "";
+        if (node2.angle) {
+          result += "from " + visitor.visit(node2.angle);
+        }
+        if (node2.at) {
+          if (result) {
+            result += " ";
+          }
+          result += "at " + visitor.visit(node2.at);
+        }
+        return result;
+      },
+      "visit_array": function(elements2) {
+        var result = "", size4 = elements2.length;
+        elements2.forEach(function(element, i2) {
+          result += visitor.visit(element);
+          if (i2 < size4 - 1) {
+            result += ", ";
+          }
+        });
+        return result;
+      },
+      "visit_object": function(obj) {
+        if (obj.width && obj.height) {
+          return visitor.visit(obj.width) + " " + visitor.visit(obj.height);
+        }
+        return "";
+      },
+      "visit": function(element) {
+        if (!element) {
+          return "";
+        }
+        var result = "";
+        if (element instanceof Array) {
+          return visitor.visit_array(element);
+        } else if (typeof element === "object" && !element.type) {
+          return visitor.visit_object(element);
+        } else if (element.type) {
+          var nodeVisitor = visitor["visit_" + element.type];
+          if (nodeVisitor) {
+            return nodeVisitor(element);
+          } else {
+            throw Error("Missing visitor visit_" + element.type);
+          }
+        } else {
+          throw Error("Invalid node.");
+        }
+      }
+    };
+    return function(root) {
+      return visitor.visit(root);
+    };
+  })();
+  var GradientParser = GradientParser || {};
+  GradientParser.parse = /* @__PURE__ */ (function() {
+    var tokens = {
+      linearGradient: /^(\-(webkit|o|ms|moz)\-)?(linear\-gradient)/i,
+      repeatingLinearGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-linear\-gradient)/i,
+      radialGradient: /^(\-(webkit|o|ms|moz)\-)?(radial\-gradient)/i,
+      repeatingRadialGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-radial\-gradient)/i,
+      conicGradient: /^(\-(webkit|o|ms|moz)\-)?(conic\-gradient)/i,
+      repeatingConicGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-conic\-gradient)/i,
+      sideOrCorner: /^to (left (top|bottom)|right (top|bottom)|top (left|right)|bottom (left|right)|left|right|top|bottom)/i,
+      extentKeywords: /^(closest\-side|closest\-corner|farthest\-side|farthest\-corner|contain|cover)/,
+      positionKeywords: /^(left|center|right|top|bottom)/i,
+      pixelValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))px/,
+      percentageValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))\%/,
+      emValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))em/,
+      remValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))rem/,
+      vwValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))vw/,
+      vhValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))vh/,
+      vminValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))vmin/,
+      vmaxValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))vmax/,
+      chValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))ch/,
+      exValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))ex/,
+      angleValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))deg/,
+      radianValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))rad/,
+      gradianValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))grad/,
+      turnValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))turn/,
+      startCall: /^\(/,
+      endCall: /^\)/,
+      comma: /^,/,
+      slash: /^\//,
+      hexColor: /^\#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})(?![0-9a-fA-F])/,
+      literalColor: /^([a-zA-Z]+)/,
+      rgbColor: /^rgb/i,
+      rgbaColor: /^rgba/i,
+      varColor: /^var/i,
+      calcValue: /^calc/i,
+      variableName: /^(--[a-zA-Z0-9-,\s\#]+)/,
+      number: /^(([0-9]*\.[0-9]+)|([0-9]+\.?))/,
+      hslColor: /^hsl/i,
+      hslaColor: /^hsla/i
+    };
+    var input = "";
+    function error2(msg) {
+      var err = new Error(input + ": " + msg);
+      err.source = input;
+      throw err;
+    }
+    function getAST() {
+      var ast = matchListDefinitions();
+      if (input.length > 0) {
+        error2("Invalid input not EOF");
+      }
+      return ast;
+    }
+    function matchListDefinitions() {
+      return matchListing(matchDefinition);
+    }
+    function matchDefinition() {
+      return matchGradient(
+        "linear-gradient",
+        tokens.linearGradient,
+        matchLinearOrientation
+      ) || matchGradient(
+        "repeating-linear-gradient",
+        tokens.repeatingLinearGradient,
+        matchLinearOrientation
+      ) || matchGradient(
+        "radial-gradient",
+        tokens.radialGradient,
+        matchListRadialOrientations
+      ) || matchGradient(
+        "repeating-radial-gradient",
+        tokens.repeatingRadialGradient,
+        matchListRadialOrientations
+      ) || matchGradient(
+        "conic-gradient",
+        tokens.conicGradient,
+        matchConicOrientation
+      ) || matchGradient(
+        "repeating-conic-gradient",
+        tokens.repeatingConicGradient,
+        matchConicOrientation
+      );
+    }
+    function matchGradient(gradientType, pattern, orientationMatcher) {
+      return matchCall(pattern, function(captures) {
+        var orientation = orientationMatcher();
+        if (orientation) {
+          if (!scan(tokens.comma)) {
+            error2("Missing comma before color stops");
+          }
+        }
+        return {
+          type: gradientType,
+          orientation,
+          colorStops: matchListing(matchColorStop)
+        };
+      });
+    }
+    function matchCall(pattern, callback) {
+      var captures = scan(pattern);
+      if (captures) {
+        if (!scan(tokens.startCall)) {
+          error2("Missing (");
+        }
+        var result = callback(captures);
+        if (!scan(tokens.endCall)) {
+          error2("Missing )");
+        }
+        return result;
+      }
+    }
+    function matchLinearOrientation() {
+      var sideOrCorner = matchSideOrCorner();
+      if (sideOrCorner) {
+        return sideOrCorner;
+      }
+      var legacyDirection = match3("position-keyword", tokens.positionKeywords, 1);
+      if (legacyDirection) {
+        return {
+          type: "directional",
+          value: legacyDirection.value
+        };
+      }
+      return matchAngle();
+    }
+    function matchConicOrientation() {
+      var angle = matchFrom();
+      var atPosition = matchAtPosition();
+      if (angle || atPosition) {
+        return {
+          type: "conic",
+          angle: angle || void 0,
+          at: atPosition || void 0
+        };
+      }
+    }
+    function matchFrom() {
+      if (match3("from", /^from/, 0)) {
+        var angle = matchAngle();
+        if (!angle) {
+          error2('Missing angle after "from" in conic-gradient');
+        }
+        return angle;
+      }
+    }
+    function matchSideOrCorner() {
+      return match3("directional", tokens.sideOrCorner, 1);
+    }
+    function matchAngle() {
+      return matchAngularWithUnit("deg", tokens.angleValue) || matchAngularWithUnit("rad", tokens.radianValue) || matchAngularWithUnit("grad", tokens.gradianValue) || matchAngularWithUnit("turn", tokens.turnValue);
+    }
+    function matchAngularWithUnit(unit, pattern) {
+      var captures = scan(pattern);
+      if (captures) {
+        return {
+          type: "angular",
+          value: captures[1],
+          unit
+        };
+      }
+    }
+    function matchListRadialOrientations() {
+      var radialOrientations, radialOrientation = matchRadialOrientation(), lookaheadCache;
+      if (radialOrientation) {
+        radialOrientations = [];
+        radialOrientations.push(radialOrientation);
+        lookaheadCache = input;
+        if (scan(tokens.comma)) {
+          radialOrientation = matchRadialOrientation();
+          if (radialOrientation) {
+            radialOrientations.push(radialOrientation);
+          } else {
+            input = lookaheadCache;
+          }
+        }
+      }
+      return radialOrientations;
+    }
+    function matchRadialOrientation() {
+      var radialType = matchCircle() || matchEllipse();
+      if (radialType) {
+        radialType.at = matchAtPosition();
+      } else {
+        var extent = matchExtentKeyword();
+        if (extent) {
+          radialType = extent;
+          var positionAt = matchAtPosition();
+          if (positionAt) {
+            radialType.at = positionAt;
+          }
+        } else {
+          var atPosition = matchAtPosition();
+          if (atPosition) {
+            radialType = {
+              type: "default-radial",
+              at: atPosition,
+              hasAtKeyword: true
+            };
+          } else {
+            var defaultPosition = matchPositioning();
+            if (defaultPosition) {
+              radialType = {
+                type: "default-radial",
+                at: defaultPosition
+              };
+            }
+          }
+        }
+      }
+      return radialType;
+    }
+    function matchCircle() {
+      var circle = match3("shape", /^(circle)/i, 0);
+      if (circle) {
+        circle.style = matchLength() || matchExtentKeyword();
+      }
+      return circle;
+    }
+    function matchEllipse() {
+      var ellipse = match3("shape", /^(ellipse)/i, 0);
+      if (ellipse) {
+        ellipse.style = matchPositioning() || matchDistance() || matchExtentKeyword();
+      }
+      return ellipse;
+    }
+    function matchExtentKeyword() {
+      return match3("extent-keyword", tokens.extentKeywords, 1);
+    }
+    function matchAtPosition() {
+      if (match3("position", /^at/, 0)) {
+        var positioning = matchPositioning();
+        if (!positioning) {
+          error2("Missing positioning value");
+        }
+        return positioning;
+      }
+    }
+    function matchPositioning() {
+      var location = matchCoordinates();
+      if (location.x || location.y) {
+        return {
+          type: "position",
+          value: location
+        };
+      }
+    }
+    function matchCoordinates() {
+      return {
+        x: matchDistance(),
+        y: matchDistance()
+      };
+    }
+    function matchListing(matcher) {
+      var captures = matcher(), result = [];
+      if (captures) {
+        result.push(captures);
+        while (scan(tokens.comma)) {
+          captures = matcher();
+          if (captures) {
+            result.push(captures);
+          } else {
+            error2("One extra comma");
+          }
+        }
+      }
+      return result;
+    }
+    function matchColorStop() {
+      var color2 = matchColor();
+      if (!color2) {
+        error2("Expected color definition");
+      }
+      color2.length = matchDistance();
+      if (color2.length) {
+        color2.length2 = matchDistance();
+      }
+      return color2;
+    }
+    function matchColor() {
+      return matchHexColor() || matchHSLAColor() || matchHSLColor() || matchRGBAColor() || matchRGBColor() || matchVarColor() || matchLiteralColor();
+    }
+    function matchLiteralColor() {
+      return match3("literal", tokens.literalColor, 0);
+    }
+    function matchHexColor() {
+      return match3("hex", tokens.hexColor, 1);
+    }
+    function matchRGBColor() {
+      return matchCall(tokens.rgbColor, function() {
+        return matchRGBValues("rgb");
+      });
+    }
+    function matchRGBAColor() {
+      return matchCall(tokens.rgbaColor, function() {
+        return matchRGBValues("rgba");
+      });
+    }
+    function matchRGBValues(baseType) {
+      var r4 = matchNumber();
+      if (scan(tokens.comma)) {
+        var g3 = matchNumber();
+        scan(tokens.comma);
+        var b2 = matchNumber();
+        var values = [r4, g3, b2];
+        if (scan(tokens.comma)) {
+          values.push(matchNumber());
+          return { type: "rgba", value: values };
+        }
+        return { type: baseType, value: values };
+      } else {
+        var g3 = matchNumber();
+        var b2 = matchNumber();
+        var values = [r4, g3, b2];
+        if (scan(tokens.slash)) {
+          values.push(matchNumber());
+          return { type: "rgba", value: values };
+        }
+        return { type: baseType, value: values };
+      }
+    }
+    function matchVarColor() {
+      return matchCall(tokens.varColor, function() {
+        return {
+          type: "var",
+          value: matchVariableName()
+        };
+      });
+    }
+    function matchHSLColor() {
+      return matchCall(tokens.hslColor, function() {
+        return matchHSLValues("hsl");
+      });
+    }
+    function matchHSLAColor() {
+      return matchCall(tokens.hslaColor, function() {
+        return matchHSLValues("hsla");
+      });
+    }
+    function matchHSLValues(baseType) {
+      var lookahead = scan(tokens.percentageValue);
+      if (lookahead) {
+        error2("HSL hue value must be a number in degrees (0-360) or normalized (-360 to 360), not a percentage");
+      }
+      var hue = matchNumber();
+      if (scan(tokens.comma)) {
+        var captures = scan(tokens.percentageValue);
+        var sat = captures ? captures[1] : null;
+        scan(tokens.comma);
+        captures = scan(tokens.percentageValue);
+        var light = captures ? captures[1] : null;
+        if (!sat || !light) {
+          error2("Expected percentage value for saturation and lightness in HSL");
+        }
+        if (scan(tokens.comma)) {
+          var alpha2 = matchNumber();
+          return { type: "hsla", value: [hue, sat, light, alpha2] };
+        }
+        return { type: baseType, value: [hue, sat, light] };
+      } else {
+        var captures = scan(tokens.percentageValue);
+        var sat = captures ? captures[1] : null;
+        captures = scan(tokens.percentageValue);
+        var light = captures ? captures[1] : null;
+        if (!sat || !light) {
+          error2("Expected percentage value for saturation and lightness in HSL");
+        }
+        if (scan(tokens.slash)) {
+          var alpha2 = matchNumber();
+          return { type: "hsla", value: [hue, sat, light, alpha2] };
+        }
+        return { type: baseType, value: [hue, sat, light] };
+      }
+    }
+    function matchPercentage() {
+      var captures = scan(tokens.percentageValue);
+      return captures ? captures[1] : null;
+    }
+    function matchVariableName() {
+      return scan(tokens.variableName)[1];
+    }
+    function matchNumber() {
+      return scan(tokens.number)[1];
+    }
+    function matchDistance() {
+      return match3("%", tokens.percentageValue, 1) || matchPositionKeyword() || matchCalc() || matchLength();
+    }
+    function matchPositionKeyword() {
+      return match3("position-keyword", tokens.positionKeywords, 1);
+    }
+    function matchCalc() {
+      return matchCall(tokens.calcValue, function() {
+        var openParenCount = 1;
+        var i2 = 0;
+        while (openParenCount > 0 && i2 < input.length) {
+          var char2 = input.charAt(i2);
+          if (char2 === "(") {
+            openParenCount++;
+          } else if (char2 === ")") {
+            openParenCount--;
+          }
+          i2++;
+        }
+        if (openParenCount > 0) {
+          error2("Missing closing parenthesis in calc() expression");
+        }
+        var calcContent = input.substring(0, i2 - 1);
+        consume(i2 - 1);
+        return {
+          type: "calc",
+          value: calcContent
+        };
+      });
+    }
+    function matchLength() {
+      return match3("px", tokens.pixelValue, 1) || match3("em", tokens.emValue, 1) || match3("rem", tokens.remValue, 1) || match3("vw", tokens.vwValue, 1) || match3("vh", tokens.vhValue, 1) || match3("vmin", tokens.vminValue, 1) || match3("vmax", tokens.vmaxValue, 1) || match3("ch", tokens.chValue, 1) || match3("ex", tokens.exValue, 1);
+    }
+    function match3(type, pattern, captureIndex) {
+      var captures = scan(pattern);
+      if (captures) {
+        return {
+          type,
+          value: captures[captureIndex]
+        };
+      }
+    }
+    function scan(regexp) {
+      var captures, blankCaptures;
+      blankCaptures = /^[\n\r\t\s]+/.exec(input);
+      if (blankCaptures) {
+        consume(blankCaptures[0].length);
+      }
+      captures = regexp.exec(input);
+      if (captures) {
+        consume(captures[0].length);
+      }
+      return captures;
+    }
+    function consume(size4) {
+      input = input.substring(size4);
+    }
+    return function(code) {
+      input = code.toString().trim();
+      if (input.endsWith(";")) {
+        input = input.slice(0, -1);
+      }
+      return getAST();
+    };
+  })();
+  var parse3 = GradientParser.parse;
+  var stringify2 = GradientParser.stringify;
+  var esm_default = { parse: GradientParser.parse, stringify: GradientParser.stringify };
 
   // packages/components/build-module/custom-gradient-picker/constants.mjs
   var import_i18n40 = __toESM(require_i18n(), 1);
@@ -57297,7 +57413,8 @@ This message will only show in development mode. It won't appear in production. 
   var DEFAULT_LINEAR_GRADIENT_ANGLE = 180;
   var HORIZONTAL_GRADIENT_ORIENTATION = {
     type: "angular",
-    value: "90"
+    value: "90",
+    unit: "deg"
   };
   var GRADIENT_OPTIONS = [{
     value: "linear-gradient",
@@ -57340,7 +57457,7 @@ This message will only show in development mode. It won't appear in production. 
       return `hsl(${hue},${saturation}%,${lightness}%)`;
     }
     if (type === "hsla") {
-      const [hue, saturation, lightness, alpha2] = value;
+      const [hue, saturation, lightness, alpha2 = "1"] = value;
       return `hsla(${hue},${saturation}%,${lightness}%,${alpha2})`;
     }
     return `${type}(${value.join(",")})`;
@@ -57372,7 +57489,7 @@ This message will only show in development mode. It won't appear in production. 
     if (Array.isArray(orientation) || !orientation || orientation.type !== "angular") {
       return;
     }
-    return `${orientation.value}deg`;
+    return `${orientation.value}${orientation.unit}`;
   }
   function serializeGradient({
     type,
@@ -57391,6 +57508,12 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/custom-gradient-picker/utils.mjs
   D([e]);
+  var ANGLE_UNIT_TO_DEGREES = {
+    deg: 1,
+    rad: 180 / Math.PI,
+    grad: 0.9,
+    turn: 360
+  };
   function getLinearGradientRepresentation(gradientAST) {
     return serializeGradient({
       type: "linear-gradient",
@@ -57406,16 +57529,31 @@ This message will only show in development mode. It won't appear in production. 
     let hasGradient = !!value;
     const valueToParse = value ?? DEFAULT_GRADIENT;
     try {
-      gradientAST = import_gradient_parser.default.parse(valueToParse)[0];
+      gradientAST = esm_default.parse(valueToParse)[0];
     } catch (error2) {
       console.warn("wp.components.CustomGradientPicker failed to parse the gradient with error", error2);
-      gradientAST = import_gradient_parser.default.parse(DEFAULT_GRADIENT)[0];
+    }
+    if (!gradientAST || gradientAST.type === "conic-gradient" || gradientAST.type === "repeating-conic-gradient" || gradientAST.colorStops.some((stop) => stop.length2 !== void 0)) {
+      gradientAST = esm_default.parse(DEFAULT_GRADIENT)[0];
       hasGradient = false;
     }
     if (!Array.isArray(gradientAST.orientation) && gradientAST.orientation?.type === "directional") {
+      const direction = gradientAST.orientation.value.toLowerCase();
       gradientAST.orientation = {
         type: "angular",
-        value: DIRECTIONAL_ORIENTATION_ANGLE_MAP[gradientAST.orientation.value].toString()
+        value: DIRECTIONAL_ORIENTATION_ANGLE_MAP[direction].toString(),
+        unit: "deg"
+      };
+    }
+    if (!Array.isArray(gradientAST.orientation) && gradientAST.orientation?.type === "angular" && gradientAST.orientation.unit !== "deg") {
+      const {
+        value: angle,
+        unit
+      } = gradientAST.orientation;
+      gradientAST.orientation = {
+        type: "angular",
+        value: `${Number(angle) * ANGLE_UNIT_TO_DEGREES[unit]}`,
+        unit: "deg"
       };
     }
     if (gradientAST.colorStops.some(hasUnsupportedLength)) {
@@ -57475,7 +57613,7 @@ This message will only show in development mode. It won't appear in production. 
         return `hsl(${hue},${saturation}%,${lightness}%)`;
       }
       case "hsla": {
-        const [hue, saturation, lightness, alpha2] = colorStop.value;
+        const [hue, saturation, lightness, alpha2 = "1"] = colorStop.value;
         return `hsla(${hue},${saturation}%,${lightness}%,${alpha2})`;
       }
       default:
@@ -57575,7 +57713,8 @@ This message will only show in development mode. It won't appear in production. 
         ...gradientAST,
         orientation: {
           type: "angular",
-          value: `${newAngle}`
+          value: `${newAngle}`,
+          unit: "deg"
         }
       }));
     };
@@ -57601,7 +57740,8 @@ This message will only show in development mode. It won't appear in production. 
         ...gradientAST,
         orientation: {
           type: "angular",
-          value: `${lastLinearOrientationAngle.current}`
+          value: `${lastLinearOrientationAngle.current}`,
+          unit: "deg"
         },
         type: "linear-gradient"
       }));
@@ -64886,7 +65026,7 @@ This message will only show in development mode. It won't appear in production. 
     tokens.push({ type: "END", index: i2, value: "" });
     return tokens;
   }
-  function parse3(str, options2) {
+  function parse4(str, options2) {
     if (options2 === void 0) {
       options2 = {};
     }
@@ -65053,7 +65193,7 @@ This message will only show in development mode. It won't appear in production. 
     return new RegExp("(?:".concat(parts.join("|"), ")"), flags(options2));
   }
   function stringToRegexp(path, keys, options2) {
-    return tokensToRegexp(parse3(path, options2), keys, options2);
+    return tokensToRegexp(parse4(path, options2), keys, options2);
   }
   function tokensToRegexp(tokens, keys, options2) {
     if (options2 === void 0) {
