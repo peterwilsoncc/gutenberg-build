@@ -59749,7 +59749,7 @@ This message will only show in development mode. It won't appear in production. 
         onToggle
       }) => {
         const openOnArrowDown = (event) => {
-          if (disableOpenOnArrowDown) {
+          if (disableOpenOnArrowDown || toggleProps?.disabled) {
             return;
           }
           if (!isOpen && event.code === "ArrowDown") {
