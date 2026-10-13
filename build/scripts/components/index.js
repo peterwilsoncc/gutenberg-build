@@ -59559,6 +59559,7 @@ This message will only show in development mode. It won't appear in production. 
     const ref = (0, import_element147.useRef)(null);
     const instanceId = (0, import_compose52.useInstanceId)(Modal);
     const headingId = title ? `components-modal-header-${instanceId}` : aria.labelledby;
+    const dialogLabel = contentLabel ?? (__experimentalHideHeader && title ? title : void 0);
     const shouldFocusContent = focusOnMount === "firstContentElement";
     const focusOnMountRef = (0, import_compose52.useFocusOnMount)(shouldFocusContent ? false : focusOnMount);
     const constrainedTabbingRef = (0, import_compose52.useConstrainedTabbing)();
@@ -59706,8 +59707,8 @@ This message will only show in development mode. It won't appear in production. 
             style: style2,
             ref: (0, import_compose52.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, shouldFocusContent ? focusContentRef : focusOnMountRef]),
             role,
-            "aria-label": contentLabel,
-            "aria-labelledby": contentLabel ? void 0 : headingId,
+            "aria-label": dialogLabel,
+            "aria-labelledby": dialogLabel ? void 0 : headingId,
             "aria-describedby": aria.describedby,
             tabIndex: -1,
             onKeyDown,
@@ -59892,7 +59893,6 @@ This message will only show in development mode. It won't appear in production. 
         ref: forwardedRef,
         overlayClassName: wrapperClassName,
         title,
-        contentLabel: __experimentalHideHeader ? title : void 0,
         __experimentalHideHeader,
         ...otherProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(component_default18, {
