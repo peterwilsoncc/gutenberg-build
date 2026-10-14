@@ -24029,7 +24029,7 @@ var wp;
     registerStyle3("bc09fb824f", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator{fill:transparent;stroke:currentColor;stroke-width:var(--wpds-border-width-sm,2px);stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_02322d973909703c__spinner-spin 1.4s linear infinite both}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
   }
   var style_default3 = { "spinner": "ab4d64c07c0ba587__spinner", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
-  var Spinner2 = (0, import_element22.forwardRef)(
+  var Spinner = (0, import_element22.forwardRef)(
     function UnforwardedSpinner({ className, color, style: style2, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
         "svg",
@@ -24192,7 +24192,7 @@ var wp;
           ...props,
           children: [
             children,
-            loading && variant !== "unstyled" && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(Spinner2, { className: style_default4.spinner })
+            loading && variant !== "unstyled" && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(Spinner, { className: style_default4.spinner })
           ]
         }
       );
@@ -26044,7 +26044,7 @@ var wp;
           style_default15[`is-${type}`]
         ),
         children: [
-          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(Spinner2, { className: style_default15["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(Spinner, { className: style_default15["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
             Icon,
             {
               className: style_default15["indicator-icon"],
@@ -84078,7 +84078,7 @@ ${text}
     let statusContent = /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(ListedTermCount, {});
     if (isPending) {
       statusContent = /* @__PURE__ */ (0, import_jsx_runtime485.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(Spinner2, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(Spinner, {}),
         (0, import_i18n200.__)("Loading\u2026")
       ] });
     } else if (isLimited) {
