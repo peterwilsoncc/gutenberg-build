@@ -6531,7 +6531,10 @@ var wp;
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var Context2 = (0, import_element2.createContext)({});
   Context2.displayName = "BlockContext";
-  function BlockContextProvider({ value, children }) {
+  function BlockContextProvider({
+    value,
+    children
+  }) {
     const context = (0, import_element2.useContext)(Context2);
     const nextValue = (0, import_element2.useMemo)(
       () => ({ ...context, ...value }),
@@ -17296,6 +17299,7 @@ var wp;
     (0, import_deprecated5.default)("wp.blockEditor.useSetting", {
       since: "6.5",
       alternative: "wp.blockEditor.useSettings",
+      // @ts-expect-error `deprecated` has no `note` option, so this is ignored.
       note: "The new useSettings function can retrieve multiple settings at once, with better performance."
     });
     const [value] = useSettings(path);
@@ -18172,7 +18176,12 @@ var wp;
   var import_components6 = __toESM(require_components(), 1);
   var import_element11 = __toESM(require_element(), 1);
   var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
-  function BlockIcon({ icon, showColors = false, className, context }) {
+  function BlockIcon({
+    icon,
+    showColors = false,
+    className,
+    context
+  }) {
     if (icon?.src === "block-default") {
       icon = {
         src: block_default_default
@@ -18742,7 +18751,12 @@ var wp;
     return hasHorizontalSupport || hasVerticalSupport;
   }
   function hasBalancedSidesSupport(sides2 = []) {
-    const counts = { top: 0, right: 0, bottom: 0, left: 0 };
+    const counts = {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    };
     sides2.forEach((side) => counts[side] += 1);
     return (counts.top + counts.bottom) % 2 === 0 && (counts.left + counts.right) % 2 === 0;
   }
@@ -62117,7 +62131,9 @@ var wp;
     }, [refsMap, clientId, ref]);
   }
   function useBlockElement(clientId) {
-    const [blockElement, setBlockElement] = (0, import_element149.useState)(null);
+    const [blockElement, setBlockElement] = (0, import_element149.useState)(
+      null
+    );
     useBlockElementRef(clientId, setBlockElement);
     return blockElement;
   }
@@ -118038,7 +118054,10 @@ If there's a particular need for this, please submit a feature request at https:
       hasLocalOverride: !!hasLocalOverride
     };
   }
-  function InheritanceResetButton({ onResetToInherited, className }) {
+  function InheritanceResetButton({
+    onResetToInherited,
+    className
+  }) {
     return (
       // Intentionally small (14×14) circular control; exempt from the
       // 40px default-size enforcement rule.
