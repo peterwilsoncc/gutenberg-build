@@ -333,106 +333,101 @@ var wp;
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M7 11L12 15L17 11" }) });
 
-  // packages/icons/build-module/library/chevron-right.mjs
+  // packages/icons/build-module/library/code.mjs
   var import_primitives4 = __toESM(require_primitives(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-  var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.Path, { d: "M10 6.5L15 12L10 17.5" }) });
-
-  // packages/icons/build-module/library/code.mjs
-  var import_primitives5 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
-  var code_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.Path, { d: "M7.99997 7L3.70708 11.2929C3.31655 11.6834 3.31655 12.3166 3.70708 12.7071L7.99997 17M16 17L20.2929 12.7071C20.6834 12.3166 20.6834 11.6834 20.2929 11.2929L16 7", strokeLinejoin: "round" }) });
+  var code_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.Path, { d: "M7.99997 7L3.70708 11.2929C3.31655 11.6834 3.31655 12.3166 3.70708 12.7071L7.99997 17M16 17L20.2929 12.7071C20.6834 12.3166 20.6834 11.6834 20.2929 11.2929L16 7", strokeLinejoin: "round" }) });
 
   // packages/icons/build-module/library/color.mjs
-  var import_primitives6 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-  var color_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.Path, { d: "M17.25 14C17.25 16.8995 14.8995 19.25 12 19.25C9.10051 19.25 6.75 16.8995 6.75 14C6.75 11.1005 10 7.37 12 5.12C14 7.37 17.25 11.1005 17.25 14Z" }) });
+  var import_primitives5 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+  var color_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.Path, { d: "M17.25 14C17.25 16.8995 14.8995 19.25 12 19.25C9.10051 19.25 6.75 16.8995 6.75 14C6.75 11.1005 10 7.37 12 5.12C14 7.37 17.25 11.1005 17.25 14Z" }) });
 
   // packages/icons/build-module/library/error.mjs
-  var import_primitives7 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
-  var error_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.Path, { d: "M12 9L12 14M12 15.5V17M11.1284 5.04947L3.83827 18.0097C3.46331 18.6763 3.94502 19.5 4.70985 19.5H19.2902C20.055 19.5 20.5367 18.6763 20.1617 18.0097L12.8716 5.04947C12.4893 4.36982 11.5107 4.36982 11.1284 5.04947Z" }) });
+  var import_primitives6 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+  var error_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.Path, { d: "M12 9L12 14M12 15.5V17M11.1284 5.04947L3.83827 18.0097C3.46331 18.6763 3.94502 19.5 4.70985 19.5H19.2902C20.055 19.5 20.5367 18.6763 20.1617 18.0097L12.8716 5.04947C12.4893 4.36982 11.5107 4.36982 11.1284 5.04947Z" }) });
 
   // packages/icons/build-module/library/format-bold.mjs
-  var import_primitives8 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-  var format_bold_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.Path, { d: "M7.75 11.5V18H13.25C15.0449 18 16.5 16.5449 16.5 14.75C16.5 12.9551 15.0449 11.5 13.25 11.5H13M7.75 11.5V6H12.7441C14.2661 6 15.5 7.23387 15.5 8.75592C15.5 10.1718 14.4088 11.3591 13 11.5M7.75 11.5H13" }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.Path, { d: "M8.25 11.75V17.5H12.8642C14.5503 17.5 15.8744 16.0557 15.7283 14.3759C15.5992 12.8903 14.3554 11.75 12.8642 11.75H8.25ZM8.25 11.75V11.25M8.25 11.25V6.5H12.625C13.9367 6.5 15 7.56332 15 8.875C15 10.1867 13.9367 11.25 12.625 11.25H8.25Z" })
+  var import_primitives7 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+  var format_bold_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.Path, { d: "M7.75 11.5V18H13.25C15.0449 18 16.5 16.5449 16.5 14.75C16.5 12.9551 15.0449 11.5 13.25 11.5H13M7.75 11.5V6H12.7441C14.2661 6 15.5 7.23387 15.5 8.75592C15.5 10.1718 14.4088 11.3591 13 11.5M7.75 11.5H13" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.Path, { d: "M8.25 11.75V17.5H12.8642C14.5503 17.5 15.8744 16.0557 15.7283 14.3759C15.5992 12.8903 14.3554 11.75 12.8642 11.75H8.25ZM8.25 11.75V11.25M8.25 11.25V6.5H12.625C13.9367 6.5 15 7.56332 15 8.875C15 10.1867 13.9367 11.25 12.625 11.25H8.25Z" })
   ] });
 
   // packages/icons/build-module/library/format-italic.mjs
-  var import_primitives9 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
-  var format_italic_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.Path, { d: "M11 19L13.5 5" }) });
+  var import_primitives8 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+  var format_italic_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.Path, { d: "M11 19L13.5 5" }) });
 
   // packages/icons/build-module/library/format-strikethrough.mjs
-  var import_primitives10 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
-  var format_strikethrough_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.Path, { d: "M9 16.1554C12 18.02 15 16.5283 15 14.2908C15 13.6314 14.6839 12.999 14.1213 12.5328C14.108 12.5217 14.0945 12.5108 14.081 12.5M9 9.31845C9 7.49773 11.4313 6.3247 13.9199 7.4278M5.5 12.5H14.081M18.5 12.5H14.081", strokeLinecap: "square" }) });
+  var import_primitives9 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+  var format_strikethrough_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.Path, { d: "M9 16.1554C12 18.02 15 16.5283 15 14.2908C15 13.6314 14.6839 12.999 14.1213 12.5328C14.108 12.5217 14.0945 12.5108 14.081 12.5M9 9.31845C9 7.49773 11.4313 6.3247 13.9199 7.4278M5.5 12.5H14.081M18.5 12.5H14.081", strokeLinecap: "square" }) });
 
   // packages/icons/build-module/library/help.mjs
-  var import_primitives11 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-  var help_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.Path, { d: "M9.75 10.25C9.75 9.00736 10.7574 8 12 8C13.2426 8 14.25 9.00736 14.25 10.25C14.25 11.4083 13.3748 12.3621 12.2496 12.4863C12.1124 12.5015 12 12.6119 12 12.75V14M12 15V16.5" }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.Path, { d: "M19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12C4.75 7.99594 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12Z", strokeLinejoin: "round" })
+  var import_primitives10 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+  var help_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.Path, { d: "M9.75 10.25C9.75 9.00736 10.7574 8 12 8C13.2426 8 14.25 9.00736 14.25 10.25C14.25 11.4083 13.3748 12.3621 12.2496 12.4863C12.1124 12.5015 12 12.6119 12 12.75V14M12 15V16.5" }),
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.Path, { d: "M19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12C4.75 7.99594 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12Z", strokeLinejoin: "round" })
   ] });
 
   // packages/icons/build-module/library/inline-image.mjs
-  var import_primitives12 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-  var inline_image_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.Path, { d: "M13.25 11.3197L11.4155 9.48453C11.3765 9.44547 11.3132 9.44546 11.2741 9.48452L9.05837 11.7003C9.02448 11.7341 8.97132 11.7392 8.93163 11.7124L7.0648 10.4495C7.03003 10.426 6.98426 10.4267 6.95022 10.4513L4.75 12.0405M13.25 11.3197V7C13.25 6.30964 12.6904 5.75 12 5.75H6C5.30964 5.75 4.75 6.30965 4.75 7V12.0405M13.25 11.3197V13C13.25 13.6904 12.6904 14.25 12 14.25H6C5.30964 14.25 4.75 13.6904 4.75 13V12.0405M16 14H20M4 18H20" }) });
+  var import_primitives11 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+  var inline_image_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.Path, { d: "M13.25 11.3197L11.4155 9.48453C11.3765 9.44547 11.3132 9.44546 11.2741 9.48452L9.05837 11.7003C9.02448 11.7341 8.97132 11.7392 8.93163 11.7124L7.0648 10.4495C7.03003 10.426 6.98426 10.4267 6.95022 10.4513L4.75 12.0405M13.25 11.3197V7C13.25 6.30964 12.6904 5.75 12 5.75H6C5.30964 5.75 4.75 6.30965 4.75 7V12.0405M13.25 11.3197V13C13.25 13.6904 12.6904 14.25 12 14.25H6C5.30964 14.25 4.75 13.6904 4.75 13V12.0405M16 14H20M4 18H20" }) });
 
   // packages/icons/build-module/library/language.mjs
-  var import_primitives13 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  var language_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.Path, { d: "M3 6H9.5M16 6H13.5M9.5 6V3M9.5 6H13.5M13.5 6C13.0477 7.24386 11.7361 9.79194 9.44037 12.5512M5.5 16.5C7.04336 15.2139 8.35238 13.8588 9.44037 12.5512M6.5 8C6.9232 8.9522 7.93743 10.7507 9.44037 12.5512M12.5 15.5C11.3314 14.6235 10.305 13.587 9.44037 12.5512" }),
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.Path, { d: "M13.75 20V19.75L14.6667 17M14.6667 17L16.75 10.75H17.25L19.3333 17L20.25 19.75V20M19.3333 17H14.6667" })
+  var import_primitives12 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+  var language_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.Path, { d: "M3 6H9.5M16 6H13.5M9.5 6V3M9.5 6H13.5M13.5 6C13.0477 7.24386 11.7361 9.79194 9.44037 12.5512M5.5 16.5C7.04336 15.2139 8.35238 13.8588 9.44037 12.5512M6.5 8C6.9232 8.9522 7.93743 10.7507 9.44037 12.5512M12.5 15.5C11.3314 14.6235 10.305 13.587 9.44037 12.5512" }),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.Path, { d: "M13.75 20V19.75L14.6667 17M14.6667 17L16.75 10.75H17.25L19.3333 17L20.25 19.75V20M19.3333 17H14.6667" })
   ] });
 
   // packages/icons/build-module/library/link.mjs
-  var import_primitives14 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-  var link_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.Path, { d: "M9.5 12L14.5 12M10 7.75H8.25C5.90279 7.75 4 9.65279 4 12C4 14.3472 5.90279 16.25 8.25 16.25H10M14 16.25H15.75C18.0972 16.25 20 14.3472 20 12C20 9.65279 18.0972 7.75 15.75 7.75L14 7.75" }) });
+  var import_primitives13 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+  var link_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.Path, { d: "M9.5 12L14.5 12M10 7.75H8.25C5.90279 7.75 4 9.65279 4 12C4 14.3472 5.90279 16.25 8.25 16.25H10M14 16.25H15.75C18.0972 16.25 20 14.3472 20 12C20 9.65279 18.0972 7.75 15.75 7.75L14 7.75" }) });
 
   // packages/icons/build-module/library/math.mjs
-  var import_primitives15 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  var math_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.Path, { d: "M3 14H5L6.8916 16.3645C6.93974 16.4247 7.03496 16.4101 7.06289 16.3383L10.2521 8.13755C10.4015 7.75318 10.7717 7.5 11.1841 7.5H19M17 11L14.5 13.5M12 16L14.5 13.5M14.5 13.5L17 16M14.5 13.5L12 11" }) });
+  var import_primitives14 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  var math_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.Path, { d: "M3 14H5L6.8916 16.3645C6.93974 16.4247 7.03496 16.4101 7.06289 16.3383L10.2521 8.13755C10.4015 7.75318 10.7717 7.5 11.1841 7.5H19M17 11L14.5 13.5M12 16L14.5 13.5M14.5 13.5L17 16M14.5 13.5L12 11" }) });
 
   // packages/icons/build-module/library/published.mjs
-  var import_primitives16 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  var published_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.Path, { d: "M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z", strokeLinejoin: "round" }),
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.Path, { d: "M9 12L11 14L15 10" })
+  var import_primitives15 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+  var published_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.Path, { d: "M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z", strokeLinejoin: "round" }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.Path, { d: "M9 12L11 14L15 10" })
   ] });
 
   // packages/icons/build-module/library/subscript.mjs
-  var import_primitives17 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-  var subscript_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.Path, { d: "M17.75 18.5988H15.75C15.75 16.5322 17.75 17.0489 17.75 15.4989C17.75 14.7239 16.75 14.0738 15.75 14.8488", strokeLinecap: "square" }),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.Path, { d: "M10 12L13 7.4V7M10 12L7 7.4L7.00004 7M10 12L7 16.6V17M10 12L13 16.6V17" })
+  var import_primitives16 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  var subscript_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.Path, { d: "M17.75 18.5988H15.75C15.75 16.5322 17.75 17.0489 17.75 15.4989C17.75 14.7239 16.75 14.0738 15.75 14.8488", strokeLinecap: "square" }),
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.Path, { d: "M10 12L13 7.4V7M10 12L7 7.4L7.00004 7M10 12L7 16.6V17M10 12L13 16.6V17" })
   ] });
 
   // packages/icons/build-module/library/superscript.mjs
-  var import_primitives18 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  var superscript_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.Path, { d: "M17.75 8.59884H15.75C15.75 6.53219 17.75 7.04885 17.75 5.49887C17.75 4.72388 16.75 4.07384 15.75 4.84884", strokeLinecap: "square" }),
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.Path, { d: "M10 12L13 7.4V7M10 12L7 7.4L7.00004 7M10 12L7 16.6V17M10 12L13 16.6V17" })
+  var import_primitives17 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  var superscript_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.Path, { d: "M17.75 8.59884H15.75C15.75 6.53219 17.75 7.04885 17.75 5.49887C17.75 4.72388 16.75 4.07384 15.75 4.84884", strokeLinecap: "square" }),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.Path, { d: "M10 12L13 7.4V7M10 12L7 7.4L7.00004 7M10 12L7 16.6V17M10 12L13 16.6V17" })
   ] });
 
   // packages/icons/build-module/library/text-color.mjs
-  var import_primitives19 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
-  var text_color_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives19.Path, { d: "M8 17.5V17.223L9.01577 14.1757M9.01577 14.1757L11.3243 7.25H11.8784L14.1869 14.1757L15.2027 17.223V17.5M14.1869 14.1757H9.01577" }) });
+  var import_primitives18 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+  var text_color_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.Path, { d: "M8 17.5V17.223L9.01577 14.1757M9.01577 14.1757L11.3243 7.25H11.8784L14.1869 14.1757L15.2027 17.223V17.5M14.1869 14.1757H9.01577" }) });
 
   // packages/format-library/build-module/bold/index.mjs
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   var name = "core/bold";
   var title = (0, import_i18n.__)("Bold");
   var bold = {
@@ -454,8 +449,8 @@ var wp;
         onChange((0, import_rich_text.toggleFormat)(value, { type: name, title }));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           import_block_editor.RichTextShortcut,
           {
             type: "primary",
@@ -463,7 +458,7 @@ var wp;
             onUse: onToggle
           }
         ),
-        isVisible && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+        isVisible && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           import_block_editor.RichTextToolbarButton,
           {
             name: "bold",
@@ -475,7 +470,7 @@ var wp;
             shortcutCharacter: "b"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           import_block_editor.__unstableRichTextInputEvent,
           {
             inputType: "formatBold",
@@ -490,7 +485,7 @@ var wp;
   var import_i18n2 = __toESM(require_i18n(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
   var import_block_editor2 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   var name2 = "core/code";
   var title2 = (0, import_i18n2.__)("Inline code");
   var code = {
@@ -535,8 +530,8 @@ var wp;
         onChange((0, import_rich_text2.toggleFormat)(value, { type: name2, title: title2 }));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
           import_block_editor2.RichTextShortcut,
           {
             type: "access",
@@ -544,7 +539,7 @@ var wp;
             onUse: onClick
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
           import_block_editor2.RichTextToolbarButton,
           {
             icon: code_default,
@@ -1527,7 +1522,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   function CompositeList(props) {
     const {
       children,
@@ -1663,7 +1658,7 @@ var wp;
       subscribeMapChange,
       nextIndexRef
     }), [register2, unregister, subscribeMapChange, nextIndexRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(CompositeListContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(CompositeListContext.Provider, {
       value: contextValue,
       children
     });
@@ -2912,7 +2907,7 @@ var wp;
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FocusGuard.mjs
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   var FocusGuard = /* @__PURE__ */ React19.forwardRef(function FocusGuard2(props, ref) {
     const [role, setRole] = React19.useState();
     useIsoLayoutEffect(() => {
@@ -2925,7 +2920,7 @@ var wp;
       // Role is only for VoiceOver
       role
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", {
       ...props,
       ref,
       style: visuallyHidden,
@@ -3535,7 +3530,7 @@ var wp;
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   var PortalContext = /* @__PURE__ */ React20.createContext(null);
   if (true) PortalContext.displayName = "PortalContext";
   var usePortalContext = () => React20.useContext(PortalContext);
@@ -3661,10 +3656,10 @@ var wp;
       portalNode,
       setFocusManagerState
     }), [portalNode]);
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(React20.Fragment, {
-      children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(PortalContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(React20.Fragment, {
+      children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(PortalContext.Provider, {
         value: portalContextValue,
-        children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(FocusGuard, {
+        children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(FocusGuard, {
           "data-type": "outside",
           ref: beforeOutsideRef,
           onFocus: (event) => {
@@ -3676,11 +3671,11 @@ var wp;
               prevTabbable?.focus();
             }
           }
-        }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", {
+        }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", {
           role: portalOwnerRole,
           "aria-owns": portalNodeId,
           style: ownerVisuallyHidden
-        }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(FocusGuard, {
+        }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(FocusGuard, {
           "data-type": "outside",
           ref: afterOutsideRef,
           onFocus: (event) => {
@@ -3724,7 +3719,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var FloatingNodeContext = /* @__PURE__ */ React21.createContext(null);
   if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
   var FloatingTreeContext = /* @__PURE__ */ React21.createContext(null);
@@ -3736,7 +3731,7 @@ var wp;
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   function getEventType(event, lastInteractionType) {
     const win = getWindow(getTarget(event));
     if (event instanceof win.KeyboardEvent) {
@@ -4202,8 +4197,8 @@ var wp;
       };
     }, [disabled2, floatingFocusElement]);
     const shouldRenderGuards = !disabled2 && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(React22.Fragment, {
-      children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(FocusGuard, {
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(React22.Fragment, {
+      children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(FocusGuard, {
         "data-type": "inside",
         ref: mergedBeforeGuardRef,
         onFocus: (event) => {
@@ -4220,7 +4215,7 @@ var wp;
             }
           }
         }
-      }), children, shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(FocusGuard, {
+      }), children, shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(FocusGuard, {
         "data-type": "inside",
         ref: mergedAfterGuardRef,
         onFocus: (event) => {
@@ -7633,7 +7628,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/InternalBackdrop.mjs
   var React33 = __toESM(require_react(), 1);
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var InternalBackdrop = /* @__PURE__ */ React33.forwardRef(function InternalBackdrop2(props, ref) {
     const {
       cutout,
@@ -7644,7 +7639,7 @@ var wp;
       const rect = cutout.getBoundingClientRect();
       clipPath = `polygon(0% 0%,100% 0%,100% 100%,0% 100%,0% 0%,${rect.left}px ${rect.top}px,${rect.left}px ${rect.bottom}px,${rect.right}px ${rect.bottom}px,${rect.right}px ${rect.top}px,${rect.left}px ${rect.top}px)`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", {
       ref,
       role: "presentation",
       "data-base-ui-inert": "",
@@ -7846,7 +7841,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveValueLabel.mjs
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   function isGroup(item) {
     return typeof item === "object" && item != null && Array.isArray(item.items);
   }
@@ -7939,7 +7934,7 @@ var wp;
       if (index3 > 0) {
         acc.push(", ");
       }
-      acc.push(/* @__PURE__ */ (0, import_jsx_runtime28.jsx)(React38.Fragment, {
+      acc.push(/* @__PURE__ */ (0, import_jsx_runtime27.jsx)(React38.Fragment, {
         children: resolveSelectedLabel(value, items, itemToStringLabel)
       }, index3));
       return acc;
@@ -9361,7 +9356,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
   var React54 = __toESM(require_react(), 1);
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var DirectionProvider = function DirectionProvider2(props) {
     const {
       direction = "ltr"
@@ -9369,7 +9364,7 @@ var wp;
     const contextValue = React54.useMemo(() => ({
       direction
     }), [direction]);
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(DirectionContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DirectionContext.Provider, {
       value: contextValue,
       children: props.children
     });
@@ -9454,7 +9449,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/labelable-provider/LabelableProvider.mjs
   var React57 = __toESM(require_react(), 1);
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   var LabelableProvider = function LabelableProvider2(props) {
     const defaultId = useBaseUiId();
     const [controlIdState, setControlIdState] = React57.useState(defaultId);
@@ -9511,7 +9506,7 @@ var wp;
       setMessageIds,
       getDescriptionProps
     }), [controlId, registerControlId, resetControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(LabelableContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(LabelableContext.Provider, {
       value: contextValue,
       children: props.children
     });
@@ -9645,7 +9640,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/field/root/FieldRoot.mjs
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   var FieldRootInner = /* @__PURE__ */ React59.forwardRef(function FieldRootInner2(componentProps, forwardedRef) {
     const {
       errors,
@@ -9770,15 +9765,15 @@ var wp;
       props: elementProps,
       stateAttributesMapping: fieldValidityMapping
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(FieldRootContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(FieldRootContext.Provider, {
       value: contextValue,
       children: element
     });
   });
   if (true) FieldRootInner.displayName = "FieldRootInner";
   var FieldRoot = /* @__PURE__ */ React59.forwardRef(function FieldRoot2(componentProps, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(LabelableProvider, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(FieldRootInner, {
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(LabelableProvider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(FieldRootInner, {
         ...componentProps,
         ref: forwardedRef
       })
@@ -9842,7 +9837,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/field/error/FieldError.mjs
   var React61 = __toESM(require_react(), 1);
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   var stateAttributesMapping = {
     ...fieldValidityMapping,
     ...transitionStatusMapping
@@ -9906,8 +9901,8 @@ var wp;
     }
     let errorMessage = error2;
     if (Array.isArray(error2)) {
-      errorMessage = error2.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("ul", {
-        children: error2.map((message) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("li", {
+      errorMessage = error2.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("ul", {
+        children: error2.map((message) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("li", {
           children: message
         }, message))
       }) : error2[0];
@@ -10128,7 +10123,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/field/validity/FieldValidity.mjs
   var React64 = __toESM(require_react(), 1);
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
   var FieldValidity = function FieldValidity2(props) {
     const {
       children
@@ -10149,7 +10144,7 @@ var wp;
         transitionStatus
       };
     }, [combinedFieldValidityData, transitionStatus]);
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(React64.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(React64.Fragment, {
       children: children(fieldValidityState)
     });
   };
@@ -10157,7 +10152,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/field/item/FieldItem.mjs
   var React65 = __toESM(require_react(), 1);
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
   var FieldItem = /* @__PURE__ */ React65.forwardRef(function FieldItem2(componentProps, forwardedRef) {
     const {
       render,
@@ -10184,8 +10179,8 @@ var wp;
       props: elementProps,
       stateAttributesMapping: fieldValidityMapping
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(LabelableProvider, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(FieldItemContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(LabelableProvider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(FieldItemContext.Provider, {
         value: fieldItemContext,
         children: element
       })
@@ -10195,9 +10190,9 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/input/Input.mjs
   var React66 = __toESM(require_react(), 1);
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
   var Input = /* @__PURE__ */ React66.forwardRef(function Input2(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(index_parts_exports.Control, {
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(index_parts_exports.Control, {
       ref: forwardedRef,
       ...props
     });
@@ -10440,7 +10435,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/root/CompositeRoot.mjs
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   function CompositeRoot(componentProps) {
     const {
       render,
@@ -10500,9 +10495,9 @@ var wp;
       highlightItemOnHover,
       relayKeyboardEvent
     }), [highlightedIndex, onHighlightedIndexChange, highlightItemOnHover, relayKeyboardEvent]);
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(CompositeRootContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(CompositeRootContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(CompositeList, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(CompositeList, {
         elementsRef,
         onMapChange: (newMap) => {
           onMapChangeProp?.(newMap);
@@ -10514,12 +10509,12 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/styles.mjs
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   var DISABLE_SCROLLBAR_CLASS_NAME = "base-ui-disable-scrollbar";
   var styleDisableScrollbar = {
     className: DISABLE_SCROLLBAR_CLASS_NAME,
     getElement(nonce) {
-      return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("style", {
+      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("style", {
         nonce,
         href: DISABLE_SCROLLBAR_CLASS_NAME,
         precedence: "base-ui:low",
@@ -10666,7 +10661,7 @@ var wp;
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/root/SelectRoot.mjs
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
   function SelectRoot(props) {
     const {
       id,
@@ -11007,7 +11002,7 @@ var wp;
       }
       return value.map((v) => {
         const currentSerializedValue = stringifyAsValue(v, itemToStringValue);
-        return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("input", {
+        return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("input", {
           type: "hidden",
           form,
           name: name16,
@@ -11016,12 +11011,12 @@ var wp;
         }, currentSerializedValue);
       });
     }, [multiple, value, form, name16, itemToStringValue, disabled2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(SelectRootContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(SelectRootContext.Provider, {
       value: store,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SelectFloatingContext.Provider, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime37.jsx)(SelectFloatingContext.Provider, {
         value: floatingContext,
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("input", {
         ...validation.getValidationProps(disabled2, {
           onFocus() {
             store.state.triggerElement?.focus({
@@ -11350,7 +11345,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/portal/SelectPortal.mjs
   var React75 = __toESM(require_react(), 1);
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
   var SelectPortal = /* @__PURE__ */ React75.forwardRef(function SelectPortal2(portalProps, forwardedRef) {
     const store = useSelectRootContext();
     const mounted = store.useState("mounted");
@@ -11359,7 +11354,7 @@ var wp;
     if (!shouldRender) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(FloatingPortal, {
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(FloatingPortal, {
       ref: forwardedRef,
       ...portalProps
     });
@@ -11433,7 +11428,7 @@ var wp;
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositioner.mjs
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
   var FIXED = {
     position: "fixed"
   };
@@ -11567,13 +11562,13 @@ var wp;
       scrollUpArrowRef,
       scrollDownArrowRef
     }), [positioning, renderedSide, alignItemWithTriggerActive, setControlledAlignItemWithTrigger]);
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(CompositeList, {
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(CompositeList, {
       elementsRef: store.context.listRef,
       labelsRef: store.context.labelsRef,
       onMapChange,
-      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(SelectPositionerContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(SelectPositionerContext.Provider, {
         value: contextValue,
-        children: [mounted && modal && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(InternalBackdrop, {
+        children: [mounted && modal && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InternalBackdrop, {
           inert: inertValue(!open2),
           cutout: triggerElement
         }), element]
@@ -11589,7 +11584,7 @@ var wp;
   var transformOrigin2 = "--transform-origin";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/popup/SelectPopup.mjs
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
   var stateAttributesMapping5 = {
     ...popupStateMapping,
     ...transitionStatusMapping
@@ -11878,8 +11873,8 @@ var wp;
       stateAttributesMapping: stateAttributesMapping5,
       props: [popupProps, defaultProps, getDisabledMountTransitionStyles(transitionStatus), elementProps]
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(React79.Fragment, {
-      children: [!disableStyleElements && styleDisableScrollbar.getElement(nonce), /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(FloatingFocusManager, {
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(React79.Fragment, {
+      children: [!disableStyleElements && styleDisableScrollbar.getElement(nonce), /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(FloatingFocusManager, {
         context: floatingRootContext,
         modal: false,
         disabled: !mounted,
@@ -11989,7 +11984,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item/SelectItem.mjs
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   var SelectItem = /* @__PURE__ */ React82.memo(/* @__PURE__ */ React82.forwardRef(function SelectItem2(componentProps, forwardedRef) {
     const {
       render,
@@ -12154,7 +12149,7 @@ var wp;
       textRef,
       selectedByFocus
     }), [selected, index3, textRef, selectedByFocus]);
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(SelectItemContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(SelectItemContext.Provider, {
       value: contextValue,
       children: element
     });
@@ -12163,7 +12158,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item-indicator/SelectItemIndicator.mjs
   var React83 = __toESM(require_react(), 1);
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   var SelectItemIndicator = /* @__PURE__ */ React83.forwardRef(function SelectItemIndicator2(componentProps, forwardedRef) {
     const {
       selected
@@ -12172,7 +12167,7 @@ var wp;
     if (!shouldRender) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(ItemIndicator, {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(ItemIndicator, {
       ...componentProps,
       selected,
       ref: forwardedRef
@@ -12396,9 +12391,9 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/scroll-down-arrow/SelectScrollDownArrow.mjs
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
   var SelectScrollDownArrow = /* @__PURE__ */ React87.forwardRef(function SelectScrollDownArrow2(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(SelectScrollArrow, {
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(SelectScrollArrow, {
       ...props,
       ref: forwardedRef,
       direction: "down"
@@ -12408,9 +12403,9 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/scroll-up-arrow/SelectScrollUpArrow.mjs
   var React88 = __toESM(require_react(), 1);
-  var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var SelectScrollUpArrow = /* @__PURE__ */ React88.forwardRef(function SelectScrollUpArrow2(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(SelectScrollArrow, {
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(SelectScrollArrow, {
       ...props,
       ref: forwardedRef,
       direction: "up"
@@ -12434,7 +12429,7 @@ var wp;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroup.mjs
-  var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
   var SelectGroup = /* @__PURE__ */ React90.forwardRef(function SelectGroup2(componentProps, forwardedRef) {
     const {
       render,
@@ -12454,7 +12449,7 @@ var wp;
         "aria-labelledby": labelId
       }, elementProps]
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(SelectGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(SelectGroupContext.Provider, {
       value: contextValue,
       children: element
     });
@@ -12522,7 +12517,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/PrehydrationScript.mjs
   var React93 = __toESM(require_react(), 1);
-  var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
   function PrehydrationScript(props) {
     const {
       script: script2
@@ -12534,7 +12529,7 @@ var wp;
     if (!isHydrating) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("script", {
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("script", {
       nonce,
       dangerouslySetInnerHTML: {
         __html: script2
@@ -12579,7 +12574,7 @@ var wp;
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
-  var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
   var TabsRoot = /* @__PURE__ */ React95.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
     const {
       className,
@@ -12762,9 +12757,9 @@ var wp;
       props: elementProps,
       stateAttributesMapping: tabsStateAttributesMapping
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(TabsRootContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(TabsRootContext.Provider, {
       value: tabsContextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(CompositeList, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(CompositeList, {
         elementsRef: tabPanelRefs,
         children: element
       })
@@ -12974,7 +12969,7 @@ var wp;
   var activeTabHeight = "--active-tab-height";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
-  var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
   var _PrehydrationScript;
   var stateAttributesMapping6 = {
     ...tabsStateAttributesMapping,
@@ -13084,8 +13079,8 @@ var wp;
     if (value == null) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(React98.Fragment, {
-      children: [element, renderBeforeHydration && (_PrehydrationScript || (_PrehydrationScript = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(PrehydrationScript, {
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(React98.Fragment, {
+      children: [element, renderBeforeHydration && (_PrehydrationScript || (_PrehydrationScript = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(PrehydrationScript, {
         script
       })))]
     });
@@ -13247,7 +13242,7 @@ var wp;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/list/TabsList.mjs
   var React100 = __toESM(require_react(), 1);
-  var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
   var TabsList = /* @__PURE__ */ React100.forwardRef(function TabsList2(componentProps, forwardedRef) {
     const {
       activateOnFocus = false,
@@ -13316,9 +13311,9 @@ var wp;
       registerTabResizeObserverElement,
       tabsListElement
     }), [activateOnFocus, registerIndicatorUpdateListener, registerTabResizeObserverElement, tabsListElement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(TabsListContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(TabsListContext.Provider, {
       value: tabsListContextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(CompositeRoot, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(CompositeRoot, {
         render,
         className,
         style,
@@ -13455,7 +13450,7 @@ var wp;
 
   // packages/ui/build-module/spinner/spinner.mjs
   var import_element9 = __toESM(require_element(), 1);
-  var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
   function getRuntime2() {
     const globalScope = globalThis;
@@ -13542,7 +13537,7 @@ var wp;
   var style_default2 = { "spinner": "ab4d64c07c0ba587__spinner", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
   var Spinner = (0, import_element9.forwardRef)(
     function UnforwardedSpinner({ className, color, style, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
         "svg",
         {
           className: clsx_default(style_default2.spinner, className),
@@ -13553,7 +13548,7 @@ var wp;
           focusable: "false",
           ...props,
           ref,
-          children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
             "path",
             {
               className: style_default2.indicator,
@@ -13568,13 +13563,13 @@ var wp;
 
   // packages/ui/build-module/icon/icon.mjs
   var import_element10 = __toESM(require_element(), 1);
-  var import_primitives20 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+  var import_primitives19 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
   var Icon = (0, import_element10.forwardRef)(
     function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
       const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-        import_primitives20.SVG,
+      return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+        import_primitives19.SVG,
         {
           ref,
           ...icon.props,
@@ -13926,15 +13921,15 @@ var wp;
 
   // packages/ui/build-module/utils/direction-provider.mjs
   var import_i18n3 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
   function DirectionProvider3({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(DirectionProvider, { direction: (0, import_i18n3.isRTL)() ? "rtl" : "ltr", children });
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(DirectionProvider, { direction: (0, import_i18n3.isRTL)() ? "rtl" : "ltr", children });
   }
 
   // packages/ui/build-module/link/link.mjs
   var import_element14 = __toESM(require_element(), 1);
   var import_i18n4 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
   function getRuntime5() {
     const globalScope = globalThis;
@@ -14058,9 +14053,9 @@ var wp;
             className
           ),
           target: target ?? (openInNewTab ? "_blank" : void 0),
-          children: /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(import_jsx_runtime54.Fragment, { children: [
+          children: /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(import_jsx_runtime53.Fragment, { children: [
             children,
-            shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+            shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
               "span",
               {
                 className: style_default4["link-icon"],
@@ -14230,7 +14225,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
   var import_element17 = __toESM(require_element(), 1);
-  var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
   function getRuntime7() {
     const globalScope = globalThis;
@@ -14334,7 +14329,7 @@ var wp;
       suffix,
       ...restProps
     }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
         "div",
         {
           ref,
@@ -14349,7 +14344,7 @@ var wp;
           ),
           ...restProps,
           children: [
-            import_element17.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+            import_element17.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
               "div",
               {
                 className: style_default6["slot-wrapper"],
@@ -14358,7 +14353,7 @@ var wp;
               }
             ),
             children,
-            import_element17.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+            import_element17.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
               "div",
               {
                 className: style_default6["slot-wrapper"],
@@ -14374,7 +14369,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/input-layout/slot.mjs
   var import_element18 = __toESM(require_element(), 1);
-  var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
   function getRuntime8() {
     const globalScope = globalThis;
@@ -14460,7 +14455,7 @@ var wp;
   }
   var style_default7 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
   var InputLayoutSlot = (0, import_element18.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
       "div",
       {
         ref,
@@ -14481,7 +14476,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/input/input.mjs
-  var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
   function getRuntime9() {
     const globalScope = globalThis;
@@ -14576,7 +14571,7 @@ var wp;
   var style_default8 = { "input": "_2ae7be2fc1bb17a3__input", "layout": "beecada4b38856ab__layout" };
   var Input3 = (0, import_element19.forwardRef)(
     function UnforwardedInput({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
         InputLayout2,
         {
           className: clsx_default(
@@ -14589,7 +14584,7 @@ var wp;
           visuallyDisabled: restProps.disabled,
           prefix,
           suffix,
-          children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
             Input,
             {
               ref,
@@ -14711,7 +14706,7 @@ var wp;
   var import_element20 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-  var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
   function getRuntime11() {
     const globalScope = globalThis;
@@ -14809,7 +14804,7 @@ var wp;
     type,
     message
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(
       "p",
       {
         id,
@@ -14819,7 +14814,7 @@ var wp;
           style_default9[`is-${type}`]
         ),
         children: [
-          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Spinner, { className: style_default9["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Spinner, { className: style_default9["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
             Icon,
             {
               className: style_default9["indicator-icon"],
@@ -14835,8 +14830,8 @@ var wp;
   }
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+  var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
   function appendRequiredIndicator(label, required, markWhenOptional) {
     let suffix;
     if (required && !markWhenOptional) {
@@ -14850,7 +14845,7 @@ var wp;
     if (typeof label === "string") {
       return `${label} ${suffix}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)(import_jsx_runtime58.Fragment, { children: [
       label,
       " ",
       suffix
@@ -14985,7 +14980,7 @@ var wp;
     const messageId = (0, import_element20.useId)();
     const message = (() => {
       if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
           ValidityIndicator,
           {
             id: messageId,
@@ -14995,7 +14990,7 @@ var wp;
         );
       }
       if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
           ValidityIndicator,
           {
             id: messageId,
@@ -15031,7 +15026,7 @@ var wp;
       ref: [forwardedRef, wrapperRef],
       props: mergeProps(restProps, {
         onBlur,
-        children: /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)(import_jsx_runtime58.Fragment, { children: [
           (0, import_element20.cloneElement)(children, {
             label: appendRequiredIndicator(
               children.props.label,
@@ -15060,7 +15055,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/field/root.mjs
   var import_element21 = __toESM(require_element(), 1);
-  var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
   function getRuntime12() {
     const globalScope = globalThis;
@@ -15145,10 +15140,10 @@ var wp;
     registerStyle12("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
   }
   var resets_default3 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+  var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
   var Root = (0, import_element21.forwardRef)(
     function UnforwardedRoot({ className, render = DEFAULT_RENDER2, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
         index_parts_exports.Root,
         {
           ref,
@@ -15162,14 +15157,14 @@ var wp;
 
   // packages/ui/build-module/form/primitives/field/item.mjs
   var import_element22 = __toESM(require_element(), 1);
-  var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
   var Item = (0, import_element22.forwardRef)(function UnforwardedItem(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(index_parts_exports.Item, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(index_parts_exports.Item, { ref, ...props });
   });
 
   // packages/ui/build-module/form/primitives/field/label.mjs
   var import_element23 = __toESM(require_element(), 1);
-  var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
   function getRuntime13() {
     const globalScope = globalThis;
@@ -15256,7 +15251,7 @@ var wp;
   var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
   var Label = (0, import_element23.forwardRef)(
     function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
-      const label = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
+      const label = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
         index_parts_exports.Label,
         {
           ref,
@@ -15269,7 +15264,7 @@ var wp;
         }
       );
       if (hideFromVision) {
-        return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(VisuallyHidden, { render: label });
+        return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(VisuallyHidden, { render: label });
       }
       return label;
     }
@@ -15277,7 +15272,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/field/description.mjs
   var import_element24 = __toESM(require_element(), 1);
-  var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
   function getRuntime14() {
     const globalScope = globalThis;
@@ -15367,7 +15362,7 @@ var wp;
   }
   var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
   var Description = (0, import_element24.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
       index_parts_exports.Description,
       {
         ref,
@@ -15384,7 +15379,7 @@ var wp;
   // packages/ui/build-module/form/primitives/field/details.mjs
   var import_element25 = __toESM(require_element(), 1);
   var import_i18n6 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
   function getRuntime15() {
     const globalScope = globalThis;
@@ -15471,9 +15466,9 @@ var wp;
   var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
   var Details = (0, import_element25.forwardRef)(
     function UnforwardedDetails({ className, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime64.jsxs)(import_jsx_runtime64.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(index_parts_exports.Description, {}), children: (0, import_i18n6.__)("More details follow the field.") }),
-        /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime63.jsxs)(import_jsx_runtime63.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(index_parts_exports.Description, {}), children: (0, import_i18n6.__)("More details follow the field.") }),
+        /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
           "div",
           {
             ref,
@@ -15487,10 +15482,10 @@ var wp;
 
   // packages/ui/build-module/form/primitives/field/control.mjs
   var import_element26 = __toESM(require_element(), 1);
-  var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
   var Control = (0, import_element26.forwardRef)(
     function UnforwardedControl(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(index_parts_exports.Control, { ref, ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(index_parts_exports.Control, { ref, ...props });
     }
   );
 
@@ -15616,7 +15611,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/select/group.mjs
   var import_element28 = __toESM(require_element(), 1);
-  var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
   function getRuntime17() {
     const globalScope = globalThis;
@@ -15703,7 +15698,7 @@ var wp;
   var item_popup_default2 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "item-icon": "a3adcfd0b73ffd40__item-icon", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "separator": "be89a1df0fe77bd2__separator", "item": "_684ccb7988365b4f__item", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var Group = (0, import_element28.forwardRef)(
     function UnforwardedGroup({ className, children, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
         index_parts_exports2.Group,
         {
           className: clsx_default(item_popup_default2.group, className),
@@ -15717,7 +15712,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/select/group-label.mjs
   var import_element29 = __toESM(require_element(), 1);
-  var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
   function getRuntime18() {
     const globalScope = globalThis;
@@ -15804,7 +15799,7 @@ var wp;
   var item_popup_default3 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "item-icon": "a3adcfd0b73ffd40__item-icon", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "separator": "be89a1df0fe77bd2__separator", "item": "_684ccb7988365b4f__item", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var GroupLabel = (0, import_element29.forwardRef)(
     function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
         Text,
         {
           variant: "heading-sm",
@@ -15812,7 +15807,7 @@ var wp;
             item_popup_default3["group-label"],
             className
           ),
-          render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(index_parts_exports2.GroupLabel, { ref, ...restProps }),
+          render: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(index_parts_exports2.GroupLabel, { ref, ...restProps }),
           children
         }
       );
@@ -15824,7 +15819,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/select/item-description.mjs
   var import_element30 = __toESM(require_element(), 1);
-  var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
   function getRuntime19() {
     const globalScope = globalThis;
@@ -15917,7 +15912,7 @@ var wp;
         "Select.ItemDescription: Missing direct select item parent. Render <Select.ItemDescription> as a direct child of <Select.Item>."
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
       Text,
       {
         ref,
@@ -15933,7 +15928,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/select/item-label.mjs
   var import_element31 = __toESM(require_element(), 1);
-  var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
   function getRuntime20() {
     const globalScope = globalThis;
@@ -16020,12 +16015,12 @@ var wp;
   var item_popup_default5 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "is-width-anchor": "b9a9946a395ccad8__is-width-anchor", "is-width-content": "_7c9f1b268b013f02__is-width-content", "is-width-sm": "_6f31db51d79ec899__is-width-sm", "is-width-md": "fa45cdb5f45e57fb__is-width-md", "is-width-lg": "_46a909337f6be21c__is-width-lg", "is-width-available": "_6083938dff06df34__is-width-available", "is-align-item-with-trigger": "_101852fa256bb935__is-align-item-with-trigger", "list-chrome": "_2fff4e9defe85de5__list-chrome", "item-icon": "a3adcfd0b73ffd40__item-icon", "list": "f43dc7c768d7b622__list _2fff4e9defe85de5__list-chrome", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "separator": "be89a1df0fe77bd2__separator", "item": "_684ccb7988365b4f__item", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-content": "_74465fc7e8ecea1a__item-content", "item-text": "_41f0dd875c005a48__item-text", "item-label": "_12335b76ada0b1f5__item-label", "item-description": "_160635254c702623__item-description", "status": "_6eb78bc92f8d7795__status", "empty": "_06c7ff39d2f685b9__empty" };
   var ItemLabel = (0, import_element31.forwardRef)(
     function UnforwardedItemLabel({ children, className, render, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
         Text,
         {
           ref,
           variant: "body-md",
-          render: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(index_parts_exports2.ItemText, { render }),
+          render: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(index_parts_exports2.ItemText, { render }),
           className: clsx_default(item_popup_default5["item-label"], className),
           ...restProps,
           children
@@ -16035,7 +16030,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/select/item.mjs
-  var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
   function getRuntime21() {
     const globalScope = globalThis;
@@ -16154,7 +16149,7 @@ var wp;
           "aria-labelledby": ariaLabelledBy
         }
       );
-      return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(
         index_parts_exports2.Item,
         {
           className: clsx_default(
@@ -16169,7 +16164,7 @@ var wp;
           ...itemAriaProps,
           ...restProps,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { className: item_popup_default6["item-icon"], children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("span", { className: item_popup_default6["item-icon"], children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
               Icon,
               {
                 icon: check_default,
@@ -16177,7 +16172,7 @@ var wp;
                 size: 16
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", { className: item_popup_default6["item-text"], children: contentChildren })
+            /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("div", { className: item_popup_default6["item-text"], children: contentChildren })
           ]
         }
       );
@@ -16189,9 +16184,9 @@ var wp;
 
   // packages/ui/build-module/form/primitives/select/portal.mjs
   var import_element33 = __toESM(require_element(), 1);
-  var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
   var Portal = (0, import_element33.forwardRef)(function SelectPortal3({ container, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
       index_parts_exports2.Portal,
       {
         container: container === void 0 ? getWpCompatOverlaySlot() : container,
@@ -16203,7 +16198,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/select/positioner.mjs
   var import_element34 = __toESM(require_element(), 1);
-  var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
   function getRuntime22() {
     const globalScope = globalThis;
@@ -16298,7 +16293,7 @@ var wp;
   var style_default10 = { "positioner": "_0ab863136fb95530__positioner", "list": "a9ab07efb9ef413f__list" };
   var Positioner = (0, import_element34.forwardRef)(
     function SelectPositioner3({ className, alignItemWithTrigger = true, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
         index_parts_exports2.Positioner,
         {
           ...ITEM_POPUP_POSITIONER_PROPS,
@@ -16317,7 +16312,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/select/popup.mjs
-  var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
   function getRuntime23() {
     const globalScope = globalThis;
@@ -16408,7 +16403,7 @@ var wp;
   var style_default11 = { "positioner": "_0ab863136fb95530__positioner", "list": "a9ab07efb9ef413f__list" };
   var Popup = (0, import_element35.forwardRef)(
     function UnforwardedPopup({ className, portal, positioner, width, children, ...restProps }, ref) {
-      const popupContent = /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+      const popupContent = /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
         index_parts_exports2.Popup,
         {
           ref,
@@ -16418,7 +16413,7 @@ var wp;
             className
           ),
           ...restProps,
-          children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
             index_parts_exports2.List,
             {
               className: clsx_default(
@@ -16432,22 +16427,22 @@ var wp;
       );
       const positionedPopup = renderSlotWithChildren(
         positioner,
-        /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Positioner, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Positioner, {}),
         popupContent
       );
-      return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Portal, {}), positionedPopup);
+      return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Portal, {}), positionedPopup);
     }
   );
 
   // packages/ui/build-module/form/primitives/select/root.mjs
-  var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
   function Root2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(index_parts_exports2.Root, { ...props }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(index_parts_exports2.Root, { ...props }) });
   }
 
   // packages/ui/build-module/form/primitives/select/separator.mjs
   var import_element36 = __toESM(require_element(), 1);
-  var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
   function getRuntime24() {
     const globalScope = globalThis;
@@ -16538,7 +16533,7 @@ var wp;
       orientation: _orientation,
       ...props
     }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
         index_parts_exports2.Separator,
         {
           ref,
@@ -16552,7 +16547,7 @@ var wp;
   // packages/ui/build-module/form/primitives/select/trigger.mjs
   var import_element37 = __toESM(require_element(), 1);
   var import_i18n7 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
   function getRuntime25() {
     const globalScope = globalThis;
@@ -16650,7 +16645,7 @@ var wp;
       placeholder = (0, import_i18n7.__)("Select"),
       ...restProps
     }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
         InputLayout2,
         {
           className: clsx_default(
@@ -16661,7 +16656,7 @@ var wp;
           ),
           size: size4,
           isBorderless: variant === "minimal",
-          children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(
             index_parts_exports2.Trigger,
             {
               ...restProps,
@@ -16672,7 +16667,7 @@ var wp;
               "data-can-disable-input-layout": true,
               ref,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
                   index_parts_exports2.Value,
                   {
                     placeholder,
@@ -16680,7 +16675,7 @@ var wp;
                     children
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
                   Icon,
                   {
                     className: select_trigger_default["trigger-caret"],
@@ -16698,7 +16693,7 @@ var wp;
 
   // packages/ui/build-module/form/input-control/input-control.mjs
   var import_element38 = __toESM(require_element(), 1);
-  var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
   function getRuntime26() {
     const globalScope = globalThis;
@@ -16792,11 +16787,11 @@ var wp;
       hideLabelFromVision,
       ...restProps
     }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(field_exports.Root, { className: clsx_default(style_default12.root, className), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(Input3, { ref, ...restProps }),
-        description && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(field_exports.Description, { children: description }),
-        details && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(field_exports.Details, { children: details })
+      return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(field_exports.Root, { className: clsx_default(style_default12.root, className), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(Input3, { ref, ...restProps }),
+        description && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(field_exports.Description, { children: description }),
+        details && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(field_exports.Details, { children: details })
       ] });
     }
   );
@@ -16806,15 +16801,15 @@ var wp;
 
   // packages/ui/build-module/form/select-control/item.mjs
   var import_element39 = __toESM(require_element(), 1);
-  var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
   var Item3 = (0, import_element39.forwardRef)(
     function UnforwardedItem3(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(select_exports.Item, { ref, ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(select_exports.Item, { ref, ...props });
     }
   );
 
   // packages/ui/build-module/form/select-control/select-control.mjs
-  var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
   var SelectControl = (0, import_element40.forwardRef)(function UnforwardedSelectControl({
     className,
     children,
@@ -16829,10 +16824,10 @@ var wp;
     triggerContent,
     ...restProps
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(field_exports.Root, { className, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(select_exports.Root, { items, ...restProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(field_exports.Root, { className, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(select_exports.Root, { items, ...restProps, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
           select_exports.Trigger,
           {
             ref,
@@ -16841,22 +16836,22 @@ var wp;
             children: triggerContent
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(select_exports.Popup, { width: popupWidth, children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(select_exports.Popup, { width: popupWidth, children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(
           Item3,
           {
             value: item,
             label: item.label,
             disabled: item.disabled,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(select_exports.ItemLabel, { children: item.label }),
-              item.description ? /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(select_exports.ItemDescription, { children: item.description }) : null
+              /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(select_exports.ItemLabel, { children: item.label }),
+              item.description ? /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(select_exports.ItemDescription, { children: item.description }) : null
             ]
           },
           item.value ?? "null"
         )) })
       ] }),
-      description && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(field_exports.Description, { children: description }),
-      details && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(field_exports.Details, { children: details })
+      description && /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(field_exports.Description, { children: description }),
+      details && /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(field_exports.Details, { children: details })
     ] });
   });
 
@@ -16898,18 +16893,18 @@ var wp;
   // packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
   var import_element41 = __toESM(require_element(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
-  var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
   var ValidatedInputControl = (0, import_element41.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
     const validityTargetRef = (0, import_element41.useRef)(null);
     const mergedRefs = (0, import_compose2.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
       ControlWithError,
       {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(InputControl, { ref: mergedRefs, ...restProps })
+        children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(InputControl, { ref: mergedRefs, ...restProps })
       }
     );
   });
@@ -16926,7 +16921,7 @@ var wp;
   // packages/ui/build-module/tabs/list.mjs
   var import_element42 = __toESM(require_element(), 1);
   var import_compose3 = __toESM(require_compose(), 1);
-  var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
   function getRuntime27() {
     const globalScope = globalThis;
@@ -17008,9 +17003,9 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle27("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
+    registerStyle27("38cee6f1d8", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.eb7aaeb14de04857__is-scrolling){overflow:visible}&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;._7313adbc8a112e90__tablist:has(>.a5fd8814f195aa5e__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);& ._5dfc77e6edd345d4__tab-children:after,&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}& ._5dfc77e6edd345d4__tab-children:after,&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible ._5dfc77e6edd345d4__tab-children:after,&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._59228b5227f38a99__is-minimal-variant.eb7aaeb14de04857__is-scrolling[data-orientation=horizontal] &{&:before{content:"";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{flex-grow:0;justify-content:start;position:relative;&:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}}}}}');
   }
-  var style_default13 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
+  var style_default13 = { "tablist": "_7313adbc8a112e90__tablist", "is-scrolling": "eb7aaeb14de04857__is-scrolling", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children" };
   var SCROLL_EPSILON = 1;
   var List = (0, import_element42.forwardRef)(
     function TabList({
@@ -17090,7 +17085,7 @@ var wp;
         forwardedRef,
         (el) => setListEl(el)
       ]);
-      return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(
         index_parts_exports3.List,
         {
           ref: mergedListRef,
@@ -17098,6 +17093,7 @@ var wp;
           "data-select-on-move": activateOnFocus ? "true" : "false",
           className: clsx_default(
             style_default13.tablist,
+            overflow.isScrolling && style_default13["is-scrolling"],
             overflow.first && style_default13["is-overflowing-first"],
             overflow.last && style_default13["is-overflowing-last"],
             style_default13[`is-${variant}-variant`],
@@ -17107,7 +17103,7 @@ var wp;
           tabIndex: otherProps.tabIndex ?? (overflow.isScrolling ? -1 : void 0),
           children: [
             children,
-            /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(index_parts_exports3.Indicator, { className: style_default13.indicator })
+            /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(index_parts_exports3.Indicator, { className: style_default13.indicator })
           ]
         }
       );
@@ -17119,7 +17115,7 @@ var wp;
 
   // packages/ui/build-module/tabs/context.mjs
   var import_element43 = __toESM(require_element(), 1);
-  var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
   var VALIDATION_ENABLED2 = true;
   var TabsValidationContext = VALIDATION_ENABLED2 ? (0, import_element43.createContext)(null) : null;
   function useRegisterTabDev() {
@@ -17183,17 +17179,17 @@ var wp;
       }),
       [registerTab, registerPanel]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(TabsValidationContext.Provider, { value: contextValue, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(TabsValidationContext.Provider, { value: contextValue, children });
   }
   function TabsValidationProviderProd({
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_jsx_runtime82.Fragment, { children });
+    return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_jsx_runtime81.Fragment, { children });
   }
   var TabsValidationProvider = VALIDATION_ENABLED2 ? TabsValidationProviderDev : TabsValidationProviderProd;
 
   // packages/ui/build-module/tabs/panel.mjs
-  var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
   function getRuntime28() {
     const globalScope = globalThis;
@@ -17285,7 +17281,7 @@ var wp;
   var Panel = (0, import_element44.forwardRef)(
     function TabPanel({ className, ...otherProps }, forwardedRef) {
       useRegisterPanel();
-      return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
         index_parts_exports3.Panel,
         {
           ref: forwardedRef,
@@ -17302,16 +17298,16 @@ var wp;
 
   // packages/ui/build-module/tabs/root.mjs
   var import_element45 = __toESM(require_element(), 1);
-  var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
   var Root3 = (0, import_element45.forwardRef)(
     function TabsRoot3({ ...otherProps }, forwardedRef) {
-      return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(index_parts_exports3.Root, { ref: forwardedRef, ...otherProps }) }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(index_parts_exports3.Root, { ref: forwardedRef, ...otherProps }) }) });
     }
   );
 
   // packages/ui/build-module/tabs/tab.mjs
   var import_element46 = __toESM(require_element(), 1);
-  var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
   function getRuntime29() {
     const globalScope = globalThis;
@@ -17393,28 +17389,19 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle29("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
+    registerStyle29("38cee6f1d8", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.eb7aaeb14de04857__is-scrolling){overflow:visible}&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;._7313adbc8a112e90__tablist:has(>.a5fd8814f195aa5e__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);& ._5dfc77e6edd345d4__tab-children:after,&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}& ._5dfc77e6edd345d4__tab-children:after,&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible ._5dfc77e6edd345d4__tab-children:after,&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._59228b5227f38a99__is-minimal-variant.eb7aaeb14de04857__is-scrolling[data-orientation=horizontal] &{&:before{content:"";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{flex-grow:0;justify-content:start;position:relative;&:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}}}}}');
   }
-  var style_default14 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
+  var style_default14 = { "tablist": "_7313adbc8a112e90__tablist", "is-scrolling": "eb7aaeb14de04857__is-scrolling", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children" };
   var Tab = (0, import_element46.forwardRef)(
     function UnforwardedTab({ className, children, ...otherProps }, forwardedRef) {
       useRegisterTab();
-      return /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
         index_parts_exports3.Tab,
         {
           ref: forwardedRef,
           className: clsx_default(style_default14.tab, className),
           ...otherProps,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime85.jsx)("span", { className: style_default14["tab-children"], children }),
-            /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
-              Icon,
-              {
-                icon: chevron_right_default,
-                className: style_default14["tab-chevron"]
-              }
-            )
-          ]
+          children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("span", { className: style_default14["tab-children"], children })
         }
       );
     }
@@ -17425,7 +17412,7 @@ var wp;
   var import_element47 = __toESM(require_element(), 1);
   var import_rich_text3 = __toESM(require_rich_text(), 1);
   var import_block_editor3 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES = ["image"];
   var name3 = "core/image";
   var title3 = (0, import_i18n8.__)("Inline image");
@@ -17468,13 +17455,13 @@ var wp;
       editableContentElement: contentRef.current,
       settings: image
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
       import_components.Popover,
       {
         focusOnMount: false,
         anchor: popoverAnchor,
         className: "block-editor-format-toolbar__image-popover",
-        children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
           "form",
           {
             className: "block-editor-format-toolbar__image-container-content",
@@ -17497,8 +17484,8 @@ var wp;
                 replacements: newReplacements
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
                 import_components.__experimentalNumberControl,
                 {
                   label: (0, import_i18n8.__)("Width"),
@@ -17509,7 +17496,7 @@ var wp;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
                 import_components.TextareaControl,
                 {
                   label: (0, import_i18n8.__)("Alternative text"),
@@ -17517,8 +17504,8 @@ var wp;
                   onChange: (newAlt) => {
                     setEditedAlt(newAlt);
                   },
-                  help: /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(import_jsx_runtime86.Fragment, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+                  help: /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(import_jsx_runtime85.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
                       Link,
                       {
                         openInNewTab: true,
@@ -17533,12 +17520,12 @@ var wp;
                         )
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime86.jsx)("br", {}),
+                    /* @__PURE__ */ (0, import_jsx_runtime85.jsx)("br", {}),
                     (0, import_i18n8.__)("Leave empty if decorative.")
                   ] })
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(Stack, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(Stack, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
                 import_components.Button,
                 {
                   disabled: !hasChanged,
@@ -17563,8 +17550,8 @@ var wp;
     activeObjectAttributes,
     contentRef
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(import_block_editor3.MediaUploadCheck, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(import_block_editor3.MediaUploadCheck, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
         import_block_editor3.MediaUpload,
         {
           allowedTypes: ALLOWED_MEDIA_TYPES,
@@ -17591,7 +17578,7 @@ var wp;
             );
             onFocus();
           },
-          render: ({ open: open2 }) => /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+          render: ({ open: open2 }) => /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
             import_block_editor3.RichTextToolbarButton,
             {
               icon: inline_image_default,
@@ -17602,7 +17589,7 @@ var wp;
           )
         }
       ),
-      isObjectActive && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+      isObjectActive && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
         InlineUI,
         {
           value,
@@ -17618,7 +17605,7 @@ var wp;
   var import_i18n9 = __toESM(require_i18n(), 1);
   var import_rich_text4 = __toESM(require_rich_text(), 1);
   var import_block_editor4 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
   var name4 = "core/italic";
   var title4 = (0, import_i18n9.__)("Italic");
   var italic = {
@@ -17640,8 +17627,8 @@ var wp;
         onChange((0, import_rich_text4.toggleFormat)(value, { type: name4, title: title4 }));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(import_jsx_runtime86.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
           import_block_editor4.RichTextShortcut,
           {
             type: "primary",
@@ -17649,7 +17636,7 @@ var wp;
             onUse: onToggle
           }
         ),
-        isVisible && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+        isVisible && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
           import_block_editor4.RichTextToolbarButton,
           {
             name: "italic",
@@ -17661,7 +17648,7 @@ var wp;
             shortcutCharacter: "i"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
           import_block_editor4.__unstableRichTextInputEvent,
           {
             inputType: "formatItalic",
@@ -17828,7 +17815,7 @@ var wp;
   var import_compose4 = __toESM(require_compose(), 1);
   var import_i18n10 = __toESM(require_i18n(), 1);
   var import_components2 = __toESM(require_components(), 1);
-  var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
   var CSSClassesSettingComponent = ({
     setting,
     value,
@@ -17855,10 +17842,10 @@ var wp;
         setIsSettingActive(true);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)("fieldset", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("legend", {}), children: setting.title }),
-      /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(Stack, { direction: "column", gap: "md", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)("fieldset", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("legend", {}), children: setting.title }),
+      /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(Stack, { direction: "column", gap: "md", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
           import_components2.CheckboxControl,
           {
             label: setting.title,
@@ -17868,7 +17855,7 @@ var wp;
             "aria-controls": isSettingActive ? controlledRegionId : void 0
           }
         ),
-        isSettingActive && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("div", { id: controlledRegionId, children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+        isSettingActive && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("div", { id: controlledRegionId, children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
           import_components2.__experimentalInputControl,
           {
             label: (0, import_i18n10.__)("CSS classes"),
@@ -17886,7 +17873,7 @@ var wp;
   var css_classes_setting_default = CSSClassesSettingComponent;
 
   // packages/format-library/build-module/link/inline.mjs
-  var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
   var LINK_SETTINGS = [
     ...import_block_editor5.LinkControl.DEFAULT_LINK_SETTINGS,
     {
@@ -17896,7 +17883,7 @@ var wp;
     {
       id: "cssClasses",
       title: (0, import_i18n11.__)("Additional CSS class(es)"),
-      render: (setting, value, onChange) => /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+      render: (setting, value, onChange) => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
         css_classes_setting_default,
         {
           setting,
@@ -18058,10 +18045,10 @@ var wp;
           (0, import_i18n11.__)("Create page: <mark>%s</mark>"),
           searchTerm
         ),
-        { mark: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)("mark", {}) }
+        { mark: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("mark", {}) }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
       import_components3.Popover,
       {
         anchor: popoverAnchor,
@@ -18073,7 +18060,7 @@ var wp;
         shift: true,
         focusOnMount,
         constrainTabbing: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
           import_block_editor5.LinkControl,
           {
             value: linkValue,
@@ -18114,7 +18101,7 @@ var wp;
   var inline_default = InlineLinkUI;
 
   // packages/format-library/build-module/link/index.mjs
-  var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
   var name5 = "core/link";
   var title5 = (0, import_i18n12.__)("Link");
   function Edit2({
@@ -18210,8 +18197,8 @@ var wp;
     }
     const shouldAutoFocus = !(openedBy?.el?.tagName === "A" && openedBy?.action === "click");
     const hasSelection = !(0, import_rich_text6.isCollapsed)(value);
-    return /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(import_jsx_runtime90.Fragment, { children: [
-      hasSelection && /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(import_jsx_runtime89.Fragment, { children: [
+      hasSelection && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
         import_block_editor6.RichTextShortcut,
         {
           type: "primary",
@@ -18219,7 +18206,7 @@ var wp;
           onUse: addLink
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
         import_block_editor6.RichTextShortcut,
         {
           type: "primaryShift",
@@ -18227,7 +18214,7 @@ var wp;
           onUse: onRemoveFormat
         }
       ),
-      isVisible && /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+      isVisible && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
         import_block_editor6.RichTextToolbarButton,
         {
           name: "link",
@@ -18243,7 +18230,7 @@ var wp;
           "aria-expanded": addingLink
         }
       ),
-      isVisible && addingLink && /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+      isVisible && addingLink && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
         inline_default,
         {
           stopAddingLink,
@@ -18304,7 +18291,7 @@ var wp;
   var import_i18n13 = __toESM(require_i18n(), 1);
   var import_rich_text7 = __toESM(require_rich_text(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
   var name6 = "core/strikethrough";
   var title6 = (0, import_i18n13.__)("Strikethrough");
   var strikethrough = {
@@ -18317,8 +18304,8 @@ var wp;
         onChange((0, import_rich_text7.toggleFormat)(value, { type: name6, title: title6 }));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_jsx_runtime91.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(import_jsx_runtime90.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
           import_block_editor7.RichTextShortcut,
           {
             type: "access",
@@ -18326,7 +18313,7 @@ var wp;
             onUse: onClick
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
           import_block_editor7.RichTextToolbarButton,
           {
             icon: format_strikethrough_default,
@@ -18344,7 +18331,7 @@ var wp;
   var import_i18n14 = __toESM(require_i18n(), 1);
   var import_rich_text8 = __toESM(require_rich_text(), 1);
   var import_block_editor8 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
   var name7 = "core/underline";
   var title7 = (0, import_i18n14.__)("Underline");
   var underline = {
@@ -18367,8 +18354,8 @@ var wp;
           })
         );
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(import_jsx_runtime92.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_jsx_runtime91.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
           import_block_editor8.RichTextShortcut,
           {
             type: "primary",
@@ -18376,7 +18363,7 @@ var wp;
             onUse: onToggle
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
           import_block_editor8.__unstableRichTextInputEvent,
           {
             inputType: "formatUnderline",
@@ -18400,7 +18387,7 @@ var wp;
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_components4 = __toESM(require_components(), 1);
   var import_i18n15 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
   var TABS = [
     { name: "color", title: (0, import_i18n15.__)("Text") },
     { name: "backgroundColor", title: (0, import_i18n15.__)("Background") }
@@ -18492,7 +18479,7 @@ var wp;
       () => getActiveColors(value, name16, colors),
       [name16, value, colors]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
       import_block_editor9.ColorPalette,
       {
         value: activeColors[property],
@@ -18520,20 +18507,20 @@ var wp;
       editableContentElement: contentRef.current,
       settings: anchorSettings
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
       import_components4.Popover,
       {
         onClose,
         className: "format-library__inline-color-popover",
         anchor: popoverAnchor,
-        children: /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(tabs_exports.Root, { defaultValue: TABS[0].name, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(tabs_exports.List, { children: TABS.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(tabs_exports.Tab, { value: tab.name, children: tab.title }, tab.name)) }),
-          TABS.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(tabs_exports.Root, { defaultValue: TABS[0].name, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(tabs_exports.List, { children: TABS.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(tabs_exports.Tab, { value: tab.name, children: tab.title }, tab.name)) }),
+          TABS.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
             tabs_exports.Panel,
             {
               value: tab.name,
               tabIndex: -1,
-              children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
                 ColorPicker,
                 {
                   name: name16,
@@ -18551,7 +18538,7 @@ var wp;
   }
 
   // packages/format-library/build-module/text-color/index.mjs
-  var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
   var transparentValue = "rgba(0, 0, 0, 0)";
   var name8 = "core/text-color";
   var title8 = (0, import_i18n16.__)("Highlight");
@@ -18598,13 +18585,13 @@ var wp;
     if (!hasColorsToChoose && !isActive) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_jsx_runtime94.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(import_jsx_runtime93.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
         import_block_editor10.RichTextToolbarButton,
         {
           className: "format-library-text-color-button",
           isActive,
-          icon: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+          icon: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
             icon_default,
             {
               icon: Object.keys(activeAttributes).length ? text_color_default : color_default,
@@ -18616,7 +18603,7 @@ var wp;
           role: "menuitemcheckbox"
         }
       ),
-      isAddingColor && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+      isAddingColor && /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
         InlineColorUI,
         {
           name: name8,
@@ -18645,7 +18632,7 @@ var wp;
   var import_i18n17 = __toESM(require_i18n(), 1);
   var import_rich_text11 = __toESM(require_rich_text(), 1);
   var import_block_editor11 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
   var name9 = "core/subscript";
   var title9 = (0, import_i18n17.__)("Subscript");
   var subscript = {
@@ -18661,7 +18648,7 @@ var wp;
         onToggle();
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
         import_block_editor11.RichTextToolbarButton,
         {
           icon: subscript_default,
@@ -18678,7 +18665,7 @@ var wp;
   var import_i18n18 = __toESM(require_i18n(), 1);
   var import_rich_text12 = __toESM(require_rich_text(), 1);
   var import_block_editor12 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
   var name10 = "core/superscript";
   var title10 = (0, import_i18n18.__)("Superscript");
   var superscript = {
@@ -18694,7 +18681,7 @@ var wp;
         onToggle();
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
         import_block_editor12.RichTextToolbarButton,
         {
           icon: superscript_default,
@@ -18711,7 +18698,7 @@ var wp;
   var import_i18n19 = __toESM(require_i18n(), 1);
   var import_rich_text13 = __toESM(require_rich_text(), 1);
   var import_block_editor13 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
   var name11 = "core/keyboard";
   var title11 = (0, import_i18n19.__)("Keyboard input");
   var keyboard2 = {
@@ -18727,7 +18714,7 @@ var wp;
         onToggle();
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
         import_block_editor13.RichTextToolbarButton,
         {
           icon: button_default,
@@ -18744,7 +18731,7 @@ var wp;
   var import_i18n20 = __toESM(require_i18n(), 1);
   var import_rich_text14 = __toESM(require_rich_text(), 1);
   var import_block_editor14 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
   var name12 = "core/unknown";
   var title12 = (0, import_i18n20.__)("Clear Unknown Formatting");
   function selectionContainsUnknownFormats(value) {
@@ -18769,7 +18756,7 @@ var wp;
         onChange((0, import_rich_text14.removeFormat)(value, name12));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
         import_block_editor14.RichTextToolbarButton,
         {
           name: "unknown",
@@ -18788,7 +18775,7 @@ var wp;
   var import_components5 = __toESM(require_components(), 1);
   var import_element53 = __toESM(require_element(), 1);
   var import_rich_text15 = __toESM(require_rich_text(), 1);
-  var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
   var name13 = "core/language";
   var title13 = (0, import_i18n21.__)("Language");
   var language = {
@@ -18807,8 +18794,8 @@ var wp;
     const togglePopover = () => {
       setIsPopoverVisible((state) => !state);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(import_jsx_runtime99.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_jsx_runtime98.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
         import_block_editor15.RichTextToolbarButton,
         {
           icon: language_default,
@@ -18825,7 +18812,7 @@ var wp;
           role: "menuitemcheckbox"
         }
       ),
-      isPopoverVisible && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+      isPopoverVisible && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
         InlineLanguageUI,
         {
           value,
@@ -18853,16 +18840,16 @@ var wp;
       { label: (0, import_i18n21.__)("Left to right"), value: "ltr" },
       { label: (0, import_i18n21.__)("Right to left"), value: "rtl" }
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
       import_components5.Popover,
       {
         className: "block-editor-format-toolbar__language-popover",
         anchor: popoverAnchor,
         onClose,
-        children: /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
           Stack,
           {
-            render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("form", {}),
+            render: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("form", {}),
             direction: "column",
             gap: "lg",
             className: "block-editor-format-toolbar__language-container-content",
@@ -18880,7 +18867,7 @@ var wp;
               onClose();
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
                 import_components5.TextControl,
                 {
                   label: title13,
@@ -18891,7 +18878,7 @@ var wp;
                   )
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
                 SelectControl2,
                 {
                   label: (0, import_i18n21.__)("Text direction"),
@@ -18904,7 +18891,7 @@ var wp;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Stack, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(Stack, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
                 import_components5.Button,
                 {
                   __next40pxDefaultSize: true,
@@ -18926,7 +18913,7 @@ var wp;
   var import_rich_text16 = __toESM(require_rich_text(), 1);
   var import_block_editor16 = __toESM(require_block_editor(), 1);
   var import_components6 = __toESM(require_components(), 1);
-  var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
   var name14 = "core/math";
   var title14 = (0, import_i18n22.__)("Math");
   function InlineUI2({
@@ -18977,7 +18964,7 @@ var wp;
         replacements: newReplacements
       });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
       import_components6.Popover,
       {
         placement: "bottom-start",
@@ -18986,14 +18973,14 @@ var wp;
         anchor: popoverAnchor,
         onFocusOutside: () => formRef.current?.reportValidity(),
         className: "block-editor-format-toolbar__math-popover",
-        children: /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
           "form",
           {
             ref: formRef,
             style: { minWidth: "300px", padding: "16px" },
             onSubmit: (event) => event.preventDefault(),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
                 ValidatedInputControl,
                 {
                   label: (0, import_i18n22.__)("LaTeX math syntax"),
@@ -19005,7 +18992,7 @@ var wp;
                   className: "block-editor-format-toolbar__math-input"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
                 Link,
                 {
                   openInNewTab: true,
@@ -19063,8 +19050,8 @@ var wp;
       onChange(newValue);
       onFocus();
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(import_jsx_runtime100.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(import_jsx_runtime99.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
         import_block_editor16.RichTextToolbarButton,
         {
           icon: math_default,
@@ -19073,7 +19060,7 @@ var wp;
           isActive: isObjectActive
         }
       ),
-      isObjectActive && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+      isObjectActive && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
         InlineUI2,
         {
           value,
@@ -19102,7 +19089,7 @@ var wp;
   var import_rich_text17 = __toESM(require_rich_text(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
   var import_components7 = __toESM(require_components(), 1);
-  var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
   var name15 = "core/non-breaking-space";
   var title15 = (0, import_i18n23.__)("Non breaking space");
   function PopoverAnchor({
@@ -19113,7 +19100,7 @@ var wp;
       editableContentElement: contentRef.current,
       settings: nonBreakingSpace
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components7.Popover, { anchor: popoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("div", { style: { whiteSpace: "nowrap", padding: "4px" }, children: (0, import_i18n23.__)("Non-breaking space") }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components7.Popover, { anchor: popoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { style: { whiteSpace: "nowrap", padding: "4px" }, children: (0, import_i18n23.__)("Non-breaking space") }) });
   }
   var nonBreakingSpace = {
     name: name15,
@@ -19125,8 +19112,8 @@ var wp;
         onChange((0, import_rich_text17.insert)(value, "\xA0"));
       }
       const selectedValue = value.start && value.end ? value.text.slice(value.start, value.end) : null;
-      return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(import_jsx_runtime101.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(import_jsx_runtime100.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
           import_block_editor17.RichTextShortcut,
           {
             type: "primaryShift",
@@ -19134,7 +19121,7 @@ var wp;
             onUse: addNonBreakingSpace
           }
         ),
-        selectedValue === "\xA0" && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(PopoverAnchor, { contentRef })
+        selectedValue === "\xA0" && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(PopoverAnchor, { contentRef })
       ] });
     },
     __experimentalCreatePrepareEditableTree() {
