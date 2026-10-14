@@ -2561,9 +2561,9 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 }
 
 .components-popover__content {
-  background: #fff;
-  box-shadow: 0 0 0 1px #ccc, 0 2px 3px rgba(0, 0, 0, 0.05), 0 4px 5px rgba(0, 0, 0, 0.04), 0 12px 12px rgba(0, 0, 0, 0.03), 0 16px 16px rgba(0, 0, 0, 0.02);
-  border-radius: 4px;
+  background: var(--wpds-color-background-surface-neutral-strong, #fff);
+  box-shadow: 0 0 0 var(--wpds-border-width-xs, 1px) var(--wpds-color-stroke-surface-neutral, #dbdbdb), 0 2px 3px rgba(0, 0, 0, 0.05), 0 4px 5px rgba(0, 0, 0, 0.04), 0 12px 12px rgba(0, 0, 0, 0.03), 0 16px 16px rgba(0, 0, 0, 0.02);
+  border-radius: var(--wpds-border-radius-md, 4px);
   box-sizing: border-box;
   width: min-content;
 }
@@ -2581,15 +2581,20 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   height: calc(100% - 48px);
   overflow-y: visible;
   width: auto;
-  box-shadow: 0 -1px 0 0 #ccc;
+  box-shadow: 0 calc(var(--wpds-border-width-xs, 1px) * -1) 0 0 var(--wpds-color-stroke-surface-neutral, #dbdbdb);
 }
 .components-popover.is-expanded.is-alternate .components-popover__content {
   box-shadow: 0 -1px 0 #1e1e1e;
 }
+@media (forced-colors: active) {
+  .components-popover:where(:not(.is-unstyled):not(.is-expanded)) .components-popover__content {
+    outline: var(--wpds-border-width-xs, 1px) solid transparent;
+  }
+}
 
 .components-popover__header {
   align-items: center;
-  background: #fff;
+  background: var(--wpds-color-background-surface-neutral-strong, #fff);
   display: flex;
   height: 48px;
   justify-content: space-between;
@@ -2613,11 +2618,16 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 .components-popover__arrow::before {
   content: "";
   position: absolute;
-  top: -1px;
+  top: calc(var(--wpds-border-width-xs, 1px) * -1);
   right: 1px;
-  height: 2px;
+  height: calc(var(--wpds-border-width-xs, 1px) * 2);
   left: 1px;
-  background-color: #fff;
+  background-color: var(--wpds-color-background-surface-neutral-strong, #fff);
+}
+@media (forced-colors: active) {
+  .components-popover__arrow::before {
+    background-color: Canvas;
+  }
 }
 .components-popover__arrow.is-top {
   bottom: -14px !important;
@@ -2643,16 +2653,26 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 }
 
 .components-popover__triangle-bg {
-  fill: #fff;
+  fill: var(--wpds-color-background-surface-neutral-strong, #fff);
+}
+@media (forced-colors: active) {
+  .components-popover__triangle-bg {
+    fill: Canvas;
+  }
 }
 
 .components-popover__triangle-border {
   fill: transparent;
-  stroke-width: 1px;
-  stroke: #ccc;
+  stroke-width: var(--wpds-border-width-xs, 1px);
+  stroke: var(--wpds-color-stroke-surface-neutral, #dbdbdb);
 }
 .is-alternate .components-popover__triangle-border {
   stroke: #1e1e1e;
+}
+@media (forced-colors: active) {
+  .components-popover:not(.is-unstyled) .components-popover__triangle-border {
+    stroke: CanvasText;
+  }
 }
 
 .components-radio-control {
