@@ -93664,7 +93664,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-grid.mjs
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
-  var InserterDraggableBlocks2 = InserterDraggableBlocks;
   var EMPTY_ARRAY12 = [];
   var GRID_LAYOUT = {
     previewSize: 120,
@@ -93682,7 +93681,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => getBlockAndPreviewFromMedia(item, mediaType),
       [item, mediaType]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(InserterDraggableBlocks2, { isEnabled: true, blocks: [block], children: ({ draggable, onDragStart, onDragEnd }) => /* @__PURE__ */ (0, import_jsx_runtime468.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(InserterDraggableBlocks, { isEnabled: true, blocks: [block], children: ({ draggable, onDragStart, onDragEnd }) => /* @__PURE__ */ (0, import_jsx_runtime468.jsxs)(
       "div",
       {
         className: "block-editor-inserter__media-grid__preview",
