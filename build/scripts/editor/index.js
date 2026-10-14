@@ -86714,7 +86714,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasVariationsPanel;
     return hasGlobalStyles;
   }
-  function BlockMenuItem({ block, isCustomized }) {
+  function BlockMenuItem({ block }) {
     const hasBlockMenuItem = useBlockHasGlobalStyles(block.name);
     if (!hasBlockMenuItem) {
       return null;
@@ -86731,17 +86731,7 @@ If there's a particular need for this, please submit a feature request at https:
               icon: block.icon
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(import_components94.FlexItem, { children: block.title }),
-          isCustomized && /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)(import_jsx_runtime455.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(VisuallyHidden, { children: (0, import_i18n169.__)("Has custom styles") }),
-            /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
-              "span",
-              {
-                "aria-hidden": "true",
-                className: "global-styles-ui-block-types-item__indicator"
-              }
-            )
-          ] })
+          /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(import_components94.FlexItem, { children: block.title })
         ] })
       }
     );
@@ -86814,8 +86804,7 @@ If there's a particular need for this, please submit a feature request at https:
         ) : filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
           BlockMenuItem,
           {
-            block,
-            isCustomized: customizedBlockNames.has(block.name)
+            block
           },
           "menu-itemblock-" + block.name
         ))
