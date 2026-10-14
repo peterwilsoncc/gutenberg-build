@@ -1682,7 +1682,7 @@ var wp;
         const { canUser } = select(import_core_data7.store);
         const block = getBlock(clientId);
         const _isUnsyncedPattern = !!block?.attributes?.metadata?.patternName;
-        const _isSyncedPattern = !!block && (0, import_blocks3.isReusableBlock)(block) && !!canUser("update", {
+        const _isSyncedPattern = !!block && (0, import_blocks3.isReusableBlock)(block) && !!canUser("read", {
           kind: "postType",
           name: "wp_block",
           id: block.attributes.ref
