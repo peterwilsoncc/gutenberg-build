@@ -15443,7 +15443,10 @@ var wp;
     "blockInspectorAnimation",
     "mediaSideload"
   ];
-  function __experimentalUpdateSettings(settings3, { stripExperimentalSettings = false, reset = false } = {}) {
+  function __experimentalUpdateSettings(settings3, {
+    stripExperimentalSettings = false,
+    reset = false
+  } = {}) {
     let incomingSettings = settings3;
     if (Object.hasOwn(incomingSettings, "__unstableIsPreviewMode")) {
       (0, import_deprecated3.default)(
@@ -15528,7 +15531,10 @@ var wp;
       removeRoot = blockOrder.length === clientIds.length && blockOrder.every(
         (clientId) => clientIds.includes(clientId)
       ) && (0, import_blocks8.isUnmodifiedBlock)(
-        select3.__unstableGetBlockWithoutInnerBlocks(rootClientId)
+        // The check reads the attributes, not the inner blocks.
+        select3.__unstableGetBlockWithoutInnerBlocks(
+          rootClientId
+        )
       );
     }
     if (selectPrevious) {
@@ -15974,6 +15980,7 @@ var wp;
           "%1$s blocks selected, %2$s including nested blocks.",
           blockCount
         ),
+        // @ts-expect-error `%1$s` formats the number too.
         blockCount,
         blockCount + nestedBlockCount
       ) : (0, import_i18n5.sprintf)(
@@ -15983,6 +15990,7 @@ var wp;
           "%s blocks selected.",
           blockCount
         ),
+        // @ts-expect-error `%s` formats the number too.
         blockCount
       ),
       "assertive"
@@ -16027,6 +16035,7 @@ var wp;
       selectBlockTypeTemplate(
         select3,
         dispatch,
+        // `castArray` above made it an array.
         blocks2,
         blocksWithTemplates,
         initialPosition2
@@ -16100,7 +16109,10 @@ var wp;
         const { template: template2 } = (0, import_blocks10.getBlockType)(block.name) ?? {};
         if (template2?.length) {
           innerBlocks = applyBlockTypeTemplates(
-            (0, import_blocks10.synchronizeBlocksWithTemplate)([], template2),
+            (0, import_blocks10.synchronizeBlocksWithTemplate)(
+              [],
+              template2
+            ),
             new Set(expandedTypes).add(block.name)
           );
         }
@@ -16296,7 +16308,9 @@ var wp;
     }
     const newAttributeKey = retrieveSelectedAttribute(updatedAttributes);
     const convertedHtml = updatedAttributes[newAttributeKey];
-    const convertedValue = (0, import_rich_text3.create)({ html: convertedHtml });
+    const convertedValue = (0, import_rich_text3.create)({
+      html: convertedHtml
+    });
     const newOffset = convertedValue.text.indexOf(START_OF_SELECTED_AREA);
     const newValue = (0, import_rich_text3.remove)(convertedValue, newOffset, newOffset + 1);
     const newHtml = (0, import_rich_text3.toHTMLString)({ value: newValue });
@@ -16409,7 +16423,10 @@ var wp;
           const name = select3.getBlockName(selectionA.clientId);
           return (0, import_blocks10.createBlock)(
             name,
-            getSiblingBlockAttributes(name, blockAttributes)
+            getSiblingBlockAttributes(
+              name,
+              blockAttributes
+            )
           );
         };
         var createEmpty = createEmpty2;
@@ -16479,7 +16496,12 @@ var wp;
         const tailType2 = (0, import_blocks10.getBlockType)(tail.name);
         const tailKey = tailType2?.[editableRootKey2] && findRichTextAttributeKey(tailType2);
         if (tailKey) {
-          dispatch.selectionChange(tail.clientId, tailKey, 0, 0);
+          dispatch.selectionChange(
+            tail.clientId,
+            tailKey,
+            0,
+            0
+          );
         }
       });
       return;
@@ -16503,7 +16525,9 @@ var wp;
       selection2 = {
         clientId: head.clientId,
         attributeKey: attributeKeyA,
-        offset: (0, import_rich_text3.create)({ html: head.attributes[attributeKeyA] }).text.length
+        offset: (0, import_rich_text3.create)({
+          html: head.attributes[attributeKeyA]
+        }).text.length
       };
       clonedBlocks.unshift(...firstBlocks);
     } else {
@@ -16697,7 +16721,9 @@ var wp;
     if (canRestoreTextSelection) {
       const newAttributeKey = retrieveSelectedAttribute(updatedAttributes);
       const convertedHtml = updatedAttributes[newAttributeKey];
-      const convertedValue = (0, import_rich_text3.create)({ html: convertedHtml });
+      const convertedValue = (0, import_rich_text3.create)({
+        html: convertedHtml
+      });
       const newOffset = convertedValue.text.indexOf(
         START_OF_SELECTED_AREA
       );
@@ -94179,7 +94205,13 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           icon: external_default,
           callback: ([media]) => {
-            window.open(category.getReportUrl?.(media), "_blank")?.focus();
+            window.open(
+              // Only external sources report items, and their titles are strings.
+              category.getReportUrl?.(
+                media
+              ),
+              "_blank"
+            )?.focus();
           }
         });
       }
