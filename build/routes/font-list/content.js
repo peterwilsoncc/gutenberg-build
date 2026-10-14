@@ -20852,7 +20852,7 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/font-list/stage.tsx
-var import_i18n56 = __toESM(require_i18n());
+var import_i18n57 = __toESM(require_i18n());
 var import_components56 = __toESM(require_components());
 var import_editor = __toESM(require_editor());
 var import_core_data12 = __toESM(require_core_data());
@@ -23292,7 +23292,7 @@ var {
 } = unlock3(import_block_editor5.privateApis);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
-var import_i18n29 = __toESM(require_i18n(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
 var import_element72 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-body.mjs
@@ -23471,7 +23471,7 @@ function TypographyVariations({
 }
 
 // packages/global-styles-ui/build-module/font-families.mjs
-var import_i18n26 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 var import_components28 = __toESM(require_components(), 1);
 var import_element71 = __toESM(require_element(), 1);
 
@@ -24236,7 +24236,7 @@ function FontLibraryProvider({ children }) {
 var context_default = FontLibraryProvider;
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 var import_components26 = __toESM(require_components(), 1);
 var import_core_data8 = __toESM(require_core_data(), 1);
 var import_data8 = __toESM(require_data(), 1);
@@ -24946,7 +24946,7 @@ var installed_fonts_default = InstalledFonts;
 var import_element68 = __toESM(require_element(), 1);
 var import_components24 = __toESM(require_components(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
-var import_i18n22 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 var import_core_data7 = __toESM(require_core_data(), 1);
 
 // packages/global-styles-ui/build-module/font-library/utils/filter-fonts.mjs
@@ -25028,14 +25028,19 @@ var google_fonts_confirm_dialog_default = GoogleFontsConfirmDialog;
 // packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
 var import_element67 = __toESM(require_element(), 1);
 var import_components23 = __toESM(require_components(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
 var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function CollectionFontVariant({
   face,
   font: font2,
   handleToggleVariant,
-  selected
+  selected,
+  installed
 }) {
   const handleToggleActivation = () => {
+    if (installed) {
+      return;
+    }
     if (font2?.fontFace) {
       handleToggleVariant(font2, face);
       return;
@@ -25044,23 +25049,36 @@ function CollectionFontVariant({
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
   const checkboxId = (0, import_element67.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components23.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
-      import_components23.CheckboxControl,
+  const installedId = `${checkboxId}-installed`;
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components23.Flex, { justify: "space-between", align: "center", gap: "1rem", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components23.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+        import_components23.CheckboxControl,
+        {
+          checked: selected || installed,
+          disabled: installed,
+          onChange: handleToggleActivation,
+          id: checkboxId,
+          "aria-describedby": installed ? installedId : void 0
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+        font_demo_default,
+        {
+          font: face,
+          text: displayName,
+          onClick: handleToggleActivation
+        }
+      ) })
+    ] }),
+    installed && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+      Text,
       {
-        checked: selected,
-        onChange: handleToggleActivation,
-        id: checkboxId
+        id: installedId,
+        className: "font-library__font-card__count",
+        children: (0, import_i18n22.__)("Installed")
       }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
-      font_demo_default,
-      {
-        font: face,
-        text: displayName,
-        onClick: handleToggleActivation
-      }
-    ) })
+    )
   ] }) });
 }
 var collection_font_variant_default = CollectionFontVariant;
@@ -25069,7 +25087,7 @@ var collection_font_variant_default = CollectionFontVariant;
 var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_CATEGORY = {
   slug: "all",
-  name: (0, import_i18n22._x)("All", "font categories")
+  name: (0, import_i18n23._x)("All", "font categories")
 };
 var LOCAL_STORAGE_ITEM = "wp-font-library-google-fonts-permission";
 var MIN_WINDOW_HEIGHT = 500;
@@ -25091,7 +25109,7 @@ function FontCollection({ slug }) {
   const [renderConfirmDialog, setRenderConfirmDialog] = (0, import_element68.useState)(
     requiresPermission && !getGoogleFontsPermissionFromStorage()
   );
-  const { installFonts, isInstalling } = (0, import_element68.useContext)(FontLibraryContext);
+  const { installFonts, isInstalling, baseCustomFonts } = (0, import_element68.useContext)(FontLibraryContext);
   const { record: selectedCollection, isResolving: isLoading } = (0, import_core_data7.useEntityRecord)("root", "fontCollection", slug);
   (0, import_element68.useEffect)(() => {
     const handleStorage = () => {
@@ -25147,16 +25165,33 @@ function FontCollection({ slug }) {
     setFontsToInstall(newFontsToInstall);
   };
   const fontToInstallOutline = getFontsOutline(fontsToInstall);
+  const installedFontsOutline = getFontsOutline(baseCustomFonts);
+  const isFontFaceInstalled = (face) => !!selectedFont && isFontFontFaceInOutline(
+    selectedFont.slug,
+    selectedFont.fontFace ? face : null,
+    // If the font has no fontFace, we want to check if the font is installed
+    installedFontsOutline
+  );
+  const installableFontFaces = selectedFont?.fontFace?.filter(
+    (face) => !isFontFaceInstalled(face)
+  );
+  const isAllInstalled = !!selectedFont && (selectedFont.fontFace?.length ? installableFontFaces?.length === 0 : isFontFontFaceInOutline(
+    selectedFont.slug,
+    null,
+    installedFontsOutline
+  ));
   const resetFontsToInstall = () => {
     setFontsToInstall([]);
   };
   const selectFontCount = fontsToInstall.length > 0 ? fontsToInstall[0]?.fontFace?.length ?? 0 : 0;
-  const isIndeterminate = selectFontCount > 0 && selectFontCount !== selectedFont?.fontFace?.length;
-  const isSelectAllChecked = selectFontCount === selectedFont?.fontFace?.length;
+  const isIndeterminate = selectFontCount > 0 && selectFontCount !== installableFontFaces?.length;
+  const isSelectAllChecked = selectFontCount === installableFontFaces?.length;
   const toggleSelectAll = () => {
     const newFonts = [];
     if (!isSelectAllChecked && selectedFont) {
-      newFonts.push(selectedFont);
+      newFonts.push(
+        selectedFont.fontFace ? { ...selectedFont, fontFace: installableFontFaces } : selectedFont
+      );
     }
     setFontsToInstall(newFonts);
   };
@@ -25178,7 +25213,7 @@ function FontCollection({ slug }) {
     } catch {
       setNotice({
         type: "error",
-        message: (0, import_i18n22.__)(
+        message: (0, import_i18n23.__)(
           "Error installing the fonts, could not be downloaded."
         )
       });
@@ -25188,7 +25223,7 @@ function FontCollection({ slug }) {
       await installFonts([fontFamily]);
       setNotice({
         type: "success",
-        message: (0, import_i18n22.__)("Fonts were installed successfully.")
+        message: (0, import_i18n23.__)("Fonts were installed successfully.")
       });
     } catch (error2) {
       setNotice({
@@ -25222,7 +25257,7 @@ function FontCollection({ slug }) {
       progress_exports.Root,
       {
         value: null,
-        "aria-label": (0, import_i18n22.__)("Loading fonts"),
+        "aria-label": (0, import_i18n23.__)("Loading fonts"),
         children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(progress_exports.Indicator, {}) })
       }
     ) }),
@@ -25248,7 +25283,7 @@ function FontCollection({ slug }) {
                         {
                           size: "small",
                           icon: more_vertical_default,
-                          label: (0, import_i18n22.__)("Actions")
+                          label: (0, import_i18n23.__)("Actions")
                         }
                       )
                     }
@@ -25263,7 +25298,7 @@ function FontCollection({ slug }) {
                           align: "end"
                         }
                       ),
-                      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(menu_exports.Item, { onClick: revokeAccess, children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n22.__)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(menu_exports.Item, { onClick: revokeAccess, children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n23.__)(
                         "Revoke access to Google Fonts"
                       ) }) })
                     }
@@ -25277,8 +25312,8 @@ function FontCollection({ slug }) {
                   {
                     className: "font-library__search",
                     value: filters.search,
-                    placeholder: (0, import_i18n22.__)("Font name\u2026"),
-                    label: (0, import_i18n22.__)("Search"),
+                    placeholder: (0, import_i18n23.__)("Font name\u2026"),
+                    label: (0, import_i18n23.__)("Search"),
                     onChange: debouncedUpdateSearchInput,
                     hideLabelFromVision: false
                   }
@@ -25286,7 +25321,7 @@ function FontCollection({ slug }) {
                 /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                   import_components24.SelectControl,
                   {
-                    label: (0, import_i18n22.__)("Category"),
+                    label: (0, import_i18n23.__)("Category"),
                     value: filters.category,
                     onChange: handleCategoryFilter,
                     children: categories && categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
@@ -25301,7 +25336,7 @@ function FontCollection({ slug }) {
                 )
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              !!selectedCollection?.font_families?.length && !fonts.length && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalText, { children: (0, import_i18n22.__)(
+              !!selectedCollection?.font_families?.length && !fonts.length && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalText, { children: (0, import_i18n23.__)(
                 "No fonts found. Try with a different search term."
               ) }),
               /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "font-library__fonts-grid__main", children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
@@ -25337,7 +25372,7 @@ function FontCollection({ slug }) {
                 /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                   import_components24.Navigator.BackButton,
                   {
-                    icon: (0, import_i18n22.isRTL)() ? chevron_right_default : chevron_left_default,
+                    icon: (0, import_i18n23.isRTL)() ? chevron_right_default : chevron_left_default,
                     size: "small",
                     onClick: () => {
                       setLastSelectedFontSlug(
@@ -25346,7 +25381,7 @@ function FontCollection({ slug }) {
                       setSelectedFont(null);
                       setNotice(null);
                     },
-                    label: (0, import_i18n22.__)("Back")
+                    label: (0, import_i18n23.__)("Back")
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
@@ -25372,16 +25407,17 @@ function FontCollection({ slug }) {
                 /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 1 })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalText, { children: (0, import_i18n22.__)("Select font variants to install.") }),
+              /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalText, { children: (0, import_i18n23.__)("Select font variants to install.") }),
               /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
               /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                 import_components24.CheckboxControl,
                 {
                   className: "font-library__select-all",
-                  label: (0, import_i18n22.__)("Select all"),
-                  checked: isSelectAllChecked,
+                  label: (0, import_i18n23.__)("Select all"),
+                  checked: isSelectAllChecked || isAllInstalled,
                   onChange: toggleSelectAll,
-                  indeterminate: isIndeterminate
+                  indeterminate: isIndeterminate,
+                  disabled: isAllInstalled
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components24.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
@@ -25405,6 +25441,9 @@ function FontCollection({ slug }) {
                               selectedFont.fontFace ? face : null,
                               // If the font has no fontFace, we want to check if the font is in the outline
                               fontToInstallOutline
+                            ),
+                            installed: isFontFaceInstalled(
+                              face
                             )
                           }
                         )
@@ -25433,7 +25472,7 @@ function FontCollection({ slug }) {
               isBusy: isInstalling,
               disabled: fontsToInstall.length === 0 || isInstalling,
               accessibleWhenDisabled: true,
-              children: (0, import_i18n22.__)("Install")
+              children: (0, import_i18n23.__)("Install")
             }
           )
         }
@@ -25454,9 +25493,9 @@ function FontCollection({ slug }) {
                 spacing: 1,
                 className: "font-library__page-selection",
                 children: (0, import_element68.createInterpolateElement)(
-                  (0, import_i18n22.sprintf)(
+                  (0, import_i18n23.sprintf)(
                     // translators: 1: Current page number, 2: Total number of pages.
-                    (0, import_i18n22._x)(
+                    (0, import_i18n23._x)(
                       "<div>Page</div>%1$s<div>of %2$d</div>",
                       "paging"
                     ),
@@ -25469,7 +25508,7 @@ function FontCollection({ slug }) {
                     CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
                       import_components24.SelectControl,
                       {
-                        "aria-label": (0, import_i18n22.__)(
+                        "aria-label": (0, import_i18n23.__)(
                           "Current page"
                         ),
                         value: page.toString(),
@@ -25499,8 +25538,8 @@ function FontCollection({ slug }) {
                   onClick: () => setPage(page - 1),
                   disabled: page === 1,
                   accessibleWhenDisabled: true,
-                  label: (0, import_i18n22.__)("Previous page"),
-                  icon: (0, import_i18n22.isRTL)() ? next_default : previous_default,
+                  label: (0, import_i18n23.__)("Previous page"),
+                  icon: (0, import_i18n23.isRTL)() ? next_default : previous_default,
                   showTooltip: true,
                   size: "compact",
                   tooltipPosition: "top"
@@ -25512,8 +25551,8 @@ function FontCollection({ slug }) {
                   onClick: () => setPage(page + 1),
                   disabled: page === totalPages,
                   accessibleWhenDisabled: true,
-                  label: (0, import_i18n22.__)("Next page"),
-                  icon: (0, import_i18n22.isRTL)() ? previous_default : next_default,
+                  label: (0, import_i18n23.__)("Next page"),
+                  icon: (0, import_i18n23.isRTL)() ? previous_default : next_default,
                   showTooltip: true,
                   size: "compact",
                   tooltipPosition: "top"
@@ -25529,7 +25568,7 @@ function FontCollection({ slug }) {
 var font_collection_default = FontCollection;
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
-var import_i18n23 = __toESM(require_i18n(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
 var import_components25 = __toESM(require_components(), 1);
 var import_element69 = __toESM(require_element(), 1);
 
@@ -29349,12 +29388,12 @@ var inflate_default = (function() {
           var STR_APPLY_UIA_OK = true;
           try {
             String.fromCharCode.apply(null, [0]);
-          } catch (__50) {
+          } catch (__51) {
             STR_APPLY_OK = false;
           }
           try {
             String.fromCharCode.apply(null, new Uint8Array(1));
-          } catch (__50) {
+          } catch (__51) {
             STR_APPLY_UIA_OK = false;
           }
           var _utf8len = new utils.Buf8(256);
@@ -35626,7 +35665,7 @@ function UploadFonts() {
     if (allowedFiles.length > 0) {
       loadFiles(allowedFiles);
     } else {
-      const message = hasInvalidFiles ? (0, import_i18n23.__)("Sorry, you are not allowed to upload this file type.") : (0, import_i18n23.__)("No fonts found to install.");
+      const message = hasInvalidFiles ? (0, import_i18n24.__)("Sorry, you are not allowed to upload this file type.") : (0, import_i18n24.__)("No fonts found to install.");
       setNotice({
         type: "error",
         message
@@ -35696,7 +35735,7 @@ function UploadFonts() {
       await installFonts(fontFamilies);
       setNotice({
         type: "success",
-        message: (0, import_i18n23.__)("Fonts were installed successfully.")
+        message: (0, import_i18n24.__)("Fonts were installed successfully.")
       });
     } catch (error2) {
       const typedError = error2;
@@ -35727,7 +35766,7 @@ function UploadFonts() {
         progress_exports.Root,
         {
           value: null,
-          "aria-label": (0, import_i18n23.__)("Uploading fonts"),
+          "aria-label": (0, import_i18n24.__)("Uploading fonts"),
           children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(progress_exports.Track, { children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(progress_exports.Indicator, {}) })
         }
       ) }) }),
@@ -35745,12 +35784,12 @@ function UploadFonts() {
               __next40pxDefaultSize: true,
               className: "font-library__upload-area",
               onClick: openFileDialog,
-              children: (0, import_i18n23.__)("Upload font")
+              children: (0, import_i18n24.__)("Upload font")
             }
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components25.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n23.__)(
+      /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components25.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n24.__)(
         "Uploaded fonts appear in your library and can be used in your theme. Supported formats: .ttf, .otf, .woff, and .woff2."
       ) })
     ] })
@@ -35763,15 +35802,15 @@ var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 var { Tabs } = unlock3(import_components26.privateApis);
 var DEFAULT_TAB = {
   id: "installed-fonts",
-  title: (0, import_i18n24._x)("Library", "Font library")
+  title: (0, import_i18n25._x)("Library", "Font library")
 };
 var UPLOAD_TAB = {
   id: "upload-fonts",
-  title: (0, import_i18n24._x)("Upload", "noun")
+  title: (0, import_i18n25._x)("Upload", "noun")
 };
 
 // packages/global-styles-ui/build-module/font-family-item.mjs
-var import_i18n25 = __toESM(require_i18n(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
 var import_components27 = __toESM(require_components(), 1);
 var import_element70 = __toESM(require_element(), 1);
 var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
@@ -35780,12 +35819,12 @@ var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
-var import_i18n27 = __toESM(require_i18n(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
 var import_components29 = __toESM(require_components(), 1);
 var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/text-shadows.mjs
-var import_i18n28 = __toESM(require_i18n(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
 var import_components30 = __toESM(require_components(), 1);
 var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 
@@ -35793,7 +35832,7 @@ var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-typography-element.mjs
-var import_i18n30 = __toESM(require_i18n(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
 var import_components31 = __toESM(require_components(), 1);
 var import_element73 = __toESM(require_element(), 1);
 
@@ -35809,47 +35848,47 @@ var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
 var elements = {
   text: {
-    description: (0, import_i18n30.__)("Manage the fonts used on the site."),
-    title: (0, import_i18n30.__)("Text")
+    description: (0, import_i18n31.__)("Manage the fonts used on the site."),
+    title: (0, import_i18n31.__)("Text")
   },
   link: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on the links."),
-    title: (0, import_i18n30.__)("Links")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on the links."),
+    title: (0, import_i18n31.__)("Links")
   },
   heading: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on headings."),
-    title: (0, import_i18n30.__)("Headings")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on headings."),
+    title: (0, import_i18n31.__)("Headings")
   },
   caption: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on captions."),
-    title: (0, import_i18n30.__)("Captions")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on captions."),
+    title: (0, import_i18n31.__)("Captions")
   },
   cite: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on citations."),
-    title: (0, import_i18n30.__)("Citations")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on citations."),
+    title: (0, import_i18n31.__)("Citations")
   },
   button: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on buttons."),
-    title: (0, import_i18n30.__)("Buttons")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on buttons."),
+    title: (0, import_i18n31.__)("Buttons")
   },
   textInput: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on inputs."),
-    title: (0, import_i18n30.__)("Inputs")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on inputs."),
+    title: (0, import_i18n31.__)("Inputs")
   },
   select: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on selects."),
-    title: (0, import_i18n30.__)("Selects")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on selects."),
+    title: (0, import_i18n31.__)("Selects")
   }
 };
 
 // packages/global-styles-ui/build-module/screen-colors.mjs
-var import_i18n32 = __toESM(require_i18n(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
 var import_components33 = __toESM(require_components(), 1);
 var import_block_editor7 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/palette.mjs
 var import_components32 = __toESM(require_components(), 1);
-var import_i18n31 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 var import_element74 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
@@ -35864,18 +35903,18 @@ var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: Style
   import_block_editor7.privateApis
 );
 var ADDITIONAL_ELEMENTS = [
-  { name: "cite", label: (0, import_i18n32.__)("Citations") },
-  { name: "textInput", label: (0, import_i18n32.__)("Inputs") },
-  { name: "select", label: (0, import_i18n32.__)("Selects") }
+  { name: "cite", label: (0, import_i18n33.__)("Citations") },
+  { name: "textInput", label: (0, import_i18n33.__)("Inputs") },
+  { name: "select", label: (0, import_i18n33.__)("Selects") }
 ];
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/color-palette-panel.mjs
 var import_compose6 = __toESM(require_compose(), 1);
 var import_components36 = __toESM(require_components(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/variations/variations-color.mjs
 var import_components35 = __toESM(require_components(), 1);
@@ -35984,21 +36023,21 @@ var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
 var import_compose7 = __toESM(require_compose(), 1);
 var import_components37 = __toESM(require_components(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/duotone-palette-panel.mjs
 var import_compose8 = __toESM(require_compose(), 1);
 var import_element75 = __toESM(require_element(), 1);
 var import_components38 = __toESM(require_components(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
 var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-background.mjs
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 var import_block_editor9 = __toESM(require_block_editor(), 1);
 var import_components39 = __toESM(require_components(), 1);
 
@@ -36014,16 +36053,16 @@ var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock3(import_block_editor9.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_components41 = __toESM(require_components(), 1);
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 var import_element76 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-reset-dialog.mjs
 var import_components40 = __toESM(require_components(), 1);
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
@@ -36034,7 +36073,7 @@ var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
 var import_components45 = __toESM(require_components(), 1);
-var import_i18n43 = __toESM(require_i18n(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
 var import_element78 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
@@ -36043,12 +36082,12 @@ var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
 var import_components43 = __toESM(require_components(), 1);
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/rename-dialog.mjs
 var import_components44 = __toESM(require_components(), 1);
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_element77 = __toESM(require_element(), 1);
 var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 
@@ -36059,17 +36098,17 @@ var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows.mjs
-var import_i18n44 = __toESM(require_i18n(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
 var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows-edit.mjs
 var import_components46 = __toESM(require_components(), 1);
-var import_i18n45 = __toESM(require_i18n(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
 var import_element79 = __toESM(require_element(), 1);
 var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_i18n46 = __toESM(require_i18n(), 1);
+var import_i18n47 = __toESM(require_i18n(), 1);
 var import_block_editor11 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/dimensions-panel.mjs
@@ -36086,10 +36125,10 @@ var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement:
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
 var import_components49 = __toESM(require_components(), 1);
-var import_i18n49 = __toESM(require_i18n(), 1);
+var import_i18n50 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_i18n48 = __toESM(require_i18n(), 1);
+var import_i18n49 = __toESM(require_i18n(), 1);
 var import_components48 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-container.mjs
@@ -36097,7 +36136,7 @@ var import_core_data9 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_element81 = __toESM(require_element(), 1);
 var import_components47 = __toESM(require_components(), 1);
-var import_i18n47 = __toESM(require_i18n(), 1);
+var import_i18n48 = __toESM(require_i18n(), 1);
 var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
 function StyleVariationsContainer({
   gap = 2
@@ -36121,7 +36160,7 @@ function StyleVariationsContainer({
   const themeVariations = (0, import_element81.useMemo)(() => {
     const withEmptyVariation = [
       {
-        title: (0, import_i18n47.__)("Default"),
+        title: (0, import_i18n48.__)("Default"),
         settings: {},
         styles: {}
       },
@@ -36193,14 +36232,14 @@ var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-css.mjs
-var import_i18n50 = __toESM(require_i18n(), 1);
+var import_i18n51 = __toESM(require_i18n(), 1);
 var import_components50 = __toESM(require_components(), 1);
 var import_block_editor12 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
 var { AdvancedPanel: StylesAdvancedPanel2 } = unlock3(import_block_editor12.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_i18n52 = __toESM(require_i18n(), 1);
+var import_i18n53 = __toESM(require_i18n(), 1);
 var import_components51 = __toESM(require_components(), 1);
 var import_element84 = __toESM(require_element(), 1);
 
@@ -36210,7 +36249,7 @@ var import_core_data10 = __toESM(require_core_data(), 1);
 var import_element82 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/revisions-list.mjs
-var import_i18n51 = __toESM(require_i18n(), 1);
+var import_i18n52 = __toESM(require_i18n(), 1);
 var import_date = __toESM(require_date(), 1);
 var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data11 = __toESM(require_data(), 1);
@@ -36222,18 +36261,18 @@ var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
-var import_i18n53 = __toESM(require_i18n(), 1);
+var import_i18n54 = __toESM(require_i18n(), 1);
 var import_components52 = __toESM(require_components(), 1);
 var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_i18n55 = __toESM(require_i18n(), 1);
+var import_i18n56 = __toESM(require_i18n(), 1);
 var import_components54 = __toESM(require_components(), 1);
 var import_element85 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor13 = __toESM(require_block_editor(), 1);
-var import_i18n54 = __toESM(require_i18n(), 1);
+var import_i18n55 = __toESM(require_i18n(), 1);
 var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/size-control/index.mjs
@@ -36343,22 +36382,22 @@ function FontLibraryPage() {
   const tabs = [
     {
       id: "installed-fonts",
-      title: (0, import_i18n56._x)("Library", "Font library")
+      title: (0, import_i18n57._x)("Library", "Font library")
     }
   ];
   if (canUserCreate) {
     tabs.push({
       id: "upload-fonts",
-      title: (0, import_i18n56._x)("Upload", "noun")
+      title: (0, import_i18n57._x)("Upload", "noun")
     });
     tabs.push(
       ...(collections || []).map(({ slug, name: name2 }) => ({
         id: slug,
-        title: collections && collections.length === 1 && slug === "google-fonts" ? (0, import_i18n56.__)("Install Fonts") : name2
+        title: collections && collections.length === 1 && slug === "google-fonts" ? (0, import_i18n57.__)("Install Fonts") : name2
       }))
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(page_default, { title: (0, import_i18n56.__)("Fonts"), className: "font-library-page", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: "font-library-page__content", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(page_default, { title: (0, import_i18n57.__)("Fonts"), className: "font-library-page", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: "font-library-page__content", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
     Tabs2,
     {
       selectedTabId: activeTab,

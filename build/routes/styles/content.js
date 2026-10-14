@@ -12914,7 +12914,7 @@ var {
 } = unlock4(import_block_editor6.privateApis);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
-var import_i18n29 = __toESM(require_i18n(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
 var import_element42 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-body.mjs
@@ -13093,7 +13093,7 @@ function TypographyVariations({
 }
 
 // packages/global-styles-ui/build-module/font-families.mjs
-var import_i18n26 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 var import_components29 = __toESM(require_components(), 1);
 var import_element41 = __toESM(require_element(), 1);
 
@@ -13136,7 +13136,7 @@ var FontLibraryContext = (0, import_element32.createContext)(
 FontLibraryContext.displayName = "FontLibraryContext";
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 var import_components27 = __toESM(require_components(), 1);
 var import_core_data10 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
@@ -13172,7 +13172,7 @@ var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 var import_element38 = __toESM(require_element(), 1);
 var import_components25 = __toESM(require_components(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
-var import_i18n22 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 var import_core_data9 = __toESM(require_core_data(), 1);
 
 // packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.mjs
@@ -13183,17 +13183,18 @@ var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 // packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
 var import_element37 = __toESM(require_element(), 1);
 var import_components24 = __toESM(require_components(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
 var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-collection.mjs
 var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_CATEGORY = {
   slug: "all",
-  name: (0, import_i18n22._x)("All", "font categories")
+  name: (0, import_i18n23._x)("All", "font categories")
 };
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
-var import_i18n23 = __toESM(require_i18n(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
 var import_components26 = __toESM(require_components(), 1);
 var import_element39 = __toESM(require_element(), 1);
 
@@ -17013,12 +17014,12 @@ var inflate_default = (function() {
           var STR_APPLY_UIA_OK = true;
           try {
             String.fromCharCode.apply(null, [0]);
-          } catch (__49) {
+          } catch (__50) {
             STR_APPLY_OK = false;
           }
           try {
             String.fromCharCode.apply(null, new Uint8Array(1));
-          } catch (__49) {
+          } catch (__50) {
             STR_APPLY_UIA_OK = false;
           }
           var _utf8len = new utils.Buf8(256);
@@ -23237,15 +23238,15 @@ var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
 var { Tabs } = unlock4(import_components27.privateApis);
 var DEFAULT_TAB = {
   id: "installed-fonts",
-  title: (0, import_i18n24._x)("Library", "Font library")
+  title: (0, import_i18n25._x)("Library", "Font library")
 };
 var UPLOAD_TAB = {
   id: "upload-fonts",
-  title: (0, import_i18n24._x)("Upload", "noun")
+  title: (0, import_i18n25._x)("Upload", "noun")
 };
 
 // packages/global-styles-ui/build-module/font-family-item.mjs
-var import_i18n25 = __toESM(require_i18n(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
 var import_components28 = __toESM(require_components(), 1);
 var import_element40 = __toESM(require_element(), 1);
 var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
@@ -23254,12 +23255,12 @@ var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
-var import_i18n27 = __toESM(require_i18n(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
 var import_components30 = __toESM(require_components(), 1);
 var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/text-shadows.mjs
-var import_i18n28 = __toESM(require_i18n(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
 var import_components31 = __toESM(require_components(), 1);
 var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 
@@ -23267,7 +23268,7 @@ var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-typography-element.mjs
-var import_i18n30 = __toESM(require_i18n(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
 var import_components32 = __toESM(require_components(), 1);
 var import_element43 = __toESM(require_element(), 1);
 
@@ -23283,47 +23284,47 @@ var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
 var elements = {
   text: {
-    description: (0, import_i18n30.__)("Manage the fonts used on the site."),
-    title: (0, import_i18n30.__)("Text")
+    description: (0, import_i18n31.__)("Manage the fonts used on the site."),
+    title: (0, import_i18n31.__)("Text")
   },
   link: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on the links."),
-    title: (0, import_i18n30.__)("Links")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on the links."),
+    title: (0, import_i18n31.__)("Links")
   },
   heading: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on headings."),
-    title: (0, import_i18n30.__)("Headings")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on headings."),
+    title: (0, import_i18n31.__)("Headings")
   },
   caption: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on captions."),
-    title: (0, import_i18n30.__)("Captions")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on captions."),
+    title: (0, import_i18n31.__)("Captions")
   },
   cite: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on citations."),
-    title: (0, import_i18n30.__)("Citations")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on citations."),
+    title: (0, import_i18n31.__)("Citations")
   },
   button: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on buttons."),
-    title: (0, import_i18n30.__)("Buttons")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on buttons."),
+    title: (0, import_i18n31.__)("Buttons")
   },
   textInput: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on inputs."),
-    title: (0, import_i18n30.__)("Inputs")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on inputs."),
+    title: (0, import_i18n31.__)("Inputs")
   },
   select: {
-    description: (0, import_i18n30.__)("Manage the fonts and typography used on selects."),
-    title: (0, import_i18n30.__)("Selects")
+    description: (0, import_i18n31.__)("Manage the fonts and typography used on selects."),
+    title: (0, import_i18n31.__)("Selects")
   }
 };
 
 // packages/global-styles-ui/build-module/screen-colors.mjs
-var import_i18n32 = __toESM(require_i18n(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
 var import_components34 = __toESM(require_components(), 1);
 var import_block_editor8 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/palette.mjs
 var import_components33 = __toESM(require_components(), 1);
-var import_i18n31 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 var import_element44 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
@@ -23338,18 +23339,18 @@ var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: Style
   import_block_editor8.privateApis
 );
 var ADDITIONAL_ELEMENTS = [
-  { name: "cite", label: (0, import_i18n32.__)("Citations") },
-  { name: "textInput", label: (0, import_i18n32.__)("Inputs") },
-  { name: "select", label: (0, import_i18n32.__)("Selects") }
+  { name: "cite", label: (0, import_i18n33.__)("Citations") },
+  { name: "textInput", label: (0, import_i18n33.__)("Inputs") },
+  { name: "select", label: (0, import_i18n33.__)("Selects") }
 ];
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/color-palette-panel.mjs
 var import_compose5 = __toESM(require_compose(), 1);
 var import_components37 = __toESM(require_components(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/variations/variations-color.mjs
 var import_components36 = __toESM(require_components(), 1);
@@ -23458,21 +23459,21 @@ var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
 // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
 var import_compose6 = __toESM(require_compose(), 1);
 var import_components38 = __toESM(require_components(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/duotone-palette-panel.mjs
 var import_compose7 = __toESM(require_compose(), 1);
 var import_element45 = __toESM(require_element(), 1);
 var import_components39 = __toESM(require_components(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-background.mjs
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 var import_block_editor10 = __toESM(require_block_editor(), 1);
 var import_components40 = __toESM(require_components(), 1);
 
@@ -23488,16 +23489,16 @@ var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock4(import_block_editor10.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_components42 = __toESM(require_components(), 1);
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 var import_element46 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-reset-dialog.mjs
 var import_components41 = __toESM(require_components(), 1);
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
@@ -23508,7 +23509,7 @@ var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
 var import_components46 = __toESM(require_components(), 1);
-var import_i18n43 = __toESM(require_i18n(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
 var import_element48 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
@@ -23517,12 +23518,12 @@ var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
 var import_components44 = __toESM(require_components(), 1);
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/rename-dialog.mjs
 var import_components45 = __toESM(require_components(), 1);
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_element47 = __toESM(require_element(), 1);
 var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
 
@@ -23533,17 +23534,17 @@ var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows.mjs
-var import_i18n44 = __toESM(require_i18n(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
 var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows-edit.mjs
 var import_components47 = __toESM(require_components(), 1);
-var import_i18n45 = __toESM(require_i18n(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
 var import_element49 = __toESM(require_element(), 1);
 var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_i18n46 = __toESM(require_i18n(), 1);
+var import_i18n47 = __toESM(require_i18n(), 1);
 var import_block_editor12 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/dimensions-panel.mjs
@@ -23560,10 +23561,10 @@ var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement:
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
 var import_components50 = __toESM(require_components(), 1);
-var import_i18n49 = __toESM(require_i18n(), 1);
+var import_i18n50 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_i18n48 = __toESM(require_i18n(), 1);
+var import_i18n49 = __toESM(require_i18n(), 1);
 var import_components49 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-container.mjs
@@ -23571,7 +23572,7 @@ var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data10 = __toESM(require_data(), 1);
 var import_element51 = __toESM(require_element(), 1);
 var import_components48 = __toESM(require_components(), 1);
-var import_i18n47 = __toESM(require_i18n(), 1);
+var import_i18n48 = __toESM(require_i18n(), 1);
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 function StyleVariationsContainer({
   gap = 2
@@ -23595,7 +23596,7 @@ function StyleVariationsContainer({
   const themeVariations = (0, import_element51.useMemo)(() => {
     const withEmptyVariation = [
       {
-        title: (0, import_i18n47.__)("Default"),
+        title: (0, import_i18n48.__)("Default"),
         settings: {},
         styles: {}
       },
@@ -23667,14 +23668,14 @@ var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-css.mjs
-var import_i18n50 = __toESM(require_i18n(), 1);
+var import_i18n51 = __toESM(require_i18n(), 1);
 var import_components51 = __toESM(require_components(), 1);
 var import_block_editor13 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 var { AdvancedPanel: StylesAdvancedPanel2 } = unlock4(import_block_editor13.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_i18n52 = __toESM(require_i18n(), 1);
+var import_i18n53 = __toESM(require_i18n(), 1);
 var import_components52 = __toESM(require_components(), 1);
 var import_element54 = __toESM(require_element(), 1);
 
@@ -23811,7 +23812,7 @@ function useGlobalStylesRevisions({
 }
 
 // packages/global-styles-ui/build-module/screen-revisions/revisions-list.mjs
-var import_i18n51 = __toESM(require_i18n(), 1);
+var import_i18n52 = __toESM(require_i18n(), 1);
 var import_date = __toESM(require_date(), 1);
 var import_core_data13 = __toESM(require_core_data(), 1);
 var import_data12 = __toESM(require_data(), 1);
@@ -23823,18 +23824,18 @@ var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
-var import_i18n53 = __toESM(require_i18n(), 1);
+var import_i18n54 = __toESM(require_i18n(), 1);
 var import_components53 = __toESM(require_components(), 1);
 var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_i18n55 = __toESM(require_i18n(), 1);
+var import_i18n56 = __toESM(require_i18n(), 1);
 var import_components55 = __toESM(require_components(), 1);
 var import_element55 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor14 = __toESM(require_block_editor(), 1);
-var import_i18n54 = __toESM(require_i18n(), 1);
+var import_i18n55 = __toESM(require_i18n(), 1);
 var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/size-control/index.mjs
