@@ -13599,6 +13599,7 @@ var wp;
       state.settings[userPatternCategoriesSelectKey]?.(select3) ?? state.settings.__experimentalUserPatternCategories,
       state.settings.__experimentalReusableBlocks,
       state.settings[selectBlockPatternsKey]?.(select3),
+      // @ts-expect-error The store has no `blockPatterns`, so this is always undefined.
       state.blockPatterns,
       unlock(select3(STORE_NAME)).getReusableBlocks()
     ];
@@ -13867,7 +13868,9 @@ var wp;
     (state, clientId, blockName, ascending = false) => {
       const parents = getBlockParents(state, clientId, ascending);
       const hasName = Array.isArray(blockName) ? (name) => blockName.includes(name) : (name) => blockName === name;
-      return parents.filter((id) => hasName(getBlockName(state, id)));
+      return parents.filter(
+        (id) => hasName(getBlockName(state, id))
+      );
     },
     (state) => [state.blocks.parents]
   );
@@ -14662,7 +14665,7 @@ var wp;
       isDisabled = getBlocksByClientId(
         state,
         getClientIdsWithDescendants(state)
-      ).some(({ name }) => name === blockType.name);
+      ).some((block) => block.name === blockType.name);
     }
     const { time, count = 0 } = getInsertUsage(state, id) || {};
     const blockItemBase = {
@@ -14680,7 +14683,10 @@ var wp;
       blockType.name,
       "inserter"
     );
-    const blockVariations = (0, import_blocks7.getBlockVariations)(blockType.name, "block");
+    const blockVariations = (0, import_blocks7.getBlockVariations)(
+      blockType.name,
+      "block"
+    );
     const allVariations = [
       ...inserterVariations,
       // Built-in heading level variations have block scope but allow
@@ -14954,7 +14960,11 @@ var wp;
           return;
         }
         const blockTypes = (0, import_blocks7.getBlockTypes)().filter(
-          (blockType) => canIncludeBlockTypeInInserter(state, blockType, rootClientId)
+          (blockType) => canIncludeBlockTypeInInserter(
+            state,
+            blockType,
+            rootClientId
+          )
         );
         const hasReusableBlock = canInsertBlockTypeUnmemoized(
           state,
@@ -14984,7 +14994,10 @@ var wp;
       );
       return getAllowedBlocks(state, rootClientId);
     },
-    (state, rootClientId) => getAllowedBlocks.getDependants(state, rootClientId)
+    (state, rootClientId) => (
+      // @ts-expect-error A registry selector has no `getDependants`, so this throws.
+      getAllowedBlocks.getDependants(state, rootClientId)
+    )
   );
   function getDirectInsertBlock(state, rootClientId = null) {
     if (!rootClientId) {
@@ -15369,7 +15382,10 @@ var wp;
         viewport: getStyleStateViewport(state)
       };
     },
-    (state) => [state.styleStateViewport, state.selectedBlockStyleState]
+    (state) => [
+      state.styleStateViewport,
+      state.selectedBlockStyleState
+    ]
   );
   function hasSelectedBlockStyleState(state, clientId) {
     const selectedState = getSelectedBlockStyleState(state, clientId);
