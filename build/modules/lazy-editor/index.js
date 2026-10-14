@@ -674,58 +674,6 @@ function getResolvedValue(ruleValue, tree) {
   return resolvedValue;
 }
 
-// packages/global-styles-engine/build-module/style-state-back-compat.mjs
-var LEGACY_STYLE_STATE_ALIASES = {
-  "@mobile": "mobile",
-  "@tablet": "tablet",
-  "-current": "@current"
-};
-function isObjectRecord(value) {
-  return !!value && typeof value === "object" && !Array.isArray(value);
-}
-function normalizeStyleStateNode(node) {
-  if (!isObjectRecord(node)) {
-    return node;
-  }
-  let normalized = node;
-  Object.entries(LEGACY_STYLE_STATE_ALIASES).forEach(
-    ([state, legacyState]) => {
-      if (Object.hasOwn(node, legacyState)) {
-        if (normalized === node) {
-          normalized = { ...node };
-        }
-        if (!Object.hasOwn(node, state)) {
-          normalized[state] = node[legacyState];
-        }
-        delete normalized[legacyState];
-      }
-    }
-  );
-  Object.entries(normalized).forEach(([key, value]) => {
-    if (!isObjectRecord(value)) {
-      return;
-    }
-    const normalizedValue = normalizeStyleStateNode(value);
-    if (normalizedValue !== value) {
-      if (normalized === node) {
-        normalized = { ...node };
-      }
-      normalized[key] = normalizedValue;
-    }
-  });
-  return normalized;
-}
-function normalizeStyleStateAliases(globalStyles) {
-  if (false) {
-    return globalStyles;
-  }
-  if (!globalStyles?.styles) {
-    return globalStyles;
-  }
-  const styles = normalizeStyleStateNode(globalStyles.styles);
-  return styles === globalStyles.styles ? globalStyles : { ...globalStyles, styles };
-}
-
 // packages/global-styles-engine/build-module/core/render.mjs
 var import_blocks = __toESM(require_blocks(), 1);
 var import_style_engine2 = __toESM(require_style_engine(), 1);
@@ -2296,17 +2244,10 @@ var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGa
     variationStyles: false,
     ...styleOptions
   };
-  const normalizedTree = normalizeStyleStateAliases(tree);
-  const nodesWithStyles = getNodesWithStyles(
-    normalizedTree,
-    blockSelectors
-  );
-  const nodesWithSettings = getNodesWithSettings(
-    normalizedTree,
-    blockSelectors
-  );
-  const useRootPaddingAlign = normalizedTree?.settings?.useRootPaddingAwareAlignments;
-  const { contentSize, wideSize } = normalizedTree?.settings?.layout || {};
+  const nodesWithStyles = getNodesWithStyles(tree, blockSelectors);
+  const nodesWithSettings = getNodesWithSettings(tree, blockSelectors);
+  const useRootPaddingAlign = tree?.settings?.useRootPaddingAwareAlignments;
+  const { contentSize, wideSize } = tree?.settings?.layout || {};
   const hasBodyStyles = options.marginReset || options.rootPadding || options.layoutStyles;
   let ruleset = "";
   if (options.presets && (contentSize || wideSize)) {
@@ -2344,7 +2285,7 @@ var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGa
         ...responsiveNodes.flatMap(getPseudoStyleNodes)
       ].forEach((expandedNode) => {
         ruleset += renderStylesNode(expandedNode, {
-          tree: normalizedTree,
+          tree,
           useRootPaddingAlign,
           disableLayoutStyles,
           hasBlockGapSupport,
@@ -2360,7 +2301,7 @@ var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGa
     ruleset = ruleset + ".wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }";
   }
   if (options.blockGap && hasBlockGapSupport) {
-    const gapValue = getGapCSSValue(normalizedTree?.styles?.spacing?.blockGap) || "0.5em";
+    const gapValue = getGapCSSValue(tree?.styles?.spacing?.blockGap) || "0.5em";
     ruleset = ruleset + `:root :where(.wp-site-blocks) > * { margin-block-start: ${gapValue}; margin-block-end: 0; }`;
     ruleset = ruleset + ":root :where(.wp-site-blocks) > :first-child { margin-block-start: 0; }";
     ruleset = ruleset + ":root :where(.wp-site-blocks) > :last-child { margin-block-end: 0; }";

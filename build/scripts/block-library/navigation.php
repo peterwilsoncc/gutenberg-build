@@ -1656,13 +1656,6 @@ function gutenberg_block_core_navigation_add_support_classes_to_container( $bloc
 
 	$attributes = is_array( $block['attrs'] ?? null ) ? $block['attrs'] : array();
 	$style      = is_array( $attributes['style'] ?? null ) ? $attributes['style'] : array();
-	if (
-		defined( 'IS_GUTENBERG_PLUGIN' ) &&
-		IS_GUTENBERG_PLUGIN &&
-		function_exists( 'gutenberg_resolve_style_state_aliases' )
-	) {
-		$style = gutenberg_resolve_style_state_aliases( $style, 'core/navigation' );
-	}
 
 	$global_settings          = gutenberg_get_global_settings();
 	$viewport_settings        = $global_settings['viewport'] ?? null;
