@@ -1246,6 +1246,7 @@ input.components-combobox-control__input[type=text]:focus {
 }
 
 .components-external-link {
+  border-radius: var(--wpds-border-radius-sm, 2px);
   color: var(--wpds-color-foreground-interactive-brand, var(--wp-admin-theme-color, #3858e9));
   text-decoration: none;
 }
@@ -1257,7 +1258,7 @@ input.components-combobox-control__input[type=text]:focus {
 }
 .components-external-link:focus {
   box-shadow: none;
-  border-radius: 0;
+  border-radius: var(--wpds-border-radius-sm, 2px);
 }
 .components-external-link:focus:not(:active) {
   outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
