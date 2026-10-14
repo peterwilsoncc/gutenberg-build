@@ -70800,6 +70800,13 @@ var wp;
             event.preventDefault();
             return;
           }
+          if (!hasMultiSelection2() && !(0, import_blocks33.hasBlockSupport)(
+            getBlockName2(selectedBlockClientIds[0]),
+            "splitting",
+            false
+          ) && !event.__deprecatedOnSplit) {
+            return;
+          }
           if (!hasMultiSelection2() && isBlockEntirelySelected(
             event.target.ownerDocument,
             selectedBlockClientIds[0]
@@ -70811,13 +70818,6 @@ var wp;
               -1
             );
             event.preventDefault();
-            return;
-          }
-          if (!hasMultiSelection2() && !(0, import_blocks33.hasBlockSupport)(
-            getBlockName2(selectedBlockClientIds[0]),
-            "splitting",
-            false
-          ) && !event.__deprecatedOnSplit) {
             return;
           }
           const [firstSelectedClientId] = selectedBlockClientIds;
