@@ -12804,6 +12804,7 @@ var wp;
           candidateClientId
         );
         result = getValueFromObjectPath2(
+          // Attribute values are not validated against a schema.
           candidateAtts.settings?.blocks?.[blockName],
           normalizedPath
         ) ?? getValueFromObjectPath2(
@@ -12829,7 +12830,8 @@ var wp;
       }
       if (result !== void 0) {
         if (import_blocks4.__EXPERIMENTAL_PATHS_WITH_OVERRIDE[normalizedPath]) {
-          return result.custom ?? result.theme ?? result.default;
+          const presets = result;
+          return presets.custom ?? presets.theme ?? presets.default;
         }
         return result;
       }
@@ -17105,6 +17107,7 @@ var wp;
   };
   var store = (0, import_data6.createReduxStore)(STORE_NAME, {
     ...storeConfig,
+    // @ts-expect-error `persist` is a persistence plugin option `ReduxStoreConfig` omits.
     persist: ["preferences"]
   });
   var registeredStore = (0, import_data6.registerStore)(STORE_NAME, {
