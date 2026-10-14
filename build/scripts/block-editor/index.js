@@ -62713,7 +62713,7 @@ var wp;
     }, []);
   }
   function usesNativeUndo(event) {
-    let { target } = event;
+    let target = event.target;
     if (target?.nodeName === "IFRAME") {
       target = target.contentDocument?.activeElement;
     }
@@ -100312,7 +100312,7 @@ If there's a particular need for this, please submit a feature request at https:
   function groupBlocks(blocks2, groupingBlockName) {
     const groupingBlockTransform = (0, import_blocks59.findTransform)(
       (0, import_blocks59.getBlockTransforms)("from", groupingBlockName),
-      (transform) => transform.type === "block" && transform.isMultiBlock && transform.blocks.includes("*")
+      (transform) => transform.type === "block" && !!transform.isMultiBlock && transform.blocks.includes("*")
     );
     if (groupingBlockTransform?.__experimentalConvert) {
       const result = groupingBlockTransform.__experimentalConvert(blocks2);
