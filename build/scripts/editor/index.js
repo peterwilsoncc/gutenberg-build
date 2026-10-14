@@ -131543,7 +131543,7 @@ ${content}
       selectNote2(noteId, options);
     };
   }
-  function useNoteFocus({ sidebarRef }) {
+  function useNoteFocus({ sidebarRef, isPlaced }) {
     const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store));
     const { selectedNote: selectedNote2, noteFocused } = (0, import_data262.useSelect)((select9) => {
       const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
@@ -131555,7 +131555,7 @@ ${content}
       };
     }, []);
     (0, import_element451.useEffect)(() => {
-      if (!noteFocused || !selectedNote2) {
+      if (!noteFocused || !selectedNote2 || !isPlaced) {
         return;
       }
       focusNoteThread(
@@ -131564,7 +131564,7 @@ ${content}
         selectedNote2 === "new" ? '[role="textbox"]' : void 0
       );
       selectNote2(selectedNote2);
-    }, [noteFocused, selectedNote2, selectNote2, sidebarRef]);
+    }, [noteFocused, selectedNote2, isPlaced, selectNote2, sidebarRef]);
   }
   var subscribeNoop = () => () => {
   };
@@ -132321,7 +132321,6 @@ ${content}
     const { toggleBlockSpotlight } = unlock((0, import_data265.useDispatch)(import_block_editor106.store));
     const drafts = (0, import_element455.useContext)(NoteDraftsContext);
     const pickNote = usePickNote({ drafts, onDiscard });
-    useNoteFocus({ sidebarRef });
     const { selectedBlockClientId, orderedBlockIds } = (0, import_data265.useSelect)(
       (select9) => {
         const { getSelectedBlockClientId: getSelectedBlockClientId2, getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select9(import_block_editor106.store);
@@ -132392,6 +132391,10 @@ ${content}
       selectedNoteId: selectedNote2,
       isFloating,
       sidebarRef
+    });
+    useNoteFocus({
+      sidebarRef,
+      isPlaced: !isFloating || notePositions[selectedNote2] !== void 0
     });
     const navigate = (event, thread, isSelected2) => {
       if (event.defaultPrevented) {
