@@ -67847,6 +67847,7 @@ ${text}
     setInsertedBlockClientId
   }) {
     const { updateBlockAttributes, removeBlock } = (0, import_data88.useDispatch)(import_block_editor152.store);
+    const { getBlock } = (0, import_data88.useSelect)(import_block_editor152.store);
     const { insertedBlockName, insertedBlockAttributes } = (0, import_data88.useSelect)(
       (select10) => {
         const { getBlockName, getBlockAttributes: getBlockAttributes4 } = select10(import_block_editor152.store);
@@ -67882,7 +67883,7 @@ ${text}
     };
     const handleSetInsertedBlock = (newBlock) => {
       const shouldAutoSelectBlock = false;
-      if (insertedBlockClientId && newBlock) {
+      if (newBlock && getBlock(insertedBlockClientId)) {
         removeBlock(insertedBlockClientId, shouldAutoSelectBlock);
       }
       setInsertedBlockClientId(newBlock?.clientId ?? null);
