@@ -7219,10 +7219,14 @@ var wp;
       } while (current !== void 0);
     }
     for (const clientId of uncontrolledParents) {
-      treeToUpdate.set(clientId, { ...treeToUpdate.get(clientId) });
+      treeToUpdate.set(clientId, {
+        ...treeToUpdate.get(clientId)
+      });
     }
     for (const clientId of uncontrolledParents) {
-      treeToUpdate.get(clientId).innerBlocks = (state.order.get(clientId) || []).map((subClientId) => treeToUpdate.get(subClientId));
+      treeToUpdate.get(clientId).innerBlocks = (state.order.get(clientId) || []).map(
+        (subClientId) => treeToUpdate.get(subClientId)
+      );
     }
     for (const clientId of controlledParents) {
       treeToUpdate.set("controlled||" + clientId, {
@@ -7734,7 +7738,10 @@ var wp;
           });
           newState.set(
             "",
-            (state.get("") ?? []).concat(blockOrder[""])
+            (state.get("") ?? []).concat(
+              // @ts-expect-error `blockOrder` is a `Map`, so this reads `undefined`.
+              blockOrder[""]
+            )
           );
           return newState;
         }
@@ -7853,18 +7860,15 @@ var wp;
             }
           });
           newState.forEach((order, clientId) => {
-            const newSubOrder = Object.values(order).reduce(
-              (result, subClientId) => {
-                if (subClientId === clientIds[0]) {
-                  return [...result, ...mappedBlocks.get("")];
-                }
-                if (clientIds.indexOf(subClientId) === -1) {
-                  result.push(subClientId);
-                }
-                return result;
-              },
-              []
-            );
+            const newSubOrder = Object.values(order).reduce((result, subClientId) => {
+              if (subClientId === clientIds[0]) {
+                return [...result, ...mappedBlocks.get("")];
+              }
+              if (clientIds.indexOf(subClientId) === -1) {
+                result.push(subClientId);
+              }
+              return result;
+            }, []);
             newState.set(clientId, newSubOrder);
           });
           return newState;
@@ -7940,7 +7944,11 @@ var wp;
       }
       return state;
     },
-    controlledInnerBlocks(state = /* @__PURE__ */ new Set(), { type, clientId, hasControlledInnerBlocks }) {
+    controlledInnerBlocks(state = /* @__PURE__ */ new Set(), {
+      type,
+      clientId,
+      hasControlledInnerBlocks
+    }) {
       if (type === "SET_HAS_CONTROLLED_INNER_BLOCKS") {
         if (hasControlledInnerBlocks) {
           if (state.has(clientId)) {
@@ -8889,6 +8897,7 @@ var wp;
     addedBlocks?.forEach((addedBlock) => {
       const updates = getDerivedBlockEditingModesForTree(
         nextState,
+        // A stale client ID leaves `undefined` here, which throws as before.
         addedBlock.clientId
       );
       if (updates.size) {
