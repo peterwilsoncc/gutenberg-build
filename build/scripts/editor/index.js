@@ -6612,6 +6612,7 @@ var wp;
     }
     const publishStatus = ["publish", "private", "future"];
     const isPublished = publishStatus.indexOf(post2.status) !== -1;
+    const id = options?.isAutosave ? "editor-autosave" : "editor-save";
     if (error2.code === "offline_error") {
       const messages2 = {
         publish: (0, import_i18n3.__)(
@@ -6631,7 +6632,7 @@ var wp;
       if (options?.isAutosave) {
         noticeMessage2 = AUTO_SAVE_OFFLINE_FAILURE_NOTICE;
       }
-      return [noticeMessage2, { id: "editor-save" }];
+      return [noticeMessage2, { id }];
     }
     const messages = {
       publish: (0, import_i18n3.__)(
@@ -6651,12 +6652,7 @@ var wp;
     if (options?.isAutosave) {
       noticeMessage = AUTO_SAVE_FAILURE_NOTICE;
     }
-    return [
-      noticeMessage,
-      {
-        id: "editor-save"
-      }
-    ];
+    return [noticeMessage, { id }];
   }
   function getNotificationArgumentsForTrashFail(data) {
     return [
@@ -109892,6 +109888,15 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     dispatch9({ type: "REQUEST_POST_UPDATE_FINISH", options });
+    const isManualSaveFailureShown = registry.select(import_notices20.store).getNotices().some(
+      (notice) => notice.id === "editor-save" && notice.status === "error"
+    );
+    if (!error2 || !options.isAutosave) {
+      registry.dispatch(import_notices20.store).removeNotice("editor-autosave");
+    }
+    if (!error2 && options.isAutosave && isManualSaveFailureShown && !select9.isEditedPostDirty()) {
+      registry.dispatch(import_notices20.store).removeNotice("editor-save");
+    }
     if (!error2 && !options.isAutosave && !options.isPreview && !select9.isDeletingPost() && previousRecord.status !== "trash" && select9.getEditorSettings().autoAttachMediaEnabled) {
       attachMediaInPost(registry, {
         id: previousRecord.id,
@@ -109906,7 +109911,7 @@ If there's a particular need for this, please submit a feature request at https:
         error: error2,
         options
       });
-      if (args.length) {
+      if (args.length && !(options.isAutosave && isManualSaveFailureShown)) {
         const [noticeMessage] = args;
         if (error2.message && !CLIENT_GENERATED_ERROR_CODES.includes(error2.code) && !/<\/?[^>]*>/.test(error2.message)) {
           args[0] = `${(0, import_escape_html.escapeHTML)(
