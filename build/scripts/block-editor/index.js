@@ -13036,10 +13036,13 @@ var wp;
   var getStyleOverrides = (0, import_data4.createSelector)(
     (state) => {
       const clientIds = getClientIdsWithDescendants(state);
-      const clientIdMap = clientIds.reduce((acc, clientId, index3) => {
-        acc[clientId] = index3;
-        return acc;
-      }, {});
+      const clientIdMap = clientIds.reduce(
+        (acc, clientId, index3) => {
+          acc[clientId] = index3;
+          return acc;
+        },
+        {}
+      );
       return [...state.styleOverrides].sort((overrideA, overrideB) => {
         const [, { clientId: clientIdA }] = overrideA;
         const [, { clientId: clientIdB }] = overrideB;
@@ -13102,6 +13105,7 @@ var wp;
           }
           const grammar = getGrammar(pattern);
           return checkAllowListRecursive(grammar, allowedBlockTypes) && grammar.every(
+            // @ts-expect-error Grammar blocks have `blockName`, so this is always undefined.
             ({ name: blockName }) => canInsertBlockType(state, blockName, rootClientId)
           );
         });
@@ -13299,7 +13303,11 @@ var wp;
       return null;
     }
     const names = getGrammar(pattern).map(({ blockName: name }) => name);
-    return getClosestAllowedInsertionPoint(state, names, clientId);
+    return getClosestAllowedInsertionPoint(
+      state,
+      names,
+      clientId
+    );
   }
   function getInsertionPoint(state) {
     return state.insertionPoint;
