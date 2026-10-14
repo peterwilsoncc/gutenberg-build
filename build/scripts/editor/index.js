@@ -88050,7 +88050,8 @@ If there's a particular need for this, please submit a feature request at https:
       "postType",
       "wp_font_family",
       {
-        _embed: true
+        _embed: true,
+        per_page: -1
       }
     );
     const libraryFonts = (libraryPosts || []).map((fontFamilyPost) => {

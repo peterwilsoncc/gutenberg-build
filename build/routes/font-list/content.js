@@ -23917,7 +23917,8 @@ function FontLibraryProvider({ children }) {
     "postType",
     "wp_font_family",
     {
-      _embed: true
+      _embed: true,
+      per_page: -1
     }
   );
   const libraryFonts = (libraryPosts || []).map((fontFamilyPost) => {
