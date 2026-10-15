@@ -70120,7 +70120,7 @@ var wp;
         let isTripleClick = false;
         function onMouseDown(event) {
           isTripleClick = event.detail === 3;
-          if (event.shiftKey) {
+          if (event.shiftKey && getBlockSelectionStart2() !== getBlockClientId(event.target)) {
             startMultiSelect2();
           }
         }
