@@ -8861,26 +8861,6 @@ textarea.editor-post-text-editor::placeholder {
   padding-left: 12px;
 }
 
-.editor-fields-content-preview {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border-radius: 4px;
-}
-.dataviews-view-table .editor-fields-content-preview {
-  width: 96px;
-  flex-grow: 0;
-}
-.editor-fields-content-preview .block-editor-block-preview__container,
-.editor-fields-content-preview .editor-fields-content-preview__empty {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-.editor-fields-content-preview__empty {
-  text-align: center;
-}
-
 .editor-push-changes-to-global-styles-control .components-button {
   justify-content: center;
   width: 100%;

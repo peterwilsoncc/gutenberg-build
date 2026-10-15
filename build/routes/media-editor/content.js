@@ -155,14 +155,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React220 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef107 = React220.useRef, useEffect53 = React220.useEffect, useMemo77 = React220.useMemo, useDebugValue2 = React220.useDebugValue;
+      var React220 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef107 = React220.useRef, useEffect53 = React220.useEffect, useMemo78 = React220.useMemo, useDebugValue2 = React220.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef107(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo77(
+        instRef = useMemo78(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -472,6 +472,13 @@ var require_notices = __commonJS({
 var require_api_fetch = __commonJS({
   "package-external:@wordpress/api-fetch"(exports, module) {
     module.exports = window.wp.apiFetch;
+  }
+});
+
+// package-external:@wordpress/preferences
+var require_preferences = __commonJS({
+  "package-external:@wordpress/preferences"(exports, module) {
+    module.exports = window.wp.preferences;
   }
 });
 
@@ -31302,7 +31309,7 @@ function useMulti(props, dateLib) {
     return selected?.some((d) => isSameDay2(d, date)) ?? false;
   };
   const { min: min4, max: max4 } = props;
-  const select = (triggerDate, modifiers, e) => {
+  const select2 = (triggerDate, modifiers, e) => {
     let newDates = [...selected ?? []];
     if (isSelected(triggerDate)) {
       if (selected?.length === min4) {
@@ -31327,7 +31334,7 @@ function useMulti(props, dateLib) {
   };
   return {
     selected,
-    select,
+    select: select2,
     isSelected
   };
 }
@@ -31465,7 +31472,7 @@ function useRange(props, dateLib) {
   const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
   const selected = !onSelect ? internallySelected : initiallySelected;
   const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-  const select = (triggerDate, modifiers, e) => {
+  const select2 = (triggerDate, modifiers, e) => {
     const { min: min4, max: max4 } = props;
     let newRange;
     if (triggerDate) {
@@ -31497,7 +31504,7 @@ function useRange(props, dateLib) {
   };
   return {
     selected,
-    select,
+    select: select2,
     isSelected
   };
 }
@@ -31511,7 +31518,7 @@ function useSingle(props, dateLib) {
   const isSelected = (compareDate) => {
     return selected ? isSameDay2(selected, compareDate) : false;
   };
-  const select = (triggerDate, modifiers, e) => {
+  const select2 = (triggerDate, modifiers, e) => {
     let newDate = triggerDate;
     if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
       newDate = void 0;
@@ -31528,7 +31535,7 @@ function useSingle(props, dateLib) {
   };
   return {
     selected,
-    select,
+    select: select2,
     isSelected
   };
 }
@@ -31708,7 +31715,7 @@ function DayPicker(initialProps) {
   const calendar = useCalendar(props, dateLib);
   const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
   const getModifiers = createGetModifiers(days, props, navStart, navEnd, dateLib);
-  const { isSelected, select, selected: selectedValue } = useSelection(props, dateLib) ?? {};
+  const { isSelected, select: select2, selected: selectedValue } = useSelection(props, dateLib) ?? {};
   const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus2(props, calendar, getModifiers, isSelected ?? (() => false), dateLib);
   const { labelDayButton: labelDayButton2, labelGridcell: labelGridcell2, labelGrid: labelGrid2, labelMonthDropdown: labelMonthDropdown2, labelNav: labelNav2, labelPrevious: labelPrevious2, labelNext: labelNext2, labelWeekday: labelWeekday2, labelWeekNumber: labelWeekNumber2, labelWeekNumberHeader: labelWeekNumberHeader2, labelYearDropdown: labelYearDropdown2 } = labels;
   const weekdays = (0, import_react36.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [dateLib, props.ISOWeek, props.broadcastCalendar, props.today]);
@@ -31732,9 +31739,9 @@ function DayPicker(initialProps) {
     if (m2.disabled) {
       return;
     }
-    select?.(day.date, m2, e);
+    select2?.(day.date, m2, e);
     onDayClick?.(day.date, m2, e);
-  }, [select, onDayClick, setFocused]);
+  }, [select2, onDayClick, setFocused]);
   const handleDayFocus = (0, import_react36.useCallback)((day, m2) => (e) => {
     setFocused(day);
     onDayFocus?.(day.date, m2, e);
@@ -31810,7 +31817,7 @@ function DayPicker(initialProps) {
   const contextValue = {
     dayPickerProps: props,
     selected: selectedValue,
-    select,
+    select: select2,
     isSelected,
     months,
     nextMonth,
@@ -37979,8 +37986,8 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/media-editor/stage.tsx
-var import_core_data3 = __toESM(require_core_data());
-var import_data5 = __toESM(require_data());
+var import_core_data4 = __toESM(require_core_data());
+var import_data8 = __toESM(require_data());
 var import_editor = __toESM(require_editor());
 var import_html_entities = __toESM(require_html_entities());
 var import_i18n49 = __toESM(require_i18n());
@@ -38000,7 +38007,8 @@ function MediaEditorProvider({
   const contextValue = {
     media: value,
     onChange,
-    fields: settings.fields || []
+    fields: settings.fields || [],
+    form: settings.form
   };
   return /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(MediaEditorContext.Provider, { value: contextValue, children });
 }
@@ -44578,41 +44586,41 @@ function DataForm({
 var import_components30 = __toESM(require_components(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_FORM = {
+  layout: {
+    type: "panel"
+  },
+  fields: [
+    ...["title", "alt_text", "caption", "description"].map((id) => ({
+      id,
+      layout: {
+        type: "regular",
+        labelPosition: "top"
+      }
+    })),
+    "date",
+    "author",
+    "filename",
+    "mime_type",
+    "filesize",
+    "media_dimensions",
+    "attached_to"
+  ]
+};
 function MediaForm({
   form: formOverrides,
   header
 }) {
-  const { media, fields, onChange } = useMediaEditorContext();
+  const {
+    media,
+    fields,
+    form: settingsForm,
+    onChange
+  } = useMediaEditorContext();
   if (!media || !onChange) {
     return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(import_components30.Spinner, {}) });
   }
-  const regularFieldIds = ["title", "alt_text", "caption", "description"];
-  const sortedFields = [
-    ...fields.filter(
-      (field) => regularFieldIds.includes(field.id)
-    ),
-    ...fields.filter(
-      (field) => !regularFieldIds.includes(field.id)
-    )
-  ];
-  const defaultForm = {
-    layout: {
-      type: "panel"
-    },
-    fields: sortedFields.map((field) => {
-      if (regularFieldIds.includes(field.id)) {
-        return {
-          id: field.id,
-          layout: {
-            type: "regular",
-            labelPosition: "top"
-          }
-        };
-      }
-      return field.id;
-    })
-  };
-  const form = formOverrides || defaultForm;
+  const form = formOverrides || settingsForm || DEFAULT_FORM;
   return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(import_components30.__experimentalVStack, { spacing: 4, children: [
     /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("h2", {}), children: (0, import_i18n36.__)("Media details") }),
     header,
@@ -50708,6 +50716,7 @@ function SaveActions({ size: size4 = "default" }) {
 }
 function MediaEditorContent({
   fields = [],
+  form,
   id,
   aspectRatioPresets,
   onClose,
@@ -50736,7 +50745,7 @@ function MediaEditorContent({
   }, []);
   const layout = isWide ? "wide" : "narrow";
   const sourceMedia = (0, import_data3.useSelect)(
-    (select) => select(import_core_data2.store).getEntityRecord(
+    (select2) => select2(import_core_data2.store).getEntityRecord(
       "postType",
       "attachment",
       id
@@ -50776,7 +50785,7 @@ function MediaEditorContent({
   }, [id]);
   const originalId = sourceMedia?.edit_root;
   const originalRecord = (0, import_data3.useSelect)(
-    (select) => originalId ? select(import_core_data2.store).getEntityRecord(
+    (select2) => originalId ? select2(import_core_data2.store).getEntityRecord(
       "postType",
       "attachment",
       originalId
@@ -50799,12 +50808,12 @@ function MediaEditorContent({
   } : void 0;
   const activeId = replacementSource?.id ?? id;
   const { media, hasEdits } = (0, import_data3.useSelect)(
-    (select) => {
+    (select2) => {
       const {
         getEditedEntityRecord,
         getEntityRecord,
         hasEditsForEntityRecord
-      } = select(import_core_data2.store);
+      } = select2(import_core_data2.store);
       getEntityRecord(
         "postType",
         "attachment",
@@ -50973,7 +50982,8 @@ function MediaEditorContent({
         fields: isSaving ? fields.map((field) => ({
           ...field,
           isDisabled: true
-        })) : fields
+        })) : fields,
+        form
       },
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(import_components35.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(
@@ -51096,11 +51106,12 @@ function ModalFooter() {
 }
 function MediaEditorModal({
   fields = [],
+  form,
   aspectRatioPresets
 }) {
   const { isModalOpen, id, onUpdate, onUndo, onClose } = (0, import_data4.useSelect)(
-    (select) => {
-      const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2, getOnUndo: getOnUndo2, getOnClose: getOnClose2 } = select(store);
+    (select2) => {
+      const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2, getOnUndo: getOnUndo2, getOnClose: getOnClose2 } = select2(store);
       return {
         isModalOpen: isOpen2(),
         id: getId2(),
@@ -51129,6 +51140,7 @@ function MediaEditorModal({
     {
       id,
       fields,
+      form,
       aspectRatioPresets,
       shouldCloseOnEsc: true,
       noticesClassName: "media-editor-modal__snackbar",
@@ -51215,6 +51227,48 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis4.__dangerousOptIn
   "@wordpress/routes"
 );
 
+// packages/views/build-module/use-view.mjs
+var import_element164 = __toESM(require_element(), 1);
+var import_data5 = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
+
+// packages/views/build-module/load-view.mjs
+var import_data6 = __toESM(require_data(), 1);
+var import_preferences2 = __toESM(require_preferences(), 1);
+
+// packages/views/build-module/use-view-config.mjs
+var import_data7 = __toESM(require_data(), 1);
+var import_core_data3 = __toESM(require_core_data(), 1);
+
+// packages/views/build-module/lock-unlock.mjs
+var import_private_apis5 = __toESM(require_private_apis(), 1);
+var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/views"
+);
+
+// packages/views/build-module/use-view-config.mjs
+function useViewConfig({
+  kind,
+  name,
+  fields
+}) {
+  const fieldList = Array.isArray(fields) ? fields : fields?.split(",");
+  const fieldsKey = fieldList ? fieldList.toSorted().join(",") : void 0;
+  return (0, import_data7.useSelect)(
+    (select2) => {
+      return unlock4(select2(import_core_data3.store)).getViewConfig(
+        kind,
+        name,
+        fieldsKey ? {
+          fields: fieldsKey
+        } : void 0
+      );
+    },
+    [kind, name, fieldsKey]
+  );
+}
+
 // routes/media-editor/style.scss
 if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='782ae062d5']")) {
   const style = document.createElement("style");
@@ -51227,6 +51281,7 @@ if (typeof document !== "undefined" && (typeof process === "undefined" || true) 
 var import_jsx_runtime241 = __toESM(require_jsx_runtime());
 var { usePostFields } = unlock3(import_editor.privateApis);
 var { MediaEditor: MediaEditor2 } = unlock3(privateApis);
+var VIEW_CONFIG_FIELDS = ["form"];
 var MEDIA_LIST_PATH = "/types/attachment/list/all";
 var MEDIA_LIBRARY_ADMIN_PATH = "upload.php";
 var MEDIA_EDITOR_ADMIN_PAGE = "media-editor-wp-admin";
@@ -51242,11 +51297,16 @@ function MediaEditorRoute() {
   const attachmentId = parseInt(id, 10);
   const navigate = useNavigate();
   const fields = usePostFields({ postType: "attachment" });
+  const { form } = useViewConfig({
+    kind: "postType",
+    name: "attachment",
+    fields: VIEW_CONFIG_FIELDS
+  });
   const isStandaloneAdminPage = isMediaEditorAdminPage();
-  const media = (0, import_data5.useSelect)(
-    (select) => (
+  const media = (0, import_data8.useSelect)(
+    (select2) => (
       /* The record of an attachment is always assignable to `Media`. */
-      select(import_core_data3.store).getEditedEntityRecord(
+      select2(import_core_data4.store).getEditedEntityRecord(
         "postType",
         "attachment",
         attachmentId
@@ -51271,6 +51331,7 @@ function MediaEditorRoute() {
     {
       id: attachmentId,
       fields,
+      form,
       onClose: navigateBack,
       onSaved: ({ id: savedId }) => {
         if (savedId !== attachmentId) {

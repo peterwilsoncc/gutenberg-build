@@ -12142,6 +12142,12 @@ var wp;
         ...postType && window?.__experimentalDataFormInspector ? [
           unlock2(core).getViewConfig("postType", postType, {
             fields: "form"
+          }),
+          // The fields of the post type, which the DataForm post
+          // summary reads with `useFields`. The summary reports a
+          // failure of its own, so this must not cut the rest of
+          // the kickoff short.
+          unlock2(core).getFieldsConfig("postType", postType).catch(() => {
           })
         ] : [],
         // Per-post resolvers. `getPostType` and `getEditedEntityRecord`

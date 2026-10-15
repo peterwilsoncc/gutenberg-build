@@ -17111,6 +17111,19 @@ ${err.toString()}`);
     }
     return state;
   }
+  function fieldsConfigs(state = {}, action) {
+    switch (action.type) {
+      case "RECEIVE_FIELDS_CONFIG":
+        return {
+          ...state,
+          [action.kind]: {
+            ...state[action.kind],
+            [action.name]: action.config
+          }
+        };
+    }
+    return state;
+  }
   var reducer_default2 = (0, import_data8.combineReducers)({
     users,
     currentTheme,
@@ -17136,7 +17149,8 @@ ${err.toString()}`);
     editorAssets,
     syncConnectionStatuses,
     collaborationSupported,
-    viewConfigs
+    viewConfigs,
+    fieldsConfigs
   });
 
   // packages/core-data/build-module/selectors.mjs
@@ -17208,6 +17222,7 @@ ${err.toString()}`);
     getEntityRecordPermissions: () => getEntityRecordPermissions,
     getEntityRecordsPermissions: () => getEntityRecordsPermissions,
     getEntitySyncConnectionStatus: () => getEntitySyncConnectionStatus,
+    getFieldsConfig: () => getFieldsConfig,
     getHomePage: () => getHomePage,
     getNavigationFallbackId: () => getNavigationFallbackId,
     getPostsPageId: () => getPostsPageId,
@@ -17423,6 +17438,9 @@ ${err.toString()}`);
       view_list: void 0,
       form: void 0
     };
+  }
+  function getFieldsConfig(state, kind, name) {
+    return state.fieldsConfigs?.[kind]?.[name];
   }
   function getSyncConnectionStatus(state) {
     if (!state.syncConnectionStatuses) {
@@ -18865,6 +18883,7 @@ ${err.toString()}`);
     editMediaEntity: () => editMediaEntity,
     receiveEditorAssets: () => receiveEditorAssets,
     receiveEditorSettings: () => receiveEditorSettings,
+    receiveFieldsConfig: () => receiveFieldsConfig,
     receiveRegisteredPostMeta: () => receiveRegisteredPostMeta,
     receiveViewConfig: () => receiveViewConfig,
     recordSyncUndoLevel: () => recordSyncUndoLevel,
@@ -18973,6 +18992,14 @@ ${err.toString()}`);
   function receiveViewConfig(kind, name, config) {
     return {
       type: "RECEIVE_VIEW_CONFIG",
+      kind,
+      name,
+      config
+    };
+  }
+  function receiveFieldsConfig(kind, name, config) {
+    return {
+      type: "RECEIVE_FIELDS_CONFIG",
       kind,
       name,
       config
@@ -19152,6 +19179,7 @@ ${err.toString()}`);
     getEntityRecords: () => getEntityRecords2,
     getEntityRecordsTotalItems: () => getEntityRecordsTotalItems2,
     getEntityRecordsTotalPages: () => getEntityRecordsTotalPages2,
+    getFieldsConfig: () => getFieldsConfig2,
     getNavigationFallbackId: () => getNavigationFallbackId2,
     getRawEntityRecord: () => getRawEntityRecord2,
     getRegisteredPostMeta: () => getRegisteredPostMeta2,
@@ -20187,6 +20215,12 @@ ${err.toString()}`);
       path: (0, import_url6.addQueryArgs)("/wp/v2/view-config", query)
     });
     dispatch4.receiveViewConfig(kind, name, config);
+  };
+  var getFieldsConfig2 = (kind, name) => async ({ dispatch: dispatch4 }) => {
+    const config = await (0, import_api_fetch10.default)({
+      path: (0, import_url6.addQueryArgs)("/wp/v2/entity-fields", { kind, name })
+    });
+    dispatch4.receiveFieldsConfig(kind, name, config);
   };
 
   // packages/core-data/build-module/locks/utils.mjs

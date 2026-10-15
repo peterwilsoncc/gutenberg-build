@@ -17553,7 +17553,7 @@ function useMulti(props, dateLib) {
     return selected?.some((d) => isSameDay2(d, date)) ?? false;
   };
   const { min: min3, max: max3 } = props;
-  const select3 = (triggerDate, modifiers, e) => {
+  const select2 = (triggerDate, modifiers, e) => {
     let newDates = [...selected ?? []];
     if (isSelected(triggerDate)) {
       if (selected?.length === min3) {
@@ -17578,7 +17578,7 @@ function useMulti(props, dateLib) {
   };
   return {
     selected,
-    select: select3,
+    select: select2,
     isSelected
   };
 }
@@ -17716,7 +17716,7 @@ function useRange(props, dateLib) {
   const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
   const selected = !onSelect ? internallySelected : initiallySelected;
   const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-  const select3 = (triggerDate, modifiers, e) => {
+  const select2 = (triggerDate, modifiers, e) => {
     const { min: min3, max: max3 } = props;
     let newRange;
     if (triggerDate) {
@@ -17748,7 +17748,7 @@ function useRange(props, dateLib) {
   };
   return {
     selected,
-    select: select3,
+    select: select2,
     isSelected
   };
 }
@@ -17762,7 +17762,7 @@ function useSingle(props, dateLib) {
   const isSelected = (compareDate) => {
     return selected ? isSameDay2(selected, compareDate) : false;
   };
-  const select3 = (triggerDate, modifiers, e) => {
+  const select2 = (triggerDate, modifiers, e) => {
     let newDate = triggerDate;
     if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
       newDate = void 0;
@@ -17779,7 +17779,7 @@ function useSingle(props, dateLib) {
   };
   return {
     selected,
-    select: select3,
+    select: select2,
     isSelected
   };
 }
@@ -17959,7 +17959,7 @@ function DayPicker(initialProps) {
   const calendar = useCalendar(props, dateLib);
   const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
   const getModifiers = createGetModifiers(days, props, navStart, navEnd, dateLib);
-  const { isSelected, select: select3, selected: selectedValue } = useSelection(props, dateLib) ?? {};
+  const { isSelected, select: select2, selected: selectedValue } = useSelection(props, dateLib) ?? {};
   const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus2(props, calendar, getModifiers, isSelected ?? (() => false), dateLib);
   const { labelDayButton: labelDayButton2, labelGridcell: labelGridcell2, labelGrid: labelGrid2, labelMonthDropdown: labelMonthDropdown2, labelNav: labelNav2, labelPrevious: labelPrevious2, labelNext: labelNext2, labelWeekday: labelWeekday2, labelWeekNumber: labelWeekNumber2, labelWeekNumberHeader: labelWeekNumberHeader2, labelYearDropdown: labelYearDropdown2 } = labels;
   const weekdays = (0, import_react34.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [dateLib, props.ISOWeek, props.broadcastCalendar, props.today]);
@@ -17983,9 +17983,9 @@ function DayPicker(initialProps) {
     if (m2.disabled) {
       return;
     }
-    select3?.(day.date, m2, e);
+    select2?.(day.date, m2, e);
     onDayClick?.(day.date, m2, e);
-  }, [select3, onDayClick, setFocused]);
+  }, [select2, onDayClick, setFocused]);
   const handleDayFocus = (0, import_react34.useCallback)((day, m2) => (e) => {
     setFocused(day);
     onDayFocus?.(day.date, m2, e);
@@ -18061,7 +18061,7 @@ function DayPicker(initialProps) {
   const contextValue = {
     dayPickerProps: props,
     selected: selectedValue,
-    select: select3,
+    select: select2,
     isSelected,
     months,
     nextMonth,
@@ -25509,13 +25509,14 @@ async function ensureView(activeView, search) {
   });
 }
 async function loadTemplateFields() {
-  await unlock3((0, import_data4.dispatch)(import_editor.store)).registerPostTypeSchema(
-    TEMPLATE_POST_TYPE
-  );
-  return unlock3((0, import_data4.select)(import_editor.store)).getEntityFields(
-    "postType",
-    TEMPLATE_POST_TYPE
-  );
+  try {
+    return await unlock3((0, import_data4.resolveSelect)(import_editor.store)).getEntityFields(
+      "postType",
+      TEMPLATE_POST_TYPE
+    );
+  } catch {
+    return [];
+  }
 }
 
 // routes/template-list/route.ts
