@@ -370,8 +370,8 @@ var wp;
   // node_modules/.store/@radix-ui/react-use-controllable-state@1.2.6-E1gehUSActoGL_ABO78qWQ/node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs
   var React6 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@radix-ui/primitive@1.1.7-U6Tg5_5zgTQvcXJNNg7HcQ/node_modules/@radix-ui/primitive/dist/internal/is-development.false.mjs
-  var IS_DEVELOPMENT = false;
+  // node_modules/.store/@radix-ui/primitive@1.1.7-U6Tg5_5zgTQvcXJNNg7HcQ/node_modules/@radix-ui/primitive/dist/internal/is-development.true.mjs
+  var IS_DEVELOPMENT = true;
 
   // node_modules/.store/@radix-ui/react-use-controllable-state@1.2.6-E1gehUSActoGL_ABO78qWQ/node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs
   var React22 = __toESM(require_react(), 1);
