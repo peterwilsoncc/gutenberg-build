@@ -98176,8 +98176,8 @@ If there's a particular need for this, please submit a feature request at https:
   var InspectorControlsTypography = (0, import_components124.createSlotFill)(
     "InspectorControlsTypography"
   );
-  var InspectorControlsStyleStates = (0, import_components124.createSlotFill)(
-    "InspectorControlsStyleStates"
+  var InspectorControlsStyleState = (0, import_components124.createSlotFill)(
+    "InspectorControlsStyleState"
   );
   var InspectorControlsListView = (0, import_components124.createSlotFill)("InspectorControlsListView");
   var InspectorControlsStyles = (0, import_components124.createSlotFill)("InspectorControlsStyles");
@@ -98202,14 +98202,14 @@ If there's a particular need for this, please submit a feature request at https:
     // Alias for default.
     styles: InspectorControlsStyles,
     typography: InspectorControlsTypography,
-    styleStates: InspectorControlsStyleStates
+    "style-state": InspectorControlsStyleState
   };
   var groups_default2 = groups2;
   var PrivateInspectorControlsAllowedBlocks = (0, import_components124.createSlotFill)(
     /* @__PURE__ */ Symbol("PrivateInspectorControlsAllowedBlocks")
   );
-  var PrivateInspectorControlsStyleStatesAdvanced = (0, import_components124.createSlotFill)(
-    /* @__PURE__ */ Symbol("PrivateInspectorControlsStyleStatesAdvanced")
+  var PrivateInspectorControlsStyleStateAdvanced = (0, import_components124.createSlotFill)(
+    /* @__PURE__ */ Symbol("PrivateInspectorControlsStyleStateAdvanced")
   );
 
   // packages/block-editor/build-module/hooks/block-style-state.mjs
@@ -124702,8 +124702,8 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(position_controls_panel_default, {})
       ] }),
-      !isDefaultBlockStyleState2(selectedBlockStyleState2) && /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(inspector_controls_default.Slot, { group: "styleStates" }),
-      !isDefaultBlockStyleState2(selectedBlockStyleState2) && /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(PrivateInspectorControlsStyleStatesAdvanced.Slot, {})
+      !isDefaultBlockStyleState2(selectedBlockStyleState2) && /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(inspector_controls_default.Slot, { group: "style-state" }),
+      !isDefaultBlockStyleState2(selectedBlockStyleState2) && /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(PrivateInspectorControlsStyleStateAdvanced.Slot, {})
     ] });
   }
   function BlockInspector() {
@@ -130951,7 +130951,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     if (isStateSelected) {
-      return /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(PrivateInspectorControlsStyleStatesAdvanced.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(import_components287.PanelBody, { title: (0, import_i18n289.__)("Advanced"), children: panel }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(PrivateInspectorControlsStyleStateAdvanced.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(import_components287.PanelBody, { title: (0, import_i18n289.__)("Advanced"), children: panel }) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(inspector_controls_default, { group: "advanced", children: panel });
   }

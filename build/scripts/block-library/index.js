@@ -50542,7 +50542,7 @@ ${url}
       /* @__PURE__ */ (0, import_jsx_runtime356.jsxs)(
         import_block_editor89.InspectorControls,
         {
-          group: isViewportStyleState && hasViewportSettings ? "styleStates" : "default",
+          group: isViewportStyleState && hasViewportSettings ? "style-state" : "default",
           children: [
             !isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
               GallerySourcePanel,
