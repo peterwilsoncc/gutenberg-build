@@ -108972,6 +108972,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isReady2 || !mode) {
         return null;
       }
+      const shouldSyncSelection = !isInRevisionsMode && !settings.isPreviewMode;
       return /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(import_core_data59.EntityProvider, { kind: "root", type: "site", children: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(
         import_core_data59.EntityProvider,
         {
@@ -108985,8 +108986,8 @@ If there's a particular need for this, please submit a feature request at https:
               value: blocks,
               onChange,
               onInput,
-              selection: isInRevisionsMode ? void 0 : selection,
-              onChangeSelection: isInRevisionsMode ? noop8 : onChangeSelection,
+              selection: shouldSyncSelection ? selection : void 0,
+              onChangeSelection: shouldSyncSelection ? onChangeSelection : noop8,
               settings: blockEditorSettings,
               useSubRegistry: false,
               children: [
