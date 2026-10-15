@@ -6537,6 +6537,12 @@ return array(
 			'anchor' => true,
 			'reusable' => false,
 			'html' => false,
+			'background' => array(
+				'__experimentalSkipSerialization' => true,
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'color' => array(
 				'link' => true
 			),
@@ -6590,6 +6596,7 @@ return array(
 			)
 		),
 		'selectors' => array(
+			'background' => '.wp-block-post-navigation-link:not(:empty)',
 			'border' => '.wp-block-post-navigation-link:not(:empty)',
 			'dimensions' => '.wp-block-post-navigation-link:not(:empty)',
 			'shadow' => '.wp-block-post-navigation-link:not(:empty)',

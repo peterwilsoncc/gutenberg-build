@@ -80063,6 +80063,12 @@ ${text}
       anchor: true,
       reusable: false,
       html: false,
+      background: {
+        __experimentalSkipSerialization: true,
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       color: {
         link: true
       },
@@ -80116,6 +80122,7 @@ ${text}
       }
     },
     selectors: {
+      background: ".wp-block-post-navigation-link:not(:empty)",
       border: ".wp-block-post-navigation-link:not(:empty)",
       dimensions: ".wp-block-post-navigation-link:not(:empty)",
       shadow: ".wp-block-post-navigation-link:not(:empty)",
@@ -80155,13 +80162,15 @@ ${text}
       );
     }
     const ariaLabel = isNext ? (0, import_i18n183.__)("Next post") : (0, import_i18n183.__)("Previous post");
+    const backgroundProps = (0, import_block_editor194.useBackgroundProps)(attributes2);
     const borderProps = (0, import_block_editor194.__experimentalUseBorderProps)(attributes2);
     const dimensionsProps = (0, import_block_editor194.__experimentalGetDimensionsClassesAndStyles)(attributes2);
     const shadowProps = (0, import_block_editor194.__experimentalGetShadowClassesAndStyles)(attributes2);
     const spacingProps = (0, import_block_editor194.__experimentalGetSpacingClassesAndStyles)(attributes2);
     const blockProps = (0, import_block_editor194.useBlockProps)({
-      className: borderProps.className,
+      className: clsx_default(backgroundProps.className, borderProps.className),
       style: {
+        ...backgroundProps.style,
         ...borderProps.style,
         ...dimensionsProps.style,
         ...shadowProps.style,
