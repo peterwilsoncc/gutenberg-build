@@ -2115,6 +2115,10 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   text-align: center;
 }
 
+:where(.wp-block-search__inside-wrapper) {
+  min-width: 220px;
+}
+
 .wp-block-search__inspector-controls .components-base-control {
   margin-bottom: 0;
 }

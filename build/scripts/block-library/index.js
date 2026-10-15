@@ -2518,7 +2518,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState108({
+          cachedValue = useState109({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -2556,7 +2556,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React138 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState108 = React138.useState, useEffect82 = React138.useEffect, useLayoutEffect6 = React138.useLayoutEffect, useDebugValue2 = React138.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React138 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState109 = React138.useState, useEffect82 = React138.useEffect, useLayoutEffect6 = React138.useLayoutEffect, useDebugValue2 = React138.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React138.useSyncExternalStore ? React138.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -89313,6 +89313,11 @@ ${text}
       shadow: {
         __experimentalSkipSerialization: true
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true,
+        __experimentalSkipSerialization: true
+      },
       spacing: {
         margin: true,
         padding: true
@@ -89325,7 +89330,8 @@ ${text}
       color: ".wp-block-search .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input",
       background: ".wp-block-search .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input",
       border: ".wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper",
-      shadow: ".wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper"
+      shadow: ".wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper",
+      dimensions: ".wp-block-search .wp-block-search__inside-wrapper"
     }
   };
 
@@ -89421,6 +89427,8 @@ ${text}
     const colorProps = (0, import_block_editor231.__experimentalUseColorProps)(attributes2);
     const backgroundProps = (0, import_block_editor231.useBackgroundProps)(attributes2);
     const shadowProps = (0, import_block_editor231.__experimentalGetShadowClassesAndStyles)(attributes2);
+    const dimensionsProps = (0, import_block_editor231.getDimensionsClassesAndStyles)(attributes2);
+    const [isResizing, setIsResizing] = (0, import_element192.useState)(false);
     const [fluidTypographySettings, layout] = (0, import_block_editor231.useSettings)(
       "typography.fluid",
       "layout"
@@ -89827,19 +89835,22 @@ ${text}
               isButtonPositionInside ? borderProps.className : void 0
             ),
             style: getWrapperStyles(),
-            minWidth: MIN_WIDTH,
+            minWidth: isResizing ? MIN_WIDTH : dimensionsProps.style?.minWidth,
+            minHeight: isResizing ? void 0 : dimensionsProps.style?.minHeight,
             enable: getResizableSides(),
             onResizeStart: (event, direction, elt) => {
               setAttributes({
                 width: parseInt(elt.offsetWidth, 10),
                 widthUnit: "px"
               });
+              setIsResizing(true);
               toggleSelection(false);
             },
             onResizeStop: (event, direction, elt, delta) => {
               setAttributes({
                 width: parseInt(width + delta.width, 10)
               });
+              setIsResizing(false);
               toggleSelection(true);
             },
             showHandle: isSelected,
