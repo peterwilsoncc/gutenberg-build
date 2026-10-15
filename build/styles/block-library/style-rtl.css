@@ -4414,6 +4414,12 @@ ul.wp-block-rss.is-grid li {
   margin: 0;
   flex-basis: 0;
 }
+.wp-block-search.wp-block-search__button-only.wp-block-search__searchfield-hidden:focus-within {
+  overflow: visible;
+}
+.wp-block-search.wp-block-search__button-only.wp-block-search__searchfield-hidden:focus-within .wp-block-search__inside-wrapper {
+  overflow: visible;
+}
 
 :where(.wp-block-search__input) {
   font-family: inherit;
