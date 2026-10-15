@@ -98265,7 +98265,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (!path.length) {
       return cleanEmptyObject(newStyle);
     }
-    return cleanEmptyObject(setImmutably2(style, path, newStyle));
+    return cleanEmptyObject(
+      setImmutably2(style, path, newStyle)
+    );
   }
   function scopeResetAllFilterToState(selectedState, resetAllFilter) {
     if (!resetAllFilter || isDefaultBlockStyleState2(selectedState)) {
@@ -118399,7 +118401,10 @@ If there's a particular need for this, please submit a feature request at https:
           supportedStyles: unlock(
             select3(import_blocks94.store)
           ).getSupportedStyles(blockName, element),
-          supports: select3(import_blocks94.store).getBlockType(blockName)?.supports
+          supports: (
+            // The root Global Styles screens pass no name, which finds no type.
+            select3(import_blocks94.store).getBlockType(blockName)?.supports
+          )
         };
       },
       [blockName, element]
@@ -125473,7 +125478,10 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isPlainObject2(object)) {
       return object;
     }
-    const cleanedNestedObjects = Object.entries(object).map(([key, value]) => [key, cleanEmptyObject(value)]).filter(([, value]) => value !== void 0);
+    const cleanedNestedObjects = Object.entries(object).map(([key, value]) => [
+      key,
+      cleanEmptyObject(value)
+    ]).filter(([, value]) => value !== void 0);
     return !cleanedNestedObjects.length ? void 0 : Object.fromEntries(cleanedNestedObjects);
   };
   function transformStyles2(activeSupports, migrationPaths, result, source, index3, results) {
@@ -125504,6 +125512,7 @@ If there's a particular need for this, please submit a feature request at https:
           if (styleValue) {
             returnBlock = {
               ...returnBlock,
+              // Setting a path on the attributes object keeps it an object.
               attributes: setImmutably2(
                 returnBlock.attributes,
                 path,
@@ -125525,7 +125534,10 @@ If there's a particular need for this, please submit a feature request at https:
     return skipSerialization;
   }
   var pendingStyleOverrides = /* @__PURE__ */ new WeakMap();
-  function useStyleOverride({ id, css }) {
+  function useStyleOverride({
+    id,
+    css
+  }) {
     return usePrivateStyleOverride({ id, css });
   }
   function usePrivateStyleOverride({
@@ -125984,9 +125996,7 @@ If there's a particular need for this, please submit a feature request at https:
   function createBlockListBlockFilter(features) {
     const withBlockListBlockHooks = (0, import_compose144.createHigherOrderComponent)(
       (BlockListBlock2) => function WithBlockListBlockHooks(props) {
-        const [allWrapperProps, setAllWrapperProps] = (0, import_element435.useState)(
-          Array(features.length).fill(void 0)
-        );
+        const [allWrapperProps, setAllWrapperProps] = (0, import_element435.useState)(Array(features.length).fill(void 0));
         return [
           ...features.map((feature, i) => {
             const {
@@ -126025,20 +126035,25 @@ If there's a particular need for this, please submit a feature request at https:
             BlockListBlock2,
             {
               ...props,
-              wrapperProps: allWrapperProps.filter(Boolean).reduce((acc, wrapperProps) => {
-                return {
-                  ...acc,
-                  ...wrapperProps,
-                  className: clsx_default(
-                    acc.className,
-                    wrapperProps.className
-                  ),
-                  style: {
-                    ...acc.style,
-                    ...wrapperProps.style
-                  }
-                };
-              }, props.wrapperProps || {})
+              wrapperProps: (
+                // `filter( Boolean )` drops the unset wrapper props.
+                allWrapperProps.filter(
+                  Boolean
+                ).reduce((acc, wrapperProps) => {
+                  return {
+                    ...acc,
+                    ...wrapperProps,
+                    className: clsx_default(
+                      acc.className,
+                      wrapperProps.className
+                    ),
+                    style: {
+                      ...acc.style,
+                      ...wrapperProps.style
+                    }
+                  };
+                }, props.wrapperProps || {})
+              )
             },
             "edit"
           )
