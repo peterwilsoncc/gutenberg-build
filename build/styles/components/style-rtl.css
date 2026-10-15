@@ -2122,6 +2122,7 @@ body.modal-open {
   --wp-components-notice-border-color: var(--wpds-color-stroke-surface-info, #adc6e2);
   --wp-components-notice-text-color: var(--wpds-color-foreground-content-info, #001b4f);
   box-sizing: border-box;
+  isolation: isolate;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: start;
@@ -2171,9 +2172,15 @@ body.modal-open {
   grid-row: 1;
   color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
   margin-inline-start: var(--wpds-dimension-gap-xs, 4px);
+  mix-blend-mode: luminosity;
 }
 .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):not(.is-secondary):hover, .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):not(.is-secondary):active, .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):focus {
   color: var(--wpds-color-foreground-interactive-neutral-active, #1e1e1e);
+}
+@media (forced-colors: active) {
+  .components-notice__dismiss {
+    mix-blend-mode: normal;
+  }
 }
 
 .components-notice-list {
