@@ -103971,6 +103971,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { getEntityRecords } = select9(import_core_data51.store);
     return getEntityRecords("postType", "wp_block", {
       per_page: -1,
+      context: "view",
       [RECEIVE_INTERMEDIATE_RESULTS2]: true
     });
   }
