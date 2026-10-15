@@ -115706,7 +115706,7 @@ If there's a particular need for this, please submit a feature request at https:
           onChange(transformed);
         } else {
           const valueToInsert = (0, import_rich_text15.create)({ html: content2 });
-          addActiveFormats(valueToInsert, value.activeFormats);
+          addActiveFormats(valueToInsert, (0, import_rich_text15.getActiveFormats)(value));
           onChange((0, import_rich_text15.insert)(value, valueToInsert));
         }
       }
@@ -115715,7 +115715,9 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       if (pastePlainText) {
-        onChange((0, import_rich_text15.insert)(value, (0, import_rich_text15.create)({ text: plainText })));
+        const valueToInsert = (0, import_rich_text15.create)({ text: plainText });
+        addActiveFormats(valueToInsert, (0, import_rich_text15.getActiveFormats)(value));
+        onChange((0, import_rich_text15.insert)(value, valueToInsert));
         return;
       }
       let mode2 = "INLINE";

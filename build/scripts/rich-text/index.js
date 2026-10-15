@@ -2375,12 +2375,16 @@ var wp;
         return;
       }
       const currentValue = createRecord();
-      const { start, activeFormats: oldActiveFormats = [] } = record.current;
+      const { start } = record.current;
       if (start === void 0 || currentValue.start === void 0) {
         handleChange(currentValue);
         return;
       }
       const clearFormats = !isCollapsed(record.current) && currentValue.start <= start;
+      const oldActiveFormats = getActiveFormats(
+        record.current,
+        EMPTY_ACTIVE_FORMATS2
+      );
       const change = updateFormats({
         value: currentValue,
         start,
