@@ -88400,40 +88400,44 @@ ${text}
     __unstableParentLayout: parentLayout,
     setAttributes
   }) {
-    const { record, hasResolved } = (0, import_core_data83.useEntityRecord)(
-      "postType",
-      "wp_block",
-      ref
-    );
-    const [editableBlocks] = (0, import_core_data83.useEntityBlockEditor)("postType", "wp_block", {
-      id: ref
-    });
-    const isUnavailableToEdit = hasResolved && !record;
-    const { readOnlyRecord, hasResolvedReadOnly } = (0, import_data136.useSelect)(
+    const { record, isResolving } = (0, import_data136.useSelect)(
       (select10) => {
-        if (!isUnavailableToEdit) {
-          return {};
+        if (select10(import_core_data83.store).hasEntityRecord(
+          "postType",
+          "wp_block",
+          ref
+        )) {
+          return {
+            record: select10(import_core_data83.store).getEditedEntityRecord(
+              "postType",
+              "wp_block",
+              ref
+            ),
+            isResolving: false
+          };
         }
         const args = ["postType", "wp_block", ref, { context: "view" }];
-        const { getEntityRecord, hasFinishedResolution } = select10(import_core_data83.store);
+        const viewRecord = select10(import_core_data83.store).getEntityRecord(...args);
         return {
-          readOnlyRecord: getEntityRecord(...args),
-          hasResolvedReadOnly: hasFinishedResolution(
+          record: viewRecord,
+          // Not `isResolving`: resolution starts after a timeout, so on the
+          // first render it'd read as missing and flash the warning.
+          isResolving: !viewRecord && !select10(import_core_data83.store).hasFinishedResolution(
             "getEntityRecord",
             args
           )
         };
       },
-      [isUnavailableToEdit, ref]
+      [ref]
     );
-    const readOnlyContent = readOnlyRecord?.content?.raw;
-    const readOnlyBlocks = (0, import_element190.useMemo)(
-      () => readOnlyContent ? (0, import_blocks90.parse)(readOnlyContent) : EMPTY_ARRAY9,
-      [readOnlyContent]
-    );
-    const blocks = editableBlocks?.length ? editableBlocks : readOnlyBlocks;
-    const isResolving = isUnavailableToEdit ? !hasResolvedReadOnly : !hasResolved;
-    const isMissing = !isResolving && !record && !readOnlyRecord;
+    const patternContent = record?.content?.raw ?? record?.content;
+    const blocks = (0, import_element190.useMemo)(() => {
+      if (record?.blocks) {
+        return record.blocks;
+      }
+      return typeof patternContent === "string" && patternContent ? (0, import_blocks90.parse)(patternContent) : EMPTY_ARRAY9;
+    }, [record?.blocks, patternContent]);
+    const isMissing = !isResolving && !record;
     const { __unstableMarkLastChangeAsPersistent } = (0, import_data136.useDispatch)(import_block_editor228.store);
     const {
       onNavigateToEntityRecord,
@@ -88635,21 +88639,10 @@ ${text}
       if (!ref) {
         return;
       }
-      const {
-        getEditedEntityRecord,
-        getEntityRecord,
-        hasFinishedResolution
-      } = (0, import_data137.select)(import_core_data84.store);
-      let title = getEditedEntityRecord("postType", "wp_block", ref)?.title;
-      if (!title && hasFinishedResolution("getEntityRecord", [
-        "postType",
-        "wp_block",
-        ref
-      ])) {
-        title = getEntityRecord("postType", "wp_block", ref, {
-          context: "view"
-        })?.title?.raw;
-      }
+      const { hasEntityRecord, getEditedEntityRecord, getEntityRecord } = (0, import_data137.select)(import_core_data84.store);
+      const title = hasEntityRecord("postType", "wp_block", ref) ? getEditedEntityRecord("postType", "wp_block", ref)?.title : getEntityRecord("postType", "wp_block", ref, {
+        context: "view"
+      })?.title?.raw;
       if (!title) {
         return;
       }

@@ -11897,7 +11897,7 @@ var wp;
         Editor,
         {
           settings: editorSettings,
-          initialEdits,
+          initialEdits: currentPostId === initialPostId && currentPostType === initialPostType ? initialEdits : void 0,
           postType: currentPostType,
           postId: currentPostId,
           templateId,
