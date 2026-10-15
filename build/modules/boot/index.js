@@ -70,6 +70,13 @@ var require_react_dom = __commonJS({
   }
 });
 
+// package-external:@wordpress/primitives
+var require_primitives = __commonJS({
+  "package-external:@wordpress/primitives"(exports, module) {
+    module.exports = window.wp.primitives;
+  }
+});
+
 // node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
 var require_use_sync_external_store_shim_development = __commonJS({
   "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
@@ -229,13 +236,6 @@ var require_with_selector = __commonJS({
 var require_compose = __commonJS({
   "package-external:@wordpress/compose"(exports, module) {
     module.exports = window.wp.compose;
-  }
-});
-
-// package-external:@wordpress/primitives
-var require_primitives = __commonJS({
-  "package-external:@wordpress/primitives"(exports, module) {
-    module.exports = window.wp.primitives;
   }
 });
 
@@ -1203,6 +1203,27 @@ function clsx() {
 }
 var clsx_default = clsx;
 
+// packages/ui/build-module/icon/icon.mjs
+var import_element = __toESM(require_element(), 1);
+var import_primitives = __toESM(require_primitives(), 1);
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var Icon = (0, import_element.forwardRef)(
+  function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
+    const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      import_primitives.SVG,
+      {
+        ref,
+        ...icon.props,
+        ...restProps,
+        ...mergedStyle ? { style: mergedStyle } : {},
+        width: size4,
+        height: size4
+      }
+    );
+  }
+);
+
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useId.mjs
 var React11 = __toESM(require_react(), 1);
 
@@ -1849,7 +1870,7 @@ function isHoverOpenEvent(openEventType) {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 var FloatingDelayGroupContext = /* @__PURE__ */ React12.createContext({
   hasProvider: false,
   timeoutMs: 0,
@@ -1893,7 +1914,7 @@ function FloatingDelayGroup(props) {
       close: getDelay(delay, "close")
     };
   }, [delay, currentIdRef, delayRef, initialDelayRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(FloatingDelayGroupContext.Provider, {
     value: React12.useMemo(() => ({
       hasProvider: true,
       delayRef,
@@ -2044,7 +2065,7 @@ var visuallyHiddenInput = {
 };
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FocusGuard.mjs
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var FocusGuard = /* @__PURE__ */ React13.forwardRef(function FocusGuard2(props, ref) {
   const [role, setRole] = React13.useState();
   useIsoLayoutEffect(() => {
@@ -2057,7 +2078,7 @@ var FocusGuard = /* @__PURE__ */ React13.forwardRef(function FocusGuard2(props, 
     // Role is only for VoiceOver
     role
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", {
     ...props,
     ref,
     style: visuallyHidden,
@@ -2414,7 +2435,7 @@ var ownerVisuallyHidden = {
 };
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
-var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var PortalContext = /* @__PURE__ */ React14.createContext(null);
 if (true) PortalContext.displayName = "PortalContext";
 var usePortalContext = () => React14.useContext(PortalContext);
@@ -2540,10 +2561,10 @@ var FloatingPortal = /* @__PURE__ */ React14.forwardRef(function FloatingPortal2
     portalNode,
     setFocusManagerState
   }), [portalNode]);
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(React14.Fragment, {
-    children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(PortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(React14.Fragment, {
+    children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(PortalContext.Provider, {
       value: portalContextValue,
-      children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(FocusGuard, {
+      children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(FocusGuard, {
         "data-type": "outside",
         ref: beforeOutsideRef,
         onFocus: (event) => {
@@ -2555,11 +2576,11 @@ var FloatingPortal = /* @__PURE__ */ React14.forwardRef(function FloatingPortal2
             prevTabbable?.focus();
           }
         }
-      }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", {
+      }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", {
         role: portalOwnerRole,
         "aria-owns": portalNodeId,
         style: ownerVisuallyHidden
-      }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(FocusGuard, {
+      }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(FocusGuard, {
         "data-type": "outside",
         ref: afterOutsideRef,
         onFocus: (event) => {
@@ -2603,7 +2624,7 @@ function createEventEmitter() {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
-var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 var FloatingNodeContext = /* @__PURE__ */ React15.createContext(null);
 if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
 var FloatingTreeContext = /* @__PURE__ */ React15.createContext(null);
@@ -7542,7 +7563,7 @@ function setPositionerCssSize(positionerElement, size4) {
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
 var React33 = __toESM(require_react(), 1);
-var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 var DirectionProvider = function DirectionProvider2(props) {
   const {
     direction = "ltr"
@@ -7550,7 +7571,7 @@ var DirectionProvider = function DirectionProvider2(props) {
   const contextValue = React33.useMemo(() => ({
     direction
   }), [direction]);
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(DirectionContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(DirectionContext.Provider, {
     value: contextValue,
     children: props.children
   });
@@ -7629,7 +7650,7 @@ var adaptiveOrigin = {
 var activationDirection = "data-activation-direction";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupViewport.mjs
-var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var popupViewportStateMapping = {
   activationDirection: (value) => value ? {
     [activationDirection]: value
@@ -7732,14 +7753,14 @@ function usePopupViewport(parameters) {
   const isTransitioning = previousContentNode != null;
   let childrenToRender;
   if (!isTransitioning) {
-    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", {
+    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", {
       "data-current": true,
       ref: currentContainerRef,
       children
     }, currentContentKey);
   } else {
-    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React34.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", {
+    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(React34.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", {
         "data-previous": true,
         inert: inertValue(true),
         ref: previousContainerRef,
@@ -7751,7 +7772,7 @@ function usePopupViewport(parameters) {
           position: "absolute"
         },
         "data-ending-style": showStartingStyleAttribute ? void 0 : ""
-      }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", {
+      }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", {
         "data-current": true,
         ref: currentContainerRef,
         "data-starting-style": showStartingStyleAttribute ? "" : void 0,
@@ -7842,7 +7863,7 @@ function usePopupContentKey(activeTriggerId, payload) {
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
 var React35 = __toESM(require_react(), 1);
 var ReactDOM7 = __toESM(require_react_dom(), 1);
-var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var FloatingPortalLite = /* @__PURE__ */ React35.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
   const {
     children,
@@ -7864,7 +7885,7 @@ var FloatingPortalLite = /* @__PURE__ */ React35.forwardRef(function FloatingPor
   if (!portalSubtree && !portalNode) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(React35.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(React35.Fragment, {
     children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM7.createPortal(children, portalNode)]
   });
 });
@@ -7968,7 +7989,7 @@ function createInitialContext(triggerElements) {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
     disabled: disabled2 = false,
@@ -8043,12 +8064,12 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     close: () => store2.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction))
   }), [forceUnmount, store2]);
   const shouldRenderInteractions = open2 || mounted || !disabled2 && trackCursorAxis !== "none";
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(TooltipRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(TooltipRootContext.Provider, {
     value: store2,
-    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(PopupHandleAttachment, {
+    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(PopupHandleAttachment, {
       handle,
       store: store2
-    }), shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(TooltipInteractions, {
+    }), shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TooltipInteractions, {
       store: store2,
       disabled: disabled2,
       trackCursorAxis
@@ -8293,7 +8314,7 @@ function useTooltipPortalContext() {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 var TooltipPortal = /* @__PURE__ */ React42.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
     keepMounted = false,
@@ -8305,9 +8326,9 @@ var TooltipPortal = /* @__PURE__ */ React42.forwardRef(function TooltipPortal2(p
   if (!shouldRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TooltipPortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(TooltipPortalContext.Provider, {
     value: keepMounted,
-    children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(FloatingPortalLite, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(FloatingPortalLite, {
       ref: forwardedRef,
       ...portalProps
     })
@@ -8331,7 +8352,7 @@ function useTooltipPositionerContext() {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
 var TooltipPositioner = /* @__PURE__ */ React44.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
     render,
@@ -8394,7 +8415,7 @@ var TooltipPositioner = /* @__PURE__ */ React44.forwardRef(function TooltipPosit
     hidden: !mounted,
     inert: !open2 || trackCursorAxis === "both" || disableHoverablePopup
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(TooltipPositionerContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TooltipPositionerContext.Provider, {
     value: positioning,
     children: element
   });
@@ -8494,7 +8515,7 @@ if (true) TooltipArrow.displayName = "TooltipArrow";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
 var React47 = __toESM(require_react(), 1);
-var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
   const {
     delay,
@@ -8505,9 +8526,9 @@ var TooltipProvider = function TooltipProvider2(props) {
     open: delay,
     close: closeDelay
   }), [delay, closeDelay]);
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TooltipProviderContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TooltipProviderContext.Provider, {
     value: delay,
-    children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(FloatingDelayGroup, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(FloatingDelayGroup, {
       delay: delayValue,
       timeoutMs: timeout,
       children: props.children
@@ -8594,7 +8615,7 @@ function useRender(params) {
 }
 
 // packages/ui/build-module/text/text.mjs
-var import_element10 = __toESM(require_element(), 1);
+var import_element11 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE = "data-wp-hash";
 function getRuntime() {
   const globalScope = globalThis;
@@ -8680,10 +8701,10 @@ if (typeof process === "undefined" || true) {
 }
 var style_default = { "text": "_83ed8a8da5dd50ea__text", "heading-2xl": "_14437cfb77831647__heading-2xl", "heading-xl": "_3c78b7fa9b4072dd__heading-xl", "heading-lg": "aa58f227716bcde2__heading-lg", "heading-md": "fc4da56d8dfe52c4__heading-md", "heading-sm": "a9b78c7c82e8dff7__heading-sm", "body-xl": "_305ff559e52180d5__body-xl", "body-lg": "ca1aa3fc2029e958__body-lg", "body-md": "_131101940be12424__body-md", "body-sm": "_0e8d87a42c1f75fa__body-sm" };
 if (typeof process === "undefined" || true) {
-  registerStyle("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
+  registerStyle("abb19c3171", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._400bf7ee0c6061a9__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 }
-var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-var Text = (0, import_element10.forwardRef)(
+var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li", "span": "_400bf7ee0c6061a9__span" };
+var Text = (0, import_element11.forwardRef)(
   function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
     const element = useRender({
       render,
@@ -8700,27 +8721,6 @@ var Text = (0, import_element10.forwardRef)(
       })
     });
     return element;
-  }
-);
-
-// packages/ui/build-module/icon/icon.mjs
-var import_element11 = __toESM(require_element(), 1);
-var import_primitives = __toESM(require_primitives(), 1);
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element11.forwardRef)(
-  function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
-    const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-      import_primitives.SVG,
-      {
-        ref,
-        ...icon.props,
-        ...restProps,
-        ...mergedStyle ? { style: mergedStyle } : {},
-        width: size4,
-        height: size4
-      }
-    );
   }
 );
 
@@ -9456,9 +9456,9 @@ if (typeof process === "undefined" || true) {
 }
 var style_default5 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
 if (typeof process === "undefined" || true) {
-  registerStyle6("e8e31009f5", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
+  registerStyle6("abb19c3171", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._400bf7ee0c6061a9__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 }
-var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
+var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li", "span": "_400bf7ee0c6061a9__span" };
 var Link = (0, import_element19.forwardRef)(
   function UnforwardedLink({
     children,
