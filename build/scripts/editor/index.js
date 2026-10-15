@@ -132756,33 +132756,33 @@ ${content}
   var import_jsx_runtime723 = __toESM(require_jsx_runtime(), 1);
   var { NoteIconSlotFill } = unlock(import_block_editor108.privateApis);
   function NoteMenuItem({ clientId, onClick, isDistractionFree }) {
-    const block = (0, import_data267.useSelect)(
+    const { blockName, isValid: isValid2, shortcut } = (0, import_data267.useSelect)(
       (select9) => {
-        return select9(import_block_editor108.store).getBlock(clientId);
+        const { getBlockName: getBlockName2, isBlockValid: isBlockValid2 } = select9(import_block_editor108.store);
+        return {
+          blockName: getBlockName2(clientId),
+          isValid: isBlockValid2(clientId),
+          shortcut: select9(
+            import_keyboard_shortcuts12.store
+          ).getShortcutRepresentation("core/editor/new-note")
+        };
       },
       [clientId]
     );
-    const shortcut = (0, import_data267.useSelect)(
-      (select9) => select9(import_keyboard_shortcuts12.store).getShortcutRepresentation(
-        "core/editor/new-note"
-      ),
-      []
-    );
-    if (!block?.isValid || block?.name === (0, import_blocks38.getUnregisteredTypeHandlerName)()) {
+    if (!isValid2 || blockName === (0, import_blocks38.getUnregisteredTypeHandlerName)()) {
       return null;
     }
-    const isDisabled = isDistractionFree || block?.name === "core/freeform";
+    const isDisabled = isDistractionFree || blockName === "core/freeform";
     let infoText;
     if (isDistractionFree) {
       infoText = (0, import_i18n368.__)("Notes are disabled in distraction free mode.");
-    } else if (block?.name === "core/freeform") {
+    } else if (blockName === "core/freeform") {
       infoText = (0, import_i18n368.__)("Convert to blocks to add notes.");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime723.jsx)(
       import_components268.MenuItem,
       {
         onClick,
-        "aria-haspopup": "dialog",
         disabled: isDisabled,
         info: infoText,
         shortcut,
