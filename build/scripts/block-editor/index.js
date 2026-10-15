@@ -62297,7 +62297,7 @@ var wp;
   var import_compose114 = __toESM(require_compose(), 1);
   var import_element346 = __toESM(require_element(), 1);
   var import_data135 = __toESM(require_data(), 1);
-  var import_components168 = __toESM(require_components(), 1);
+  var import_components169 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-list/index.mjs
   var import_data91 = __toESM(require_data(), 1);
@@ -67904,14 +67904,14 @@ var wp;
   // packages/block-editor/build-module/components/inserter/index.mjs
   var import_a11y15 = __toESM(require_a11y(), 1);
   var import_i18n133 = __toESM(require_i18n(), 1);
-  var import_components117 = __toESM(require_components(), 1);
+  var import_components118 = __toESM(require_components(), 1);
   var import_data76 = __toESM(require_data(), 1);
   var import_blocks44 = __toESM(require_blocks(), 1);
   var import_element298 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inserter/menu.mjs
   var import_element296 = __toESM(require_element(), 1);
-  var import_components115 = __toESM(require_components(), 1);
+  var import_components116 = __toESM(require_components(), 1);
   var import_i18n131 = __toESM(require_i18n(), 1);
   var import_compose91 = __toESM(require_compose(), 1);
   var import_data74 = __toESM(require_data(), 1);
@@ -75125,6 +75125,7 @@ var wp;
   // packages/block-editor/build-module/components/inserter/media-tab/hooks.mjs
   var import_element205 = __toESM(require_element(), 1);
   var import_data63 = __toESM(require_data(), 1);
+  var EMPTY_MEDIA_LIST = [];
   function normalizeFetchResult(result) {
     if (Array.isArray(result)) {
       return { mediaItems: result };
@@ -75137,6 +75138,7 @@ var wp;
   }
   function useMediaResults(category, query = {}, refreshKey) {
     const [mediaList, setMediaList] = (0, import_element205.useState)();
+    const [resolvedSource, setResolvedSource] = (0, import_element205.useState)();
     const [totals, setTotals] = (0, import_element205.useState)({});
     const [isLoading, setIsLoading] = (0, import_element205.useState)(false);
     const lastRequestRef = (0, import_element205.useRef)();
@@ -75168,6 +75170,7 @@ var wp;
         );
         if (request === lastRequestRef.current) {
           setMediaList(mediaItems);
+          setResolvedSource(category.name);
           setTotals({ totalItems, totalPages });
           setIsLoading(false);
         }
@@ -75178,11 +75181,14 @@ var wp;
       ...Object.values(query),
       refreshKey
     ]);
+    const isSwitchingSource = resolvedSource !== category.name;
     return {
-      mediaList,
+      mediaList: isSwitchingSource ? EMPTY_MEDIA_LIST : mediaList,
       isLoading,
-      totalItems: totals.totalItems,
-      totalPages: totals.totalPages
+      isSwitchingSource,
+      // Held back too, so the pager can't show the previous source's totals.
+      totalItems: isSwitchingSource ? void 0 : totals.totalItems,
+      totalPages: isSwitchingSource ? void 0 : totals.totalPages
     };
   }
   function useMediaCategories(rootClientId) {
@@ -75190,6 +75196,7 @@ var wp;
       /** @type {InserterMediaCategory[]} */
       []
     );
+    const [hasResolved, setHasResolved] = (0, import_element205.useState)(false);
     const inserterMediaCategories = (0, import_data63.useSelect)(
       (select3) => unlock(select3(store)).getInserterMediaCategories(),
       []
@@ -75218,6 +75225,7 @@ var wp;
       (async () => {
         const _categories = [];
         if (!inserterMediaCategories) {
+          setHasResolved(true);
           return;
         }
         const categoriesHaveMedia = new Map(
@@ -75251,6 +75259,7 @@ var wp;
         if (!!_categories.length) {
           setCategories(_categories);
         }
+        setHasResolved(true);
       })();
     }, [
       canInsertImage,
@@ -75258,7 +75267,7 @@ var wp;
       canInsertAudio,
       inserterMediaCategories
     ]);
-    return categories;
+    return { categories, hasResolved };
   }
 
   // packages/block-editor/build-module/components/inserter/media-tab/utils.mjs
@@ -75301,6 +75310,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-panel.mjs
   var import_i18n127 = __toESM(require_i18n(), 1);
+  var import_components112 = __toESM(require_components(), 1);
   var import_element291 = __toESM(require_element(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
   var import_dom61 = __toESM(require_dom(), 1);
@@ -93734,7 +93744,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-grid.mjs
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY12 = [];
   var GRID_LAYOUT = {
     previewSize: 120,
     density: "compact",
@@ -93872,12 +93881,12 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime468.jsxs)(
       dataviews_default,
       {
-        data: mediaList ?? EMPTY_ARRAY12,
+        data: mediaList,
         fields,
         view,
         onChangeView,
         actions,
-        isLoading: isLoading || mediaList === void 0,
+        isLoading,
         paginationInfo,
         defaultLayouts: DEFAULT_LAYOUTS2,
         getItemId,
@@ -94408,11 +94417,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { actions, attach, handleAttach, refreshKey } = useAttachmentActions(
       { category, query }
     );
-    const { mediaList, isLoading, totalItems, totalPages } = useMediaResults(
-      category,
-      query,
-      refreshKey
-    );
+    const { mediaList, isLoading, isSwitchingSource, totalItems, totalPages } = useMediaResults(category, query, refreshKey);
     const numPages = totalPages || 1;
     if (typeof totalPages === "number" && page > numPages) {
       setPage(numPages);
@@ -94451,7 +94456,7 @@ If there's a particular need for this, please submit a feature request at https:
         MediaGrid,
         {
           mediaList,
-          isLoading,
+          isLoading: isLoading && !isSwitchingSource,
           totalItems,
           totalPages,
           page,
@@ -94463,7 +94468,16 @@ If there's a particular need for this, please submit a feature request at https:
           insertingId,
           actions,
           searchLabel,
-          empty: /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(no_results_default, { children: emptyMessage }),
+          empty: isLoading || isSwitchingSource ? /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
+            "div",
+            {
+              className: clsx_default(
+                "block-editor-inserter__media-grid__loading",
+                { "is-replacing-results": isSwitchingSource }
+              ),
+              children: /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(import_components112.Spinner, {})
+            }
+          ) : /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(no_results_default, { children: emptyMessage }),
           sourceMenu,
           mediaTypes,
           mediaType,
@@ -94491,7 +94505,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inserter/media-tab/source-menu.mjs
-  var import_components112 = __toESM(require_components(), 1);
+  var import_components113 = __toESM(require_components(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_jsx_runtime474 = __toESM(require_jsx_runtime(), 1);
   function SourceMenu({
@@ -94504,7 +94518,7 @@ If there's a particular need for this, please submit a feature request at https:
         menu_exports.Trigger,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(
-            import_components112.Button,
+            import_components113.Button,
             {
               __next40pxDefaultSize: true,
               icon: settings_default,
@@ -94542,7 +94556,7 @@ If there's a particular need for this, please submit a feature request at https:
     rootClientId,
     onInsert
   }) {
-    const mediaCategories = useMediaCategories(rootClientId);
+    const { categories: mediaCategories, hasResolved } = useMediaCategories(rootClientId);
     const onSelectMedia = (0, import_element292.useCallback)(
       (media) => {
         const item = media;
@@ -94598,7 +94612,7 @@ If there's a particular need for this, please submit a feature request at https:
       (candidate) => candidate.name === activeSource?.name
     );
     if (!category) {
-      return /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(no_results_default, {});
+      return hasResolved ? /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(no_results_default, {}) : null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
       MediaCategoryPanel,
@@ -94639,8 +94653,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data72 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/inserter-menu-extension/index.mjs
-  var import_components113 = __toESM(require_components(), 1);
-  var { Fill: __unstableInserterMenuExtension, Slot: Slot3 } = (0, import_components113.createSlotFill)(
+  var import_components114 = __toESM(require_components(), 1);
+  var { Fill: __unstableInserterMenuExtension, Slot: Slot3 } = (0, import_components114.createSlotFill)(
     "__unstableInserterMenuExtension"
   );
   __unstableInserterMenuExtension.Slot = Slot3;
@@ -94649,7 +94663,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/inserter/search-results.mjs
   var import_jsx_runtime476 = __toESM(require_jsx_runtime(), 1);
   var INITIAL_INSERTER_RESULTS = 9;
-  var EMPTY_ARRAY13 = [];
+  var EMPTY_ARRAY12 = [];
   function InserterSearchResults({
     filterValue,
     onSelect,
@@ -94673,7 +94687,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => {
         const blockListSettings2 = select3(store).getBlockListSettings(rootClientId);
         return {
-          prioritizedBlocks: blockListSettings2?.prioritizedInserterBlocks || EMPTY_ARRAY13
+          prioritizedBlocks: blockListSettings2?.prioritizedInserterBlocks || EMPTY_ARRAY12
         };
       },
       [rootClientId]
@@ -94822,10 +94836,10 @@ If there's a particular need for this, please submit a feature request at https:
   var search_results_default = InserterSearchResults;
 
   // packages/block-editor/build-module/components/tabbed-sidebar/index.mjs
-  var import_components114 = __toESM(require_components(), 1);
+  var import_components115 = __toESM(require_components(), 1);
   var import_element294 = __toESM(require_element(), 1);
   var import_jsx_runtime477 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs2 } = unlock(import_components114.privateApis);
+  var { Tabs: Tabs2 } = unlock(import_components115.privateApis);
   function TabbedSidebar({ defaultTabId, onClose, onSelect, selectedTab, tabs, closeButtonLabel }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime477.jsx)("div", { className: "block-editor-tabbed-sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime477.jsxs)(
       Tabs2,
@@ -94837,7 +94851,7 @@ If there's a particular need for this, please submit a feature request at https:
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime477.jsxs)("div", { className: "block-editor-tabbed-sidebar__tablist-and-close-button", children: [
             /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
-              import_components114.Button,
+              import_components115.Button,
               {
                 className: "block-editor-tabbed-sidebar__close-button",
                 icon: close_small_default,
@@ -95058,7 +95072,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return /* @__PURE__ */ (0, import_jsx_runtime478.jsxs)(import_jsx_runtime478.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
-          import_components115.SearchControl,
+          import_components116.SearchControl,
           {
             className: clsx_default("block-editor-inserter__search", {
               "is-scrolled": isScrolled
@@ -95232,7 +95246,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ) }),
           showInserterHelpPanel && hoveredItem && /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
-            import_components115.Popover,
+            import_components116.Popover,
             {
               className: "block-editor-inserter__preview-container__popover",
               placement: "right-start",
@@ -95262,7 +95276,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/inserter/quick-inserter.mjs
   var import_element297 = __toESM(require_element(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
-  var import_components116 = __toESM(require_components(), 1);
+  var import_components117 = __toESM(require_components(), 1);
   var import_data75 = __toESM(require_data(), 1);
   var import_jsx_runtime479 = __toESM(require_jsx_runtime(), 1);
   var SEARCH_THRESHOLD = 6;
@@ -95325,7 +95339,7 @@ If there's a particular need for this, please submit a feature request at https:
         }),
         children: [
           showSearch && /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
-            import_components116.SearchControl,
+            import_components117.SearchControl,
             {
               className: "block-editor-inserter__search",
               value: filterValue,
@@ -95353,7 +95367,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             setInserterIsOpened && /* @__PURE__ */ (0, import_jsx_runtime479.jsx)("div", { className: "block-editor-inserter__quick-inserter-expand", children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
-              import_components116.Button,
+              import_components117.Button,
               {
                 className: "block-editor-inserter__quick-inserter-expand-toggle",
                 __next40pxDefaultSize: true,
@@ -95399,7 +95413,7 @@ If there's a particular need for this, please submit a feature request at https:
     toggleProps = {}
   }, ref) => {
     const {
-      as: Wrapper = import_components117.Button,
+      as: Wrapper = import_components118.Button,
       label: labelProp,
       onClick,
       ...rest
@@ -95631,7 +95645,7 @@ If there's a particular need for this, please submit a feature request at https:
       return renderToggle3({ onToggle: insertOnlyAllowedBlock });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
-      import_components117.Dropdown,
+      import_components118.Dropdown,
       {
         className: "block-editor-inserter",
         contentClassName: clsx_default("block-editor-inserter__popover", {
@@ -95726,7 +95740,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/button-block-appender/index.mjs
-  var import_components118 = __toESM(require_components(), 1);
+  var import_components119 = __toESM(require_components(), 1);
   var import_element299 = __toESM(require_element(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
@@ -95771,7 +95785,7 @@ If there's a particular need for this, please submit a feature request at https:
             // Disable reason: There shouldn't be a case where this button is disabled but not visually hidden.
             // eslint-disable-next-line @wordpress/components-no-unsafe-button-disabled
             /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
-              import_components118.Button,
+              import_components119.Button,
               {
                 __next40pxDefaultSize: true,
                 ref,
@@ -95866,13 +95880,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-tools/insertion-point.mjs
   var import_data81 = __toESM(require_data(), 1);
   var import_element303 = __toESM(require_element(), 1);
-  var import_components122 = __toESM(require_components(), 1);
+  var import_components123 = __toESM(require_components(), 1);
   var import_compose95 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-popover/inbetween.mjs
   var import_data79 = __toESM(require_data(), 1);
   var import_element300 = __toESM(require_element(), 1);
-  var import_components119 = __toESM(require_components(), 1);
+  var import_components120 = __toESM(require_components(), 1);
   var import_i18n136 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-popover/use-popover-scroll.mjs
@@ -96040,7 +96054,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
-      import_components119.Popover,
+      import_components120.Popover,
       {
         ref: popoverScrollRef,
         animate: false,
@@ -96068,14 +96082,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-popover/drop-zone.mjs
   var import_data80 = __toESM(require_data(), 1);
   var import_compose94 = __toESM(require_compose(), 1);
-  var import_components121 = __toESM(require_components(), 1);
+  var import_components122 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-popover/cover.mjs
   var import_element302 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-popover/index.mjs
   var import_compose93 = __toESM(require_compose(), 1);
-  var import_components120 = __toESM(require_components(), 1);
+  var import_components121 = __toESM(require_components(), 1);
   var import_element301 = __toESM(require_element(), 1);
   var import_jsx_runtime485 = __toESM(require_jsx_runtime(), 1);
   var MAX_POPOVER_RECOMPUTE_COUNTER2 = Number.MAX_SAFE_INTEGER;
@@ -96152,7 +96166,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
-      import_components120.Popover,
+      import_components121.Popover,
       {
         ref: mergedRefs,
         animate: false,
@@ -96275,7 +96289,7 @@ If there's a particular need for this, please submit a feature request at https:
         __unstableContentRef,
         className: "block-editor-block-popover__drop-zone",
         children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-          import_components121.__unstableMotion.div,
+          import_components122.__unstableMotion.div,
           {
             "data-testid": "block-popover-drop-zone",
             initial: reducedMotion ? animateVariants.show : animateVariants.hide,
@@ -96419,7 +96433,7 @@ If there's a particular need for this, please submit a feature request at https:
         operation,
         nearestSide,
         children: /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(
-          import_components122.__unstableMotion.div,
+          import_components123.__unstableMotion.div,
           {
             layout: !disableMotion,
             initial: disableMotion ? "rest" : "start",
@@ -96437,7 +96451,7 @@ If there's a particular need for this, please submit a feature request at https:
             onHoverEnd: maybeHideInserterPoint,
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
-                import_components122.__unstableMotion.div,
+                import_components123.__unstableMotion.div,
                 {
                   variants: lineVariants,
                   className: "block-editor-block-list__insertion-point-indicator",
@@ -96445,7 +96459,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               ),
               isInserterShown && /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
-                import_components122.__unstableMotion.div,
+                import_components123.__unstableMotion.div,
                 {
                   variants: inserterVariants,
                   className: clsx_default(
@@ -97768,7 +97782,7 @@ If there's a particular need for this, please submit a feature request at https:
   var inner_blocks_default = ForwardedInnerBlocks;
 
   // packages/block-editor/build-module/components/block-list/zoom-out-separator.mjs
-  var import_components123 = __toESM(require_components(), 1);
+  var import_components124 = __toESM(require_components(), 1);
   var import_compose100 = __toESM(require_compose(), 1);
   var import_data90 = __toESM(require_data(), 1);
   var import_element310 = __toESM(require_element(), 1);
@@ -97834,8 +97848,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (isCurrentBlockBeingDragged || isCurrentBlockPreviousSiblingOfBlockBeingDragged) {
       isVisible2 = false;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_components123.__unstableAnimatePresence, { children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
-      import_components123.__unstableMotion.div,
+    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_components124.__unstableAnimatePresence, { children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+      import_components124.__unstableMotion.div,
       {
         initial: { height: 0 },
         animate: {
@@ -97858,7 +97872,7 @@ If there's a particular need for this, please submit a feature request at https:
         onDragOver: () => setIsDraggedOver(true),
         onDragLeave: () => setIsDraggedOver(false),
         children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
-          import_components123.__unstableMotion.div,
+          import_components124.__unstableMotion.div,
           {
             initial: { opacity: 0 },
             animate: { opacity: 1 },
@@ -97991,7 +98005,7 @@ If there's a particular need for this, please submit a feature request at https:
   function BlockList(settings3) {
     return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(Provider, { value: DEFAULT_BLOCK_EDIT_CONTEXT, children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(Root13, { ...settings3 }) });
   }
-  var EMPTY_ARRAY14 = [];
+  var EMPTY_ARRAY13 = [];
   var EMPTY_SET2 = /* @__PURE__ */ new Set();
   function Items({
     placeholder,
@@ -98030,7 +98044,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (getSettings9().isPreviewMode) {
           return {
             order: _order,
-            selectedBlocks: EMPTY_ARRAY14,
+            selectedBlocks: EMPTY_ARRAY13,
             visibleBlocks: EMPTY_SET2
           };
         }
@@ -98131,7 +98145,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-tools/index.mjs
   var import_data132 = __toESM(require_data(), 1);
   var import_dom68 = __toESM(require_dom(), 1);
-  var import_components167 = __toESM(require_components(), 1);
+  var import_components168 = __toESM(require_components(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_element345 = __toESM(require_element(), 1);
   var import_blocks81 = __toESM(require_blocks(), 1);
@@ -98152,37 +98166,37 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element319 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/fill.mjs
-  var import_components126 = __toESM(require_components(), 1);
+  var import_components127 = __toESM(require_components(), 1);
   var import_warning8 = __toESM(require_warning(), 1);
   var import_element314 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/groups.mjs
-  var import_components124 = __toESM(require_components(), 1);
-  var InspectorControlsDefault = (0, import_components124.createSlotFill)("InspectorControls");
-  var InspectorControlsAdvanced = (0, import_components124.createSlotFill)("InspectorAdvancedControls");
-  var InspectorControlsBindings = (0, import_components124.createSlotFill)("InspectorControlsBindings");
-  var InspectorControlsBackground = (0, import_components124.createSlotFill)(
+  var import_components125 = __toESM(require_components(), 1);
+  var InspectorControlsDefault = (0, import_components125.createSlotFill)("InspectorControls");
+  var InspectorControlsAdvanced = (0, import_components125.createSlotFill)("InspectorAdvancedControls");
+  var InspectorControlsBindings = (0, import_components125.createSlotFill)("InspectorControlsBindings");
+  var InspectorControlsBackground = (0, import_components125.createSlotFill)(
     "InspectorControlsBackground"
   );
-  var InspectorControlsBorder = (0, import_components124.createSlotFill)("InspectorControlsBorder");
-  var InspectorControlsColor = (0, import_components124.createSlotFill)("InspectorControlsColor");
-  var InspectorControlsFilter = (0, import_components124.createSlotFill)("InspectorControlsFilter");
-  var InspectorControlsDimensions = (0, import_components124.createSlotFill)(
+  var InspectorControlsBorder = (0, import_components125.createSlotFill)("InspectorControlsBorder");
+  var InspectorControlsColor = (0, import_components125.createSlotFill)("InspectorControlsColor");
+  var InspectorControlsFilter = (0, import_components125.createSlotFill)("InspectorControlsFilter");
+  var InspectorControlsDimensions = (0, import_components125.createSlotFill)(
     "InspectorControlsDimensions"
   );
-  var InspectorControlsLayout = (0, import_components124.createSlotFill)("InspectorControlsLayout");
-  var InspectorControlsElements = (0, import_components124.createSlotFill)("InspectorControlsElements");
-  var InspectorControlsPosition = (0, import_components124.createSlotFill)("InspectorControlsPosition");
-  var InspectorControlsTypography = (0, import_components124.createSlotFill)(
+  var InspectorControlsLayout = (0, import_components125.createSlotFill)("InspectorControlsLayout");
+  var InspectorControlsElements = (0, import_components125.createSlotFill)("InspectorControlsElements");
+  var InspectorControlsPosition = (0, import_components125.createSlotFill)("InspectorControlsPosition");
+  var InspectorControlsTypography = (0, import_components125.createSlotFill)(
     "InspectorControlsTypography"
   );
-  var InspectorControlsStyleState = (0, import_components124.createSlotFill)(
+  var InspectorControlsStyleState = (0, import_components125.createSlotFill)(
     "InspectorControlsStyleState"
   );
-  var InspectorControlsListView = (0, import_components124.createSlotFill)("InspectorControlsListView");
-  var InspectorControlsStyles = (0, import_components124.createSlotFill)("InspectorControlsStyles");
-  var InspectorControlsEffects = (0, import_components124.createSlotFill)("InspectorControlsEffects");
-  var InspectorControlsContent = (0, import_components124.createSlotFill)("InspectorControlsContent");
+  var InspectorControlsListView = (0, import_components125.createSlotFill)("InspectorControlsListView");
+  var InspectorControlsStyles = (0, import_components125.createSlotFill)("InspectorControlsStyles");
+  var InspectorControlsEffects = (0, import_components125.createSlotFill)("InspectorControlsEffects");
+  var InspectorControlsContent = (0, import_components125.createSlotFill)("InspectorControlsContent");
   var groups2 = {
     default: InspectorControlsDefault,
     advanced: InspectorControlsAdvanced,
@@ -98205,10 +98219,10 @@ If there's a particular need for this, please submit a feature request at https:
     "style-state": InspectorControlsStyleState
   };
   var groups_default2 = groups2;
-  var PrivateInspectorControlsAllowedBlocks = (0, import_components124.createSlotFill)(
+  var PrivateInspectorControlsAllowedBlocks = (0, import_components125.createSlotFill)(
     /* @__PURE__ */ Symbol("PrivateInspectorControlsAllowedBlocks")
   );
-  var PrivateInspectorControlsStyleStateAdvanced = (0, import_components124.createSlotFill)(
+  var PrivateInspectorControlsStyleStateAdvanced = (0, import_components125.createSlotFill)(
     /* @__PURE__ */ Symbol("PrivateInspectorControlsStyleStateAdvanced")
   );
 
@@ -98279,13 +98293,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inspector-controls/list-view-content-popover.mjs
-  var import_components125 = __toESM(require_components(), 1);
+  var import_components126 = __toESM(require_components(), 1);
   var import_element313 = __toESM(require_element(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_data92 = __toESM(require_data(), 1);
   var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
   var LIST_VIEW_CONTENT_PANEL_SLOT = /* @__PURE__ */ Symbol("ListViewContentPopover");
-  var { Fill, Slot: Slot4 } = (0, import_components125.createSlotFill)(LIST_VIEW_CONTENT_PANEL_SLOT);
+  var { Fill, Slot: Slot4 } = (0, import_components126.createSlotFill)(LIST_VIEW_CONTENT_PANEL_SLOT);
   function useInspectorPopoverPlacement() {
     const isMobile = (0, import_compose102.useViewportMatch)("medium", "<");
     return !isMobile ? {
@@ -98298,7 +98312,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function ListViewContentPopover({ listViewRef }) {
     const { popoverProps } = useInspectorPopoverPlacement();
-    const fills = (0, import_components125.__experimentalUseSlotFills)(LIST_VIEW_CONTENT_PANEL_SLOT);
+    const fills = (0, import_components126.__experimentalUseSlotFills)(LIST_VIEW_CONTENT_PANEL_SLOT);
     const hasFills = Boolean(fills && fills.length);
     const { selectedClientId, isOpen } = (0, import_data92.useSelect)((select3) => {
       const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select3(store);
@@ -98326,7 +98340,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
-      import_components125.Popover,
+      import_components126.Popover,
       {
         ...popoverProps ?? {},
         className: "block-editor-inspector-list-view-content-popover",
@@ -98368,7 +98382,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (rendersInListView && !isSelectedBlock) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(import_components126.__experimentalStyleProvider, { document, children: rendersInListView ? /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Fill, { children }) : /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Fill5, { children: (fillProps) => /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(import_components127.__experimentalStyleProvider, { document, children: rendersInListView ? /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Fill, { children }) : /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Fill5, { children: (fillProps) => /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
       ToolsPanelInspectorControl,
       {
         fillProps,
@@ -98378,7 +98392,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) }) });
   }
   function RegisterResetAll({ resetAllFilter, children }) {
-    const { registerResetAllFilter, deregisterResetAllFilter } = (0, import_element314.useContext)(import_components126.__experimentalToolsPanelContext);
+    const { registerResetAllFilter, deregisterResetAllFilter } = (0, import_element314.useContext)(import_components127.__experimentalToolsPanelContext);
     const selectedState = useBlockStyleState();
     const scopedResetAllFilter = (0, import_element314.useMemo)(
       () => scopeResetAllFilterToState(selectedState, resetAllFilter),
@@ -98408,12 +98422,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inspector-controls/slot.mjs
-  var import_components129 = __toESM(require_components(), 1);
+  var import_components130 = __toESM(require_components(), 1);
   var import_element318 = __toESM(require_element(), 1);
   var import_warning9 = __toESM(require_warning(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.mjs
-  var import_components127 = __toESM(require_components(), 1);
+  var import_components128 = __toESM(require_components(), 1);
   var import_data93 = __toESM(require_data(), 1);
   var import_element316 = __toESM(require_element(), 1);
 
@@ -98513,7 +98527,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
-      import_components127.__experimentalToolsPanel,
+      import_components128.__experimentalToolsPanel,
       {
         className: `${group}-block-support-panel`,
         label,
@@ -98531,7 +98545,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-slot-container.mjs
-  var import_components128 = __toESM(require_components(), 1);
+  var import_components129 = __toESM(require_components(), 1);
   var import_element317 = __toESM(require_element(), 1);
   var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
   function BlockSupportSlotContainer({
@@ -98539,13 +98553,13 @@ If there's a particular need for this, please submit a feature request at https:
     fillProps,
     ...props
   }) {
-    const toolsPanelContext = (0, import_element317.useContext)(import_components128.__experimentalToolsPanelContext);
+    const toolsPanelContext = (0, import_element317.useContext)(import_components129.__experimentalToolsPanelContext);
     const computedFillProps = (0, import_element317.useMemo)(
       () => ({
         ...fillProps ?? {},
         forwardedContext: [
           ...fillProps?.forwardedContext ?? [],
-          [import_components128.__experimentalToolsPanelContext.Provider, { value: toolsPanelContext }]
+          [import_components129.__experimentalToolsPanelContext.Provider, { value: toolsPanelContext }]
         ]
       }),
       [toolsPanelContext, fillProps]
@@ -98557,7 +98571,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
   function InspectorControlsSlot({ group = "default", label, fillProps, ...props }, ref) {
     const slotFill = groups_default2[group];
-    const fills = (0, import_components129.__experimentalUseSlotFills)(slotFill?.name);
+    const fills = (0, import_components130.__experimentalUseSlotFills)(slotFill?.name);
     if (!slotFill) {
       (0, import_warning9.default)(`Unknown InspectorControls group "${group}" provided.`);
       return null;
@@ -99136,16 +99150,16 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element342 = __toESM(require_element(), 1);
   var import_compose112 = __toESM(require_compose(), 1);
   var import_blocks79 = __toESM(require_blocks(), 1);
-  var import_components165 = __toESM(require_components(), 1);
+  var import_components166 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-mover/index.mjs
-  var import_components132 = __toESM(require_components(), 1);
+  var import_components133 = __toESM(require_components(), 1);
   var import_data100 = __toESM(require_data(), 1);
   var import_i18n144 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-draggable/index.mjs
   var import_blocks54 = __toESM(require_blocks(), 1);
-  var import_components130 = __toESM(require_components(), 1);
+  var import_components131 = __toESM(require_components(), 1);
   var import_data98 = __toESM(require_data(), 1);
   var import_element322 = __toESM(require_element(), 1);
   var import_compose106 = __toESM(require_compose(), 1);
@@ -99354,7 +99368,7 @@ If there's a particular need for this, please submit a feature request at https:
       srcRootClientId
     };
     return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-      import_components130.Draggable,
+      import_components131.Draggable,
       {
         appendToOwnerDocument,
         cloneClassname,
@@ -99406,7 +99420,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-mover/button.mjs
   var import_blocks55 = __toESM(require_blocks(), 1);
-  var import_components131 = __toESM(require_components(), 1);
+  var import_components132 = __toESM(require_components(), 1);
   var import_compose107 = __toESM(require_compose(), 1);
   var import_data99 = __toESM(require_data(), 1);
   var import_element323 = __toESM(require_element(), 1);
@@ -99768,7 +99782,7 @@ If there's a particular need for this, please submit a feature request at https:
       const keyCharacter = direction === "up" ? "t" : "y";
       return /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(import_jsx_runtime504.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
-          import_components131.Button,
+          import_components132.Button,
           {
             __next40pxDefaultSize: true,
             ref,
@@ -99859,14 +99873,14 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime505.jsxs)(
-      import_components132.ToolbarGroup,
+      import_components133.ToolbarGroup,
       {
         className: clsx_default("block-editor-block-mover", {
           "is-horizontal": orientation === "horizontal"
         }),
         children: [
           !hideDragHandle && /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(block_draggable_default, { clientIds, fadeWhenDisabled: true, children: (draggableProps) => /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
-            import_components132.Button,
+            import_components133.Button,
             {
               __next40pxDefaultSize: true,
               icon: drag_handle_default,
@@ -99877,14 +99891,14 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ) }),
           !isManualGrid && /* @__PURE__ */ (0, import_jsx_runtime505.jsxs)("div", { className: "block-editor-block-mover__move-button-container", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(import_components132.ToolbarItem, { children: (itemProps) => /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(import_components133.ToolbarItem, { children: (itemProps) => /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
               BlockMoverUpButton,
               {
                 clientIds,
                 ...itemProps
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(import_components132.ToolbarItem, { children: (itemProps) => /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(import_components133.ToolbarItem, { children: (itemProps) => /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
               BlockMoverDownButton,
               {
                 clientIds,
@@ -99899,7 +99913,7 @@ If there's a particular need for this, please submit a feature request at https:
   var block_mover_default = BlockMover;
 
   // packages/block-editor/build-module/components/block-parent-selector/index.mjs
-  var import_components133 = __toESM(require_components(), 1);
+  var import_components134 = __toESM(require_components(), 1);
   var import_data102 = __toESM(require_data(), 1);
   var import_i18n145 = __toESM(require_i18n(), 1);
   var import_element325 = __toESM(require_element(), 1);
@@ -100078,7 +100092,7 @@ If there's a particular need for this, please submit a feature request at https:
       highlightParent: true
     });
     const parentButton = /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
-      import_components133.ToolbarButton,
+      import_components134.ToolbarButton,
       {
         className: "block-editor-block-parent-selector__button",
         onClick: () => selectBlock2(parentClientId),
@@ -100102,7 +100116,7 @@ If there's a particular need for this, please submit a feature request at https:
           showInserter && // A real toolbar group, so the buttons get the standard
           // toolbar sizing, and the group overlaps the container
           // border the way toolbar groups overlap the toolbar box.
-          /* @__PURE__ */ (0, import_jsx_runtime506.jsxs)(import_components133.ToolbarGroup, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime506.jsxs)(import_components134.ToolbarGroup, { children: [
             parentButton,
             /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
               inserter_default,
@@ -100119,7 +100133,7 @@ If there's a particular need for this, please submit a feature request at https:
                   blockTitle,
                   hasSingleBlockType
                 }) => /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
-                  import_components133.ToolbarButton,
+                  import_components134.ToolbarButton,
                   {
                     className: "block-editor-block-parent-selector__inserter",
                     onClick: onToggle,
@@ -100150,19 +100164,19 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-toolbar/block-toolbar-last-item.mjs
-  var import_components134 = __toESM(require_components(), 1);
-  var { Fill: __unstableBlockToolbarLastItem, Slot: Slot6 } = (0, import_components134.createSlotFill)(
+  var import_components135 = __toESM(require_components(), 1);
+  var { Fill: __unstableBlockToolbarLastItem, Slot: Slot6 } = (0, import_components135.createSlotFill)(
     "__unstableBlockToolbarLastItem"
   );
   __unstableBlockToolbarLastItem.Slot = Slot6;
   var block_toolbar_last_item_default = __unstableBlockToolbarLastItem;
 
   // packages/block-editor/build-module/components/block-settings-menu/index.mjs
-  var import_components150 = __toESM(require_components(), 1);
+  var import_components151 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-settings-menu/block-settings-dropdown.mjs
   var import_blocks68 = __toESM(require_blocks(), 1);
-  var import_components148 = __toESM(require_components(), 1);
+  var import_components149 = __toESM(require_components(), 1);
   var import_data116 = __toESM(require_data(), 1);
   var import_element333 = __toESM(require_element(), 1);
   var import_i18n157 = __toESM(require_i18n(), 1);
@@ -100507,13 +100521,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/collab/note-icon-slot.mjs
-  var import_components135 = __toESM(require_components(), 1);
-  var NoteIconSlotFill = (0, import_components135.createSlotFill)(/* @__PURE__ */ Symbol("NoteIconSlotFill"));
+  var import_components136 = __toESM(require_components(), 1);
+  var NoteIconSlotFill = (0, import_components136.createSlotFill)(/* @__PURE__ */ Symbol("NoteIconSlotFill"));
   var note_icon_slot_default = NoteIconSlotFill;
 
   // packages/block-editor/build-module/components/block-settings-menu/block-html-convert-button.mjs
   var import_i18n147 = __toESM(require_i18n(), 1);
-  var import_components136 = __toESM(require_components(), 1);
+  var import_components137 = __toESM(require_components(), 1);
   var import_blocks61 = __toESM(require_blocks(), 1);
   var import_data105 = __toESM(require_data(), 1);
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
@@ -100527,7 +100541,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
-      import_components136.MenuItem,
+      import_components137.MenuItem,
       {
         onClick: () => replaceBlocks2(
           clientId,
@@ -100540,20 +100554,20 @@ If there's a particular need for this, please submit a feature request at https:
   var block_html_convert_button_default = BlockHTMLConvertButton;
 
   // packages/block-editor/build-module/components/block-settings-menu/block-settings-menu-first-item.mjs
-  var import_components137 = __toESM(require_components(), 1);
-  var { Fill: __unstableBlockSettingsMenuFirstItem, Slot: Slot7 } = (0, import_components137.createSlotFill)(
+  var import_components138 = __toESM(require_components(), 1);
+  var { Fill: __unstableBlockSettingsMenuFirstItem, Slot: Slot7 } = (0, import_components138.createSlotFill)(
     "__unstableBlockSettingsMenuFirstItem"
   );
   __unstableBlockSettingsMenuFirstItem.Slot = Slot7;
   var block_settings_menu_first_item_default = __unstableBlockSettingsMenuFirstItem;
 
   // packages/block-editor/build-module/components/block-settings-menu-controls/index.mjs
-  var import_components146 = __toESM(require_components(), 1);
+  var import_components147 = __toESM(require_components(), 1);
   var import_blocks67 = __toESM(require_blocks(), 1);
   var import_data114 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/convert-to-group-buttons/index.mjs
-  var import_components139 = __toESM(require_components(), 1);
+  var import_components140 = __toESM(require_components(), 1);
   var import_i18n149 = __toESM(require_i18n(), 1);
   var import_data108 = __toESM(require_data(), 1);
   var import_keycodes15 = __toESM(require_keycodes(), 1);
@@ -100591,7 +100605,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/convert-to-group-buttons/toolbar.mjs
   var import_data107 = __toESM(require_data(), 1);
   var import_blocks63 = __toESM(require_blocks(), 1);
-  var import_components138 = __toESM(require_components(), 1);
+  var import_components139 = __toESM(require_components(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
   var layouts = {
@@ -100642,9 +100656,9 @@ If there's a particular need for this, please submit a feature request at https:
     const canInsertGrid = !!variations.find(
       ({ name }) => name === "group-grid"
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime508.jsxs)(import_components138.ToolbarGroup, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime508.jsxs)(import_components139.ToolbarGroup, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
-        import_components138.ToolbarButton,
+        import_components139.ToolbarButton,
         {
           icon: group_default,
           label: (0, import_i18n148._x)("Group", "action: convert blocks to group"),
@@ -100652,7 +100666,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       canInsertRow && /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
-        import_components138.ToolbarButton,
+        import_components139.ToolbarButton,
         {
           icon: row_default,
           label: (0, import_i18n148._x)("Row", "action: convert blocks to row"),
@@ -100660,7 +100674,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       canInsertStack && /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
-        import_components138.ToolbarButton,
+        import_components139.ToolbarButton,
         {
           icon: stack_default,
           label: (0, import_i18n148._x)("Stack", "action: convert blocks to stack"),
@@ -100668,7 +100682,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       canInsertGrid && /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
-        import_components138.ToolbarButton,
+        import_components139.ToolbarButton,
         {
           icon: grid_default,
           label: (0, import_i18n148._x)("Grid", "action: convert blocks to grid"),
@@ -100718,7 +100732,7 @@ If there's a particular need for this, please submit a feature request at https:
     const selectedBlockClientIds = getSelectedBlockClientIds2();
     return /* @__PURE__ */ (0, import_jsx_runtime509.jsxs)(import_jsx_runtime509.Fragment, { children: [
       isGroupable2 && /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
-        import_components139.MenuItem,
+        import_components140.MenuItem,
         {
           shortcut: selectedBlockClientIds.length > 1 ? import_keycodes15.displayShortcut.primary("g") : void 0,
           onClick: () => {
@@ -100729,7 +100743,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       isUngroupable2 && /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
-        import_components139.MenuItem,
+        import_components140.MenuItem,
         {
           onClick: () => {
             onConvertFromGroup();
@@ -100747,7 +100761,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-lock/menu-item.mjs
   var import_i18n151 = __toESM(require_i18n(), 1);
   var import_element328 = __toESM(require_element(), 1);
-  var import_components141 = __toESM(require_components(), 1);
+  var import_components142 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-lock/use-block-lock.mjs
   var import_data109 = __toESM(require_data(), 1);
@@ -100777,7 +100791,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-lock/modal.mjs
   var import_i18n150 = __toESM(require_i18n(), 1);
   var import_element327 = __toESM(require_element(), 1);
-  var import_components140 = __toESM(require_components(), 1);
+  var import_components141 = __toESM(require_components(), 1);
   var import_data110 = __toESM(require_data(), 1);
   var import_blocks64 = __toESM(require_blocks(), 1);
   var import_jsx_runtime510 = __toESM(require_jsx_runtime(), 1);
@@ -100821,7 +100835,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isMixed = Object.values(lock4).some(Boolean) && !isAllChecked;
     const isDirty = lock4.move !== isMoveLocked || lock4.remove !== isRemoveLocked || allowsEditLocking && lock4.edit !== isEditLocked || hasTemplateLock && applyTemplateLock !== !!templateLock;
     return /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-      import_components140.Modal,
+      import_components141.Modal,
       {
         title: (0, import_i18n150.sprintf)(
           /* translators: %s: Name of the block. */
@@ -100855,7 +100869,7 @@ If there's a particular need for this, please submit a feature request at https:
                     className: "block-editor-block-lock-modal__checklist",
                     children: /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)("li", { children: [
                       /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                        import_components140.CheckboxControl,
+                        import_components141.CheckboxControl,
                         {
                           className: "block-editor-block-lock-modal__options-all",
                           label: (0, import_i18n150.__)("Lock all"),
@@ -100876,7 +100890,7 @@ If there's a particular need for this, please submit a feature request at https:
                           children: [
                             allowsEditLocking && /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)("li", { className: "block-editor-block-lock-modal__checklist-item", children: [
                               /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                                import_components140.CheckboxControl,
+                                import_components141.CheckboxControl,
                                 {
                                   label: (0, import_i18n150.__)("Lock editing"),
                                   checked: !!lock4.edit,
@@ -100887,7 +100901,7 @@ If there's a particular need for this, please submit a feature request at https:
                                 }
                               ),
                               /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                                import_components140.Icon,
+                                import_components141.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
                                   icon: lock4.edit ? lock_default : unlock_default
@@ -100896,7 +100910,7 @@ If there's a particular need for this, please submit a feature request at https:
                             ] }),
                             /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)("li", { className: "block-editor-block-lock-modal__checklist-item", children: [
                               /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                                import_components140.CheckboxControl,
+                                import_components141.CheckboxControl,
                                 {
                                   label: (0, import_i18n150.__)("Lock movement"),
                                   checked: lock4.move,
@@ -100907,7 +100921,7 @@ If there's a particular need for this, please submit a feature request at https:
                                 }
                               ),
                               /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                                import_components140.Icon,
+                                import_components141.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
                                   icon: lock4.move ? lock_default : unlock_default
@@ -100916,7 +100930,7 @@ If there's a particular need for this, please submit a feature request at https:
                             ] }),
                             /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)("li", { className: "block-editor-block-lock-modal__checklist-item", children: [
                               /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                                import_components140.CheckboxControl,
+                                import_components141.CheckboxControl,
                                 {
                                   label: (0, import_i18n150.__)("Lock removal"),
                                   checked: lock4.remove,
@@ -100927,7 +100941,7 @@ If there's a particular need for this, please submit a feature request at https:
                                 }
                               ),
                               /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                                import_components140.Icon,
+                                import_components141.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
                                   icon: lock4.remove ? lock_default : unlock_default
@@ -100941,7 +100955,7 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 ),
                 hasTemplateLock && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                  import_components140.ToggleControl,
+                  import_components141.ToggleControl,
                   {
                     className: "block-editor-block-lock-modal__template-lock",
                     label: (0, import_i18n150.__)("Apply to all blocks inside"),
@@ -100952,14 +100966,14 @@ If there's a particular need for this, please submit a feature request at https:
                 )
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(
-                import_components140.Flex,
+                import_components141.Flex,
                 {
                   className: "block-editor-block-lock-modal__actions",
                   justify: "flex-end",
                   expanded: false,
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(import_components140.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                      import_components140.Button,
+                    /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(import_components141.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
+                      import_components141.Button,
                       {
                         variant: "tertiary",
                         onClick: onClose,
@@ -100967,8 +100981,8 @@ If there's a particular need for this, please submit a feature request at https:
                         children: (0, import_i18n150.__)("Cancel")
                       }
                     ) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(import_components140.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                      import_components140.Button,
+                    /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(import_components141.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
+                      import_components141.Button,
                       {
                         variant: "primary",
                         type: "submit",
@@ -101002,7 +101016,7 @@ If there's a particular need for this, please submit a feature request at https:
     const label = isLocked ? (0, import_i18n151.__)("Unlock") : (0, import_i18n151.__)("Lock");
     return /* @__PURE__ */ (0, import_jsx_runtime511.jsxs)(import_jsx_runtime511.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
-        import_components141.MenuItem,
+        import_components142.MenuItem,
         {
           icon: isLocked ? unlock_default : lock_outline_default,
           onClick: toggleModal,
@@ -101017,7 +101031,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-lock/toolbar.mjs
   var import_i18n152 = __toESM(require_i18n(), 1);
-  var import_components142 = __toESM(require_components(), 1);
+  var import_components143 = __toESM(require_components(), 1);
   var import_element329 = __toESM(require_element(), 1);
   var import_jsx_runtime512 = __toESM(require_jsx_runtime(), 1);
   function BlockLockToolbar({ clientId }) {
@@ -101040,8 +101054,8 @@ If there's a particular need for this, please submit a feature request at https:
       label = (0, import_i18n152.__)("Locked");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime512.jsxs)(import_jsx_runtime512.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_components142.ToolbarGroup, { className: "block-editor-block-lock-toolbar", children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
-        import_components142.ToolbarButton,
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_components143.ToolbarGroup, { className: "block-editor-block-lock-toolbar", children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
+        import_components143.ToolbarButton,
         {
           disabled: !canLock,
           icon: isLocked ? lock_default : unlock_default,
@@ -101057,7 +101071,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-settings-menu/block-mode-toggle.mjs
   var import_i18n153 = __toESM(require_i18n(), 1);
-  var import_components143 = __toESM(require_components(), 1);
+  var import_components144 = __toESM(require_components(), 1);
   var import_blocks65 = __toESM(require_blocks(), 1);
   var import_data111 = __toESM(require_data(), 1);
   var import_jsx_runtime513 = __toESM(require_jsx_runtime(), 1);
@@ -101082,7 +101096,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const label = mode2 === "visual" ? (0, import_i18n153.__)("Edit as HTML") : (0, import_i18n153.__)("Edit visually");
     return /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-      import_components143.MenuItem,
+      import_components144.MenuItem,
       {
         onClick: () => {
           toggleBlockMode2(clientId);
@@ -101094,14 +101108,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-rename/rename-control.mjs
-  var import_components145 = __toESM(require_components(), 1);
+  var import_components146 = __toESM(require_components(), 1);
   var import_i18n155 = __toESM(require_i18n(), 1);
   var import_element331 = __toESM(require_element(), 1);
   var import_data113 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
 
   // packages/block-editor/build-module/components/block-rename/modal.mjs
-  var import_components144 = __toESM(require_components(), 1);
+  var import_components145 = __toESM(require_components(), 1);
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_element330 = __toESM(require_element(), 1);
   var import_a11y16 = __toESM(require_a11y(), 1);
@@ -101158,7 +101172,7 @@ If there's a particular need for this, please submit a feature request at https:
       onClose();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
-      import_components144.Modal,
+      import_components145.Modal,
       {
         title: (0, import_i18n154.__)("Rename"),
         onRequestClose: onClose,
@@ -101175,9 +101189,9 @@ If there's a particular need for this, please submit a feature request at https:
               }
               handleSubmit();
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)(import_components144.__experimentalVStack, { spacing: "3", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)(import_components145.__experimentalVStack, { spacing: "3", children: [
               /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
-                import_components144.TextControl,
+                import_components145.TextControl,
                 {
                   value: editedBlockName ?? blockName,
                   label: (0, import_i18n154.__)("Name"),
@@ -101189,9 +101203,9 @@ If there's a particular need for this, please submit a feature request at https:
                   onFocus: autoSelectInputText
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)(import_components144.__experimentalHStack, { justify: "right", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)(import_components145.__experimentalHStack, { justify: "right", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
-                  import_components144.Button,
+                  import_components145.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "tertiary",
@@ -101200,7 +101214,7 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
-                  import_components144.Button,
+                  import_components145.Button,
                   {
                     __next40pxDefaultSize: true,
                     accessibleWhenDisabled: true,
@@ -101230,7 +101244,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return /* @__PURE__ */ (0, import_jsx_runtime515.jsxs)(import_jsx_runtime515.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
-        import_components145.MenuItem,
+        import_components146.MenuItem,
         {
           onClick: () => {
             setRenamingBlock(true);
@@ -101261,7 +101275,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-settings-menu-controls/index.mjs
   var import_jsx_runtime516 = __toESM(require_jsx_runtime(), 1);
-  var { Fill: Fill2, Slot: Slot8 } = (0, import_components146.createSlotFill)("BlockSettingsMenuControls");
+  var { Fill: Fill2, Slot: Slot8 } = (0, import_components147.createSlotFill)("BlockSettingsMenuControls");
   var BlockSettingsMenuControlsSlot = ({ fillProps, clientIds = null }) => {
     const {
       selectedBlocks,
@@ -101314,7 +101328,7 @@ If there's a particular need for this, please submit a feature request at https:
           if (!fills?.length > 0 && !showConvertToGroupButton && !showLockButton) {
             return null;
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(import_components146.MenuGroup, { children: [
+          return /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(import_components147.MenuGroup, { children: [
             showConvertToGroupButton && /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
               ConvertToGroupButton,
               {
@@ -101354,14 +101368,14 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   function BlockSettingsMenuControls({ ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_components146.__experimentalStyleProvider, { document, children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(Fill2, { ...props }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_components147.__experimentalStyleProvider, { document, children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(Fill2, { ...props }) });
   }
   BlockSettingsMenuControls.Slot = BlockSettingsMenuControlsSlot;
   var block_settings_menu_controls_default = BlockSettingsMenuControls;
 
   // packages/block-editor/build-module/components/block-settings-menu/block-parent-selector-menu-item.mjs
   var import_element332 = __toESM(require_element(), 1);
-  var import_components147 = __toESM(require_components(), 1);
+  var import_components148 = __toESM(require_components(), 1);
   var import_compose108 = __toESM(require_compose(), 1);
   var import_data115 = __toESM(require_data(), 1);
   var import_i18n156 = __toESM(require_i18n(), 1);
@@ -101381,7 +101395,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(
-      import_components147.MenuItem,
+      import_components148.MenuItem,
       {
         ...gesturesProps,
         ref: menuItemRef,
@@ -101432,7 +101446,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     const copyMenuItemLabel = label ? label : (0, import_i18n157.__)("Copy");
-    return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_components148.MenuItem, { ref, shortcut, children: copyMenuItemLabel });
+    return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_components149.MenuItem, { ref, shortcut, children: copyMenuItemLabel });
   }
   function BlockSettingsDropdown({
     clientId,
@@ -101555,7 +101569,7 @@ If there's a particular need for this, please submit a feature request at https:
             return null;
           }
           return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-            import_components148.DropdownMenu,
+            import_components149.DropdownMenu,
             {
               icon: more_vertical_default,
               label: (0, import_i18n157.__)("Options"),
@@ -101564,7 +101578,7 @@ If there's a particular need for this, please submit a feature request at https:
               noIcons: true,
               ...props,
               children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_jsx_runtime518.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_components148.MenuGroup, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_components149.MenuGroup, { children: [
                   /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
                     block_settings_menu_first_item_default.Slot,
                     {
@@ -101580,7 +101594,7 @@ If there's a particular need for this, please submit a feature request at https:
                   ),
                   canMove && isContentOnlyListView && /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_jsx_runtime518.Fragment, { children: [
                     /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-                      import_components148.MenuItem,
+                      import_components149.MenuItem,
                       {
                         icon: chevron_up_default,
                         disabled: isFirst,
@@ -101595,7 +101609,7 @@ If there's a particular need for this, please submit a feature request at https:
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-                      import_components148.MenuItem,
+                      import_components149.MenuItem,
                       {
                         icon: chevron_down_default,
                         disabled: isLast,
@@ -101635,7 +101649,7 @@ If there's a particular need for this, please submit a feature request at https:
                     }
                   ),
                   canDuplicate && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-                    import_components148.MenuItem,
+                    import_components149.MenuItem,
                     {
                       onClick: (0, import_compose109.pipe)(
                         onClose,
@@ -101648,7 +101662,7 @@ If there's a particular need for this, please submit a feature request at https:
                   ),
                   canInsertBlock && !isZoomOut2 && /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_jsx_runtime518.Fragment, { children: [
                     /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-                      import_components148.MenuItem,
+                      import_components149.MenuItem,
                       {
                         onClick: (0, import_compose109.pipe)(
                           onClose,
@@ -101659,7 +101673,7 @@ If there's a particular need for this, please submit a feature request at https:
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-                      import_components148.MenuItem,
+                      import_components149.MenuItem,
                       {
                         onClick: (0, import_compose109.pipe)(
                           onClose,
@@ -101680,7 +101694,7 @@ If there's a particular need for this, please submit a feature request at https:
                     }
                   )
                 ] }),
-                canCopyStyles && !isContentOnly && /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_components148.MenuGroup, { children: [
+                canCopyStyles && !isContentOnly && /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_components149.MenuGroup, { children: [
                   /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
                     CopyMenuItem,
                     {
@@ -101690,7 +101704,7 @@ If there's a particular need for this, please submit a feature request at https:
                       eventType: "copyStyles"
                     }
                   ),
-                  canEdit && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_components148.MenuItem, { onClick: onPasteStyles, children: (0, import_i18n157.__)("Paste styles") })
+                  canEdit && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_components149.MenuItem, { onClick: onPasteStyles, children: (0, import_i18n157.__)("Paste styles") })
                 ] }),
                 !isContentOnly && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
                   block_settings_menu_controls_default.Slot,
@@ -101706,8 +101720,8 @@ If there's a particular need for this, please submit a feature request at https:
                 typeof children === "function" ? children({ onClose }) : import_element333.Children.map(
                   (child) => (0, import_element333.cloneElement)(child, { onClose })
                 ),
-                canRemove && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_components148.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-                  import_components148.MenuItem,
+                canRemove && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_components149.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+                  import_components149.MenuItem,
                   {
                     onClick: (0, import_compose109.pipe)(
                       onClose,
@@ -101728,8 +101742,8 @@ If there's a particular need for this, please submit a feature request at https:
   var block_settings_dropdown_default = BlockSettingsDropdown;
 
   // packages/block-editor/build-module/components/collab/note-icon-toolbar-slot.mjs
-  var import_components149 = __toESM(require_components(), 1);
-  var NoteIconToolbarSlotFill = (0, import_components149.createSlotFill)(
+  var import_components150 = __toESM(require_components(), 1);
+  var NoteIconToolbarSlotFill = (0, import_components150.createSlotFill)(
     /* @__PURE__ */ Symbol("NoteIconToolbarSlotFill")
   );
   var note_icon_toolbar_slot_default = NoteIconToolbarSlotFill;
@@ -101737,9 +101751,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-settings-menu/index.mjs
   var import_jsx_runtime519 = __toESM(require_jsx_runtime(), 1);
   function BlockSettingsMenu({ clientIds, ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_components150.ToolbarGroup, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_components151.ToolbarGroup, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(note_icon_toolbar_slot_default.Slot, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(import_components150.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(import_components151.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
         block_settings_dropdown_default,
         {
           clientIds,
@@ -101756,7 +101770,7 @@ If there's a particular need for this, please submit a feature request at https:
   var block_settings_menu_default = BlockSettingsMenu;
 
   // packages/block-editor/build-module/components/block-edit-visually-button/index.mjs
-  var import_components151 = __toESM(require_components(), 1);
+  var import_components152 = __toESM(require_components(), 1);
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_data117 = __toESM(require_data(), 1);
   var import_jsx_runtime520 = __toESM(require_jsx_runtime(), 1);
@@ -101770,8 +101784,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!canEditVisually) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_components151.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
-      import_components151.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_components152.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+      import_components152.ToolbarButton,
       {
         onClick: () => {
           toggleBlockMode2(clientId);
@@ -101795,13 +101809,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-toolbar/change-design.mjs
-  var import_components152 = __toESM(require_components(), 1);
+  var import_components153 = __toESM(require_components(), 1);
   var import_i18n159 = __toESM(require_i18n(), 1);
   var import_blocks70 = __toESM(require_blocks(), 1);
   var import_element334 = __toESM(require_element(), 1);
   var import_data119 = __toESM(require_data(), 1);
   var import_jsx_runtime521 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY15 = [];
+  var EMPTY_ARRAY14 = [];
   var MAX_PATTERNS_TO_SHOW = 6;
   var POPOVER_PROPS6 = {
     placement: "bottom-start"
@@ -101815,9 +101829,9 @@ If there's a particular need for this, please submit a feature request at https:
           __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2
         } = select3(store);
         const attributes = getBlockAttributes3(clientId);
-        const _categories = attributes?.metadata?.categories || EMPTY_ARRAY15;
+        const _categories = attributes?.metadata?.categories || EMPTY_ARRAY14;
         const rootBlock = getBlockRootClientId2(clientId);
-        const _patterns = _categories.length > 0 ? __experimentalGetAllowedPatterns2(rootBlock) : EMPTY_ARRAY15;
+        const _patterns = _categories.length > 0 ? __experimentalGetAllowedPatterns2(rootBlock) : EMPTY_ARRAY14;
         return {
           categories: _categories,
           currentPatternName: attributes?.metadata?.patternName,
@@ -101829,7 +101843,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { replaceBlocks: replaceBlocks2 } = (0, import_data119.useDispatch)(store);
     const sameCategoryPatternsWithSingleWrapper = (0, import_element334.useMemo)(() => {
       if (categories.length === 0 || !patterns2 || patterns2.length === 0) {
-        return EMPTY_ARRAY15;
+        return EMPTY_ARRAY14;
       }
       return patterns2.filter((pattern) => {
         const isCorePattern = pattern.source === "core" || pattern.source?.startsWith("pattern-directory") && pattern.source !== "pattern-directory/theme";
@@ -101859,12 +101873,12 @@ If there's a particular need for this, please submit a feature request at https:
       replaceBlocks2(clientId, newBlocks);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
-      import_components152.Dropdown,
+      import_components153.Dropdown,
       {
         popoverProps: POPOVER_PROPS6,
         renderToggle: ({ onToggle, isOpen }) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_components152.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
-            import_components152.ToolbarButton,
+          return /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_components153.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
+            import_components153.ToolbarButton,
             {
               onClick: () => onToggle(!isOpen),
               "aria-expanded": isOpen,
@@ -101873,7 +101887,7 @@ If there's a particular need for this, please submit a feature request at https:
           ) });
         },
         renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
-          import_components152.__experimentalDropdownContentWrapper,
+          import_components153.__experimentalDropdownContentWrapper,
           {
             className: "block-editor-block-toolbar-change-design-content-wrapper",
             paddingSize: "none",
@@ -101892,7 +101906,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-toolbar/switch-section-style.mjs
-  var import_components153 = __toESM(require_components(), 1);
+  var import_components154 = __toESM(require_components(), 1);
   var import_i18n161 = __toESM(require_i18n(), 1);
   var import_data121 = __toESM(require_data(), 1);
 
@@ -102008,7 +102022,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
   var { getVariationStyle: getVariationStyle2 } = unlock(privateApis);
   var styleIcon = /* @__PURE__ */ (0, import_jsx_runtime522.jsxs)(
-    import_components153.SVG,
+    import_components154.SVG,
     {
       viewBox: "0 0 24 24",
       xmlns: "http://www.w3.org/2000/svg",
@@ -102017,9 +102031,9 @@ If there's a particular need for this, please submit a feature request at https:
       "aria-hidden": "true",
       focusable: "false",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(import_components153.Path, { d: "M17.2 10.9c-.5-1-1.2-2.1-2.1-3.2-.6-.9-1.3-1.7-2.1-2.6L12 4l-1 1.1c-.6.9-1.3 1.7-2 2.6-.8 1.2-1.5 2.3-2 3.2-.6 1.2-1 2.2-1 3 0 3.4 2.7 6.1 6.1 6.1s6.1-2.7 6.1-6.1c0-.8-.3-1.8-1-3z" }),
+        /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(import_components154.Path, { d: "M17.2 10.9c-.5-1-1.2-2.1-2.1-3.2-.6-.9-1.3-1.7-2.1-2.6L12 4l-1 1.1c-.6.9-1.3 1.7-2 2.6-.8 1.2-1.5 2.3-2 3.2-.6 1.2-1 2.2-1 3 0 3.4 2.7 6.1 6.1 6.1s6.1-2.7 6.1-6.1c0-.8-.3-1.8-1-3z" }),
         /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
-          import_components153.Path,
+          import_components154.Path,
           {
             stroke: "currentColor",
             strokeWidth: "1.5",
@@ -102071,13 +102085,13 @@ If there's a particular need for this, please submit a feature request at https:
         className: styleClassName
       });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(import_components153.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
-      import_components153.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(import_components154.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
+      import_components154.ToolbarButton,
       {
         onClick: handleStyleSwitch,
         label: (0, import_i18n161.__)("Shuffle styles"),
         children: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
-          import_components153.Icon,
+          import_components154.Icon,
           {
             icon: styleIcon,
             style: {
@@ -102091,7 +102105,7 @@ If there's a particular need for this, please submit a feature request at https:
   var switch_section_style_default = SwitchSectionStyle;
 
   // packages/block-editor/build-module/components/block-toolbar/edit-section-button.mjs
-  var import_components154 = __toESM(require_components(), 1);
+  var import_components155 = __toESM(require_components(), 1);
   var import_i18n162 = __toESM(require_i18n(), 1);
   var import_data123 = __toESM(require_data(), 1);
   var import_blocks72 = __toESM(require_blocks(), 1);
@@ -102168,7 +102182,7 @@ If there's a particular need for this, please submit a feature request at https:
         editContentOnlySection2(clientId);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components154.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components154.ToolbarButton, { onClick: handleClick, children: isEditing ? (
+    return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components155.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components155.ToolbarButton, { onClick: handleClick, children: isEditing ? (
       /* translators: Button label to leave pattern editing mode. */
       (0, import_i18n162.__)("Exit pattern")
     ) : (
@@ -102178,7 +102192,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-toolbar/block-toolbar-icon.mjs
-  var import_components164 = __toESM(require_components(), 1);
+  var import_components165 = __toESM(require_components(), 1);
   var import_i18n169 = __toESM(require_i18n(), 1);
   var import_data127 = __toESM(require_data(), 1);
   var import_blocks78 = __toESM(require_blocks(), 1);
@@ -102186,18 +102200,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-switcher/index.mjs
   var import_i18n166 = __toESM(require_i18n(), 1);
-  var import_components161 = __toESM(require_components(), 1);
+  var import_components162 = __toESM(require_components(), 1);
   var import_blocks77 = __toESM(require_blocks(), 1);
   var import_data125 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/block-switcher/block-transformations-menu.mjs
   var import_i18n163 = __toESM(require_i18n(), 1);
-  var import_components157 = __toESM(require_components(), 1);
+  var import_components158 = __toESM(require_components(), 1);
   var import_blocks74 = __toESM(require_blocks(), 1);
   var import_element337 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-switcher/preview-block-popover.mjs
-  var import_components155 = __toESM(require_components(), 1);
+  var import_components156 = __toESM(require_components(), 1);
   var import_compose110 = __toESM(require_compose(), 1);
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
   function PreviewBlockPopover({
@@ -102211,7 +102225,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)("div", { className: "block-editor-block-switcher__popover-preview-container", children: /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
-      import_components155.Popover,
+      import_components156.Popover,
       {
         className: "block-editor-block-switcher__popover-preview",
         placement,
@@ -102224,7 +102238,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-switcher/block-variation-transformations.mjs
-  var import_components156 = __toESM(require_components(), 1);
+  var import_components157 = __toESM(require_components(), 1);
   var import_blocks73 = __toESM(require_blocks(), 1);
   var import_data124 = __toESM(require_data(), 1);
   var import_element336 = __toESM(require_element(), 1);
@@ -102296,7 +102310,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { name, icon, title } = item;
     return /* @__PURE__ */ (0, import_jsx_runtime525.jsxs)(
-      import_components156.MenuItem,
+      import_components157.MenuItem,
       {
         className: (0, import_blocks73.getBlockMenuDefaultClassName)(name),
         onClick: (event) => {
@@ -102374,7 +102388,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime526.jsxs)(import_jsx_runtime526.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime526.jsxs)(import_components157.MenuGroup, { label: (0, import_i18n163.__)("Transform to"), className, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime526.jsxs)(import_components158.MenuGroup, { label: (0, import_i18n163.__)("Transform to"), className, children: [
         hoveredTransformItem && /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
           PreviewBlockPopover,
           {
@@ -102404,7 +102418,7 @@ If there's a particular need for this, please submit a feature request at https:
         )),
         !hasBothContentTransformations && restTransformItems
       ] }),
-      !!hasBothContentTransformations && /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components157.MenuGroup, { className, children: restTransformItems })
+      !!hasBothContentTransformations && /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components158.MenuGroup, { className, children: restTransformItems })
     ] });
   };
   function RestTransformationItems({
@@ -102429,7 +102443,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { name, icon, title, isDisabled } = item;
     return /* @__PURE__ */ (0, import_jsx_runtime526.jsxs)(
-      import_components157.MenuItem,
+      import_components158.MenuItem,
       {
         className: (0, import_blocks74.getBlockMenuDefaultClassName)(name),
         onClick: (event) => {
@@ -102452,11 +102466,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-switcher/block-styles-menu.mjs
   var import_i18n164 = __toESM(require_i18n(), 1);
-  var import_components159 = __toESM(require_components(), 1);
+  var import_components160 = __toESM(require_components(), 1);
   var import_element338 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-styles/menu-items.mjs
-  var import_components158 = __toESM(require_components(), 1);
+  var import_components159 = __toESM(require_components(), 1);
   var import_jsx_runtime527 = __toESM(require_jsx_runtime(), 1);
   var noop13 = () => {
   };
@@ -102472,7 +102486,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(import_jsx_runtime527.Fragment, { children: stylesToRender.map((style) => {
       const menuItemText = style.label || style.name;
       return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
-        import_components158.MenuItem,
+        import_components159.MenuItem,
         {
           icon: activeStyle.name === style.name ? check_default : null,
           onClick: () => onSelect(style),
@@ -102481,7 +102495,7 @@ If there's a particular need for this, please submit a feature request at https:
           onMouseEnter: () => onHoverStyle(style),
           onMouseLeave: () => onHoverStyle(null),
           children: /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
-            import_components158.__experimentalText,
+            import_components159.__experimentalText,
             {
               as: "span",
               limit: 18,
@@ -102534,7 +102548,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime528.jsxs)(
-      import_components159.MenuGroup,
+      import_components160.MenuGroup,
       {
         label: (0, import_i18n164.__)("Styles"),
         className: "block-editor-block-switcher__styles__menugroup",
@@ -102558,7 +102572,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n165 = __toESM(require_i18n(), 1);
   var import_element340 = __toESM(require_element(), 1);
   var import_compose111 = __toESM(require_compose(), 1);
-  var import_components160 = __toESM(require_components(), 1);
+  var import_components161 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-switcher/use-transformed-patterns.mjs
   var import_element339 = __toESM(require_element(), 1);
@@ -102668,7 +102682,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!patterns2.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime529.jsxs)(import_components160.MenuGroup, { className: "block-editor-block-switcher__pattern__transforms__menugroup", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime529.jsxs)(import_components161.MenuGroup, { className: "block-editor-block-switcher__pattern__transforms__menugroup", children: [
       showTransforms && /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
         PreviewPatternsPopover,
         {
@@ -102677,7 +102691,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
-        import_components160.MenuItem,
+        import_components161.MenuItem,
         {
           onClick: (event) => {
             event.preventDefault();
@@ -102692,7 +102706,7 @@ If there's a particular need for this, please submit a feature request at https:
   function PreviewPatternsPopover({ patterns: patterns2, onSelect }) {
     const isMobile = (0, import_compose111.useViewportMatch)("medium", "<");
     return /* @__PURE__ */ (0, import_jsx_runtime529.jsx)("div", { className: "block-editor-block-switcher__popover-preview-container", children: /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
-      import_components160.Popover,
+      import_components161.Popover,
       {
         className: "block-editor-block-switcher__popover-preview",
         placement: isMobile ? "bottom" : "right-start",
@@ -102709,7 +102723,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function BlockPatternsList2({ patterns: patterns2, onSelect }) {
     return /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
-      import_components160.Composite,
+      import_components161.Composite,
       {
         role: "listbox",
         className: "block-editor-block-switcher__preview-patterns-container",
@@ -102733,7 +102747,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return /* @__PURE__ */ (0, import_jsx_runtime529.jsxs)("div", { className: `${baseClassName}-list__list-item`, children: [
       /* @__PURE__ */ (0, import_jsx_runtime529.jsxs)(
-        import_components160.Composite.Item,
+        import_components161.Composite.Item,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
             "div",
@@ -102890,7 +102904,7 @@ If there's a particular need for this, please submit a feature request at https:
           onSwitch: onClose
         }
       ),
-      isUsingBindings && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components161.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(Text, { className: "block-editor-block-switcher__binding-indicator", children: connectedBlockDescription }) })
+      isUsingBindings && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components162.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(Text, { className: "block-editor-block-switcher__binding-indicator", children: connectedBlockDescription }) })
     ] });
   }
   var BlockSwitcher = ({ children, clientIds, label, text }) => {
@@ -102904,8 +102918,8 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       clientIds.length
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components161.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components161.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
-      import_components161.DropdownMenu,
+    return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components162.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components162.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
+      import_components162.DropdownMenu,
       {
         className: "block-editor-block-switcher",
         label,
@@ -102934,7 +102948,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-toolbar/block-styles-dropdown.mjs
   var import_i18n167 = __toESM(require_i18n(), 1);
-  var import_components162 = __toESM(require_components(), 1);
+  var import_components163 = __toESM(require_components(), 1);
   var import_jsx_runtime531 = __toESM(require_jsx_runtime(), 1);
   function BlockStylesDropdown({
     clientIds,
@@ -102942,8 +102956,8 @@ If there's a particular need for this, please submit a feature request at https:
     label,
     text
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components162.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components162.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
-      import_components162.DropdownMenu,
+    return /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components163.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components163.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
+      import_components163.DropdownMenu,
       {
         className: "block-editor-block-switcher",
         label,
@@ -102972,7 +102986,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-toolbar/pattern-overrides-dropdown.mjs
-  var import_components163 = __toESM(require_components(), 1);
+  var import_components164 = __toESM(require_components(), 1);
   var import_i18n168 = __toESM(require_i18n(), 1);
   var import_element341 = __toESM(require_element(), 1);
   var import_data126 = __toESM(require_data(), 1);
@@ -103009,7 +103023,7 @@ If there's a particular need for this, please submit a feature request at https:
     const anchorRef = (0, import_element341.useRef)();
     return /* @__PURE__ */ (0, import_jsx_runtime532.jsxs)(import_jsx_runtime532.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(
-        import_components163.ToolbarButton,
+        import_components164.ToolbarButton,
         {
           ref: anchorRef,
           className: "block-editor-block-toolbar__pattern-overrides-indicator",
@@ -103020,7 +103034,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       isOpen && /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(
-        import_components163.Popover,
+        import_components164.Popover,
         {
           anchor: anchorRef.current,
           onClose: () => setIsOpen(false),
@@ -103186,7 +103200,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(
-      import_components164.ToolbarButton,
+      import_components165.ToolbarButton,
       {
         disabled: true,
         className: "block-editor-block-toolbar__block-icon-button",
@@ -103341,7 +103355,7 @@ If there's a particular need for this, please submit a feature request at https:
         __experimentalOnIndexChange,
         children: /* @__PURE__ */ (0, import_jsx_runtime534.jsxs)("div", { ref: toolbarWrapperRef, className: innerClasses, children: [
           showParentSelector && !isMultiToolbar && isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(BlockParentSelector, {}),
-          (shouldShowVisualToolbar || isMultiToolbar || isPlaceholder) && /* @__PURE__ */ (0, import_jsx_runtime534.jsx)("div", { ref: nodeRef, ...showHoveredOrFocusedGestures, children: /* @__PURE__ */ (0, import_jsx_runtime534.jsxs)(import_components165.ToolbarGroup, { className: "block-editor-block-toolbar__block-controls", children: [
+          (shouldShowVisualToolbar || isMultiToolbar || isPlaceholder) && /* @__PURE__ */ (0, import_jsx_runtime534.jsx)("div", { ref: nodeRef, ...showHoveredOrFocusedGestures, children: /* @__PURE__ */ (0, import_jsx_runtime534.jsxs)(import_components166.ToolbarGroup, { className: "block-editor-block-toolbar__block-controls", children: [
             /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
               BlockToolbarIcon,
               {
@@ -103498,12 +103512,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element344 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-tools/zoom-out-mode-inserter-button.mjs
-  var import_components166 = __toESM(require_components(), 1);
+  var import_components167 = __toESM(require_components(), 1);
   var import_i18n171 = __toESM(require_i18n(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
   function ZoomOutModeInserterButton({ onClick }) {
     return /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
-      import_components166.Button,
+      import_components167.Button,
       {
         variant: "primary",
         icon: plus_default,
@@ -103857,7 +103871,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               ),
               !isZoomOutMode && !hasFixedToolbar && /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
-                import_components167.Popover.Slot,
+                import_components168.Popover.Slot,
                 {
                   name: "block-toolbar",
                   ref: blockToolbarRef
@@ -103865,7 +103879,7 @@ If there's a particular need for this, please submit a feature request at https:
               ),
               /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(MultiBlockFormatEdit, { contentRef: __unstableContentRef, children }),
               /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
-                import_components167.Popover.Slot,
+                import_components168.Popover.Slot,
                 {
                   name: "__unstable-block-tools-after",
                   ref: blockToolbarAfterRef
@@ -104292,7 +104306,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-canvas/index.mjs
   var import_jsx_runtime540 = __toESM(require_jsx_runtime(), 1);
-  var BlockCanvasCover = (0, import_components168.createSlotFill)(/* @__PURE__ */ Symbol("BlockCanvasCover"));
+  var BlockCanvasCover = (0, import_components169.createSlotFill)(/* @__PURE__ */ Symbol("BlockCanvasCover"));
   function BlockCanvasCoverWrapper({ children }) {
     return /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(
       "div",
@@ -104407,12 +104421,12 @@ If there's a particular need for this, please submit a feature request at https:
   var block_canvas_default = BlockCanvas;
 
   // packages/block-editor/build-module/components/color-style-selector/index.mjs
-  var import_components169 = __toESM(require_components(), 1);
+  var import_components170 = __toESM(require_components(), 1);
   var import_i18n174 = __toESM(require_i18n(), 1);
   var import_keycodes17 = __toESM(require_keycodes(), 1);
   var import_deprecated12 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
-  var ColorSelectorSVGIcon = () => /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components169.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components169.Path, { d: "M7.434 5l3.18 9.16H8.538l-.692-2.184H4.628l-.705 2.184H2L5.18 5h2.254zm-1.13 1.904h-.115l-1.148 3.593H7.44L6.304 6.904zM14.348 7.006c1.853 0 2.9.876 2.9 2.374v4.78h-1.79v-.914h-.114c-.362.64-1.123 1.022-2.031 1.022-1.346 0-2.292-.826-2.292-2.108 0-1.27.972-2.006 2.71-2.107l1.696-.102V9.38c0-.584-.42-.914-1.18-.914-.667 0-1.112.228-1.264.647h-1.701c.12-1.295 1.307-2.107 3.066-2.107zm1.079 4.1l-1.416.09c-.793.056-1.18.342-1.18.844 0 .52.45.837 1.091.837.857 0 1.505-.545 1.505-1.256v-.515z" }) });
+  var ColorSelectorSVGIcon = () => /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components170.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components170.Path, { d: "M7.434 5l3.18 9.16H8.538l-.692-2.184H4.628l-.705 2.184H2L5.18 5h2.254zm-1.13 1.904h-.115l-1.148 3.593H7.44L6.304 6.904zM14.348 7.006c1.853 0 2.9.876 2.9 2.374v4.78h-1.79v-.914h-.114c-.362.64-1.123 1.022-2.031 1.022-1.346 0-2.292-.826-2.292-2.108 0-1.27.972-2.006 2.71-2.107l1.696-.102V9.38c0-.584-.42-.914-1.18-.914-.667 0-1.112.228-1.264.647h-1.701c.12-1.295 1.307-2.107 3.066-2.107zm1.079 4.1l-1.416.09c-.793.056-1.18.342-1.18.844 0 .52.45.837 1.091.837.857 0 1.505-.545 1.505-1.256v-.515z" }) });
   var ColorSelectorIcon = ({ style, className }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)("div", { className: "block-library-colors-selector__icon-container", children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
       "div",
@@ -104430,8 +104444,8 @@ If there's a particular need for this, please submit a feature request at https:
         onToggle();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components169.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
-      import_components169.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components170.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
+      import_components170.ToolbarButton,
       {
         className: "components-toolbar__control block-library-colors-selector__toggle",
         label: (0, import_i18n174.__)("Open Colors Selector"),
@@ -104448,7 +104462,7 @@ If there's a particular need for this, please submit a feature request at https:
       version: "6.3"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
-      import_components169.Dropdown,
+      import_components170.Dropdown,
       {
         popoverProps: { placement: "bottom-start" },
         className: "block-library-colors-selector",
@@ -104462,7 +104476,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-navigation/dropdown.mjs
   var import_deprecated14 = __toESM(require_deprecated(), 1);
-  var import_components176 = __toESM(require_components(), 1);
+  var import_components177 = __toESM(require_components(), 1);
   var import_i18n183 = __toESM(require_i18n(), 1);
   var import_data148 = __toESM(require_data(), 1);
   var import_element363 = __toESM(require_element(), 1);
@@ -104470,14 +104484,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/list-view/index.mjs
   var import_compose120 = __toESM(require_compose(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
-  var import_components175 = __toESM(require_components(), 1);
+  var import_components176 = __toESM(require_components(), 1);
   var import_data147 = __toESM(require_data(), 1);
   var import_deprecated13 = __toESM(require_deprecated(), 1);
   var import_element362 = __toESM(require_element(), 1);
   var import_i18n182 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/list-view/branch.mjs
-  var import_components173 = __toESM(require_components(), 1);
+  var import_components174 = __toESM(require_components(), 1);
   var import_element355 = __toESM(require_element(), 1);
   var import_data140 = __toESM(require_data(), 1);
 
@@ -104587,7 +104601,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/list-view/block.mjs
   var import_blocks84 = __toESM(require_blocks(), 1);
-  var import_components172 = __toESM(require_components(), 1);
+  var import_components173 = __toESM(require_components(), 1);
   var import_compose117 = __toESM(require_compose(), 1);
   var import_element354 = __toESM(require_element(), 1);
   var import_data139 = __toESM(require_data(), 1);
@@ -104598,11 +104612,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_a11y19 = __toESM(require_a11y(), 1);
 
   // packages/block-editor/build-module/components/list-view/leaf.mjs
-  var import_components170 = __toESM(require_components(), 1);
+  var import_components171 = __toESM(require_components(), 1);
   var import_compose116 = __toESM(require_compose(), 1);
   var import_element349 = __toESM(require_element(), 1);
   var import_jsx_runtime543 = __toESM(require_jsx_runtime(), 1);
-  var AnimatedTreeGridRow = animated(import_components170.__experimentalTreeGridRow);
+  var AnimatedTreeGridRow = animated(import_components171.__experimentalTreeGridRow);
   var ListViewLeaf = (0, import_element349.forwardRef)(
     ({
       isDragged,
@@ -104669,7 +104683,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element353 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/list-view/block-select-button.mjs
-  var import_components171 = __toESM(require_components(), 1);
+  var import_components172 = __toESM(require_components(), 1);
   var import_element352 = __toESM(require_element(), 1);
   var import_data138 = __toESM(require_data(), 1);
   var import_blocks83 = __toESM(require_blocks(), 1);
@@ -104883,7 +104897,7 @@ If there's a particular need for this, please submit a feature request at https:
                 justify: "flex-start",
                 gap: "xs",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime545.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(import_components171.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime545.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(import_components172.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) }),
                   !!anchor && /* @__PURE__ */ (0, import_jsx_runtime545.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime545.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor", children: anchor }) }),
                   isSticky && /* @__PURE__ */ (0, import_jsx_runtime545.jsx)("span", { className: "block-editor-list-view-block-select-button__sticky", children: /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(icon_default, { icon: pin_small_default }) }),
                   images.length ? /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(
@@ -105554,7 +105568,7 @@ If there's a particular need for this, please submit a feature request at https:
         ref: rowRef,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-            import_components172.__experimentalTreeGridCell,
+            import_components173.__experimentalTreeGridCell,
             {
               className: "block-editor-list-view-block__contents-cell",
               colSpan,
@@ -105589,12 +105603,12 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           hasRenderedMovers && /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_jsx_runtime547.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime547.jsxs)(
-            import_components172.__experimentalTreeGridCell,
+            import_components173.__experimentalTreeGridCell,
             {
               className: moverCellClassName,
               withoutGridItem: true,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_components172.__experimentalTreeGridItem, { children: ({ ref, tabIndex, onFocus }) => /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_components173.__experimentalTreeGridItem, { children: ({ ref, tabIndex, onFocus }) => /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
                   BlockMoverUpButton,
                   {
                     orientation: "vertical",
@@ -105604,7 +105618,7 @@ If there's a particular need for this, please submit a feature request at https:
                     onFocus
                   }
                 ) }),
-                /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_components172.__experimentalTreeGridItem, { children: ({ ref, tabIndex, onFocus }) => /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_components173.__experimentalTreeGridItem, { children: ({ ref, tabIndex, onFocus }) => /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
                   BlockMoverDownButton,
                   {
                     orientation: "vertical",
@@ -105618,7 +105632,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ) }),
           canShowBlockActions && BlockSettingsMenu2 && /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-            import_components172.__experimentalTreeGridCell,
+            import_components173.__experimentalTreeGridCell,
             {
               className: listViewBlockSettingsClassName,
               "aria-selected": !!isSelected2,
@@ -105840,13 +105854,13 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime548.jsxs)(import_jsx_runtime548.Fragment, { children: [
       rows,
       showAppender && /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
-        import_components173.__experimentalTreeGridRow,
+        import_components174.__experimentalTreeGridRow,
         {
           level,
           setSize: rowCount,
           positionInSet: rowCount,
           isExpanded: true,
-          children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components173.__experimentalTreeGridCell, { children: (treeGridCellProps) => /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components174.__experimentalTreeGridCell, { children: (treeGridCellProps) => /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
             Appender,
             {
               clientId: parentId,
@@ -105862,7 +105876,7 @@ If there's a particular need for this, please submit a feature request at https:
   var branch_default = (0, import_element355.memo)(ListViewBranch);
 
   // packages/block-editor/build-module/components/list-view/drop-indicator.mjs
-  var import_components174 = __toESM(require_components(), 1);
+  var import_components175 = __toESM(require_components(), 1);
   var import_dom72 = __toESM(require_dom(), 1);
   var import_element356 = __toESM(require_element(), 1);
   var import_i18n179 = __toESM(require_i18n(), 1);
@@ -106012,7 +106026,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
-      import_components174.Popover,
+      import_components175.Popover,
       {
         animate: false,
         anchor: popoverAnchor,
@@ -106063,7 +106077,7 @@ If there's a particular need for this, please submit a feature request at https:
                             className: "block-editor-list-view-block-select-button__label-wrapper",
                             justify: "flex-start",
                             gap: "xs",
-                            children: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(import_components174.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) })
+                            children: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(import_components175.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) })
                           }
                         )
                       ]
@@ -106946,7 +106960,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       description && /* @__PURE__ */ (0, import_jsx_runtime550.jsx)(VisuallyHidden, { id: describedById, children: description }),
       /* @__PURE__ */ (0, import_jsx_runtime550.jsx)(
-        import_components175.__experimentalTreeGrid,
+        import_components176.__experimentalTreeGrid,
         {
           id,
           className: clsx_default("block-editor-list-view-tree", {
@@ -107017,7 +107031,7 @@ If there's a particular need for this, please submit a feature request at https:
     ...props
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(
-      import_components176.Button,
+      import_components177.Button,
       {
         __next40pxDefaultSize: true,
         ...props,
@@ -107043,7 +107057,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const isEnabled = hasBlocks && !isDisabled;
     return /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(
-      import_components176.Dropdown,
+      import_components177.Dropdown,
       {
         contentClassName: "block-editor-block-navigation__popover",
         popoverProps: { placement: "bottom-start" },
@@ -107070,7 +107084,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element364 = __toESM(require_element(), 1);
   var import_data149 = __toESM(require_data(), 1);
   var import_compose121 = __toESM(require_compose(), 1);
-  var import_components177 = __toESM(require_components(), 1);
+  var import_components178 = __toESM(require_components(), 1);
   var import_i18n184 = __toESM(require_i18n(), 1);
   var import_jsx_runtime552 = __toESM(require_jsx_runtime(), 1);
   var noop15 = () => {
@@ -107158,7 +107172,7 @@ If there's a particular need for this, please submit a feature request at https:
       onSelectStylePreview(defaultStyle);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
-      import_components177.__experimentalToolsPanel,
+      import_components178.__experimentalToolsPanel,
       {
         label: (0, import_i18n184.__)("Styles"),
         resetAll: onDeselect,
@@ -107166,7 +107180,7 @@ If there's a particular need for this, please submit a feature request at https:
         hasInnerWrapper: true,
         dropdownMenuProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
-          import_components177.__experimentalToolsPanelItem,
+          import_components178.__experimentalToolsPanelItem,
           {
             hasValue: hasValue3,
             label: (0, import_i18n184.__)("Variation"),
@@ -107180,7 +107194,7 @@ If there's a particular need for this, please submit a feature request at https:
                 className: "block-editor-block-styles",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
-                    import_components177.Composite,
+                    import_components178.Composite,
                     {
                       role: "radiogroup",
                       "aria-label": (0, import_i18n184.__)("Styles"),
@@ -107194,11 +107208,11 @@ If there's a particular need for this, please submit a feature request at https:
                       focusWrap: true,
                       focusShift: true,
                       children: styleRows.map((row, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
-                        import_components177.Composite.Row,
+                        import_components178.Composite.Row,
                         {
                           className: "block-editor-block-styles__row",
                           children: row.map((style) => /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
-                            import_components177.Composite.Item,
+                            import_components178.Composite.Item,
                             {
                               id: getCompositeItemId(
                                 instanceId,
@@ -107220,7 +107234,7 @@ If there's a particular need for this, please submit a feature request at https:
                               onBlur: () => styleItemHandler(null),
                               onClick: () => onSelectStylePreview(style),
                               children: /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
-                                import_components177.__experimentalTruncate,
+                                import_components178.__experimentalTruncate,
                                 {
                                   numberOfLines: 3,
                                   className: "block-editor-block-styles__item-text",
@@ -107255,11 +107269,11 @@ If there's a particular need for this, please submit a feature request at https:
   var block_styles_default = BlockStyles;
 
   // packages/block-editor/build-module/components/block-heading-level-dropdown/index.mjs
-  var import_components179 = __toESM(require_components(), 1);
+  var import_components180 = __toESM(require_components(), 1);
   var import_i18n185 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-heading-level-dropdown/heading-level-icon.mjs
-  var import_components178 = __toESM(require_components(), 1);
+  var import_components179 = __toESM(require_components(), 1);
   var import_jsx_runtime553 = __toESM(require_jsx_runtime(), 1);
   var LEVEL_TO_PATH = {
     0: paragraph_default,
@@ -107272,7 +107286,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function HeadingLevelIcon({ level }) {
     if (LEVEL_TO_PATH[level]) {
-      return /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(import_components178.Icon, { icon: LEVEL_TO_PATH[level] });
+      return /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(import_components179.Icon, { icon: LEVEL_TO_PATH[level] });
     }
     return null;
   }
@@ -107292,7 +107306,7 @@ If there's a particular need for this, please submit a feature request at https:
       (option) => option === 0 || HEADING_LEVELS.includes(option)
     ).sort((a, b) => a - b);
     return /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(
-      import_components179.ToolbarDropdownMenu,
+      import_components180.ToolbarDropdownMenu,
       {
         popoverProps: POPOVER_PROPS7,
         icon: /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(HeadingLevelIcon, { level: value }),
@@ -107319,7 +107333,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-variation-picker/index.mjs
   var import_i18n186 = __toESM(require_i18n(), 1);
-  var import_components180 = __toESM(require_components(), 1);
+  var import_components181 = __toESM(require_components(), 1);
   var import_jsx_runtime555 = __toESM(require_jsx_runtime(), 1);
   function BlockVariationPicker({
     icon = layout_default,
@@ -107333,7 +107347,7 @@ If there's a particular need for this, please submit a feature request at https:
       "has-many-variations": variations.length > 4
     });
     return /* @__PURE__ */ (0, import_jsx_runtime555.jsxs)(
-      import_components180.Placeholder,
+      import_components181.Placeholder,
       {
         icon,
         label,
@@ -107348,7 +107362,7 @@ If there's a particular need for this, please submit a feature request at https:
               "aria-label": (0, import_i18n186.__)("Block variations"),
               children: variations.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime555.jsxs)("li", { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(
-                  import_components180.Button,
+                  import_components181.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "tertiary",
@@ -107364,7 +107378,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           allowSkip && /* @__PURE__ */ (0, import_jsx_runtime555.jsx)("div", { className: "block-editor-block-variation-picker__skip", children: /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(
-            import_components180.Button,
+            import_components181.Button,
             {
               __next40pxDefaultSize: true,
               variant: "link",
@@ -107381,14 +107395,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-pattern-setup/index.mjs
   var import_data151 = __toESM(require_data(), 1);
   var import_blocks86 = __toESM(require_blocks(), 1);
-  var import_components182 = __toESM(require_components(), 1);
+  var import_components183 = __toESM(require_components(), 1);
   var import_element365 = __toESM(require_element(), 1);
   var import_compose122 = __toESM(require_compose(), 1);
   var import_i18n188 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-pattern-setup/setup-toolbar.mjs
   var import_i18n187 = __toESM(require_i18n(), 1);
-  var import_components181 = __toESM(require_components(), 1);
+  var import_components182 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-pattern-setup/constants.mjs
   var VIEWMODES = {
@@ -107399,7 +107413,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-pattern-setup/setup-toolbar.mjs
   var import_jsx_runtime556 = __toESM(require_jsx_runtime(), 1);
   var Actions2 = ({ onBlockPatternSelect }) => /* @__PURE__ */ (0, import_jsx_runtime556.jsx)("div", { className: "block-editor-block-pattern-setup__actions", children: /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
-    import_components181.Button,
+    import_components182.Button,
     {
       __next40pxDefaultSize: true,
       variant: "primary",
@@ -107414,7 +107428,7 @@ If there's a particular need for this, please submit a feature request at https:
     totalSlides
   }) => /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)("div", { className: "block-editor-block-pattern-setup__navigation", children: [
     /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
-      import_components181.Button,
+      import_components182.Button,
       {
         size: "compact",
         icon: (0, import_i18n187.isRTL)() ? chevron_right_default : chevron_left_default,
@@ -107425,7 +107439,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
-      import_components181.Button,
+      import_components182.Button,
       {
         size: "compact",
         icon: (0, import_i18n187.isRTL)() ? chevron_left_default : chevron_right_default,
@@ -107448,7 +107462,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isCarouselView = viewMode === VIEWMODES.carousel;
     const displayControls = /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)("div", { className: "block-editor-block-pattern-setup__display-controls", children: [
       /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
-        import_components181.Button,
+        import_components182.Button,
         {
           size: "compact",
           icon: stretch_full_width_default,
@@ -107458,7 +107472,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
-        import_components181.Button,
+        import_components182.Button,
         {
           size: "compact",
           icon: grid_default,
@@ -107534,7 +107548,7 @@ If there's a particular need for this, please submit a feature request at https:
       )) }) }) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime557.jsx)("div", { className: "block-editor-block-pattern-setup__grid", children: /* @__PURE__ */ (0, import_jsx_runtime557.jsx)(
-      import_components182.Composite,
+      import_components183.Composite,
       {
         role: "listbox",
         className: containerClass,
@@ -107559,7 +107573,7 @@ If there's a particular need for this, please submit a feature request at https:
       `${baseClassName}__item-description`
     );
     return /* @__PURE__ */ (0, import_jsx_runtime557.jsx)("div", { className: `${baseClassName}__list-item`, children: /* @__PURE__ */ (0, import_jsx_runtime557.jsxs)(
-      import_components182.Composite.Item,
+      import_components183.Composite.Item,
       {
         render: /* @__PURE__ */ (0, import_jsx_runtime557.jsx)(
           "div",
@@ -107675,7 +107689,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-variation-transforms/index.mjs
   var import_blocks87 = __toESM(require_blocks(), 1);
   var import_i18n189 = __toESM(require_i18n(), 1);
-  var import_components183 = __toESM(require_components(), 1);
+  var import_components184 = __toESM(require_components(), 1);
   var import_data152 = __toESM(require_data(), 1);
   var import_element366 = __toESM(require_element(), 1);
   var import_jsx_runtime558 = __toESM(require_jsx_runtime(), 1);
@@ -107688,7 +107702,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)("fieldset", { className, children: [
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)("legend", {}), children: (0, import_i18n189.__)("Transform to variation") }),
       variations.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-        import_components183.Button,
+        import_components184.Button,
         {
           __next40pxDefaultSize: true,
           size: "compact",
@@ -107718,7 +107732,7 @@ If there's a particular need for this, please submit a feature request at https:
         menu_exports.Trigger,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components183.Button,
+            import_components184.Button,
             {
               className: "block-editor-block-variation-transforms__button",
               __next40pxDefaultSize: true,
@@ -107761,14 +107775,14 @@ If there's a particular need for this, please submit a feature request at https:
     variations
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime558.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-      import_components183.__experimentalToggleGroupControl,
+      import_components184.__experimentalToggleGroupControl,
       {
         label: (0, import_i18n189.__)("Transform to variation"),
         value: selectedValue,
         hideLabelFromVision: true,
         onChange: onSelectVariation,
         children: variations.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-          import_components183.__experimentalToggleGroupControlOptionIcon,
+          import_components184.__experimentalToggleGroupControlOptionIcon,
           {
             icon: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(block_icon_default, { icon: variation.icon, showColors: true }),
             value: variation.name,
@@ -107857,7 +107871,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-vertical-alignment-control/ui.mjs
   var import_i18n190 = __toESM(require_i18n(), 1);
-  var import_components184 = __toESM(require_components(), 1);
+  var import_components185 = __toESM(require_components(), 1);
   var import_jsx_runtime559 = __toESM(require_jsx_runtime(), 1);
   var BLOCK_ALIGNMENTS_CONTROLS2 = {
     top: {
@@ -107896,7 +107910,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const activeAlignment = BLOCK_ALIGNMENTS_CONTROLS2[value];
     const defaultAlignmentControl = BLOCK_ALIGNMENTS_CONTROLS2[DEFAULT_CONTROL2];
-    const UIComponent = isToolbar ? import_components184.ToolbarGroup : import_components184.ToolbarDropdownMenu;
+    const UIComponent = isToolbar ? import_components185.ToolbarGroup : import_components185.ToolbarDropdownMenu;
     const extraProps = isToolbar ? { isCollapsed: isCollapsed3 } : {};
     return /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
       UIComponent,
@@ -107927,18 +107941,18 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/border-radius-control/index.mjs
-  var import_components189 = __toESM(require_components(), 1);
+  var import_components190 = __toESM(require_components(), 1);
   var import_element368 = __toESM(require_element(), 1);
   var import_i18n194 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/border-radius-control/linked-button.mjs
-  var import_components185 = __toESM(require_components(), 1);
+  var import_components186 = __toESM(require_components(), 1);
   var import_i18n191 = __toESM(require_i18n(), 1);
   var import_jsx_runtime561 = __toESM(require_jsx_runtime(), 1);
   function LinkedButton({ isLinked, ...props }) {
     const label = isLinked ? (0, import_i18n191.__)("Unlink radii") : (0, import_i18n191.__)("Link radii");
     return /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(
-      import_components185.Button,
+      import_components186.Button,
       {
         ...props,
         className: "components-border-radius-control__linked-button",
@@ -107951,7 +107965,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/border-radius-control/utils.mjs
-  var import_components186 = __toESM(require_components(), 1);
+  var import_components187 = __toESM(require_components(), 1);
   function mode(inputArray) {
     const arr = [...inputArray];
     return arr.sort(
@@ -107963,7 +107977,7 @@ If there's a particular need for this, please submit a feature request at https:
       return values;
     }
     const parsedQuantitiesAndUnits = Object.values(values).map((value2) => {
-      const newValue = (0, import_components186.__experimentalParseQuantityAndUnitFromRawValue)(value2);
+      const newValue = (0, import_components187.__experimentalParseQuantityAndUnitFromRawValue)(value2);
       if (typeof value2 === "string" && newValue[0] === void 0) {
         return [value2, ""];
       }
@@ -108007,7 +108021,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/preset-input-control/index.mjs
-  var import_components188 = __toESM(require_components(), 1);
+  var import_components189 = __toESM(require_components(), 1);
   var import_compose123 = __toESM(require_compose(), 1);
   var import_i18n192 = __toESM(require_i18n(), 1);
   var import_element367 = __toESM(require_element(), 1);
@@ -108047,7 +108061,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/preset-input-control/custom-value-controls.mjs
-  var import_components187 = __toESM(require_components(), 1);
+  var import_components188 = __toESM(require_components(), 1);
   var import_jsx_runtime562 = __toESM(require_jsx_runtime(), 1);
   function CustomValueControls({
     allowNegativeOnDrag,
@@ -108071,7 +108085,7 @@ If there's a particular need for this, please submit a feature request at https:
     setMinValue
   }) {
     const unitControl = /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
-      import_components187.__experimentalUnitControl,
+      import_components188.__experimentalUnitControl,
       {
         className: "preset-input-control__unit-control",
         disableUnits: isMixed,
@@ -108116,7 +108130,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime562.jsxs)(import_jsx_runtime562.Fragment, { children: [
       wrappedUnitControl,
       /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
-        import_components187.RangeControl,
+        import_components188.RangeControl,
         {
           className: "preset-input-control__custom-value-range",
           hideLabelFromVision: true,
@@ -108206,7 +108220,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: size4.name
     }));
     const resolvedPresetValue = isValuePreset(value, presetType) ? getCustomValueFromPreset(value, presets, presetType) : value;
-    const [parsedQuantity, parsedUnit] = (0, import_components188.__experimentalParseQuantityAndUnitFromRawValue)(resolvedPresetValue);
+    const [parsedQuantity, parsedUnit] = (0, import_components189.__experimentalParseQuantityAndUnitFromRawValue)(resolvedPresetValue);
     const computedUnit = parsedUnit || selectedUnit || "px";
     const unitConfig = units2?.find((item) => item.value === computedUnit);
     const step = unitConfig?.step ?? customValueSettings[computedUnit]?.steps ?? 0.1;
@@ -108240,12 +108254,12 @@ If there's a particular need for this, please submit a feature request at https:
       return `var:preset|${presetType}|${presets[next]?.slug}`;
     };
     return /* @__PURE__ */ (0, import_jsx_runtime563.jsxs)(
-      import_components188.__experimentalHStack,
+      import_components189.__experimentalHStack,
       {
         className: `preset-input-control__wrapper ${className}__wrapper`,
         children: [
           icon && /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
-            import_components188.Icon,
+            import_components189.Icon,
             {
               className: "preset-input-control__icon",
               icon,
@@ -108277,7 +108291,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           hasPresets && showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
-            import_components188.RangeControl,
+            import_components189.RangeControl,
             {
               "aria-valuenow": currentValue,
               "aria-valuetext": presets[currentValue]?.name,
@@ -108306,7 +108320,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           hasPresets && !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
-            import_components188.CustomSelectControl,
+            import_components189.CustomSelectControl,
             {
               className: "preset-input-control__custom-select-control",
               hideLabelFromVision: true,
@@ -108338,7 +108352,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           hasPresets && !disableCustomValues && /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
-            import_components188.Button,
+            import_components189.Button,
             {
               className: "preset-input-control__custom-toggle",
               icon: settings_default,
@@ -108359,7 +108373,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/border-radius-control/constants.mjs
   var import_i18n193 = __toESM(require_i18n(), 1);
   var RANGE_CONTROL_MAX_SIZE3 = 8;
-  var EMPTY_ARRAY16 = [];
+  var EMPTY_ARRAY15 = [];
   var CORNERS = {
     all: (0, import_i18n193.__)("Border radius"),
     topLeft: (0, import_i18n193.__)("Top left"),
@@ -108379,9 +108393,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/border-radius-control/index.mjs
   var import_jsx_runtime564 = __toESM(require_jsx_runtime(), 1);
   function useBorderRadiusSizes(presets) {
-    const defaultSizes = presets?.default ?? EMPTY_ARRAY16;
-    const customSizes = presets?.custom ?? EMPTY_ARRAY16;
-    const themeSizes = presets?.theme ?? EMPTY_ARRAY16;
+    const defaultSizes = presets?.default ?? EMPTY_ARRAY15;
+    const customSizes = presets?.custom ?? EMPTY_ARRAY15;
+    const themeSizes = presets?.theme ?? EMPTY_ARRAY15;
     return (0, import_element368.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n194.__)("None"), slug: "0", size: 0 },
@@ -108458,22 +108472,22 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const options = useBorderRadiusSizes(presets);
     const [selectedUnits, setSelectedUnits] = (0, import_element368.useState)({
-      flat: typeof values === "string" ? (0, import_components189.__experimentalParseQuantityAndUnitFromRawValue)(values)[1] : void 0,
-      topLeft: (0, import_components189.__experimentalParseQuantityAndUnitFromRawValue)(values?.topLeft)[1],
-      topRight: (0, import_components189.__experimentalParseQuantityAndUnitFromRawValue)(values?.topRight)[1],
-      bottomLeft: (0, import_components189.__experimentalParseQuantityAndUnitFromRawValue)(values?.bottomLeft)[1],
-      bottomRight: (0, import_components189.__experimentalParseQuantityAndUnitFromRawValue)(
+      flat: typeof values === "string" ? (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(values)[1] : void 0,
+      topLeft: (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(values?.topLeft)[1],
+      topRight: (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(values?.topRight)[1],
+      bottomLeft: (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(values?.bottomLeft)[1],
+      bottomRight: (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(
         values?.bottomRight
       )[1]
     });
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components189.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components190.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["px", "em", "rem"]
     });
     const toggleLinked = () => setIsLinked(!isLinked);
     return /* @__PURE__ */ (0, import_jsx_runtime564.jsxs)("fieldset", { className: "components-border-radius-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime564.jsxs)(import_components189.__experimentalHStack, { className: "components-border-radius-control__header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(import_components189.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n194.__)("Radius") }),
+      /* @__PURE__ */ (0, import_jsx_runtime564.jsxs)(import_components190.__experimentalHStack, { className: "components-border-radius-control__header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(import_components190.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n194.__)("Radius") }),
         /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(LinkedButton, { onClick: toggleLinked, isLinked })
       ] }),
       isLinked ? /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(
@@ -108500,7 +108514,7 @@ If there's a particular need for this, please submit a feature request at https:
           units: units2,
           value: getCornerValue(values, "all")
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(import_components189.__experimentalVStack, { children: [
+      ) : /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(import_components190.__experimentalVStack, { children: [
         "topLeft",
         "topRight",
         "bottomLeft",
@@ -108538,7 +108552,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/color-palette/index.mjs
-  var import_components190 = __toESM(require_components(), 1);
+  var import_components191 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/color-palette/with-color-context.mjs
   var import_compose124 = __toESM(require_compose(), 1);
@@ -108580,13 +108594,13 @@ If there's a particular need for this, please submit a feature request at https:
   }, "withColorContext");
 
   // packages/block-editor/build-module/components/color-palette/index.mjs
-  var color_palette_default = with_color_context_default(import_components190.ColorPalette);
+  var color_palette_default = with_color_context_default(import_components191.ColorPalette);
 
   // packages/block-editor/build-module/components/colors-gradients/control.mjs
   var import_i18n195 = __toESM(require_i18n(), 1);
-  var import_components191 = __toESM(require_components(), 1);
+  var import_components192 = __toESM(require_components(), 1);
   var import_jsx_runtime566 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs3 } = unlock(import_components191.privateApis);
+  var { Tabs: Tabs3 } = unlock(import_components192.privateApis);
   var colorsAndGradientKeys = [
     "colors",
     "disableCustomColors",
@@ -108624,7 +108638,7 @@ If there's a particular need for this, please submit a feature request at https:
       onGradientChange();
     } : (newColor, _index, newSlug) => onColorChange(newColor, newSlug);
     const colorPalette = /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-      import_components191.ColorPalette,
+      import_components192.ColorPalette,
       {
         value: colorValue,
         selectedSlug: colorSlug,
@@ -108645,10 +108659,10 @@ If there's a particular need for this, please submit a feature request at https:
       // the notice sits at the bottom of the popover.
       [TAB_IDS.color]: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(import_jsx_runtime566.Fragment, { children: [
         colorPalette,
-        noticeProps && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(import_components191.Notice, { isDismissible: false, ...noticeProps })
+        noticeProps && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(import_components192.Notice, { isDismissible: false, ...noticeProps })
       ] }),
       [TAB_IDS.gradient]: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-        import_components191.GradientPicker,
+        import_components192.GradientPicker,
         {
           value: gradientValue,
           selectedSlug: gradientSlug,
@@ -108665,14 +108679,14 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const renderPanelType = (type) => /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("div", { className: "block-editor-color-gradient-control__panel", children: tabPanels[type] });
     return /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-      import_components191.BaseControl,
+      import_components192.BaseControl,
       {
         className: clsx_default(
           "block-editor-color-gradient-control",
           className
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("fieldset", { className: "block-editor-color-gradient-control__fieldset", children: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(import_components191.__experimentalVStack, { spacing: 1, children: [
-          showTitle && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("legend", { children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("div", { className: "block-editor-color-gradient-control__color-indicator", children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(import_components191.BaseControl.VisualLabel, { children: label }) }) }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("fieldset", { className: "block-editor-color-gradient-control__fieldset", children: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(import_components192.__experimentalVStack, { spacing: 1, children: [
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("legend", { children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("div", { className: "block-editor-color-gradient-control__color-indicator", children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(import_components192.BaseControl.VisualLabel, { children: label }) }) }),
           canChooseAColor && canChooseAGradient && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(
             Tabs3,
             {
@@ -108756,7 +108770,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/contrast-checker/index.mjs
   var import_i18n196 = __toESM(require_i18n(), 1);
-  var import_components192 = __toESM(require_components(), 1);
+  var import_components193 = __toESM(require_components(), 1);
   var import_a11y22 = __toESM(require_a11y(), 1);
   var import_jsx_runtime568 = __toESM(require_jsx_runtime(), 1);
   D([e, r2]);
@@ -108857,7 +108871,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     (0, import_a11y22.speak)(warning8.speakMessage);
     return /* @__PURE__ */ (0, import_jsx_runtime568.jsx)("div", { className: "block-editor-contrast-checker", children: /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(
-      import_components192.Notice,
+      import_components193.Notice,
       {
         spokenMessage: null,
         status: "warning",
@@ -108872,7 +108886,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n197 = __toESM(require_i18n(), 1);
   var import_date13 = __toESM(require_date(), 1);
   var import_element369 = __toESM(require_element(), 1);
-  var import_components193 = __toESM(require_components(), 1);
+  var import_components194 = __toESM(require_components(), 1);
   var import_jsx_runtime569 = __toESM(require_jsx_runtime(), 1);
   var exampleDate = /* @__PURE__ */ new Date();
   exampleDate.setDate(20);
@@ -108886,7 +108900,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChange
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime569.jsxs)(
-      import_components193.__experimentalVStack,
+      import_components194.__experimentalVStack,
       {
         as: "fieldset",
         spacing: 4,
@@ -108894,7 +108908,7 @@ If there's a particular need for this, please submit a feature request at https:
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime569.jsx)("legend", {}), children: (0, import_i18n197.__)("Date format") }),
           /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
-            import_components193.ToggleControl,
+            import_components194.ToggleControl,
             {
               label: (0, import_i18n197.__)("Default format"),
               help: `${(0, import_i18n197.__)("Example:")}  ${(0, import_date13.dateI18n)(
@@ -108950,9 +108964,9 @@ If there's a particular need for this, please submit a feature request at https:
     const [isCustom, setIsCustom] = (0, import_element369.useState)(
       () => !!format7 && !suggestedOptions.some((option) => option.format === format7)
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime569.jsxs)(import_components193.__experimentalVStack, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime569.jsxs)(import_components194.__experimentalVStack, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
-        import_components193.CustomSelectControl,
+        import_components194.CustomSelectControl,
         {
           label: (0, import_i18n197.__)("Choose a format"),
           options: [...suggestedOptions, customOption],
@@ -108970,7 +108984,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       isCustom && /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
-        import_components193.TextControl,
+        import_components194.TextControl,
         {
           label: (0, import_i18n197.__)("Custom format"),
           hideLabelFromVision: true,
@@ -108980,7 +108994,7 @@ If there's a particular need for this, please submit a feature request at https:
             ),
             {
               Link: /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
-                import_components193.ExternalLink,
+                import_components194.ExternalLink,
                 {
                   href: (0, import_i18n197.__)(
                     "https://wordpress.org/documentation/article/customize-date-and-time-format/"
@@ -108997,7 +109011,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/duotone-control/index.mjs
-  var import_components194 = __toESM(require_components(), 1);
+  var import_components195 = __toESM(require_components(), 1);
   var import_i18n198 = __toESM(require_i18n(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_compose125 = __toESM(require_compose(), 1);
@@ -109014,9 +109028,9 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     let toolbarIcon;
     if (value === "unset") {
-      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(import_components194.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" });
+      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(import_components195.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" });
     } else if (value) {
-      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(import_components194.DuotoneSwatch, { values: value });
+      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(import_components195.DuotoneSwatch, { values: value });
     } else {
       toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(icon_default, { icon: filter_default });
     }
@@ -109024,7 +109038,7 @@ If there's a particular need for this, please submit a feature request at https:
     const id = (0, import_compose125.useInstanceId)(DuotoneControl, "duotone-control", idProp);
     const descriptionId = `${id}__description`;
     return /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(
-      import_components194.Dropdown,
+      import_components195.Dropdown,
       {
         popoverProps: {
           className: "block-editor-duotone-control__popover",
@@ -109038,7 +109052,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           };
           return /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(
-            import_components194.ToolbarButton,
+            import_components195.ToolbarButton,
             {
               showTooltip: true,
               onClick: onToggle,
@@ -109050,12 +109064,12 @@ If there's a particular need for this, please submit a feature request at https:
             }
           );
         },
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)(import_components194.MenuGroup, { label: (0, import_i18n198.__)("Duotone"), children: [
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)(import_components195.MenuGroup, { label: (0, import_i18n198.__)("Duotone"), children: [
           /* @__PURE__ */ (0, import_jsx_runtime570.jsx)("p", { children: (0, import_i18n198.__)(
             "Create a two-tone color effect without losing your original image."
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(
-            import_components194.DuotonePicker,
+            import_components195.DuotonePicker,
             {
               "aria-label": actionLabel,
               "aria-describedby": descriptionId,
@@ -109075,7 +109089,7 @@ If there's a particular need for this, please submit a feature request at https:
   var duotone_control_default = DuotoneControl;
 
   // packages/block-editor/build-module/components/font-appearance-control/index.mjs
-  var import_components195 = __toESM(require_components(), 1);
+  var import_components196 = __toESM(require_components(), 1);
   var import_element370 = __toESM(require_element(), 1);
   var import_i18n202 = __toESM(require_i18n(), 1);
 
@@ -109417,7 +109431,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     };
     return hasStylesOrWeights && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-      import_components195.CustomSelectControl,
+      import_components196.CustomSelectControl,
       {
         ...otherProps,
         className: "components-font-appearance-control",
@@ -109431,7 +109445,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/font-family/index.mjs
-  var import_components196 = __toESM(require_components(), 1);
+  var import_components197 = __toESM(require_components(), 1);
   var import_i18n203 = __toESM(require_i18n(), 1);
   var import_jsx_runtime572 = __toESM(require_jsx_runtime(), 1);
   function FontFamilyControl({
@@ -109467,7 +109481,7 @@ If there's a particular need for this, please submit a feature request at https:
     ];
     const selectedValue = options.find((option) => option.key === value) ?? "";
     return /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(
-      import_components196.CustomSelectControl,
+      import_components197.CustomSelectControl,
       {
         label: (0, import_i18n203.__)("Font"),
         value: selectedValue,
@@ -109480,7 +109494,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/letter-spacing-control/index.mjs
-  var import_components197 = __toESM(require_components(), 1);
+  var import_components198 = __toESM(require_components(), 1);
   var import_i18n204 = __toESM(require_i18n(), 1);
   var import_jsx_runtime573 = __toESM(require_jsx_runtime(), 1);
   function LetterSpacingControl({
@@ -109490,12 +109504,12 @@ If there's a particular need for this, please submit a feature request at https:
     ...otherProps
   }) {
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components197.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components198.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["px", "em", "rem"],
       defaultValues: { px: 2, em: 0.2, rem: 0.2 }
     });
     return /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-      import_components197.__experimentalUnitControl,
+      import_components198.__experimentalUnitControl,
       {
         ...otherProps,
         label: (0, import_i18n204.__)("Letter spacing"),
@@ -109509,7 +109523,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/text-decoration-control/index.mjs
   var import_i18n205 = __toESM(require_i18n(), 1);
-  var import_components198 = __toESM(require_components(), 1);
+  var import_components199 = __toESM(require_components(), 1);
   var import_jsx_runtime574 = __toESM(require_jsx_runtime(), 1);
   var TEXT_DECORATIONS = [
     {
@@ -109534,7 +109548,7 @@ If there's a particular need for this, please submit a feature request at https:
     className
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
-      import_components198.__experimentalToggleGroupControl,
+      import_components199.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
         label: (0, import_i18n205.__)("Decoration"),
@@ -109548,7 +109562,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         children: TEXT_DECORATIONS.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
-            import_components198.__experimentalToggleGroupControlOptionIcon,
+            import_components199.__experimentalToggleGroupControlOptionIcon,
             {
               value: option.value,
               icon: option.icon,
@@ -109563,7 +109577,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/text-transform-control/index.mjs
   var import_i18n206 = __toESM(require_i18n(), 1);
-  var import_components199 = __toESM(require_components(), 1);
+  var import_components200 = __toESM(require_components(), 1);
   var import_jsx_runtime575 = __toESM(require_jsx_runtime(), 1);
   var TEXT_TRANSFORMS = [
     {
@@ -109589,7 +109603,7 @@ If there's a particular need for this, please submit a feature request at https:
   ];
   function TextTransformControl({ className, value, onChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
-      import_components199.__experimentalToggleGroupControl,
+      import_components200.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
         label: (0, import_i18n206.__)("Letter case"),
@@ -109603,7 +109617,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         children: TEXT_TRANSFORMS.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
-            import_components199.__experimentalToggleGroupControlOptionIcon,
+            import_components200.__experimentalToggleGroupControlOptionIcon,
             {
               value: option.value,
               icon: option.icon,
@@ -109618,7 +109632,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/writing-mode-control/index.mjs
   var import_i18n207 = __toESM(require_i18n(), 1);
-  var import_components200 = __toESM(require_components(), 1);
+  var import_components201 = __toESM(require_components(), 1);
   var import_jsx_runtime576 = __toESM(require_jsx_runtime(), 1);
   var WRITING_MODES = [
     {
@@ -109634,7 +109648,7 @@ If there's a particular need for this, please submit a feature request at https:
   ];
   function WritingModeControl({ className, value, onChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
-      import_components200.__experimentalToggleGroupControl,
+      import_components201.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
         label: (0, import_i18n207.__)("Orientation"),
@@ -109645,7 +109659,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         children: WRITING_MODES.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
-            import_components200.__experimentalToggleGroupControlOptionIcon,
+            import_components201.__experimentalToggleGroupControlOptionIcon,
             {
               value: option.value,
               icon: option.icon,
@@ -109659,7 +109673,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/colors-gradients/dropdown.mjs
-  var import_components201 = __toESM(require_components(), 1);
+  var import_components202 = __toESM(require_components(), 1);
   var import_element371 = __toESM(require_element(), 1);
   var import_i18n208 = __toESM(require_i18n(), 1);
   var import_jsx_runtime577 = __toESM(require_jsx_runtime(), 1);
@@ -109672,7 +109686,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
-      import_components201.__experimentalToolsPanelItem,
+      import_components202.__experimentalToolsPanelItem,
       {
         hasValue: () => {
           return !!setting.colorValue || !!setting.gradientValue;
@@ -109691,16 +109705,16 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var LabeledColorIndicator = ({ colorValue, label }) => /* @__PURE__ */ (0, import_jsx_runtime577.jsxs)(import_components201.__experimentalHStack, { justify: "flex-start", children: [
+  var LabeledColorIndicator = ({ colorValue, label }) => /* @__PURE__ */ (0, import_jsx_runtime577.jsxs)(import_components202.__experimentalHStack, { justify: "flex-start", children: [
     /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
-      import_components201.ColorIndicator,
+      import_components202.ColorIndicator,
       {
         className: "block-editor-panel-color-gradient-settings__color-indicator",
         colorValue
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
-      import_components201.FlexItem,
+      import_components202.FlexItem,
       {
         className: "block-editor-panel-color-gradient-settings__color-name",
         title: label,
@@ -109736,7 +109750,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const value = colorValue ?? gradientValue;
     return /* @__PURE__ */ (0, import_jsx_runtime577.jsxs)(import_jsx_runtime577.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(import_components201.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(import_components202.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
         LabeledColorIndicator,
         {
           colorValue: value,
@@ -109744,7 +109758,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ) }),
       clearable && value && /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
-        import_components201.Button,
+        import_components202.Button,
         {
           __next40pxDefaultSize: true,
           label: (0, import_i18n208.__)("Reset"),
@@ -109813,12 +109827,12 @@ If there's a particular need for this, please submit a feature request at https:
           setting,
           ...props,
           children: /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
-            import_components201.Dropdown,
+            import_components202.Dropdown,
             {
               popoverProps,
               className: "block-editor-tools-panel-color-gradient-settings__dropdown",
               renderToggle: renderToggle(toggleSettings),
-              renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(import_components201.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime577.jsx)("div", { className: "block-editor-panel-color-gradient-settings__dropdown-content", children: /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
+              renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(import_components202.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime577.jsx)("div", { className: "block-editor-panel-color-gradient-settings__dropdown-content", children: /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
                 control_default,
                 {
                   ...controlProps
@@ -109833,7 +109847,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/colors-gradients/panel-color-gradient-settings.mjs
-  var import_components202 = __toESM(require_components(), 1);
+  var import_components203 = __toESM(require_components(), 1);
   var import_data153 = __toESM(require_data(), 1);
   var import_compose126 = __toESM(require_compose(), 1);
 
@@ -109979,7 +109993,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(
-      import_components202.__experimentalToolsPanel,
+      import_components203.__experimentalToolsPanel,
       {
         className: clsx_default(
           "block-editor-panel-color-gradient-settings",
@@ -110025,7 +110039,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           !!children && /* @__PURE__ */ (0, import_jsx_runtime578.jsxs)(import_jsx_runtime578.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(import_components202.__experimentalSpacer, { marginTop: 4, marginBottom: 0 }),
+            /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(import_components203.__experimentalSpacer, { marginTop: 4, marginBottom: 0 }),
             children
           ] })
         ] })
@@ -110051,10 +110065,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/dimension-control/index.mjs
   var import_element373 = __toESM(require_element(), 1);
-  var import_components203 = __toESM(require_components(), 1);
+  var import_components204 = __toESM(require_components(), 1);
   var import_i18n210 = __toESM(require_i18n(), 1);
   var import_jsx_runtime579 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY17 = [];
+  var EMPTY_ARRAY16 = [];
   var DIMENSION_CUSTOM_VALUE_SETTINGS = {
     ...CUSTOM_VALUE_SETTINGS,
     px: { max: 1e3, steps: 1 },
@@ -110062,9 +110076,9 @@ If there's a particular need for this, please submit a feature request at https:
     rem: { max: 50, steps: 0.1 }
   };
   function useDimensionSizes(presets) {
-    const defaultSizes = presets?.default ?? EMPTY_ARRAY17;
-    const customSizes = presets?.custom ?? EMPTY_ARRAY17;
-    const themeSizes = presets?.theme ?? EMPTY_ARRAY17;
+    const defaultSizes = presets?.default ?? EMPTY_ARRAY16;
+    const customSizes = presets?.custom ?? EMPTY_ARRAY16;
+    const themeSizes = presets?.theme ?? EMPTY_ARRAY16;
     return (0, import_element373.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n210.__)("None"), slug: "0", size: 0 },
@@ -110088,7 +110102,7 @@ If there's a particular need for this, please submit a feature request at https:
       "spacing.units"
     );
     const dimensionSizes = dimensionSizesProp ?? dimensionSizesFromSettings;
-    const units2 = (0, import_components203.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components204.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || [
         "%",
         "px",
@@ -110100,11 +110114,11 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const options = useDimensionSizes(dimensionSizes);
     const [selectedUnit, setSelectedUnit] = (0, import_element373.useState)(() => {
-      const [, unit] = (0, import_components203.__experimentalParseQuantityAndUnitFromRawValue)(value);
+      const [, unit] = (0, import_components204.__experimentalParseQuantityAndUnitFromRawValue)(value);
       return unit || units2[0]?.value || "px";
     });
     const handleUnitChange = (newUnit) => {
-      const [currentValue, currentUnit] = (0, import_components203.__experimentalParseQuantityAndUnitFromRawValue)(value);
+      const [currentValue, currentUnit] = (0, import_components204.__experimentalParseQuantityAndUnitFromRawValue)(value);
       if (["em", "rem"].includes(newUnit) && currentUnit === "px") {
         onChange((currentValue / 16).toFixed(2) + newUnit);
       } else if (["em", "rem"].includes(currentUnit) && newUnit === "px") {
@@ -110145,7 +110159,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: clsx_default("block-editor-dimension-control", className),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(import_components203.BaseControl.VisualLabel, { as: "legend", children: label }),
+          /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(import_components204.BaseControl.VisualLabel, { as: "legend", children: label }),
           /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
             PresetInputControl,
             {
@@ -110171,7 +110185,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/height-control/index.mjs
   var import_element374 = __toESM(require_element(), 1);
-  var import_components204 = __toESM(require_components(), 1);
+  var import_components205 = __toESM(require_components(), 1);
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_deprecated15 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime580 = __toESM(require_jsx_runtime(), 1);
@@ -110217,7 +110231,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const customRangeValue = parseFloat(value);
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components204.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components205.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || [
         "%",
         "px",
@@ -110228,14 +110242,14 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     });
     const selectedUnit = (0, import_element374.useMemo)(
-      () => (0, import_components204.__experimentalParseQuantityAndUnitFromRawValue)(value),
+      () => (0, import_components205.__experimentalParseQuantityAndUnitFromRawValue)(value),
       [value]
     )[1] || units2[0]?.value || "px";
     const handleSliderChange = (next) => {
       onChange([next, selectedUnit].join(""));
     };
     const handleUnitChange = (newUnit) => {
-      const [currentValue, currentUnit] = (0, import_components204.__experimentalParseQuantityAndUnitFromRawValue)(value);
+      const [currentValue, currentUnit] = (0, import_components205.__experimentalParseQuantityAndUnitFromRawValue)(value);
       if (["em", "rem"].includes(newUnit) && currentUnit === "px") {
         onChange((currentValue / 16).toFixed(2) + newUnit);
       } else if (["em", "rem"].includes(currentUnit) && newUnit === "px") {
@@ -110271,10 +110285,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)("fieldset", { className: "block-editor-height-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components204.BaseControl.VisualLabel, { as: "legend", children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(import_components204.Flex, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components204.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
-          import_components204.__experimentalUnitControl,
+      /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components205.BaseControl.VisualLabel, { as: "legend", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(import_components205.Flex, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components205.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+          import_components205.__experimentalUnitControl,
           {
             value,
             units: units2,
@@ -110285,8 +110299,8 @@ If there's a particular need for this, please submit a feature request at https:
             hideLabelFromVision: true
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components204.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components204.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
-          import_components204.RangeControl,
+        /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components205.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components205.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+          import_components205.RangeControl,
           {
             value: customRangeValue,
             min: 0,
@@ -110303,7 +110317,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/image-editor/index.mjs
-  var import_components210 = __toESM(require_components(), 1);
+  var import_components211 = __toESM(require_components(), 1);
   var import_deprecated16 = __toESM(require_deprecated(), 1);
 
   // node_modules/.store/react-easy-crop@5.5.3-kybkjvqwKpE4KKLeyRXnSg/node_modules/react-easy-crop/index.module.js
@@ -111547,7 +111561,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/image-editor/aspect-ratio-dropdown.mjs
-  var import_components205 = __toESM(require_components(), 1);
+  var import_components206 = __toESM(require_components(), 1);
   var import_i18n213 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/image-editor/constants.mjs
@@ -111874,8 +111888,8 @@ If there's a particular need for this, please submit a feature request at https:
     onClick,
     value
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(import_components205.MenuGroup, { label, children: aspectRatios.map(({ name, slug, ratio }) => /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
-      import_components205.MenuItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(import_components206.MenuGroup, { label, children: aspectRatios.map(({ name, slug, ratio }) => /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
+      import_components206.MenuItem,
       {
         disabled: isDisabled,
         onClick: () => {
@@ -111910,7 +111924,7 @@ If there's a particular need for this, please submit a feature request at https:
       "dimensions.defaultAspectRatios"
     );
     return /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
-      import_components205.DropdownMenu,
+      import_components206.DropdownMenu,
       {
         icon: aspect_ratio_default,
         label: (0, import_i18n213.__)("Aspect Ratio"),
@@ -111982,7 +111996,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/image-editor/cropper.mjs
-  var import_components206 = __toESM(require_components(), 1);
+  var import_components207 = __toESM(require_components(), 1);
   var import_compose127 = __toESM(require_compose(), 1);
   var import_jsx_runtime585 = __toESM(require_jsx_runtime(), 1);
   function ImageCropper2({
@@ -112016,7 +112030,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(ImageCropper, { src: editedUrl || url }),
-          isInProgress && /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(import_components206.Spinner, {})
+          isInProgress && /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(import_components207.Spinner, {})
         ]
       }
     );
@@ -112027,18 +112041,18 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/image-editor/zoom-dropdown.mjs
-  var import_components207 = __toESM(require_components(), 1);
+  var import_components208 = __toESM(require_components(), 1);
   var import_i18n214 = __toESM(require_i18n(), 1);
   var import_jsx_runtime586 = __toESM(require_jsx_runtime(), 1);
   function ZoomDropdown() {
     const { isInProgress, zoom, setZoom } = useImageEditingContext();
     return /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(
-      import_components207.Dropdown,
+      import_components208.Dropdown,
       {
         contentClassName: "wp-block-image__zoom",
         popoverProps: POPOVER_PROPS8,
         renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(
-          import_components207.ToolbarButton,
+          import_components208.ToolbarButton,
           {
             icon: search_default,
             label: (0, import_i18n214.__)("Zoom"),
@@ -112047,8 +112061,8 @@ If there's a particular need for this, please submit a feature request at https:
             disabled: isInProgress
           }
         ),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(import_components207.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(
-          import_components207.RangeControl,
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(import_components208.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(
+          import_components208.RangeControl,
           {
             label: (0, import_i18n214.__)("Zoom"),
             min: MIN_ZOOM3,
@@ -112062,13 +112076,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/image-editor/rotation-button.mjs
-  var import_components208 = __toESM(require_components(), 1);
+  var import_components209 = __toESM(require_components(), 1);
   var import_i18n215 = __toESM(require_i18n(), 1);
   var import_jsx_runtime587 = __toESM(require_jsx_runtime(), 1);
   function RotationButton() {
     const { isInProgress, rotateClockwise } = useImageEditingContext();
     return /* @__PURE__ */ (0, import_jsx_runtime587.jsx)(
-      import_components208.ToolbarButton,
+      import_components209.ToolbarButton,
       {
         icon: rotate_right_default,
         label: (0, import_i18n215.__)("Rotate"),
@@ -112079,14 +112093,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/image-editor/form-controls.mjs
-  var import_components209 = __toESM(require_components(), 1);
+  var import_components210 = __toESM(require_components(), 1);
   var import_i18n216 = __toESM(require_i18n(), 1);
   var import_jsx_runtime588 = __toESM(require_jsx_runtime(), 1);
   function FormControls() {
     const { isInProgress, apply, cancel } = useImageEditingContext();
     return /* @__PURE__ */ (0, import_jsx_runtime588.jsxs)(import_jsx_runtime588.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime588.jsx)(import_components209.ToolbarButton, { onClick: apply, disabled: isInProgress, children: (0, import_i18n216.__)("Apply") }),
-      /* @__PURE__ */ (0, import_jsx_runtime588.jsx)(import_components209.ToolbarButton, { onClick: cancel, children: (0, import_i18n216.__)("Cancel") })
+      /* @__PURE__ */ (0, import_jsx_runtime588.jsx)(import_components210.ToolbarButton, { onClick: apply, disabled: isInProgress, children: (0, import_i18n216.__)("Apply") }),
+      /* @__PURE__ */ (0, import_jsx_runtime588.jsx)(import_components210.ToolbarButton, { onClick: cancel, children: (0, import_i18n216.__)("Cancel") })
     ] });
   }
 
@@ -112129,9 +112143,9 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime589.jsxs)(block_controls_default, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime589.jsxs)(import_components210.ToolbarGroup, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime589.jsxs)(import_components211.ToolbarGroup, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(ZoomDropdown, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(import_components210.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(import_components211.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(
                 AspectRatioDropdown,
                 {
                   toggleProps
@@ -112139,7 +112153,7 @@ If there's a particular need for this, please submit a feature request at https:
               ) }),
               /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(RotationButton, {})
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(import_components210.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(FormControls, {}) })
+            /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(import_components211.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(FormControls, {}) })
           ] })
         ]
       }
@@ -112147,7 +112161,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/image-size-control/index.mjs
-  var import_components211 = __toESM(require_components(), 1);
+  var import_components212 = __toESM(require_components(), 1);
   var import_i18n217 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/image-size-control/use-dimension-handler.mjs
@@ -112245,7 +112259,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
       return currentWidth === scaledWidth && currentHeight === scaledHeight;
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime590.jsxs)(import_components211.__experimentalVStack, { className: "block-editor-image-size-control", spacing: "4", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime590.jsxs)(import_components212.__experimentalVStack, { className: "block-editor-image-size-control", spacing: "4", children: [
       imageSizeOptions && imageSizeOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime590.jsx)(
         SelectControl2,
         {
@@ -112262,9 +112276,9 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       isResizable && /* @__PURE__ */ (0, import_jsx_runtime590.jsxs)(import_jsx_runtime590.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime590.jsxs)(import_components211.__experimentalHStack, { align: "baseline", spacing: "4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime590.jsxs)(import_components212.__experimentalHStack, { align: "baseline", spacing: "4", children: [
           /* @__PURE__ */ (0, import_jsx_runtime590.jsx)(
-            import_components211.__experimentalNumberControl,
+            import_components212.__experimentalNumberControl,
             {
               label: (0, import_i18n217.__)("Width"),
               value: currentWidth,
@@ -112273,7 +112287,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime590.jsx)(
-            import_components211.__experimentalNumberControl,
+            import_components212.__experimentalNumberControl,
             {
               label: (0, import_i18n217.__)("Height"),
               value: currentHeight,
@@ -112283,7 +112297,7 @@ If there's a particular need for this, please submit a feature request at https:
           )
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime590.jsx)(
-          import_components211.__experimentalToggleGroupControl,
+          import_components212.__experimentalToggleGroupControl,
           {
             label: (0, import_i18n217.__)("Image size presets"),
             hideLabelFromVision: true,
@@ -112292,7 +112306,7 @@ If there's a particular need for this, please submit a feature request at https:
             isBlock: true,
             children: IMAGE_SIZE_PRESETS.map((scale) => {
               return /* @__PURE__ */ (0, import_jsx_runtime590.jsx)(
-                import_components211.__experimentalToggleGroupControlOption,
+                import_components212.__experimentalToggleGroupControlOption,
                 {
                   value: scale,
                   label: (0, import_i18n217.sprintf)(
@@ -112311,7 +112325,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/justify-content-control/ui.mjs
-  var import_components212 = __toESM(require_components(), 1);
+  var import_components213 = __toESM(require_components(), 1);
   var import_i18n218 = __toESM(require_i18n(), 1);
   var import_jsx_runtime591 = __toESM(require_jsx_runtime(), 1);
   var icons2 = {
@@ -112374,7 +112388,7 @@ If there's a particular need for this, please submit a feature request at https:
         onClick: () => handleClick("stretch")
       }
     ];
-    const UIComponent = isToolbar ? import_components212.ToolbarGroup : import_components212.ToolbarDropdownMenu;
+    const UIComponent = isToolbar ? import_components213.ToolbarGroup : import_components213.ToolbarDropdownMenu;
     const extraProps = isToolbar ? { isCollapsed: isCollapsed3 } : {};
     return /* @__PURE__ */ (0, import_jsx_runtime591.jsx)(
       UIComponent,
@@ -112401,7 +112415,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/link-control/index.mjs
-  var import_components220 = __toESM(require_components(), 1);
+  var import_components221 = __toESM(require_components(), 1);
   var import_i18n228 = __toESM(require_i18n(), 1);
   var import_element389 = __toESM(require_element(), 1);
   var import_compose131 = __toESM(require_compose(), 1);
@@ -112414,20 +112428,20 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url8 = __toESM(require_url(), 1);
 
   // packages/block-editor/build-module/components/link-control/settings-drawer.mjs
-  var import_components213 = __toESM(require_components(), 1);
+  var import_components214 = __toESM(require_components(), 1);
   var import_compose128 = __toESM(require_compose(), 1);
   var import_i18n219 = __toESM(require_i18n(), 1);
   var import_element382 = __toESM(require_element(), 1);
   var import_jsx_runtime593 = __toESM(require_jsx_runtime(), 1);
   function LinkSettingsDrawer({ children, settingsOpen, setSettingsOpen }) {
     const prefersReducedMotion = (0, import_compose128.useReducedMotion)();
-    const MaybeAnimatePresence = prefersReducedMotion ? import_element382.Fragment : import_components213.__unstableAnimatePresence;
-    const MaybeMotionDiv = prefersReducedMotion ? "div" : import_components213.__unstableMotion.div;
+    const MaybeAnimatePresence = prefersReducedMotion ? import_element382.Fragment : import_components214.__unstableAnimatePresence;
+    const MaybeMotionDiv = prefersReducedMotion ? "div" : import_components214.__unstableMotion.div;
     const id = (0, import_compose128.useInstanceId)(LinkSettingsDrawer);
     const settingsDrawerId = `link-control-settings-drawer-${id}`;
     return /* @__PURE__ */ (0, import_jsx_runtime593.jsxs)(import_jsx_runtime593.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(
-        import_components213.Button,
+        import_components214.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-link-control__drawer-toggle",
@@ -112468,12 +112482,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-control/search-results.mjs
   var import_i18n223 = __toESM(require_i18n(), 1);
-  var import_components216 = __toESM(require_components(), 1);
+  var import_components217 = __toESM(require_components(), 1);
   var import_deprecated18 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/link-control/search-create-button.mjs
   var import_i18n220 = __toESM(require_i18n(), 1);
-  var import_components214 = __toESM(require_components(), 1);
+  var import_components215 = __toESM(require_components(), 1);
   var import_element383 = __toESM(require_element(), 1);
   var import_jsx_runtime594 = __toESM(require_jsx_runtime(), 1);
   var LinkControlSearchCreate = ({
@@ -112499,7 +112513,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime594.jsx)(
-      import_components214.MenuItem,
+      import_components215.MenuItem,
       {
         ...itemProps,
         iconPosition: "left",
@@ -112514,7 +112528,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-control/search-item.mjs
   var import_i18n221 = __toESM(require_i18n(), 1);
-  var import_components215 = __toESM(require_components(), 1);
+  var import_components216 = __toESM(require_components(), 1);
   var import_dom74 = __toESM(require_dom(), 1);
   var import_url5 = __toESM(require_url(), 1);
   var import_compose129 = __toESM(require_compose(), 1);
@@ -112611,7 +112625,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) => {
     const info = isURL4 ? (0, import_i18n221.__)("Press ENTER to add this link") : getURLForDisplay(suggestion.url);
     return /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(
-      import_components215.MenuItem,
+      import_components216.MenuItem,
       {
         ...itemProps,
         info,
@@ -112621,7 +112635,7 @@ If there's a particular need for this, please submit a feature request at https:
         shortcut: shouldShowType && getVisualTypeName(suggestion),
         className: "block-editor-link-control__search-item",
         children: /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(
-          import_components215.TextHighlight,
+          import_components216.TextHighlight,
           {
             text: (0, import_dom74.__unstableStripHTML)(suggestion.title),
             highlight: searchTerm
@@ -112708,7 +112722,7 @@ If there's a particular need for this, please submit a feature request at https:
         ...suggestionsListProps,
         className: resultsListClasses,
         "aria-label": labelText,
-        children: /* @__PURE__ */ (0, import_jsx_runtime596.jsx)(import_components216.MenuGroup, { children: suggestions.map((suggestion, index3) => {
+        children: /* @__PURE__ */ (0, import_jsx_runtime596.jsx)(import_components217.MenuGroup, { children: suggestions.map((suggestion, index3) => {
           if (shouldShowCreateSuggestion && CREATE_TYPE === suggestion.type) {
             return /* @__PURE__ */ (0, import_jsx_runtime596.jsx)(
               search_create_button_default,
@@ -112999,7 +113013,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-control/link-preview.mjs
   var import_i18n225 = __toESM(require_i18n(), 1);
-  var import_components218 = __toESM(require_components(), 1);
+  var import_components219 = __toESM(require_components(), 1);
   var import_compose130 = __toESM(require_compose(), 1);
   var import_url7 = __toESM(require_url(), 1);
   var import_dom75 = __toESM(require_dom(), 1);
@@ -113008,8 +113022,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_preferences2 = __toESM(require_preferences(), 1);
 
   // packages/block-editor/build-module/components/link-control/viewer-slot.mjs
-  var import_components217 = __toESM(require_components(), 1);
-  var { Slot: ViewerSlot, Fill: ViewerFill } = (0, import_components217.createSlotFill)(
+  var import_components218 = __toESM(require_components(), 1);
+  var { Slot: ViewerSlot, Fill: ViewerFill } = (0, import_components218.createSlotFill)(
     "BlockEditorLinkControlViewer"
   );
 
@@ -113117,7 +113131,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     });
     return /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-      import_components218.Flex,
+      import_components219.Flex,
       {
         role: "group",
         "aria-label": (0, import_i18n225.__)("Manage link"),
@@ -113129,9 +113143,9 @@ If there's a particular need for this, please submit a feature request at https:
           "is-error": isEmptyURL,
           "is-url-title": displayTitle === displayURL
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime598.jsxs)(import_components218.Flex, { gap: 0, align: "flex-start", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime598.jsxs)(import_components219.Flex, { gap: 0, align: "flex-start", children: [
           /* @__PURE__ */ (0, import_jsx_runtime598.jsxs)(
-            import_components218.Flex,
+            import_components219.Flex,
             {
               className: "block-editor-link-control__link-information",
               role: "figure",
@@ -113143,14 +113157,14 @@ If there's a particular need for this, please submit a feature request at https:
               align: "flex-start",
               children: [
                 value?.image ? /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-                  import_components218.Flex,
+                  import_components219.Flex,
                   {
                     className: "block-editor-link-control__preview-image",
                     justify: "center",
                     children: /* @__PURE__ */ (0, import_jsx_runtime598.jsx)("img", { src: value?.image, alt: "" })
                   }
                 ) : /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-                  import_components218.Flex,
+                  import_components219.Flex,
                   {
                     className: clsx_default(
                       "block-editor-link-control__preview-icon",
@@ -113163,23 +113177,23 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-                  import_components218.Flex,
+                  import_components219.Flex,
                   {
                     className: "block-editor-link-control__preview-details",
                     direction: "column",
                     gap: 2,
                     children: !isEmptyURL ? /* @__PURE__ */ (0, import_jsx_runtime598.jsxs)(import_jsx_runtime598.Fragment, { children: [
                       /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-                        import_components218.ExternalLink,
+                        import_components219.ExternalLink,
                         {
                           className: "block-editor-link-control__preview-title",
                           href: value.url,
-                          children: /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(import_components218.__experimentalTruncate, { numberOfLines: 1, children: displayTitle })
+                          children: /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(import_components219.__experimentalTruncate, { numberOfLines: 1, children: displayTitle })
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime598.jsx)("span", { className: "block-editor-link-control__preview-info", children: /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(import_components218.__experimentalTruncate, { numberOfLines: 1, children: displayURL }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime598.jsx)("span", { className: "block-editor-link-control__preview-info", children: /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(import_components219.__experimentalTruncate, { numberOfLines: 1, children: displayURL }) }),
                       value?.badges?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-                        import_components218.__experimentalHStack,
+                        import_components219.__experimentalHStack,
                         {
                           className: "block-editor-link-control__preview-badges",
                           alignment: "left",
@@ -113203,7 +113217,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-            import_components218.Button,
+            import_components219.Button,
             {
               icon: pencil_default,
               label: (0, import_i18n225.__)("Edit link"),
@@ -113213,7 +113227,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           hasUnlinkControl && /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-            import_components218.Button,
+            import_components219.Button,
             {
               icon: link_off_default,
               label: (0, import_i18n225.__)("Remove link"),
@@ -113223,7 +113237,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-            import_components218.Button,
+            import_components219.Button,
             {
               icon: copy_small_default,
               label: (0, import_i18n225.__)("Copy link"),
@@ -113242,7 +113256,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-control/settings.mjs
   var import_i18n226 = __toESM(require_i18n(), 1);
-  var import_components219 = __toESM(require_components(), 1);
+  var import_components220 = __toESM(require_components(), 1);
   var import_jsx_runtime599 = __toESM(require_jsx_runtime(), 1);
   var noop18 = () => {
   };
@@ -113276,7 +113290,7 @@ If there's a particular need for this, please submit a feature request at https:
         return null;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime599.jsx)(
-        import_components219.CheckboxControl,
+        import_components220.CheckboxControl,
         {
           className: "block-editor-link-control__setting",
           label: setting.title,
@@ -113680,7 +113694,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: "block-editor-link-control",
         children: [
           isCreatingPage && /* @__PURE__ */ (0, import_jsx_runtime600.jsxs)("div", { className: "block-editor-link-control__loading", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(import_components220.Spinner, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(import_components221.Spinner, {}),
             " ",
             (0, import_i18n228.__)("Creating"),
             "\u2026"
@@ -113696,7 +113710,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }),
                 children: [
                   showTextControl && /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-                    import_components220.TextControl,
+                    import_components221.TextControl,
                     {
                       ref: textInputRef,
                       className: "block-editor-link-control__field block-editor-link-control__text-content",
@@ -113757,7 +113771,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             errorMessage && /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-              import_components220.Notice,
+              import_components221.Notice,
               {
                 className: "block-editor-link-control__search-error",
                 status: "error",
@@ -113798,13 +113812,13 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ) }),
           showActions && /* @__PURE__ */ (0, import_jsx_runtime600.jsxs)(
-            import_components220.__experimentalHStack,
+            import_components221.__experimentalHStack,
             {
               justify: "right",
               className: "block-editor-link-control__search-actions",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-                  import_components220.Button,
+                  import_components221.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "tertiary",
@@ -113813,7 +113827,7 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-                  import_components220.Button,
+                  import_components221.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "primary",
@@ -113841,7 +113855,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     if (isEntity) {
       return /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-        import_components220.Button,
+        import_components221.Button,
         {
           icon: link_off_default,
           onClick: onUnlink,
@@ -113855,8 +113869,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (showActions) {
       return void 0;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(import_components220.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-      import_components220.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(import_components221.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
+      import_components221.Button,
       {
         onClick: isDisabled ? noop19 : onSubmit,
         label: (0, import_i18n228.__)("Submit"),
@@ -113882,7 +113896,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/line-height-control/index.mjs
   var import_i18n229 = __toESM(require_i18n(), 1);
-  var import_components221 = __toESM(require_components(), 1);
+  var import_components222 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/line-height-control/utils.mjs
   var BASE_DEFAULT_VALUE = 1.5;
@@ -113948,7 +113962,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChange(`${nextValue}`);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime601.jsx)("div", { className: "block-editor-line-height-control", children: /* @__PURE__ */ (0, import_jsx_runtime601.jsx)(
-      import_components221.__experimentalNumberControl,
+      import_components222.__experimentalNumberControl,
       {
         placeholder: BASE_DEFAULT_VALUE,
         ...otherProps,
@@ -113969,7 +113983,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/media-replace-flow/index.mjs
   var import_i18n230 = __toESM(require_i18n(), 1);
   var import_a11y23 = __toESM(require_a11y(), 1);
-  var import_components222 = __toESM(require_components(), 1);
+  var import_components223 = __toESM(require_components(), 1);
   var import_data159 = __toESM(require_data(), 1);
   var import_keycodes23 = __toESM(require_keycodes(), 1);
   var import_compose132 = __toESM(require_compose(), 1);
@@ -114118,7 +114132,7 @@ If there's a particular need for this, please submit a feature request at https:
       variant
     };
     return /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
-      import_components222.Dropdown,
+      import_components223.Dropdown,
       {
         popoverProps: mergedPopoverProps,
         className,
@@ -114137,7 +114151,7 @@ If there's a particular need for this, please submit a feature request at https:
             });
           }
           return /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
-            import_components222.ToolbarButton,
+            import_components223.ToolbarButton,
             {
               "aria-expanded": isOpen,
               "aria-haspopup": "true",
@@ -114148,7 +114162,7 @@ If there's a particular need for this, please submit a feature request at https:
           );
         },
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime602.jsxs)(import_jsx_runtime602.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime602.jsxs)(import_components222.NavigableMenu, { className: "block-editor-media-replace-flow__media-upload-menu", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime602.jsxs)(import_components223.NavigableMenu, { className: "block-editor-media-replace-flow__media-upload-menu", children: [
             /* @__PURE__ */ (0, import_jsx_runtime602.jsxs)(check_default2, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
                 media_upload_default,
@@ -114160,7 +114174,7 @@ If there's a particular need for this, please submit a feature request at https:
                   onSelect: (media) => selectMedia(media, onClose),
                   allowedTypes,
                   render: ({ open: open3 }) => /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
-                    import_components222.MenuItem,
+                    import_components223.MenuItem,
                     {
                       icon: media_default,
                       onClick: open3,
@@ -114170,7 +114184,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
-                import_components222.FormFileUpload,
+                import_components223.FormFileUpload,
                 {
                   onChange: (event) => {
                     uploadFiles(event, onClose);
@@ -114179,7 +114193,7 @@ If there's a particular need for this, please submit a feature request at https:
                   multiple: !!multiple,
                   render: ({ openFileDialog }) => {
                     return /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
-                      import_components222.MenuItem,
+                      import_components223.MenuItem,
                       {
                         icon: upload_default,
                         onClick: () => {
@@ -114193,7 +114207,7 @@ If there's a particular need for this, please submit a feature request at https:
               )
             ] }),
             onToggleFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
-              import_components222.MenuItem,
+              import_components223.MenuItem,
               {
                 icon: post_featured_image_default,
                 onClick: () => {
@@ -114206,7 +114220,7 @@ If there's a particular need for this, please submit a feature request at https:
             ),
             typeof children === "function" ? children({ onClose }) : children,
             mediaURL && onReset && /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
-              import_components222.MenuItem,
+              import_components223.MenuItem,
               {
                 onClick: () => {
                   onReset();
@@ -114245,11 +114259,11 @@ If there's a particular need for this, please submit a feature request at https:
         removeNotice
       };
     }),
-    (0, import_components222.withFilters)("editor.MediaReplaceFlow")
+    (0, import_components223.withFilters)("editor.MediaReplaceFlow")
   ])(MediaReplaceFlow);
 
   // packages/block-editor/build-module/components/media-placeholder/index.mjs
-  var import_components228 = __toESM(require_components(), 1);
+  var import_components229 = __toESM(require_components(), 1);
   var import_i18n235 = __toESM(require_i18n(), 1);
   var import_element393 = __toESM(require_element(), 1);
   var import_data161 = __toESM(require_data(), 1);
@@ -114258,15 +114272,15 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/url-popover/index.mjs
   var import_i18n234 = __toESM(require_i18n(), 1);
   var import_element392 = __toESM(require_element(), 1);
-  var import_components227 = __toESM(require_components(), 1);
+  var import_components228 = __toESM(require_components(), 1);
   var import_deprecated21 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/url-popover/link-viewer.mjs
   var import_i18n231 = __toESM(require_i18n(), 1);
-  var import_components224 = __toESM(require_components(), 1);
+  var import_components225 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/url-popover/link-viewer-url.mjs
-  var import_components223 = __toESM(require_components(), 1);
+  var import_components224 = __toESM(require_components(), 1);
   var import_url9 = __toESM(require_url(), 1);
   var import_jsx_runtime603 = __toESM(require_jsx_runtime(), 1);
   function LinkViewerURL({ url, urlLabel, className }) {
@@ -114277,7 +114291,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!url) {
       return /* @__PURE__ */ (0, import_jsx_runtime603.jsx)("span", { className: linkClassName });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime603.jsx)(import_components223.ExternalLink, { className: linkClassName, href: url, children: urlLabel || (0, import_url9.filterURLForDisplay)((0, import_url9.safeDecodeURI)(url)) });
+    return /* @__PURE__ */ (0, import_jsx_runtime603.jsx)(import_components224.ExternalLink, { className: linkClassName, href: url, children: urlLabel || (0, import_url9.filterURLForDisplay)((0, import_url9.safeDecodeURI)(url)) });
   }
 
   // packages/block-editor/build-module/components/url-popover/link-viewer.mjs
@@ -114308,7 +114322,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           onEditLinkClick && /* @__PURE__ */ (0, import_jsx_runtime604.jsx)(
-            import_components224.Button,
+            import_components225.Button,
             {
               icon: pencil_default,
               label: (0, import_i18n231.__)("Edit"),
@@ -114323,20 +114337,20 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/url-popover/link-editor.mjs
   var import_i18n233 = __toESM(require_i18n(), 1);
-  var import_components226 = __toESM(require_components(), 1);
+  var import_components227 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/url-input/index.mjs
   var import_a11y24 = __toESM(require_a11y(), 1);
   var import_i18n232 = __toESM(require_i18n(), 1);
   var import_element391 = __toESM(require_element(), 1);
   var import_keycodes24 = __toESM(require_keycodes(), 1);
-  var import_components225 = __toESM(require_components(), 1);
+  var import_components226 = __toESM(require_components(), 1);
   var import_compose133 = __toESM(require_compose(), 1);
   var import_data160 = __toESM(require_data(), 1);
   var import_url10 = __toESM(require_url(), 1);
   var import_jsx_runtime605 = __toESM(require_jsx_runtime(), 1);
   var import_react82 = __toESM(require_react(), 1);
-  var { ValidatedInputControl: ValidatedInputControl2 } = unlock(import_components225.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl2 } = unlock(import_components226.privateApis);
   var noop21 = () => {
   };
   function isFunction(maybeFunc) {
@@ -114624,8 +114638,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (renderControl) {
       return renderControl(controlProps, inputProps, isLoading);
     }
-    const MaybeValidatedInputControl = isValidated ? ValidatedInputControl2 : import_components225.__experimentalInputControl;
-    return /* @__PURE__ */ (0, import_jsx_runtime605.jsxs)(import_components225.BaseControl, { ...controlProps, children: [
+    const MaybeValidatedInputControl = isValidated ? ValidatedInputControl2 : import_components226.__experimentalInputControl;
+    return /* @__PURE__ */ (0, import_jsx_runtime605.jsxs)(import_components226.BaseControl, { ...controlProps, children: [
       /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(
         MaybeValidatedInputControl,
         {
@@ -114641,7 +114655,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
       ),
-      isLoading && /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(import_components225.Spinner, {})
+      isLoading && /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(import_components226.Spinner, {})
     ] });
   }
   function Suggestions({
@@ -114685,7 +114699,7 @@ If there's a particular need for this, please submit a feature request at https:
         currentInputValue: suggestionsValue
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(import_components225.Popover, { placement: "bottom", focusOnMount: false, children: /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(import_components226.Popover, { placement: "bottom", focusOnMount: false, children: /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(
       "div",
       {
         ...suggestionsListProps,
@@ -114693,7 +114707,7 @@ If there's a particular need for this, please submit a feature request at https:
           [`${className}__suggestions`]: className
         }),
         children: suggestions.map((suggestion, index3) => /* @__PURE__ */ (0, import_react82.createElement)(
-          import_components225.Button,
+          import_components226.Button,
           {
             __next40pxDefaultSize: true,
             ...buildSuggestionItemProps(suggestion, index3),
@@ -114739,7 +114753,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
-            import_components226.Button,
+            import_components227.Button,
             {
               icon: keyboard_return_default,
               label: (0, import_i18n233.__)("Apply"),
@@ -114755,7 +114769,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/url-popover/index.mjs
   var import_jsx_runtime607 = __toESM(require_jsx_runtime(), 1);
   var { __experimentalPopoverLegacyPositionToPlacement } = unlock(
-    import_components227.privateApis
+    import_components228.privateApis
   );
   var DEFAULT_PLACEMENT = "bottom";
   var URLPopover = (0, import_element392.forwardRef)(
@@ -114790,7 +114804,7 @@ If there's a particular need for this, please submit a feature request at https:
         setIsSettingsExpanded(!isSettingsExpanded);
       };
       return /* @__PURE__ */ (0, import_jsx_runtime607.jsxs)(
-        import_components227.Popover,
+        import_components228.Popover,
         {
           ref,
           role: "dialog",
@@ -114806,7 +114820,7 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime607.jsx)("div", { className: "block-editor-url-popover__input-container", children: /* @__PURE__ */ (0, import_jsx_runtime607.jsxs)("div", { className: "block-editor-url-popover__row", children: [
               children,
               !!renderSettings && /* @__PURE__ */ (0, import_jsx_runtime607.jsx)(
-                import_components227.Button,
+                import_components228.Button,
                 {
                   className: "block-editor-url-popover__settings-toggle",
                   icon: chevron_down_default,
@@ -114844,7 +114858,7 @@ If there's a particular need for this, please submit a feature request at https:
       className: "block-editor-media-placeholder__url-input-form",
       onSubmit,
       children: /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-        import_components228.__experimentalInputControl,
+        import_components229.__experimentalInputControl,
         {
           label: (0, import_i18n235.__)("URL"),
           type: "text",
@@ -114852,8 +114866,8 @@ If there's a particular need for this, please submit a feature request at https:
           placeholder: (0, import_i18n235.__)("Paste or type URL"),
           onChange,
           value: src,
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(import_components228.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-            import_components228.Button,
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(import_components229.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
+            import_components229.Button,
             {
               size: "small",
               icon: keyboard_return_default,
@@ -114884,7 +114898,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return /* @__PURE__ */ (0, import_jsx_runtime608.jsxs)("div", { className: "block-editor-media-placeholder__url-input-container", children: [
       /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-        import_components228.Button,
+        import_components229.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-media-placeholder__button",
@@ -115105,7 +115119,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
       return /* @__PURE__ */ (0, import_jsx_runtime608.jsxs)(
-        import_components228.Placeholder,
+        import_components229.Placeholder,
         {
           icon,
           label: title,
@@ -115128,7 +115142,7 @@ If there's a particular need for this, please submit a feature request at https:
         return null;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-        import_components228.DropZone,
+        import_components229.DropZone,
         {
           onFilesDrop: onFilesUpload,
           onDrop: handleBlocksDrop,
@@ -115149,7 +115163,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const renderCancelLink = () => {
       return onCancel && /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-        import_components228.Button,
+        import_components229.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-media-placeholder__cancel-button",
@@ -115172,7 +115186,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const renderFeaturedImageToggle = () => {
       return onToggleFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime608.jsx)("div", { className: "block-editor-media-placeholder__url-input-container", children: /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-        import_components228.Button,
+        import_components229.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-media-placeholder__button",
@@ -115185,7 +115199,7 @@ If there's a particular need for this, please submit a feature request at https:
     const renderMediaUploadChecked = () => {
       const defaultButton = ({ open: open3 }) => {
         return /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-          import_components228.Button,
+          import_components229.Button,
           {
             __next40pxDefaultSize: true,
             variant: "secondary",
@@ -115214,7 +115228,7 @@ If there's a particular need for this, please submit a feature request at https:
         return /* @__PURE__ */ (0, import_jsx_runtime608.jsxs)(import_jsx_runtime608.Fragment, { children: [
           renderDropZone(),
           /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-            import_components228.FormFileUpload,
+            import_components229.FormFileUpload,
             {
               onChange: onUpload,
               accept: computedAccept,
@@ -115222,7 +115236,7 @@ If there's a particular need for this, please submit a feature request at https:
               render: ({ openFileDialog }) => {
                 const content = /* @__PURE__ */ (0, import_jsx_runtime608.jsxs)(import_jsx_runtime608.Fragment, { children: [
                   /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-                    import_components228.Button,
+                    import_components229.Button,
                     {
                       __next40pxDefaultSize: true,
                       variant: "primary",
@@ -115249,10 +115263,10 @@ If there's a particular need for this, please submit a feature request at https:
         const content = /* @__PURE__ */ (0, import_jsx_runtime608.jsxs)(import_jsx_runtime608.Fragment, { children: [
           renderDropZone(),
           /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-            import_components228.FormFileUpload,
+            import_components229.FormFileUpload,
             {
               render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-                import_components228.Button,
+                import_components229.Button,
                 {
                   __next40pxDefaultSize: true,
                   onClick: openFileDialog,
@@ -115289,7 +115303,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var media_placeholder_default = (0, import_components228.withFilters)("editor.MediaPlaceholder")(MediaPlaceholder);
+  var media_placeholder_default = (0, import_components229.withFilters)("editor.MediaPlaceholder")(MediaPlaceholder);
 
   // packages/block-editor/build-module/components/panel-color-settings/index.mjs
   var import_jsx_runtime609 = __toESM(require_jsx_runtime(), 1);
@@ -115329,7 +115343,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data163 = __toESM(require_data(), 1);
   var import_compose139 = __toESM(require_compose(), 1);
   var import_rich_text20 = __toESM(require_rich_text(), 1);
-  var import_components230 = __toESM(require_components(), 1);
+  var import_components231 = __toESM(require_components(), 1);
   var import_blocks92 = __toESM(require_blocks(), 1);
   var import_i18n236 = __toESM(require_i18n(), 1);
 
@@ -116144,7 +116158,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/rich-text/toolbar-button.mjs
-  var import_components229 = __toESM(require_components(), 1);
+  var import_components230 = __toESM(require_components(), 1);
   var import_keycodes28 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime613 = __toESM(require_jsx_runtime(), 1);
   function RichTextToolbarButton({
@@ -116161,7 +116175,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (shortcutType && shortcutCharacter) {
       shortcut = import_keycodes28.displayShortcut[shortcutType](shortcutCharacter);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime613.jsx)(import_components229.Fill, { name: fillName, children: /* @__PURE__ */ (0, import_jsx_runtime613.jsx)(import_components229.ToolbarButton, { ...props, shortcut }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime613.jsx)(import_components230.Fill, { name: fillName, children: /* @__PURE__ */ (0, import_jsx_runtime613.jsx)(import_components230.ToolbarButton, { ...props, shortcut }) });
   }
 
   // packages/block-editor/build-module/components/rich-text/index.mjs
@@ -116552,7 +116566,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const TagName13 = tagName;
     return /* @__PURE__ */ (0, import_jsx_runtime614.jsxs)(import_jsx_runtime614.Fragment, { children: [
-      isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(KeyboardShortcutContext2.Provider, { value: keyboardShortcuts, children: /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(InputEventContext2.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime614.jsxs)(import_components230.Popover.__unstableSlotNameProvider, { value: "__unstable-block-tools-after", children: [
+      isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(KeyboardShortcutContext2.Provider, { value: keyboardShortcuts, children: /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(InputEventContext2.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime614.jsxs)(import_components231.Popover.__unstableSlotNameProvider, { value: "__unstable-block-tools-after", children: [
         children && children({ value, onChange, onFocus }),
         /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(
           FormatEdit,
@@ -116718,7 +116732,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/responsive-block-control/index.mjs
   var import_i18n238 = __toESM(require_i18n(), 1);
   var import_element402 = __toESM(require_element(), 1);
-  var import_components231 = __toESM(require_components(), 1);
+  var import_components232 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/responsive-block-control/label.mjs
   var import_compose140 = __toESM(require_compose(), 1);
@@ -116819,7 +116833,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime618.jsx)("legend", { className: "block-editor-responsive-block-control__title", children: title }),
       /* @__PURE__ */ (0, import_jsx_runtime618.jsxs)("div", { className: "block-editor-responsive-block-control__inner", children: [
         /* @__PURE__ */ (0, import_jsx_runtime618.jsx)(
-          import_components231.ToggleControl,
+          import_components232.ToggleControl,
           {
             className: "block-editor-responsive-block-control__toggle",
             label: toggleControlLabel,
@@ -116849,21 +116863,21 @@ If there's a particular need for this, please submit a feature request at https:
   var responsive_block_control_default = ResponsiveBlockControl;
 
   // packages/block-editor/build-module/components/unit-control/index.mjs
-  var import_components232 = __toESM(require_components(), 1);
+  var import_components233 = __toESM(require_components(), 1);
   var import_jsx_runtime619 = __toESM(require_jsx_runtime(), 1);
   function UnitControl6({ units: unitsProp, ...props }) {
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components232.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components233.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["%", "px", "em", "rem", "vw"],
       units: unitsProp
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components232.__experimentalUnitControl, { units: units2, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components233.__experimentalUnitControl, { units: units2, ...props });
   }
 
   // packages/block-editor/build-module/components/url-input/button.mjs
   var import_i18n239 = __toESM(require_i18n(), 1);
   var import_element403 = __toESM(require_element(), 1);
-  var import_components233 = __toESM(require_components(), 1);
+  var import_components234 = __toESM(require_components(), 1);
   var import_jsx_runtime620 = __toESM(require_jsx_runtime(), 1);
   function URLInputButton({ url, onChange }) {
     const [expanded, toggleExpanded] = (0, import_element403.useReducer)(
@@ -116876,7 +116890,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return /* @__PURE__ */ (0, import_jsx_runtime620.jsxs)("div", { className: "block-editor-url-input__button", children: [
       /* @__PURE__ */ (0, import_jsx_runtime620.jsx)(
-        import_components233.Button,
+        import_components234.Button,
         {
           size: "compact",
           icon: link_default,
@@ -116893,7 +116907,7 @@ If there's a particular need for this, please submit a feature request at https:
           onSubmit: submitLink,
           children: /* @__PURE__ */ (0, import_jsx_runtime620.jsxs)("div", { className: "block-editor-url-input__button-modal-line", children: [
             /* @__PURE__ */ (0, import_jsx_runtime620.jsx)(
-              import_components233.Button,
+              import_components234.Button,
               {
                 __next40pxDefaultSize: true,
                 className: "block-editor-url-input__back",
@@ -116907,8 +116921,8 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 value: url || "",
                 onChange,
-                suffix: /* @__PURE__ */ (0, import_jsx_runtime620.jsx)(import_components233.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime620.jsx)(
-                  import_components233.Button,
+                suffix: /* @__PURE__ */ (0, import_jsx_runtime620.jsx)(import_components234.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime620.jsx)(
+                  import_components234.Button,
                   {
                     size: "small",
                     icon: keyboard_return_default,
@@ -116929,7 +116943,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n240 = __toESM(require_i18n(), 1);
   var import_element404 = __toESM(require_element(), 1);
   var import_dom78 = __toESM(require_dom(), 1);
-  var import_components234 = __toESM(require_components(), 1);
+  var import_components235 = __toESM(require_components(), 1);
   var import_url12 = __toESM(require_url(), 1);
   var import_jsx_runtime621 = __toESM(require_jsx_runtime(), 1);
   var LINK_DESTINATION_NONE = "none";
@@ -117082,9 +117096,9 @@ If there's a particular need for this, please submit a feature request at https:
     const onSetLinkClass = (value) => {
       onChangeUrl({ linkClass: value });
     };
-    const advancedOptions = /* @__PURE__ */ (0, import_jsx_runtime621.jsxs)(import_components234.__experimentalVStack, { spacing: "3", children: [
+    const advancedOptions = /* @__PURE__ */ (0, import_jsx_runtime621.jsxs)(import_components235.__experimentalVStack, { spacing: "3", children: [
       /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-        import_components234.ToggleControl,
+        import_components235.ToggleControl,
         {
           label: (0, import_i18n240.__)("Open in new tab"),
           onChange: onSetNewTab,
@@ -117092,7 +117106,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-        import_components234.TextControl,
+        import_components235.TextControl,
         {
           label: (0, import_i18n240.__)("Link relation"),
           value: rel ?? "",
@@ -117102,13 +117116,13 @@ If there's a particular need for this, please submit a feature request at https:
               "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
             ),
             {
-              a: /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(import_components234.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
+              a: /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(import_components235.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
             }
           )
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-        import_components234.TextControl,
+        import_components235.TextControl,
         {
           label: (0, import_i18n240.__)("Link CSS class"),
           value: linkClass || "",
@@ -117131,7 +117145,7 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime621.jsx)("p", { className: "description", children: (0, import_i18n240.__)("Scales the image with a lightbox effect") })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-            import_components234.Button,
+            import_components235.Button,
             {
               icon: link_off_default,
               label: (0, import_i18n240.__)("Disable enlarge on click"),
@@ -117165,7 +117179,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-            import_components234.Button,
+            import_components235.Button,
             {
               icon: link_off_default,
               label: (0, import_i18n240.__)("Remove link"),
@@ -117181,7 +117195,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return /* @__PURE__ */ (0, import_jsx_runtime621.jsxs)(import_jsx_runtime621.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-        import_components234.ToolbarButton,
+        import_components235.ToolbarButton,
         {
           icon: link_default,
           className: "components-toolbar__control",
@@ -117200,9 +117214,9 @@ If there's a particular need for this, please submit a feature request at https:
           onFocusOutside: onFocusOutside(),
           onClose: closeLinkUI,
           renderSettings: hideLightboxPanel ? () => advancedOptions : null,
-          additionalControls: showLinkEditor && /* @__PURE__ */ (0, import_jsx_runtime621.jsxs)(import_components234.NavigableMenu, { children: [
+          additionalControls: showLinkEditor && /* @__PURE__ */ (0, import_jsx_runtime621.jsxs)(import_components235.NavigableMenu, { children: [
             getLinkDestinations().map((link) => /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-              import_components234.MenuItem,
+              import_components235.MenuItem,
               {
                 icon: link.icon,
                 iconPosition: "left",
@@ -117216,7 +117230,7 @@ If there's a particular need for this, please submit a feature request at https:
               link.linkDestination
             )),
             showLightboxSetting && /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-              import_components234.MenuItem,
+              import_components235.MenuItem,
               {
                 className: "block-editor-url-popover__expand-on-click",
                 icon: fullscreen_default,
@@ -117246,14 +117260,14 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/spacing-sizes-control/index.mjs
-  var import_components237 = __toESM(require_components(), 1);
+  var import_components238 = __toESM(require_components(), 1);
   var import_element407 = __toESM(require_element(), 1);
   var import_i18n244 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/spacing-sizes-control/hooks/use-spacing-sizes.mjs
   var import_element405 = __toESM(require_element(), 1);
   var import_i18n241 = __toESM(require_i18n(), 1);
-  var EMPTY_ARRAY18 = [];
+  var EMPTY_ARRAY17 = [];
   var compare = new Intl.Collator("und", { numeric: true }).compare;
   function useSpacingSizes() {
     const [
@@ -117267,9 +117281,9 @@ If there's a particular need for this, please submit a feature request at https:
       "spacing.spacingSizes.default",
       "spacing.defaultSpacingSizes"
     );
-    const customSizes = customSpacingSizes ?? EMPTY_ARRAY18;
-    const themeSizes = themeSpacingSizes ?? EMPTY_ARRAY18;
-    const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : EMPTY_ARRAY18;
+    const customSizes = customSpacingSizes ?? EMPTY_ARRAY17;
+    const themeSizes = themeSpacingSizes ?? EMPTY_ARRAY17;
+    const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : EMPTY_ARRAY17;
     return (0, import_element405.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n241.__)("None"), slug: "0", size: 0 },
@@ -117295,7 +117309,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element406 = __toESM(require_element(), 1);
   var import_data164 = __toESM(require_data(), 1);
   var import_i18n242 = __toESM(require_i18n(), 1);
-  var import_components235 = __toESM(require_components(), 1);
+  var import_components236 = __toESM(require_components(), 1);
   var import_jsx_runtime622 = __toESM(require_jsx_runtime(), 1);
   var CUSTOM_VALUE_SETTINGS2 = {
     px: { max: 300, steps: 1 },
@@ -117346,7 +117360,7 @@ If there's a particular need for this, please submit a feature request at https:
       return editorSettings?.disableCustomSpacingSizes;
     });
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components235.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components236.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["px", "em", "rem"]
     });
     const presets = (0, import_element406.useMemo)(() => {
@@ -117540,13 +117554,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/linked-button.mjs
-  var import_components236 = __toESM(require_components(), 1);
+  var import_components237 = __toESM(require_components(), 1);
   var import_i18n243 = __toESM(require_i18n(), 1);
   var import_jsx_runtime626 = __toESM(require_jsx_runtime(), 1);
   function LinkedButton2({ isLinked, ...props }) {
     const label = isLinked ? (0, import_i18n243.__)("Unlink sides") : (0, import_i18n243.__)("Link sides");
     return /* @__PURE__ */ (0, import_jsx_runtime626.jsx)(
-      import_components236.Button,
+      import_components237.Button,
       {
         ...props,
         size: "small",
@@ -117619,9 +117633,9 @@ If there's a particular need for this, please submit a feature request at https:
       sideLabel
     ).trim();
     return /* @__PURE__ */ (0, import_jsx_runtime627.jsxs)("fieldset", { className: "spacing-sizes-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime627.jsxs)(import_components237.__experimentalHStack, { className: "spacing-sizes-control__header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime627.jsxs)(import_components238.__experimentalHStack, { className: "spacing-sizes-control__header", children: [
         /* @__PURE__ */ (0, import_jsx_runtime627.jsx)(
-          import_components237.BaseControl.VisualLabel,
+          import_components238.BaseControl.VisualLabel,
           {
             as: "legend",
             className: "spacing-sizes-control__label",
@@ -117637,7 +117651,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime627.jsx)(import_components237.__experimentalVStack, { spacing: 0.5, children: renderControls() })
+      /* @__PURE__ */ (0, import_jsx_runtime627.jsx)(import_components238.__experimentalVStack, { spacing: 0.5, children: renderControls() })
     ] });
   }
 
@@ -117662,12 +117676,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-inspector/index.mjs
   var import_i18n273 = __toESM(require_i18n(), 1);
   var import_blocks108 = __toESM(require_blocks(), 1);
-  var import_components264 = __toESM(require_components(), 1);
+  var import_components265 = __toESM(require_components(), 1);
   var import_data185 = __toESM(require_data(), 1);
   var import_element431 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-inspector/edit-contents.mjs
-  var import_components238 = __toESM(require_components(), 1);
+  var import_components239 = __toESM(require_components(), 1);
   var import_i18n245 = __toESM(require_i18n(), 1);
   var import_data165 = __toESM(require_data(), 1);
   var import_blocks93 = __toESM(require_blocks(), 1);
@@ -117694,7 +117708,7 @@ If there's a particular need for this, please submit a feature request at https:
         direction: "column",
         className: "block-editor-block-inspector-edit-contents",
         children: /* @__PURE__ */ (0, import_jsx_runtime628.jsx)(
-          import_components238.Button,
+          import_components239.Button,
           {
             className: "block-editor-block-inspector-edit-contents__button",
             __next40pxDefaultSize: true,
@@ -117748,15 +117762,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-inspector/edit-original-slot-fill.mjs
-  var import_components239 = __toESM(require_components(), 1);
-  var PrivateBlockInspectorEditOriginal = (0, import_components239.createSlotFill)(
+  var import_components240 = __toESM(require_components(), 1);
+  var PrivateBlockInspectorEditOriginal = (0, import_components240.createSlotFill)(
     /* @__PURE__ */ Symbol("PrivateBlockInspectorEditOriginal")
   );
 
   // packages/block-editor/build-module/components/skip-to-selected-block/index.mjs
   var import_data166 = __toESM(require_data(), 1);
   var import_i18n246 = __toESM(require_i18n(), 1);
-  var import_components240 = __toESM(require_components(), 1);
+  var import_components241 = __toESM(require_components(), 1);
   var import_element408 = __toESM(require_element(), 1);
   var import_jsx_runtime629 = __toESM(require_jsx_runtime(), 1);
   function SkipToSelectedBlock() {
@@ -117770,7 +117784,7 @@ If there's a particular need for this, please submit a feature request at https:
       ref.current?.focus();
     };
     return selectedBlockClientId ? /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(
-      import_components240.Button,
+      import_components241.Button,
       {
         __next40pxDefaultSize: true,
         variant: "secondary",
@@ -117830,15 +117844,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-inspector/inspector-pre-tabs-slot-fill.mjs
-  var import_components241 = __toESM(require_components(), 1);
+  var import_components242 = __toESM(require_components(), 1);
   var BlockInspectorPreTabsKey = /* @__PURE__ */ Symbol("BlockInspectorPreTabs");
   var {
     Fill: BlockInspectorPreTabsFill,
     Slot: BlockInspectorPreTabsSlot
-  } = (0, import_components241.createSlotFill)(BlockInspectorPreTabsKey);
+  } = (0, import_components242.createSlotFill)(BlockInspectorPreTabsKey);
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.mjs
-  var import_components260 = __toESM(require_components(), 1);
+  var import_components261 = __toESM(require_components(), 1);
   var import_element429 = __toESM(require_element(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
   var import_data182 = __toESM(require_data(), 1);
@@ -117871,15 +117885,15 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/settings-tab.mjs
-  var import_components243 = __toESM(require_components(), 1);
+  var import_components244 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/advanced-controls-panel.mjs
-  var import_components242 = __toESM(require_components(), 1);
+  var import_components243 = __toESM(require_components(), 1);
   var import_i18n249 = __toESM(require_i18n(), 1);
   var import_jsx_runtime631 = __toESM(require_jsx_runtime(), 1);
   var AdvancedControls = ({ initialOpen = false }) => {
-    const fills = (0, import_components242.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName);
-    const privateFills = (0, import_components242.__experimentalUseSlotFills)(
+    const fills = (0, import_components243.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName);
+    const privateFills = (0, import_components243.__experimentalUseSlotFills)(
       PrivateInspectorControlsAllowedBlocks.name
     );
     const hasFills = Boolean(fills && fills.length);
@@ -117888,7 +117902,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime631.jsxs)(
-      import_components242.PanelBody,
+      import_components243.PanelBody,
       {
         className: "block-editor-block-inspector__advanced",
         title: (0, import_i18n249.__)("Advanced"),
@@ -117905,8 +117919,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/inspector-controls-tabs/settings-tab.mjs
   var import_jsx_runtime632 = __toESM(require_jsx_runtime(), 1);
   var SettingsTab = ({ showAdvancedControls = false }) => {
-    const defaultFills = (0, import_components243.__experimentalUseSlotFills)(groups_default2.default.name);
-    const bindingsFills = (0, import_components243.__experimentalUseSlotFills)(groups_default2.bindings.name);
+    const defaultFills = (0, import_components244.__experimentalUseSlotFills)(groups_default2.default.name);
+    const bindingsFills = (0, import_components244.__experimentalUseSlotFills)(groups_default2.bindings.name);
     const hasOtherFills = !!defaultFills?.length || !!bindingsFills?.length;
     return /* @__PURE__ */ (0, import_jsx_runtime632.jsxs)(import_jsx_runtime632.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime632.jsx)(inspector_controls_default.Slot, {}),
@@ -117922,7 +117936,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element427 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/position-controls-panel.mjs
-  var import_components244 = __toESM(require_components(), 1);
+  var import_components245 = __toESM(require_components(), 1);
   var import_data168 = __toESM(require_data(), 1);
   var import_i18n250 = __toESM(require_i18n(), 1);
   var import_jsx_runtime633 = __toESM(require_jsx_runtime(), 1);
@@ -117994,14 +118008,14 @@ If there's a particular need for this, please submit a feature request at https:
       updateBlockAttributes2(selectedClientIds, attributesByClientId, true);
     }
     return /* @__PURE__ */ (0, import_jsx_runtime633.jsx)(
-      import_components244.__experimentalToolsPanel,
+      import_components245.__experimentalToolsPanel,
       {
         className: "block-editor-block-inspector__position",
         label: (0, import_i18n250.__)("Position"),
         resetAll: resetPosition,
         dropdownMenuProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime633.jsx)(
-          import_components244.__experimentalToolsPanelItem,
+          import_components245.__experimentalToolsPanelItem,
           {
             isShownByDefault: hasPositionAttribute,
             label: (0, import_i18n250.__)("Position"),
@@ -118014,7 +118028,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   var PositionControls = () => {
-    const fills = (0, import_components244.__experimentalUseSlotFills)(groups_default2.position.name);
+    const fills = (0, import_components245.__experimentalUseSlotFills)(groups_default2.position.name);
     const hasFills = Boolean(fills && fills.length);
     if (!hasFills) {
       return null;
@@ -118030,18 +118044,18 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n259 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/color-panel.mjs
-  var import_components247 = __toESM(require_components(), 1);
+  var import_components248 = __toESM(require_components(), 1);
   var import_element411 = __toESM(require_element(), 1);
   var import_i18n254 = __toESM(require_i18n(), 1);
   var import_style_engine4 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/components/global-styles/color-gradient-dropdown-item.mjs
-  var import_components246 = __toESM(require_components(), 1);
+  var import_components247 = __toESM(require_components(), 1);
   var import_element409 = __toESM(require_element(), 1);
   var import_i18n252 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/inheritance/index.mjs
-  var import_components245 = __toESM(require_components(), 1);
+  var import_components246 = __toESM(require_components(), 1);
   var import_i18n251 = __toESM(require_i18n(), 1);
   var import_jsx_runtime634 = __toESM(require_jsx_runtime(), 1);
   var isGlobalStylesInheritanceIndicatorUIEnabled = () => !!window.__experimentalGlobalStylesInheritanceUI;
@@ -118066,7 +118080,7 @@ If there's a particular need for this, please submit a feature request at https:
       // 40px default-size enforcement rule.
       // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
       /* @__PURE__ */ (0, import_jsx_runtime634.jsxs)(
-        import_components245.Button,
+        import_components246.Button,
         {
           __next40pxDefaultSize: false,
           label: (0, import_i18n251.__)("Reset to inherited value"),
@@ -118089,7 +118103,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime634.jsx)(
-              import_components245.Icon,
+              import_components246.Icon,
               {
                 className: "has-local-override-from-global-styles__reset-icon",
                 icon: reset_default
@@ -118117,7 +118131,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const showResetAffordance = hasLocalOverride && showLocalOverrideActionsInLabel;
     return /* @__PURE__ */ (0, import_jsx_runtime634.jsxs)(
-      import_components245.__experimentalToolsPanelItem,
+      import_components246.__experimentalToolsPanelItem,
       {
         className,
         label,
@@ -118150,7 +118164,7 @@ If there's a particular need for this, please submit a feature request at https:
     const defaultTabId = (tabs.find((tab) => tab.userValue !== void 0) ?? tabs.find(
       (tab) => tab.isPlaceholder || tab.inheritedValue !== void 0
     ))?.key;
-    return /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(import_components246.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime635.jsxs)("div", { className: "block-editor-panel-color-gradient-settings__dropdown-content", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(import_components247.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime635.jsxs)("div", { className: "block-editor-panel-color-gradient-settings__dropdown-content", children: [
       tabs.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(
         ColorGradientTab,
         {
@@ -118194,7 +118208,7 @@ If there's a particular need for this, please submit a feature request at https:
       justify: "flex-start",
       gap: "sm",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime635.jsx)("div", { className: "block-editor-panel-color-gradient-settings__color-indicators", children: indicators.map((indicator, index3) => /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(import_components246.ColorIndicator, { colorValue: indicator }, index3)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime635.jsx)("div", { className: "block-editor-panel-color-gradient-settings__color-indicators", children: indicators.map((indicator, index3) => /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(import_components247.ColorIndicator, { colorValue: indicator }, index3)) }),
         /* @__PURE__ */ (0, import_jsx_runtime635.jsx)("span", { className: "block-editor-panel-color-gradient-settings__color-name", children: label })
       ]
     }
@@ -118274,7 +118288,7 @@ If there's a particular need for this, please submit a feature request at https:
         isShownByDefault,
         panelId,
         children: /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(
-          import_components246.Dropdown,
+          import_components247.Dropdown,
           {
             popoverProps,
             className: "block-editor-tools-panel-color-gradient-settings__dropdown",
@@ -118292,7 +118306,7 @@ If there's a particular need for this, please submit a feature request at https:
                 ref: colorGradientDropdownButtonRef
               };
               return /* @__PURE__ */ (0, import_jsx_runtime635.jsxs)(import_jsx_runtime635.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(import_components246.Button, { ...toggleProps, __next40pxDefaultSize: true, children: /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(import_components247.Button, { ...toggleProps, __next40pxDefaultSize: true, children: /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(
                   LabeledColorIndicators,
                   {
                     indicators,
@@ -118312,7 +118326,7 @@ If there's a particular need for this, please submit a feature request at https:
                     }
                   }
                 ) : /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(
-                  import_components246.Button,
+                  import_components247.Button,
                   {
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n252.__)("Reset"),
@@ -118334,7 +118348,7 @@ If there's a particular need for this, please submit a feature request at https:
                 // the full warning notice is shown, so the indicator
                 // doubles as a shortcut to where the issue is fixed.
                 /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(
-                  import_components246.Button,
+                  import_components247.Button,
                   {
                     __next40pxDefaultSize: true,
                     size: "small",
@@ -118703,7 +118717,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChange(updatedValue);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
-      import_components247.__experimentalToolsPanel,
+      import_components248.__experimentalToolsPanel,
       {
         label: label || (0, import_i18n254.__)("Elements"),
         resetAll,
@@ -119561,13 +119575,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/background-panel.mjs
-  var import_components250 = __toESM(require_components(), 1);
+  var import_components251 = __toESM(require_components(), 1);
   var import_element416 = __toESM(require_element(), 1);
   var import_i18n257 = __toESM(require_i18n(), 1);
   var import_style_engine5 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/components/background-clip-control/index.mjs
-  var import_components248 = __toESM(require_components(), 1);
+  var import_components249 = __toESM(require_components(), 1);
   var import_i18n255 = __toESM(require_i18n(), 1);
   var import_jsx_runtime638 = __toESM(require_jsx_runtime(), 1);
   var BACKGROUND_CLIP_OPTIONS = [
@@ -119597,7 +119611,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const selectedOption = options.find((option) => option.key === value) ?? defaultOption;
     return /* @__PURE__ */ (0, import_jsx_runtime638.jsx)(
-      import_components248.CustomSelectControl,
+      import_components249.CustomSelectControl,
       {
         className: "block-editor-background-clip-control",
         label: (0, import_i18n255.__)("Clip"),
@@ -119611,7 +119625,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/background-image-control/index.mjs
-  var import_components249 = __toESM(require_components(), 1);
+  var import_components250 = __toESM(require_components(), 1);
   var import_i18n256 = __toESM(require_i18n(), 1);
   var import_notices12 = __toESM(require_notices(), 1);
   var import_url13 = __toESM(require_url(), 1);
@@ -119673,7 +119687,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [isOpen, onToggleCallback]);
     const renderPreviewContent = () => {
-      return /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components249.__experimentalHStack, { className: "block-editor-global-styles-background-panel__inspector-preview-inner", children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components250.__experimentalHStack, { className: "block-editor-global-styles-background-panel__inspector-preview-inner", children: [
         /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
           "span",
           {
@@ -119683,9 +119697,9 @@ If there's a particular need for this, please submit a feature request at https:
             }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components249.FlexBlock, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components250.FlexBlock, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-            import_components249.__experimentalTruncate,
+            import_components250.__experimentalTruncate,
             {
               numberOfLines: 1,
               className: "block-editor-global-styles-background-panel__inspector-media-replace-title",
@@ -119700,7 +119714,7 @@ If there's a particular need for this, please submit a feature request at https:
         ] })
       ] });
     };
-    return as === "button" ? /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(import_components249.Button, { __next40pxDefaultSize: true, ...restToggleProps, children: renderPreviewContent() }) : renderPreviewContent();
+    return as === "button" ? /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(import_components250.Button, { __next40pxDefaultSize: true, ...restToggleProps, children: renderPreviewContent() }) : renderPreviewContent();
   }
   function BackgroundControlsPanel({
     label,
@@ -119722,7 +119736,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const imgLabel = label || (0, import_url13.getFilename)(imgUrl) || (0, import_i18n256.__)("Image");
     return /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-      import_components249.Dropdown,
+      import_components250.Dropdown,
       {
         popoverProps,
         renderToggle: ({ onToggle, isOpen }) => {
@@ -119760,7 +119774,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               }
             ) : /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-              import_components249.Button,
+              import_components250.Button,
               {
                 __next40pxDefaultSize: true,
                 label: (0, import_i18n256.__)("Reset"),
@@ -119779,7 +119793,7 @@ If there's a particular need for this, please submit a feature request at https:
           ] });
         },
         renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-          import_components249.__experimentalDropdownContentWrapper,
+          import_components250.__experimentalDropdownContentWrapper,
           {
             className: "block-editor-global-styles-background-panel__dropdown-content-wrapper",
             paddingSize: "medium",
@@ -119790,7 +119804,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function LoadingSpinner() {
-    return /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(import_components249.Placeholder, { className: "block-editor-global-styles-background-panel__loading", children: /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(import_components249.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(import_components250.Placeholder, { className: "block-editor-global-styles-background-panel__loading", children: /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(import_components250.Spinner, {}) });
   }
   function BackgroundImageControls({
     onChange,
@@ -119920,14 +119934,14 @@ If there's a particular need for this, please submit a feature request at https:
               label: imgLabel
             }
           ),
-          renderToggle: (props) => /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(import_components249.Button, { ...props, __next40pxDefaultSize: true }),
+          renderToggle: (props) => /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(import_components250.Button, { ...props, __next40pxDefaultSize: true }),
           onError: onUploadError,
           onReset: () => {
             focusToggleButton(containerRef);
             onResetImage();
           },
           children: canRemove && /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-            import_components249.MenuItem,
+            import_components250.MenuItem,
             {
               onClick: () => {
                 focusToggleButton(containerRef);
@@ -119940,7 +119954,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-        import_components249.DropZone,
+        import_components250.DropZone,
         {
           onFilesDrop: onFilesDrop2,
           label: (0, import_i18n256.__)("Drop to upload")
@@ -120026,9 +120040,9 @@ If there's a particular need for this, please submit a feature request at https:
       )
     );
     const backgroundPositionValue = !positionValue && isUploadedImage && "contain" === sizeValue ? defaultValues?.backgroundPosition : positionValue;
-    return /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components249.__experimentalVStack, { spacing: 3, className: "single-column", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components250.__experimentalVStack, { spacing: 3, className: "single-column", children: [
       /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-        import_components249.FocalPointPicker,
+        import_components250.FocalPointPicker,
         {
           label: (0, import_i18n256.__)("Focal point"),
           url: imageValue,
@@ -120037,7 +120051,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-        import_components249.ToggleControl,
+        import_components250.ToggleControl,
         {
           label: (0, import_i18n256.__)("Fixed background"),
           checked: attachmentValue === "fixed",
@@ -120045,7 +120059,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(
-        import_components249.__experimentalToggleGroupControl,
+        import_components250.__experimentalToggleGroupControl,
         {
           label: (0, import_i18n256.__)("Size"),
           value: currentValueForToggle,
@@ -120056,7 +120070,7 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-              import_components249.__experimentalToggleGroupControlOption,
+              import_components250.__experimentalToggleGroupControlOption,
               {
                 value: "cover",
                 label: (0, import_i18n256._x)(
@@ -120067,7 +120081,7 @@ If there's a particular need for this, please submit a feature request at https:
               "cover"
             ),
             /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-              import_components249.__experimentalToggleGroupControlOption,
+              import_components250.__experimentalToggleGroupControlOption,
               {
                 value: "contain",
                 label: (0, import_i18n256._x)(
@@ -120078,7 +120092,7 @@ If there's a particular need for this, please submit a feature request at https:
               "contain"
             ),
             /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-              import_components249.__experimentalToggleGroupControlOption,
+              import_components250.__experimentalToggleGroupControlOption,
               {
                 value: "auto",
                 label: (0, import_i18n256._x)(
@@ -120091,9 +120105,9 @@ If there's a particular need for this, please submit a feature request at https:
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components249.__experimentalHStack, { justify: "flex-start", spacing: 2, as: "span", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components250.__experimentalHStack, { justify: "flex-start", spacing: 2, as: "span", children: [
         /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-          import_components249.__experimentalUnitControl,
+          import_components250.__experimentalUnitControl,
           {
             "aria-label": (0, import_i18n256.__)("Background image width"),
             onChange: updateBackgroundSize,
@@ -120105,7 +120119,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-          import_components249.ToggleControl,
+          import_components250.ToggleControl,
           {
             label: (0, import_i18n256.__)("Repeat"),
             checked: repeatCheckedValue,
@@ -120188,7 +120202,7 @@ If there's a particular need for this, please submit a feature request at https:
             hasLocalOverride,
             onReset: localHasImageValue ? resetBackground : void 0,
             containerRef,
-            children: /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components249.__experimentalVStack, { spacing: 3, className: "single-column", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime639.jsxs)(import_components250.__experimentalVStack, { spacing: 3, className: "single-column", children: [
               /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
                 BackgroundImageControls,
                 {
@@ -120300,7 +120314,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChange(updatedValue);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime640.jsx)(
-      import_components250.__experimentalToolsPanel,
+      import_components251.__experimentalToolsPanel,
       {
         label: headerLabel,
         resetAll,
@@ -121234,14 +121248,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n267 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/typography-panel.mjs
-  var import_components254 = __toESM(require_components(), 1);
+  var import_components255 = __toESM(require_components(), 1);
   var import_i18n263 = __toESM(require_i18n(), 1);
   var import_element422 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/text-alignment-control/index.mjs
   var import_i18n260 = __toESM(require_i18n(), 1);
   var import_element420 = __toESM(require_element(), 1);
-  var import_components251 = __toESM(require_components(), 1);
+  var import_components252 = __toESM(require_components(), 1);
   var import_jsx_runtime643 = __toESM(require_jsx_runtime(), 1);
   var TEXT_ALIGNMENT_OPTIONS = [
     {
@@ -121282,7 +121296,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime643.jsx)(
-      import_components251.__experimentalToggleGroupControl,
+      import_components252.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
         label: (0, import_i18n260.__)("Text alignment"),
@@ -121296,7 +121310,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         children: validOptions.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime643.jsx)(
-            import_components251.__experimentalToggleGroupControlOptionIcon,
+            import_components252.__experimentalToggleGroupControlOptionIcon,
             {
               value: option.value,
               icon: option.icon,
@@ -121310,7 +121324,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/text-indent-control/index.mjs
-  var import_components252 = __toESM(require_components(), 1);
+  var import_components253 = __toESM(require_components(), 1);
   var import_i18n261 = __toESM(require_i18n(), 1);
   var import_jsx_runtime644 = __toESM(require_jsx_runtime(), 1);
   function TextIndentControl({
@@ -121325,7 +121339,7 @@ If there's a particular need for this, please submit a feature request at https:
     ...otherProps
   }) {
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components252.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components253.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || [
         "px",
         "em",
@@ -121337,14 +121351,14 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       defaultValues: { px: 16, em: 2, rem: 2, ch: 2 }
     });
-    const [valueQuantity, valueUnit] = (0, import_components252.__experimentalParseQuantityAndUnitFromRawValue)(
+    const [valueQuantity, valueUnit] = (0, import_components253.__experimentalParseQuantityAndUnitFromRawValue)(
       value,
       units2
     );
     const isValueUnitRelative = !!valueUnit && ["em", "rem", "%", "ch", "vw", "vh"].includes(valueUnit);
     if (!withSlider) {
       return /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(
-        import_components252.__experimentalUnitControl,
+        import_components253.__experimentalUnitControl,
         {
           ...otherProps,
           label: (0, import_i18n261.__)("Line indent"),
@@ -121358,11 +121372,11 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime644.jsxs)(import_components252.__experimentalView, { style: hasBottomMargin ? { marginBottom: 12 } : void 0, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(import_components252.BaseControl.VisualLabel, { children: (0, import_i18n261.__)("Line indent") }),
-      /* @__PURE__ */ (0, import_jsx_runtime644.jsxs)(import_components252.Flex, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(import_components252.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(
-          import_components252.__experimentalUnitControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime644.jsxs)(import_components253.__experimentalView, { style: hasBottomMargin ? { marginBottom: 12 } : void 0, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(import_components253.BaseControl.VisualLabel, { children: (0, import_i18n261.__)("Line indent") }),
+      /* @__PURE__ */ (0, import_jsx_runtime644.jsxs)(import_components253.Flex, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(import_components253.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(
+          import_components253.__experimentalUnitControl,
           {
             label: (0, import_i18n261.__)("Line indent"),
             labelPosition: "top",
@@ -121376,8 +121390,8 @@ If there's a particular need for this, please submit a feature request at https:
             placeholder
           }
         ) }),
-        withSlider && /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(import_components252.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(import_components252.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(
-          import_components252.RangeControl,
+        withSlider && /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(import_components253.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(import_components253.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(
+          import_components253.RangeControl,
           {
             label: (0, import_i18n261.__)("Line indent"),
             hideLabelFromVision: true,
@@ -121405,10 +121419,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/text-shadow-panel.mjs
   var import_i18n262 = __toESM(require_i18n(), 1);
-  var import_components253 = __toESM(require_components(), 1);
+  var import_components254 = __toESM(require_components(), 1);
   var import_element421 = __toESM(require_element(), 1);
   var import_jsx_runtime645 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY19 = [];
+  var EMPTY_ARRAY18 = [];
   var PRESETS_SELECT_THRESHOLD = 7;
   function getTextShadowPresetSlug(rawValue) {
     if (!rawValue || typeof rawValue !== "string") {
@@ -121431,7 +121445,7 @@ If there's a particular need for this, please submit a feature request at https:
       className: "block-editor-global-styles__text-shadow-popover"
     };
     return /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(
-      import_components253.Dropdown,
+      import_components254.Dropdown,
       {
         popoverProps,
         className: "block-editor-global-styles__text-shadow-dropdown",
@@ -121468,9 +121482,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const presets = (0, import_element421.useMemo)(
       () => [
-        ...defaultPresetsEnabled && defaultPresets || EMPTY_ARRAY19,
-        ...themePresets || EMPTY_ARRAY19,
-        ...customPresets || EMPTY_ARRAY19
+        ...defaultPresetsEnabled && defaultPresets || EMPTY_ARRAY18,
+        ...themePresets || EMPTY_ARRAY18,
+        ...customPresets || EMPTY_ARRAY18
       ],
       [defaultPresetsEnabled, defaultPresets, themePresets, customPresets]
     );
@@ -121512,7 +121526,7 @@ If there's a particular need for this, please submit a feature request at https:
               onValueChange: (item) => onChange(item?.value ?? "")
             }
           ) : /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(
-            import_components253.Composite,
+            import_components254.Composite,
             {
               role: "listbox",
               "aria-label": (0, import_i18n262.__)("Text shadow presets"),
@@ -121520,7 +121534,7 @@ If there's a particular need for this, please submit a feature request at https:
               children: choices.map(({ value, label }) => {
                 const isActive = value === activeValue;
                 return /* @__PURE__ */ (0, import_jsx_runtime645.jsxs)(
-                  import_components253.Composite.Item,
+                  import_components254.Composite.Item,
                   {
                     role: "option",
                     "aria-selected": isActive,
@@ -121529,7 +121543,7 @@ If there's a particular need for this, please submit a feature request at https:
                       { "is-active": isActive }
                     ),
                     onClick: () => onChange(value),
-                    render: /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(import_components253.Button, { __next40pxDefaultSize: true }),
+                    render: /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(import_components254.Button, { __next40pxDefaultSize: true }),
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime645.jsx)("span", { children: label }),
                       /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(icon_default, { icon: check_default })
@@ -121541,7 +121555,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(Stack, { direction: "row", justify: "flex-end", children: /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(
-            import_components253.Button,
+            import_components254.Button,
             {
               __next40pxDefaultSize: true,
               variant: "tertiary",
@@ -121564,7 +121578,7 @@ If there's a particular need for this, please submit a feature request at https:
     const buttonRef = (0, import_element421.useRef)(void 0);
     return /* @__PURE__ */ (0, import_jsx_runtime645.jsxs)(import_jsx_runtime645.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(
-        import_components253.Button,
+        import_components254.Button,
         {
           __next40pxDefaultSize: true,
           onClick: onToggle,
@@ -121590,7 +121604,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       !!textShadow && /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(
-        import_components253.Button,
+        import_components254.Button,
         {
           __next40pxDefaultSize: true,
           size: "small",
@@ -121783,7 +121797,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChange(updatedValue);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime646.jsx)(
-      import_components254.__experimentalToolsPanel,
+      import_components255.__experimentalToolsPanel,
       {
         label: (0, import_i18n263.__)("Typography"),
         resetAll,
@@ -121796,7 +121810,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function NoticeForControl({ label, isShownByDefault, children }) {
-    const { menuItems } = (0, import_element422.useContext)(import_components254.__experimentalToolsPanelContext);
+    const { menuItems } = (0, import_element422.useContext)(import_components255.__experimentalToolsPanelContext);
     const isShown = isShownByDefault || !!menuItems?.optional?.[label];
     return isShown ? children : null;
   }
@@ -121824,7 +121838,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!hasValue(rawValue)) {
       return void 0;
     }
-    const [quantity] = (0, import_components254.__experimentalParseQuantityAndUnitFromRawValue)(rawValue);
+    const [quantity] = (0, import_components255.__experimentalParseQuantityAndUnitFromRawValue)(rawValue);
     return quantity;
   }
   function TypographyPanel({
@@ -122422,7 +122436,7 @@ If there's a particular need for this, please submit a feature request at https:
               isShownByDefault: defaultControls.fontSize,
               panelId,
               children: /* @__PURE__ */ (0, import_jsx_runtime646.jsx)(
-                import_components254.FontSizePicker,
+                import_components255.FontSizePicker,
                 {
                   value: currentFontSizeSlug || fontSize,
                   valueMode: currentFontSizeSlug ? "slug" : "literal",
@@ -122541,7 +122555,7 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 ),
                 isGlobalStyles && /* @__PURE__ */ (0, import_jsx_runtime646.jsx)(
-                  import_components254.ToggleControl,
+                  import_components255.ToggleControl,
                   {
                     label: (0, import_i18n263.__)("Indent all paragraphs"),
                     checked: isTextIndentAll,
@@ -122566,7 +122580,7 @@ If there's a particular need for this, please submit a feature request at https:
               isShownByDefault: defaultControls.textColumns,
               panelId,
               children: /* @__PURE__ */ (0, import_jsx_runtime646.jsx)(
-                import_components254.__experimentalNumberControl,
+                import_components255.__experimentalNumberControl,
                 {
                   label: (0, import_i18n263.__)("Columns"),
                   max: MAX_TEXT_COLUMNS,
@@ -123092,7 +123106,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element425 = __toESM(require_element(), 1);
   var import_data178 = __toESM(require_data(), 1);
   var import_i18n266 = __toESM(require_i18n(), 1);
-  var import_components257 = __toESM(require_components(), 1);
+  var import_components258 = __toESM(require_components(), 1);
   var import_compose141 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/utils/fit-text-utils.mjs
@@ -123150,7 +123164,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/fit-text-size-warning/index.mjs
   var import_element424 = __toESM(require_element(), 1);
   var import_i18n265 = __toESM(require_i18n(), 1);
-  var import_components256 = __toESM(require_components(), 1);
+  var import_components257 = __toESM(require_components(), 1);
   var import_a11y26 = __toESM(require_a11y(), 1);
   var import_jsx_runtime650 = __toESM(require_jsx_runtime(), 1);
   function FitTextSizeWarning() {
@@ -123161,7 +123175,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_a11y26.speak)(message2);
     }, [message2]);
     return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("div", { className: "block-editor-fit-text-size-warning", children: /* @__PURE__ */ (0, import_jsx_runtime650.jsx)(
-      import_components256.Notice,
+      import_components257.Notice,
       {
         spokenMessage: null,
         status: "warning",
@@ -123319,7 +123333,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime651.jsx)(
-      import_components257.__experimentalToolsPanelItem,
+      import_components258.__experimentalToolsPanelItem,
       {
         hasValue: () => fitText,
         label: (0, import_i18n266.__)("Fit text"),
@@ -123327,7 +123341,7 @@ If there's a particular need for this, please submit a feature request at https:
         resetAllFilter: () => ({ fitText: void 0 }),
         panelId: clientId,
         children: /* @__PURE__ */ (0, import_jsx_runtime651.jsx)(
-          import_components257.ToggleControl,
+          import_components258.ToggleControl,
           {
             label: (0, import_i18n266.__)("Fit text"),
             checked: fitText,
@@ -123862,13 +123876,13 @@ If there's a particular need for this, please submit a feature request at https:
   var styles_tab_default = StylesTab;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/content-tab.mjs
-  var import_components259 = __toESM(require_components(), 1);
+  var import_components260 = __toESM(require_components(), 1);
   var import_i18n269 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-quick-navigation/index.mjs
   var import_blocks107 = __toESM(require_blocks(), 1);
   var import_data181 = __toESM(require_data(), 1);
-  var import_components258 = __toESM(require_components(), 1);
+  var import_components259 = __toESM(require_components(), 1);
   var import_element428 = __toESM(require_element(), 1);
   var import_compose142 = __toESM(require_compose(), 1);
   var import_jsx_runtime654 = __toESM(require_jsx_runtime(), 1);
@@ -123881,7 +123895,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!clientIds.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components258.__experimentalVStack, { spacing: 1, children: clientIds.map((clientId) => /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components259.__experimentalVStack, { spacing: 1, children: clientIds.map((clientId) => /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(
       BlockQuickNavigationItem,
       {
         onSelect,
@@ -123949,7 +123963,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasChildren = childBlocks && childBlocks.length > 0;
     const canNavigateToListView = hasChildren && hasListViewTab && shouldRenderListView;
     return /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(
-      import_components258.Button,
+      import_components259.Button,
       {
         __next40pxDefaultSize: true,
         className: "block-editor-block-quick-navigation__item",
@@ -123967,10 +123981,10 @@ If there's a particular need for this, please submit a feature request at https:
             onSelect(clientId);
           }
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime654.jsxs)(import_components258.Flex, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components258.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(block_icon_default, { icon: blockInformation?.icon }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components258.FlexBlock, { style: { textAlign: "left" }, children: /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components258.__experimentalTruncate, { children: blockTitle }) }),
-          canNavigateToListView && /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components258.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(icon_default, { icon: chevron_right_default, size: 24 }) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime654.jsxs)(import_components259.Flex, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components259.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(block_icon_default, { icon: blockInformation?.icon }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components259.FlexBlock, { style: { textAlign: "left" }, children: /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components259.__experimentalTruncate, { children: blockTitle }) }),
+          canNavigateToListView && /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(import_components259.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime654.jsx)(icon_default, { icon: chevron_right_default, size: 24 }) })
         ] })
       }
     );
@@ -123986,7 +124000,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!contentClientIds || contentClientIds.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(import_components259.PanelBody, { title: (0, import_i18n269.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(import_components260.PanelBody, { title: (0, import_i18n269.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
       BlockQuickNavigation,
       {
         clientIds: contentClientIds,
@@ -123999,7 +124013,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.mjs
   var import_jsx_runtime656 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs4 } = unlock(import_components260.privateApis);
+  var { Tabs: Tabs4 } = unlock(import_components261.privateApis);
   function InspectorControlsTabs({
     blockName,
     clientId,
@@ -124105,7 +124119,7 @@ If there's a particular need for this, please submit a feature request at https:
                   tabId: tab.name,
                   "aria-label": tab.title,
                   render: /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(tooltip_exports.Trigger, {}),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(import_components260.Icon, { icon: tab.icon })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(import_components261.Icon, { icon: tab.icon })
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(tooltip_exports.Popup, { children: tab.title })
@@ -124144,9 +124158,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/use-inspector-controls-tabs.mjs
-  var import_components261 = __toESM(require_components(), 1);
+  var import_components262 = __toESM(require_components(), 1);
   var import_data183 = __toESM(require_data(), 1);
-  var EMPTY_ARRAY20 = [];
+  var EMPTY_ARRAY19 = [];
   function getShowTabs(blockName, tabSettings = {}) {
     if (tabSettings[blockName] !== void 0) {
       return tabSettings[blockName];
@@ -124172,28 +124186,28 @@ If there's a particular need for this, please submit a feature request at https:
       typography: typographyGroup,
       effects: effectsGroup
     } = groups_default2;
-    const listFills = (0, import_components261.__experimentalUseSlotFills)(listGroup.name);
+    const listFills = (0, import_components262.__experimentalUseSlotFills)(listGroup.name);
     const hasListFills = !!listFills && listFills.length;
-    const contentFills = (0, import_components261.__experimentalUseSlotFills)(contentGroup.name);
+    const contentFills = (0, import_components262.__experimentalUseSlotFills)(contentGroup.name);
     const hasContentFills = !!contentFills && contentFills.length;
     const styleFills = [
-      ...(0, import_components261.__experimentalUseSlotFills)(borderGroup.name) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(colorGroup.name) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(layoutGroup.name) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(positionGroup.name) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(dimensionsGroup.name) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(stylesGroup.name) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(typographyGroup.name) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(effectsGroup.name) || []
+      ...(0, import_components262.__experimentalUseSlotFills)(borderGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(colorGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(layoutGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(positionGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(dimensionsGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(stylesGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(typographyGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(effectsGroup.name) || []
     ];
     const hasStyleFills = styleFills.length;
     const advancedFills = [
-      ...(0, import_components261.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(bindingsGroup.name) || [],
-      ...(0, import_components261.__experimentalUseSlotFills)(PrivateInspectorControlsAllowedBlocks.name) || []
+      ...(0, import_components262.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(bindingsGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(PrivateInspectorControlsAllowedBlocks.name) || []
     ];
     const settingsFills = [
-      ...(0, import_components261.__experimentalUseSlotFills)(defaultGroup.name) || [],
+      ...(0, import_components262.__experimentalUseSlotFills)(defaultGroup.name) || [],
       ...hasListFills && hasStyleFills > 1 ? advancedFills : []
     ];
     const hasContentTab = hasContentFills || contentClientIds?.length;
@@ -124218,13 +124232,13 @@ If there's a particular need for this, please submit a feature request at https:
       tabs.push(TAB_STYLES);
     }
     const showTabs = getShowTabs(blockName, tabSettings);
-    return showTabs ? tabs : EMPTY_ARRAY20;
+    return showTabs ? tabs : EMPTY_ARRAY19;
   }
 
   // packages/block-editor/build-module/components/inspector-controls/last-item.mjs
-  var import_components262 = __toESM(require_components(), 1);
+  var import_components263 = __toESM(require_components(), 1);
   var import_jsx_runtime657 = __toESM(require_jsx_runtime(), 1);
-  var { Fill: Fill4, Slot: Slot9 } = (0, import_components262.createSlotFill)(/* @__PURE__ */ Symbol("InspectorControlsLastItem"));
+  var { Fill: Fill4, Slot: Slot9 } = (0, import_components263.createSlotFill)(/* @__PURE__ */ Symbol("InspectorControlsLastItem"));
   var InspectorControlsLastItem = (props) => {
     const context = useBlockEditContext();
     if (!context[mayDisplayControlsKey]) {
@@ -124269,7 +124283,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/state-control.mjs
   var import_i18n270 = __toESM(require_i18n(), 1);
-  var import_components263 = __toESM(require_components(), 1);
+  var import_components264 = __toESM(require_components(), 1);
   var import_jsx_runtime658 = __toESM(require_jsx_runtime(), 1);
   function StateControl({
     viewportStates = [],
@@ -124336,7 +124350,7 @@ If there's a particular need for this, please submit a feature request at https:
         align: "flex-end",
         className: "block-editor-global-styles-state-control",
         children: /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
-          import_components263.DropdownMenu,
+          import_components264.DropdownMenu,
           {
             icon,
             label: showText ? triggerLabel : (0, import_i18n270.sprintf)(
@@ -124351,8 +124365,8 @@ If there's a particular need for this, please submit a feature request at https:
             text: showText ? triggerLabel : void 0,
             toggleProps,
             children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime658.jsxs)(import_jsx_runtime658.Fragment, { children: [
-              hasViewportOptions && /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(import_components263.MenuGroup, { label: (0, import_i18n270.__)("Viewport"), children: viewportOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
-                import_components263.MenuItem,
+              hasViewportOptions && /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(import_components264.MenuGroup, { label: (0, import_i18n270.__)("Viewport"), children: viewportOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
+                import_components264.MenuItem,
                 {
                   onClick: () => {
                     onChangeViewport?.(option.value);
@@ -124365,8 +124379,8 @@ If there's a particular need for this, please submit a feature request at https:
                 },
                 `viewport-${option.value}`
               )) }),
-              hasPseudoStateOptions && /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(import_components263.MenuGroup, { label: (0, import_i18n270.__)("Pseudo state"), children: pseudoStateOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
-                import_components263.MenuItem,
+              hasPseudoStateOptions && /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(import_components264.MenuGroup, { label: (0, import_i18n270.__)("Pseudo state"), children: pseudoStateOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
+                import_components264.MenuItem,
                 {
                   onClick: () => {
                     onChangePseudoState?.(
@@ -124873,7 +124887,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) => {
     const animationOrigin = blockInspectorAnimationSettings && blockInspectorAnimationSettings.enterDirection === "leftToRight" ? -50 : 50;
     return /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(
-      import_components264.__unstableMotion.div,
+      import_components265.__unstableMotion.div,
       {
         animate: {
           x: 0,
@@ -124954,8 +124968,8 @@ If there's a particular need for this, please submit a feature request at https:
               name: blockName,
               value: selectedBlockStyleState2,
               onChange: onBlockStyleStateChange,
-              children: /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(import_components264.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(
-                import_components264.MenuItem,
+              children: /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(import_components265.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(
+                import_components265.MenuItem,
                 {
                   role: "menuitemcheckbox",
                   isSelected: showStateOnCanvas,
@@ -125323,13 +125337,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/publish-date-time-picker/index.mjs
-  var import_components266 = __toESM(require_components(), 1);
+  var import_components267 = __toESM(require_components(), 1);
   var import_i18n275 = __toESM(require_i18n(), 1);
   var import_element434 = __toESM(require_element(), 1);
   var import_date14 = __toESM(require_date(), 1);
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.mjs
-  var import_components265 = __toESM(require_components(), 1);
+  var import_components266 = __toESM(require_components(), 1);
   var import_i18n274 = __toESM(require_i18n(), 1);
   var import_jsx_runtime666 = __toESM(require_jsx_runtime(), 1);
   function InspectorPopoverHeader({
@@ -125338,8 +125352,8 @@ If there's a particular need for this, please submit a feature request at https:
     actions = [],
     onClose
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime666.jsxs)(import_components265.__experimentalVStack, { className: "block-editor-inspector-popover-header", spacing: 4, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime666.jsxs)(import_components265.__experimentalHStack, { alignment: "center", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime666.jsxs)(import_components266.__experimentalVStack, { className: "block-editor-inspector-popover-header", spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime666.jsxs)(import_components266.__experimentalHStack, { alignment: "center", children: [
         /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(
           Text,
           {
@@ -125349,9 +125363,9 @@ If there's a particular need for this, please submit a feature request at https:
             children: title
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(import_components265.__experimentalSpacer, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(import_components266.__experimentalSpacer, {}),
         actions.map(({ label, icon, onClick }) => /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(
-          import_components265.Button,
+          import_components266.Button,
           {
             size: "small",
             className: "block-editor-inspector-popover-header__action",
@@ -125364,7 +125378,7 @@ If there's a particular need for this, please submit a feature request at https:
           label
         )),
         onClose && /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(
-          import_components265.Button,
+          import_components266.Button,
           {
             size: "small",
             className: "block-editor-inspector-popover-header__action",
@@ -125397,7 +125411,7 @@ If there's a particular need for this, please submit a feature request at https:
       currentTime: isCompact ? currentDate : void 0,
       ...additionalProps
     };
-    const DatePickerComponent = isCompact ? import_components266.TimePicker : import_components266.DateTimePicker;
+    const DatePickerComponent = isCompact ? import_components267.TimePicker : import_components267.DateTimePicker;
     return /* @__PURE__ */ (0, import_jsx_runtime667.jsxs)("div", { ref, className: "block-editor-publish-date-time-picker", children: [
       showPopoverHeader && /* @__PURE__ */ (0, import_jsx_runtime667.jsx)(
         InspectorPopoverHeader,
@@ -126215,14 +126229,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks114 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
-  var import_components273 = __toESM(require_components(), 1);
+  var import_components274 = __toESM(require_components(), 1);
   var import_i18n278 = __toESM(require_i18n(), 1);
   var import_element440 = __toESM(require_element(), 1);
   var import_data190 = __toESM(require_data(), 1);
   var import_blocks113 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.mjs
-  var import_components272 = __toESM(require_components(), 1);
+  var import_components273 = __toESM(require_components(), 1);
   var import_element439 = __toESM(require_element(), 1);
   var import_i18n277 = __toESM(require_i18n(), 1);
   var import_data189 = __toESM(require_data(), 1);
@@ -126230,7 +126244,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-manager/index.mjs
   var import_blocks112 = __toESM(require_blocks(), 1);
   var import_data188 = __toESM(require_data(), 1);
-  var import_components271 = __toESM(require_components(), 1);
+  var import_components272 = __toESM(require_components(), 1);
   var import_i18n276 = __toESM(require_i18n(), 1);
   var import_element438 = __toESM(require_element(), 1);
   var import_compose146 = __toESM(require_compose(), 1);
@@ -126239,10 +126253,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-manager/category.mjs
   var import_element437 = __toESM(require_element(), 1);
   var import_compose145 = __toESM(require_compose(), 1);
-  var import_components270 = __toESM(require_components(), 1);
+  var import_components271 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-manager/checklist.mjs
-  var import_components269 = __toESM(require_components(), 1);
+  var import_components270 = __toESM(require_components(), 1);
   var import_jsx_runtime670 = __toESM(require_jsx_runtime(), 1);
   function BlockTypesChecklist({ blockTypes, value, onItemChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime670.jsx)("ul", { className: "block-editor-block-manager__checklist", children: blockTypes.map((blockType) => /* @__PURE__ */ (0, import_jsx_runtime670.jsxs)(
@@ -126251,7 +126265,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: "block-editor-block-manager__checklist-item",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-            import_components269.CheckboxControl,
+            import_components270.CheckboxControl,
             {
               label: blockType.title,
               checked: value.includes(blockType.name),
@@ -126331,7 +126345,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: "block-editor-block-manager__category",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime671.jsx)(
-            import_components270.CheckboxControl,
+            import_components271.CheckboxControl,
             {
               checked: isAllChecked,
               onChange: toggleAllVisible,
@@ -126387,9 +126401,9 @@ If there's a particular need for this, please submit a feature request at https:
       );
       debouncedSpeak(resultsFoundMessage);
     }, [filteredBlockTypes?.length, search, debouncedSpeak]);
-    return /* @__PURE__ */ (0, import_jsx_runtime672.jsxs)(import_components271.__experimentalVStack, { className: "block-editor-block-manager__content", spacing: 4, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime672.jsxs)(import_components272.__experimentalVStack, { className: "block-editor-block-manager__content", spacing: 4, children: [
       /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
-        import_components271.SearchControl,
+        import_components272.SearchControl,
         {
           label: (0, import_i18n276.__)("Search for a block"),
           placeholder: (0, import_i18n276.__)("Search for a block"),
@@ -126399,7 +126413,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       showSelectAll && /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
-        import_components271.CheckboxControl,
+        import_components272.CheckboxControl,
         {
           className: "block-editor-block-manager__select-all",
           label: (0, import_i18n276.__)("Select all"),
@@ -126473,7 +126487,7 @@ If there's a particular need for this, please submit a feature request at https:
       onClose();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-      import_components272.Modal,
+      import_components273.Modal,
       {
         title: (0, import_i18n277._x)("Manage allowed blocks", "modal title"),
         onRequestClose: onClose,
@@ -126481,7 +126495,7 @@ If there's a particular need for this, please submit a feature request at https:
         focusOnMount: "firstContentElement",
         size: "medium",
         children: /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(
-          import_components272.__experimentalVStack,
+          import_components273.__experimentalVStack,
           {
             as: "form",
             onSubmit: (e2) => {
@@ -126504,14 +126518,14 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(
-                import_components272.Flex,
+                import_components273.Flex,
                 {
                   className: "block-editor-block-allowed-blocks-modal__actions",
                   justify: "flex-end",
                   expanded: false,
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(import_components272.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-                      import_components272.Button,
+                    /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(import_components273.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+                      import_components273.Button,
                       {
                         variant: "tertiary",
                         onClick: onClose,
@@ -126519,8 +126533,8 @@ If there's a particular need for this, please submit a feature request at https:
                         children: (0, import_i18n277.__)("Cancel")
                       }
                     ) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(import_components272.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-                      import_components272.Button,
+                    /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(import_components273.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+                      import_components273.Button,
                       {
                         variant: "primary",
                         type: "submit",
@@ -126563,15 +126577,15 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return /* @__PURE__ */ (0, import_jsx_runtime674.jsxs)("div", { className: "block-editor-block-allowed-blocks-control", children: [
       /* @__PURE__ */ (0, import_jsx_runtime674.jsxs)(
-        import_components273.BaseControl,
+        import_components274.BaseControl,
         {
           help: (0, import_i18n278.__)(
             "Specify which blocks are allowed inside this container."
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(import_components273.BaseControl.VisualLabel, { children: (0, import_i18n278.__)("Allowed Blocks") }),
+            /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(import_components274.BaseControl.VisualLabel, { children: (0, import_i18n278.__)("Allowed Blocks") }),
             /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-              import_components273.Button,
+              import_components274.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "secondary",
@@ -126688,7 +126702,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/anchor.mjs
   var import_hooks21 = __toESM(require_hooks(), 1);
-  var import_components274 = __toESM(require_components(), 1);
+  var import_components275 = __toESM(require_components(), 1);
   var import_i18n279 = __toESM(require_i18n(), 1);
   var import_blocks115 = __toESM(require_blocks(), 1);
   var import_jsx_runtime676 = __toESM(require_jsx_runtime(), 1);
@@ -126713,7 +126727,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime676.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime676.jsx)(
-      import_components274.TextControl,
+      import_components275.TextControl,
       {
         className: "html-anchor-control",
         label: (0, import_i18n279.__)("HTML anchor"),
@@ -126723,7 +126737,7 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           " ",
           /* @__PURE__ */ (0, import_jsx_runtime676.jsx)(
-            import_components274.ExternalLink,
+            import_components275.ExternalLink,
             {
               href: (0, import_i18n279.__)(
                 "https://wordpress.org/documentation/article/page-jumps/"
@@ -126799,7 +126813,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/custom-class-name.mjs
   var import_hooks23 = __toESM(require_hooks(), 1);
-  var import_components276 = __toESM(require_components(), 1);
+  var import_components277 = __toESM(require_components(), 1);
   var import_i18n280 = __toESM(require_i18n(), 1);
   var import_blocks117 = __toESM(require_blocks(), 1);
   var import_jsx_runtime677 = __toESM(require_jsx_runtime(), 1);
@@ -126820,7 +126834,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime677.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime677.jsx)(
-      import_components276.TextControl,
+      import_components277.TextControl,
       {
         autoComplete: "off",
         label: (0, import_i18n280.__)("Additional CSS class(es)"),
@@ -126920,7 +126934,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/border.mjs
   var import_blocks119 = __toESM(require_blocks(), 1);
-  var import_components285 = __toESM(require_components(), 1);
+  var import_components286 = __toESM(require_components(), 1);
   var import_element447 = __toESM(require_element(), 1);
   var import_hooks27 = __toESM(require_hooks(), 1);
   var import_data193 = __toESM(require_data(), 1);
@@ -126953,11 +126967,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/dimensions-panel.mjs
   var import_i18n283 = __toESM(require_i18n(), 1);
-  var import_components279 = __toESM(require_components(), 1);
+  var import_components280 = __toESM(require_components(), 1);
   var import_element442 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/child-layout-control/index.mjs
-  var import_components278 = __toESM(require_components(), 1);
+  var import_components279 = __toESM(require_components(), 1);
   var import_i18n281 = __toESM(require_i18n(), 1);
   var import_element441 = __toESM(require_element(), 1);
   var import_data192 = __toESM(require_data(), 1);
@@ -127070,7 +127084,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasFlexValue = () => !!selfStretch;
     const flexResetLabel = orientation === "horizontal" ? (0, import_i18n281.__)("Width") : (0, import_i18n281.__)("Height");
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components278.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components279.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || [
         "%",
         "px",
@@ -127095,9 +127109,9 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime678.jsxs)(
-      import_components278.__experimentalVStack,
+      import_components279.__experimentalVStack,
       {
-        as: import_components278.__experimentalToolsPanelItem,
+        as: import_components279.__experimentalToolsPanelItem,
         spacing: 2,
         hasValue: hasFlexValue,
         label: flexResetLabel,
@@ -127106,7 +127120,7 @@ If there's a particular need for this, please submit a feature request at https:
         panelId,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime678.jsxs)(
-            import_components278.__experimentalToggleGroupControl,
+            import_components279.__experimentalToggleGroupControl,
             {
               label: childLayoutOrientation(parentLayout),
               value: flexControlValue,
@@ -127121,7 +127135,7 @@ If there's a particular need for this, please submit a feature request at https:
               isBlock: true,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-                  import_components278.__experimentalToggleGroupControlOption,
+                  import_components279.__experimentalToggleGroupControlOption,
                   {
                     value: FLEX_CHILD_LAYOUT_VALUES.fit,
                     label: (0, import_i18n281._x)(
@@ -127132,7 +127146,7 @@ If there's a particular need for this, please submit a feature request at https:
                   FLEX_CHILD_LAYOUT_VALUES.fit
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-                  import_components278.__experimentalToggleGroupControlOption,
+                  import_components279.__experimentalToggleGroupControlOption,
                   {
                     value: FLEX_CHILD_LAYOUT_VALUES.grow,
                     label: (0, import_i18n281._x)(
@@ -127143,7 +127157,7 @@ If there's a particular need for this, please submit a feature request at https:
                   FLEX_CHILD_LAYOUT_VALUES.grow
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-                  import_components278.__experimentalToggleGroupControlOption,
+                  import_components279.__experimentalToggleGroupControlOption,
                   {
                     value: FLEX_CHILD_LAYOUT_VALUES.max,
                     label: maxSizeLabel(parentLayout)
@@ -127151,7 +127165,7 @@ If there's a particular need for this, please submit a feature request at https:
                   FLEX_CHILD_LAYOUT_VALUES.max
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-                  import_components278.__experimentalToggleGroupControlOption,
+                  import_components279.__experimentalToggleGroupControlOption,
                   {
                     value: FLEX_CHILD_LAYOUT_VALUES.fixed,
                     label: (0, import_i18n281._x)(
@@ -127165,7 +127179,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           hasFlexSizeValue && /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-            import_components278.__experimentalUnitControl,
+            import_components279.__experimentalUnitControl,
             {
               units: units2,
               onChange: (value) => {
@@ -127226,17 +127240,17 @@ If there's a particular need for this, please submit a feature request at https:
     const rowSpanValue = rowSpan ?? (showGridSpanDefaults ? 1 : void 0);
     return /* @__PURE__ */ (0, import_jsx_runtime678.jsxs)(import_jsx_runtime678.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime678.jsxs)(
-        import_components278.Flex,
+        import_components279.Flex,
         {
-          as: import_components278.__experimentalToolsPanelItem,
+          as: import_components279.__experimentalToolsPanelItem,
           hasValue: hasSpanValue,
           label: (0, import_i18n281.__)("Grid span"),
           onDeselect: resetGridSpans,
           isShownByDefault,
           panelId,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(import_components278.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-              import_components278.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(import_components279.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
+              import_components279.__experimentalInputControl,
               {
                 label: (0, import_i18n281.__)("Column span"),
                 type: "number",
@@ -127255,8 +127269,8 @@ If there's a particular need for this, please submit a feature request at https:
                 max: maxColumnSpan
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(import_components278.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-              import_components278.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(import_components279.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
+              import_components279.__experimentalInputControl,
               {
                 label: (0, import_i18n281.__)("Row span"),
                 type: "number",
@@ -127282,17 +127296,17 @@ If there's a particular need for this, please submit a feature request at https:
       // work around an issue in webkit where inputs with a max attribute are
       // sized incorrectly.
       /* @__PURE__ */ (0, import_jsx_runtime678.jsxs)(
-        import_components278.Flex,
+        import_components279.Flex,
         {
-          as: import_components278.__experimentalToolsPanelItem,
+          as: import_components279.__experimentalToolsPanelItem,
           hasValue: hasStartValue,
           label: (0, import_i18n281.__)("Grid placement"),
           onDeselect: resetGridStarts,
           isShownByDefault: false,
           panelId,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(import_components278.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-              import_components278.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(import_components279.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
+              import_components279.__experimentalInputControl,
               {
                 label: (0, import_i18n281.__)("Column"),
                 type: "number",
@@ -127320,8 +127334,8 @@ If there's a particular need for this, please submit a feature request at https:
                 max: columnCount ? columnCount - (columnSpan ?? 1) + 1 : void 0
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(import_components278.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-              import_components278.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(import_components279.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
+              import_components279.__experimentalInputControl,
               {
                 label: (0, import_i18n281.__)("Row"),
                 type: "number",
@@ -127560,7 +127574,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!hasValue2(rawValue)) {
       return void 0;
     }
-    const [quantity] = (0, import_components279.__experimentalParseQuantityAndUnitFromRawValue)(rawValue);
+    const [quantity] = (0, import_components280.__experimentalParseQuantityAndUnitFromRawValue)(rawValue);
     return quantity;
   }
   function splitStyleValue(value) {
@@ -127633,7 +127647,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChange(updatedValue);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
-      import_components279.__experimentalToolsPanel,
+      import_components280.__experimentalToolsPanel,
       {
         label: (0, import_i18n283.__)("Dimensions"),
         resetAll,
@@ -127697,7 +127711,7 @@ If there's a particular need for this, please submit a feature request at https:
       className
     );
     const showSpacingPresetsControl = hasSpacingPresets(settings3);
-    const units2 = (0, import_components279.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components280.__experimentalUseCustomUnits)({
       availableUnits: settings3?.spacing?.units || [
         "%",
         "px",
@@ -127976,7 +127990,7 @@ If there's a particular need for this, please submit a feature request at https:
               isShownByDefault: defaultControls.contentSize ?? DEFAULT_CONTROLS6.contentSize,
               panelId,
               children: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
-                import_components279.__experimentalUnitControl,
+                import_components280.__experimentalUnitControl,
                 {
                   label: (0, import_i18n283.__)("Content width"),
                   labelPosition: "top",
@@ -127988,7 +128002,7 @@ If there's a particular need for this, please submit a feature request at https:
                     setContentSizeValue(nextContentSize);
                   },
                   units: units2,
-                  prefix: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(import_components279.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(icon_default, { icon: align_none_default }) })
+                  prefix: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(import_components280.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(icon_default, { icon: align_none_default }) })
                 }
               )
             }
@@ -128006,7 +128020,7 @@ If there's a particular need for this, please submit a feature request at https:
               isShownByDefault: defaultControls.wideSize ?? DEFAULT_CONTROLS6.wideSize,
               panelId,
               children: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
-                import_components279.__experimentalUnitControl,
+                import_components280.__experimentalUnitControl,
                 {
                   label: (0, import_i18n283.__)("Wide width"),
                   labelPosition: "top",
@@ -128018,7 +128032,7 @@ If there's a particular need for this, please submit a feature request at https:
                     setWideSizeValue(nextWideSize);
                   },
                   units: units2,
-                  prefix: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(import_components279.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(icon_default, { icon: stretch_wide_default }) })
+                  prefix: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(import_components280.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(icon_default, { icon: stretch_wide_default }) })
                 }
               )
             }
@@ -128044,7 +128058,7 @@ If there's a particular need for this, please submit a feature request at https:
               panelId,
               children: [
                 !showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
-                  import_components279.BoxControl,
+                  import_components280.BoxControl,
                   {
                     values: localPaddingValues,
                     onChange: setPaddingValues,
@@ -128097,7 +128111,7 @@ If there's a particular need for this, please submit a feature request at https:
               panelId,
               children: [
                 !showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
-                  import_components279.BoxControl,
+                  import_components280.BoxControl,
                   {
                     values: localMarginValues,
                     onChange: setMarginValues,
@@ -128159,7 +128173,7 @@ If there's a particular need for this, please submit a feature request at https:
               panelId,
               children: [
                 !showSpacingPresetsControl && (isAxialGap ? /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
-                  import_components279.BoxControl,
+                  import_components280.BoxControl,
                   {
                     label: (0, import_i18n283.__)("Block spacing"),
                     min: 0,
@@ -128171,7 +128185,7 @@ If there's a particular need for this, please submit a feature request at https:
                     splitOnAxis: isAxialGap
                   }
                 ) : /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
-                  import_components279.__experimentalUnitControl,
+                  import_components280.__experimentalUnitControl,
                   {
                     label: (0, import_i18n283.__)("Block spacing"),
                     min: 0,
@@ -128328,16 +128342,16 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/border-panel.mjs
-  var import_components281 = __toESM(require_components(), 1);
+  var import_components282 = __toESM(require_components(), 1);
   var import_element444 = __toESM(require_element(), 1);
   var import_i18n285 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/shadow-panel-components.mjs
   var import_i18n284 = __toESM(require_i18n(), 1);
-  var import_components280 = __toESM(require_components(), 1);
+  var import_components281 = __toESM(require_components(), 1);
   var import_element443 = __toESM(require_element(), 1);
   var import_jsx_runtime681 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY21 = [];
+  var EMPTY_ARRAY20 = [];
   function ShadowPopoverContainer({ shadow, onShadowChange, settings: settings3 }) {
     const shadows = useShadowPresets(settings3);
     const presets = (0, import_element443.useMemo)(() => {
@@ -128349,8 +128363,8 @@ If there's a particular need for this, please submit a feature request at https:
         ...shadows
       ];
     }, [shadows]);
-    return /* @__PURE__ */ (0, import_jsx_runtime681.jsx)("div", { className: "block-editor-global-styles__shadow-popover-container", children: /* @__PURE__ */ (0, import_jsx_runtime681.jsxs)(import_components280.__experimentalVStack, { spacing: 4, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(import_components280.__experimentalHeading, { level: 5, children: (0, import_i18n284.__)("Drop shadow") }),
+    return /* @__PURE__ */ (0, import_jsx_runtime681.jsx)("div", { className: "block-editor-global-styles__shadow-popover-container", children: /* @__PURE__ */ (0, import_jsx_runtime681.jsxs)(import_components281.__experimentalVStack, { spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(import_components281.__experimentalHeading, { level: 5, children: (0, import_i18n284.__)("Drop shadow") }),
       /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
         ShadowPresets,
         {
@@ -128360,7 +128374,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime681.jsx)("div", { className: "block-editor-global-styles__clear-shadow", children: /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
-        import_components280.Button,
+        import_components281.Button,
         {
           __next40pxDefaultSize: true,
           variant: "tertiary",
@@ -128374,7 +128388,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function ShadowPresets({ presets, activeShadow, onSelect }) {
     return !presets ? null : /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
-      import_components280.Composite,
+      import_components281.Composite,
       {
         role: "listbox",
         className: "block-editor-global-styles__shadow__list",
@@ -128399,7 +128413,7 @@ If there's a particular need for this, please submit a feature request at https:
         tooltip_exports.Trigger,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
-            import_components280.Composite.Item,
+            import_components281.Composite.Item,
             {
               role: "option",
               "aria-label": label,
@@ -128443,7 +128457,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const popoverProps = useToolsPanelItemPopoverProps();
     return /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
-      import_components280.Dropdown,
+      import_components281.Dropdown,
       {
         popoverProps,
         className: clsx_default(
@@ -128455,7 +128469,7 @@ If there's a particular need for this, please submit a feature request at https:
           hasLocalOverride,
           onReset: onReset ?? (() => onShadowChange(void 0))
         }),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(import_components280.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(import_components281.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
           ShadowPopoverContainer,
           {
             shadow,
@@ -128487,7 +128501,7 @@ If there's a particular need for this, please submit a feature request at https:
         shadowButtonRef.current?.focus();
       };
       return /* @__PURE__ */ (0, import_jsx_runtime681.jsxs)(import_jsx_runtime681.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(import_components280.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime681.jsxs)(import_components280.__experimentalHStack, { justify: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(import_components281.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime681.jsxs)(import_components281.__experimentalHStack, { justify: "flex-start", children: [
           /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
             icon_default,
             {
@@ -128496,7 +128510,7 @@ If there's a particular need for this, please submit a feature request at https:
               size: 24
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(import_components280.FlexItem, { children: (0, import_i18n284.__)("Drop shadow") })
+          /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(import_components281.FlexItem, { children: (0, import_i18n284.__)("Drop shadow") })
         ] }) }),
         hasLocalValue && (hasLocalOverride ? /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
           InheritanceResetButton,
@@ -128505,7 +128519,7 @@ If there's a particular need for this, please submit a feature request at https:
             onResetToInherited: handleReset
           }
         ) : /* @__PURE__ */ (0, import_jsx_runtime681.jsx)(
-          import_components280.Button,
+          import_components281.Button,
           {
             __next40pxDefaultSize: true,
             size: "small",
@@ -128521,7 +128535,7 @@ If there's a particular need for this, please submit a feature request at https:
   function useShadowPresets(settings3) {
     return (0, import_element443.useMemo)(() => {
       if (!settings3?.shadow) {
-        return EMPTY_ARRAY21;
+        return EMPTY_ARRAY20;
       }
       const defaultPresetsEnabled = settings3?.shadow?.defaultPresets;
       const {
@@ -128530,9 +128544,9 @@ If there's a particular need for this, please submit a feature request at https:
         custom: customShadows
       } = settings3?.shadow?.presets ?? {};
       const allPresets = [
-        ...defaultPresetsEnabled && defaultShadows || EMPTY_ARRAY21,
-        ...themeShadows || EMPTY_ARRAY21,
-        ...customShadows || EMPTY_ARRAY21
+        ...defaultPresetsEnabled && defaultShadows || EMPTY_ARRAY20,
+        ...themeShadows || EMPTY_ARRAY20,
+        ...customShadows || EMPTY_ARRAY20
       ];
       return allPresets.filter(
         (preset, index3) => allPresets.findLastIndex(
@@ -128588,7 +128602,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChange(updatedValue);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime682.jsx)(
-      import_components281.__experimentalToolsPanel,
+      import_components282.__experimentalToolsPanel,
       {
         label,
         resetAll,
@@ -128640,7 +128654,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (!source) {
           return void 0;
         }
-        if ((0, import_components281.__experimentalHasSplitBorders)(source)) {
+        if ((0, import_components282.__experimentalHasSplitBorders)(source)) {
           const out = { ...source };
           ["top", "right", "bottom", "left"].forEach((side) => {
             out[side] = {
@@ -128665,7 +128679,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => decodeBorder(inheritedValue?.border),
       [inheritedValue?.border, decodeBorder]
     );
-    const isBorderPlaceholder = !(0, import_components281.__experimentalIsDefinedBorder)(value?.border) && !!inheritedBorder && (0, import_components281.__experimentalIsDefinedBorder)(inheritedBorder);
+    const isBorderPlaceholder = !(0, import_components282.__experimentalIsDefinedBorder)(value?.border) && !!inheritedBorder && (0, import_components282.__experimentalIsDefinedBorder)(inheritedBorder);
     const border = isBorderPlaceholder ? inheritedBorder : localBorder;
     const setBorder = (newBorder) => onChange({ ...value, border: newBorder });
     const showBorderColor = useHasBorderColorControl(settings3);
@@ -128758,7 +128772,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const onBorderChange = (newBorder) => {
       const updatedBorder = { ...newBorder };
-      if ((0, import_components281.__experimentalHasSplitBorders)(updatedBorder)) {
+      if ((0, import_components282.__experimentalHasSplitBorders)(updatedBorder)) {
         ["top", "right", "bottom", "left"].forEach((side) => {
           if (updatedBorder[side]) {
             updatedBorder[side] = {
@@ -128797,16 +128811,16 @@ If there's a particular need for this, please submit a feature request at https:
             {
               ...inheritanceProps(
                 isBorderPlaceholder,
-                (0, import_components281.__experimentalIsDefinedBorder)(value?.border) && !!inheritedBorder && (0, import_components281.__experimentalIsDefinedBorder)(inheritedBorder)
+                (0, import_components282.__experimentalIsDefinedBorder)(value?.border) && !!inheritedBorder && (0, import_components282.__experimentalIsDefinedBorder)(inheritedBorder)
               ),
-              hasValue: () => (0, import_components281.__experimentalIsDefinedBorder)(value?.border),
+              hasValue: () => (0, import_components282.__experimentalIsDefinedBorder)(value?.border),
               label: (0, import_i18n285.__)("Border"),
               hasInlineEndToggle: true,
               onDeselect: () => resetBorder(),
               isShownByDefault: showBorderByDefault,
               panelId,
               children: /* @__PURE__ */ (0, import_jsx_runtime682.jsx)(
-                import_components281.BorderBoxControl,
+                import_components282.BorderBoxControl,
                 {
                   colors: colors2,
                   disableCustomColors: !areCustomSolidsEnabled,
@@ -128861,7 +128875,7 @@ If there's a particular need for this, please submit a feature request at https:
               showLocalOverrideActionsInLabel: false,
               panelId,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime682.jsx)(import_components281.BaseControl.VisualLabel, { children: (0, import_i18n285.__)("Shadow") }),
+                /* @__PURE__ */ (0, import_jsx_runtime682.jsx)(import_components282.BaseControl.VisualLabel, { children: (0, import_i18n285.__)("Shadow") }),
                 /* @__PURE__ */ (0, import_jsx_runtime682.jsx)(
                   ShadowPopover,
                   {
@@ -128882,21 +128896,21 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/filters-panel.mjs
-  var import_components282 = __toESM(require_components(), 1);
+  var import_components283 = __toESM(require_components(), 1);
   var import_i18n286 = __toESM(require_i18n(), 1);
   var import_element445 = __toESM(require_element(), 1);
   var import_jsx_runtime683 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY22 = [];
+  var EMPTY_ARRAY21 = [];
   function useMultiOriginColorPresets(settings3, { presetSetting, defaultSetting }) {
     const disableDefault = !settings3?.color?.[defaultSetting];
-    const userPresets = settings3?.color?.[presetSetting]?.custom || EMPTY_ARRAY22;
-    const themePresets = settings3?.color?.[presetSetting]?.theme || EMPTY_ARRAY22;
-    const defaultPresets = settings3?.color?.[presetSetting]?.default || EMPTY_ARRAY22;
+    const userPresets = settings3?.color?.[presetSetting]?.custom || EMPTY_ARRAY21;
+    const themePresets = settings3?.color?.[presetSetting]?.theme || EMPTY_ARRAY21;
+    const defaultPresets = settings3?.color?.[presetSetting]?.default || EMPTY_ARRAY21;
     return (0, import_element445.useMemo)(
       () => [
         ...userPresets,
         ...themePresets,
-        ...disableDefault ? EMPTY_ARRAY22 : defaultPresets
+        ...disableDefault ? EMPTY_ARRAY21 : defaultPresets
       ],
       [disableDefault, userPresets, themePresets, defaultPresets]
     );
@@ -128920,7 +128934,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChange(updatedValue);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(
-      import_components282.__experimentalToolsPanel,
+      import_components283.__experimentalToolsPanel,
       {
         label: (0, import_i18n286._x)("Filters", "Name for applying graphical effects"),
         resetAll,
@@ -128942,7 +128956,7 @@ If there's a particular need for this, please submit a feature request at https:
       justify: "flex-start",
       gap: "sm",
       children: [
-        indicator === "unset" || !indicator ? /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(import_components282.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" }) : /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(import_components282.DuotoneSwatch, { values: indicator }),
+        indicator === "unset" || !indicator ? /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(import_components283.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" }) : /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(import_components283.DuotoneSwatch, { values: indicator }),
         /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(
           "span",
           {
@@ -128974,7 +128988,7 @@ If there's a particular need for this, please submit a feature request at https:
       duotoneButtonRef.current?.focus();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime683.jsxs)(import_jsx_runtime683.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(import_components282.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(import_components283.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(
         LabeledColorIndicator2,
         {
           indicator: duotone,
@@ -128988,7 +129002,7 @@ If there's a particular need for this, please submit a feature request at https:
           onResetToInherited: handleReset
         }
       ) : /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(
-        import_components282.Button,
+        import_components283.Button,
         {
           size: "small",
           icon: reset_default,
@@ -129085,7 +129099,7 @@ If there's a particular need for this, please submit a feature request at https:
             showLocalOverrideActionsInLabel: false,
             panelId,
             children: /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(
-              import_components282.Dropdown,
+              import_components283.Dropdown,
               {
                 popoverProps,
                 className: "block-editor-global-styles-filters-panel__dropdown",
@@ -129094,12 +129108,12 @@ If there's a particular need for this, please submit a feature request at https:
                   hasLocalOverride: hasDuotoneLocalOverride,
                   onReset: resetDuotone
                 }),
-                renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(import_components282.__experimentalDropdownContentWrapper, { paddingSize: "small", children: /* @__PURE__ */ (0, import_jsx_runtime683.jsxs)(import_components282.MenuGroup, { label: (0, import_i18n286.__)("Duotone"), children: [
+                renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(import_components283.__experimentalDropdownContentWrapper, { paddingSize: "small", children: /* @__PURE__ */ (0, import_jsx_runtime683.jsxs)(import_components283.MenuGroup, { label: (0, import_i18n286.__)("Duotone"), children: [
                   /* @__PURE__ */ (0, import_jsx_runtime683.jsx)("p", { children: (0, import_i18n286.__)(
                     "Create a two-tone color effect without losing your original image."
                   ) }),
                   /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(
-                    import_components282.DuotonePicker,
+                    import_components283.DuotonePicker,
                     {
                       colorPalette,
                       duotonePalette,
@@ -129120,7 +129134,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/image-settings-panel.mjs
-  var import_components283 = __toESM(require_components(), 1);
+  var import_components284 = __toESM(require_components(), 1);
   var import_i18n287 = __toESM(require_i18n(), 1);
   var import_jsx_runtime684 = __toESM(require_jsx_runtime(), 1);
   function useHasImageSettingsPanel(name, value, inheritedValue) {
@@ -129146,14 +129160,14 @@ If there's a particular need for this, please submit a feature request at https:
       lightboxChecked = inheritedValue.lightbox.enabled;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime684.jsx)(import_jsx_runtime684.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime684.jsx)(
-      import_components283.__experimentalToolsPanel,
+      import_components284.__experimentalToolsPanel,
       {
         label: (0, import_i18n287._x)("Settings", "Image settings"),
         resetAll: resetLightbox,
         panelId,
         dropdownMenuProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime684.jsx)(
-          import_components283.__experimentalToolsPanelItem,
+          import_components284.__experimentalToolsPanelItem,
           {
             hasValue: () => !!value?.lightbox,
             label: (0, import_i18n287.__)("Enlarge on click"),
@@ -129161,7 +129175,7 @@ If there's a particular need for this, please submit a feature request at https:
             isShownByDefault: true,
             panelId,
             children: /* @__PURE__ */ (0, import_jsx_runtime684.jsx)(
-              import_components283.ToggleControl,
+              import_components284.ToggleControl,
               {
                 label: (0, import_i18n287.__)("Enlarge on click"),
                 checked: lightboxChecked,
@@ -129175,7 +129189,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/advanced-panel.mjs
-  var import_components284 = __toESM(require_components(), 1);
+  var import_components285 = __toESM(require_components(), 1);
   var import_element446 = __toESM(require_element(), 1);
   var import_i18n288 = __toESM(require_i18n(), 1);
   var import_jsx_runtime685 = __toESM(require_jsx_runtime(), 1);
@@ -129241,9 +129255,9 @@ If there's a particular need for this, please submit a feature request at https:
         gap: "md",
         className: "block-editor-global-styles-advanced-panel",
         children: [
-          cssError && /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(import_components284.Notice, { status: "error", onRemove: () => setCSSError(null), children: cssError }),
+          cssError && /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(import_components285.Notice, { status: "error", onRemove: () => setCSSError(null), children: cssError }),
           /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(
-            import_components284.TextareaControl,
+            import_components285.TextareaControl,
             {
               label: (0, import_i18n288.__)("Additional CSS"),
               value: customCSS,
@@ -129297,7 +129311,7 @@ If there's a particular need for this, please submit a feature request at https:
     return null;
   }
   function styleToAttributes2(style) {
-    if ((0, import_components285.__experimentalHasSplitBorders)(style?.border)) {
+    if ((0, import_components286.__experimentalHasSplitBorders)(style?.border)) {
       return {
         style,
         borderColor: void 0
@@ -129316,7 +129330,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function attributesToStyle2(attributes) {
-    if ((0, import_components285.__experimentalHasSplitBorders)(attributes.style?.border)) {
+    if ((0, import_components286.__experimentalHasSplitBorders)(attributes.style?.border)) {
       return attributes.style;
     }
     return {
@@ -130549,7 +130563,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data196 = __toESM(require_data(), 1);
   var import_jsx_runtime690 = __toESM(require_jsx_runtime(), 1);
   var { getDuotoneFilter: getDuotoneFilter2, getDuotoneStylesheet: getDuotoneStylesheet2, getDuotoneUnsetStylesheet: getDuotoneUnsetStylesheet2 } = unlock(privateApis);
-  var EMPTY_ARRAY23 = [];
+  var EMPTY_ARRAY22 = [];
   var isSafari2 = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
   D([e]);
   function useMultiOriginPresets({ presetSetting, defaultSetting }) {
@@ -130561,9 +130575,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return (0, import_element451.useMemo)(
       () => [
-        ...userPresets || EMPTY_ARRAY23,
-        ...themePresets || EMPTY_ARRAY23,
-        ...enableDefault && defaultPresets || EMPTY_ARRAY23
+        ...userPresets || EMPTY_ARRAY22,
+        ...themePresets || EMPTY_ARRAY22,
+        ...enableDefault && defaultPresets || EMPTY_ARRAY22
       ],
       [enableDefault, userPresets, themePresets, defaultPresets]
     );
@@ -130855,7 +130869,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element452 = __toESM(require_element(), 1);
   var import_data197 = __toESM(require_data(), 1);
   var import_compose149 = __toESM(require_compose(), 1);
-  var import_components287 = __toESM(require_components(), 1);
+  var import_components288 = __toESM(require_components(), 1);
   var import_blocks126 = __toESM(require_blocks(), 1);
   var import_i18n289 = __toESM(require_i18n(), 1);
   var import_notices13 = __toESM(require_notices(), 1);
@@ -130951,7 +130965,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     if (isStateSelected) {
-      return /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(PrivateInspectorControlsStyleStateAdvanced.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(import_components287.PanelBody, { title: (0, import_i18n289.__)("Advanced"), children: panel }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(PrivateInspectorControlsStyleStateAdvanced.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(import_components288.PanelBody, { title: (0, import_i18n289.__)("Advanced"), children: panel }) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime691.jsx)(inspector_controls_default, { group: "advanced", children: panel });
   }
@@ -131067,7 +131081,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element453 = __toESM(require_element(), 1);
   var import_blocks127 = __toESM(require_blocks(), 1);
   var import_data198 = __toESM(require_data(), 1);
-  var import_components288 = __toESM(require_components(), 1);
+  var import_components289 = __toESM(require_components(), 1);
   var import_i18n290 = __toESM(require_i18n(), 1);
   var import_jsx_runtime692 = __toESM(require_jsx_runtime(), 1);
   var VARIATION_PREFIX2 = "is-style-";
@@ -131384,7 +131398,7 @@ If there's a particular need for this, please submit a feature request at https:
           resetAllFilter: resetLayoutFilter,
           children: [
             showInheritToggle && /* @__PURE__ */ (0, import_jsx_runtime692.jsx)(
-              import_components288.__experimentalToolsPanelItem,
+              import_components289.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n290.__)("Use content width"),
                 hasValue: hasInheritToggleValue,
@@ -131392,7 +131406,7 @@ If there's a particular need for this, please submit a feature request at https:
                 isShownByDefault: true,
                 panelId: clientId,
                 children: /* @__PURE__ */ (0, import_jsx_runtime692.jsx)(
-                  import_components288.ToggleControl,
+                  import_components289.ToggleControl,
                   {
                     label: (0, import_i18n290.__)("Inner blocks use content width"),
                     checked: isUsingContentWidth(),
@@ -131409,7 +131423,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             showLayoutTypeSwitcher && /* @__PURE__ */ (0, import_jsx_runtime692.jsx)(
-              import_components288.__experimentalToolsPanelItem,
+              import_components289.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n290.__)("Layout type"),
                 hasValue: hasLayoutTypeValue,
@@ -131475,7 +131489,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function LayoutTypeSwitcher({ type, onChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime692.jsx)(
-      import_components288.__experimentalToggleGroupControl,
+      import_components289.__experimentalToggleGroupControl,
       {
         isBlock: true,
         label: (0, import_i18n290.__)("Layout type"),
@@ -131485,7 +131499,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange,
         children: getLayoutTypes().map(({ name, label }) => {
           return /* @__PURE__ */ (0, import_jsx_runtime692.jsx)(
-            import_components288.__experimentalToggleGroupControlOption,
+            import_components289.__experimentalToggleGroupControlOption,
             {
               value: name,
               label
@@ -132173,7 +132187,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/grid/grid-item-resizer.mjs
-  var import_components290 = __toESM(require_components(), 1);
+  var import_components291 = __toESM(require_components(), 1);
   var import_element455 = __toESM(require_element(), 1);
   var import_jsx_runtime694 = __toESM(require_jsx_runtime(), 1);
   function GridItemResizer({
@@ -132260,7 +132274,7 @@ If there's a particular need for this, please submit a feature request at https:
         __unstablePopoverSlot: "__unstable-block-tools-after",
         additionalStyles: styles,
         children: /* @__PURE__ */ (0, import_jsx_runtime694.jsx)(
-          import_components290.ResizableBox,
+          import_components291.ResizableBox,
           {
             className: "block-editor-grid-item-resizer__box",
             size: {
@@ -132331,7 +132345,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/grid/grid-item-movers.mjs
   var import_i18n291 = __toESM(require_i18n(), 1);
-  var import_components291 = __toESM(require_components(), 1);
+  var import_components292 = __toESM(require_components(), 1);
   var import_data200 = __toESM(require_data(), 1);
   var import_compose152 = __toESM(require_compose(), 1);
   var import_jsx_runtime695 = __toESM(require_jsx_runtime(), 1);
@@ -132355,7 +132369,7 @@ If there's a particular need for this, please submit a feature request at https:
       gridClientId,
       columnCount
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime695.jsx)(block_controls_default, { group: "parent", children: /* @__PURE__ */ (0, import_jsx_runtime695.jsxs)(import_components291.ToolbarGroup, { className: "block-editor-grid-item-mover__move-button-container", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime695.jsx)(block_controls_default, { group: "parent", children: /* @__PURE__ */ (0, import_jsx_runtime695.jsxs)(import_components292.ToolbarGroup, { className: "block-editor-grid-item-mover__move-button-container", children: [
       /* @__PURE__ */ (0, import_jsx_runtime695.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-left", children: /* @__PURE__ */ (0, import_jsx_runtime695.jsx)(
         GridItemMover,
         {
@@ -132470,7 +132484,7 @@ If there's a particular need for this, please submit a feature request at https:
     const descriptionId = `block-editor-grid-item-mover-button__description-${instanceId}`;
     return /* @__PURE__ */ (0, import_jsx_runtime695.jsxs)(import_jsx_runtime695.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime695.jsx)(
-        import_components291.ToolbarButton,
+        import_components292.ToolbarButton,
         {
           className: clsx_default(
             "block-editor-grid-item-mover-button",
@@ -133153,7 +133167,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/block-hooks.mjs
   var import_i18n292 = __toESM(require_i18n(), 1);
   var import_element458 = __toESM(require_element(), 1);
-  var import_components292 = __toESM(require_components(), 1);
+  var import_components293 = __toESM(require_components(), 1);
   var import_blocks129 = __toESM(require_blocks(), 1);
   var import_data203 = __toESM(require_data(), 1);
   var import_jsx_runtime697 = __toESM(require_jsx_runtime(), 1);
@@ -133274,7 +133288,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime697.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime697.jsxs)(
-      import_components292.PanelBody,
+      import_components293.PanelBody,
       {
         className: "block-editor-hooks__block-hooks",
         title: (0, import_i18n292.__)("Plugins"),
@@ -133289,7 +133303,7 @@ If there's a particular need for this, please submit a feature request at https:
               groupedHookedBlocks[vendor].map((block) => {
                 const checked2 = block.name in hookedBlockClientIds;
                 return /* @__PURE__ */ (0, import_jsx_runtime697.jsx)(
-                  import_components292.ToggleControl,
+                  import_components293.ToggleControl,
                   {
                     checked: checked2,
                     label: block.title,
@@ -133328,7 +133342,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/block-bindings.mjs
   var import_i18n293 = __toESM(require_i18n(), 1);
   var import_blocks130 = __toESM(require_blocks(), 1);
-  var import_components294 = __toESM(require_components(), 1);
+  var import_components295 = __toESM(require_components(), 1);
   var import_data204 = __toESM(require_data(), 1);
   var import_element459 = __toESM(require_element(), 1);
   var import_compose155 = __toESM(require_compose(), 1);
@@ -133373,7 +133387,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime698.jsx)(inspector_controls_default, { group: "bindings", children: /* @__PURE__ */ (0, import_jsx_runtime698.jsxs)(
-      import_components294.__experimentalToolsPanel,
+      import_components295.__experimentalToolsPanel,
       {
         label: (0, import_i18n293.__)("Attributes"),
         resetAll: () => {
@@ -133382,7 +133396,7 @@ If there's a particular need for this, please submit a feature request at https:
         dropdownMenuProps,
         className: "block-editor-bindings__panel",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime698.jsx)(import_components294.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => /* @__PURE__ */ (0, import_jsx_runtime698.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime698.jsx)(import_components295.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => /* @__PURE__ */ (0, import_jsx_runtime698.jsx)(
             BlockBindingsAttributeControl,
             {
               attribute,
@@ -133391,7 +133405,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             attribute
           )) }),
-          /* @__PURE__ */ (0, import_jsx_runtime698.jsx)(import_components294.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime698.jsx)("p", { children: (0, import_i18n293.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime698.jsx)(import_components295.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime698.jsx)("p", { children: (0, import_i18n293.__)(
             "Attributes connected to custom fields or other dynamic data."
           ) }) })
         ]
@@ -133412,7 +133426,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/list-view.mjs
   var import_i18n294 = __toESM(require_i18n(), 1);
-  var import_components295 = __toESM(require_components(), 1);
+  var import_components296 = __toESM(require_components(), 1);
   var import_data206 = __toESM(require_data(), 1);
   var import_blocks131 = __toESM(require_blocks(), 1);
   var import_element460 = __toESM(require_element(), 1);
@@ -133481,7 +133495,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const showBlockTitle = isSelectionWithinCurrentSection;
     return /* @__PURE__ */ (0, import_jsx_runtime699.jsx)(InspectorControlsFill, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime699.jsxs)(
-      import_components295.PanelBody,
+      import_components296.PanelBody,
       {
         title: showBlockTitle ? title : void 0,
         opened: isOpened,
@@ -133632,7 +133646,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/auto-inspector-controls.mjs
   var import_blocks133 = __toESM(require_blocks(), 1);
-  var import_components296 = __toESM(require_components(), 1);
+  var import_components297 = __toESM(require_components(), 1);
   var import_data208 = __toESM(require_data(), 1);
   var import_element461 = __toESM(require_element(), 1);
   var import_i18n295 = __toESM(require_i18n(), 1);
@@ -133730,7 +133744,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!fields || fields.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime701.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime701.jsx)(import_components296.PanelBody, { title: (0, import_i18n295.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime701.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime701.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime701.jsx)(import_components297.PanelBody, { title: (0, import_i18n295.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime701.jsx)(
       DataForm,
       {
         data: attributes,
@@ -134081,7 +134095,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/resizable-box-popover/index.mjs
-  var import_components297 = __toESM(require_components(), 1);
+  var import_components298 = __toESM(require_components(), 1);
   var import_jsx_runtime703 = __toESM(require_jsx_runtime(), 1);
   function ResizableBoxPopover({
     clientId,
@@ -134094,7 +134108,7 @@ If there's a particular need for this, please submit a feature request at https:
         clientId,
         __unstablePopoverSlot: "__unstable-block-tools-after",
         ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime703.jsx)(import_components297.ResizableBox, { ...resizableBoxProps })
+        children: /* @__PURE__ */ (0, import_jsx_runtime703.jsx)(import_components298.ResizableBox, { ...resizableBoxProps })
       }
     );
   }
@@ -134102,7 +134116,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.mjs
   var import_element465 = __toESM(require_element(), 1);
   var import_data209 = __toESM(require_data(), 1);
-  var import_components298 = __toESM(require_components(), 1);
+  var import_components299 = __toESM(require_components(), 1);
   var import_i18n296 = __toESM(require_i18n(), 1);
   var import_jsx_runtime704 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
@@ -134141,12 +134155,12 @@ If there's a particular need for this, please submit a feature request at https:
       clearBlockRemovalPrompt2();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime704.jsx)(
-      import_components298.Modal,
+      import_components299.Modal,
       {
         title: (0, import_i18n296.__)("Confirm deletion"),
         onRequestClose: clearBlockRemovalPrompt2,
         size: "medium",
-        children: /* @__PURE__ */ (0, import_jsx_runtime704.jsxs)(import_components298.__experimentalVStack, { spacing: 4, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime704.jsxs)(import_components299.__experimentalVStack, { spacing: 4, children: [
           /* @__PURE__ */ (0, import_jsx_runtime704.jsxs)("div", { children: [
             /* @__PURE__ */ (0, import_jsx_runtime704.jsx)("p", { children: description }),
             isStructured && (message2.warning || message2.subtext) && /* @__PURE__ */ (0, import_jsx_runtime704.jsxs)("p", { children: [
@@ -134156,16 +134170,16 @@ If there's a particular need for this, please submit a feature request at https:
             ] })
           ] }),
           requireConfirmation && /* @__PURE__ */ (0, import_jsx_runtime704.jsx)(
-            import_components298.CheckboxControl,
+            import_components299.CheckboxControl,
             {
               label: (0, import_i18n296.__)("I understand the consequences"),
               checked: confirmed,
               onChange: setConfirmed
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime704.jsxs)(import_components298.__experimentalHStack, { justify: "right", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime704.jsxs)(import_components299.__experimentalHStack, { justify: "right", children: [
             /* @__PURE__ */ (0, import_jsx_runtime704.jsx)(
-              import_components298.Button,
+              import_components299.Button,
               {
                 variant: "tertiary",
                 onClick: clearBlockRemovalPrompt2,
@@ -134174,7 +134188,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime704.jsx)(
-              import_components298.Button,
+              import_components299.Button,
               {
                 variant: "primary",
                 onClick: onConfirmRemoval,
@@ -134194,7 +134208,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element467 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.mjs
-  var import_components299 = __toESM(require_components(), 1);
+  var import_components300 = __toESM(require_components(), 1);
   var import_element466 = __toESM(require_element(), 1);
   var import_i18n297 = __toESM(require_i18n(), 1);
   var import_jsx_runtime705 = __toESM(require_jsx_runtime(), 1);
@@ -134245,7 +134259,7 @@ If there's a particular need for this, please submit a feature request at https:
       }, {});
     }, [options]);
     return /* @__PURE__ */ (0, import_jsx_runtime705.jsx)(
-      import_components299.__experimentalToolsPanelItem,
+      import_components300.__experimentalToolsPanelItem,
       {
         label: (0, import_i18n297._x)("Scale", "Image scaling options"),
         isShownByDefault,
@@ -134253,7 +134267,7 @@ If there's a particular need for this, please submit a feature request at https:
         onDeselect: () => onChange(defaultValue2),
         panelId,
         children: /* @__PURE__ */ (0, import_jsx_runtime705.jsx)(
-          import_components299.__experimentalToggleGroupControl,
+          import_components300.__experimentalToggleGroupControl,
           {
             label: (0, import_i18n297._x)("Scale", "Image scaling options"),
             isBlock: true,
@@ -134261,7 +134275,7 @@ If there's a particular need for this, please submit a feature request at https:
             value: displayValue,
             onChange,
             children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime705.jsx)(
-              import_components299.__experimentalToggleGroupControlOption,
+              import_components300.__experimentalToggleGroupControlOption,
               {
                 ...option
               },
@@ -134274,7 +134288,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/width-height-tool.mjs
-  var import_components300 = __toESM(require_components(), 1);
+  var import_components301 = __toESM(require_components(), 1);
   var import_i18n298 = __toESM(require_i18n(), 1);
   var import_jsx_runtime706 = __toESM(require_jsx_runtime(), 1);
   function WidthHeightTool({
@@ -134298,7 +134312,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return /* @__PURE__ */ (0, import_jsx_runtime706.jsxs)(import_jsx_runtime706.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime706.jsx)(
-        import_components300.__experimentalToolsPanelItem,
+        import_components301.__experimentalToolsPanelItem,
         {
           style: { gridColumn: "span 1" },
           label: (0, import_i18n298.__)("Width"),
@@ -134307,7 +134321,7 @@ If there's a particular need for this, please submit a feature request at https:
           onDeselect: onDimensionChange("width"),
           panelId,
           children: /* @__PURE__ */ (0, import_jsx_runtime706.jsx)(
-            import_components300.__experimentalUnitControl,
+            import_components301.__experimentalUnitControl,
             {
               label: (0, import_i18n298.__)("Width"),
               placeholder: (0, import_i18n298.__)("Auto"),
@@ -134321,7 +134335,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime706.jsx)(
-        import_components300.__experimentalToolsPanelItem,
+        import_components301.__experimentalToolsPanelItem,
         {
           style: { gridColumn: "span 1" },
           label: (0, import_i18n298.__)("Height"),
@@ -134330,7 +134344,7 @@ If there's a particular need for this, please submit a feature request at https:
           onDeselect: onDimensionChange("height"),
           panelId,
           children: /* @__PURE__ */ (0, import_jsx_runtime706.jsx)(
-            import_components300.__experimentalUnitControl,
+            import_components301.__experimentalUnitControl,
             {
               label: (0, import_i18n298.__)("Height"),
               placeholder: (0, import_i18n298.__)("Auto"),
@@ -134469,7 +134483,7 @@ If there's a particular need for this, please submit a feature request at https:
   var dimensions_tool_default = DimensionsTool;
 
   // packages/block-editor/build-module/components/resolution-tool/index.mjs
-  var import_components301 = __toESM(require_components(), 1);
+  var import_components302 = __toESM(require_components(), 1);
   var import_i18n299 = __toESM(require_i18n(), 1);
   var import_jsx_runtime708 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SIZE_OPTIONS = [
@@ -134501,7 +134515,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const displayValue = value ?? defaultValue2;
     return /* @__PURE__ */ (0, import_jsx_runtime708.jsx)(
-      import_components301.__experimentalToolsPanelItem,
+      import_components302.__experimentalToolsPanelItem,
       {
         hasValue: () => displayValue !== defaultValue2,
         label: (0, import_i18n299.__)("Resolution"),
@@ -134525,7 +134539,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/html-element-control/index.mjs
   var import_i18n301 = __toESM(require_i18n(), 1);
-  var import_components302 = __toESM(require_components(), 1);
+  var import_components303 = __toESM(require_components(), 1);
   var import_data210 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/html-element-control/messages.mjs
@@ -134609,7 +134623,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return option;
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime709.jsxs)(import_components302.__experimentalVStack, { spacing: 2, className: "block-editor-html-element-control", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime709.jsxs)(import_components303.__experimentalVStack, { spacing: 2, className: "block-editor-html-element-control", children: [
       /* @__PURE__ */ (0, import_jsx_runtime709.jsx)(
         SelectControl2,
         {
@@ -134622,25 +134636,25 @@ If there's a particular need for this, please submit a feature request at https:
           description: htmlElementMessages[tagName]
         }
       ),
-      tagName === "main" && hasMainElementElsewhere && /* @__PURE__ */ (0, import_jsx_runtime709.jsx)(import_components302.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n301.__)(
+      tagName === "main" && hasMainElementElsewhere && /* @__PURE__ */ (0, import_jsx_runtime709.jsx)(import_components303.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n301.__)(
         "Multiple <main> elements detected. The duplicate may be in your content or template. This is not valid HTML and may cause accessibility issues. Please change this HTML element."
       ) })
     ] });
   }
 
   // packages/block-editor/build-module/components/link-picker/link-picker.mjs
-  var import_components304 = __toESM(require_components(), 1);
+  var import_components305 = __toESM(require_components(), 1);
   var import_element468 = __toESM(require_element(), 1);
   var import_i18n302 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
-  var import_components303 = __toESM(require_components(), 1);
+  var import_components304 = __toESM(require_components(), 1);
   var import_dom81 = __toESM(require_dom(), 1);
   var import_jsx_runtime710 = __toESM(require_jsx_runtime(), 1);
   function LinkPreview2({ title, url, image, badges }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime710.jsxs)(import_components303.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(import_components303.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime710.jsxs)(import_components303.__experimentalHStack, { alignment: "top", children: [
-        image && /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(import_components303.FlexItem, { className: "link-preview-button__image-container", children: /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime710.jsxs)(import_components304.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(import_components304.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime710.jsxs)(import_components304.__experimentalHStack, { alignment: "top", children: [
+        image && /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(import_components304.FlexItem, { className: "link-preview-button__image-container", children: /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(
           "img",
           {
             className: "link-preview-button__image",
@@ -134649,13 +134663,13 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime710.jsxs)(
-          import_components303.__experimentalVStack,
+          import_components304.__experimentalVStack,
           {
             className: "link-preview-button__details",
             alignment: "topLeft",
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(
-                import_components303.__experimentalTruncate,
+                import_components304.__experimentalTruncate,
                 {
                   numberOfLines: 1,
                   className: "link-preview-button__title",
@@ -134663,7 +134677,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               ),
               url && /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(
-                import_components303.__experimentalTruncate,
+                import_components304.__experimentalTruncate,
                 {
                   numberOfLines: 1,
                   className: "link-preview-button__hint",
@@ -134671,7 +134685,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               ),
               badges && badges.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime710.jsx)(
-                import_components303.__experimentalHStack,
+                import_components304.__experimentalHStack,
                 {
                   className: "link-preview-button__badges",
                   alignment: "left",
@@ -134707,7 +134721,7 @@ If there's a particular need for this, please submit a feature request at https:
     const dialogTitleId = `link-picker-title-${instanceId}`;
     const dialogDescriptionId = `link-picker-description-${instanceId}`;
     const anchorRef = (0, import_element468.useRef)(null);
-    const { baseControlProps, controlProps } = (0, import_components304.useBaseControlProps)({
+    const { baseControlProps, controlProps } = (0, import_components305.useBaseControlProps)({
       help
     });
     const handleChange = (newValue) => {
@@ -134723,10 +134737,10 @@ If there's a particular need for this, please submit a feature request at https:
         onSelect(suggestion);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime711.jsxs)(import_components304.BaseControl, { ...baseControlProps, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime711.jsx)(import_components304.BaseControl.VisualLabel, { children: label }),
+    return /* @__PURE__ */ (0, import_jsx_runtime711.jsxs)(import_components305.BaseControl, { ...baseControlProps, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime711.jsx)(import_components305.BaseControl.VisualLabel, { children: label }),
       /* @__PURE__ */ (0, import_jsx_runtime711.jsxs)(
-        import_components304.Button,
+        import_components305.Button,
         {
           ref: anchorRef,
           onClick: () => setIsOpen(!isOpen),
@@ -134754,7 +134768,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       isOpen && /* @__PURE__ */ (0, import_jsx_runtime711.jsx)(
-        import_components304.Popover,
+        import_components305.Popover,
         {
           anchor: anchorRef.current,
           onClose: () => setIsOpen(false),

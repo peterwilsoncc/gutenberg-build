@@ -4613,6 +4613,15 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 .block-editor-inserter__media-panel .dataviews-loading {
   padding: 0 16px;
 }
+.block-editor-inserter__media-panel .block-editor-inserter__media-grid__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.block-editor-inserter__media-panel .block-editor-inserter__media-grid__loading.is-replacing-results {
+  min-height: 500px;
+}
 .block-editor-inserter__media-panel .block-editor-inserter__media-grid__footer {
   flex-shrink: 0;
   border-top: 1px solid #e0e0e0;
