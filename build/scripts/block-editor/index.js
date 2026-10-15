@@ -105629,7 +105629,8 @@ If there's a particular need for this, please submit a feature request at https:
           const { getBlockListSettings: getBlockListSettings2, getTemplateLock: getTemplateLock2, isZoomOut: isZoomOut2 } = unlock(select3(store));
           const settings3 = getBlockListSettings2(clientId);
           const directInsertValue = settings3?.directInsert || false;
-          const hideInserterValue = !!getTemplateLock2(clientId) || isZoomOut2();
+          const templateLock = getTemplateLock2(clientId);
+          const hideInserterValue = !!templateLock && templateLock !== "contentOnly" || isZoomOut2();
           return {
             directInsert: directInsertValue,
             hideInserter: hideInserterValue
