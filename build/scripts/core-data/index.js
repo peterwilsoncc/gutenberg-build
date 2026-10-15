@@ -15261,19 +15261,25 @@ ${err.toString()}`);
   var disallowedPostMetaKeys = /* @__PURE__ */ new Set([
     POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE
   ]);
-  function defaultApplyChangesToCRDTDoc(ydoc, changes) {
+  var unsyncedTaxonomyProperties = /* @__PURE__ */ new Set([
+    "id",
+    "count",
+    "link",
+    "taxonomy",
+    "_links",
+    "_embedded"
+  ]);
+  function applyTaxonomyChangesToCRDTDoc(ydoc, changes) {
     const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
     Object.entries(changes).forEach(([key, newValue]) => {
+      if (unsyncedTaxonomyProperties.has(key)) {
+        return;
+      }
       if ("function" === typeof newValue) {
         return;
       }
-      switch (key) {
-        // Add support for additional data types here.
-        default: {
-          const currentValue = ymap.get(key);
-          updateMapValue(ymap, key, currentValue, newValue);
-        }
-      }
+      const currentValue = ymap.get(key);
+      updateMapValue(ymap, key, currentValue, newValue);
     });
   }
   function applyPostChangesToCRDTDoc(ydoc, changes, syncedProperties) {
@@ -15394,11 +15400,11 @@ ${err.toString()}`);
       offset: asRichTextOffset(selectionStart.offset)
     } : null;
   }
-  function defaultGetChangesFromCRDTDoc(crdtDoc, editedRecord) {
+  function getTaxonomyChangesFromCRDTDoc(crdtDoc, editedRecord) {
     const docRecord = getRootMap(crdtDoc, CRDT_RECORD_MAP_KEY).toJSON();
     return Object.fromEntries(
       Object.entries(docRecord).filter(
-        ([key, newValue]) => haveValuesChanged(editedRecord?.[key], newValue)
+        ([key, newValue]) => !unsyncedTaxonomyProperties.has(key) && haveValuesChanged(editedRecord?.[key], newValue)
       )
     );
   }
@@ -15490,10 +15496,10 @@ ${err.toString()}`);
     }
     return changes;
   }
-  var defaultSyncConfig = {
-    applyChangesToCRDTDoc: defaultApplyChangesToCRDTDoc,
+  var taxonomySyncConfig = {
+    applyChangesToCRDTDoc: applyTaxonomyChangesToCRDTDoc,
     createAwareness: (ydoc) => new BaseAwareness(ydoc),
-    getChangesFromCRDTDoc: defaultGetChangesFromCRDTDoc
+    getChangesFromCRDTDoc: getTaxonomyChangesFromCRDTDoc
   };
   var defaultCollectionSyncConfig = {
     applyChangesToCRDTDoc: () => {
@@ -15904,7 +15910,7 @@ ${err.toString()}`);
         supportsPagination: true
       };
       if (window.__experimentalEnableRealTimeCollaboration) {
-        entity2.syncConfig = defaultSyncConfig;
+        entity2.syncConfig = taxonomySyncConfig;
       }
       return entity2;
     });
