@@ -18582,16 +18582,18 @@ var wp;
   function getBlockGapCSS(selector5, layoutDefinitions = LAYOUT_DEFINITIONS2, layoutType, blockGapValue) {
     let output = "";
     if (layoutDefinitions?.[layoutType]?.spacingStyles?.length && blockGapValue) {
-      layoutDefinitions[layoutType].spacingStyles.forEach((gapStyle) => {
-        output += `${appendSelectors(
-          selector5,
-          gapStyle.selector.trim()
-        )} { `;
-        output += Object.entries(gapStyle.rules).map(
-          ([cssProperty, value]) => `${cssProperty}: ${value ? value : blockGapValue}`
-        ).join("; ");
-        output += "; }";
-      });
+      layoutDefinitions[layoutType].spacingStyles.forEach(
+        (gapStyle) => {
+          output += `${appendSelectors(
+            selector5,
+            gapStyle.selector.trim()
+          )} { `;
+          output += Object.entries(gapStyle.rules).map(
+            ([cssProperty, value]) => `${cssProperty}: ${value ? value : blockGapValue}`
+          ).join("; ");
+          output += "; }";
+        }
+      );
     }
     return output;
   }
@@ -18789,7 +18791,9 @@ var wp;
   // packages/block-editor/build-module/hooks/gap.mjs
   function isAxialBlockGapAllowed(layout, defaultLayout2) {
     const usedLayout = normalizeLegacyLayout(layout) || defaultLayout2 || {};
-    return ["flex", "grid"].includes(usedLayout?.type);
+    return ["flex", "grid"].includes(
+      usedLayout?.type
+    );
   }
   function getGapBoxControlValueFromStyle2(blockGapValue) {
     if (!blockGapValue) {
