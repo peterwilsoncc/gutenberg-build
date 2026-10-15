@@ -58904,6 +58904,32 @@ This message will only show in development mode. It won't appear in production. 
     "top left": 315,
     "left top": 315
   };
+  var RECTANGULAR_INTERPOLATION_COLOR_SPACES = [
+    "srgb",
+    "srgb-linear",
+    "display-p3",
+    "display-p3-linear",
+    "a98-rgb",
+    "prophoto-rgb",
+    "rec2020",
+    "lab",
+    "oklab",
+    "xyz",
+    "xyz-d50",
+    "xyz-d65"
+  ];
+  var POLAR_INTERPOLATION_COLOR_SPACES = [
+    "hsl",
+    "hwb",
+    "lch",
+    "oklch"
+  ];
+  var HUE_INTERPOLATION_METHODS = [
+    "shorter",
+    "longer",
+    "increasing",
+    "decreasing"
+  ];
 
   // packages/components/build-module/custom-gradient-picker/serializer.mjs
   function serializeGradientColor({
@@ -58957,10 +58983,14 @@ This message will only show in development mode. It won't appear in production. 
   }
   function serializeGradient({
     type,
+    colorInterpolation,
     orientation,
     colorStops
   }) {
-    const serializedOrientation = serializeGradientOrientation(orientation);
+    const serializedOrientation = [
+      colorInterpolation,
+      serializeGradientOrientation(orientation)
+    ].filter(Boolean).join(" ");
     const serializedColorStops = colorStops.sort((colorStop1, colorStop2) => {
       const getNumericStopValue = (colorStop) => {
         return colorStop?.length?.value === void 0 ? 0 : parseInt(colorStop.length.value);
@@ -58988,12 +59018,74 @@ This message will only show in development mode. It won't appear in production. 
   function hasUnsupportedLength(item) {
     return item.length === void 0 || item.length.type !== "%";
   }
+  function readFirstArgument(gradient, start) {
+    const tokens = [];
+    let token2 = "";
+    let depth = 0;
+    for (let index2 = start; index2 < gradient.length; index2++) {
+      const char2 = gradient[index2];
+      if (depth === 0 && (char2 === "," || char2 === ")")) {
+        if (token2) {
+          tokens.push(token2);
+        }
+        return { tokens, end: index2 };
+      }
+      if (char2 === "(") {
+        depth++;
+      } else if (char2 === ")") {
+        depth--;
+      }
+      if (depth === 0 && /\s/.test(char2)) {
+        if (token2) {
+          tokens.push(token2);
+        }
+        token2 = "";
+      } else {
+        token2 += char2;
+      }
+    }
+    return void 0;
+  }
+  function extractColorInterpolation(gradient) {
+    const start = gradient.indexOf("(") + 1;
+    const firstArgument = start && readFirstArgument(gradient, start);
+    if (!firstArgument) {
+      return { gradient };
+    }
+    const { tokens, end } = firstArgument;
+    const words = tokens.map((token2) => token2.toLowerCase());
+    const index2 = words.indexOf("in");
+    if (index2 === -1) {
+      return { gradient };
+    }
+    const colorSpace = words[index2 + 1];
+    let length2;
+    if (POLAR_INTERPOLATION_COLOR_SPACES.includes(colorSpace) && HUE_INTERPOLATION_METHODS.includes(words[index2 + 2]) && words[index2 + 3] === "hue") {
+      length2 = 4;
+    } else if (RECTANGULAR_INTERPOLATION_COLOR_SPACES.includes(colorSpace) || POLAR_INTERPOLATION_COLOR_SPACES.includes(colorSpace)) {
+      length2 = 2;
+    } else {
+      return { gradient };
+    }
+    const remainder = [
+      ...tokens.slice(0, index2),
+      ...tokens.slice(index2 + length2)
+    ].join(" ");
+    const hasEmptyFirstArgument = !remainder && gradient[end] === ",";
+    return {
+      gradient: gradient.slice(0, start) + remainder + gradient.slice(hasEmptyFirstArgument ? end + 1 : end),
+      colorInterpolation: words.slice(index2, index2 + length2).join(" ")
+    };
+  }
   function getGradientAstWithDefault(value) {
     let gradientAST;
     let hasGradient = !!value;
-    const valueToParse = value ?? DEFAULT_GRADIENT;
+    const { gradient: valueToParse, colorInterpolation } = extractColorInterpolation(value ?? DEFAULT_GRADIENT);
     try {
       gradientAST = esm_default.parse(valueToParse)[0];
+      if (colorInterpolation) {
+        gradientAST.colorInterpolation = colorInterpolation;
+      }
     } catch (error2) {
       console.warn(
         "wp.components.CustomGradientPicker failed to parse the gradient with error",
