@@ -1752,8 +1752,7 @@ iframe[name=editor-canvas] {
   grid-column: span 2;
 }
 
-.components-font-appearance-control [role=option] {
-  color: #1e1e1e;
+.components-font-appearance-control__option {
   text-transform: capitalize;
 }
 
@@ -1975,7 +1974,8 @@ iframe[name=editor-canvas] {
 }
 
 .is-inherited-from-global-styles .components-base-control__label,
-.is-inherited-from-global-styles .components-input-control__label {
+.is-inherited-from-global-styles .components-input-control__label,
+.is-inherited-from-global-styles .block-editor-font-appearance-control__label {
   text-decoration-line: underline;
   text-decoration-style: dotted;
   text-decoration-thickness: 1px;
