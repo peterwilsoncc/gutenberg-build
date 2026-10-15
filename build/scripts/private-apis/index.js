@@ -40,6 +40,7 @@ var wp;
     "@wordpress/connectors",
     "@wordpress/workflows",
     "@wordpress/components",
+    "@wordpress/core-actions",
     "@wordpress/core-commands",
     "@wordpress/core-data",
     "@wordpress/core-fields",

@@ -1103,7 +1103,7 @@ var wp;
   var import_data82 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element263 = __toESM(require_element(), 1);
-  var import_editor42 = __toESM(require_editor(), 1);
+  var import_editor41 = __toESM(require_editor(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
 
@@ -77023,7 +77023,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element250 = __toESM(require_element(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
-  var import_editor29 = __toESM(require_editor(), 1);
+  var import_editor28 = __toESM(require_editor(), 1);
   var import_router29 = __toESM(require_router(), 1);
   var import_data71 = __toESM(require_data(), 1);
   var import_url17 = __toESM(require_url(), 1);
@@ -77101,13 +77101,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_patterns2 = __toESM(require_patterns(), 1);
   var import_notices5 = __toESM(require_notices(), 1);
   var import_core_data47 = __toESM(require_core_data(), 1);
-  var import_editor27 = __toESM(require_editor(), 1);
   var import_jsx_runtime401 = __toESM(require_jsx_runtime(), 1);
   var { useHistory: useHistory18, useLocation: useLocation24 } = unlock(import_router26.privateApis);
-  var { CreatePatternModal, useAddPatternCategory } = unlock(
-    import_patterns2.privateApis
-  );
-  var { CreateTemplatePartModal } = unlock(import_editor27.privateApis);
+  var { CreatePatternModal, CreateTemplatePartModal, useAddPatternCategory } = unlock(import_patterns2.privateApis);
   function AddNewPattern() {
     const history = useHistory18();
     const location = useLocation24();
@@ -77505,9 +77501,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element249 = __toESM(require_element(), 1);
   var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
-  var import_editor28 = __toESM(require_editor(), 1);
+  var import_editor27 = __toESM(require_editor(), 1);
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
-  var { useStyle: useStyle4 } = unlock(import_editor28.privateApis);
+  var { useStyle: useStyle4 } = unlock(import_editor27.privateApis);
   function PreviewField({ item }) {
     const descriptionId = (0, import_element249.useId)();
     const description = item.description || item?.excerpt?.raw;
@@ -77550,7 +77546,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider } = unlock(import_block_editor27.privateApis);
-  var { usePostActions, usePostFields } = unlock(import_editor29.privateApis);
+  var { usePostActions, usePostFields } = unlock(import_editor28.privateApis);
   var { useLocation: useLocation26, useHistory: useHistory21 } = unlock(import_router29.privateApis);
   var EMPTY_ARRAY11 = [];
   var VIEW_CONFIG_FIELDS3 = ["default_view", "default_layouts"];
@@ -77868,7 +77864,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element256 = __toESM(require_element(), 1);
   var import_core_data54 = __toESM(require_core_data(), 1);
   var import_router32 = __toESM(require_router(), 1);
-  var import_editor33 = __toESM(require_editor(), 1);
+  var import_editor32 = __toESM(require_editor(), 1);
   var import_url21 = __toESM(require_url(), 1);
   var import_compose46 = __toESM(require_compose(), 1);
 
@@ -79153,9 +79149,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element255 = __toESM(require_element(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
   var import_block_editor28 = __toESM(require_block_editor(), 1);
-  var import_editor32 = __toESM(require_editor(), 1);
+  var import_editor31 = __toESM(require_editor(), 1);
   var import_jsx_runtime416 = __toESM(require_jsx_runtime(), 1);
-  var { useStyle: useStyle5 } = unlock(import_editor32.privateApis);
+  var { useStyle: useStyle5 } = unlock(import_editor31.privateApis);
   function PreviewField2({ item }) {
     const settings2 = usePatternSettings();
     const backgroundColor = useStyle5("color.background") ?? "white";
@@ -79163,7 +79159,7 @@ If there's a particular need for this, please submit a feature request at https:
       return (0, import_blocks13.parse)(item.content.raw);
     }, [item.content.raw]);
     const isEmpty2 = !blocks?.length;
-    return /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(import_editor32.EditorProvider, { post: item, settings: settings2, children: /* @__PURE__ */ (0, import_jsx_runtime416.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(import_editor31.EditorProvider, { post: item, settings: settings2, children: /* @__PURE__ */ (0, import_jsx_runtime416.jsxs)(
       "div",
       {
         className: "page-templates-preview-field",
@@ -79184,7 +79180,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
   var import_jsx_runtime417 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions2, usePostFields: usePostFields2 } = unlock(import_editor33.privateApis);
+  var { usePostActions: usePostActions2, usePostFields: usePostFields2 } = unlock(import_editor32.privateApis);
   var { useHistory: useHistory23, useLocation: useLocation28 } = unlock(import_router32.privateApis);
   var { useEntityRecordsWithPermissions } = unlock(import_core_data54.privateApis);
   var VIEW_CONFIG_FIELDS5 = ["default_view", "default_layouts", "view_list"];
@@ -79403,7 +79399,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element260 = __toESM(require_element(), 1);
   var import_router33 = __toESM(require_router(), 1);
   var import_data78 = __toESM(require_data(), 1);
-  var import_editor37 = __toESM(require_editor(), 1);
+  var import_editor36 = __toESM(require_editor(), 1);
   var import_compose47 = __toESM(require_compose(), 1);
   var import_url22 = __toESM(require_url(), 1);
 
@@ -79554,9 +79550,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_components145 = __toESM(require_components(), 1);
   var import_element259 = __toESM(require_element(), 1);
-  var import_editor36 = __toESM(require_editor(), 1);
+  var import_editor35 = __toESM(require_editor(), 1);
   var import_jsx_runtime421 = __toESM(require_jsx_runtime(), 1);
-  var { usePostFields: usePostFields3, PostCardPanel } = unlock(import_editor36.privateApis);
+  var { usePostFields: usePostFields3, PostCardPanel } = unlock(import_editor35.privateApis);
   var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
   function QuickEditModal({
     postType: postType2,
@@ -79714,7 +79710,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/post-list/index.mjs
   var import_jsx_runtime422 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions3, usePostFields: usePostFields4 } = unlock(import_editor37.privateApis);
+  var { usePostActions: usePostActions3, usePostFields: usePostFields4 } = unlock(import_editor36.privateApis);
   var { useLocation: useLocation29, useHistory: useHistory24 } = unlock(import_router33.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions2 } = unlock(import_core_data59.privateApis);
   var EMPTY_ARRAY13 = [];
@@ -80074,9 +80070,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
   var import_i18n171 = __toESM(require_i18n(), 1);
-  var import_editor40 = __toESM(require_editor(), 1);
+  var import_editor39 = __toESM(require_editor(), 1);
   var import_jsx_runtime425 = __toESM(require_jsx_runtime(), 1);
-  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor40.privateApis);
+  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor39.privateApis);
   var stylebookRoute = {
     name: "stylebook",
     path: "/stylebook",
@@ -80217,7 +80213,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/deprecated.mjs
-  var import_editor41 = __toESM(require_editor(), 1);
+  var import_editor40 = __toESM(require_editor(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime428 = __toESM(require_jsx_runtime(), 1);
@@ -80235,26 +80231,26 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     deprecateSlot("PluginMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_editor41.PluginMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_editor40.PluginMoreMenuItem, { ...props });
   }
   function PluginSidebar(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebar");
-    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_editor41.PluginSidebar, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_editor40.PluginSidebar, { ...props });
   }
   function PluginSidebarMoreMenuItem(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebarMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_editor41.PluginSidebarMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_editor40.PluginSidebarMoreMenuItem, { ...props });
   }
 
   // packages/edit-site/build-module/index.mjs
   var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
-  var { registerCoreBlockBindingsSources } = unlock(import_editor42.privateApis);
+  var { registerCoreBlockBindingsSources } = unlock(import_editor41.privateApis);
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
     const root = (0, import_element263.createRoot)(target);

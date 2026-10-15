@@ -88,6 +88,21 @@ return array(
 		'asset' => 'core-abilities/index.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/core-actions/post_type_supports',
+		'path' => 'core-actions/post_type_supports',
+		'asset' => 'core-actions/post_type_supports.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/core-actions/wp_block',
+		'path' => 'core-actions/wp_block',
+		'asset' => 'core-actions/wp_block.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/core-actions/wp_template_part',
+		'path' => 'core-actions/wp_template_part',
+		'asset' => 'core-actions/wp_template_part.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/core-fields/attachment',
 		'path' => 'core-fields/attachment',
 		'asset' => 'core-fields/attachment.min.asset.php',
