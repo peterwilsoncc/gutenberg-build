@@ -42,6 +42,7 @@ var wp;
     "@wordpress/components",
     "@wordpress/core-commands",
     "@wordpress/core-data",
+    "@wordpress/core-fields",
     "@wordpress/customize-widgets",
     "@wordpress/data",
     "@wordpress/edit-post",
