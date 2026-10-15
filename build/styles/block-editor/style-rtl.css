@@ -2620,14 +2620,6 @@ iframe[name=editor-canvas] {
 .block-editor-link-control__preview .block-editor-link-control__preview-title {
   line-height: var(--wpds-typography-line-height-sm, 20px);
 }
-.block-editor-link-control__preview .block-editor-link-control__preview-title:focus {
-  box-shadow: none;
-}
-.block-editor-link-control__preview .block-editor-link-control__preview-title:focus-visible {
-  box-shadow: inset 0 0 0 1px #fff, 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
-  text-decoration: none;
-}
 .block-editor-link-control__preview .block-editor-link-control__preview-title mark {
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: inherit;
