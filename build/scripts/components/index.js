@@ -38045,15 +38045,90 @@ This message will only show in development mode. It won't appear in production. 
       (border) => border === shorthandBorders[0]
     );
   };
+  function splitBoxShorthand(value) {
+    const parts = [];
+    let current = "";
+    let depth = 0;
+    for (const char2 of value.trim()) {
+      if (char2 === "(") {
+        depth++;
+        current += char2;
+      } else if (char2 === ")") {
+        depth = Math.max(0, depth - 1);
+        current += char2;
+      } else if (/\s/.test(char2) && depth === 0) {
+        if (current) {
+          parts.push(current);
+          current = "";
+        }
+      } else {
+        current += char2;
+      }
+    }
+    if (current) {
+      parts.push(current);
+    }
+    return parts;
+  }
+  function unpackBoxShorthand(value) {
+    if (typeof value !== "string") {
+      return {
+        top: value,
+        right: value,
+        bottom: value,
+        left: value
+      };
+    }
+    const parts = splitBoxShorthand(value);
+    switch (parts.length) {
+      case 2:
+        return {
+          top: parts[0],
+          right: parts[1],
+          bottom: parts[0],
+          left: parts[1]
+        };
+      case 3:
+        return {
+          top: parts[0],
+          right: parts[1],
+          bottom: parts[2],
+          left: parts[1]
+        };
+      case 4:
+        return {
+          top: parts[0],
+          right: parts[1],
+          bottom: parts[2],
+          left: parts[3]
+        };
+      default:
+        return {
+          top: value,
+          right: value,
+          bottom: value,
+          left: value
+        };
+    }
+  }
   var getSplitBorders = (border) => {
     if (!border || isEmptyBorder(border)) {
       return void 0;
     }
+    if (border.width === void 0) {
+      return {
+        top: border,
+        right: border,
+        bottom: border,
+        left: border
+      };
+    }
+    const unpackedWidths = unpackBoxShorthand(border.width);
     return {
-      top: border,
-      right: border,
-      bottom: border,
-      left: border
+      top: { ...border, width: unpackedWidths.top },
+      right: { ...border, width: unpackedWidths.right },
+      bottom: { ...border, width: unpackedWidths.bottom },
+      left: { ...border, width: unpackedWidths.left }
     };
   };
   var getBorderDiff = (original, updated) => {
