@@ -6625,7 +6625,9 @@ var wp;
 
   // packages/block-editor/build-module/components/block-list/private-block-context.mjs
   var import_element3 = __toESM(require_element(), 1);
-  var PrivateBlockContext = (0, import_element3.createContext)({});
+  var PrivateBlockContext = (0, import_element3.createContext)(
+    {}
+  );
   PrivateBlockContext.displayName = "PrivateBlockContext";
 
   // packages/block-editor/build-module/components/block-edit/edit.mjs
@@ -6639,7 +6641,9 @@ var wp;
     const Component4 = blockType.edit || blockType.save;
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Component4, { ...props });
   };
-  var EditWithFilters = (0, import_components.withFilters)("editor.BlockEdit")(Edit);
+  var EditWithFilters = (0, import_components.withFilters)("editor.BlockEdit")(
+    Edit
+  );
   var EditWithGeneratedProps = (props) => {
     const { name, clientId, attributes, setAttributes } = props;
     const registry = (0, import_data.useRegistry)();
@@ -6654,6 +6658,7 @@ var wp;
       return {
         blockBindings: replacePatternOverridesDefaultBinding(
           attributes?.metadata?.bindings,
+          // Blocks with pattern overrides have bindable attributes.
           bindableAttributes
         ),
         // Assign context values using the block type's declared context
@@ -6663,6 +6668,7 @@ var wp;
           blockContext,
           blockType?.usesContext,
           attributes?.metadata?.bindings ? Object.values(attributes.metadata.bindings).map(
+            // An absent source looks up nothing.
             (binding) => registeredSources[binding?.source]
           ) : void 0
         ),
@@ -6717,7 +6723,8 @@ var wp;
             for (const [attributeName, value] of Object.entries(
               values
             )) {
-              if (attributeName === "url" && (!value || !isURLLike(value))) {
+              if (attributeName === "url" && // Sources return URLs as strings.
+              (!value || !isURLLike(value))) {
                 attributesFromSources[attributeName] = null;
               } else {
                 attributesFromSources[attributeName] = value;
@@ -6823,6 +6830,7 @@ var wp;
     const generatedClassName = (0, import_blocks.hasBlockSupport)(blockType, "className", true) ? (0, import_blocks.getBlockDefaultClassName)(name) : null;
     const className = clsx_default(
       generatedClassName,
+      // The class name attribute is a string.
       attributes?.className,
       props.className
     );
@@ -17131,7 +17139,12 @@ var wp;
   var import_components2 = __toESM(require_components(), 1);
   var import_i18n6 = __toESM(require_i18n(), 1);
   var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
-  function Warning({ className, actions, children, secondaryActions }) {
+  function Warning({
+    className,
+    actions,
+    children,
+    secondaryActions
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { style: { display: "contents", all: "initial" }, children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: clsx_default(className, "block-editor-warning"), children: /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("div", { className: "block-editor-warning__contents", children: [
       /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("p", { className: "block-editor-warning__message", children }),
       (actions?.length > 0 || secondaryActions) && /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("div", { className: "block-editor-warning__actions", children: [
@@ -17250,6 +17263,7 @@ var wp;
             name,
             isSelected: isSelected2,
             clientId,
+            // The layout attribute is an object when the block supports it.
             layout: layoutSupport ? layout : null,
             __unstableLayoutClassNames,
             // We use symbols in favour of an __unstable prefix to avoid
