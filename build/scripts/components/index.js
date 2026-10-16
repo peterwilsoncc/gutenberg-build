@@ -71446,6 +71446,7 @@ The screen with id ${screen.id} will not be added.`
   var import_warning10 = __toESM(require_warning(), 1);
   var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_TIMEOUT = 6e3;
+  var NOTICE_TIMEOUT_WITH_ACTIONS = 1e4;
   function useSpokenMessage2(message, politeness) {
     const spokenMessage = typeof message === "string" ? message : (0, import_element201.renderToString)(message);
     (0, import_element201.useEffect)(() => {
@@ -71506,6 +71507,7 @@ The screen with id ${screen.id} will not be added.`
     (0, import_element201.useLayoutEffect)(() => {
       callbacksRef.current = { onDismiss, onRemove };
     });
+    const timeout = actions.length > 0 ? NOTICE_TIMEOUT_WITH_ACTIONS : NOTICE_TIMEOUT;
     (0, import_element201.useEffect)(() => {
       if (explicitDismiss || !isPresent2) {
         return;
@@ -71513,9 +71515,9 @@ The screen with id ${screen.id} will not be added.`
       const timeoutHandle = setTimeout(() => {
         callbacksRef.current.onDismiss?.();
         callbacksRef.current.onRemove?.();
-      }, NOTICE_TIMEOUT);
+      }, timeout);
       return () => clearTimeout(timeoutHandle);
-    }, [explicitDismiss, isPresent2]);
+    }, [explicitDismiss, isPresent2, timeout]);
     const classes = clsx_default(className, "components-snackbar", {
       "components-snackbar-explicit-dismiss": !!explicitDismiss
     });
