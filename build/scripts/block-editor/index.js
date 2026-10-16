@@ -62968,8 +62968,13 @@ var wp;
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data13.useDispatch)(store);
     const { getBlockAttributes: getBlockAttributes3 } = (0, import_data13.useRegistry)().select(store);
     const updateBlockBindings = (bindings) => {
-      const { metadata: { bindings: currentBindings, ...metadata } = {} } = getBlockAttributes3(blockClientId);
-      const newBindings = { ...currentBindings };
+      const { metadata: { bindings: currentBindings, ...metadata } = {} } = (
+        // The utils are used within a block or for a given one.
+        getBlockAttributes3(blockClientId)
+      );
+      const newBindings = {
+        ...currentBindings
+      };
       Object.entries(bindings).forEach(([attribute, binding]) => {
         if (!binding && newBindings[attribute]) {
           delete newBindings[attribute];
@@ -62989,7 +62994,10 @@ var wp;
       });
     };
     const removeAllBlockBindings = () => {
-      const { metadata: { bindings, ...metadata } = {} } = getBlockAttributes3(blockClientId);
+      const { metadata: { bindings, ...metadata } = {} } = (
+        // The utils are used within a block or for a given one.
+        getBlockAttributes3(blockClientId)
+      );
       updateBlockAttributes2(blockClientId, {
         metadata: isObjectEmpty(metadata) ? void 0 : metadata
       });
@@ -63017,13 +63025,16 @@ var wp;
     );
     const blockContext = (0, import_element154.useContext)(block_context_default);
     const values = (0, import_data14.useSelect)(
-      (select3) => source.getValues({
-        select: select3,
-        context: blockContext,
-        bindings: {
-          [attribute]: itemBindings
-        }
-      }),
+      (select3) => (
+        // A source offering fields provides their values.
+        source.getValues({
+          select: select3,
+          context: blockContext,
+          bindings: {
+            [attribute]: itemBindings
+          }
+        })
+      ),
       [attribute, blockContext, itemBindings, source]
     );
     const { updateBlockBindings } = useBlockBindingsUtils();
@@ -63149,7 +63160,8 @@ var wp;
       isValid2 = false;
       displayText = (0, import_i18n30.__)("Source not registered");
     } else {
-      displayText = compatibleFields?.[boundSourceName]?.find(
+      displayText = // A found source has a name.
+      compatibleFields?.[boundSourceName]?.find(
         (field) => (0, import_es63.default)(field.args, args)
       )?.label || source?.label || boundSourceName;
     }
@@ -67714,11 +67726,19 @@ var wp;
     [BLOCK_VISIBILITY_VIEWPORTS.desktop.key]: false
   };
   var EMPTY_BLOCKS = [];
-  function BlockVisibilityModal({ clientIds, onClose }) {
+  function BlockVisibilityModal({
+    clientIds,
+    onClose
+  }) {
     const { createSuccessNotice } = (0, import_data27.useDispatch)(import_notices2.store);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data27.useDispatch)(store);
     const blocks2 = (0, import_data27.useSelect)(
-      (select3) => select3(store).getBlocksByClientId(clientIds) ?? EMPTY_BLOCKS,
+      (select3) => (
+        // The modal is opened for existing blocks.
+        select3(store).getBlocksByClientId(
+          clientIds
+        ) ?? EMPTY_BLOCKS
+      ),
       [clientIds]
     );
     const listViewShortcut = (0, import_data27.useSelect)((select3) => {
@@ -67727,7 +67747,10 @@ var wp;
       );
     }, []);
     const viewportSettings = (0, import_data27.useSelect)(
-      (select3) => select3(store).getSettings().__experimentalFeatures?.viewport,
+      (select3) => (
+        // The `viewport` setting holds the breakpoints.
+        select3(store).getSettings().__experimentalFeatures?.viewport
+      ),
       []
     );
     const viewportEntries = (0, import_element169.useMemo)(
@@ -67738,6 +67761,7 @@ var wp;
       if (blocks2?.length === 0) {
         return {
           hideEverywhere: false,
+          // No viewport is checked.
           viewportChecked: {}
         };
       }
@@ -67826,6 +67850,7 @@ var wp;
               }
               return acc;
             },
+            // The reducer fills the empty object.
             {}
           )
         };
@@ -68027,7 +68052,9 @@ var wp;
   var import_blocks23 = __toESM(require_blocks(), 1);
   var import_data28 = __toESM(require_data(), 1);
   var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
-  function BlockVisibilityViewportToolbar({ clientIds }) {
+  function BlockVisibilityViewportToolbar({
+    clientIds
+  }) {
     const hasBlockVisibilityButtonShownRef = (0, import_element170.useRef)(false);
     const [blockVisibility2] = useSettings("blockVisibility.allowEditing");
     const { canToggleBlockVisibility, areBlocksHiddenAnywhere } = (0, import_data28.useSelect)(
@@ -68080,7 +68107,9 @@ var wp;
   var import_data29 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts2 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
-  function BlockVisibilityViewportMenuItem({ clientIds }) {
+  function BlockVisibilityViewportMenuItem({
+    clientIds
+  }) {
     const [blockVisibility2] = useSettings("blockVisibility.allowEditing");
     const { areBlocksHiddenAnywhere, shortcut } = (0, import_data29.useSelect)(
       (select3) => {
@@ -68124,7 +68153,9 @@ var wp;
     hasParentHiddenEverywhere: false,
     selectedDeviceType: BLOCK_VISIBILITY_VIEWPORTS.desktop.key
   };
-  function ViewportVisibilityInfo({ clientId }) {
+  function ViewportVisibilityInfo({
+    clientId
+  }) {
     const {
       currentBlockVisibility,
       selectedDeviceType,
@@ -102083,8 +102114,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return false;
   }
-  function BlockLockModal({ clientId, onClose }) {
-    const [lock4, setLock] = (0, import_element335.useState)({ move: false, remove: false });
+  function BlockLockModal({
+    clientId,
+    onClose
+  }) {
+    const [lock4, setLock] = (0, import_element335.useState)({
+      move: false,
+      remove: false
+    });
     const { isEditLocked, isMoveLocked, isRemoveLocked } = useBlockLock(clientId);
     const { allowsEditLocking, templateLock, hasTemplateLock } = (0, import_data110.useSelect)(
       (select3) => {
@@ -102118,6 +102155,7 @@ If there's a particular need for this, please submit a feature request at https:
         title: (0, import_i18n151.sprintf)(
           /* translators: %s: Name of the block. */
           (0, import_i18n151.__)("Lock %s"),
+          // An existing block has display information.
           blockInformation.title
         ),
         overlayClassName: "block-editor-block-lock-modal",
@@ -102282,7 +102320,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-lock/menu-item.mjs
   var import_jsx_runtime521 = __toESM(require_jsx_runtime(), 1);
-  function BlockLockMenuItem({ clientId }) {
+  function BlockLockMenuItem({
+    clientId
+  }) {
     const { canLock, isLocked } = useBlockLock(clientId);
     const [isModalOpen, toggleModal] = (0, import_element336.useReducer)(
       (isActive) => !isActive,
@@ -102312,7 +102352,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components144 = __toESM(require_components(), 1);
   var import_element337 = __toESM(require_element(), 1);
   var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
-  function BlockLockToolbar({ clientId }) {
+  function BlockLockToolbar({
+    clientId
+  }) {
     const { canLock, isLocked } = useBlockLock(clientId);
     const [isModalOpen, toggleModal] = (0, import_element337.useReducer)(
       (isActive) => !isActive,
