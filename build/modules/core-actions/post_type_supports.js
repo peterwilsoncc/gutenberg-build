@@ -250,10 +250,7 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
 // packages/core-actions/build-module/post_type_supports/delete-post/action.mjs
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var { PATTERN_TYPES } = unlock(import_patterns.privateApis);
-var deletePostAction = {
-  id: "delete-post",
-  label: (0, import_i18n2.__)("Delete…"),
-  isPrimary: true,
+var deletePost = {
   icon: trash_default,
   isEligible(post) {
     if (isTemplateOrTemplatePart(post)) {
@@ -261,9 +258,6 @@ var deletePostAction = {
     }
     return post.type === PATTERN_TYPES.user;
   },
-  supportsBulk: true,
-  hideModalHeader: true,
-  modalFocusOnMount: "firstContentElement",
   RenderModal: ({ items, closeModal, onActionPerformed }) => {
     const [isBusy, setIsBusy] = (0, import_element.useState)(false);
     const isResetting = items.every(
@@ -400,7 +394,7 @@ var deletePostAction = {
     ] });
   }
 };
-var action_default = deletePostAction;
+var action_default = deletePost;
 
 // packages/core-actions/build-module/post_type_supports/duplicate-post/action.mjs
 var import_data2 = __toESM(require_data(), 1);
@@ -411,13 +405,9 @@ var import_element2 = __toESM(require_element(), 1);
 var import_components2 = __toESM(require_components(), 1);
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 var duplicatePost = {
-  id: "duplicate-post",
-  label: (0, import_i18n3._x)("Duplicate…", "action label"),
-  modalHeader: (0, import_i18n3._x)("Duplicate", "action label"),
   isEligible({ status }) {
     return status !== "trash";
   },
-  modalFocusOnMount: "firstContentElement",
   RenderModal: ({ items, closeModal, onActionPerformed }) => {
     const [item, setItem] = (0, import_element2.useState)({
       ...items[0],
@@ -554,9 +544,6 @@ function hasActionLink(item, action) {
 // packages/core-actions/build-module/post_type_supports/move-to-trash/action.mjs
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 var trashPost = {
-  id: "move-to-trash",
-  label: (0, import_i18n4._x)("Trash…", "verb"),
-  isPrimary: true,
   icon: trash_default,
   isEligible(item) {
     if (item.type === "wp_template_part" || item.type === "wp_block") {
@@ -567,9 +554,6 @@ var trashPost = {
     }
     return !!item.status && !["auto-draft", "trash"].includes(item.status) && item.permissions?.delete && hasActionLink(item, "wp:action-trash");
   },
-  supportsBulk: true,
-  hideModalHeader: true,
-  modalFocusOnMount: "firstContentElement",
   RenderModal: ({ items, closeModal, onActionPerformed }) => {
     const [isBusy, setIsBusy] = (0, import_element3.useState)(false);
     const { createSuccessNotice, createErrorNotice } = (0, import_data3.useDispatch)(import_notices3.store);
@@ -804,13 +788,9 @@ function ReorderModal({
   ] }) });
 }
 var reorderPage = {
-  id: "order-pages",
-  label: (0, import_i18n5.__)("Order…"),
-  modalHeader: (0, import_i18n5.__)("Order"),
   isEligible({ status }) {
     return status !== "trash";
   },
-  modalFocusOnMount: "firstContentElement",
   RenderModal: ReorderModal
 };
 var action_default4 = reorderPage;
@@ -825,9 +805,6 @@ var import_components5 = __toESM(require_components(), 1);
 var import_html_entities3 = __toESM(require_html_entities(), 1);
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var permanentlyDeletePost = {
-  id: "permanently-delete",
-  label: (0, import_i18n6.__)("Permanently delete…"),
-  supportsBulk: true,
   icon: trash_default,
   isEligible(item) {
     if (isTemplateOrTemplatePart(item) || item.type === "wp_block") {
@@ -839,8 +816,6 @@ var permanentlyDeletePost = {
     }
     return status === "trash" || !hasActionLink(item, "wp:action-trash");
   },
-  hideModalHeader: true,
-  modalFocusOnMount: "firstContentElement",
   RenderModal: ({ items, closeModal, onActionPerformed }) => {
     const [isBusy, setIsBusy] = (0, import_element5.useState)(false);
     const { createSuccessNotice, createErrorNotice } = (0, import_data5.useDispatch)(import_notices5.store);
@@ -987,10 +962,6 @@ var import_notices6 = __toESM(require_notices(), 1);
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var { PATTERN_TYPES: PATTERN_TYPES2 } = unlock(import_patterns2.privateApis);
 var renamePost = {
-  id: "rename-post",
-  label: (0, import_i18n7.__)("Rename…"),
-  modalHeader: (0, import_i18n7.__)("Rename"),
-  modalFocusOnMount: "firstContentElement",
   isEligible(post) {
     if (post.status === "trash") {
       return false;
@@ -1197,15 +1168,10 @@ var revertTemplate = async (template, { allowUndo = true } = {}) => {
   }
 };
 var resetPostAction = {
-  id: "reset-post",
-  label: (0, import_i18n8.__)("Reset…"),
   isEligible: (item) => {
     return isTemplateOrTemplatePart(item) && item?.source === "custom" && (Boolean(item.type === "wp_template" && item?.plugin) || item?.has_theme_file);
   },
   icon: backup_default,
-  supportsBulk: true,
-  hideModalHeader: true,
-  modalFocusOnMount: "firstContentElement",
   RenderModal: ({ items, closeModal, onActionPerformed }) => {
     const [isBusy, setIsBusy] = (0, import_element7.useState)(false);
     const { saveEditedEntityRecord } = (0, import_data7.useDispatch)(import_core_data7.store);
@@ -1300,11 +1266,7 @@ var import_core_data8 = __toESM(require_core_data(), 1);
 var import_i18n9 = __toESM(require_i18n(), 1);
 var import_notices8 = __toESM(require_notices(), 1);
 var restorePost = {
-  id: "restore",
-  label: (0, import_i18n9.__)("Restore"),
-  isPrimary: true,
   icon: backup_default,
-  supportsBulk: true,
   isEligible(item) {
     return !isTemplateOrTemplatePart(item) && item.type !== "wp_block" && item.status === "trash" && item.permissions?.update;
   },
@@ -1404,11 +1366,7 @@ var restorePost = {
 var action_default8 = restorePost;
 
 // packages/core-actions/build-module/post_type_supports/view-post/action.mjs
-var import_i18n10 = __toESM(require_i18n(), 1);
 var viewPost = {
-  id: "view-post",
-  label: (0, import_i18n10._x)("View", "verb"),
-  isPrimary: true,
   icon: external_default,
   isEligible(post) {
     return post.status !== "trash";
@@ -1425,15 +1383,13 @@ var action_default9 = viewPost;
 
 // packages/core-actions/build-module/post_type_supports/view-post-revisions/action.mjs
 var import_url2 = __toESM(require_url(), 1);
-var import_i18n11 = __toESM(require_i18n(), 1);
+var import_i18n10 = __toESM(require_i18n(), 1);
 var viewPostRevisions = {
-  id: "view-post-revisions",
-  context: "list",
   label(items) {
     const revisionsCount = items[0]._links?.["version-history"]?.[0]?.count ?? 0;
-    return (0, import_i18n11.sprintf)(
+    return (0, import_i18n10.sprintf)(
       /* translators: %d: number of revisions. */
-      (0, import_i18n11.__)("View revisions (%d)"),
+      (0, import_i18n10.__)("View revisions (%d)"),
       revisionsCount
     );
   },

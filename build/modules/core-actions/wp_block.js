@@ -570,11 +570,7 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
 var { CreatePatternModalContents, useDuplicatePatternProps } = unlock(import_patterns.privateApis);
 var duplicatePattern = {
-  id: "duplicate-pattern",
-  label: (0, import_i18n._x)("Duplicate…", "action label"),
   isEligible: (item) => item.type !== "wp_template_part",
-  modalHeader: (0, import_i18n._x)("Duplicate pattern", "action label"),
-  modalFocusOnMount: "firstContentElement",
   RenderModal: ({ items, closeModal }) => {
     const [item] = items;
     const duplicatedProps = useDuplicatePatternProps({
@@ -862,10 +858,7 @@ function getJsonFromItem(item) {
   );
 }
 var exportPattern = {
-  id: "export-pattern",
-  label: (0, import_i18n3.__)("Export as JSON"),
   icon: download_default,
-  supportsBulk: true,
   isEligible: (item) => item.type === "wp_block",
   callback: async (items) => {
     if (items.length === 1) {

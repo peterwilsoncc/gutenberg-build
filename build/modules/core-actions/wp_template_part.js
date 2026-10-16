@@ -121,11 +121,7 @@ function getItemTitle(item, fallback = (0, import_i18n.__)("(no title)")) {
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
 var { CreateTemplatePartModalContents } = unlock(import_patterns.privateApis);
 var duplicateTemplatePart = {
-  id: "duplicate-template-part",
-  label: (0, import_i18n2._x)("Duplicate…", "action label"),
   isEligible: (item) => item.type === "wp_template_part",
-  modalHeader: (0, import_i18n2._x)("Duplicate template part", "action label"),
-  modalFocusOnMount: "firstContentElement",
   RenderModal: ({ items, closeModal }) => {
     const [item] = items;
     const blocks = (0, import_element.useMemo)(() => {

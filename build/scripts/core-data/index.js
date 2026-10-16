@@ -17124,6 +17124,19 @@ ${err.toString()}`);
     }
     return state;
   }
+  function entityActionsConfigs(state = {}, action) {
+    switch (action.type) {
+      case "RECEIVE_ENTITY_ACTIONS_CONFIG":
+        return {
+          ...state,
+          [action.kind]: {
+            ...state[action.kind],
+            [action.name]: action.config
+          }
+        };
+    }
+    return state;
+  }
   var reducer_default2 = (0, import_data8.combineReducers)({
     users,
     currentTheme,
@@ -17150,7 +17163,8 @@ ${err.toString()}`);
     syncConnectionStatuses,
     collaborationSupported,
     viewConfigs,
-    fieldsConfigs
+    fieldsConfigs,
+    entityActionsConfigs
   });
 
   // packages/core-data/build-module/selectors.mjs
@@ -17219,6 +17233,7 @@ ${err.toString()}`);
     getBlockPatternsForPostType: () => getBlockPatternsForPostType,
     getEditorAssets: () => getEditorAssets,
     getEditorSettings: () => getEditorSettings,
+    getEntityActionsConfig: () => getEntityActionsConfig,
     getEntityRecordPermissions: () => getEntityRecordPermissions,
     getEntityRecordsPermissions: () => getEntityRecordsPermissions,
     getEntitySyncConnectionStatus: () => getEntitySyncConnectionStatus,
@@ -17441,6 +17456,9 @@ ${err.toString()}`);
   }
   function getFieldsConfig(state, kind, name) {
     return state.fieldsConfigs?.[kind]?.[name];
+  }
+  function getEntityActionsConfig(state, kind, name) {
+    return state.entityActionsConfigs?.[kind]?.[name];
   }
   function getSyncConnectionStatus(state) {
     if (!state.syncConnectionStatuses) {
@@ -18883,6 +18901,7 @@ ${err.toString()}`);
     editMediaEntity: () => editMediaEntity,
     receiveEditorAssets: () => receiveEditorAssets,
     receiveEditorSettings: () => receiveEditorSettings,
+    receiveEntityActionsConfig: () => receiveEntityActionsConfig,
     receiveFieldsConfig: () => receiveFieldsConfig,
     receiveRegisteredPostMeta: () => receiveRegisteredPostMeta,
     receiveViewConfig: () => receiveViewConfig,
@@ -19000,6 +19019,14 @@ ${err.toString()}`);
   function receiveFieldsConfig(kind, name, config) {
     return {
       type: "RECEIVE_FIELDS_CONFIG",
+      kind,
+      name,
+      config
+    };
+  }
+  function receiveEntityActionsConfig(kind, name, config) {
+    return {
+      type: "RECEIVE_ENTITY_ACTIONS_CONFIG",
       kind,
       name,
       config
@@ -19175,6 +19202,7 @@ ${err.toString()}`);
     getEditorSettings: () => getEditorSettings2,
     getEmbedPreview: () => getEmbedPreview2,
     getEntitiesConfig: () => getEntitiesConfig2,
+    getEntityActionsConfig: () => getEntityActionsConfig2,
     getEntityRecord: () => getEntityRecord2,
     getEntityRecords: () => getEntityRecords2,
     getEntityRecordsTotalItems: () => getEntityRecordsTotalItems2,
@@ -20221,6 +20249,12 @@ ${err.toString()}`);
       path: (0, import_url6.addQueryArgs)("/wp/v2/entity-fields", { kind, name })
     });
     dispatch4.receiveFieldsConfig(kind, name, config);
+  };
+  var getEntityActionsConfig2 = (kind, name) => async ({ dispatch: dispatch4 }) => {
+    const config = await (0, import_api_fetch10.default)({
+      path: (0, import_url6.addQueryArgs)("/wp/v2/entity-actions", { kind, name })
+    });
+    dispatch4.receiveEntityActionsConfig(kind, name, config);
   };
 
   // packages/core-data/build-module/locks/utils.mjs

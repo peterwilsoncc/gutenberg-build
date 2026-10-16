@@ -12150,6 +12150,13 @@ var wp;
           unlock2(core).getFieldsConfig("postType", postType).catch(() => {
           })
         ] : [],
+        // The actions of the post type, which the actions menu of the
+        // document sidebar reads with `useEntityActions`. It reports a failure
+        // of its own, so this must not cut the rest of the kickoff short.
+        ...postType ? [
+          unlock2(core).getEntityActionsConfig("postType", postType).catch(() => {
+          })
+        ] : [],
         // Per-post resolvers. `getPostType` and `getEditedEntityRecord`
         // are shorthand/forward-resolver aliases with their own
         // resolution metadata, so they need separate kicks.
