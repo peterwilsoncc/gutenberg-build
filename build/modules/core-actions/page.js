@@ -138,13 +138,12 @@ function SetSitePageModal({
     (select) => {
       const { getEntityRecord, isSavingEntityRecord } = select(import_core_data2.store);
       const settings = getEntityRecord("root", "site");
+      const currentId = settings?.[setting];
       return {
         siteSettings: settings,
-        currentPage: getEntityRecord(
-          "postType",
-          "page",
-          settings?.[setting]
-        ),
+        // A setting holding no page is `0`, and `getEntityRecord()`
+        // without a key would request the whole collection.
+        currentPage: currentId ? getEntityRecord("postType", "page", currentId) : void 0,
         isSaving: isSavingEntityRecord("root", "site")
       };
     },
