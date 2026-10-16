@@ -101747,11 +101747,11 @@ ${content}
       };
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-      import_components177.ExternalLink,
+      Link,
       {
         className: "editor-post-url__front-page-link",
         href: postLink,
-        target: "_blank",
+        openInNewTab: true,
         children: postLink
       }
     );

@@ -7686,14 +7686,10 @@ textarea.editor-post-text-editor::placeholder {
 /* rtl:end:ignore */
 .editor-post-url__front-page-link {
   padding: 6px 12px;
-  color: var(--wp-admin-theme-color);
 }
-.editor-post-url__front-page-link:hover {
+.editor-post-url__front-page-link:is(a):hover {
   background: color-mix(in srgb, var(--wp-admin-theme-color) 4%, transparent);
   color: var(--wp-admin-theme-color-darker-20, #183ad6);
-}
-.editor-post-url__front-page-link:focus {
-  color: var(--wp-admin-theme-color);
 }
 
 .editor-post-url__link-slug {
