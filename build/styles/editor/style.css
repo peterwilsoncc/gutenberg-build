@@ -5240,6 +5240,7 @@ div.dataviews-view-list {
 
 .editor-collab-sidebar-panel__note-content {
   overflow-wrap: break-word;
+  padding-right: 32px;
 }
 .editor-collab-sidebar-panel__note-content p {
   margin-top: 0;
@@ -5375,6 +5376,51 @@ div.dataviews-view-list {
 mark.wp-note {
   border-radius: 1px;
   transition: background-color 0.1s ease-in-out;
+}
+
+.editor-collab-sidebar-panel__note-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.editor-collab-sidebar-panel__reactions.is-floating {
+  position: absolute;
+  right: 0;
+  top: calc((1lh - 24px) / 2);
+}
+
+@media (hover: hover) {
+  .editor-collab-sidebar-panel__reactions.is-floating .editor-collab-sidebar-panel__add-reaction-button {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .editor-collab-sidebar-panel__reactions.is-floating .editor-collab-sidebar-panel__add-reaction-button {
+    transition: none;
+  }
+}
+@media (hover: hover) {
+  .editor-collab-sidebar-panel__note:hover .editor-collab-sidebar-panel__add-reaction-button,
+  .editor-collab-sidebar-panel__reactions .editor-collab-sidebar-panel__add-reaction-button:focus,
+  .editor-collab-sidebar-panel__reactions .editor-collab-sidebar-panel__add-reaction-button[data-popup-open] {
+    opacity: 1;
+  }
+}
+.editor-collab-sidebar-panel__reaction-button {
+  gap: 4px;
+  min-width: 0;
+}
+
+.editor-collab-sidebar-panel__add-reaction-button:focus:not(:focus-visible):not([data-popup-open]) {
+  outline: none;
+}
+
+.editor-collab-sidebar-panel__reaction-button-emoji,
+.editor-collab-sidebar-panel__reaction-option-emoji {
+  font-size: var(--wpds-typography-font-size-lg, 15px);
 }
 
 .wp-note-mention {
