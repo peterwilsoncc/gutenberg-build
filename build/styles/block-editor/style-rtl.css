@@ -4628,10 +4628,27 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   height: 100%;
   object-fit: contain;
 }
-.block-editor-inserter__media-panel .block-editor-inserter__media-grid__preview audio {
+.block-editor-inserter__media-panel .block-editor-inserter__media-grid__file-preview {
+  box-sizing: border-box;
   width: 100%;
-  position: absolute;
-  bottom: 0;
+  height: 100%;
+  padding: 0 16px;
+  color: #757575;
+  text-align: center;
+  container-type: inline-size;
+}
+.block-editor-inserter__media-panel .block-editor-inserter__media-grid__file-preview__name {
+  margin-top: 4px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+}
+@container (max-width: 90px) {
+  .block-editor-inserter__media-panel .block-editor-inserter__media-grid__file-preview__name {
+    display: none;
+  }
 }
 .block-editor-inserter__media-panel .block-editor-inserter__media-grid__spinner {
   position: absolute;
