@@ -107607,9 +107607,20 @@ If there's a particular need for this, please submit a feature request at https:
       blocksData
     );
     const isDraggingBelow = candidateEdge === "bottom";
+    const nextBlock = getNextNonDraggedBlock(blocksData, candidateBlockIndex);
+    const lastBlock = blocksData[blocksData.length - 1];
+    const nestingRect = {
+      top: candidateRect.top,
+      left: candidateRect.left,
+      right: candidateRect.right,
+      bottom: Math.max(
+        candidateRect.bottom,
+        nextBlock ? nextBlock.element.getBoundingClientRect().top : lastBlock.element.getBoundingClientRect().bottom
+      )
+    };
     if (isDraggingBelow && candidateBlockData.canInsertDraggedBlocksAsChild && (candidateBlockData.innerBlockCount > 0 && candidateBlockData.isExpanded || isNestingGesture(
       position,
-      candidateRect,
+      nestingRect,
       candidateBlockParents.length,
       rtl
     ))) {
@@ -107627,10 +107638,6 @@ If there's a particular need for this, please submit a feature request at https:
       candidateBlockParents.length,
       rtl
     )) {
-      const nextBlock = getNextNonDraggedBlock(
-        blocksData,
-        candidateBlockIndex
-      );
       const currentLevel = candidateBlockData.nestingLevel;
       const nextLevel = nextBlock ? nextBlock.nestingLevel : 1;
       if (currentLevel && nextLevel) {
