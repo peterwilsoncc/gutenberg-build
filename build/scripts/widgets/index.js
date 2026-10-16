@@ -392,7 +392,7 @@ var wp;
   var import_block_editor3 = __toESM(require_block_editor(), 1);
   var import_components5 = __toESM(require_components(), 1);
   var import_i18n10 = __toESM(require_i18n(), 1);
-  var import_element36 = __toESM(require_element(), 1);
+  var import_element37 = __toESM(require_element(), 1);
   var import_core_data2 = __toESM(require_core_data(), 1);
 
   // packages/widgets/build-module/blocks/legacy-widget/edit/widget-type-selector.mjs
@@ -14427,7 +14427,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/select-control/select-control.mjs
-  var import_element33 = __toESM(require_element(), 1);
+  var import_element34 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/select-control/item.mjs
   var import_element32 = __toESM(require_element(), 1);
@@ -14438,9 +14438,17 @@ var wp;
     }
   );
 
-  // packages/ui/build-module/form/select-control/select-control.mjs
+  // packages/ui/build-module/form/select-control/trigger.mjs
+  var import_element33 = __toESM(require_element(), 1);
   var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
-  var SelectControl = (0, import_element33.forwardRef)(function UnforwardedSelectControl({
+  var Trigger2 = (0, import_element33.forwardRef)(function UnforwardedTrigger2(props, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(select_exports.Trigger, { ref, ...props });
+  });
+
+  // packages/ui/build-module/form/select-control/select-control.mjs
+  var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_TRIGGER = /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Trigger2, {});
+  var SelectControl = (0, import_element34.forwardRef)(function UnforwardedSelectControl({
     className,
     children,
     items,
@@ -14451,47 +14459,50 @@ var wp;
     placeholder,
     popupWidth = "content",
     size: size4 = "default",
-    triggerContent,
+    trigger,
     ...restProps
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(field_exports.Root, { className, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(select_exports.Root, { items, ...restProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-          select_exports.Trigger,
-          {
-            ref,
-            placeholder,
-            size: size4,
-            children: triggerContent
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(select_exports.Popup, { width: popupWidth, children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
+    const triggerElement = useRender({
+      render: trigger ?? DEFAULT_TRIGGER,
+      ref,
+      props: { placeholder, size: size4 }
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(field_exports.Root, { className, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(select_exports.Root, { items, ...restProps, children: [
+        triggerElement,
+        /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(select_exports.Popup, { width: popupWidth, children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
           Item3,
           {
             value: item,
             label: item.label,
             disabled: item.disabled,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(select_exports.ItemLabel, { children: item.label }),
-              item.description ? /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(select_exports.ItemDescription, { children: item.description }) : null
+              /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(select_exports.ItemLabel, { children: item.label }),
+              item.description ? /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(select_exports.ItemDescription, { children: item.description }) : null
             ]
           },
           item.value ?? "null"
         )) })
       ] }),
-      description && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(field_exports.Description, { children: description }),
-      details && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(field_exports.Details, { children: details })
+      description && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(field_exports.Description, { children: description }),
+      details && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(field_exports.Details, { children: details })
     ] });
   });
 
   // packages/ui/build-module/form/select-control/index.mjs
+  Trigger2.displayName = "SelectControl.Trigger";
   Group.displayName = "SelectControl.Group";
   GroupLabel.displayName = "SelectControl.GroupLabel";
   Item3.displayName = "SelectControl.Item";
   ItemLabel.displayName = "SelectControl.ItemLabel";
   ItemDescription.displayName = "SelectControl.ItemDescription";
   var SelectControl2 = Object.assign(SelectControl, {
+    /**
+     * The trigger button, passed through the `trigger` prop to customize
+     * its props while retaining the control's label and selected content.
+     */
+    Trigger: Trigger2,
     /**
      * Groups related items together with an associated label rendered by
      * `SelectControl.GroupLabel`.
@@ -14525,14 +14536,14 @@ var wp;
   var import_data = __toESM(require_data(), 1);
   var import_core_data = __toESM(require_core_data(), 1);
   var import_block_editor = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
   function WidgetTypeSelector({ selectedId, onSelect }) {
     const widgetTypes = (0, import_data.useSelect)((select2) => {
       const hiddenIds = select2(import_block_editor.store).getSettings()?.widgetTypesToHideFromLegacyWidgetBlock ?? [];
       return select2(import_core_data.store).getWidgetTypes({ per_page: -1 })?.filter((widgetType) => !hiddenIds.includes(widgetType.id));
     }, []);
     if (!widgetTypes) {
-      return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_components.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_components.Spinner, {});
     }
     if (widgetTypes.length === 0) {
       return (0, import_i18n4.__)("There are no widgets available.");
@@ -14544,7 +14555,7 @@ var wp;
         label: widgetType.name
       }))
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
       SelectControl2,
       {
         label: (0, import_i18n4.__)("Legacy widget"),
@@ -14569,16 +14580,16 @@ var wp;
   }
 
   // packages/widgets/build-module/blocks/legacy-widget/edit/inspector-card.mjs
-  var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
   function InspectorCard({ name: name3, description }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)("div", { className: "wp-block-legacy-widget-inspector-card", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("h3", { className: "wp-block-legacy-widget-inspector-card__name", children: name3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("span", { children: description })
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)("div", { className: "wp-block-legacy-widget-inspector-card", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("h3", { className: "wp-block-legacy-widget-inspector-card__name", children: name3 }),
+      /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("span", { children: description })
     ] });
   }
 
   // packages/widgets/build-module/blocks/legacy-widget/edit/form.mjs
-  var import_element34 = __toESM(require_element(), 1);
+  var import_element35 = __toESM(require_element(), 1);
   var import_data2 = __toESM(require_data(), 1);
   var import_notices = __toESM(require_notices(), 1);
   var import_i18n6 = __toESM(require_i18n(), 1);
@@ -14943,7 +14954,7 @@ var wp;
   }
 
   // packages/widgets/build-module/blocks/legacy-widget/edit/form.mjs
-  var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
   function Form({
     title,
     isVisible,
@@ -14954,12 +14965,12 @@ var wp;
     onChangeInstance,
     onChangeHasPreview
   }) {
-    const ref = (0, import_element34.useRef)();
+    const ref = (0, import_element35.useRef)();
     const isMediumLargeViewport = (0, import_compose2.useViewportMatch)("small");
-    const outgoingInstances = (0, import_element34.useRef)(/* @__PURE__ */ new Set());
-    const incomingInstances = (0, import_element34.useRef)(/* @__PURE__ */ new Set());
+    const outgoingInstances = (0, import_element35.useRef)(/* @__PURE__ */ new Set());
+    const incomingInstances = (0, import_element35.useRef)(/* @__PURE__ */ new Set());
     const { createNotice } = (0, import_data2.useDispatch)(import_notices.store);
-    (0, import_element34.useEffect)(() => {
+    (0, import_element35.useEffect)(() => {
       if (incomingInstances.current.has(instance)) {
         incomingInstances.current.delete(instance);
         return;
@@ -15005,15 +15016,15 @@ var wp;
       isMediumLargeViewport
     ]);
     if (isWide && isMediumLargeViewport) {
-      return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)(
         "div",
         {
           className: clsx_default({
             "wp-block-legacy-widget__container": isVisible
           }),
           children: [
-            isVisible && /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("h3", { className: "wp-block-legacy-widget__edit-form-title", children: title }),
-            /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+            isVisible && /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("h3", { className: "wp-block-legacy-widget__edit-form-title", children: title }),
+            /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
               import_components2.Popover,
               {
                 focusOnMount: false,
@@ -15022,7 +15033,7 @@ var wp;
                 resize: false,
                 flip: false,
                 shift: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
                   "div",
                   {
                     ref,
@@ -15036,28 +15047,28 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
       "div",
       {
         ref,
         className: "wp-block-legacy-widget__edit-form",
         hidden: !isVisible,
-        children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("h3", { className: "wp-block-legacy-widget__edit-form-title", children: title })
+        children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("h3", { className: "wp-block-legacy-widget__edit-form-title", children: title })
       }
     );
   }
 
   // packages/widgets/build-module/blocks/legacy-widget/edit/preview.mjs
   var import_compose3 = __toESM(require_compose(), 1);
-  var import_element35 = __toESM(require_element(), 1);
+  var import_element36 = __toESM(require_element(), 1);
   var import_components3 = __toESM(require_components(), 1);
   var import_i18n7 = __toESM(require_i18n(), 1);
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
-  var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
   function Preview({ idBase, instance, isVisible }) {
-    const [isLoaded, setIsLoaded] = (0, import_element35.useState)(false);
-    const [srcDoc, setSrcDoc] = (0, import_element35.useState)("");
-    (0, import_element35.useEffect)(() => {
+    const [isLoaded, setIsLoaded] = (0, import_element36.useState)(false);
+    const [srcDoc, setSrcDoc] = (0, import_element36.useState)("");
+    (0, import_element36.useEffect)(() => {
       const abortController = typeof window.AbortController === "undefined" ? void 0 : new window.AbortController();
       async function fetchPreviewHTML() {
         const restRoute = `/wp/v2/widget-types/${idBase}/render`;
@@ -15110,15 +15121,15 @@ var wp;
       },
       [isLoaded]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)(import_jsx_runtime56.Fragment, { children: [
-      isVisible && !isLoaded && /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_components3.Placeholder, { children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_components3.Spinner, {}) }),
-      /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(import_jsx_runtime57.Fragment, { children: [
+      isVisible && !isLoaded && /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_components3.Placeholder, { children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_components3.Spinner, {}) }),
+      /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
         "div",
         {
           className: clsx_default("wp-block-legacy-widget__edit-preview", {
             "is-offscreen": !isVisible || !isLoaded
           }),
-          children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_components3.Disabled, { children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_components3.Disabled, { children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
             "iframe",
             {
               ref,
@@ -15140,11 +15151,11 @@ var wp;
 
   // packages/widgets/build-module/blocks/legacy-widget/edit/no-preview.mjs
   var import_i18n8 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
   function NoPreview({ name: name3 }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)("div", { className: "wp-block-legacy-widget__edit-no-preview", children: [
-      name3 && /* @__PURE__ */ (0, import_jsx_runtime57.jsx)("h3", { children: name3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime57.jsx)("p", { children: (0, import_i18n8.__)("No preview available.") })
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)("div", { className: "wp-block-legacy-widget__edit-no-preview", children: [
+      name3 && /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("h3", { children: name3 }),
+      /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("p", { children: (0, import_i18n8.__)("No preview available.") })
     ] });
   }
 
@@ -15154,10 +15165,10 @@ var wp;
   var import_components4 = __toESM(require_components(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
   var import_i18n9 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
   function ConvertToBlocksButton({ clientId, rawInstance }) {
     const { replaceBlocks } = (0, import_data3.useDispatch)(import_block_editor2.store);
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
       import_components4.ToolbarButton,
       {
         onClick: () => {
@@ -15181,7 +15192,7 @@ var wp;
   }
 
   // packages/widgets/build-module/blocks/legacy-widget/edit/index.mjs
-  var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
   function Edit(props) {
     const { id, idBase } = props.attributes;
     const { isWide = false } = props;
@@ -15190,15 +15201,15 @@ var wp;
         "is-wide-widget": isWide
       })
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("div", { ...blockProps, children: !id && !idBase ? /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Empty, { ...props }) : /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(NotEmpty, { ...props }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)("div", { ...blockProps, children: !id && !idBase ? /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Empty, { ...props }) : /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(NotEmpty, { ...props }) });
   }
   function Empty({ attributes: { id, idBase }, setAttributes }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
       import_components5.Placeholder,
       {
-        icon: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_block_editor3.BlockIcon, { icon: brush_default }),
+        icon: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_block_editor3.BlockIcon, { icon: brush_default }),
         label: (0, import_i18n10.__)("Legacy Widget"),
-        children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components5.Flex, { children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components5.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_components5.Flex, { children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_components5.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
           WidgetTypeSelector,
           {
             selectedId: id ?? idBase,
@@ -15235,42 +15246,42 @@ var wp;
     isSelected,
     isWide = false
   }) {
-    const [hasPreview, setHasPreview] = (0, import_element36.useState)(null);
+    const [hasPreview, setHasPreview] = (0, import_element37.useState)(null);
     const widgetTypeId = id ?? idBase;
     const { record: widgetType, hasResolved: hasResolvedWidgetType } = (0, import_core_data2.useEntityRecord)("root", "widgetType", widgetTypeId);
-    const setInstance = (0, import_element36.useCallback)((nextInstance) => {
+    const setInstance = (0, import_element37.useCallback)((nextInstance) => {
       setAttributes({ instance: nextInstance });
     }, []);
     if (!widgetType && hasResolvedWidgetType) {
-      return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
         import_components5.Placeholder,
         {
-          icon: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_block_editor3.BlockIcon, { icon: brush_default }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_block_editor3.BlockIcon, { icon: brush_default }),
           label: (0, import_i18n10.__)("Legacy Widget"),
           children: (0, import_i18n10.__)("Widget is missing.")
         }
       );
     }
     if (!hasResolvedWidgetType) {
-      return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components5.Placeholder, { children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components5.Spinner, {}) });
+      return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_components5.Placeholder, { children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_components5.Spinner, {}) });
     }
     const mode = idBase && !isSelected ? "preview" : "edit";
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
-      idBase === "text" && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_block_editor3.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(import_jsx_runtime60.Fragment, { children: [
+      idBase === "text" && /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_block_editor3.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
         ConvertToBlocksButton,
         {
           clientId,
           rawInstance: instance.raw
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_block_editor3.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_block_editor3.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
         InspectorCard,
         {
           name: widgetType.name,
           description: widgetType.description
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
         Form,
         {
           title: widgetType.name,
@@ -15283,9 +15294,9 @@ var wp;
           onChangeHasPreview: setHasPreview
         }
       ),
-      idBase && /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
-        hasPreview === null && mode === "preview" && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components5.Placeholder, { children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components5.Spinner, {}) }),
-        hasPreview === true && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+      idBase && /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(import_jsx_runtime60.Fragment, { children: [
+        hasPreview === null && mode === "preview" && /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_components5.Placeholder, { children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_components5.Spinner, {}) }),
+        hasPreview === true && /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
           Preview,
           {
             idBase,
@@ -15293,7 +15304,7 @@ var wp;
             isVisible: mode === "preview"
           }
         ),
-        hasPreview === false && mode === "preview" && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(NoPreview, { name: widgetType.name })
+        hasPreview === false && mode === "preview" && /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(NoPreview, { name: widgetType.name })
       ] })
     ] });
   }
@@ -15529,32 +15540,32 @@ var wp;
   var import_components6 = __toESM(require_components(), 1);
   var import_i18n11 = __toESM(require_i18n(), 1);
   var import_data4 = __toESM(require_data(), 1);
-  var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
   function Edit2(props) {
     const { clientId } = props;
     const hasInnerBlocks = (0, import_data4.useSelect)(
       (select2) => select2(import_block_editor4.store).getBlockCount(clientId) > 0,
       [clientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)("div", { ...(0, import_block_editor4.useBlockProps)({ className: "widget" }), children: !hasInnerBlocks ? /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(PlaceholderContent, { ...props }) : /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(PreviewContent, { ...props }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("div", { ...(0, import_block_editor4.useBlockProps)({ className: "widget" }), children: !hasInnerBlocks ? /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(PlaceholderContent, { ...props }) : /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(PreviewContent, { ...props }) });
   }
   function PlaceholderContent({ clientId }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(import_jsx_runtime60.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(import_jsx_runtime61.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
         import_components6.Placeholder,
         {
           className: "wp-block-widget-group__placeholder",
-          icon: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_block_editor4.BlockIcon, { icon: group_default }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_block_editor4.BlockIcon, { icon: group_default }),
           label: (0, import_i18n11.__)("Widget Group"),
-          children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_block_editor4.ButtonBlockAppender, { rootClientId: clientId })
+          children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_block_editor4.ButtonBlockAppender, { rootClientId: clientId })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_block_editor4.InnerBlocks, { renderAppender: false })
+      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_block_editor4.InnerBlocks, { renderAppender: false })
     ] });
   }
   function PreviewContent({ attributes, setAttributes }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(import_jsx_runtime60.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(import_jsx_runtime61.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
         import_block_editor4.RichText,
         {
           tagName: "h2",
@@ -15566,16 +15577,16 @@ var wp;
           onChange: (title) => setAttributes({ title })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_block_editor4.InnerBlocks, {})
+      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_block_editor4.InnerBlocks, {})
     ] });
   }
 
   // packages/widgets/build-module/blocks/widget-group/save.mjs
   var import_block_editor5 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
   function save({ attributes }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(import_jsx_runtime61.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(import_jsx_runtime62.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
         import_block_editor5.RichText.Content,
         {
           tagName: "h2",
@@ -15583,13 +15594,13 @@ var wp;
           value: attributes.title
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("div", { className: "wp-widget-group__inner-blocks", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_block_editor5.InnerBlocks.Content, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime62.jsx)("div", { className: "wp-widget-group__inner-blocks", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_block_editor5.InnerBlocks.Content, {}) })
     ] });
   }
 
   // packages/widgets/build-module/blocks/widget-group/deprecated.mjs
   var import_block_editor6 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
   var v1 = {
     attributes: {
       title: {
@@ -15603,8 +15614,8 @@ var wp;
       reusable: false
     },
     save({ attributes }) {
-      return /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(import_jsx_runtime62.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime63.jsxs)(import_jsx_runtime63.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
           import_block_editor6.RichText.Content,
           {
             tagName: "h2",
@@ -15612,7 +15623,7 @@ var wp;
             value: attributes.title
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_block_editor6.InnerBlocks.Content, {})
+        /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_block_editor6.InnerBlocks.Content, {})
       ] });
     }
   };
@@ -15667,19 +15678,19 @@ var wp;
   // packages/widgets/build-module/components/move-to-widget-area/index.mjs
   var import_components7 = __toESM(require_components(), 1);
   var import_i18n13 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
   function MoveToWidgetArea({
     currentWidgetAreaId,
     widgetAreas,
     onSelect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_components7.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_components7.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_components7.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_components7.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
       import_components7.DropdownMenu,
       {
         icon: move_to_default,
         label: (0, import_i18n13.__)("Move to widget area"),
         toggleProps,
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_components7.MenuGroup, { label: (0, import_i18n13.__)("Move to"), children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_components7.MenuGroup, { label: (0, import_i18n13.__)("Move to"), children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
           import_components7.MenuItemsChoice,
           {
             choices: widgetAreas.map(
