@@ -109301,7 +109301,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components187 = __toESM(require_components(), 1);
   var import_i18n192 = __toESM(require_i18n(), 1);
   var import_jsx_runtime571 = __toESM(require_jsx_runtime(), 1);
-  function LinkedButton({ isLinked, ...props }) {
+  function LinkedButton({
+    isLinked,
+    ...props
+  }) {
     const label = isLinked ? (0, import_i18n192.__)("Unlink radii") : (0, import_i18n192.__)("Link radii");
     return /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
       import_components187.Button,
@@ -109827,23 +109830,37 @@ If there's a particular need for this, please submit a feature request at https:
       setSelectedUnits(newUnits);
     };
   }
-  function BorderRadiusControl({ onChange, values, presets }) {
+  function BorderRadiusControl({
+    onChange,
+    values,
+    presets
+  }) {
     const [isLinked, setIsLinked] = (0, import_element376.useState)(
       !hasDefinedValues(values) || !hasMixedValues(values)
     );
     const options = useBorderRadiusSizes(presets);
+    const cornerValues = values;
     const [selectedUnits, setSelectedUnits] = (0, import_element376.useState)({
       flat: typeof values === "string" ? (0, import_components191.__experimentalParseQuantityAndUnitFromRawValue)(values)[1] : void 0,
-      topLeft: (0, import_components191.__experimentalParseQuantityAndUnitFromRawValue)(values?.topLeft)[1],
-      topRight: (0, import_components191.__experimentalParseQuantityAndUnitFromRawValue)(values?.topRight)[1],
-      bottomLeft: (0, import_components191.__experimentalParseQuantityAndUnitFromRawValue)(values?.bottomLeft)[1],
+      topLeft: (0, import_components191.__experimentalParseQuantityAndUnitFromRawValue)(cornerValues?.topLeft)[1],
+      topRight: (0, import_components191.__experimentalParseQuantityAndUnitFromRawValue)(
+        cornerValues?.topRight
+      )[1],
+      bottomLeft: (0, import_components191.__experimentalParseQuantityAndUnitFromRawValue)(
+        cornerValues?.bottomLeft
+      )[1],
       bottomRight: (0, import_components191.__experimentalParseQuantityAndUnitFromRawValue)(
-        values?.bottomRight
+        cornerValues?.bottomRight
       )[1]
     });
     const [availableUnits] = useSettings("spacing.units");
     const units2 = (0, import_components191.__experimentalUseCustomUnits)({
-      availableUnits: availableUnits || ["px", "em", "rem"]
+      // The setting lists unit strings.
+      availableUnits: availableUnits || [
+        "px",
+        "em",
+        "rem"
+      ]
     });
     const toggleLinked = () => setIsLinked(!isLinked);
     return /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)("fieldset", { className: "components-border-radius-control", children: [
@@ -111524,8 +111541,10 @@ If there's a particular need for this, please submit a feature request at https:
       "dimensions.dimensionSizes",
       "spacing.units"
     );
-    const dimensionSizes = dimensionSizesProp ?? dimensionSizesFromSettings;
+    const dimensionSizes = dimensionSizesProp ?? // The setting holds the dimension size presets.
+    dimensionSizesFromSettings;
     const units2 = (0, import_components203.__experimentalUseCustomUnits)({
+      // The setting lists unit strings.
       availableUnits: availableUnits || [
         "%",
         "px",
@@ -111544,7 +111563,10 @@ If there's a particular need for this, please submit a feature request at https:
       const [currentValue, currentUnit] = (0, import_components203.__experimentalParseQuantityAndUnitFromRawValue)(value);
       if (["em", "rem"].includes(newUnit) && currentUnit === "px") {
         onChange((currentValue / 16).toFixed(2) + newUnit);
-      } else if (["em", "rem"].includes(currentUnit) && newUnit === "px") {
+      } else if (
+        // An unparsed unit matches none of the units.
+        ["em", "rem"].includes(currentUnit) && newUnit === "px"
+      ) {
         onChange(Math.round(currentValue * 16) + newUnit);
       } else if ([
         "%",
@@ -111572,7 +111594,8 @@ If there's a particular need for this, please submit a feature request at https:
         "svmax",
         "lvmax",
         "dvmax"
-      ].includes(newUnit) && currentValue > 100) {
+      ].includes(newUnit) && // An undefined quantity is not greater than 100.
+      currentValue > 100) {
         onChange(100 + newUnit);
       }
       setSelectedUnit(newUnit);
