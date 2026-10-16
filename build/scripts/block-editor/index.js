@@ -100061,7 +100061,10 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var POSITION_SIDES = ["top", "right", "bottom", "left"];
   var VALID_POSITION_TYPES = ["sticky", "fixed"];
-  function getPositionCSS({ selector: selector5, style }) {
+  function getPositionCSS({
+    selector: selector5,
+    style
+  }) {
     let output = "";
     const { type: positionType } = style?.position || {};
     if (!VALID_POSITION_TYPES.includes(positionType)) {
@@ -100143,7 +100146,9 @@ If there's a particular need for this, please submit a feature request at https:
     const positionType = attributes?.style?.position?.type;
     return positionType === "sticky" || positionType === "fixed";
   }
-  function useIsPositionDisabled({ name: blockName } = {}) {
+  function useIsPositionDisabled({
+    name: blockName
+  } = {}) {
     const [allowFixed, allowSticky] = useSettings(
       "position.fixed",
       "position.sticky"
@@ -100253,7 +100258,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   var POSITION_BLOCK_PROPS_REFERENCE = {};
-  function useBlockProps2({ name, style }) {
+  function useBlockProps2({
+    name,
+    style
+  }) {
     const hasPositionBlockSupport = (0, import_blocks53.hasBlockSupport)(
       name,
       POSITION_SUPPORT_KEY
@@ -120738,7 +120746,9 @@ If there's a particular need for this, please submit a feature request at https:
   function OverrideStyles({ override }) {
     usePrivateStyleOverride(override);
   }
-  function BlockStyleVariationOverridesWithConfig({ config: config2 }) {
+  function BlockStyleVariationOverridesWithConfig({
+    config: config2
+  }) {
     const { overrides } = (0, import_data170.useSelect)(
       (select3) => ({
         overrides: unlock(select3(store)).getStyleOverrides()
@@ -120856,7 +120866,11 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, [globalSettings, globalStyles, variation, clientId, name]);
   }
-  function useBlockProps3({ name, className, clientId }) {
+  function useBlockProps3({
+    name,
+    className,
+    clientId
+  }) {
     const { getBlockStyles: getBlockStyles2 } = (0, import_data170.useSelect)(import_blocks95.store);
     const registeredStyles = getBlockStyles2(name);
     const variation = getVariationNameFromClass(className, registeredStyles);
@@ -134965,7 +134979,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     } : {};
   };
-  var BlockBindingsPanel = ({ name: blockName, metadata }) => {
+  var BlockBindingsPanel = ({
+    name: blockName,
+    metadata
+  }) => {
     const blockContext = (0, import_element466.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
@@ -134977,6 +134994,7 @@ If there's a particular need for this, please submit a feature request at https:
           getBlockBindingsSourceFieldsList
         } = unlock(select3(import_blocks130.store));
         return {
+          // The setting maps block names to their bindable attributes.
           bindableAttributes: __experimentalBlockBindingsSupportedAttributes?.[blockName],
           hasCompatibleFields: Object.values(
             getAllBlockBindingsSources()
