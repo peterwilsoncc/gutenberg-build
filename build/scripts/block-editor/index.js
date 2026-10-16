@@ -19090,7 +19090,9 @@ var wp;
       const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue2(style?.spacing?.blockGap, fallbackGapValue) : void 0;
       const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
       const justifyContent = justifyContentMap[effectiveLayout.justifyContent];
-      const flexWrap = flexWrapOptions.includes(effectiveLayout.flexWrap) ? effectiveLayout.flexWrap : "wrap";
+      const flexWrap = flexWrapOptions.includes(
+        effectiveLayout.flexWrap
+      ) ? effectiveLayout.flexWrap : "wrap";
       const verticalAlignment = verticalAlignmentMap[effectiveLayout.verticalAlignment];
       const alignItems = alignItemsMap[effectiveLayout.justifyContent] || alignItemsMap.left;
       let output = "";
@@ -19146,7 +19148,9 @@ var wp;
       return [];
     }
   };
-  function getDefaultVerticalAlignment({ orientation = "horizontal" } = {}) {
+  function getDefaultVerticalAlignment({
+    orientation = "horizontal"
+  } = {}) {
     return orientation === "horizontal" ? defaultAlignments.horizontal : defaultAlignments.vertical;
   }
   function getCompatibleVerticalAlignment(verticalAlignment, orientation) {
@@ -19168,6 +19172,7 @@ var wp;
     const onVerticalAlignmentChange = (value) => {
       onChange({
         ...layout,
+        // The controls only offer vertical alignments.
         verticalAlignment: value
       });
     };
@@ -19216,10 +19221,15 @@ var wp;
     const onJustificationChange = (value) => {
       onChange({
         ...layout,
+        // The controls only offer justifications.
         justifyContent: value
       });
     };
-    const allowedControls = ["left", "center", "right"];
+    const allowedControls = [
+      "left",
+      "center",
+      "right"
+    ];
     if (orientation === "horizontal") {
       allowedControls.push("space-between");
     } else {
@@ -19335,6 +19345,7 @@ var wp;
           }
           return onChange({
             ...layout,
+            // The options are the two orientations.
             orientation: value,
             verticalAlignment: newVerticalAlignment,
             justifyContent: newJustification
@@ -19493,7 +19504,14 @@ var wp;
       ];
       const [availableUnits] = useSettings("spacing.units");
       const units2 = (0, import_components10.__experimentalUseCustomUnits)({
-        availableUnits: availableUnits || ["%", "px", "em", "rem", "vw"]
+        // The setting lists unit strings.
+        availableUnits: availableUnits || [
+          "%",
+          "px",
+          "em",
+          "rem",
+          "vw"
+        ]
       });
       const hasLayoutValue = (key, defaultValue2) => (layout?.[key] ?? defaultValue2) !== (resetLayout?.[key] ?? defaultValue2);
       const resetContentSize = () => onChange(
@@ -19533,7 +19551,8 @@ var wp;
                   labelPosition: "top",
                   value: contentSize === null ? "" : contentSize || wideSize || "",
                   onChange: (nextWidth) => {
-                    nextWidth = 0 > parseFloat(nextWidth) ? "0" : nextWidth;
+                    nextWidth = // An absent width parses as `NaN` and is kept.
+                    0 > parseFloat(nextWidth) ? "0" : nextWidth;
                     onChange({
                       ...layout,
                       contentSize: nextWidth !== "" ? nextWidth : void 0
@@ -19560,7 +19579,8 @@ var wp;
                     labelPosition: "top",
                     value: wideSize === null ? "" : wideSize || contentSize || "",
                     onChange: (nextWidth) => {
-                      nextWidth = 0 > parseFloat(nextWidth) ? "0" : nextWidth;
+                      nextWidth = // An absent width parses as `NaN` and is kept.
+                      0 > parseFloat(nextWidth) ? "0" : nextWidth;
                       onChange({
                         ...layout,
                         wideSize: nextWidth !== "" ? nextWidth : void 0
@@ -19774,7 +19794,10 @@ var wp;
   var POPOVER_PROPS3 = {
     placement: "bottom-start"
   };
-  function DefaultLayoutJustifyContentControl({ layout, onChange }) {
+  function DefaultLayoutJustifyContentControl({
+    layout,
+    onChange
+  }) {
     const { justifyContent = "center" } = layout;
     const onJustificationChange = (value) => {
       onChange({
@@ -19782,7 +19805,11 @@ var wp;
         justifyContent: value
       });
     };
-    const allowedControls = ["left", "center", "right"];
+    const allowedControls = [
+      "left",
+      "center",
+      "right"
+    ];
     return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
       JustifyContentControl,
       {
@@ -20001,15 +20028,20 @@ var wp;
       const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
       let output = "";
       const rules = [];
-      const shouldOutputGridColumns = !hasViewportOverrides || hasViewportOverride("minimumColumnWidth") || hasViewportOverride("columnCount") || hasViewportOverride("autoFit") || hasBlockGapOverride && minimumColumnWidth && columnCount > 0;
+      const shouldOutputGridColumns = !hasViewportOverrides || hasViewportOverride("minimumColumnWidth") || hasViewportOverride("columnCount") || hasViewportOverride("autoFit") || hasBlockGapOverride && minimumColumnWidth && // A `null` count compares as `false`.
+      columnCount > 0;
       const shouldOutputGridRows = (!hasViewportOverrides || hasViewportOverride("rowCount")) && columnCount && rowCount;
       if (shouldOutputGridColumns && minimumColumnWidth && columnCount > 0) {
-        const blockGapBoxControlValue = blockGapValue ? getGapBoxControlValueFromStyle2(style.spacing.blockGap) : void 0;
+        const blockGapBoxControlValue = blockGapValue ? (
+          // A block gap value comes from the style's block gap.
+          getGapBoxControlValueFromStyle2(style.spacing.blockGap)
+        ) : void 0;
         let blockGapToUse = getSpacingPresetCssVar2(blockGapBoxControlValue?.left) || fallbackGapValue;
         if (blockGapToUse === "0" || blockGapToUse === 0) {
           blockGapToUse = "0px";
         }
-        const maxValue = `max(min( ${minimumColumnWidth}, 100%), ( 100% - (${blockGapToUse}*${columnCount - 1}) ) / ${columnCount})`;
+        const maxValue = `max(min( ${minimumColumnWidth}, 100%), ( 100% - (${blockGapToUse}*${// Checked to be above zero just above.
+        columnCount - 1}) ) / ${columnCount})`;
         rules.push(
           `grid-template-columns: repeat(${autoPlacement4}, minmax(${maxValue}, 1fr))`
         );
@@ -20056,11 +20088,17 @@ var wp;
       return [];
     }
   };
-  function GridLayoutMinimumWidthControl({ layout, onChange }) {
+  function GridLayoutMinimumWidthControl({
+    layout,
+    onChange
+  }) {
     const { minimumColumnWidth, columnCount, isManualPlacement } = layout;
     const defaultValue2 = isManualPlacement || columnCount ? null : "12rem";
     const value = minimumColumnWidth || defaultValue2;
-    const [quantity, unit = "rem"] = (0, import_components12.__experimentalParseQuantityAndUnitFromRawValue)(value);
+    const [quantity, unit = "rem"] = (
+      // A `null` value parses as no quantity.
+      (0, import_components12.__experimentalParseQuantityAndUnitFromRawValue)(value)
+    );
     const handleSliderChange = (next) => {
       onChange({
         ...layout,
@@ -20136,7 +20174,10 @@ var wp;
           {
             onChange: (value) => {
               const defaultNewColumnCount = isManualPlacement ? 1 : void 0;
-              const newColumnCount = value === "" || value === "0" ? defaultNewColumnCount : parseInt(value, 10);
+              const newColumnCount = value === "" || value === "0" ? defaultNewColumnCount : (
+                // Only an absent value is not a string.
+                parseInt(value, 10)
+              );
               onChange({
                 ...layout,
                 columnCount: newColumnCount
@@ -20152,7 +20193,10 @@ var wp;
           import_components12.__experimentalNumberControl,
           {
             onChange: (value) => {
-              const newRowCount = value === "" || value === "0" ? 1 : parseInt(value, 10);
+              const newRowCount = value === "" || value === "0" ? 1 : (
+                // Only an absent value is not a string.
+                parseInt(value, 10)
+              );
               onChange({
                 ...layout,
                 rowCount: newRowCount
@@ -20168,7 +20212,10 @@ var wp;
             value: columnCount ?? 1,
             onChange: (value) => onChange({
               ...layout,
-              columnCount: value === "" || value === "0" ? 1 : value
+              columnCount: (
+                // The string checks are kept from before.
+                value === "" || value === "0" ? 1 : value
+              )
             }),
             min: 1,
             max: 16,
@@ -20275,7 +20322,11 @@ var wp;
   function useLayout() {
     return (0, import_element15.useContext)(Layout);
   }
-  function LayoutStyle({ layout = {}, css, ...props }) {
+  function LayoutStyle({
+    layout = {},
+    css,
+    ...props
+  }) {
     const layoutType = getLayoutType(layout.type);
     const [blockGapSupport] = useSettings("spacing.blockGap");
     const hasBlockGapSupport = blockGapSupport !== null && blockGapSupport !== void 0;
@@ -20331,7 +20382,11 @@ var wp;
     }
     return getAvailableAlignments(controls, layout, settings3);
   }
-  function getAvailableAlignments(controls, layout, { wideControlsEnabled, themeSupportsLayout, isBlockBasedTheme }) {
+  function getAvailableAlignments(controls, layout, {
+    wideControlsEnabled,
+    themeSupportsLayout,
+    isBlockBasedTheme
+  }) {
     const layoutType = getLayoutType(layout?.type);
     if (themeSupportsLayout) {
       const layoutAlignments = layoutType.getAlignments(
@@ -20385,6 +20440,7 @@ var wp;
     }
     const themeNames = getAvailableAlignments(
       DEFAULT_CONTROLS,
+      // The `layout` setting is a layout object.
       { ...globalLayout, type: "constrained" },
       settings3
     ).map(({ name }) => name);
@@ -20440,7 +20496,9 @@ var wp;
     if (!enabledControls.length) {
       return null;
     }
-    const menuControls = [...enabledControls];
+    const menuControls = [
+      ...enabledControls
+    ];
     const enabledNames = menuControls.map(({ name }) => name);
     menuControls.splice(
       enabledNames.indexOf("none") + 1,
@@ -109093,7 +109151,11 @@ If there's a particular need for this, please submit a feature request at https:
       title: (0, import_i18n191._x)("Space between", "Block vertical alignment setting")
     }
   };
-  var DEFAULT_CONTROLS2 = ["top", "center", "bottom"];
+  var DEFAULT_CONTROLS2 = [
+    "top",
+    "center",
+    "bottom"
+  ];
   var DEFAULT_CONTROL2 = "top";
   function BlockVerticalAlignmentUI({
     value,
@@ -113635,7 +113697,10 @@ If there's a particular need for this, please submit a feature request at https:
         popoverProps,
         label: (0, import_i18n219.__)("Change items justification"),
         controls: allControls.filter(
-          (elem) => allowedControls.includes(elem.name)
+          (elem) => (
+            // Every control is named after a justification.
+            allowedControls.includes(elem.name)
+          )
         ),
         ...extraProps
       }
@@ -127435,6 +127500,7 @@ If there's a particular need for this, please submit a feature request at https:
     setAttributes
   }) {
     const blockAllowedAlignments = getValidAlignments(
+      // The `align` support is a boolean or a list of alignments.
       (0, import_blocks111.getBlockSupport)(blockName, "align"),
       (0, import_blocks111.hasBlockSupport)(blockName, "alignWide", true)
     );
@@ -127474,6 +127540,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function useBlockProps10({ name, align }) {
     const blockAllowedAlignments = getValidAlignments(
+      // The `align` support is a boolean or a list of alignments.
       (0, import_blocks111.getBlockSupport)(name, "align"),
       (0, import_blocks111.hasBlockSupport)(name, "alignWide", true)
     );
@@ -127490,6 +127557,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isAlignValid = getValidAlignments(
       blockAlign,
       hasWideBlockSupport
+      // An unset alignment is never valid.
     ).includes(align);
     if (isAlignValid) {
       props.className = clsx_default(`align${align}`, props.className);
