@@ -72161,7 +72161,9 @@ var wp;
       children
     ] });
     return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(import_components27.__experimentalStyleProvider, { document, children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(Fill5, { children: (fillProps) => {
-      const { forwardedContext = [] } = fillProps;
+      const {
+        forwardedContext = []
+      } = fillProps;
       return forwardedContext.reduce(
         (inner, [Provider3, props]) => /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(Provider3, { ...props, children: inner }),
         innerMarkup
@@ -72175,7 +72177,10 @@ var wp;
   var import_warning6 = __toESM(require_warning(), 1);
   var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
   var { ComponentsContext } = unlock(import_components28.privateApis);
-  function BlockControlsSlot({ group = "default", ...props }) {
+  function BlockControlsSlot({
+    group = "default",
+    ...props
+  }) {
     const toolbarState = (0, import_element183.useContext)(import_components28.__experimentalToolbarContext);
     const contextState = (0, import_element183.useContext)(ComponentsContext);
     const fillProps = (0, import_element183.useMemo)(
