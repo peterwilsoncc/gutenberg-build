@@ -69233,7 +69233,10 @@ var wp;
   var import_i18n44 = __toESM(require_i18n(), 1);
   var import_blocks26 = __toESM(require_blocks(), 1);
   var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
-  function OptionalParentSelectButton({ children, onClick }) {
+  function OptionalParentSelectButton({
+    children,
+    onClick
+  }) {
     if (!onClick) {
       return children;
     }
@@ -69308,6 +69311,7 @@ var wp;
                   label: parentBlockName ? (0, import_i18n44.sprintf)(
                     /* translators: %s: The name of the parent block. */
                     (0, import_i18n44.__)('Go to "%s" block'),
+                    // A selected parent block is registered.
                     (0, import_blocks26.getBlockType)(parentBlockName)?.title
                   ) : (0, import_i18n44.__)("Go to parent block"),
                   style: (
@@ -69336,7 +69340,8 @@ var wp;
                     /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(Stack, { direction: "column", gap: "xs", children: [
                       /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(TitleElement, { className: "block-editor-block-card__title", children: [
                         /* @__PURE__ */ (0, import_jsx_runtime339.jsx)("span", { className: "block-editor-block-card__name", children: !!name?.length ? name : title }),
-                        !parentClientId && !isChild && !!name?.length && /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(Badge, { children: title })
+                        !parentClientId && !isChild && !!name?.length && // A named card has a title.
+                        /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(Badge, { children: title })
                       ] }),
                       children
                     ] })
@@ -74415,7 +74420,10 @@ var wp;
         render: (htmlProps) => {
           const propsWithTabIndex = {
             ...htmlProps,
-            tabIndex: isFirst || htmlProps["data-active-item"] ? 0 : -1
+            tabIndex: (
+              // Ariakit sets the attribute on the active item.
+              isFirst || htmlProps["data-active-item"] ? 0 : -1
+            )
           };
           if (Component4) {
             return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(Component4, { ...propsWithTabIndex, children });
@@ -74432,7 +74440,10 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter-listbox/index.mjs
   var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
-  function InserterListBoxWrapper({ key, children }) {
+  function InserterListBoxWrapper({
+    key,
+    children
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_element198.Fragment, { children }, key);
   }
   function InserterListbox({ children }) {
@@ -74992,6 +75003,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(import_components44.__experimentalText, { variant: "muted", children: (0, import_i18n60.sprintf)(
         // translators: %s: Total number of patterns.
         (0, import_i18n60._n)("%s item", "%s items", totalItems),
+        // `sprintf` formats numbers with `%s`.
         totalItems
       ) }),
       numPages > 1 && /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
@@ -75041,6 +75053,7 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(import_components44.__experimentalText, { variant: "muted", children: (0, import_i18n60.sprintf)(
               // translators: 1: Current page number. 2: Total number of pages.
               (0, import_i18n60._x)("%1$s of %2$s", "paging"),
+              // `sprintf` formats numbers with `%s`.
               currentPage,
               numPages
             ) }),
@@ -96140,7 +96153,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element302 = __toESM(require_element(), 1);
   var import_jsx_runtime487 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs2 } = unlock(import_components116.privateApis);
-  function TabbedSidebar({ defaultTabId, onClose, onSelect, selectedTab, tabs, closeButtonLabel }, ref) {
+  function TabbedSidebar({
+    defaultTabId,
+    onClose,
+    onSelect,
+    selectedTab,
+    tabs,
+    closeButtonLabel
+  }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("div", { className: "block-editor-tabbed-sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(
       Tabs2,
       {
@@ -109150,6 +109170,7 @@ If there's a particular need for this, please submit a feature request at https:
                   value: variation.name,
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(menu_exports.ItemLabel, { children: variation.title }),
+                    // An empty description renders nothing.
                     variation.description && /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(menu_exports.ItemDescription, { children: variation.description })
                   ]
                 },
@@ -109190,7 +109211,9 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ) });
   }
-  function BlockVariationTransforms({ blockClientId }) {
+  function BlockVariationTransforms({
+    blockClientId
+  }) {
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data152.useDispatch)(store);
     const {
       activeBlockVariation,
@@ -109233,14 +109256,20 @@ If there's a particular need for this, please submit a feature request at https:
       }
       variations.forEach((variation) => {
         if (variation.icon) {
-          variationIcons.add(variation.icon?.src || variation.icon);
+          variationIcons.add(
+            // A variation icon is a descriptor or the icon itself.
+            variation.icon?.src || variation.icon
+          );
         }
       });
       return variationIcons.size === variations.length;
     }, [variations]);
     const onSelectVariation = (variationName) => {
       updateBlockAttributes2(blockClientId, {
-        ...variations.find(({ name }) => name === variationName).attributes
+        // The selected variation is one of the listed ones.
+        ...variations.find(
+          ({ name }) => name === variationName
+        ).attributes
       });
     };
     if (!variations?.length || !canEdit || isContentOnly || isSection) {
@@ -125565,7 +125594,8 @@ If there's a particular need for this, please submit a feature request at https:
       () => toggleBlockHighlight2(clientId, false)
     );
     (0, import_element435.useEffect)(
-      () => () => clearBlockHighlightOnUnmount(),
+      // React ignores the value the cleanup returns.
+      () => (() => clearBlockHighlightOnUnmount()),
       [clearBlockHighlightOnUnmount]
     );
     const hasChildren = childBlocks && childBlocks.length > 0;
