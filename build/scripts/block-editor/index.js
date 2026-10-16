@@ -118842,7 +118842,9 @@ If there's a particular need for this, please submit a feature request at https:
         ...defaultSizes
       ];
       if (sizes.every(({ slug }) => /^[0-9]/.test(slug))) {
-        sizes.sort((a, b) => compare(a.slug, b.slug));
+        sizes.sort(
+          (a, b) => compare(a.slug, b.slug)
+        );
       }
       return sizes.length > RANGE_CONTROL_MAX_SIZE ? [
         {
@@ -118911,7 +118913,12 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const [availableUnits] = useSettings("spacing.units");
     const units2 = (0, import_components235.__experimentalUseCustomUnits)({
-      availableUnits: availableUnits || ["px", "em", "rem"]
+      // The setting lists unit names.
+      availableUnits: availableUnits || [
+        "px",
+        "em",
+        "rem"
+      ]
     });
     const presets = (0, import_element413.useMemo)(() => {
       return spacingSizes?.map((preset) => ({
@@ -118920,7 +118927,10 @@ If there's a particular need for this, please submit a feature request at https:
         size: preset.size
       })) || [];
     }, [spacingSizes]);
-    const sideLabel = (ALL_SIDES.includes(side) || ["vertical", "horizontal"].includes(side)) && showSideInLabel ? LABELS[side] : "";
+    const sideLabel = (ALL_SIDES.includes(side) || ["vertical", "horizontal"].includes(side)) && showSideInLabel ? (
+      // Only sides and axes have labels.
+      LABELS[side]
+    ) : "";
     const typeLabel = showSideInLabel ? type?.toLowerCase() : type;
     const ariaLabel = (0, import_i18n243.sprintf)(
       // translators: 1: The side of the block being modified (top, bottom, left etc.). 2. Type of spacing being modified (padding, margin, etc).
@@ -118973,6 +118983,7 @@ If there's a particular need for this, please submit a feature request at https:
       const nextValues = {
         ...Object.keys(values).reduce((acc, key) => {
           acc[key] = getPresetValueFromCustomValue2(
+            // The keys come from the side values.
             values[key],
             spacingSizes
           );
@@ -119029,6 +119040,7 @@ If there's a particular need for this, please submit a feature request at https:
       const nextValues = {
         ...Object.keys(values).reduce((acc, key) => {
           acc[key] = getPresetValueFromCustomValue2(
+            // The keys come from the side values.
             values[key],
             spacingSizes
           );
@@ -119076,6 +119088,7 @@ If there's a particular need for this, please submit a feature request at https:
       const nextValues = {
         ...Object.keys(values).reduce((acc, key) => {
           acc[key] = getPresetValueFromCustomValue2(
+            // The keys come from the side values.
             values[key],
             spacingSizes
           );
@@ -119107,7 +119120,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components236 = __toESM(require_components(), 1);
   var import_i18n244 = __toESM(require_i18n(), 1);
   var import_jsx_runtime636 = __toESM(require_jsx_runtime(), 1);
-  function LinkedButton2({ isLinked, ...props }) {
+  function LinkedButton2({
+    isLinked,
+    ...props
+  }) {
     const label = isLinked ? (0, import_i18n244.__)("Unlink sides") : (0, import_i18n244.__)("Link sides");
     return /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
       import_components236.Button,
@@ -119175,7 +119191,10 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     };
-    const sideLabel = ALL_SIDES.includes(view) && showSideInLabel ? LABELS[view] : "";
+    const sideLabel = (
+      // A single side view is named after its side.
+      ALL_SIDES.includes(view) && showSideInLabel ? LABELS[view] : ""
+    );
     const label = (0, import_i18n245.sprintf)(
       // translators: 1: Type of spacing being modified (Padding, Margin, etc.). 2: The side of the block being modified (Top, Bottom, Left, etc.).
       (0, import_i18n245._x)("%1$s %2$s", "spacing control label"),
@@ -131108,10 +131127,17 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element455 = __toESM(require_element(), 1);
   var import_is_shallow_equal5 = __toESM(require_is_shallow_equal(), 1);
   var import_jsx_runtime697 = __toESM(require_jsx_runtime(), 1);
-  function SpacingVisualizer({ clientId, value, computeStyle, forceShow }) {
+  function SpacingVisualizer({
+    clientId,
+    value,
+    computeStyle,
+    forceShow
+  }) {
     const blockElement = useBlockElement(clientId);
     const [style, updateStyle] = (0, import_element455.useReducer)(
-      () => computeStyle(blockElement)
+      // Styles are only computed once the block element is rendered.
+      () => computeStyle(blockElement),
+      void 0
     );
     (0, import_element455.useEffect)(() => {
       if (blockElement && forceShow) {
@@ -131162,7 +131188,11 @@ If there's a particular need for this, please submit a feature request at https:
   function getComputedCSS(element, property) {
     return element.ownerDocument.defaultView.getComputedStyle(element).getPropertyValue(property);
   }
-  function MarginVisualizer({ clientId, value, forceShow }) {
+  function MarginVisualizer({
+    clientId,
+    value,
+    forceShow
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime697.jsx)(
       SpacingVisualizer,
       {
@@ -131188,7 +131218,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function PaddingVisualizer({ clientId, value, forceShow }) {
+  function PaddingVisualizer({
+    clientId,
+    value,
+    forceShow
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime697.jsx)(
       SpacingVisualizer,
       {
