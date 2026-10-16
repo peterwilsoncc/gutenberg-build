@@ -324,13 +324,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/escape-html
-  var require_escape_html = __commonJS({
-    "package-external:@wordpress/escape-html"(exports, module) {
-      module.exports = window.wp.escapeHtml;
-    }
-  });
-
   // package-external:@wordpress/warning
   var require_warning = __commonJS({
     "package-external:@wordpress/warning"(exports, module) {
@@ -425,7 +418,7 @@ var wp;
             },
             [subscribe4, value, getSnapshot]
           );
-          useEffect135(
+          useEffect136(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe4(function() {
@@ -451,7 +444,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React265 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState177 = React265.useState, useEffect135 = React265.useEffect, useLayoutEffect21 = React265.useLayoutEffect, useDebugValue2 = React265.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React265 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState177 = React265.useState, useEffect136 = React265.useEffect, useLayoutEffect21 = React265.useLayoutEffect, useDebugValue2 = React265.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React265.useSyncExternalStore ? React265.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -479,7 +472,7 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React265 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore7 = shim.useSyncExternalStore, useRef177 = React265.useRef, useEffect135 = React265.useEffect, useMemo194 = React265.useMemo, useDebugValue2 = React265.useDebugValue;
+        var React265 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore7 = shim.useSyncExternalStore, useRef177 = React265.useRef, useEffect136 = React265.useEffect, useMemo194 = React265.useMemo, useDebugValue2 = React265.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe4, getSnapshot, getServerSnapshot, selector2, isEqual) {
           var instRef = useRef177(null);
           if (null === instRef.current) {
@@ -522,7 +515,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector2, isEqual]
           );
           var value = useSyncExternalStore7(subscribe4, instRef[0], instRef[1]);
-          useEffect135(
+          useEffect136(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -6391,7 +6384,6 @@ var wp;
   });
   var import_a11y = __toESM(require_a11y(), 1);
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
-  var import_escape_html = __toESM(require_escape_html(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_deprecated2 = __toESM(require_deprecated(), 1);
   var import_warning = __toESM(require_warning(), 1);
@@ -7670,6 +7662,31 @@ var wp;
   // packages/editor/build-module/store/actions.mjs
   var { getEntitySnapshot } = unlock(import_core_data7.privateApis);
   var CLIENT_GENERATED_ERROR_CODES = ["offline_error", "fetch_error"];
+  var LINE_BREAK_ELEMENTS = "p, div, li, h1, h2, h3, h4, h5, h6, tr";
+  function getFailureDetails(message2) {
+    if (!/<\/?[a-z][^>]*>/i.test(message2)) {
+      return message2;
+    }
+    const { body } = document.implementation.createHTMLDocument("");
+    body.innerHTML = message2;
+    for (const element of body.querySelectorAll("script, style")) {
+      element.remove();
+    }
+    for (const link of body.querySelectorAll("a[href]")) {
+      const href = link.getAttribute("href").trim();
+      const text = link.textContent.trim();
+      if (/^https?:\/\//i.test(href) && text !== href) {
+        link.append(text ? ` (${href})` : href);
+      }
+    }
+    for (const element of body.querySelectorAll(LINE_BREAK_ELEMENTS)) {
+      element.append("\n");
+    }
+    for (const element of body.querySelectorAll("br")) {
+      element.replaceWith("\n");
+    }
+    return body.textContent.replace(/\n{3,}/g, "\n\n").trim();
+  }
   var setupEditor = (post2, edits, template2) => ({ dispatch: dispatch6 }) => {
     dispatch6.setEditedPost(post2.type, post2.id);
     const isNewPost = post2.status === "auto-draft";
@@ -7830,21 +7847,13 @@ var wp;
         options
       });
       if (args.length && !(options.isAutosave && isManualSaveFailureShown)) {
-        const [noticeMessage] = args;
-        if (error2.message && !CLIENT_GENERATED_ERROR_CODES.includes(error2.code) && !/<\/?[^>]*>/.test(error2.message)) {
-          args[0] = `${(0, import_escape_html.escapeHTML)(
-            noticeMessage
-          )} <details class="editor-save-error-details"><summary>${(0, import_escape_html.escapeHTML)(
-            (0, import_i18n5.__)("Show details")
-          )}</summary><span class="editor-save-error-details__message">${(0, import_escape_html.escapeHTML)(
-            error2.message
-          )}</span></details>`;
-          args[1] = {
-            ...args[1],
-            __unstableHTML: true,
-            speak: false
-          };
-          (0, import_a11y.speak)(noticeMessage, "assertive");
+        const phpError = error2.data?.error?.message;
+        const details = [
+          error2.message && !CLIENT_GENERATED_ERROR_CODES.includes(error2.code) ? getFailureDetails(error2.message) : "",
+          typeof phpError === "string" ? phpError.trim() : ""
+        ].filter(Boolean).join("\n\n");
+        if (details) {
+          args[1] = { ...args[1], details };
         }
         registry.dispatch(import_notices2.store).createErrorNotice(...args);
       }
@@ -93448,6 +93457,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_notices3 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/template-validation-notice/index.mjs
+  var import_a11y8 = __toESM(require_a11y(), 1);
   var import_components126 = __toESM(require_components(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
   var import_data50 = __toESM(require_data(), 1);
@@ -93460,29 +93470,44 @@ If there's a particular need for this, please submit a feature request at https:
       return select8(import_block_editor31.store).isValidTemplate();
     }, []);
     const { setTemplateValidity: setTemplateValidity2, synchronizeTemplate: synchronizeTemplate2 } = (0, import_data50.useDispatch)(import_block_editor31.store);
+    const message2 = (0, import_i18n138.__)(
+      "The content of your post doesn\u2019t match the template assigned to your post type."
+    );
+    (0, import_element283.useEffect)(() => {
+      if (!isValid2) {
+        (0, import_a11y8.speak)(message2);
+      }
+    }, [isValid2, message2]);
     if (isValid2) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime475.jsxs)(import_jsx_runtime475.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
-        import_components126.Notice,
+      /* @__PURE__ */ (0, import_jsx_runtime475.jsxs)(
+        notice_exports.Root,
         {
           className: "editor-template-validation-notice",
-          isDismissible: false,
-          status: "warning",
-          actions: [
-            {
-              label: (0, import_i18n138.__)("Keep it as is"),
-              onClick: () => setTemplateValidity2(true)
-            },
-            {
-              label: (0, import_i18n138.__)("Reset the template"),
-              onClick: () => setShowConfirmDialog(true)
-            }
-          ],
-          children: (0, import_i18n138.__)(
-            "The content of your post doesn\u2019t match the template assigned to your post type."
-          )
+          intent: "warning",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(notice_exports.Description, { children: message2 }),
+            /* @__PURE__ */ (0, import_jsx_runtime475.jsxs)(notice_exports.Actions, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
+                notice_exports.ActionButton,
+                {
+                  variant: "outline",
+                  onClick: () => setTemplateValidity2(true),
+                  children: (0, import_i18n138.__)("Keep it as is")
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
+                notice_exports.ActionButton,
+                {
+                  variant: "outline",
+                  onClick: () => setShowConfirmDialog(true),
+                  children: (0, import_i18n138.__)("Reset the template")
+                }
+              )
+            ] })
+          ]
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
@@ -93541,7 +93566,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/error-boundary/index.mjs
   var import_element284 = __toESM(require_element(), 1);
-  var import_a11y8 = __toESM(require_a11y(), 1);
+  var import_a11y9 = __toESM(require_a11y(), 1);
   var import_i18n139 = __toESM(require_i18n(), 1);
   var import_data52 = __toESM(require_data(), 1);
   var import_compose50 = __toESM(require_compose(), 1);
@@ -93650,7 +93675,7 @@ ${content}
     }
     componentDidCatch(error2, errorInfo) {
       const { title, description } = getErrorNotice();
-      (0, import_a11y8.speak)(`${title}. ${description}`, "assertive");
+      (0, import_a11y9.speak)(`${title}. ${description}`, "assertive");
       this.setState({ componentStack: errorInfo?.componentStack });
       (0, import_hooks41.doAction)("editor.ErrorBoundary.errorLogged", error2, errorInfo);
     }
@@ -97497,7 +97522,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-schedule/index.mjs
-  var import_a11y9 = __toESM(require_a11y(), 1);
+  var import_a11y10 = __toESM(require_a11y(), 1);
   var import_date18 = __toESM(require_date(), 1);
   var import_i18n169 = __toESM(require_i18n(), 1);
   var import_components157 = __toESM(require_components(), 1);
@@ -97620,7 +97645,7 @@ ${content}
     const { editPost: editPost2 } = (0, import_data94.useDispatch)(store);
     const onUpdateDate = (date) => {
       editPost2({ date });
-      (0, import_a11y9.speak)(
+      (0, import_a11y10.speak)(
         date ? (0, import_i18n169.sprintf)(
           // translators: %s: The new publish date and time, e.g. "June 3, 2025 12:00 pm UTC+0".
           (0, import_i18n169.__)("Publish date set to %s."),
@@ -97706,7 +97731,7 @@ ${content}
   var import_data96 = __toESM(require_data(), 1);
   var import_core_data53 = __toESM(require_core_data(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
-  var import_a11y10 = __toESM(require_a11y(), 1);
+  var import_a11y11 = __toESM(require_a11y(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
@@ -97969,7 +97994,7 @@ ${content}
         names.map((name2) => createTerm(name2))
       );
       if (results.includes(true)) {
-        (0, import_a11y10.speak)(termAddedLabel, "assertive");
+        (0, import_a11y11.speak)(termAddedLabel, "assertive");
       }
     }
     function onKeyDownCapture(event) {
@@ -97992,7 +98017,7 @@ ${content}
         return;
       }
       if (newValues.length !== values.length) {
-        (0, import_a11y10.speak)(
+        (0, import_a11y11.speak)(
           newValues.length > values.length ? termAddedLabel : termRemovedLabel,
           "assertive"
         );
@@ -98010,7 +98035,7 @@ ${content}
       if (termIds.includes(newTerm.id)) {
         return;
       }
-      (0, import_a11y10.speak)(termAddedLabel, "assertive");
+      (0, import_a11y11.speak)(termAddedLabel, "assertive");
       assignTerm(newTerm.id);
     }
     const newTermLabel = taxonomy?.labels?.add_new_item ?? (slug === "post_tag" ? (0, import_i18n170.__)("Add Tag") : (0, import_i18n170.__)("Add Term"));
@@ -98223,7 +98248,7 @@ ${content}
   var import_data99 = __toESM(require_data(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
-  var import_a11y11 = __toESM(require_a11y(), 1);
+  var import_a11y12 = __toESM(require_a11y(), 1);
   var import_html_entities13 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/utils/normalize-text-string.mjs
@@ -98346,7 +98371,7 @@ ${content}
     const [showForm, setShowForm] = (0, import_element308.useState)(false);
     const [filterValue, setFilterValue] = (0, import_element308.useState)("");
     const deferredFilterValue = (0, import_element308.useDeferredValue)(filterValue);
-    const debouncedSpeak = (0, import_compose61.useDebounce)(import_a11y11.speak, SPEAK_DEBOUNCE_MS);
+    const debouncedSpeak = (0, import_compose61.useDebounce)(import_a11y12.speak, SPEAK_DEBOUNCE_MS);
     const {
       hasCreateAction,
       hasAssignAction,
@@ -98465,7 +98490,7 @@ ${content}
         (0, import_i18n173._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y11.speak)(termAddedMessage, "assertive");
+      (0, import_a11y12.speak)(termAddedMessage, "assertive");
       setAdding(false);
       setFormName("");
       setFormParent("");
@@ -104998,7 +105023,7 @@ ${content}
   }
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-  var import_a11y12 = __toESM(require_a11y(), 1);
+  var import_a11y13 = __toESM(require_a11y(), 1);
   var import_element335 = __toESM(require_element(), 1);
   var import_i18n202 = __toESM(require_i18n(), 1);
 
@@ -105270,7 +105295,7 @@ ${content}
         prevStateRef.current = current;
         if (msg !== prevMessageRef.current) {
           prevMessageRef.current = msg;
-          (0, import_a11y12.speak)(msg);
+          (0, import_a11y13.speak)(msg);
         }
       }, ARIA_DEBOUNCE_MS);
       return () => {
@@ -114305,7 +114330,7 @@ ${content}
   var mode_switcher_default = ModeSwitcher;
 
   // packages/editor/build-module/components/more-menu/more-menu-preference-item.mjs
-  var import_a11y13 = __toESM(require_a11y(), 1);
+  var import_a11y14 = __toESM(require_a11y(), 1);
   var import_data178 = __toESM(require_data(), 1);
   var import_i18n235 = __toESM(require_i18n(), 1);
   var import_preferences18 = __toESM(require_preferences(), 1);
@@ -114328,7 +114353,7 @@ ${content}
     const { toggle } = (0, import_data178.useDispatch)(import_preferences18.store);
     function speakMessage() {
       if (isActive) {
-        (0, import_a11y13.speak)(
+        (0, import_a11y14.speak)(
           messageDeactivated || (0, import_i18n235.sprintf)(
             /* translators: %s: preference name, e.g. 'Fullscreen mode' */
             (0, import_i18n235.__)("Preference deactivated - %s"),
@@ -114336,7 +114361,7 @@ ${content}
           )
         );
       } else {
-        (0, import_a11y13.speak)(
+        (0, import_a11y14.speak)(
           messageActivated || (0, import_i18n235.sprintf)(
             /* translators: %s: preference name, e.g. 'Fullscreen mode' */
             (0, import_i18n235.__)("Preference activated - %s"),
@@ -115154,7 +115179,7 @@ ${content}
   // packages/editor/build-module/components/collaborators-presence/list.mjs
   var import_i18n243 = __toESM(require_i18n(), 1);
   var import_components210 = __toESM(require_components(), 1);
-  var import_a11y15 = __toESM(require_a11y(), 1);
+  var import_a11y16 = __toESM(require_a11y(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/get-avatar-url.mjs
   function getAvatarUrl(avatarUrls) {
@@ -115636,7 +115661,7 @@ ${content}
         highlightDuration: 2e3
       });
       if (success) {
-        (0, import_a11y15.speak)((0, import_i18n243.__)("Scrolled to cursor"), "polite");
+        (0, import_a11y16.speak)((0, import_i18n243.__)("Scrolled to cursor"), "polite");
         setIsPopoverVisible(false);
       }
     };
@@ -123027,7 +123052,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
-  var import_a11y16 = __toESM(require_a11y(), 1);
+  var import_a11y17 = __toESM(require_a11y(), 1);
   var import_i18n288 = __toESM(require_i18n(), 1);
   var import_element428 = __toESM(require_element(), 1);
   var import_compose96 = __toESM(require_compose(), 1);
@@ -123456,7 +123481,7 @@ ${content}
           if (status === "approved" && note.blockClientId) {
             removeNoteMarker(note.blockClientId, id);
           }
-          (0, import_a11y16.speak)(
+          (0, import_a11y17.speak)(
             status === "approved" ? (0, import_i18n288.__)("Note marked as resolved.") : (0, import_i18n288.__)("Note reopened.")
           );
           return savedRecord2;
@@ -124984,7 +125009,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/notes-display-mode-menu.mjs
-  var import_a11y17 = __toESM(require_a11y(), 1);
+  var import_a11y18 = __toESM(require_a11y(), 1);
   var import_block_editor106 = __toESM(require_block_editor(), 1);
   var import_components245 = __toESM(require_components(), 1);
   var import_compose99 = __toESM(require_compose(), 1);
@@ -125076,7 +125101,7 @@ ${content}
         minimized: (0, import_i18n296.__)("Notes minimized."),
         hidden: (0, import_i18n296.__)("Notes hidden.")
       };
-      (0, import_a11y17.speak)(messages[mode]);
+      (0, import_a11y18.speak)(messages[mode]);
     }
     function toggleAllNotes() {
       if (isAllNotesOpen) {
@@ -126968,7 +126993,7 @@ ${content}
   var import_data255 = __toESM(require_data(), 1);
   var import_element441 = __toESM(require_element(), 1);
   var import_i18n309 = __toESM(require_i18n(), 1);
-  var import_a11y18 = __toESM(require_a11y(), 1);
+  var import_a11y19 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices28 = __toESM(require_notices(), 1);
   var import_components254 = __toESM(require_components(), 1);
@@ -127032,7 +127057,7 @@ ${content}
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
         failuresAtStartRef.current = failures;
-        (0, import_a11y18.speak)((0, import_i18n309.__)("Media upload started"), "polite");
+        (0, import_a11y19.speak)((0, import_i18n309.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
@@ -127046,7 +127071,7 @@ ${content}
         );
         const uploaded = total2 - failed;
         if (uploaded === 0) {
-          (0, import_a11y18.speak)((0, import_i18n309.__)("Media upload failed"), "polite");
+          (0, import_a11y19.speak)((0, import_i18n309.__)("Media upload failed"), "polite");
           removeNotice(NOTICE_ID);
           peakRef.current = 0;
         } else {
@@ -127057,7 +127082,7 @@ ${content}
             uploaded,
             total2
           );
-          (0, import_a11y18.speak)(
+          (0, import_a11y19.speak)(
             isFullSuccess ? (0, import_i18n309.__)("Media upload complete") : content2,
             "polite"
           );

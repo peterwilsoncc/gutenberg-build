@@ -6092,11 +6092,12 @@ mark.wp-note {
 }
 
 .editor-notices.notices-inline-notices-wrapper,
-.editor-notices .components-notice-list {
+.editor-notices .notices-inline-notices__list {
   gap: 0;
 }
 
-.editor-notices .components-notice {
+.editor-notices .notices-inline-notices__notice,
+.editor-notices .editor-template-validation-notice {
   border-top-width: 0;
   border-inline-width: 0;
 }
@@ -7812,20 +7813,6 @@ textarea.editor-post-text-editor::placeholder {
 }
 .editor-resizable-editor__resize-handle:hover::after, .editor-resizable-editor__resize-handle:focus::after, .editor-resizable-editor__resize-handle:active::after {
   background-color: var(--wp-admin-theme-color);
-}
-
-.editor-save-error-details {
-  display: inline;
-}
-
-.editor-save-error-details summary {
-  display: inline;
-  cursor: var(--wpds-cursor-control, pointer);
-  margin-right: 0.35em;
-}
-
-.editor-save-error-details__message {
-  white-space: break-spaces;
 }
 
 .editor-layout__toggle-publish-panel,
