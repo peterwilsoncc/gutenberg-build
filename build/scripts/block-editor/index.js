@@ -95993,9 +95993,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data73 = __toESM(require_data(), 1);
   var import_element302 = __toESM(require_element(), 1);
   function useZoomOut(enabled = true) {
-    const { setZoomLevel: setZoomLevel2, resetZoomLevel: resetZoomLevel2 } = unlock(
-      (0, import_data73.useDispatch)(store)
-    );
+    const { setZoomLevel: setZoomLevel2, resetZoomLevel: resetZoomLevel2 } = unlock((0, import_data73.useDispatch)(store));
     const { isZoomedOut, isZoomOut: isZoomOut2 } = (0, import_data73.useSelect)((select3) => {
       const { isZoomOut: _isZoomOut } = unlock(select3(store));
       return {
@@ -103243,7 +103241,9 @@ If there's a particular need for this, please submit a feature request at https:
           getParentSectionBlock: getParentSectionBlock2,
           getEditedContentOnlySection: getEditedContentOnlySection2,
           isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2
-        } = unlock(select3(store));
+        } = unlock(
+          select3(store)
+        );
         const editedSection = getEditedContentOnlySection2();
         return {
           isSectionBlock: _isSectionBlock(clientId),
