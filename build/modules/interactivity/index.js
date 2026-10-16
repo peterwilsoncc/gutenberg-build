@@ -2505,6 +2505,7 @@ function getDangerousHTML(token) {
 }
 
 // packages/interactivity/build-module/directives/html.mjs
+var isServerHTMLRepresentation = (value) => isPlainObject(value) && value.wpServerHtml === true;
 directive(
   "html",
   ({ directives: { html: htmlEntries }, element, evaluate }) => {
@@ -2533,11 +2534,18 @@ directive(
       }
     }
     const active = !!entry && !entry.uniqueId;
-    const pending = result === PENDING_GETTER;
+    const serverHTMLRepresentation = isServerHTMLRepresentation(result);
+    const preserveContent = result === PENDING_GETTER || serverHTMLRepresentation;
     const trusted = isDangerousHTML(result);
     const resolvedValue = trusted ? getDangerousHTML(result) : emptyHTML;
     useLayoutEffect(() => {
-      if (!active || pending) {
+      if (!active) {
+        return;
+      }
+      if (preserveContent) {
+        if (serverHTMLRepresentation) {
+          lastAppliedKey.current = void 0;
+        }
         return;
       }
       if (!trusted && result !== null && result !== void 0) {
@@ -2565,9 +2573,17 @@ directive(
         }
       }
       lastAppliedKey.current = key;
-    }, [result, active, pending, trusted, resolvedValue, element.ref]);
+    }, [
+      result,
+      active,
+      preserveContent,
+      serverHTMLRepresentation,
+      trusted,
+      resolvedValue,
+      element.ref
+    ]);
     if (active) {
-      preactHtml.current ??= pending && element.props.dangerouslySetInnerHTML?.__html ? element.props.dangerouslySetInnerHTML : { __html: emptyHTML };
+      preactHtml.current ??= preserveContent && element.props.dangerouslySetInnerHTML?.__html ? element.props.dangerouslySetInnerHTML : { __html: emptyHTML };
       element.props.dangerouslySetInnerHTML = preactHtml.current;
       element.props.children = void 0;
     }
