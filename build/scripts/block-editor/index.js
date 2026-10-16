@@ -17622,7 +17622,8 @@ var wp;
           fontSizeParsed.value * minimumFontSizeFactor,
           3
         );
-        if (!!minimumFontSizeLimitParsed?.value && calculatedMinimumFontSize < minimumFontSizeLimitParsed?.value) {
+        if (!!minimumFontSizeLimitParsed?.value && // A finite size rounds to a number.
+        calculatedMinimumFontSize < minimumFontSizeLimitParsed?.value) {
           minimumFontSize = `${minimumFontSizeLimitParsed.value}${minimumFontSizeLimitParsed.unit}`;
         } else {
           minimumFontSize = `${calculatedMinimumFontSize}${fontSizeParsed.unit}`;
@@ -17659,9 +17660,13 @@ var wp;
       minimumViewportWidthParsed.value / 100,
       3
     );
-    const viewportWidthOffset = roundToPrecision2(minViewportWidthOffsetValue, 3) + fontSizeUnit;
+    const viewportWidthOffset = (
+      // A finite width rounds to a number.
+      roundToPrecision2(minViewportWidthOffsetValue, 3) + fontSizeUnit
+    );
     const linearFactor = 100 * ((maximumFontSizeParsed.value - minimumFontSizeParsed.value) / linearDenominator);
     const linearFactorScaled = roundToPrecision2(
+      // A `null` factor multiplies as `0`, as before.
       (linearFactor || 1) * scaleFactor,
       3
     );
@@ -17704,13 +17709,19 @@ var wp;
       unit = coerceTo;
     }
     return {
+      // A parsed number is finite, so it rounds to a number.
       value: roundToPrecision2(returnValue, 3),
       unit
     };
   }
   function roundToPrecision2(value, digits = 3) {
     const base = Math.pow(10, digits);
-    return Number.isFinite(value) ? parseFloat(Math.round(value * base) / base) : void 0;
+    return Number.isFinite(value) ? (
+      // `parseFloat` reads the rounded number as its string form.
+      parseFloat(
+        Math.round(value * base) / base
+      )
+    ) : void 0;
   }
 
   // packages/block-editor/build-module/components/font-sizes/font-size-picker.mjs
@@ -17744,9 +17755,11 @@ var wp;
         fontSizeAttributeNamesAccumulator[fontSizeAttributeName] = `custom${upperFirst2(fontSizeAttributeName)}`;
         return fontSizeAttributeNamesAccumulator;
       },
+      // The reducer fills the empty object.
       {}
     );
     return (0, import_compose3.createHigherOrderComponent)(
+      // `compose` loses the types of the components it composes.
       (0, import_compose3.compose)([
         (0, import_compose3.createHigherOrderComponent)(
           (WrappedComponent) => function WithFontSizesInner(props) {
@@ -17783,6 +17796,7 @@ var wp;
                   );
                   return settersAccumulator;
                 },
+                // The reducer fills the empty object.
                 {}
               );
             }
@@ -17825,6 +17839,7 @@ var wp;
                   const fontSizeObject = getFontSize(
                     fontSizes,
                     fontSizeAttributeValue,
+                    // The custom font size attribute holds a size.
                     attributes[customFontSizeAttributeName]
                   );
                   newStateAccumulator[fontSizeAttributeName] = {
@@ -17835,6 +17850,7 @@ var wp;
                   };
                   return newStateAccumulator;
                 },
+                // The reducer fills the empty object.
                 {}
               );
               return {
@@ -110800,7 +110816,12 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const [availableUnits] = useSettings("spacing.units");
     const units2 = (0, import_components197.__experimentalUseCustomUnits)({
-      availableUnits: availableUnits || ["px", "em", "rem"],
+      // The setting lists unit strings.
+      availableUnits: availableUnits || [
+        "px",
+        "em",
+        "rem"
+      ],
       defaultValues: { px: 2, em: 0.2, rem: 0.2 }
     });
     return /* @__PURE__ */ (0, import_jsx_runtime583.jsx)(
@@ -110853,7 +110874,9 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         value,
         onChange: (newValue) => {
-          onChange(newValue === value ? void 0 : newValue);
+          onChange(
+            newValue === value ? void 0 : newValue
+          );
         },
         children: TEXT_DECORATIONS.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
@@ -110896,7 +110919,11 @@ If there's a particular need for this, please submit a feature request at https:
       icon: format_capitalize_default
     }
   ];
-  function TextTransformControl({ className, value, onChange }) {
+  function TextTransformControl({
+    className,
+    value,
+    onChange
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(
       import_components199.__experimentalToggleGroupControl,
       {
@@ -110908,7 +110935,9 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         value,
         onChange: (newValue) => {
-          onChange(newValue === value ? void 0 : newValue);
+          onChange(
+            newValue === value ? void 0 : newValue
+          );
         },
         children: TEXT_TRANSFORMS.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(
@@ -110941,7 +110970,11 @@ If there's a particular need for this, please submit a feature request at https:
       icon: text_vertical_default
     }
   ];
-  function WritingModeControl({ className, value, onChange }) {
+  function WritingModeControl({
+    className,
+    value,
+    onChange
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(
       import_components200.__experimentalToggleGroupControl,
       {
@@ -110950,7 +110983,9 @@ If there's a particular need for this, please submit a feature request at https:
         className: clsx_default("block-editor-writing-mode-control", className),
         value,
         onChange: (newValue) => {
-          onChange(newValue === value ? void 0 : newValue);
+          onChange(
+            newValue === value ? void 0 : newValue
+          );
         },
         children: WRITING_MODES.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime586.jsx)(
@@ -115283,6 +115318,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const stateReducer = (state, action) => {
       const wasTypedOrPasted = ["insertText", "insertFromPaste"].includes(
+        // Change actions carry the input event.
         action.payload.event.nativeEvent?.inputType
       );
       const value2 = adjustNextValue(state.value, wasTypedOrPasted);
@@ -122660,7 +122696,9 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         value,
         onChange: (newValue) => {
-          onChange(newValue === value ? void 0 : newValue);
+          onChange(
+            newValue === value ? void 0 : newValue
+          );
         },
         children: validOptions.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime653.jsx)(
@@ -122694,6 +122732,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const [availableUnits] = useSettings("spacing.units");
     const units2 = (0, import_components252.__experimentalUseCustomUnits)({
+      // The setting lists unit strings.
       availableUnits: availableUnits || [
         "px",
         "em",
