@@ -115750,7 +115750,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components223 = __toESM(require_components(), 1);
   var import_url10 = __toESM(require_url(), 1);
   var import_jsx_runtime613 = __toESM(require_jsx_runtime(), 1);
-  function LinkViewerURL({ url, urlLabel, className }) {
+  function LinkViewerURL({
+    url,
+    urlLabel,
+    className
+  }) {
     const linkClassName = clsx_default(
       className,
       "block-editor-url-popover__link-viewer-url"
@@ -118449,14 +118453,16 @@ If there's a particular need for this, please submit a feature request at https:
     resetLightbox
   }) => {
     const [isOpen, setIsOpen] = (0, import_element411.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element411.useState)(null);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element411.useState)(
+      null
+    );
     const openLinkUI = () => {
       setIsOpen(true);
     };
     const [isEditingLink, setIsEditingLink] = (0, import_element411.useState)(false);
     const [urlInput, setUrlInput] = (0, import_element411.useState)(null);
     const autocompleteRef = (0, import_element411.useRef)(null);
-    const wrapperRef = (0, import_element411.useRef)();
+    const wrapperRef = (0, import_element411.useRef)(void 0);
     (0, import_element411.useEffect)(() => {
       if (!wrapperRef.current) {
         return;
@@ -118598,7 +118604,10 @@ If there's a particular need for this, please submit a feature request at https:
               "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
             ),
             {
-              a: /* @__PURE__ */ (0, import_jsx_runtime631.jsx)(import_components234.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
+              a: (
+                // @ts-expect-error `createInterpolateElement` fills in the children.
+                /* @__PURE__ */ (0, import_jsx_runtime631.jsx)(import_components234.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
+              )
             }
           )
         }
@@ -118615,9 +118624,9 @@ If there's a particular need for this, please submit a feature request at https:
     const linkEditorValue = urlInput !== null ? urlInput : url;
     const hideLightboxPanel = !lightboxEnabled || lightboxEnabled && !showLightboxSetting;
     const showLinkEditor = !linkEditorValue && hideLightboxPanel;
-    const urlLabel = (getLinkDestinations().find(
+    const urlLabel = getLinkDestinations().find(
       (destination) => destination.linkDestination === linkDestination
-    ) || {}).title;
+    )?.title;
     const PopoverChildren = () => {
       if (lightboxEnabled && showLightboxSetting && !url && !isEditingLink) {
         return /* @__PURE__ */ (0, import_jsx_runtime631.jsxs)("div", { className: "block-editor-url-popover__expand-on-click", children: [
@@ -118674,6 +118683,7 @@ If there's a particular need for this, please submit a feature request at https:
           )
         ] });
       }
+      return void 0;
     };
     return /* @__PURE__ */ (0, import_jsx_runtime631.jsxs)(import_jsx_runtime631.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime631.jsx)(
