@@ -776,7 +776,8 @@ var wp;
       scaledSuffix,
       quality,
       stripMeta,
-      maxBitdepth
+      maxBitdepth,
+      preserveAnimation
     } = options;
     if (signal?.aborted) {
       throw new Error("Operation aborted");
@@ -786,7 +787,8 @@ var wp;
       smartCrop,
       quality,
       stripMeta,
-      maxBitdepth
+      maxBitdepth,
+      preserveAnimation
     });
     let fileName = file.name;
     const wasResized = originalWidth > width || originalHeight > height;
@@ -3135,7 +3137,11 @@ var wp;
       const startTime = performance.now();
       const addSuffix = Boolean(item.parentId);
       const scaledSuffix = Boolean(args.isThresholdResize);
-      const { imageStripMeta, imageMaxBitDepth } = select2.getSettings();
+      const {
+        imageStripMeta,
+        imageMaxBitDepth,
+        generateAnimatedImageSubsizes
+      } = select2.getSettings();
       try {
         const file = await vipsResizeImage(
           item.id,
@@ -3148,7 +3154,8 @@ var wp;
             scaledSuffix,
             quality: args.quality,
             stripMeta: imageStripMeta,
-            maxBitdepth: imageMaxBitDepth
+            maxBitdepth: imageMaxBitDepth,
+            preserveAnimation: false !== generateAnimatedImageSubsizes
           }
         );
         measure({

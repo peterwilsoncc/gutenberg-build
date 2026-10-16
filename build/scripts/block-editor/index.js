@@ -70102,7 +70102,8 @@ var wp;
         allImageSizes: settings3.allImageSizes,
         bigImageSizeThreshold: settings3.bigImageSizeThreshold,
         imageStripMeta: settings3.imageStripMeta,
-        imageMaxBitDepth: settings3.imageMaxBitDepth
+        imageMaxBitDepth: settings3.imageMaxBitDepth,
+        generateAnimatedImageSubsizes: settings3.generateAnimatedImageSubsizes
       }),
       [settings3]
     );
