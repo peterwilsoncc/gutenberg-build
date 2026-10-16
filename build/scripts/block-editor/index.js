@@ -99407,7 +99407,9 @@ If there's a particular need for this, please submit a feature request at https:
       }
     } : {};
   }
-  function ListViewContentPopover({ listViewRef }) {
+  function ListViewContentPopover({
+    listViewRef
+  }) {
     const { popoverProps } = useInspectorPopoverPlacement();
     const fills = (0, import_components126.__experimentalUseSlotFills)(LIST_VIEW_CONTENT_PANEL_SLOT);
     const hasFills = Boolean(fills && fills.length);
@@ -99419,7 +99421,9 @@ If there's a particular need for this, please submit a feature request at https:
         isOpen: privateSelectors.isListViewContentPanelOpen()
       };
     }, []);
-    const [anchorElement, setAnchorElement] = (0, import_element320.useState)(null);
+    const [anchorElement, setAnchorElement] = (0, import_element320.useState)(
+      null
+    );
     (0, import_element320.useLayoutEffect)(() => {
       if (!selectedClientId || !listViewRef?.current) {
         setAnchorElement(null);
@@ -99488,7 +99492,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ) }) });
   }
-  function RegisterResetAll({ resetAllFilter, children }) {
+  function RegisterResetAll({
+    resetAllFilter,
+    children
+  }) {
     const { registerResetAllFilter, deregisterResetAllFilter } = (0, import_element321.useContext)(import_components127.__experimentalToolsPanelContext);
     const selectedState = useBlockStyleState();
     const scopedResetAllFilter = (0, import_element321.useMemo)(
@@ -99509,7 +99516,11 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     return children;
   }
-  function ToolsPanelInspectorControl({ children, resetAllFilter, fillProps }) {
+  function ToolsPanelInspectorControl({
+    children,
+    resetAllFilter,
+    fillProps
+  }) {
     const { forwardedContext = [] } = fillProps;
     const innerMarkup = /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(RegisterResetAll, { resetAllFilter, children });
     return forwardedContext.reduce(
@@ -99576,7 +99587,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.mjs
   var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
-  function BlockSupportToolsPanel({ children, group, label }) {
+  function BlockSupportToolsPanel({
+    children,
+    group,
+    label
+  }) {
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data93.useDispatch)(store);
     const {
       getBlockAttributes: getBlockAttributes3,
@@ -99666,7 +99681,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls/slot.mjs
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
-  function InspectorControlsSlot({ group = "default", label, fillProps, ...props }, ref) {
+  function InspectorControlsSlot({
+    group = "default",
+    label,
+    fillProps,
+    ...props
+  }, ref) {
     const slotFill = groups_default2[group];
     const fills = (0, import_components130.__experimentalUseSlotFills)(slotFill?.name);
     if (!slotFill) {
