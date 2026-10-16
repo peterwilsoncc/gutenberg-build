@@ -63366,9 +63366,7 @@ var wp;
     }, [refsMap, clientId, ref]);
   }
   function useBlockElement(clientId) {
-    const [blockElement, setBlockElement] = (0, import_element157.useState)(
-      null
-    );
+    const [blockElement, setBlockElement] = (0, import_element157.useState)(null);
     useBlockElementRef(clientId, setBlockElement);
     return blockElement;
   }
@@ -69389,9 +69387,14 @@ var wp;
     return subRegistry;
   }
   var withRegistryProvider = (0, import_compose36.createHigherOrderComponent)(
-    (WrappedComponent) => function WithRegistryProvider({ useSubRegistry = true, ...props }) {
+    (WrappedComponent) => function WithRegistryProvider({
+      useSubRegistry = true,
+      ...props
+    }) {
       const registry = (0, import_data34.useRegistry)();
-      const [subRegistries] = (0, import_element174.useState)(() => /* @__PURE__ */ new WeakMap());
+      const [subRegistries] = (0, import_element174.useState)(
+        () => /* @__PURE__ */ new WeakMap()
+      );
       const subRegistry = getSubRegistry(
         subRegistries,
         registry,
@@ -69511,6 +69514,7 @@ var wp;
         isRestoringSelectionRef.current = true;
         resetSelection2(
           convert(selection2.selectionStart),
+          // The store accepts an unset selection end.
           convert(selection2.selectionEnd),
           selection2.initialPosition
         );
@@ -69575,7 +69579,12 @@ var wp;
       onChangeRef.current = onChange;
     }, [onInput, onChange]);
     (0, import_element176.useEffect)(() => {
-      const isOutgoing = pendingChangesRef.current.outgoing.includes(controlledBlocks);
+      const isOutgoing = (
+        // An unset value is never pending.
+        pendingChangesRef.current.outgoing.includes(
+          controlledBlocks
+        )
+      );
       const storeMatch = getBlocks2(clientId) === controlledBlocks;
       if (isOutgoing) {
         if (pendingChangesRef.current.outgoing[pendingChangesRef.current.outgoing.length - 1] === controlledBlocks) {
@@ -70262,7 +70271,11 @@ var wp;
       const settings3 = (0, import_element180.useMemo)(() => {
         if (useUploadMediaPipeline && _settings?.mediaUpload && !isMediaUploadIntercepted) {
           const uploadFn = isClientSideMediaEnabled ? mediaUpload : heicMediaUpload;
-          const interceptor = uploadFn.bind(null, registry, _settings);
+          const interceptor = uploadFn.bind(
+            null,
+            registry,
+            _settings
+          );
           interceptor.__isMediaUploadInterceptor = true;
           return {
             ..._settings,
