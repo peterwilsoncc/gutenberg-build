@@ -69922,7 +69922,11 @@ var wp;
     const { getBlockVariations: getBlockVariations2, getActiveBlockVariation } = (0, import_data37.useSelect)(import_blocks28.store);
     const { replaceBlocks: replaceBlocks2, updateBlockAttributes: updateBlockAttributes2 } = (0, import_data37.useDispatch)(store);
     return (0, import_element178.useCallback)(
-      ({ targetBlockName, blockNames, variationName }) => {
+      ({
+        targetBlockName,
+        blockNames,
+        variationName
+      }) => {
         const clientId = getSelectedBlockClientId2();
         if (!clientId) {
           return false;
@@ -69943,6 +69947,7 @@ var wp;
           }
           const activeVariation = getActiveBlockVariation(
             targetBlockName,
+            // The selected block exists.
             getBlockAttributes3(clientId)
           );
           if (activeVariation?.name !== variationName) {
@@ -119293,8 +119298,13 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(store).getBlockSelectionStart(),
       []
     );
-    const ref = (0, import_element415.useRef)();
-    useBlockElementRef(selectedBlockClientId, ref);
+    const ref = (0, import_element415.useRef)(void 0);
+    useBlockElementRef(
+      // An unset ID matches no block element.
+      selectedBlockClientId,
+      // The ref receives the selected block's element, or `null`.
+      ref
+    );
     const onClick = () => {
       ref.current?.focus();
     };
