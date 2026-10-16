@@ -113581,12 +113581,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/image-size-control/use-dimension-handler.mjs
   var import_element388 = __toESM(require_element(), 1);
   function useDimensionHandler(customHeight, customWidth, defaultHeight, defaultWidth, onChange) {
-    const [currentWidth, setCurrentWidth] = (0, import_element388.useState)(
-      customWidth ?? defaultWidth ?? ""
-    );
-    const [currentHeight, setCurrentHeight] = (0, import_element388.useState)(
-      customHeight ?? defaultHeight ?? ""
-    );
+    const [currentWidth, setCurrentWidth] = (0, import_element388.useState)(customWidth ?? defaultWidth ?? "");
+    const [currentHeight, setCurrentHeight] = (0, import_element388.useState)(customHeight ?? defaultHeight ?? "");
     (0, import_element388.useEffect)(() => {
       if (customWidth === void 0 && defaultWidth !== void 0) {
         setCurrentWidth(defaultWidth);
@@ -113596,7 +113592,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [defaultWidth, defaultHeight]);
     (0, import_element388.useEffect)(() => {
-      if (customWidth !== void 0 && Number.parseInt(customWidth) !== Number.parseInt(currentWidth)) {
+      if (customWidth !== void 0 && // `parseInt` reads a number as its string form.
+      Number.parseInt(customWidth) !== Number.parseInt(currentWidth)) {
         setCurrentWidth(customWidth);
       }
       if (customHeight !== void 0 && Number.parseInt(customHeight) !== Number.parseInt(currentHeight)) {
@@ -113604,7 +113601,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [customWidth, customHeight]);
     const updateDimension = (dimension, value) => {
-      const parsedValue = value === "" ? void 0 : parseInt(value, 10);
+      const parsedValue = (
+        // An unset value parses as `NaN`, as before.
+        value === "" ? void 0 : parseInt(value, 10)
+      );
       if (dimension === "width") {
         setCurrentWidth(parsedValue);
       } else {
@@ -113633,8 +113633,12 @@ If there's a particular need for this, please submit a feature request at https:
   var noop16 = () => {
   };
   function getScaledWidthAndHeight(scale, imageWidth, imageHeight) {
-    const scaledWidth = Math.round(imageWidth * (scale / 100));
-    const scaledHeight = Math.round(imageHeight * (scale / 100));
+    const scaledWidth = Math.round(
+      imageWidth * (scale / 100)
+    );
+    const scaledHeight = Math.round(
+      imageHeight * (scale / 100)
+    );
     return {
       scaledWidth,
       scaledHeight
@@ -113659,6 +113663,7 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const { scaledWidth, scaledHeight } = getScaledWidthAndHeight(
+        // The preset values are numbers.
         scale,
         imageWidth,
         imageHeight
@@ -113690,26 +113695,33 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       isResizable && /* @__PURE__ */ (0, import_jsx_runtime600.jsxs)(import_jsx_runtime600.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime600.jsxs)(import_components211.__experimentalHStack, { align: "baseline", spacing: "4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-            import_components211.__experimentalNumberControl,
-            {
-              label: (0, import_i18n218.__)("Width"),
-              value: currentWidth,
-              min: 1,
-              onChange: (value) => updateDimension("width", value)
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-            import_components211.__experimentalNumberControl,
-            {
-              label: (0, import_i18n218.__)("Height"),
-              value: currentHeight,
-              min: 1,
-              onChange: (value) => updateDimension("height", value)
-            }
-          )
-        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime600.jsxs)(
+          import_components211.__experimentalHStack,
+          {
+            align: "baseline",
+            spacing: "4",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
+                import_components211.__experimentalNumberControl,
+                {
+                  label: (0, import_i18n218.__)("Width"),
+                  value: currentWidth,
+                  min: 1,
+                  onChange: (value) => updateDimension("width", value)
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
+                import_components211.__experimentalNumberControl,
+                {
+                  label: (0, import_i18n218.__)("Height"),
+                  value: currentHeight,
+                  min: 1,
+                  onChange: (value) => updateDimension("height", value)
+                }
+              )
+            ]
+          }
+        ),
         /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
           import_components211.__experimentalToggleGroupControl,
           {
@@ -128928,6 +128940,7 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         value: "auto"
       },
+      // Default ratios are listed when the setting shows them.
       ...showDefaultRatios ? defaultOptions2 : [],
       ...themeOptions ? themeOptions : [],
       {
@@ -135737,10 +135750,13 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const displayValue = value ?? defaultValue2;
     const scaleHelp = (0, import_element473.useMemo)(() => {
-      return options.reduce((acc, option) => {
-        acc[option.value] = option.help;
-        return acc;
-      }, {});
+      return options.reduce(
+        (acc, option) => {
+          acc[option.value] = option.help;
+          return acc;
+        },
+        {}
+      );
     }, [options]);
     return /* @__PURE__ */ (0, import_jsx_runtime715.jsx)(
       import_components299.__experimentalToolsPanelItem,
