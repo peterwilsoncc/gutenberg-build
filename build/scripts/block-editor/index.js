@@ -134833,6 +134833,7 @@ If there's a particular need for this, please submit a feature request at https:
       label: def.label || name,
       // Only 'string' needs mapping to 'text'; others are 1:1 with DataForm types.
       // This mapping will be unnecessary once #74105 lands.
+      // PHP only marks attributes whose type DataForm supports.
       type: type === "string" ? "text" : type
     };
     if (type === "array" && Array.isArray(def.items?.enum)) {
@@ -134859,7 +134860,11 @@ If there's a particular need for this, please submit a feature request at https:
       (attr2) => attr2?.autoGenerateControl
     );
   }
-  function AutoRegisterControls({ name, clientId, setAttributes }) {
+  function AutoRegisterControls({
+    name,
+    clientId,
+    setAttributes
+  }) {
     const blockEditingMode = useBlockEditingMode();
     const blockContext = (0, import_element467.useContext)(block_context_default);
     const attributes = (0, import_data208.useSelect)(
