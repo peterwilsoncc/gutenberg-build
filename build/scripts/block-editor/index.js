@@ -127881,7 +127881,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return settings3;
   }
-  function BlockEditAnchorControlPure({ anchor, setAttributes }) {
+  function BlockEditAnchorControlPure({
+    anchor,
+    setAttributes
+  }) {
     const blockEditingMode = useBlockEditingMode();
     if (blockEditingMode !== "default") {
       return null;
@@ -127988,7 +127991,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return settings3;
   }
-  function CustomClassNameControlsPure({ className, setAttributes }) {
+  function CustomClassNameControlsPure({
+    className,
+    setAttributes
+  }) {
     const blockEditingMode = useBlockEditingMode();
     if (blockEditingMode !== "default") {
       return null;
