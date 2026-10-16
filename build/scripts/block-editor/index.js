@@ -113657,7 +113657,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_element389 = __toESM(require_element(), 1);
   var import_jsx_runtime603 = __toESM(require_jsx_runtime(), 1);
-  function LinkSettingsDrawer({ children, settingsOpen, setSettingsOpen }) {
+  function LinkSettingsDrawer({
+    children,
+    settingsOpen,
+    setSettingsOpen
+  }) {
     const prefersReducedMotion = (0, import_compose128.useReducedMotion)();
     const MaybeAnimatePresence = prefersReducedMotion ? import_element389.Fragment : import_components213.__unstableAnimatePresence;
     const MaybeMotionDiv = prefersReducedMotion ? "div" : import_components213.__unstableMotion.div;
@@ -113780,7 +113784,10 @@ If there's a particular need for this, please submit a feature request at https:
       label: (0, import_i18n222.__)("Attachment")
     }
   };
-  function SearchItemIcon({ isURL: isURL4, suggestion }) {
+  function SearchItemIcon({
+    isURL: isURL4,
+    suggestion
+  }) {
     let icon = null;
     if (suggestion.icon) {
       icon = suggestion.icon;
@@ -113834,7 +113841,10 @@ If there's a particular need for this, please submit a feature request at https:
       import_url6.safeDecodeURI,
       import_url6.getPath,
       defaultTo(""),
-      partialRight(import_url6.filterURLForDisplay, 24),
+      partialRight(
+        import_url6.filterURLForDisplay,
+        24
+      ),
       removeTrailingSlash,
       addLeadingSlash
     )(url);
@@ -113932,12 +113942,14 @@ If there's a particular need for this, please submit a feature request at https:
         "is-loading": isLoading
       }
     );
-    const isSingleDirectEntryResult = suggestions.length === 1 && LINK_ENTRY_TYPES.includes(suggestions[0].type);
+    const isSingleDirectEntryResult = suggestions.length === 1 && // An absent type is not a link entry type.
+    LINK_ENTRY_TYPES.includes(suggestions[0].type);
     const shouldShowCreateSuggestion = withCreateSuggestion && !isSingleDirectEntryResult && !isInitialSuggestions;
     const shouldShowSuggestionsTypes = !suggestionsQuery?.type;
     const labelText = isInitialSuggestions ? (0, import_i18n224.__)("Suggestions") : (0, import_i18n224.sprintf)(
       /* translators: %s: search term. */
       (0, import_i18n224.__)('Search results for "%s"'),
+      // A search sets the value before its results are shown.
       currentInputValue
     );
     return /* @__PURE__ */ (0, import_jsx_runtime606.jsx)("div", { className: "block-editor-link-control__search-results-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
@@ -114274,7 +114286,9 @@ If there's a particular need for this, please submit a feature request at https:
           isFetching: true
         };
       default:
-        throw new Error(`Unexpected action type ${action.type}`);
+        throw new Error(
+          `Unexpected action type ${action.type}`
+        );
     }
   }
   function useRemoteUrlData(url) {
@@ -114334,7 +114348,8 @@ If there's a particular need for this, please submit a feature request at https:
     const showRichPreviews = hasRichPreviews ? value?.url : null;
     const { richData, isFetching } = use_rich_url_data_default(showRichPreviews);
     const hasRichData = richData && Object.keys(richData).length;
-    const displayURL = value && (0, import_url8.filterURLForDisplay)((0, import_url8.safeDecodeURI)(value.url), 24) || "";
+    const displayURL = value && // An empty URL shows the empty link notice instead.
+    (0, import_url8.filterURLForDisplay)((0, import_url8.safeDecodeURI)(value.url), 24) || "";
     const isEmptyURL = !value?.url?.length;
     const displayTitle = !isEmptyURL && (0, import_dom75.__unstableStripHTML)(
       value?.entityTitle || richData?.title || value?.title || displayURL
@@ -114484,7 +114499,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime609 = __toESM(require_jsx_runtime(), 1);
   var noop18 = () => {
   };
-  var LinkControlSettings = ({ value, onChange = noop18, settings: settings3 }) => {
+  var LinkControlSettings = ({
+    value,
+    onChange = noop18,
+    settings: settings3
+  }) => {
     if (!settings3 || !settings3.length) {
       return null;
     }
@@ -114536,7 +114555,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n228 = __toESM(require_i18n(), 1);
   var import_element394 = __toESM(require_element(), 1);
   function useCreatePage(handleCreatePage) {
-    const cancelableCreateSuggestion = (0, import_element394.useRef)();
+    const cancelableCreateSuggestion = (0, import_element394.useRef)(void 0);
     const [isCreatingPage, setIsCreatingPage] = (0, import_element394.useState)(false);
     const [errorMessage, setErrorMessage] = (0, import_element394.useState)(null);
     const createPage = async function(suggestionTitle) {
@@ -114546,7 +114565,10 @@ If there's a particular need for this, please submit a feature request at https:
         cancelableCreateSuggestion.current = makeCancelable(
           // Using Promise.resolve to allow createSuggestion to return a
           // non-Promise based value.
-          Promise.resolve(handleCreatePage(suggestionTitle))
+          // LinkControl only offers creation when `createSuggestion` is set.
+          Promise.resolve(
+            handleCreatePage(suggestionTitle)
+          )
         );
         return await cancelableCreateSuggestion.current.promise;
       } catch (error2) {
@@ -114688,11 +114710,11 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const isSettingsOpen = advancedSettingsPreference || settingsOpen;
     const isMountingRef = (0, import_element396.useRef)(true);
-    const wrapperNode = (0, import_element396.useRef)();
+    const wrapperNode = (0, import_element396.useRef)(null);
     const wrapperRef = (0, import_compose131.useMergeRefs)([wrapperNode, useNativeUndo()]);
-    const textInputRef = (0, import_element396.useRef)();
-    const searchInputRef = (0, import_element396.useRef)();
-    const entityUrlFallbackRef = (0, import_element396.useRef)();
+    const textInputRef = (0, import_element396.useRef)(null);
+    const searchInputRef = (0, import_element396.useRef)(null);
+    const entityUrlFallbackRef = (0, import_element396.useRef)(void 0);
     const settingsKeys = settings3.map(({ id }) => id);
     const [
       internalControlValue,
@@ -114708,7 +114730,10 @@ If there's a particular need for this, please submit a feature request at https:
     const isEntity = handleEntities && !!internalControlValue?.id;
     const baseId = (0, import_compose131.useInstanceId)(LinkControl, "link-control");
     const helpTextId = isEntity ? `${baseId}__help` : null;
-    const valueHasChanges = value && !(0, import_is_shallow_equal4.isShallowEqualObjects)(internalControlValue, value);
+    const valueHasChanges = (
+      // The internal value follows `value`, which is set here.
+      value && !(0, import_is_shallow_equal4.isShallowEqualObjects)(internalControlValue, value)
+    );
     const [isEditingLink, setIsEditingLink] = (0, import_element396.useState)(
       forceIsEditingLink !== void 0 ? forceIsEditingLink : !value || !value.url
     );
@@ -114723,7 +114748,10 @@ If there's a particular need for this, please submit a feature request at https:
       if (isMountingRef.current) {
         return;
       }
-      const nextFocusTarget = import_dom76.focus.focusable.find(wrapperNode.current)[0] || wrapperNode.current;
+      const nextFocusTarget = (
+        // The wrapper is mounted once the editing state changes.
+        import_dom76.focus.focusable.find(wrapperNode.current)[0] || wrapperNode.current
+      );
       nextFocusTarget.focus();
     }, [isEditingLink, isCreatingPage]);
     (0, import_element396.useEffect)(() => {
@@ -114732,7 +114760,7 @@ If there's a particular need for this, please submit a feature request at https:
         isMountingRef.current = true;
       };
     }, []);
-    const prevInputValueRef = (0, import_element396.useRef)();
+    const prevInputValueRef = (0, import_element396.useRef)(void 0);
     (0, import_element396.useEffect)(() => {
       if (prevInputValueRef.current === void 0) {
         prevInputValueRef.current = propInputValue;
@@ -115609,15 +115637,21 @@ If there's a particular need for this, please submit a feature request at https:
     const instanceId = (0, import_compose133.useInstanceId)(URLInput);
     const { getSettings: getSettings9 } = (0, import_data160.useSelect)(store);
     const debouncedSpeak = (0, import_compose133.useDebounce)(import_a11y24.speak, 500);
-    const [suggestions, setSuggestions] = (0, import_element398.useState)([]);
-    const [suggestionsValue, setSuggestionsValue] = (0, import_element398.useState)(null);
+    const [suggestions, setSuggestions] = (0, import_element398.useState)(
+      []
+    );
+    const [suggestionsValue, setSuggestionsValue] = (0, import_element398.useState)(
+      null
+    );
     const [selectedSuggestion, setSelectedSuggestion] = (0, import_element398.useState)(null);
     const [isSuggestionsListOpen, setIsSuggestionsListOpen] = (0, import_element398.useState)(false);
     const [isLoading, setIsLoading] = (0, import_element398.useState)(false);
     const [isComposing, setIsComposing] = (0, import_element398.useState)(false);
-    const fallbackInputRef = (0, import_element398.useRef)();
+    const fallbackInputRef = (0, import_element398.useRef)(null);
     const suggestionNodesRef = (0, import_element398.useRef)([]);
-    const suggestionsRequestRef = (0, import_element398.useRef)(null);
+    const suggestionsRequestRef = (0, import_element398.useRef)(
+      null
+    );
     const controlInputRef = inputRef ?? fallbackInputRef;
     const inputId = `url-input-control-${instanceId}`;
     const suggestionsListboxId = `block-editor-url-input-suggestions-${instanceId}`;
@@ -115744,7 +115778,10 @@ If there's a particular need for this, please submit a feature request at https:
           const caret = event.keyCode === import_keycodes24.UP ? 0 : event.target.value.length;
           if (event.target.selectionStart !== caret || event.target.selectionEnd !== caret) {
             event.preventDefault();
-            event.target.setSelectionRange(caret, caret);
+            event.target.setSelectionRange(
+              caret,
+              caret
+            );
           }
         } else if (event.keyCode === import_keycodes24.ENTER && onSubmit) {
           event.preventDefault();
@@ -115903,6 +115940,7 @@ If there's a particular need for this, please submit a feature request at https:
     const buildSuggestionItemProps = (suggestion, index3) => {
       return {
         role: "option",
+        // React coerces the string like the number.
         tabIndex: "-1",
         id: `${suggestionOptionIdPrefix}-${index3}`,
         ref: (node) => {
