@@ -31,6 +31,13 @@ var require_i18n = __commonJS({
   }
 });
 
+// package-external:@wordpress/html-entities
+var require_html_entities = __commonJS({
+  "package-external:@wordpress/html-entities"(exports, module) {
+    module.exports = window.wp.htmlEntities;
+  }
+});
+
 // package-external:@wordpress/components
 var require_components = __commonJS({
   "package-external:@wordpress/components"(exports, module) {
@@ -59,13 +66,6 @@ var require_notices = __commonJS({
   }
 });
 
-// package-external:@wordpress/html-entities
-var require_html_entities = __commonJS({
-  "package-external:@wordpress/html-entities"(exports, module) {
-    module.exports = window.wp.htmlEntities;
-  }
-});
-
 // vendor-external:react/jsx-runtime
 var require_jsx_runtime = __commonJS({
   "vendor-external:react/jsx-runtime"(exports, module) {
@@ -74,11 +74,7 @@ var require_jsx_runtime = __commonJS({
 });
 
 // packages/core-actions/build-module/page/set-as-homepage/action.mjs
-var import_i18n2 = __toESM(require_i18n(), 1);
-var import_components = __toESM(require_components(), 1);
-var import_data = __toESM(require_data(), 1);
-var import_core_data2 = __toESM(require_core_data(), 1);
-var import_notices = __toESM(require_notices(), 1);
+var import_i18n3 = __toESM(require_i18n(), 1);
 
 // packages/core-actions/build-module/shared/utils.mjs
 var import_html_entities = __toESM(require_html_entities(), 1);
@@ -103,7 +99,14 @@ function hasActionLink(item, action) {
   return !!item._links[action];
 }
 
-// packages/core-actions/build-module/shared/refetch-pages.mjs
+// packages/core-actions/build-module/page/set-site-page-modal.mjs
+var import_components = __toESM(require_components(), 1);
+var import_data = __toESM(require_data(), 1);
+var import_core_data2 = __toESM(require_core_data(), 1);
+var import_i18n2 = __toESM(require_i18n(), 1);
+var import_notices = __toESM(require_notices(), 1);
+
+// packages/core-actions/build-module/page/refetch-pages.mjs
 var import_core_data = __toESM(require_core_data(), 1);
 async function refetchPages(registry, ids) {
   const include = [...new Set(ids.filter(Boolean))];
@@ -119,204 +122,178 @@ async function refetchPages(registry, ids) {
   await registry.resolveSelect(import_core_data.store).getEntityRecords("postType", "page", query);
 }
 
-// packages/core-actions/build-module/page/set-as-homepage/action.mjs
+// packages/core-actions/build-module/page/set-site-page-modal.mjs
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+function SetSitePageModal({
+  setting,
+  items,
+  closeModal,
+  getText: getText3,
+  submitLabel,
+  successNotice,
+  errorNotice
+}) {
+  const [item] = items;
+  const { siteSettings, currentPage, isSaving } = (0, import_data.useSelect)(
+    (select) => {
+      const { getEntityRecord, isSavingEntityRecord } = select(import_core_data2.store);
+      const settings = getEntityRecord("root", "site");
+      return {
+        siteSettings: settings,
+        currentPage: getEntityRecord(
+          "postType",
+          "page",
+          settings?.[setting]
+        ),
+        isSaving: isSavingEntityRecord("root", "site")
+      };
+    },
+    [setting]
+  );
+  const registry = (0, import_data.useRegistry)();
+  const { saveEntityRecord } = (0, import_data.useDispatch)(import_core_data2.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
+  async function onSubmit(event) {
+    event.preventDefault();
+    try {
+      await saveEntityRecord("root", "site", {
+        [setting]: item.id,
+        show_on_front: "page"
+      });
+      await refetchPages(registry, [
+        item.id,
+        siteSettings?.[setting]
+      ]);
+      createSuccessNotice(successNotice, { type: "snackbar" });
+    } catch (error) {
+      const typedError = error;
+      const errorMessage = typedError.message && typedError.code !== "unknown_error" ? typedError.message : errorNotice;
+      createErrorNotice(errorMessage, { type: "snackbar" });
+    } finally {
+      closeModal?.();
+    }
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("form", { onSubmit, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: "5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: getText3({
+      pageTitle: getItemTitle(item, ""),
+      currentPage,
+      siteSettings
+    }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, { justify: "right", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        import_components.Button,
+        {
+          __next40pxDefaultSize: true,
+          variant: "tertiary",
+          onClick: () => {
+            closeModal?.();
+          },
+          disabled: isSaving,
+          accessibleWhenDisabled: true,
+          children: (0, import_i18n2.__)("Cancel")
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        import_components.Button,
+        {
+          __next40pxDefaultSize: true,
+          variant: "primary",
+          type: "submit",
+          disabled: isSaving,
+          accessibleWhenDisabled: true,
+          children: submitLabel
+        }
+      )
+    ] })
+  ] }) });
+}
+
+// packages/core-actions/build-module/page/set-as-homepage/action.mjs
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var getText = ({
+  pageTitle,
+  currentPage,
+  siteSettings
+}) => {
+  let warning = "";
+  if ("posts" === siteSettings?.show_on_front) {
+    warning = (0, import_i18n3.__)(
+      "This will replace the current homepage which is set to display latest posts."
+    );
+  } else if (currentPage) {
+    warning = (0, import_i18n3.sprintf)(
+      // translators: %s: title of the current home page.
+      (0, import_i18n3.__)('This will replace the current homepage: "%s"'),
+      getItemTitle(currentPage, "")
+    );
+  }
+  return (0, import_i18n3.sprintf)(
+    // translators: %1$s: title of the page to be set as the homepage, %2$s: homepage replacement warning message.
+    (0, import_i18n3.__)('Set "%1$s" as the site homepage? %2$s'),
+    pageTitle,
+    warning
+  ).trim();
+};
 var setAsHomepage = {
   isEligible(post) {
     return post.status === "publish" && hasActionLink(post, "wp:action-set-homepage");
   },
   RenderModal: ({ items, closeModal }) => {
-    const [item] = items;
-    const pageTitle = getItemTitle(item, "");
-    const { showOnFront, pageOnFront, currentHomePage, isSaving } = (0, import_data.useSelect)((select) => {
-      const { getEntityRecord, isSavingEntityRecord } = select(import_core_data2.store);
-      const siteSettings = getEntityRecord(
-        "root",
-        "site"
-      );
-      const currentHomePageItem = getEntityRecord(
-        "postType",
-        "page",
-        siteSettings?.page_on_front
-      );
-      return {
-        showOnFront: siteSettings?.show_on_front,
-        pageOnFront: siteSettings?.page_on_front,
-        currentHomePage: currentHomePageItem,
-        isSaving: isSavingEntityRecord("root", "site")
-      };
-    }, []);
-    const registry = (0, import_data.useRegistry)();
-    const { saveEntityRecord } = (0, import_data.useDispatch)(import_core_data2.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
-    async function onSetPageAsHomepage(event) {
-      event.preventDefault();
-      try {
-        await saveEntityRecord("root", "site", {
-          page_on_front: item.id,
-          show_on_front: "page"
-        });
-        await refetchPages(registry, [item.id, pageOnFront]);
-        createSuccessNotice((0, import_i18n2.__)("Homepage updated."), {
-          type: "snackbar"
-        });
-      } catch (error) {
-        const typedError = error;
-        const errorMessage = typedError.message && typedError.code !== "unknown_error" ? typedError.message : (0, import_i18n2.__)("An error occurred while setting the homepage.");
-        createErrorNotice(errorMessage, { type: "snackbar" });
-      } finally {
-        closeModal?.();
-      }
-    }
-    let modalWarning = "";
-    if ("posts" === showOnFront) {
-      modalWarning = (0, import_i18n2.__)(
-        "This will replace the current homepage which is set to display latest posts."
-      );
-    } else if (currentHomePage) {
-      modalWarning = (0, import_i18n2.sprintf)(
-        // translators: %s: title of the current home page.
-        (0, import_i18n2.__)('This will replace the current homepage: "%s"'),
-        getItemTitle(currentHomePage, "")
-      );
-    }
-    const modalText = (0, import_i18n2.sprintf)(
-      // translators: %1$s: title of the page to be set as the homepage, %2$s: homepage replacement warning message.
-      (0, import_i18n2.__)('Set "%1$s" as the site homepage? %2$s'),
-      pageTitle,
-      modalWarning
-    ).trim();
-    const modalButtonLabel = (0, import_i18n2.__)("Set homepage");
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("form", { onSubmit: onSetPageAsHomepage, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: "5", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: modalText }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, { justify: "right", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-          import_components.Button,
-          {
-            __next40pxDefaultSize: true,
-            variant: "tertiary",
-            onClick: () => {
-              closeModal?.();
-            },
-            disabled: isSaving,
-            accessibleWhenDisabled: true,
-            children: (0, import_i18n2.__)("Cancel")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-          import_components.Button,
-          {
-            __next40pxDefaultSize: true,
-            variant: "primary",
-            type: "submit",
-            disabled: isSaving,
-            accessibleWhenDisabled: true,
-            children: modalButtonLabel
-          }
+    const submitLabel = (0, import_i18n3.__)("Set homepage");
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+      SetSitePageModal,
+      {
+        setting: "page_on_front",
+        items,
+        closeModal,
+        getText,
+        submitLabel,
+        successNotice: (0, import_i18n3.__)("Homepage updated."),
+        errorNotice: (0, import_i18n3.__)(
+          "An error occurred while setting the homepage."
         )
-      ] })
-    ] }) });
+      }
+    );
   }
 };
 var action_default = setAsHomepage;
 
 // packages/core-actions/build-module/page/set-as-posts-page/action.mjs
-var import_i18n3 = __toESM(require_i18n(), 1);
-var import_components2 = __toESM(require_components(), 1);
-var import_data2 = __toESM(require_data(), 1);
-var import_core_data3 = __toESM(require_core_data(), 1);
-var import_notices2 = __toESM(require_notices(), 1);
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var import_i18n4 = __toESM(require_i18n(), 1);
+var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var getText2 = ({
+  pageTitle,
+  currentPage
+}) => (0, import_i18n4.sprintf)(
+  // translators: %1$s: title of the page to be set as the posts page, %2$s: posts page replacement warning message.
+  (0, import_i18n4.__)('Set "%1$s" as the posts page? %2$s'),
+  pageTitle,
+  currentPage ? (0, import_i18n4.sprintf)(
+    // translators: %s: title of the current posts page.
+    (0, import_i18n4.__)('This will replace the current posts page: "%s"'),
+    getItemTitle(currentPage, "")
+  ) : (0, import_i18n4.__)("This page will show the latest posts.")
+);
 var setAsPostsPage = {
   isEligible(post) {
     return post.status === "publish" && hasActionLink(post, "wp:action-set-posts-page");
   },
   RenderModal: ({ items, closeModal }) => {
-    const [item] = items;
-    const pageTitle = getItemTitle(item, "");
-    const { pageForPosts, currentPostsPage, isPageForPostsSet, isSaving } = (0, import_data2.useSelect)((select) => {
-      const { getEntityRecord, isSavingEntityRecord } = select(import_core_data3.store);
-      const siteSettings = getEntityRecord(
-        "root",
-        "site"
-      );
-      const currentPostsPageItem = getEntityRecord(
-        "postType",
-        "page",
-        siteSettings?.page_for_posts
-      );
-      return {
-        pageForPosts: siteSettings?.page_for_posts,
-        currentPostsPage: currentPostsPageItem,
-        isPageForPostsSet: siteSettings?.page_for_posts !== 0,
-        isSaving: isSavingEntityRecord("root", "site")
-      };
-    }, []);
-    const registry = (0, import_data2.useRegistry)();
-    const { saveEntityRecord } = (0, import_data2.useDispatch)(import_core_data3.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data2.useDispatch)(import_notices2.store);
-    async function onSetPageAsPostsPage(event) {
-      event.preventDefault();
-      try {
-        await saveEntityRecord("root", "site", {
-          page_for_posts: item.id,
-          show_on_front: "page"
-        });
-        await refetchPages(registry, [item.id, pageForPosts]);
-        createSuccessNotice((0, import_i18n3.__)("Posts page updated."), {
-          type: "snackbar"
-        });
-      } catch (error) {
-        const typedError = error;
-        const errorMessage = typedError.message && typedError.code !== "unknown_error" ? typedError.message : (0, import_i18n3.__)(
+    const submitLabel = (0, import_i18n4.__)("Set posts page");
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+      SetSitePageModal,
+      {
+        setting: "page_for_posts",
+        items,
+        closeModal,
+        getText: getText2,
+        submitLabel,
+        successNotice: (0, import_i18n4.__)("Posts page updated."),
+        errorNotice: (0, import_i18n4.__)(
           "An error occurred while setting the posts page."
-        );
-        createErrorNotice(errorMessage, { type: "snackbar" });
-      } finally {
-        closeModal?.();
-      }
-    }
-    const modalWarning = isPageForPostsSet && currentPostsPage ? (0, import_i18n3.sprintf)(
-      // translators: %s: title of the current posts page.
-      (0, import_i18n3.__)('This will replace the current posts page: "%s"'),
-      getItemTitle(currentPostsPage, "")
-    ) : (0, import_i18n3.__)("This page will show the latest posts.");
-    const modalText = (0, import_i18n3.sprintf)(
-      // translators: %1$s: title of the page to be set as the posts page, %2$s: posts page replacement warning message.
-      (0, import_i18n3.__)('Set "%1$s" as the posts page? %2$s'),
-      pageTitle,
-      modalWarning
-    );
-    const modalButtonLabel = (0, import_i18n3.__)("Set posts page");
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("form", { onSubmit: onSetPageAsPostsPage, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_components2.__experimentalVStack, { spacing: "5", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_components2.__experimentalText, { children: modalText }),
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_components2.__experimentalHStack, { justify: "right", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-          import_components2.Button,
-          {
-            __next40pxDefaultSize: true,
-            variant: "tertiary",
-            onClick: () => {
-              closeModal?.();
-            },
-            disabled: isSaving,
-            accessibleWhenDisabled: true,
-            children: (0, import_i18n3.__)("Cancel")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-          import_components2.Button,
-          {
-            __next40pxDefaultSize: true,
-            variant: "primary",
-            type: "submit",
-            disabled: isSaving,
-            accessibleWhenDisabled: true,
-            children: modalButtonLabel
-          }
         )
-      ] })
-    ] }) });
+      }
+    );
   }
 };
 var action_default2 = setAsPostsPage;
