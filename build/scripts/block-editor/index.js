@@ -66733,8 +66733,11 @@ var wp;
       left: element.offsetLeft
     };
   }
-  function useMovingAnimation({ triggerAnimationOnChange, clientId }) {
-    const ref = (0, import_element164.useRef)();
+  function useMovingAnimation({
+    triggerAnimationOnChange,
+    clientId
+  }) {
+    const ref = (0, import_element164.useRef)(void 0);
     const {
       isTyping: isTyping3,
       getGlobalBlockCount: getGlobalBlockCount2,
@@ -67555,7 +67558,10 @@ var wp;
           );
         };
         const handleClick = (event) => {
-          const shouldFlash = event.target === element || event.target.classList.contains("is-root-container");
+          const shouldFlash = event.target === element || // Clicks target elements.
+          event.target.classList.contains(
+            "is-root-container"
+          );
           if (!shouldFlash) {
             return;
           }
@@ -98284,13 +98290,17 @@ If there's a particular need for this, please submit a feature request at https:
         if (sourceRootClientId === targetRootClientId && sourceBlockIndex === targetBlockIndex) {
           return;
         }
-        if (sourceClientIds.includes(targetRootClientId) || getClientIdsOfDescendants2(sourceClientIds).some(
-          (id) => id === targetRootClientId
-        )) {
+        if (
+          // A drop at the root compares the dragged IDs with `undefined`.
+          sourceClientIds.includes(targetRootClientId) || getClientIdsOfDescendants2(sourceClientIds).some(
+            (id) => id === targetRootClientId
+          )
+        ) {
           return;
         }
         if (operation === "group") {
           const blocksToInsert = sourceClientIds.map(
+            // The dragged blocks exist.
             (clientId) => getBlock2(clientId)
           );
           insertOrReplaceBlocks(
@@ -98315,7 +98325,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const transformation = (0, import_blocks48.findTransform)(
         (0, import_blocks48.getBlockTransforms)("from"),
-        (transform) => transform.type === "files" && canInsertBlockType2(transform.blockName, targetRootClientId) && transform.isMatch(files)
+        (transform) => transform.type === "files" && canInsertBlockType2(transform.blockName, targetRootClientId) && // Files transforms define a matcher.
+        transform.isMatch(files)
       );
       if (transformation) {
         const blocks2 = transformation.transform(
@@ -98382,7 +98393,10 @@ If there's a particular need for this, please submit a feature request at https:
             targetRootClientId
           );
           const wrappedBlocks = (0, import_blocks48.createBlock)(
-            areAllImages && galleryBlock ? "core/gallery" : getGroupingBlockName(),
+            areAllImages && galleryBlock ? "core/gallery" : (
+              // A grouping block type is registered.
+              getGroupingBlockName()
+            ),
             {
               layout: {
                 type: "flex",
@@ -98423,7 +98437,9 @@ If there's a particular need for this, please submit a feature request at https:
     const moveBlocks = (0, import_element315.useCallback)(
       (sourceClientIds, sourceRootClientId, insertIndex) => {
         if (operation === "replace") {
-          const sourceBlocks = getBlocksByClientId2(sourceClientIds);
+          const sourceBlocks = getBlocksByClientId2(
+            sourceClientIds
+          );
           const targetBlockClientIds = getBlockOrder2(targetRootClientId);
           const targetBlockClientId = targetBlockClientIds[targetBlockIndex];
           registry.batch(() => {
@@ -101700,6 +101716,7 @@ If there's a particular need for this, please submit a feature request at https:
             (0, import_i18n147.sprintf)(
               // Translators: %s: Name of the block being pasted, e.g. "Paragraph".
               (0, import_i18n147.__)("Pasted styles to %s."),
+              // The block pasted to is registered.
               title
             ),
             { type: "snackbar" }
@@ -101914,6 +101931,7 @@ If there's a particular need for this, please submit a feature request at https:
           isGroupable: isGroupable2(clientIds),
           isUngroupable: _isUngroupable,
           blocksSelection,
+          // A grouping block type is registered.
           groupingBlockName: getGroupingBlockName(),
           onUngroup: _isUngroupable && getBlockType34(firstSelectedBlock.name)?.transforms?.ungroup
         };
@@ -101943,6 +101961,7 @@ If there's a particular need for this, please submit a feature request at https:
         const { getBlockVariations: getBlockVariations2 } = select3(import_blocks63.store);
         return {
           canRemove: canRemoveBlocks2(clientIds),
+          // A registered block type has a variations array.
           variations: getBlockVariations2(
             groupingBlockName,
             "transform"
@@ -105414,7 +105433,9 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         blocks: selectedBlocks,
         clientIds: selectedBlockClientIds,
+        // Block type icons are normalized to descriptors.
         possibleBlockTransformations: getBlockTransformItems2(
+          // The selection has no missing blocks here.
           selectedBlocks,
           rootClientId
         ),
@@ -105456,6 +105477,8 @@ If there's a particular need for this, please submit a feature request at https:
           name: "core/block-editor/transform-to-" + (id || name).replace(/\//g, "-"),
           /* translators: %s: Block or block variation name. */
           label: (0, import_i18n174.sprintf)((0, import_i18n174.__)("Transform to %s"), title),
+          // Transform items have a title.
+          // Block icons are elements; see the note above.
           icon: blockIcon?.src,
           category: "command",
           callback: ({ close }) => {
@@ -105533,6 +105556,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { showViewportModal: showViewportModal2 } = unlock(blockEditorDispatch);
     const rootClientId = getBlockRootClientId2(clientIds[0]);
     const canInsertDefaultBlock = canInsertBlockType2(
+      // A default block type is registered.
       getDefaultBlockName9(),
       rootClientId
     );
@@ -105555,7 +105579,10 @@ If there's a particular need for this, please submit a feature request at https:
           name: "add-before",
           label: (0, import_i18n174.__)("Add before"),
           callback: () => {
-            const clientId = Array.isArray(clientIds) ? clientIds[0] : clientId;
+            const clientId = Array.isArray(clientIds) ? clientIds[0] : (
+              // @ts-expect-error The client IDs are always an array, so this is never read.
+              clientId
+            );
             insertBeforeBlock2(clientId);
           },
           icon: plus_default
@@ -105564,7 +105591,10 @@ If there's a particular need for this, please submit a feature request at https:
           name: "add-after",
           label: (0, import_i18n174.__)("Add after"),
           callback: () => {
-            const clientId = Array.isArray(clientIds) ? clientIds[clientIds.length - 1] : clientId;
+            const clientId = Array.isArray(clientIds) ? clientIds[clientIds.length - 1] : (
+              // @ts-expect-error The client IDs are always an array, so this is never read.
+              clientId
+            );
             insertAfterBlock2(clientId);
           },
           icon: plus_default
