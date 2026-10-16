@@ -155,6 +155,7 @@ function SetSitePageModal({
   const { createSuccessNotice, createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
   async function onSubmit(event) {
     event.preventDefault();
+    const previousId = siteSettings?.[setting];
     try {
       await saveEntityRecord(
         "root",
@@ -162,17 +163,18 @@ function SetSitePageModal({
         { [setting]: item.id, show_on_front: "page" },
         { throwOnError: true }
       );
-      await refetchPages(registry, [
-        item.id,
-        siteSettings?.[setting]
-      ]);
-      createSuccessNotice(successNotice, { type: "snackbar" });
     } catch (error) {
       const typedError = error;
       const errorMessage = typedError.message && typedError.code !== "unknown_error" ? typedError.message : errorNotice;
       createErrorNotice(errorMessage, { type: "snackbar" });
-    } finally {
       closeModal?.();
+      return;
+    }
+    createSuccessNotice(successNotice, { type: "snackbar" });
+    closeModal?.();
+    try {
+      await refetchPages(registry, [item.id, previousId]);
+    } catch {
     }
   }
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("form", { onSubmit, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: "5", children: [
