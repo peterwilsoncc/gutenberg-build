@@ -63461,7 +63461,7 @@ var wp;
       [parents]
     );
     const rootLabel = typeof rootLabelText === "string" && rootLabelText.trim() ? rootLabelText : (0, import_i18n33._x)("Document", "noun, breadcrumb");
-    const blockRef = (0, import_element158.useRef)();
+    const blockRef = (0, import_element158.useRef)(void 0);
     useBlockElementRef(clientId, blockRef);
     return /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(
       breadcrumb_exports.Root,
@@ -72546,7 +72546,9 @@ var wp;
   }
   function getAllFocusableToolbarItemsIn(container) {
     return Array.from(
-      container.querySelectorAll("[data-toolbar-item]:not([disabled])")
+      container.querySelectorAll(
+        "[data-toolbar-item]:not([disabled])"
+      )
     );
   }
   function hasFocusWithin(container) {
@@ -72690,7 +72692,7 @@ var wp;
     orientation = "horizontal",
     ...props
   }) {
-    const toolbarRef = (0, import_element185.useRef)();
+    const toolbarRef = (0, import_element185.useRef)(void 0);
     const isAccessibleToolbar = useIsAccessibleToolbar(toolbarRef);
     useToolbarFocus({
       toolbarRef,
@@ -73136,7 +73138,9 @@ var wp;
           return accumulator;
         }
         function matchFromRules(_cssRules) {
-          return Array.from(_cssRules).find(
+          return Array.from(
+            _cssRules
+          ).find(
             ({
               selectorText,
               conditionText,
@@ -73165,10 +73169,7 @@ var wp;
           }
           accumulator.push(ownerNode.cloneNode(true));
           if (!isInline) {
-            const inlineStylesCssId = ownerNode.id.replace(
-              "-css",
-              "-inline-css"
-            );
+            const inlineStylesCssId = ownerNode.id.replace("-css", "-inline-css");
             const inlineStylesElement = document.getElementById(inlineStylesCssId);
             if (inlineStylesElement) {
               accumulator.push(
@@ -73281,6 +73282,7 @@ var wp;
     );
     const scaleValue = isAutoScaled ? calculateScale({
       frameSize,
+      // `Math.min` reads an unmeasured width as 0.
       containerWidth,
       maxContainerWidth,
       scaleContainerWidth
@@ -73331,6 +73333,7 @@ var wp;
       animationRef.current = null;
       iframeDocument.documentElement.style.setProperty(
         "--wp-block-editor-iframe-zoom-out-scale",
+        // The style declaration stringifies numbers.
         transitionToRef.current.scaleValue
       );
       iframeDocument.documentElement.style.setProperty(
@@ -73376,6 +73379,7 @@ var wp;
       if (isAutoScaled && transitionFromRef.current.scaleValue !== 1) {
         transitionFromRef.current.scaleValue = calculateScale({
           frameSize: transitionFromRef.current.frameSize,
+          // The container is measured once the canvas renders.
           containerWidth,
           maxContainerWidth,
           scaleContainerWidth: containerWidth
@@ -73385,6 +73389,7 @@ var wp;
         if (!startAnimationRef.current) {
           iframeDocument.documentElement.style.setProperty(
             "--wp-block-editor-iframe-zoom-out-scale",
+            // The style declaration stringifies numbers.
             scaleValue
           );
           iframeDocument.documentElement.style.setProperty(
@@ -73426,6 +73431,7 @@ var wp;
             frameSize,
             containerHeight: iframeDocument.documentElement.clientHeight
             // use clientHeight to get the actual height of the new container after zoom state changes have rendered, as it will be the most up-to-date.
+            // The scroll values are computed below.
           };
           transitionToRef.current.scrollHeight = computeScrollHeightNext(
             transitionFromRef.current,
@@ -73472,7 +73478,10 @@ var wp;
     for (const key in event) {
       init2[key] = event[key];
     }
-    if (event instanceof frame.contentDocument.defaultView.MouseEvent) {
+    if (
+      // A frame that dispatches events has a document and window.
+      event instanceof frame.contentDocument.defaultView.MouseEvent
+    ) {
       const rect = frame.getBoundingClientRect();
       init2.clientX += rect.left;
       init2.clientY += rect.top;
@@ -73501,7 +73510,11 @@ var wp;
           const prototype = Object.getPrototypeOf(event);
           const constructorName = prototype.constructor.name;
           const Constructor = window[constructorName];
-          bubbleEvent(event, Constructor, frameElement);
+          bubbleEvent(
+            event,
+            Constructor,
+            frameElement
+          );
         };
         html.addEventListener(name, handlers[name]);
       }
@@ -73599,7 +73612,9 @@ var wp;
         documentElement.classList.add("block-editor-iframe__html");
         contentDocument.dir = ownerDocument2.dir;
         for (const compatStyle of getCompatibilityStyles()) {
-          if (contentDocument.getElementById(compatStyle.id)) {
+          if (contentDocument.getElementById(
+            compatStyle.id
+          )) {
             continue;
           }
           contentDocument.head.appendChild(
@@ -73646,12 +73661,15 @@ var wp;
       scaleContainerWidth
     } = useScaleCanvas({
       scale,
+      // `parseInt` reads a number as its string form.
       frameSize: parseInt(frameSize),
+      // The canvas only animates once the iframe document loads.
       iframeDocument
     });
     const disabledRef = (0, import_compose53.useDisabled)({ isDisabled: !readonly });
     const unguardedBodyRef = (0, import_compose53.useMergeRefs)([
       useBubbleEvents(iframeDocument),
+      // `useMergeRefs` skips unset refs.
       contentRef,
       writingFlowRef,
       disabledRef,
@@ -73681,7 +73699,11 @@ var wp;
             height: props.style?.height,
             border: 0
           },
-          ref: (0, import_compose53.useMergeRefs)([ref, setRef2]),
+          ref: (0, import_compose53.useMergeRefs)([
+            // `useMergeRefs` skips unset refs.
+            ref,
+            setRef2
+          ]),
           tabIndex,
           src,
           title,
@@ -74068,7 +74090,11 @@ var wp;
       [styles, scope]
     );
   }
-  function EditorStyles({ styles, scope, transformOptions }) {
+  function EditorStyles({
+    styles,
+    scope,
+    transformOptions
+  }) {
     const overrides = (0, import_data57.useSelect)(
       (select3) => unlock(select3(store)).getStyleOverrides(),
       []
@@ -74094,6 +74120,7 @@ var wp;
       }
       return [
         transform_styles_default(
+          // The filter keeps the styles with CSS.
           _styles.filter((style) => style?.css),
           scope,
           transformOptions
