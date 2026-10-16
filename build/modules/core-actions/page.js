@@ -156,10 +156,12 @@ function SetSitePageModal({
   async function onSubmit(event) {
     event.preventDefault();
     try {
-      await saveEntityRecord("root", "site", {
-        [setting]: item.id,
-        show_on_front: "page"
-      });
+      await saveEntityRecord(
+        "root",
+        "site",
+        { [setting]: item.id, show_on_front: "page" },
+        { throwOnError: true }
+      );
       await refetchPages(registry, [
         item.id,
         siteSettings?.[setting]
