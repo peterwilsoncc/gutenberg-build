@@ -61386,7 +61386,8 @@ ${text}
       shadow: true,
       interactivity: {
         clientNavigation: true
-      }
+      },
+      contentRole: true
     },
     style: "wp-block-loginout"
   };

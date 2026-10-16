@@ -4334,7 +4334,8 @@ return array(
 			'shadow' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
-			)
+			),
+			'contentRole' => true
 		),
 		'style' => 'wp-block-loginout'
 	),
