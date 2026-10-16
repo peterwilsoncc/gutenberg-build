@@ -1490,7 +1490,7 @@ var wp;
     MenuItemsChoice: () => menu_items_choice_default,
     Modal: () => modal_default,
     NavigableMenu: () => menu_default2,
-    Navigator: () => Navigator3,
+    Navigator: () => Navigator2,
     Notice: () => notice_default,
     NoticeList: () => list_default,
     Panel: () => panel_default,
@@ -62850,106 +62850,6 @@ This message will only show in development mode. It won't appear in production. 
     };
   };
 
-  // packages/components/build-module/date-time/date-picker/styles.mjs
-  var Wrapper2 = styled.div`
-	${boxSizingReset}
-`;
-  var Navigator = styled(component_default9)`
-	column-gap: ${space(2)};
-	display: grid;
-	grid-template-columns: 0.5fr repeat( 5, 1fr ) 0.5fr;
-	justify-items: center;
-	margin-bottom: ${space(4)};
-`;
-  var ViewPreviousMonthButton = styled(button_default)`
-	grid-column: 1 / 2;
-`;
-  var ViewNextMonthButton = styled(button_default)`
-	grid-column: 7 / 8;
-`;
-  var NavigatorHeading = styled(component_default19)`
-	/* Override Heading's module typography in either document's style order. */
-	&& {
-		font-size: ${config_values_default.fontSize};
-		font-weight: ${config_values_default.fontWeight};
-	}
-	grid-column: 2 / 7;
-
-	strong {
-		font-weight: ${config_values_default.fontWeightEmphasis};
-	}
-`;
-  var Calendar = styled.div`
-	column-gap: ${space(2)};
-	display: grid;
-	grid-template-columns: 0.5fr repeat( 5, 1fr ) 0.5fr;
-	justify-items: center;
-	row-gap: ${space(2)};
-`;
-  var DayOfWeek = styled.div`
-	color: ${COLORS.theme.gray[700]};
-	font-size: ${config_values_default.fontSize};
-	line-height: ${config_values_default.fontLineHeightBase};
-`;
-  var DayButton = styled(button_default, {
-    shouldForwardProp: (prop) => !["column", "isSelected", "isToday", "hasEvents"].includes(prop)
-  })`
-	grid-column: ${(props) => props.column};
-	position: relative;
-	justify-content: center;
-	padding: 0;
-
-	${(props) => props.disabled && `
-		pointer-events: none;
-		`}
-
-	&&& {
-		border-radius: ${config_values_default.radiusRound};
-		height: ${space(7)};
-		width: ${space(7)};
-		font-weight: 400;
-
-		${(props) => props.isSelected && `
-				background: ${COLORS.theme.accent};
-
-				&,
-				&:hover:not(:disabled, [aria-disabled=true]) {
-					color: ${COLORS.theme.accentInverted};
-				}
-
-				&:focus:not(:disabled),
-				&:focus:not(:disabled) {
-					border: ${config_values_default.borderWidthFocus} solid currentColor;
-				}
-
-				/* Highlight the selected day for high-contrast mode */
-				&::after {
-					content: '';
-					position: absolute;
-					pointer-events: none;
-					inset: 0;
-					border-radius: inherit;
-					border: 1px solid transparent;
-				}
-			`}
-
-		${(props) => !props.isSelected && props.isToday && `
-			background: ${COLORS.theme.gray[200]};
-			`}
-	}
-
-	${(props) => props.hasEvents && `
-		::before {
-			border: 2px solid ${props.isSelected ? COLORS.theme.accentInverted : COLORS.theme.accent};
-			border-radius: ${config_values_default.radiusRound};
-			content: " ";
-			left: 50%;
-			position: absolute;
-			transform: translate(-50%, 9px);
-		}
-		`}
-`;
-
   // node_modules/.store/@date-fns/utc@2.1.1-ZPxNp3FQK4Dq03rd4Msm-w/node_modules/@date-fns/utc/date/mini.js
   var UTCDateMini = class extends Date {
     constructor() {
@@ -63064,6 +62964,90 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/date-time/date-picker/index.mjs
   var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE80 = "data-wp-hash";
+  function getRuntime80() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument80(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash80(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE80}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE80) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle80(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime80();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash80(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE80, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument80(targetDocument) {
+    const runtime = getRuntime80();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle80(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle79(hash2, css4) {
+    const runtime = getRuntime80();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle80(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle79("2a6c12f497", '._82a31d6e86d205ba__wrapper{box-sizing:border-box}._82a31d6e86d205ba__wrapper *,._82a31d6e86d205ba__wrapper :after,._82a31d6e86d205ba__wrapper :before{box-sizing:inherit}.e825ea6644b0c2c2__navigator{grid-template-columns:.5fr repeat(5,1fr) .5fr;justify-items:center;margin-bottom:16px}.e825ea6644b0c2c2__navigator.e825ea6644b0c2c2__navigator{display:grid}.bca12525a808147f__previous-month{grid-column:1/2}._97786f6f3b55234a__next-month{grid-column:7/8}.db6bcdfbfe2f3863__heading{grid-column:2/7}.db6bcdfbfe2f3863__heading strong{font-weight:600}.db6bcdfbfe2f3863__heading.db6bcdfbfe2f3863__heading{font-size:13px;font-weight:400}.cc9d5ac8de65bddf__calendar{column-gap:8px;display:grid;grid-template-columns:.5fr repeat(5,1fr) .5fr;justify-items:center;row-gap:8px}.b715bf6ad5df2160__day-of-week{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:13px;line-height:1.4}.cf77fed4f7b1ef63__day{grid-column:var(--_wp-components-date-picker-column);justify-content:center;padding:0;position:relative}.cf77fed4f7b1ef63__day:where(:disabled){pointer-events:none}.cf77fed4f7b1ef63__day:where(._483446d4e31e21a9__has-events):before{border:2px solid var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));border-radius:50%;content:" ";left:50%;position:absolute;transform:translate(-50%,9px)}.cf77fed4f7b1ef63__day:where(._483446d4e31e21a9__has-events._900c9ea54f66f3c9__is-selected):before{border-color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day{border-radius:50%;font-weight:400;height:28px;width:28px}.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day:where(._900c9ea54f66f3c9__is-selected){background:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day:where(._900c9ea54f66f3c9__is-selected),.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day:where(._900c9ea54f66f3c9__is-selected):hover:not(:disabled,[aria-disabled=true]){color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day:where(._900c9ea54f66f3c9__is-selected):focus:not(:disabled){border:1.5px solid}.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day:where(._900c9ea54f66f3c9__is-selected):after{border:1px solid transparent;border-radius:inherit;content:"";inset:0;pointer-events:none;position:absolute}.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day.cf77fed4f7b1ef63__day:where(._0dcdb57c69eefe32__is-today){background:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb))}');
+  }
+  var style_module_default59 = { "wrapper": "_82a31d6e86d205ba__wrapper", "navigator": "e825ea6644b0c2c2__navigator", "previous-month": "bca12525a808147f__previous-month", "next-month": "_97786f6f3b55234a__next-month", "heading": "db6bcdfbfe2f3863__heading", "calendar": "cc9d5ac8de65bddf__calendar", "day-of-week": "b715bf6ad5df2160__day-of-week", "day": "cf77fed4f7b1ef63__day", "has-events": "_483446d4e31e21a9__has-events", "is-selected": "_900c9ea54f66f3c9__is-selected", "is-today": "_0dcdb57c69eefe32__is-today" };
   function DatePicker({
     currentDate,
     onChange,
@@ -63098,16 +63082,17 @@ This message will only show in development mode. It won't appear in production. 
       setFocusable(startOfDayInConfiguredTimezone(date));
     }
     return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
-      Wrapper2,
+      "div",
       {
-        className: "components-datetime__date",
+        className: clsx_default("components-datetime__date", style_module_default59.wrapper),
         role: "application",
         "aria-label": (0, import_i18n52.__)("Calendar"),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(Navigator, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(component_default9, { className: style_module_default59.navigator, children: [
             /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-              ViewPreviousMonthButton,
+              button_default,
               {
+                className: style_module_default59["previous-month"],
                 icon: (0, import_i18n52.isRTL)() ? arrow_right_default : arrow_left_default,
                 variant: "tertiary",
                 "aria-label": (0, import_i18n52.__)("View previous month"),
@@ -63126,7 +63111,7 @@ This message will only show in development mode. It won't appear in production. 
                 size: "compact"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(NavigatorHeading, { level: 3, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(component_default19, { level: 3, className: style_module_default59.heading, children: [
               /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("strong", { children: (0, import_date3.dateI18n)(
                 "F",
                 viewing,
@@ -63136,8 +63121,9 @@ This message will only show in development mode. It won't appear in production. 
               (0, import_date3.dateI18n)("Y", viewing, -viewing.getTimezoneOffset())
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-              ViewNextMonthButton,
+              button_default,
               {
+                className: style_module_default59["next-month"],
                 icon: (0, import_i18n52.isRTL)() ? arrow_left_default : arrow_right_default,
                 variant: "tertiary",
                 "aria-label": (0, import_i18n52.__)("View next month"),
@@ -63158,12 +63144,20 @@ This message will only show in development mode. It won't appear in production. 
             )
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
-            Calendar,
+            "div",
             {
+              className: style_module_default59.calendar,
               onFocus: () => setIsFocusWithinCalendar(true),
               onBlur: () => setIsFocusWithinCalendar(false),
               children: [
-                calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(DayOfWeek, { children: (0, import_date3.dateI18n)("D", day, -day.getTimezoneOffset()) }, day.toString())),
+                calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                  "div",
+                  {
+                    className: style_module_default59["day-of-week"],
+                    children: (0, import_date3.dateI18n)("D", day, -day.getTimezoneOffset())
+                  },
+                  day.toString()
+                )),
                 calendar[0].map(
                   (week) => week.map((day, index2) => {
                     if (!isSameMonth(day, viewing)) {
@@ -63293,23 +63287,35 @@ This message will only show in development mode. It won't appear in production. 
         ref.current.focus();
       }
     }, [isFocusable2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-      DayButton,
-      {
-        __next40pxDefaultSize: true,
-        ref,
-        className: "components-datetime__date__day",
-        disabled: isInvalid,
-        tabIndex: isFocusable2 ? 0 : -1,
-        "aria-label": getDayLabel(day, isSelected2, isToday, numEvents),
-        column: column2,
-        isSelected: isSelected2,
-        isToday,
-        hasEvents: numEvents > 0,
-        onClick,
-        onKeyDown,
-        children: (0, import_date3.dateI18n)("j", day, -day.getTimezoneOffset())
-      }
+    return (
+      // Invalid dates intentionally cannot receive focus or be selected.
+      // eslint-disable-next-line @wordpress/components-no-unsafe-button-disabled
+      /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+        button_default,
+        {
+          __next40pxDefaultSize: true,
+          ref,
+          className: clsx_default(
+            "components-datetime__date__day",
+            // Unused, for backwards compatibility.
+            style_module_default59.day,
+            {
+              [style_module_default59["is-selected"]]: isSelected2,
+              [style_module_default59["is-today"]]: !isSelected2 && isToday,
+              [style_module_default59["has-events"]]: numEvents > 0
+            }
+          ),
+          style: {
+            "--_wp-components-date-picker-column": column2
+          },
+          disabled: isInvalid,
+          tabIndex: isFocusable2 ? 0 : -1,
+          "aria-label": getDayLabel(day, isSelected2, isToday, numEvents),
+          onClick,
+          onKeyDown,
+          children: (0, import_date3.dateI18n)("j", day, -day.getTimezoneOffset())
+        }
+      )
     );
   }
   function getDayLabel(date, isSelected2, isToday, numEvents) {
@@ -63348,127 +63354,6 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n53 = __toESM(require_i18n(), 1);
   var import_date4 = __toESM(require_date(), 1);
   var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE80 = "data-wp-hash";
-  function getRuntime80() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument80(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash80(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE80}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE80) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle80(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime80();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash80(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE80, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument80(targetDocument) {
-    const runtime = getRuntime80();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle80(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle79(hash2, css4) {
-    const runtime = getRuntime80();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle80(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle79("2841b7f2cf", "._57a9984e65afbfce__wrapper{box-sizing:border-box;font-size:13px}._23c9ce51d49d1dda__fieldset{border:0;margin:0 0 16px;padding:0}._23c9ce51d49d1dda__fieldset:last-child{margin-bottom:0}._109a19b273d48639__time-wrapper{direction:ltr;display:flex}._9cf7c54f094ae50b__year-input._9cf7c54f094ae50b__year-input._9cf7c54f094ae50b__year-input .components-input-control__input,.caf0b5c9edbe15f3__day-input.caf0b5c9edbe15f3__day-input.caf0b5c9edbe15f3__day-input .components-input-control__input,.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__input,.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__input{padding-left:8px;padding-right:8px;text-align:center}.cc1f8dd531cf4a27__hours-input{width:36px}.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__input{padding-right:0}.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__backdrop{border-bottom-right-radius:0;border-right:0;border-top-right-radius:0}.b734c00299c91523__time-separator{border-bottom:1px solid #757575;border-top:1px solid #757575;display:inline-block;font-size:13px;line-height:34px}.e11bd249cd9314b9__minutes-input{width:36px}.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__input{padding-left:0}.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__backdrop{border-bottom-left-radius:0;border-left:0;border-top-left-radius:0}.fc45c7c56a28ed67__month-select-wrapper{flex-grow:1}.caf0b5c9edbe15f3__day-input{width:36px}._9cf7c54f094ae50b__year-input{width:56px}._0659bf4e8c7bbc3b__time-zone{text-decoration:underline dotted}");
-  }
-  var style_module_default59 = { "wrapper": "_57a9984e65afbfce__wrapper", "fieldset": "_23c9ce51d49d1dda__fieldset", "time-wrapper": "_109a19b273d48639__time-wrapper", "hours-input": "cc1f8dd531cf4a27__hours-input", "minutes-input": "e11bd249cd9314b9__minutes-input", "day-input": "caf0b5c9edbe15f3__day-input", "year-input": "_9cf7c54f094ae50b__year-input", "time-separator": "b734c00299c91523__time-separator", "month-select-wrapper": "fc45c7c56a28ed67__month-select-wrapper", "time-zone": "_0659bf4e8c7bbc3b__time-zone" };
-  var TimeZone = () => {
-    const { timezone } = (0, import_date4.getSettings)();
-    const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
-    if (Number(timezone.offset) === userTimezoneOffset) {
-      return null;
-    }
-    const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
-    const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
-    const prettyTimezoneString = timezone.string.replace("_", " ");
-    const timezoneDetail = "UTC" === timezone.string ? (0, import_i18n53.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
-    const hasNoAdditionalTimezoneDetail = prettyTimezoneString.trim().length === 0;
-    return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
-      "div",
-      {
-        className: clsx_default(
-          "components-datetime__timezone",
-          style_module_default59["time-zone"]
-        ),
-        children: zoneAbbr
-      }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(tooltip_default, { placement: "top", text: timezoneDetail, children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
-      "div",
-      {
-        className: clsx_default(
-          "components-datetime__timezone",
-          style_module_default59["time-zone"]
-        ),
-        children: zoneAbbr
-      }
-    ) });
-  };
-  var timezone_default = TimeZone;
-
-  // packages/components/build-module/date-time/time-picker/time-input/index.mjs
-  var import_i18n54 = __toESM(require_i18n(), 1);
-  var import_element153 = __toESM(require_element(), 1);
-  var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE81 = "data-wp-hash";
   function getRuntime81() {
     const globalScope = globalThis;
@@ -63553,172 +63438,43 @@ This message will only show in development mode. It won't appear in production. 
     registerStyle80("2841b7f2cf", "._57a9984e65afbfce__wrapper{box-sizing:border-box;font-size:13px}._23c9ce51d49d1dda__fieldset{border:0;margin:0 0 16px;padding:0}._23c9ce51d49d1dda__fieldset:last-child{margin-bottom:0}._109a19b273d48639__time-wrapper{direction:ltr;display:flex}._9cf7c54f094ae50b__year-input._9cf7c54f094ae50b__year-input._9cf7c54f094ae50b__year-input .components-input-control__input,.caf0b5c9edbe15f3__day-input.caf0b5c9edbe15f3__day-input.caf0b5c9edbe15f3__day-input .components-input-control__input,.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__input,.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__input{padding-left:8px;padding-right:8px;text-align:center}.cc1f8dd531cf4a27__hours-input{width:36px}.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__input{padding-right:0}.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__backdrop{border-bottom-right-radius:0;border-right:0;border-top-right-radius:0}.b734c00299c91523__time-separator{border-bottom:1px solid #757575;border-top:1px solid #757575;display:inline-block;font-size:13px;line-height:34px}.e11bd249cd9314b9__minutes-input{width:36px}.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__input{padding-left:0}.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__backdrop{border-bottom-left-radius:0;border-left:0;border-top-left-radius:0}.fc45c7c56a28ed67__month-select-wrapper{flex-grow:1}.caf0b5c9edbe15f3__day-input{width:36px}._9cf7c54f094ae50b__year-input{width:56px}._0659bf4e8c7bbc3b__time-zone{text-decoration:underline dotted}");
   }
   var style_module_default60 = { "wrapper": "_57a9984e65afbfce__wrapper", "fieldset": "_23c9ce51d49d1dda__fieldset", "time-wrapper": "_109a19b273d48639__time-wrapper", "hours-input": "cc1f8dd531cf4a27__hours-input", "minutes-input": "e11bd249cd9314b9__minutes-input", "day-input": "caf0b5c9edbe15f3__day-input", "year-input": "_9cf7c54f094ae50b__year-input", "time-separator": "b734c00299c91523__time-separator", "month-select-wrapper": "fc45c7c56a28ed67__month-select-wrapper", "time-zone": "_0659bf4e8c7bbc3b__time-zone" };
-  function TimeInput({
-    value: valueProp,
-    defaultValue: defaultValue2,
-    is12Hour,
-    label,
-    minutesProps,
-    onChange
-  }) {
-    const [
-      value = {
-        hours: (/* @__PURE__ */ new Date()).getHours(),
-        minutes: (/* @__PURE__ */ new Date()).getMinutes()
-      },
-      setValue
-    ] = useControlledValue({
-      value: valueProp,
-      onChange,
-      defaultValue: defaultValue2
-    });
-    const dayPeriod = parseDayPeriod(value.hours);
-    const hours12Format = from24hTo12h(value.hours);
-    const buildNumberControlChangeCallback = (method) => {
-      return (_value, { event }) => {
-        if (!validateInputElementTarget(event)) {
-          return;
-        }
-        const numberValue = Number(_value);
-        setValue({
-          ...value,
-          [method]: method === "hours" && is12Hour ? from12hTo24h(numberValue, dayPeriod === "PM") : numberValue
-        });
-      };
-    };
-    const buildAmPmChangeCallback = (_value) => {
-      return () => {
-        if (dayPeriod === _value) {
-          return;
-        }
-        setValue({
-          ...value,
-          hours: from12hTo24h(hours12Format, _value === "PM")
-        });
-      };
-    };
-    function parseDayPeriod(_hours) {
-      return _hours < 12 ? "AM" : "PM";
+  var TimeZone = () => {
+    const { timezone } = (0, import_date4.getSettings)();
+    const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
+    if (Number(timezone.offset) === userTimezoneOffset) {
+      return null;
     }
-    const Wrapper3 = label ? "fieldset" : import_element153.Fragment;
-    return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(Wrapper3, { ...label ? { className: style_module_default60.fieldset } : {}, children: [
-      label && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(base_control_default.VisualLabel, { as: "legend", children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(component_default9, { alignment: "left", expanded: false, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
-          "div",
-          {
-            className: clsx_default(
-              "components-datetime__time-field components-datetime__time-field-time",
-              style_module_default60["time-wrapper"]
-            ),
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
-                number_control_default,
-                {
-                  className: clsx_default(
-                    "components-datetime__time-field-hours-input",
-                    style_module_default60["hours-input"]
-                  ),
-                  label: (0, import_i18n54.__)("Hours"),
-                  hideLabelFromVision: true,
-                  value: String(
-                    is12Hour ? hours12Format : value.hours
-                  ).padStart(2, "0"),
-                  step: 1,
-                  min: is12Hour ? 1 : 0,
-                  max: is12Hour ? 12 : 23,
-                  required: true,
-                  spinControls: "none",
-                  isPressEnterToChange: true,
-                  isDragEnabled: false,
-                  isShiftStepEnabled: false,
-                  onChange: buildNumberControlChangeCallback("hours"),
-                  __unstableStateReducer: buildPadInputStateReducer(
-                    2
-                  )
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
-                "span",
-                {
-                  className: clsx_default(
-                    "components-datetime__time-separator",
-                    style_module_default60["time-separator"]
-                  ),
-                  "aria-hidden": "true",
-                  children: ":"
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
-                number_control_default,
-                {
-                  label: (0, import_i18n54.__)("Minutes"),
-                  hideLabelFromVision: true,
-                  value: String(value.minutes).padStart(2, "0"),
-                  step: 1,
-                  min: 0,
-                  max: 59,
-                  required: true,
-                  spinControls: "none",
-                  isPressEnterToChange: true,
-                  isDragEnabled: false,
-                  isShiftStepEnabled: false,
-                  onChange: (...args) => {
-                    buildNumberControlChangeCallback("minutes")(
-                      ...args
-                    );
-                    minutesProps?.onChange?.(...args);
-                  },
-                  __unstableStateReducer: buildPadInputStateReducer(
-                    2
-                  ),
-                  ...minutesProps,
-                  className: clsx_default(
-                    style_module_default60["minutes-input"],
-                    minutesProps?.className ?? "components-datetime__time-field-minutes-input"
-                    // Unused, for backwards compatibility.
-                  )
-                }
-              )
-            ]
-          }
+    const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
+    const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
+    const prettyTimezoneString = timezone.string.replace("_", " ");
+    const timezoneDetail = "UTC" === timezone.string ? (0, import_i18n53.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
+    const hasNoAdditionalTimezoneDetail = prettyTimezoneString.trim().length === 0;
+    return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+      "div",
+      {
+        className: clsx_default(
+          "components-datetime__timezone",
+          style_module_default60["time-zone"]
         ),
-        is12Hour && /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
-          component_default12,
-          {
-            isBlock: true,
-            label: (0, import_i18n54.__)("Select AM or PM"),
-            hideLabelFromVision: true,
-            value: dayPeriod,
-            onChange: (newValue) => {
-              buildAmPmChangeCallback(
-                newValue
-              )();
-            },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
-                component_default14,
-                {
-                  value: "AM",
-                  label: (0, import_i18n54.__)("AM")
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
-                component_default14,
-                {
-                  value: "PM",
-                  label: (0, import_i18n54.__)("PM")
-                }
-              )
-            ]
-          }
-        )
-      ] })
-    ] });
-  }
+        children: zoneAbbr
+      }
+    ) : /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(tooltip_default, { placement: "top", text: timezoneDetail, children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+      "div",
+      {
+        className: clsx_default(
+          "components-datetime__timezone",
+          style_module_default60["time-zone"]
+        ),
+        children: zoneAbbr
+      }
+    ) });
+  };
+  var timezone_default = TimeZone;
 
-  // packages/components/build-module/date-time/time-picker/index.mjs
-  var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/date-time/time-picker/time-input/index.mjs
+  var import_i18n54 = __toESM(require_i18n(), 1);
+  var import_element153 = __toESM(require_element(), 1);
+  var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE82 = "data-wp-hash";
   function getRuntime82() {
     const globalScope = globalThis;
@@ -63803,215 +63559,172 @@ This message will only show in development mode. It won't appear in production. 
     registerStyle81("2841b7f2cf", "._57a9984e65afbfce__wrapper{box-sizing:border-box;font-size:13px}._23c9ce51d49d1dda__fieldset{border:0;margin:0 0 16px;padding:0}._23c9ce51d49d1dda__fieldset:last-child{margin-bottom:0}._109a19b273d48639__time-wrapper{direction:ltr;display:flex}._9cf7c54f094ae50b__year-input._9cf7c54f094ae50b__year-input._9cf7c54f094ae50b__year-input .components-input-control__input,.caf0b5c9edbe15f3__day-input.caf0b5c9edbe15f3__day-input.caf0b5c9edbe15f3__day-input .components-input-control__input,.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__input,.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__input{padding-left:8px;padding-right:8px;text-align:center}.cc1f8dd531cf4a27__hours-input{width:36px}.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__input{padding-right:0}.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__backdrop{border-bottom-right-radius:0;border-right:0;border-top-right-radius:0}.b734c00299c91523__time-separator{border-bottom:1px solid #757575;border-top:1px solid #757575;display:inline-block;font-size:13px;line-height:34px}.e11bd249cd9314b9__minutes-input{width:36px}.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__input{padding-left:0}.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__backdrop{border-bottom-left-radius:0;border-left:0;border-top-left-radius:0}.fc45c7c56a28ed67__month-select-wrapper{flex-grow:1}.caf0b5c9edbe15f3__day-input{width:36px}._9cf7c54f094ae50b__year-input{width:56px}._0659bf4e8c7bbc3b__time-zone{text-decoration:underline dotted}");
   }
   var style_module_default61 = { "wrapper": "_57a9984e65afbfce__wrapper", "fieldset": "_23c9ce51d49d1dda__fieldset", "time-wrapper": "_109a19b273d48639__time-wrapper", "hours-input": "cc1f8dd531cf4a27__hours-input", "minutes-input": "e11bd249cd9314b9__minutes-input", "day-input": "caf0b5c9edbe15f3__day-input", "year-input": "_9cf7c54f094ae50b__year-input", "time-separator": "b734c00299c91523__time-separator", "month-select-wrapper": "fc45c7c56a28ed67__month-select-wrapper", "time-zone": "_0659bf4e8c7bbc3b__time-zone" };
-  var VALID_DATE_ORDERS = ["dmy", "mdy", "ymd"];
-  function TimePicker({
+  function TimeInput({
+    value: valueProp,
+    defaultValue: defaultValue2,
     is12Hour,
-    currentTime,
-    onChange,
-    dateOrder: dateOrderProp,
-    hideLabelFromVision = false
+    label,
+    minutesProps,
+    onChange
   }) {
-    const [date, setDate] = (0, import_element154.useState)(
-      () => (
-        // Truncate the date at the minutes, see: #15495.
-        startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date()))
-      )
-    );
-    (0, import_element154.useEffect)(() => {
-      setDate(startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date())));
-    }, [currentTime]);
-    const monthOptions = [
-      { value: "01", label: (0, import_i18n55.__)("January") },
-      { value: "02", label: (0, import_i18n55.__)("February") },
-      { value: "03", label: (0, import_i18n55.__)("March") },
-      { value: "04", label: (0, import_i18n55.__)("April") },
-      { value: "05", label: (0, import_i18n55.__)("May") },
-      { value: "06", label: (0, import_i18n55.__)("June") },
-      { value: "07", label: (0, import_i18n55.__)("July") },
-      { value: "08", label: (0, import_i18n55.__)("August") },
-      { value: "09", label: (0, import_i18n55.__)("September") },
-      { value: "10", label: (0, import_i18n55.__)("October") },
-      { value: "11", label: (0, import_i18n55.__)("November") },
-      { value: "12", label: (0, import_i18n55.__)("December") }
-    ];
-    const { day, month, year, minutes, hours } = (0, import_element154.useMemo)(
-      () => ({
-        day: (0, import_date5.date)("d", date),
-        month: (0, import_date5.date)(
-          "m",
-          date
-        ),
-        year: (0, import_date5.date)("Y", date),
-        minutes: (0, import_date5.date)("i", date),
-        hours: (0, import_date5.date)("H", date)
-      }),
-      [date]
-    );
+    const [
+      value = {
+        hours: (/* @__PURE__ */ new Date()).getHours(),
+        minutes: (/* @__PURE__ */ new Date()).getMinutes()
+      },
+      setValue
+    ] = useControlledValue({
+      value: valueProp,
+      onChange,
+      defaultValue: defaultValue2
+    });
+    const dayPeriod = parseDayPeriod(value.hours);
+    const hours12Format = from24hTo12h(value.hours);
     const buildNumberControlChangeCallback = (method) => {
-      const callback = (value, { event }) => {
+      return (_value, { event }) => {
         if (!validateInputElementTarget(event)) {
           return;
         }
-        const numberValue = Number(value);
-        const newDate = setInConfiguredTimezone(date, {
-          [method]: numberValue
+        const numberValue = Number(_value);
+        setValue({
+          ...value,
+          [method]: method === "hours" && is12Hour ? from12hTo24h(numberValue, dayPeriod === "PM") : numberValue
         });
-        setDate(newDate);
-        onChange?.((0, import_date5.date)(TIMEZONELESS_FORMAT, newDate));
       };
-      return callback;
     };
-    const onTimeInputChangeCallback = ({
-      hours: newHours,
-      minutes: newMinutes
-    }) => {
-      const newDate = setInConfiguredTimezone(date, {
-        hours: newHours,
-        minutes: newMinutes
-      });
-      setDate(newDate);
-      onChange?.((0, import_date5.date)(TIMEZONELESS_FORMAT, newDate));
-    };
-    const dayField = /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
-      number_control_default,
-      {
-        className: clsx_default(
-          "components-datetime__time-field components-datetime__time-field-day",
-          style_module_default61["day-input"]
-        ),
-        label: (0, import_i18n55.__)("Day"),
-        hideLabelFromVision: true,
-        value: day,
-        step: 1,
-        min: 1,
-        max: getDaysInMonth2(Number(year), Number(month) - 1),
-        required: true,
-        spinControls: "none",
-        isPressEnterToChange: true,
-        isDragEnabled: false,
-        isShiftStepEnabled: false,
-        onChange: buildNumberControlChangeCallback("date")
-      },
-      "day"
-    );
-    const monthField = /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className: style_module_default61["month-select-wrapper"], children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
-      select_control_default,
-      {
-        className: "components-datetime__time-field components-datetime__time-field-month",
-        label: (0, import_i18n55.__)("Month"),
-        hideLabelFromVision: true,
-        value: month,
-        options: monthOptions,
-        onChange: (value) => {
-          const newDate = setInConfiguredTimezone(date, {
-            month: Number(value) - 1
-          });
-          setDate(newDate);
-          onChange?.((0, import_date5.date)(TIMEZONELESS_FORMAT, newDate));
+    const buildAmPmChangeCallback = (_value) => {
+      return () => {
+        if (dayPeriod === _value) {
+          return;
         }
-      }
-    ) }, "month");
-    const yearField = /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
-      number_control_default,
-      {
-        className: clsx_default(
-          "components-datetime__time-field components-datetime__time-field-year",
-          style_module_default61["year-input"]
-        ),
-        label: (0, import_i18n55.__)("Year"),
-        hideLabelFromVision: true,
-        value: year,
-        step: 1,
-        min: 1,
-        max: 9999,
-        required: true,
-        spinControls: "none",
-        isPressEnterToChange: true,
-        isDragEnabled: false,
-        isShiftStepEnabled: false,
-        onChange: buildNumberControlChangeCallback("year"),
-        __unstableStateReducer: buildPadInputStateReducer(4)
-      },
-      "year"
-    );
-    const defaultDateOrder = is12Hour ? "mdy" : "dmy";
-    const dateOrder = dateOrderProp && VALID_DATE_ORDERS.includes(dateOrderProp) ? dateOrderProp : defaultDateOrder;
-    const fields = dateOrder.split("").map((field) => {
-      switch (field) {
-        case "d":
-          return dayField;
-        case "m":
-          return monthField;
-        case "y":
-          return yearField;
-        default:
-          return null;
-      }
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
-      "div",
-      {
-        className: clsx_default("components-datetime__time", style_module_default61.wrapper),
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)("fieldset", { className: style_module_default61.fieldset, children: [
-            hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(component_default2, { as: "legend", children: (0, import_i18n55.__)("Time") }) : /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
-              base_control_default.VisualLabel,
-              {
-                as: "legend",
-                className: "components-datetime__time-legend",
-                children: (0, import_i18n55.__)("Time")
-              }
+        setValue({
+          ...value,
+          hours: from12hTo24h(hours12Format, _value === "PM")
+        });
+      };
+    };
+    function parseDayPeriod(_hours) {
+      return _hours < 12 ? "AM" : "PM";
+    }
+    const Wrapper2 = label ? "fieldset" : import_element153.Fragment;
+    return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(Wrapper2, { ...label ? { className: style_module_default61.fieldset } : {}, children: [
+      label && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(base_control_default.VisualLabel, { as: "legend", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(component_default9, { alignment: "left", expanded: false, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
+          "div",
+          {
+            className: clsx_default(
+              "components-datetime__time-field components-datetime__time-field-time",
+              style_module_default61["time-wrapper"]
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
-              component_default9,
-              {
-                className: "components-datetime__time-wrapper",
-                children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
-                    TimeInput,
-                    {
-                      value: {
-                        hours: Number(hours),
-                        minutes: Number(minutes)
-                      },
-                      is12Hour,
-                      onChange: onTimeInputChangeCallback
-                    }
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                number_control_default,
+                {
+                  className: clsx_default(
+                    "components-datetime__time-field-hours-input",
+                    style_module_default61["hours-input"]
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(component_default6, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(timezone_default, {})
-                ]
-              }
-            )
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)("fieldset", { className: style_module_default61.fieldset, children: [
-            hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(component_default2, { as: "legend", children: (0, import_i18n55.__)("Date") }) : /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
-              base_control_default.VisualLabel,
-              {
-                as: "legend",
-                className: "components-datetime__time-legend",
-                children: (0, import_i18n55.__)("Date")
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
-              component_default9,
-              {
-                className: "components-datetime__time-wrapper",
-                children: fields
-              }
-            )
-          ] })
-        ]
-      }
-    );
+                  label: (0, import_i18n54.__)("Hours"),
+                  hideLabelFromVision: true,
+                  value: String(
+                    is12Hour ? hours12Format : value.hours
+                  ).padStart(2, "0"),
+                  step: 1,
+                  min: is12Hour ? 1 : 0,
+                  max: is12Hour ? 12 : 23,
+                  required: true,
+                  spinControls: "none",
+                  isPressEnterToChange: true,
+                  isDragEnabled: false,
+                  isShiftStepEnabled: false,
+                  onChange: buildNumberControlChangeCallback("hours"),
+                  __unstableStateReducer: buildPadInputStateReducer(
+                    2
+                  )
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                "span",
+                {
+                  className: clsx_default(
+                    "components-datetime__time-separator",
+                    style_module_default61["time-separator"]
+                  ),
+                  "aria-hidden": "true",
+                  children: ":"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                number_control_default,
+                {
+                  label: (0, import_i18n54.__)("Minutes"),
+                  hideLabelFromVision: true,
+                  value: String(value.minutes).padStart(2, "0"),
+                  step: 1,
+                  min: 0,
+                  max: 59,
+                  required: true,
+                  spinControls: "none",
+                  isPressEnterToChange: true,
+                  isDragEnabled: false,
+                  isShiftStepEnabled: false,
+                  onChange: (...args) => {
+                    buildNumberControlChangeCallback("minutes")(
+                      ...args
+                    );
+                    minutesProps?.onChange?.(...args);
+                  },
+                  __unstableStateReducer: buildPadInputStateReducer(
+                    2
+                  ),
+                  ...minutesProps,
+                  className: clsx_default(
+                    style_module_default61["minutes-input"],
+                    minutesProps?.className ?? "components-datetime__time-field-minutes-input"
+                    // Unused, for backwards compatibility.
+                  )
+                }
+              )
+            ]
+          }
+        ),
+        is12Hour && /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
+          component_default12,
+          {
+            isBlock: true,
+            label: (0, import_i18n54.__)("Select AM or PM"),
+            hideLabelFromVision: true,
+            value: dayPeriod,
+            onChange: (newValue) => {
+              buildAmPmChangeCallback(
+                newValue
+              )();
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                component_default14,
+                {
+                  value: "AM",
+                  label: (0, import_i18n54.__)("AM")
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                component_default14,
+                {
+                  value: "PM",
+                  label: (0, import_i18n54.__)("PM")
+                }
+              )
+            ]
+          }
+        )
+      ] })
+    ] });
   }
-  TimePicker.TimeInput = TimeInput;
-  Object.assign(TimePicker.TimeInput, { displayName: "TimePicker.TimeInput" });
-  var time_picker_default = TimePicker;
 
-  // packages/components/build-module/date-time/date-time/index.mjs
-  var import_element155 = __toESM(require_element(), 1);
-  var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/date-time/time-picker/index.mjs
+  var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE83 = "data-wp-hash";
   function getRuntime83() {
     const globalScope = globalThis;
@@ -64093,67 +63806,218 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle82("38b5f9f89c", "._55e7ea149e11edaf__wrapper{box-sizing:border-box}");
+    registerStyle82("2841b7f2cf", "._57a9984e65afbfce__wrapper{box-sizing:border-box;font-size:13px}._23c9ce51d49d1dda__fieldset{border:0;margin:0 0 16px;padding:0}._23c9ce51d49d1dda__fieldset:last-child{margin-bottom:0}._109a19b273d48639__time-wrapper{direction:ltr;display:flex}._9cf7c54f094ae50b__year-input._9cf7c54f094ae50b__year-input._9cf7c54f094ae50b__year-input .components-input-control__input,.caf0b5c9edbe15f3__day-input.caf0b5c9edbe15f3__day-input.caf0b5c9edbe15f3__day-input .components-input-control__input,.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__input,.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__input{padding-left:8px;padding-right:8px;text-align:center}.cc1f8dd531cf4a27__hours-input{width:36px}.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__input{padding-right:0}.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input.cc1f8dd531cf4a27__hours-input .components-input-control__backdrop{border-bottom-right-radius:0;border-right:0;border-top-right-radius:0}.b734c00299c91523__time-separator{border-bottom:1px solid #757575;border-top:1px solid #757575;display:inline-block;font-size:13px;line-height:34px}.e11bd249cd9314b9__minutes-input{width:36px}.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__input{padding-left:0}.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input.e11bd249cd9314b9__minutes-input .components-input-control__backdrop{border-bottom-left-radius:0;border-left:0;border-top-left-radius:0}.fc45c7c56a28ed67__month-select-wrapper{flex-grow:1}.caf0b5c9edbe15f3__day-input{width:36px}._9cf7c54f094ae50b__year-input{width:56px}._0659bf4e8c7bbc3b__time-zone{text-decoration:underline dotted}");
   }
-  var style_module_default62 = { "wrapper": "_55e7ea149e11edaf__wrapper" };
-  var noop14 = () => {
-  };
-  function UnforwardedDateTimePicker({
-    currentDate,
+  var style_module_default62 = { "wrapper": "_57a9984e65afbfce__wrapper", "fieldset": "_23c9ce51d49d1dda__fieldset", "time-wrapper": "_109a19b273d48639__time-wrapper", "hours-input": "cc1f8dd531cf4a27__hours-input", "minutes-input": "e11bd249cd9314b9__minutes-input", "day-input": "caf0b5c9edbe15f3__day-input", "year-input": "_9cf7c54f094ae50b__year-input", "time-separator": "b734c00299c91523__time-separator", "month-select-wrapper": "fc45c7c56a28ed67__month-select-wrapper", "time-zone": "_0659bf4e8c7bbc3b__time-zone" };
+  var VALID_DATE_ORDERS = ["dmy", "mdy", "ymd"];
+  function TimePicker({
     is12Hour,
-    dateOrder,
-    isInvalidDate,
-    onMonthPreviewed = noop14,
+    currentTime,
     onChange,
-    events,
-    startOfWeek: startOfWeek2
-  }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-      component_default18,
+    dateOrder: dateOrderProp,
+    hideLabelFromVision = false
+  }) {
+    const [date, setDate] = (0, import_element154.useState)(
+      () => (
+        // Truncate the date at the minutes, see: #15495.
+        startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date()))
+      )
+    );
+    (0, import_element154.useEffect)(() => {
+      setDate(startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date())));
+    }, [currentTime]);
+    const monthOptions = [
+      { value: "01", label: (0, import_i18n55.__)("January") },
+      { value: "02", label: (0, import_i18n55.__)("February") },
+      { value: "03", label: (0, import_i18n55.__)("March") },
+      { value: "04", label: (0, import_i18n55.__)("April") },
+      { value: "05", label: (0, import_i18n55.__)("May") },
+      { value: "06", label: (0, import_i18n55.__)("June") },
+      { value: "07", label: (0, import_i18n55.__)("July") },
+      { value: "08", label: (0, import_i18n55.__)("August") },
+      { value: "09", label: (0, import_i18n55.__)("September") },
+      { value: "10", label: (0, import_i18n55.__)("October") },
+      { value: "11", label: (0, import_i18n55.__)("November") },
+      { value: "12", label: (0, import_i18n55.__)("December") }
+    ];
+    const { day, month, year, minutes, hours } = (0, import_element154.useMemo)(
+      () => ({
+        day: (0, import_date5.date)("d", date),
+        month: (0, import_date5.date)(
+          "m",
+          date
+        ),
+        year: (0, import_date5.date)("Y", date),
+        minutes: (0, import_date5.date)("i", date),
+        hours: (0, import_date5.date)("H", date)
+      }),
+      [date]
+    );
+    const buildNumberControlChangeCallback = (method) => {
+      const callback = (value, { event }) => {
+        if (!validateInputElementTarget(event)) {
+          return;
+        }
+        const numberValue = Number(value);
+        const newDate = setInConfiguredTimezone(date, {
+          [method]: numberValue
+        });
+        setDate(newDate);
+        onChange?.((0, import_date5.date)(TIMEZONELESS_FORMAT, newDate));
+      };
+      return callback;
+    };
+    const onTimeInputChangeCallback = ({
+      hours: newHours,
+      minutes: newMinutes
+    }) => {
+      const newDate = setInConfiguredTimezone(date, {
+        hours: newHours,
+        minutes: newMinutes
+      });
+      setDate(newDate);
+      onChange?.((0, import_date5.date)(TIMEZONELESS_FORMAT, newDate));
+    };
+    const dayField = /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+      number_control_default,
       {
-        ref,
-        className: clsx_default("components-datetime", style_module_default62.wrapper),
-        spacing: 4,
-        children: /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(import_jsx_runtime256.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-            time_picker_default,
-            {
-              currentTime: currentDate,
-              onChange,
-              is12Hour,
-              dateOrder
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-            date_picker_default,
-            {
-              currentDate,
-              onChange,
-              isInvalidDate,
-              events,
-              onMonthPreviewed,
-              startOfWeek: startOfWeek2
-            }
-          )
-        ] })
+        className: clsx_default(
+          "components-datetime__time-field components-datetime__time-field-day",
+          style_module_default62["day-input"]
+        ),
+        label: (0, import_i18n55.__)("Day"),
+        hideLabelFromVision: true,
+        value: day,
+        step: 1,
+        min: 1,
+        max: getDaysInMonth2(Number(year), Number(month) - 1),
+        required: true,
+        spinControls: "none",
+        isPressEnterToChange: true,
+        isDragEnabled: false,
+        isShiftStepEnabled: false,
+        onChange: buildNumberControlChangeCallback("date")
+      },
+      "day"
+    );
+    const monthField = /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className: style_module_default62["month-select-wrapper"], children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+      select_control_default,
+      {
+        className: "components-datetime__time-field components-datetime__time-field-month",
+        label: (0, import_i18n55.__)("Month"),
+        hideLabelFromVision: true,
+        value: month,
+        options: monthOptions,
+        onChange: (value) => {
+          const newDate = setInConfiguredTimezone(date, {
+            month: Number(value) - 1
+          });
+          setDate(newDate);
+          onChange?.((0, import_date5.date)(TIMEZONELESS_FORMAT, newDate));
+        }
+      }
+    ) }, "month");
+    const yearField = /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+      number_control_default,
+      {
+        className: clsx_default(
+          "components-datetime__time-field components-datetime__time-field-year",
+          style_module_default62["year-input"]
+        ),
+        label: (0, import_i18n55.__)("Year"),
+        hideLabelFromVision: true,
+        value: year,
+        step: 1,
+        min: 1,
+        max: 9999,
+        required: true,
+        spinControls: "none",
+        isPressEnterToChange: true,
+        isDragEnabled: false,
+        isShiftStepEnabled: false,
+        onChange: buildNumberControlChangeCallback("year"),
+        __unstableStateReducer: buildPadInputStateReducer(4)
+      },
+      "year"
+    );
+    const defaultDateOrder = is12Hour ? "mdy" : "dmy";
+    const dateOrder = dateOrderProp && VALID_DATE_ORDERS.includes(dateOrderProp) ? dateOrderProp : defaultDateOrder;
+    const fields = dateOrder.split("").map((field) => {
+      switch (field) {
+        case "d":
+          return dayField;
+        case "m":
+          return monthField;
+        case "y":
+          return yearField;
+        default:
+          return null;
+      }
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
+      "div",
+      {
+        className: clsx_default("components-datetime__time", style_module_default62.wrapper),
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)("fieldset", { className: style_module_default62.fieldset, children: [
+            hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(component_default2, { as: "legend", children: (0, import_i18n55.__)("Time") }) : /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+              base_control_default.VisualLabel,
+              {
+                as: "legend",
+                className: "components-datetime__time-legend",
+                children: (0, import_i18n55.__)("Time")
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
+              component_default9,
+              {
+                className: "components-datetime__time-wrapper",
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+                    TimeInput,
+                    {
+                      value: {
+                        hours: Number(hours),
+                        minutes: Number(minutes)
+                      },
+                      is12Hour,
+                      onChange: onTimeInputChangeCallback
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(component_default6, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(timezone_default, {})
+                ]
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)("fieldset", { className: style_module_default62.fieldset, children: [
+            hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(component_default2, { as: "legend", children: (0, import_i18n55.__)("Date") }) : /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+              base_control_default.VisualLabel,
+              {
+                as: "legend",
+                className: "components-datetime__time-legend",
+                children: (0, import_i18n55.__)("Date")
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+              component_default9,
+              {
+                className: "components-datetime__time-wrapper",
+                children: fields
+              }
+            )
+          ] })
+        ]
       }
     );
   }
-  var DateTimePicker = (0, import_element155.forwardRef)(UnforwardedDateTimePicker);
-  DateTimePicker.displayName = "DateTimePicker";
-  var date_time_default = DateTimePicker;
+  TimePicker.TimeInput = TimeInput;
+  Object.assign(TimePicker.TimeInput, { displayName: "TimePicker.TimeInput" });
+  var time_picker_default = TimePicker;
 
-  // packages/components/build-module/date-time/index.mjs
-  var date_time_default2 = date_time_default;
-
-  // packages/components/build-module/disabled/context.mjs
-  var import_element156 = __toESM(require_element(), 1);
-  var Context = (0, import_element156.createContext)(false);
-  Context.displayName = "DisabledContext";
-  var context_default3 = Context;
-
-  // packages/components/build-module/disabled/index.mjs
-  var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/date-time/date-time/index.mjs
+  var import_element155 = __toESM(require_element(), 1);
+  var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE84 = "data-wp-hash";
   function getRuntime84() {
     const globalScope = globalThis;
@@ -64235,74 +64099,67 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle83("bacc423d2b", '._556ae8be2a7ddc8e__disabled{pointer-events:none;position:relative}._556ae8be2a7ddc8e__disabled:after{content:"";inset:0;position:absolute}._556ae8be2a7ddc8e__disabled *{pointer-events:none}');
+    registerStyle83("38b5f9f89c", "._55e7ea149e11edaf__wrapper{box-sizing:border-box}");
   }
-  var style_module_default63 = { "disabled": "_556ae8be2a7ddc8e__disabled" };
-  var { Consumer, Provider: Provider2 } = context_default3;
-  function Disabled({
-    className,
-    children,
-    isDisabled = true,
-    ...props
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(Provider2, { value: isDisabled, children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
-      "div",
+  var style_module_default63 = { "wrapper": "_55e7ea149e11edaf__wrapper" };
+  var noop14 = () => {
+  };
+  function UnforwardedDateTimePicker({
+    currentDate,
+    is12Hour,
+    dateOrder,
+    isInvalidDate,
+    onMonthPreviewed = noop14,
+    onChange,
+    events,
+    startOfWeek: startOfWeek2
+  }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
+      component_default18,
       {
-        inert: inertValue2(isDisabled),
-        className: clsx_default(
-          className,
-          isDisabled && [style_module_default63.disabled, "components-disabled"]
-        ) || void 0,
-        ...props,
-        children
-      }
-    ) });
-  }
-  Disabled.Context = context_default3;
-  Disabled.Consumer = Consumer;
-  var disabled_default = Disabled;
-
-  // packages/components/build-module/disclosure/index.mjs
-  var import_element157 = __toESM(require_element(), 1);
-  var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
-  var UnforwardedDisclosureContent = ({
-    visible,
-    children,
-    ...props
-  }, ref) => {
-    const disclosure = useDisclosureStore({ open: visible });
-    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
-      DisclosureContent,
-      {
-        store: disclosure,
         ref,
-        ...props,
-        children
+        className: clsx_default("components-datetime", style_module_default63.wrapper),
+        spacing: 4,
+        children: /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(import_jsx_runtime256.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
+            time_picker_default,
+            {
+              currentTime: currentDate,
+              onChange,
+              is12Hour,
+              dateOrder
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
+            date_picker_default,
+            {
+              currentDate,
+              onChange,
+              isInvalidDate,
+              events,
+              onMonthPreviewed,
+              startOfWeek: startOfWeek2
+            }
+          )
+        ] })
       }
     );
-  };
-  var DisclosureContent22 = (0, import_element157.forwardRef)(UnforwardedDisclosureContent);
-  DisclosureContent22.displayName = "DisclosureContent";
-
-  // packages/components/build-module/divider/deprecated.mjs
-  var import_deprecated16 = __toESM(require_deprecated(), 1);
-  function UnconnectedDeprecatedDivider(props, forwardedRef) {
-    (0, import_deprecated16.default)("wp.components.__experimentalDivider", {
-      since: "7.2",
-      version: "7.4"
-    });
-    return UnconnectedDivider(props, forwardedRef);
   }
-  var DeprecatedDivider = contextConnect(
-    UnconnectedDeprecatedDivider,
-    "Divider"
-  );
-  var deprecated_default = DeprecatedDivider;
+  var DateTimePicker = (0, import_element155.forwardRef)(UnforwardedDateTimePicker);
+  DateTimePicker.displayName = "DateTimePicker";
+  var date_time_default = DateTimePicker;
 
-  // packages/components/build-module/draggable/index.mjs
-  var import_compose54 = __toESM(require_compose(), 1);
-  var import_element158 = __toESM(require_element(), 1);
-  var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/date-time/index.mjs
+  var date_time_default2 = date_time_default;
+
+  // packages/components/build-module/disabled/context.mjs
+  var import_element156 = __toESM(require_element(), 1);
+  var Context = (0, import_element156.createContext)(false);
+  Context.displayName = "DisabledContext";
+  var context_default3 = Context;
+
+  // packages/components/build-module/disabled/index.mjs
+  var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE85 = "data-wp-hash";
   function getRuntime85() {
     const globalScope = globalThis;
@@ -64384,15 +64241,164 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle84("e7e88c1781", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:transparent;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
+    registerStyle84("bacc423d2b", '._556ae8be2a7ddc8e__disabled{pointer-events:none;position:relative}._556ae8be2a7ddc8e__disabled:after{content:"";inset:0;position:absolute}._556ae8be2a7ddc8e__disabled *{pointer-events:none}');
   }
-  var style_module_default64 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone", "is-in-compat-slot": "_664ecd37377558df__is-in-compat-slot" };
+  var style_module_default64 = { "disabled": "_556ae8be2a7ddc8e__disabled" };
+  var { Consumer, Provider: Provider2 } = context_default3;
+  function Disabled({
+    className,
+    children,
+    isDisabled = true,
+    ...props
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(Provider2, { value: isDisabled, children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
+      "div",
+      {
+        inert: inertValue2(isDisabled),
+        className: clsx_default(
+          className,
+          isDisabled && [style_module_default64.disabled, "components-disabled"]
+        ) || void 0,
+        ...props,
+        children
+      }
+    ) });
+  }
+  Disabled.Context = context_default3;
+  Disabled.Consumer = Consumer;
+  var disabled_default = Disabled;
+
+  // packages/components/build-module/disclosure/index.mjs
+  var import_element157 = __toESM(require_element(), 1);
+  var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
+  var UnforwardedDisclosureContent = ({
+    visible,
+    children,
+    ...props
+  }, ref) => {
+    const disclosure = useDisclosureStore({ open: visible });
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
+      DisclosureContent,
+      {
+        store: disclosure,
+        ref,
+        ...props,
+        children
+      }
+    );
+  };
+  var DisclosureContent22 = (0, import_element157.forwardRef)(UnforwardedDisclosureContent);
+  DisclosureContent22.displayName = "DisclosureContent";
+
+  // packages/components/build-module/divider/deprecated.mjs
+  var import_deprecated16 = __toESM(require_deprecated(), 1);
+  function UnconnectedDeprecatedDivider(props, forwardedRef) {
+    (0, import_deprecated16.default)("wp.components.__experimentalDivider", {
+      since: "7.2",
+      version: "7.4"
+    });
+    return UnconnectedDivider(props, forwardedRef);
+  }
+  var DeprecatedDivider = contextConnect(
+    UnconnectedDeprecatedDivider,
+    "Divider"
+  );
+  var deprecated_default = DeprecatedDivider;
+
+  // packages/components/build-module/draggable/index.mjs
+  var import_compose54 = __toESM(require_compose(), 1);
+  var import_element158 = __toESM(require_element(), 1);
+  var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE86 = "data-wp-hash";
+  function getRuntime86() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument86(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash86(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE86}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE86) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle86(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime86();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash86(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE86, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument86(targetDocument) {
+    const runtime = getRuntime86();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle86(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle85(hash2, css4) {
+    const runtime = getRuntime86();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle86(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle85("e7e88c1781", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:transparent;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
+  }
+  var style_module_default65 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone", "is-in-compat-slot": "_664ecd37377558df__is-in-compat-slot" };
   var dragImageClasses = [
-    style_module_default64["invisible-drag-image"],
+    style_module_default65["invisible-drag-image"],
     "components-draggable__invisible-drag-image"
   ].filter(Boolean);
   var cloneWrapperClasses = [
-    style_module_default64.clone,
+    style_module_default65.clone,
     "components-draggable__clone"
   ].filter(Boolean);
   var bodyClass = "is-dragging-components-draggable";
@@ -64435,7 +64441,7 @@ This message will only show in development mode. It won't appear in production. 
         event.dataTransfer.setDragImage(dragImage, 0, 0);
       }
       cloneWrapper.classList.add(...cloneWrapperClasses);
-      const inSlotClass = style_module_default64["is-in-compat-slot"];
+      const inSlotClass = style_module_default65["is-in-compat-slot"];
       if (compatSlot && inSlotClass) {
         cloneWrapper.classList.add(inSlotClass);
       }
@@ -65587,8 +65593,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE86 = "data-wp-hash";
-  function getRuntime86() {
+  var STYLE_HASH_ATTRIBUTE87 = "data-wp-hash";
+  function getRuntime87() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -65599,28 +65605,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument86(document);
+      registerDocument87(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash86(targetDocument, hash2) {
+  function documentContainsStyleHash87(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE86}]`
+      `style[${STYLE_HASH_ATTRIBUTE87}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE86) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE87) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle86(targetDocument, hash2, css4) {
+  function injectStyle87(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime86();
+    const runtime = getRuntime87();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -65629,24 +65635,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash86(targetDocument, hash2)) {
+    if (documentContainsStyleHash87(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE86, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE87, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument86(targetDocument) {
-    const runtime = getRuntime86();
+  function registerDocument87(targetDocument) {
+    const runtime = getRuntime87();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle86(targetDocument, hash2, css4);
+      injectStyle87(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65660,17 +65666,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle85(hash2, css4) {
-    const runtime = getRuntime86();
+  function registerStyle86(hash2, css4) {
+    const runtime = getRuntime87();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle86(targetDocument, hash2, css4);
+      injectStyle87(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle85("bfb85cc84e", "._68ab5c4c906ef17f__container{border:0;display:contents;margin:0;padding:0}._595b429882814ac1__header{height:16px}.d17d9306253ee0bf__header-toggle{margin-top:-4px}._88120fe7dea6e6fa__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._00ba4fdcdcd7e725__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
+    registerStyle86("bfb85cc84e", "._68ab5c4c906ef17f__container{border:0;display:contents;margin:0;padding:0}._595b429882814ac1__header{height:16px}.d17d9306253ee0bf__header-toggle{margin-top:-4px}._88120fe7dea6e6fa__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._00ba4fdcdcd7e725__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
   }
-  var style_module_default65 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
+  var style_module_default66 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
   var DEFAULT_OPTION = {
     key: "default",
     name: (0, import_i18n60.__)("Default"),
@@ -65709,7 +65715,7 @@ This message will only show in development mode. It won't appear in production. 
       {
         className: clsx_default(
           "components-font-size-picker__select",
-          style_module_default65.select
+          style_module_default66.select
         ),
         label: (0, import_i18n60.__)("Font size"),
         hideLabelFromVision: true,
@@ -65820,8 +65826,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/font-size-picker/index.mjs
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE87 = "data-wp-hash";
-  function getRuntime87() {
+  var STYLE_HASH_ATTRIBUTE88 = "data-wp-hash";
+  function getRuntime88() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -65832,28 +65838,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument87(document);
+      registerDocument88(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash87(targetDocument, hash2) {
+  function documentContainsStyleHash88(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE87}]`
+      `style[${STYLE_HASH_ATTRIBUTE88}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE87) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE88) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle87(targetDocument, hash2, css4) {
+  function injectStyle88(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime87();
+    const runtime = getRuntime88();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -65862,24 +65868,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash87(targetDocument, hash2)) {
+    if (documentContainsStyleHash88(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE87, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE88, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument87(targetDocument) {
-    const runtime = getRuntime87();
+  function registerDocument88(targetDocument) {
+    const runtime = getRuntime88();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle87(targetDocument, hash2, css4);
+      injectStyle88(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65893,17 +65899,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle86(hash2, css4) {
-    const runtime = getRuntime87();
+  function registerStyle87(hash2, css4) {
+    const runtime = getRuntime88();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle87(targetDocument, hash2, css4);
+      injectStyle88(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle86("bfb85cc84e", "._68ab5c4c906ef17f__container{border:0;display:contents;margin:0;padding:0}._595b429882814ac1__header{height:16px}.d17d9306253ee0bf__header-toggle{margin-top:-4px}._88120fe7dea6e6fa__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._00ba4fdcdcd7e725__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
+    registerStyle87("bfb85cc84e", "._68ab5c4c906ef17f__container{border:0;display:contents;margin:0;padding:0}._595b429882814ac1__header{height:16px}.d17d9306253ee0bf__header-toggle{margin-top:-4px}._88120fe7dea6e6fa__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._00ba4fdcdcd7e725__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
   }
-  var style_module_default66 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
+  var style_module_default67 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
   var DEFAULT_UNITS = ["px", "em", "rem", "vw", "vh"];
   var MAX_TOGGLE_GROUP_SIZES = 5;
   var UnforwardedFontSizePicker = (props, ref) => {
@@ -65959,7 +65965,7 @@ This message will only show in development mode. It won't appear in production. 
         ref,
         className: clsx_default(
           "components-font-size-picker",
-          style_module_default66.container
+          style_module_default67.container
         ),
         "aria-labelledby": labelId,
         children: [
@@ -65968,21 +65974,21 @@ This message will only show in development mode. It won't appear in production. 
             {
               className: clsx_default(
                 "components-font-size-picker__header",
-                style_module_default66.header
+                style_module_default67.header
               ),
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
                   base_control_default.VisualLabel,
                   {
                     id: labelId,
-                    className: style_module_default66["header-label"],
+                    className: style_module_default67["header-label"],
                     children: (0, import_i18n63.__)("Font size")
                   }
                 ),
                 !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
                   Button3,
                   {
-                    className: style_module_default66["header-toggle"],
+                    className: style_module_default67["header-toggle"],
                     label: currentPickerType === "custom" ? (0, import_i18n63.__)("Use size preset") : (0, import_i18n63.__)("Set custom size"),
                     icon: settings_default,
                     onClick: () => setUserRequestedCustom(!userRequestedCustom),
@@ -66271,8 +66277,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/index.mjs
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE88 = "data-wp-hash";
-  function getRuntime88() {
+  var STYLE_HASH_ATTRIBUTE89 = "data-wp-hash";
+  function getRuntime89() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -66283,28 +66289,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument88(document);
+      registerDocument89(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash88(targetDocument, hash2) {
+  function documentContainsStyleHash89(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE88}]`
+      `style[${STYLE_HASH_ATTRIBUTE89}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE88) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE89) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle88(targetDocument, hash2, css4) {
+  function injectStyle89(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime88();
+    const runtime = getRuntime89();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -66313,24 +66319,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash88(targetDocument, hash2)) {
+    if (documentContainsStyleHash89(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE88, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE89, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument88(targetDocument) {
-    const runtime = getRuntime88();
+  function registerDocument89(targetDocument) {
+    const runtime = getRuntime89();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle88(targetDocument, hash2, css4);
+      injectStyle89(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -66344,17 +66350,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle87(hash2, css4) {
-    const runtime = getRuntime88();
+  function registerStyle88(hash2, css4) {
+    const runtime = getRuntime89();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle88(targetDocument, hash2, css4);
+      injectStyle89(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle87("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
+    registerStyle88("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
   }
-  var style_module_default67 = { "tokens-and-input": "df878b202c3b3cb7__tokens-and-input" };
+  var style_module_default68 = { "tokens-and-input": "df878b202c3b3cb7__tokens-and-input" };
   var identity3 = (value) => value;
   function FormTokenField(props) {
     const {
@@ -66926,7 +66932,7 @@ This message will only show in development mode. It won't appear in production. 
             /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
               component_default3,
               {
-                className: style_module_default67["tokens-and-input"],
+                className: style_module_default68["tokens-and-input"],
                 justify: "flex-start",
                 align: "center",
                 gap: 1,
@@ -67729,8 +67735,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigator/navigator/component.mjs
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE89 = "data-wp-hash";
-  function getRuntime89() {
+  var STYLE_HASH_ATTRIBUTE90 = "data-wp-hash";
+  function getRuntime90() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -67741,28 +67747,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument89(document);
+      registerDocument90(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash89(targetDocument, hash2) {
+  function documentContainsStyleHash90(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE89}]`
+      `style[${STYLE_HASH_ATTRIBUTE90}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE89) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE90) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle89(targetDocument, hash2, css4) {
+  function injectStyle90(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime89();
+    const runtime = getRuntime90();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -67771,24 +67777,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash89(targetDocument, hash2)) {
+    if (documentContainsStyleHash90(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE89, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE90, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument89(targetDocument) {
-    const runtime = getRuntime89();
+  function registerDocument90(targetDocument) {
+    const runtime = getRuntime90();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle89(targetDocument, hash2, css4);
+      injectStyle90(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -67802,17 +67808,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle88(hash2, css4) {
-    const runtime = getRuntime89();
+  function registerStyle89(hash2, css4) {
+    const runtime = getRuntime90();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle89(targetDocument, hash2, css4);
+      injectStyle90(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle88("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
+    registerStyle89("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
   }
-  var style_module_default68 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
+  var style_module_default69 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
   function addScreen({ screens }, screen) {
     if (screens.some((s2) => s2.path === screen.path)) {
       (0, import_warning8.default)(
@@ -67981,10 +67987,10 @@ The screen with id ${screen.id} will not be added.`
       }),
       [currentLocation, matchedPath, methods]
     );
-    const classes = clsx_default(style_module_default68.wrapper, className);
+    const classes = clsx_default(style_module_default69.wrapper, className);
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(component_default, { ref: forwardedRef, className: classes, ...otherProps, children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(NavigatorContext.Provider, { value: navigatorContextValue, children }) });
   }
-  var Navigator2 = contextConnect(UnconnectedNavigator, "Navigator");
+  var Navigator = contextConnect(UnconnectedNavigator, "Navigator");
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
   var import_dom32 = __toESM(require_dom(), 1);
@@ -67999,8 +68005,8 @@ The screen with id ${screen.id} will not be added.`
   var import_i18n68 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/navigator/animation.mjs
-  var STYLE_HASH_ATTRIBUTE90 = "data-wp-hash";
-  function getRuntime90() {
+  var STYLE_HASH_ATTRIBUTE91 = "data-wp-hash";
+  function getRuntime91() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -68011,28 +68017,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument90(document);
+      registerDocument91(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash90(targetDocument, hash2) {
+  function documentContainsStyleHash91(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE90}]`
+      `style[${STYLE_HASH_ATTRIBUTE91}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE90) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE91) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle90(targetDocument, hash2, css4) {
+  function injectStyle91(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime90();
+    const runtime = getRuntime91();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -68041,24 +68047,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash90(targetDocument, hash2)) {
+    if (documentContainsStyleHash91(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE90, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE91, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument90(targetDocument) {
-    const runtime = getRuntime90();
+  function registerDocument91(targetDocument) {
+    const runtime = getRuntime91();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle90(targetDocument, hash2, css4);
+      injectStyle91(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -68072,29 +68078,29 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle89(hash2, css4) {
-    const runtime = getRuntime90();
+  function registerStyle90(hash2, css4) {
+    const runtime = getRuntime91();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle90(targetDocument, hash2, css4);
+      injectStyle91(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle89("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
+    registerStyle90("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
   }
-  var style_module_default69 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
+  var style_module_default70 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
   var TOTAL_ANIMATION_DURATION = {
     IN: 300,
     OUT: 300
   };
   var ANIMATION_END_NAMES = {
     end: {
-      in: style_module_default69["slide-from-right"],
-      out: style_module_default69["slide-to-left"]
+      in: style_module_default70["slide-from-right"],
+      out: style_module_default70["slide-to-left"]
     },
     start: {
-      in: style_module_default69["slide-from-left"],
-      out: style_module_default69["slide-to-right"]
+      in: style_module_default70["slide-from-left"],
+      out: style_module_default70["slide-to-right"]
     }
   };
 
@@ -68192,8 +68198,8 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
   var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE91 = "data-wp-hash";
-  function getRuntime91() {
+  var STYLE_HASH_ATTRIBUTE92 = "data-wp-hash";
+  function getRuntime92() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -68204,28 +68210,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument91(document);
+      registerDocument92(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash91(targetDocument, hash2) {
+  function documentContainsStyleHash92(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE91}]`
+      `style[${STYLE_HASH_ATTRIBUTE92}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE91) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE92) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle91(targetDocument, hash2, css4) {
+  function injectStyle92(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime91();
+    const runtime = getRuntime92();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -68234,24 +68240,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash91(targetDocument, hash2)) {
+    if (documentContainsStyleHash92(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE91, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE92, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument91(targetDocument) {
-    const runtime = getRuntime91();
+  function registerDocument92(targetDocument) {
+    const runtime = getRuntime92();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle91(targetDocument, hash2, css4);
+      injectStyle92(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -68265,17 +68271,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle90(hash2, css4) {
-    const runtime = getRuntime91();
+  function registerStyle91(hash2, css4) {
+    const runtime = getRuntime92();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle91(targetDocument, hash2, css4);
+      injectStyle92(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle90("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
+    registerStyle91("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
   }
-  var style_module_default70 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
+  var style_module_default71 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
   function UnconnectedNavigatorScreen(props, forwardedRef) {
     if (!/^\//.test(props.path)) {
       (0, import_warning9.default)(
@@ -68310,8 +68316,8 @@ The screen with id ${screen.id} will not be added.`
       skipAnimation: skipAnimationAndFocusRestoration
     });
     const classes = clsx_default(
-      style_module_default70.screen,
-      style_module_default70["screen-animation"],
+      style_module_default71.screen,
+      style_module_default71["screen-animation"],
       className
     );
     const locationRef = (0, import_element179.useRef)(location);
@@ -68473,7 +68479,7 @@ The screen with id ${screen.id} will not be added.`
   );
 
   // packages/components/build-module/navigator/legacy.mjs
-  var NavigatorProvider = Object.assign(Navigator2, {
+  var NavigatorProvider = Object.assign(Navigator, {
     displayName: "NavigatorProvider"
   });
   var NavigatorScreen2 = Object.assign(NavigatorScreen, {
@@ -68493,7 +68499,7 @@ The screen with id ${screen.id} will not be added.`
   );
 
   // packages/components/build-module/navigator/index.mjs
-  var Navigator3 = Object.assign(Navigator2, {
+  var Navigator2 = Object.assign(Navigator, {
     /**
      * The `Navigator.Screen` component represents a single view/screen/panel and
      * should be used in combination with the `Navigator`, the `Navigator.Button`
@@ -68957,8 +68963,8 @@ The screen with id ${screen.id} will not be added.`
   var import_i18n70 = __toESM(require_i18n(), 1);
   var import_element188 = __toESM(require_element(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE92 = "data-wp-hash";
-  function getRuntime92() {
+  var STYLE_HASH_ATTRIBUTE93 = "data-wp-hash";
+  function getRuntime93() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -68969,28 +68975,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument92(document);
+      registerDocument93(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash92(targetDocument, hash2) {
+  function documentContainsStyleHash93(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE92}]`
+      `style[${STYLE_HASH_ATTRIBUTE93}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE92) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE93) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle92(targetDocument, hash2, css4) {
+  function injectStyle93(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime92();
+    const runtime = getRuntime93();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -68999,24 +69005,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash92(targetDocument, hash2)) {
+    if (documentContainsStyleHash93(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE92, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE93, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument92(targetDocument) {
-    const runtime = getRuntime92();
+  function registerDocument93(targetDocument) {
+    const runtime = getRuntime93();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle92(targetDocument, hash2, css4);
+      injectStyle93(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -69030,26 +69036,26 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle91(hash2, css4) {
-    const runtime = getRuntime92();
+  function registerStyle92(hash2, css4) {
+    const runtime = getRuntime93();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle92(targetDocument, hash2, css4);
+      injectStyle93(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle91("cab58372e5", "._1d8296bd910bb7bb__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:9999px;height:1.5px;outline:2px solid transparent;outline-offset:2px;overflow:hidden;position:relative}:where(._1d8296bd910bb7bb__track){width:160px}.be702ee1b0a3c396__indicator{background-color:var(--wpds-color-background-thumb-neutral,#1e1e1e);border-radius:9999px;display:inline-block;height:100%;outline:2px solid transparent;outline-offset:-2px;position:absolute;top:0;width:var(--indicator-width)}@media not (prefers-reduced-motion){.be702ee1b0a3c396__indicator{transition:width .4s ease-in-out}}.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{--indicator-width:50%;animation:_7c6b2fa174e0d687__indeterminate-slide 1.5s ease-in-out infinite;transition:none}@media (prefers-reduced-motion:reduce){.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{animation-duration:3s;animation-timing-function:steps(4)}}@keyframes _7c6b2fa174e0d687__indeterminate-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}._4c47edc54d8dcb46__progress-element{height:100%;inset-inline-start:0;opacity:0;position:absolute;top:0;width:100%}");
+    registerStyle92("cab58372e5", "._1d8296bd910bb7bb__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:9999px;height:1.5px;outline:2px solid transparent;outline-offset:2px;overflow:hidden;position:relative}:where(._1d8296bd910bb7bb__track){width:160px}.be702ee1b0a3c396__indicator{background-color:var(--wpds-color-background-thumb-neutral,#1e1e1e);border-radius:9999px;display:inline-block;height:100%;outline:2px solid transparent;outline-offset:-2px;position:absolute;top:0;width:var(--indicator-width)}@media not (prefers-reduced-motion){.be702ee1b0a3c396__indicator{transition:width .4s ease-in-out}}.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{--indicator-width:50%;animation:_7c6b2fa174e0d687__indeterminate-slide 1.5s ease-in-out infinite;transition:none}@media (prefers-reduced-motion:reduce){.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{animation-duration:3s;animation-timing-function:steps(4)}}@keyframes _7c6b2fa174e0d687__indeterminate-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}._4c47edc54d8dcb46__progress-element{height:100%;inset-inline-start:0;opacity:0;position:absolute;top:0;width:100%}");
   }
-  var style_module_default71 = { "track": "_1d8296bd910bb7bb__track", "indicator": "be702ee1b0a3c396__indicator", "is-indeterminate": "_125afa179e2803a2__is-indeterminate", "indeterminate-slide": "_7c6b2fa174e0d687__indeterminate-slide", "progress-element": "_4c47edc54d8dcb46__progress-element" };
+  var style_module_default72 = { "track": "_1d8296bd910bb7bb__track", "indicator": "be702ee1b0a3c396__indicator", "is-indeterminate": "_125afa179e2803a2__is-indeterminate", "indeterminate-slide": "_7c6b2fa174e0d687__indeterminate-slide", "progress-element": "_4c47edc54d8dcb46__progress-element" };
   function UnforwardedProgressBar(props, ref) {
     const { className, value, ...progressProps } = props;
     const isIndeterminate = !Number.isFinite(value);
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", { className: clsx_default(style_module_default71.track, className), children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", { className: clsx_default(style_module_default72.track, className), children: [
       /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
         "div",
         {
-          className: clsx_default(style_module_default71.indicator, {
-            [style_module_default71["is-indeterminate"]]: isIndeterminate
+          className: clsx_default(style_module_default72.indicator, {
+            [style_module_default72["is-indeterminate"]]: isIndeterminate
           }),
           style: {
             "--indicator-width": !isIndeterminate ? `${value}%` : void 0
@@ -69059,7 +69065,7 @@ The screen with id ${screen.id} will not be added.`
       /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
         "progress",
         {
-          className: style_module_default71["progress-element"],
+          className: style_module_default72["progress-element"],
           max: 100,
           value,
           "aria-label": (0, import_i18n70.__)("Loading \u2026"),
@@ -70312,8 +70318,8 @@ The screen with id ${screen.id} will not be added.`
         if (this.state.flexBasis) {
           style2.flexBasis = this.state.flexBasis;
         }
-        var Wrapper3 = this.props.as || "div";
-        return (0, import_jsx_runtime309.jsxs)(Wrapper3, __assign3({ style: style2, className: this.props.className }, extendsProps, {
+        var Wrapper2 = this.props.as || "div";
+        return (0, import_jsx_runtime309.jsxs)(Wrapper2, __assign3({ style: style2, className: this.props.className }, extendsProps, {
           // `ref` is after `extendsProps` to ensure this one wins over a version
           // passed in
           ref: function(c3) {
@@ -70478,155 +70484,6 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE93 = "data-wp-hash";
-  function getRuntime93() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument93(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash93(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE93}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE93) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle93(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime93();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash93(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE93, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument93(targetDocument) {
-    const runtime = getRuntime93();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle93(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle92(hash2, css4) {
-    const runtime = getRuntime93();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle93(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle92("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
-  }
-  var style_module_default72 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
-  var CORNER_OFFSET = 4;
-  var CURSOR_OFFSET_TOP = CORNER_OFFSET * 2.5;
-  function Label3({ label, position: position2 = POSITIONS.corner, zIndex = 1e3, ...props }, ref) {
-    const showLabel = !!label;
-    const isBottom = position2 === POSITIONS.bottom;
-    const isCorner = position2 === POSITIONS.corner;
-    if (!showLabel) {
-      return null;
-    }
-    let style2 = {
-      opacity: showLabel ? 1 : void 0,
-      zIndex
-    };
-    let labelStyle = {};
-    if (isBottom) {
-      style2 = {
-        ...style2,
-        position: "absolute",
-        bottom: CURSOR_OFFSET_TOP * -1,
-        left: "50%",
-        transform: "translate(-50%, 0)"
-      };
-      labelStyle = {
-        transform: `translate(0, 100%)`
-      };
-    }
-    if (isCorner) {
-      style2 = {
-        ...style2,
-        position: "absolute",
-        top: CORNER_OFFSET,
-        right: (0, import_i18n73.isRTL)() ? void 0 : CORNER_OFFSET,
-        left: (0, import_i18n73.isRTL)() ? CORNER_OFFSET : void 0
-      };
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
-      "div",
-      {
-        "aria-hidden": "true",
-        className: clsx_default(
-          "components-resizable-tooltip__tooltip-wrapper",
-          style_module_default72["tooltip-wrapper"]
-        ),
-        ref,
-        style: style2,
-        ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
-          "div",
-          {
-            className: clsx_default(
-              "components-resizable-tooltip__tooltip",
-              style_module_default72.tooltip
-            ),
-            style: labelStyle,
-            children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(component_default8, { as: "span", className: style_module_default72["label-text"], children: label })
-          }
-        )
-      }
-    );
-  }
-  var ForwardedComponent3 = (0, import_element195.forwardRef)(Label3);
-  var label_default = ForwardedComponent3;
-
-  // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE94 = "data-wp-hash";
   function getRuntime94() {
     const globalScope = globalThis;
@@ -70711,6 +70568,155 @@ The screen with id ${screen.id} will not be added.`
     registerStyle93("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
   }
   var style_module_default73 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
+  var CORNER_OFFSET = 4;
+  var CURSOR_OFFSET_TOP = CORNER_OFFSET * 2.5;
+  function Label3({ label, position: position2 = POSITIONS.corner, zIndex = 1e3, ...props }, ref) {
+    const showLabel = !!label;
+    const isBottom = position2 === POSITIONS.bottom;
+    const isCorner = position2 === POSITIONS.corner;
+    if (!showLabel) {
+      return null;
+    }
+    let style2 = {
+      opacity: showLabel ? 1 : void 0,
+      zIndex
+    };
+    let labelStyle = {};
+    if (isBottom) {
+      style2 = {
+        ...style2,
+        position: "absolute",
+        bottom: CURSOR_OFFSET_TOP * -1,
+        left: "50%",
+        transform: "translate(-50%, 0)"
+      };
+      labelStyle = {
+        transform: `translate(0, 100%)`
+      };
+    }
+    if (isCorner) {
+      style2 = {
+        ...style2,
+        position: "absolute",
+        top: CORNER_OFFSET,
+        right: (0, import_i18n73.isRTL)() ? void 0 : CORNER_OFFSET,
+        left: (0, import_i18n73.isRTL)() ? CORNER_OFFSET : void 0
+      };
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
+      "div",
+      {
+        "aria-hidden": "true",
+        className: clsx_default(
+          "components-resizable-tooltip__tooltip-wrapper",
+          style_module_default73["tooltip-wrapper"]
+        ),
+        ref,
+        style: style2,
+        ...props,
+        children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
+          "div",
+          {
+            className: clsx_default(
+              "components-resizable-tooltip__tooltip",
+              style_module_default73.tooltip
+            ),
+            style: labelStyle,
+            children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(component_default8, { as: "span", className: style_module_default73["label-text"], children: label })
+          }
+        )
+      }
+    );
+  }
+  var ForwardedComponent3 = (0, import_element195.forwardRef)(Label3);
+  var label_default = ForwardedComponent3;
+
+  // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE95 = "data-wp-hash";
+  function getRuntime95() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument95(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash95(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE95}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE95) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle95(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime95();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash95(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE95, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument95(targetDocument) {
+    const runtime = getRuntime95();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle95(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle94(hash2, css4) {
+    const runtime = getRuntime95();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle95(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle94("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
+  }
+  var style_module_default74 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
   var noop24 = () => {
   };
   function ResizeTooltip({
@@ -70736,7 +70742,7 @@ The screen with id ${screen.id} will not be added.`
     if (!isVisible2) {
       return null;
     }
-    const classes = clsx_default("components-resize-tooltip", style_module_default73.root, className);
+    const classes = clsx_default("components-resize-tooltip", style_module_default74.root, className);
     return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(
       PolymorphicElement,
       {
@@ -71271,8 +71277,8 @@ The screen with id ${screen.id} will not be added.`
   var import_element200 = __toESM(require_element(), 1);
   var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE95 = "data-wp-hash";
-  function getRuntime95() {
+  var STYLE_HASH_ATTRIBUTE96 = "data-wp-hash";
+  function getRuntime96() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -71283,28 +71289,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument95(document);
+      registerDocument96(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash95(targetDocument, hash2) {
+  function documentContainsStyleHash96(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE95}]`
+      `style[${STYLE_HASH_ATTRIBUTE96}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE95) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE96) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle95(targetDocument, hash2, css4) {
+  function injectStyle96(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime95();
+    const runtime = getRuntime96();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -71313,24 +71319,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash95(targetDocument, hash2)) {
+    if (documentContainsStyleHash96(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE95, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE96, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument95(targetDocument) {
-    const runtime = getRuntime95();
+  function registerDocument96(targetDocument) {
+    const runtime = getRuntime96();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle95(targetDocument, hash2, css4);
+      injectStyle96(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -71344,17 +71350,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle94(hash2, css4) {
-    const runtime = getRuntime95();
+  function registerStyle95(hash2, css4) {
+    const runtime = getRuntime96();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle95(targetDocument, hash2, css4);
+      injectStyle96(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle94("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
+    registerStyle95("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
   }
-  var style_module_default74 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
+  var style_module_default75 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
   function SuffixItem({ searchRef, onChange, onClose }) {
     if (onClose) {
       (0, import_deprecated28.default)("`onClose` prop in wp.components.SearchControl", {
@@ -71406,7 +71412,7 @@ The screen with id ${screen.id} will not be added.`
         type: "search",
         size: size4,
         className: clsx_default(
-          style_module_default74.input,
+          style_module_default75.input,
           "components-search-control",
           className
         ),
@@ -71417,7 +71423,7 @@ The screen with id ${screen.id} will not be added.`
         prefix: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(InputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
           icon_default3,
           {
-            className: style_module_default74.icon,
+            className: style_module_default75.icon,
             icon: search_default,
             fill: "currentColor"
           }
@@ -71891,8 +71897,8 @@ The screen with id ${screen.id} will not be added.`
   var import_compose76 = __toESM(require_compose(), 1);
   var import_element205 = __toESM(require_element(), 1);
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE96 = "data-wp-hash";
-  function getRuntime96() {
+  var STYLE_HASH_ATTRIBUTE97 = "data-wp-hash";
+  function getRuntime97() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -71903,28 +71909,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument96(document);
+      registerDocument97(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash96(targetDocument, hash2) {
+  function documentContainsStyleHash97(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE96}]`
+      `style[${STYLE_HASH_ATTRIBUTE97}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE96) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE97) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle96(targetDocument, hash2, css4) {
+  function injectStyle97(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime96();
+    const runtime = getRuntime97();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -71933,24 +71939,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash96(targetDocument, hash2)) {
+    if (documentContainsStyleHash97(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE96, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE97, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument96(targetDocument) {
-    const runtime = getRuntime96();
+  function registerDocument97(targetDocument) {
+    const runtime = getRuntime97();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle96(targetDocument, hash2, css4);
+      injectStyle97(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -71964,17 +71970,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle95(hash2, css4) {
-    const runtime = getRuntime96();
+  function registerStyle96(hash2, css4) {
+    const runtime = getRuntime97();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle96(targetDocument, hash2, css4);
+      injectStyle97(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle95("6bf0085cf4", ".aa08a6e706634925__textarea{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));display:block;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;resize:vertical;width:100%}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}.aa08a6e706634925__textarea{line-height:20px;min-height:38px;padding:9px 11px}.aa08a6e706634925__textarea:disabled{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.is-dark-theme .aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.aa08a6e706634925__textarea:disabled::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}");
+    registerStyle96("6bf0085cf4", ".aa08a6e706634925__textarea{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));display:block;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;resize:vertical;width:100%}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}.aa08a6e706634925__textarea{line-height:20px;min-height:38px;padding:9px 11px}.aa08a6e706634925__textarea:disabled{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.is-dark-theme .aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.aa08a6e706634925__textarea:disabled::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}");
   }
-  var style_module_default75 = { "textarea": "aa08a6e706634925__textarea" };
+  var style_module_default76 = { "textarea": "aa08a6e706634925__textarea" };
   function UnforwardedTextareaControl(props, ref) {
     const {
       // Prevent passing this to `textarea`.
@@ -72005,7 +72011,7 @@ The screen with id ${screen.id} will not be added.`
           {
             className: clsx_default(
               "components-textarea-control__input",
-              style_module_default75.textarea
+              style_module_default76.textarea
             ),
             id: id3,
             rows,
@@ -72497,112 +72503,6 @@ The screen with id ${screen.id} will not be added.`
   var useToolsPanelContext = () => (0, import_element216.useContext)(ToolsPanelContext);
 
   // packages/components/build-module/tools-panel/tools-panel-header/hook.mjs
-  var STYLE_HASH_ATTRIBUTE97 = "data-wp-hash";
-  function getRuntime97() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument97(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash97(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE97}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE97) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle97(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime97();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash97(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE97, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument97(targetDocument) {
-    const runtime = getRuntime97();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle97(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle96(hash2, css4) {
-    const runtime = getRuntime97();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle97(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle96("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
-  }
-  var style_module_default76 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
-  function useToolsPanelHeader(props) {
-    const {
-      className,
-      headingLevel = 2,
-      ...otherProps
-    } = useContextSystem(props, "ToolsPanelHeader");
-    const { menuItems, hasMenuItems, areAllOptionalControlsHidden } = useToolsPanelContext();
-    return {
-      ...otherProps,
-      areAllOptionalControlsHidden,
-      defaultControlsItemClassName: style_module_default76["default-controls-item"],
-      dropdownMenuClassName: style_module_default76["dropdown-menu"],
-      hasMenuItems,
-      headingClassName: style_module_default76["tools-panel-heading"],
-      headingLevel,
-      menuItems,
-      className: clsx_default(style_module_default76["tools-panel-header"], className)
-    };
-  }
-
-  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
-  var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE98 = "data-wp-hash";
   function getRuntime98() {
     const globalScope = globalThis;
@@ -72687,6 +72587,112 @@ The screen with id ${screen.id} will not be added.`
     registerStyle97("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
   var style_module_default77 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  function useToolsPanelHeader(props) {
+    const {
+      className,
+      headingLevel = 2,
+      ...otherProps
+    } = useContextSystem(props, "ToolsPanelHeader");
+    const { menuItems, hasMenuItems, areAllOptionalControlsHidden } = useToolsPanelContext();
+    return {
+      ...otherProps,
+      areAllOptionalControlsHidden,
+      defaultControlsItemClassName: style_module_default77["default-controls-item"],
+      dropdownMenuClassName: style_module_default77["dropdown-menu"],
+      hasMenuItems,
+      headingClassName: style_module_default77["tools-panel-heading"],
+      headingLevel,
+      menuItems,
+      className: clsx_default(style_module_default77["tools-panel-header"], className)
+    };
+  }
+
+  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
+  var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE99 = "data-wp-hash";
+  function getRuntime99() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument99(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash99(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE99}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE99) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle99(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime99();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash99(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE99, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument99(targetDocument) {
+    const runtime = getRuntime99();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle99(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle98(hash2, css4) {
+    const runtime = getRuntime99();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle99(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle98("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+  }
+  var style_module_default78 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var DefaultControlsGroup = ({
     itemClassName,
     items,
@@ -72695,7 +72701,7 @@ The screen with id ${screen.id} will not be added.`
     if (!items.length) {
       return null;
     }
-    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("span", { "aria-hidden": true, className: style_module_default77["reset-label"], children: (0, import_i18n78.__)("Reset") });
+    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("span", { "aria-hidden": true, className: style_module_default78["reset-label"], children: (0, import_i18n78.__)("Reset") });
     return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_jsx_runtime333.Fragment, { children: items.map(([label, hasValue]) => {
       if (hasValue) {
         return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
@@ -72882,8 +72888,8 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/tools-panel/tools-panel/hook.mjs
   var import_element217 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE99 = "data-wp-hash";
-  function getRuntime99() {
+  var STYLE_HASH_ATTRIBUTE100 = "data-wp-hash";
+  function getRuntime100() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -72894,28 +72900,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument99(document);
+      registerDocument100(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash99(targetDocument, hash2) {
+  function documentContainsStyleHash100(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE99}]`
+      `style[${STYLE_HASH_ATTRIBUTE100}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE99) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE100) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle99(targetDocument, hash2, css4) {
+  function injectStyle100(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime99();
+    const runtime = getRuntime100();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -72924,24 +72930,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash99(targetDocument, hash2)) {
+    if (documentContainsStyleHash100(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE99, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE100, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument99(targetDocument) {
-    const runtime = getRuntime99();
+  function registerDocument100(targetDocument) {
+    const runtime = getRuntime100();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle99(targetDocument, hash2, css4);
+      injectStyle100(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -72955,17 +72961,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle98(hash2, css4) {
-    const runtime = getRuntime99();
+  function registerStyle99(hash2, css4) {
+    const runtime = getRuntime100();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle99(targetDocument, hash2, css4);
+      injectStyle100(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle98("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle99("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
-  var style_module_default78 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var style_module_default79 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   function emptyState() {
     return { panelItems: [], menuItemOrder: [], menuItemValues: {} };
   }
@@ -73150,9 +73156,9 @@ The screen with id ${screen.id} will not be added.`
       );
     }, [menuItems]);
     const classes = clsx_default(
-      style_module_default78["tools-panel"],
-      hasInnerWrapper && style_module_default78["tools-panel-with-inner-wrapper"],
-      areAllOptionalControlsHidden && style_module_default78["tools-panel-hidden-inner-wrapper"],
+      style_module_default79["tools-panel"],
+      hasInnerWrapper && style_module_default79["tools-panel-with-inner-wrapper"],
+      areAllOptionalControlsHidden && style_module_default79["tools-panel-hidden-inner-wrapper"],
       className
     );
     const toggleItem = (0, import_element217.useCallback)(
@@ -73286,8 +73292,8 @@ The screen with id ${screen.id} will not be added.`
   // packages/components/build-module/tools-panel/tools-panel-item/hook.mjs
   var import_compose78 = __toESM(require_compose(), 1);
   var import_element218 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE100 = "data-wp-hash";
-  function getRuntime100() {
+  var STYLE_HASH_ATTRIBUTE101 = "data-wp-hash";
+  function getRuntime101() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -73298,28 +73304,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument100(document);
+      registerDocument101(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash100(targetDocument, hash2) {
+  function documentContainsStyleHash101(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE100}]`
+      `style[${STYLE_HASH_ATTRIBUTE101}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE100) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE101) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle100(targetDocument, hash2, css4) {
+  function injectStyle101(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime100();
+    const runtime = getRuntime101();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -73328,24 +73334,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash100(targetDocument, hash2)) {
+    if (documentContainsStyleHash101(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE100, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE101, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument100(targetDocument) {
-    const runtime = getRuntime100();
+  function registerDocument101(targetDocument) {
+    const runtime = getRuntime101();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle100(targetDocument, hash2, css4);
+      injectStyle101(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -73359,17 +73365,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle99(hash2, css4) {
-    const runtime = getRuntime100();
+  function registerStyle100(hash2, css4) {
+    const runtime = getRuntime101();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle100(targetDocument, hash2, css4);
+      injectStyle101(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle99("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle100("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
-  var style_module_default79 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var style_module_default80 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var noop26 = () => {
   };
   function useToolsPanelItem(props) {
@@ -73477,8 +73483,8 @@ The screen with id ${screen.id} will not be added.`
     const isShown = isShownByDefault ? isRegistered : isMenuItemChecked;
     const shouldApplyPlaceholderStyles = shouldRenderPlaceholder && !isShown;
     const classes = clsx_default(
-      style_module_default79["tools-panel-item"],
-      shouldApplyPlaceholderStyles && style_module_default79["tools-panel-item-placeholder"],
+      style_module_default80["tools-panel-item"],
+      shouldApplyPlaceholderStyles && style_module_default80["tools-panel-item-placeholder"],
       !shouldApplyPlaceholderStyles && className,
       firstDisplayedItem === label && __experimentalFirstVisibleItemClass,
       lastDisplayedItem === label && __experimentalLastVisibleItemClass
@@ -73911,8 +73917,8 @@ The screen with id ${screen.id} will not be added.`
   var import_deprecated33 = __toESM(require_deprecated(), 1);
   var import_element228 = __toESM(require_element(), 1);
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE101 = "data-wp-hash";
-  function getRuntime101() {
+  var STYLE_HASH_ATTRIBUTE102 = "data-wp-hash";
+  function getRuntime102() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -73923,28 +73929,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument101(document);
+      registerDocument102(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash101(targetDocument, hash2) {
+  function documentContainsStyleHash102(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE101}]`
+      `style[${STYLE_HASH_ATTRIBUTE102}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE101) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE102) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle101(targetDocument, hash2, css4) {
+  function injectStyle102(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime101();
+    const runtime = getRuntime102();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -73953,24 +73959,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash101(targetDocument, hash2)) {
+    if (documentContainsStyleHash102(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE101, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE102, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument101(targetDocument) {
-    const runtime = getRuntime101();
+  function registerDocument102(targetDocument) {
+    const runtime = getRuntime102();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle101(targetDocument, hash2, css4);
+      injectStyle102(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -73984,17 +73990,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle100(hash2, css4) {
-    const runtime = getRuntime101();
+  function registerStyle101(hash2, css4) {
+    const runtime = getRuntime102();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle101(targetDocument, hash2, css4);
+      injectStyle102(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle100("a90faa8747", "._5b8fef2247903a5f__z-stack{display:inline-grid;grid-auto-flow:column;position:relative}._5b8fef2247903a5f__z-stack>._585cd0b86fd70a54__child{justify-self:start;position:relative}._93dbda3c809633d5__layered>._585cd0b86fd70a54__child{grid-column-start:1;grid-row-start:1}._585cd0b86fd70a54__child{z-index:var(--z-stack-z-index,auto)}._585cd0b86fd70a54__child:not(:first-of-type){margin-inline-start:var(--z-stack-offset,0)}");
+    registerStyle101("a90faa8747", "._5b8fef2247903a5f__z-stack{display:inline-grid;grid-auto-flow:column;position:relative}._5b8fef2247903a5f__z-stack>._585cd0b86fd70a54__child{justify-self:start;position:relative}._93dbda3c809633d5__layered>._585cd0b86fd70a54__child{grid-column-start:1;grid-row-start:1}._585cd0b86fd70a54__child{z-index:var(--z-stack-z-index,auto)}._585cd0b86fd70a54__child:not(:first-of-type){margin-inline-start:var(--z-stack-offset,0)}");
   }
-  var style_module_default80 = { "z-stack": "_5b8fef2247903a5f__z-stack", "child": "_585cd0b86fd70a54__child", "layered": "_93dbda3c809633d5__layered" };
+  var style_module_default81 = { "z-stack": "_5b8fef2247903a5f__z-stack", "child": "_585cd0b86fd70a54__child", "layered": "_93dbda3c809633d5__layered" };
   function UnconnectedZStack(props, forwardedRef) {
     (0, import_deprecated33.default)("wp.components.__experimentalZStack", {
       since: "7.2",
@@ -74018,7 +74024,7 @@ The screen with id ${screen.id} will not be added.`
       return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
         "div",
         {
-          className: style_module_default80.child,
+          className: style_module_default81.child,
           style: {
             "--z-stack-offset": `${offsetAmount}px`,
             "--z-stack-z-index": zIndex
@@ -74033,8 +74039,8 @@ The screen with id ${screen.id} will not be added.`
       {
         ...otherProps,
         className: clsx_default(
-          style_module_default80["z-stack"],
-          isLayered && style_module_default80.layered,
+          style_module_default81["z-stack"],
+          isLayered && style_module_default81.layered,
           className
         ),
         ref: forwardedRef,
@@ -74406,135 +74412,6 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/menu/item.mjs
   var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE102 = "data-wp-hash";
-  function getRuntime102() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument102(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash102(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE102}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE102) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle102(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime102();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash102(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE102, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument102(targetDocument) {
-    const runtime = getRuntime102();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle102(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle101(hash2, css4) {
-    const runtime = getRuntime102();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle102(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle101("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
-  }
-  var style_module_default81 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Item3 = (0, import_element236.forwardRef)(function UnforwardedItem({
-    className,
-    prefix: prefix2,
-    suffix,
-    children,
-    disabled: disabled2 = false,
-    hideOnClick = true,
-    store,
-    ...props
-  }, ref) {
-    const menuContext = (0, import_element236.useContext)(Context2);
-    const computedStore = store ?? menuContext?.store;
-    const computedHideOnClick = useMenuItemHideOnClick(
-      computedStore,
-      hideOnClick
-    );
-    if (!menuContext?.store || !computedStore) {
-      throw new Error(
-        "Menu.Item can only be rendered inside a Menu component"
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
-      MenuItem,
-      {
-        ref,
-        ...props,
-        className: clsx_default(style_module_default81.item, className),
-        accessibleWhenDisabled: true,
-        disabled: disabled2,
-        store: computedStore,
-        hideOnClick: computedHideOnClick,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", { className: style_module_default81["item-prefix-wrapper"], children: prefix2 }),
-          /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)("div", { className: style_module_default81["item-content-wrapper"], children: [
-            /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("div", { className: style_module_default81["item-children-wrapper"], children }),
-            suffix && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", { className: style_module_default81["item-suffix-wrapper"], children: suffix })
-          ] })
-        ]
-      }
-    );
-  });
-
-  // packages/components/build-module/menu/checkbox-item.mjs
-  var import_element237 = __toESM(require_element(), 1);
-  var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE103 = "data-wp-hash";
   function getRuntime103() {
     const globalScope = globalThis;
@@ -74619,59 +74496,51 @@ The screen with id ${screen.id} will not be added.`
     registerStyle102("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default82 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var CheckboxItem2 = (0, import_element237.forwardRef)(function UnforwardedCheckboxItem({
+  var Item3 = (0, import_element236.forwardRef)(function UnforwardedItem({
     className,
+    prefix: prefix2,
     suffix,
     children,
     disabled: disabled2 = false,
-    hideOnClick = false,
+    hideOnClick = true,
+    store,
     ...props
   }, ref) {
-    const menuContext = (0, import_element237.useContext)(Context2);
-    const store = menuContext?.store;
-    const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
-    if (!store) {
+    const menuContext = (0, import_element236.useContext)(Context2);
+    const computedStore = store ?? menuContext?.store;
+    const computedHideOnClick = useMenuItemHideOnClick(
+      computedStore,
+      hideOnClick
+    );
+    if (!menuContext?.store || !computedStore) {
       throw new Error(
-        "Menu.CheckboxItem can only be rendered inside a Menu component"
+        "Menu.Item can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(
-      MenuItemCheckbox,
+    return /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
+      MenuItem,
       {
         ref,
         ...props,
-        className: clsx_default(
-          style_module_default82.item,
-          style_module_default82["checkbox-item"],
-          className
-        ),
+        className: clsx_default(style_module_default82.item, className),
         accessibleWhenDisabled: true,
         disabled: disabled2,
-        store,
+        store: computedStore,
         hideOnClick: computedHideOnClick,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
-            MenuItemCheck,
-            {
-              store,
-              render: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("span", { className: style_module_default82["item-prefix-wrapper"] }),
-              style: { width: "auto", height: "auto" },
-              children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(icon_default2, { icon: check_default, size: 24 })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)("div", { className: style_module_default82["item-content-wrapper"], children: [
-            /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("div", { className: style_module_default82["item-children-wrapper"], children }),
-            suffix && /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("span", { className: style_module_default82["item-suffix-wrapper"], children: suffix })
+          /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", { className: style_module_default82["item-prefix-wrapper"], children: prefix2 }),
+          /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)("div", { className: style_module_default82["item-content-wrapper"], children: [
+            /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("div", { className: style_module_default82["item-children-wrapper"], children }),
+            suffix && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", { className: style_module_default82["item-suffix-wrapper"], children: suffix })
           ] })
         ]
       }
     );
   });
 
-  // packages/components/build-module/menu/radio-item.mjs
-  var import_element238 = __toESM(require_element(), 1);
-  var import_primitives35 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/checkbox-item.mjs
+  var import_element237 = __toESM(require_element(), 1);
+  var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE104 = "data-wp-hash";
   function getRuntime104() {
     const globalScope = globalThis;
@@ -74756,8 +74625,7 @@ The screen with id ${screen.id} will not be added.`
     registerStyle103("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default83 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(import_primitives35.Circle, { cx: 12, cy: 12, r: 3 }) });
-  var RadioItem2 = (0, import_element238.forwardRef)(function UnforwardedRadioItem({
+  var CheckboxItem2 = (0, import_element237.forwardRef)(function UnforwardedCheckboxItem({
     className,
     suffix,
     children,
@@ -74765,46 +74633,51 @@ The screen with id ${screen.id} will not be added.`
     hideOnClick = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element238.useContext)(Context2);
+    const menuContext = (0, import_element237.useContext)(Context2);
     const store = menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
     if (!store) {
       throw new Error(
-        "Menu.RadioItem can only be rendered inside a Menu component"
+        "Menu.CheckboxItem can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(
-      MenuItemRadio,
+    return /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(
+      MenuItemCheckbox,
       {
         ref,
         ...props,
-        className: clsx_default(style_module_default83.item, style_module_default83["radio-item"], className),
+        className: clsx_default(
+          style_module_default83.item,
+          style_module_default83["checkbox-item"],
+          className
+        ),
         accessibleWhenDisabled: true,
         disabled: disabled2,
         store,
         hideOnClick: computedHideOnClick,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
             MenuItemCheck,
             {
               store,
-              render: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("span", { className: style_module_default83["item-prefix-wrapper"] }),
+              render: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("span", { className: style_module_default83["item-prefix-wrapper"] }),
               style: { width: "auto", height: "auto" },
-              children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(icon_default2, { icon: radioCheck2, size: 24 })
+              children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(icon_default2, { icon: check_default, size: 24 })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)("div", { className: style_module_default83["item-content-wrapper"], children: [
-            /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("div", { className: style_module_default83["item-children-wrapper"], children }),
-            suffix && /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("span", { className: style_module_default83["item-suffix-wrapper"], children: suffix })
+          /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)("div", { className: style_module_default83["item-content-wrapper"], children: [
+            /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("div", { className: style_module_default83["item-children-wrapper"], children }),
+            suffix && /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("span", { className: style_module_default83["item-suffix-wrapper"], children: suffix })
           ] })
         ]
       }
     );
   });
 
-  // packages/components/build-module/menu/group.mjs
-  var import_element239 = __toESM(require_element(), 1);
-  var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/radio-item.mjs
+  var import_element238 = __toESM(require_element(), 1);
+  var import_primitives35 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE105 = "data-wp-hash";
   function getRuntime105() {
     const globalScope = globalThis;
@@ -74889,27 +74762,55 @@ The screen with id ${screen.id} will not be added.`
     registerStyle104("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default84 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Group4 = (0, import_element239.forwardRef)(function UnforwardedGroup({ className, ...props }, ref) {
-    const menuContext = (0, import_element239.useContext)(Context2);
-    if (!menuContext?.store) {
+  var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(import_primitives35.Circle, { cx: 12, cy: 12, r: 3 }) });
+  var RadioItem2 = (0, import_element238.forwardRef)(function UnforwardedRadioItem({
+    className,
+    suffix,
+    children,
+    disabled: disabled2 = false,
+    hideOnClick = false,
+    ...props
+  }, ref) {
+    const menuContext = (0, import_element238.useContext)(Context2);
+    const store = menuContext?.store;
+    const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
+    if (!store) {
       throw new Error(
-        "Menu.Group can only be rendered inside a Menu component"
+        "Menu.RadioItem can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
-      MenuGroup,
+    return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(
+      MenuItemRadio,
       {
         ref,
         ...props,
-        className: clsx_default(style_module_default84.group, className),
-        store: menuContext.store
+        className: clsx_default(style_module_default84.item, style_module_default84["radio-item"], className),
+        accessibleWhenDisabled: true,
+        disabled: disabled2,
+        store,
+        hideOnClick: computedHideOnClick,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
+            MenuItemCheck,
+            {
+              store,
+              render: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("span", { className: style_module_default84["item-prefix-wrapper"] }),
+              style: { width: "auto", height: "auto" },
+              children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(icon_default2, { icon: radioCheck2, size: 24 })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)("div", { className: style_module_default84["item-content-wrapper"], children: [
+            /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("div", { className: style_module_default84["item-children-wrapper"], children }),
+            suffix && /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("span", { className: style_module_default84["item-suffix-wrapper"], children: suffix })
+          ] })
+        ]
       }
     );
   });
 
-  // packages/components/build-module/menu/group-label.mjs
-  var import_element240 = __toESM(require_element(), 1);
-  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/group.mjs
+  var import_element239 = __toESM(require_element(), 1);
+  var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE106 = "data-wp-hash";
   function getRuntime106() {
     const globalScope = globalThis;
@@ -74994,40 +74895,27 @@ The screen with id ${screen.id} will not be added.`
     registerStyle105("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default85 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var GroupLabel4 = (0, import_element240.forwardRef)(function Group5({ className, ...props }, ref) {
-    const menuContext = (0, import_element240.useContext)(Context2);
+  var Group4 = (0, import_element239.forwardRef)(function UnforwardedGroup({ className, ...props }, ref) {
+    const menuContext = (0, import_element239.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
-        "Menu.GroupLabel can only be rendered inside a Menu component"
+        "Menu.Group can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-      MenuGroupLabel,
+    return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
+      MenuGroup,
       {
         ref,
-        render: (
-          // @ts-expect-error The `children` prop is passed
-          /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            component_default8,
-            {
-              upperCase: true,
-              variant: "muted",
-              size: "11px",
-              weight: config_values_default.fontWeightEmphasis,
-              lineHeight: "16px"
-            }
-          )
-        ),
         ...props,
-        className: clsx_default(style_module_default85["group-label"], className),
+        className: clsx_default(style_module_default85.group, className),
         store: menuContext.store
       }
     );
   });
 
-  // packages/components/build-module/menu/separator.mjs
-  var import_element241 = __toESM(require_element(), 1);
-  var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/group-label.mjs
+  var import_element240 = __toESM(require_element(), 1);
+  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE107 = "data-wp-hash";
   function getRuntime107() {
     const globalScope = globalThis;
@@ -75112,29 +75000,40 @@ The screen with id ${screen.id} will not be added.`
     registerStyle106("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default86 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Separator5 = (0, import_element241.forwardRef)(function UnforwardedSeparator({ className, ...props }, ref) {
-    const menuContext = (0, import_element241.useContext)(Context2);
+  var GroupLabel4 = (0, import_element240.forwardRef)(function Group5({ className, ...props }, ref) {
+    const menuContext = (0, import_element240.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
-        "Menu.Separator can only be rendered inside a Menu component"
+        "Menu.GroupLabel can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-      MenuSeparator,
+    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+      MenuGroupLabel,
       {
         ref,
+        render: (
+          // @ts-expect-error The `children` prop is passed
+          /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+            component_default8,
+            {
+              upperCase: true,
+              variant: "muted",
+              size: "11px",
+              weight: config_values_default.fontWeightEmphasis,
+              lineHeight: "16px"
+            }
+          )
+        ),
         ...props,
-        className: clsx_default(style_module_default86.separator, className, {
-          [style_module_default86["is-toolbar"]]: menuContext.variant === "toolbar"
-        }),
+        className: clsx_default(style_module_default86["group-label"], className),
         store: menuContext.store
       }
     );
   });
 
-  // packages/components/build-module/menu/item-label.mjs
-  var import_element242 = __toESM(require_element(), 1);
-  var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/separator.mjs
+  var import_element241 = __toESM(require_element(), 1);
+  var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE108 = "data-wp-hash";
   function getRuntime108() {
     const globalScope = globalThis;
@@ -75219,27 +75118,29 @@ The screen with id ${screen.id} will not be added.`
     registerStyle107("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default87 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var ItemLabel2 = (0, import_element242.forwardRef)(function UnforwardedItemLabel({ className, ...props }, ref) {
-    const menuContext = (0, import_element242.useContext)(Context2);
+  var Separator5 = (0, import_element241.forwardRef)(function UnforwardedSeparator({ className, ...props }, ref) {
+    const menuContext = (0, import_element241.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
-        "Menu.ItemLabel can only be rendered inside a Menu component"
+        "Menu.Separator can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
-      component_default7,
+    return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+      MenuSeparator,
       {
-        numberOfLines: 1,
         ref,
         ...props,
-        className: clsx_default(style_module_default87["item-label"], className)
+        className: clsx_default(style_module_default87.separator, className, {
+          [style_module_default87["is-toolbar"]]: menuContext.variant === "toolbar"
+        }),
+        store: menuContext.store
       }
     );
   });
 
-  // packages/components/build-module/menu/item-help-text.mjs
-  var import_element243 = __toESM(require_element(), 1);
-  var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/item-label.mjs
+  var import_element242 = __toESM(require_element(), 1);
+  var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE109 = "data-wp-hash";
   function getRuntime109() {
     const globalScope = globalThis;
@@ -75324,55 +75225,27 @@ The screen with id ${screen.id} will not be added.`
     registerStyle108("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default88 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var ItemHelpText = (0, import_element243.forwardRef)(function UnforwardedItemHelpText({ className, ...props }, ref) {
-    const menuContext = (0, import_element243.useContext)(Context2);
+  var ItemLabel2 = (0, import_element242.forwardRef)(function UnforwardedItemLabel({ className, ...props }, ref) {
+    const menuContext = (0, import_element242.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
-        "Menu.ItemHelpText can only be rendered inside a Menu component"
+        "Menu.ItemLabel can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
       component_default7,
       {
-        numberOfLines: 2,
+        numberOfLines: 1,
         ref,
         ...props,
-        className: clsx_default(style_module_default88["item-help-text"], className)
+        className: clsx_default(style_module_default88["item-label"], className)
       }
     );
   });
 
-  // packages/components/build-module/menu/trigger-button.mjs
-  var import_element244 = __toESM(require_element(), 1);
-  var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
-  var TriggerButton = (0, import_element244.forwardRef)(function UnforwardedTriggerButton({ children, disabled: disabled2 = false, ...props }, ref) {
-    const menuContext = (0, import_element244.useContext)(Context2);
-    if (!menuContext?.store) {
-      throw new Error(
-        "Menu.TriggerButton can only be rendered inside a Menu component"
-      );
-    }
-    if (menuContext.store.parent) {
-      throw new Error(
-        "Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead."
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-      MenuButton,
-      {
-        ref,
-        ...props,
-        disabled: disabled2,
-        store: menuContext.store,
-        children
-      }
-    );
-  });
-
-  // packages/components/build-module/menu/submenu-trigger-item.mjs
-  var import_element245 = __toESM(require_element(), 1);
-  var import_i18n79 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime360 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/item-help-text.mjs
+  var import_element243 = __toESM(require_element(), 1);
+  var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE110 = "data-wp-hash";
   function getRuntime110() {
     const globalScope = globalThis;
@@ -75457,49 +75330,55 @@ The screen with id ${screen.id} will not be added.`
     registerStyle109("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default89 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var SubmenuTriggerItem = (0, import_element245.forwardRef)(function UnforwardedSubmenuTriggerItem({ suffix, ...otherProps }, ref) {
-    const menuContext = (0, import_element245.useContext)(Context2);
-    if (!menuContext?.store.parent) {
+  var ItemHelpText = (0, import_element243.forwardRef)(function UnforwardedItemHelpText({ className, ...props }, ref) {
+    const menuContext = (0, import_element243.useContext)(Context2);
+    if (!menuContext?.store) {
       throw new Error(
-        "Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component"
+        "Menu.ItemHelpText can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-      MenuButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+      component_default7,
       {
+        numberOfLines: 2,
         ref,
-        accessibleWhenDisabled: true,
-        store: menuContext.store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-          Item3,
-          {
-            ...otherProps,
-            store: menuContext.store.parent,
-            suffix: /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(import_jsx_runtime360.Fragment, { children: [
-              suffix,
-              /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-                icon_default3,
-                {
-                  className: clsx_default(
-                    style_module_default89["submenu-chevron-icon"],
-                    { [style_module_default89["is-rtl"]]: (0, import_i18n79.isRTL)() }
-                  ),
-                  "aria-hidden": "true",
-                  icon: chevron_right_small_default,
-                  size: 24,
-                  preserveAspectRatio: "xMidYMid slice"
-                }
-              )
-            ] })
-          }
-        )
+        ...props,
+        className: clsx_default(style_module_default89["item-help-text"], className)
       }
     );
   });
 
-  // packages/components/build-module/menu/popover.mjs
-  var import_element246 = __toESM(require_element(), 1);
-  var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/trigger-button.mjs
+  var import_element244 = __toESM(require_element(), 1);
+  var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
+  var TriggerButton = (0, import_element244.forwardRef)(function UnforwardedTriggerButton({ children, disabled: disabled2 = false, ...props }, ref) {
+    const menuContext = (0, import_element244.useContext)(Context2);
+    if (!menuContext?.store) {
+      throw new Error(
+        "Menu.TriggerButton can only be rendered inside a Menu component"
+      );
+    }
+    if (menuContext.store.parent) {
+      throw new Error(
+        "Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead."
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+      MenuButton,
+      {
+        ref,
+        ...props,
+        disabled: disabled2,
+        store: menuContext.store,
+        children
+      }
+    );
+  });
+
+  // packages/components/build-module/menu/submenu-trigger-item.mjs
+  var import_element245 = __toESM(require_element(), 1);
+  var import_i18n79 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime360 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE111 = "data-wp-hash";
   function getRuntime111() {
     const globalScope = globalThis;
@@ -75584,6 +75463,133 @@ The screen with id ${screen.id} will not be added.`
     registerStyle110("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default90 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
+  var SubmenuTriggerItem = (0, import_element245.forwardRef)(function UnforwardedSubmenuTriggerItem({ suffix, ...otherProps }, ref) {
+    const menuContext = (0, import_element245.useContext)(Context2);
+    if (!menuContext?.store.parent) {
+      throw new Error(
+        "Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component"
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+      MenuButton,
+      {
+        ref,
+        accessibleWhenDisabled: true,
+        store: menuContext.store,
+        render: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+          Item3,
+          {
+            ...otherProps,
+            store: menuContext.store.parent,
+            suffix: /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(import_jsx_runtime360.Fragment, { children: [
+              suffix,
+              /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+                icon_default3,
+                {
+                  className: clsx_default(
+                    style_module_default90["submenu-chevron-icon"],
+                    { [style_module_default90["is-rtl"]]: (0, import_i18n79.isRTL)() }
+                  ),
+                  "aria-hidden": "true",
+                  icon: chevron_right_small_default,
+                  size: 24,
+                  preserveAspectRatio: "xMidYMid slice"
+                }
+              )
+            ] })
+          }
+        )
+      }
+    );
+  });
+
+  // packages/components/build-module/menu/popover.mjs
+  var import_element246 = __toESM(require_element(), 1);
+  var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE112 = "data-wp-hash";
+  function getRuntime112() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument112(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash112(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE112}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE112) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle112(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime112();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash112(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE112, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument112(targetDocument) {
+    const runtime = getRuntime112();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle112(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle111(hash2, css4) {
+    const runtime = getRuntime112();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle112(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle111("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
+  }
+  var style_module_default91 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
   var Popover4 = (0, import_element246.forwardRef)(function UnforwardedPopover2({ gutter, shift: shift4, modal = true, ...otherProps }, ref) {
     const menuContext = (0, import_element246.useContext)(Context2);
     const appliedPlacementSide = useStoreState(
@@ -75613,15 +75619,15 @@ The screen with id ${screen.id} will not be added.`
       );
     }
     const renderMenu = (0, import_element246.useCallback)(
-      (htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)("div", { className: style_module_default90["menu-motion-root"], children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+      (htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)("div", { className: style_module_default91["menu-motion-root"], children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
         "div",
         {
           ...htmlProps,
           className: clsx_default(
-            style_module_default90["menu-surface"],
+            style_module_default91["menu-surface"],
             htmlProps.className,
             {
-              [style_module_default90["is-toolbar"]]: menuContext.variant === "toolbar"
+              [style_module_default91["is-toolbar"]]: menuContext.variant === "toolbar"
             }
           )
         }
@@ -75632,7 +75638,7 @@ The screen with id ${screen.id} will not be added.`
       Menu,
       {
         ...otherProps,
-        className: clsx_default(style_module_default90.menu, otherProps.className),
+        className: clsx_default(style_module_default91.menu, otherProps.className),
         ref,
         modal,
         store: menuContext.store,
@@ -75813,169 +75819,6 @@ The screen with id ${screen.id} will not be added.`
   var import_element249 = __toESM(require_element(), 1);
   var import_warning12 = __toESM(require_warning(), 1);
   var import_jsx_runtime363 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE112 = "data-wp-hash";
-  function getRuntime112() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument112(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash112(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE112}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE112) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle112(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime112();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash112(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE112, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument112(targetDocument) {
-    const runtime = getRuntime112();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle112(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle111(hash2, css4) {
-    const runtime = getRuntime112();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle112(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle111("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
-  }
-  var style_module_default91 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
-  var Tab3 = (0, import_element249.forwardRef)(function UnforwardedTab({ children, tabId, disabled: disabled2, render, className, ...otherProps }, ref) {
-    const { store, instanceId } = useTabsContext() ?? {};
-    if (!store) {
-      (0, import_warning12.default)("`Tabs.Tab` must be wrapped in a `Tabs` component.");
-      return null;
-    }
-    const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
-      Tab,
-      {
-        ref,
-        store,
-        id: instancedTabId,
-        disabled: disabled2,
-        render,
-        ...otherProps,
-        className: clsx_default(style_module_default91.tab, className),
-        children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)("span", { className: style_module_default91["tab-children"], children })
-      }
-    );
-  });
-
-  // packages/components/build-module/tabs/tablist.mjs
-  var import_warning13 = __toESM(require_warning(), 1);
-  var import_element251 = __toESM(require_element(), 1);
-  var import_compose88 = __toESM(require_compose(), 1);
-
-  // packages/components/build-module/tabs/use-track-overflow.mjs
-  var import_element250 = __toESM(require_element(), 1);
-  var import_compose87 = __toESM(require_compose(), 1);
-  function useTrackOverflow(parent, children) {
-    const [first, setFirst] = (0, import_element250.useState)(false);
-    const [last, setLast] = (0, import_element250.useState)(false);
-    const [observer, setObserver] = (0, import_element250.useState)();
-    const callback = (0, import_compose87.useEvent)((entries) => {
-      for (const entry of entries) {
-        if (entry.target === children.first) {
-          setFirst(!entry.isIntersecting);
-        }
-        if (entry.target === children.last) {
-          setLast(!entry.isIntersecting);
-        }
-      }
-    });
-    (0, import_element250.useEffect)(() => {
-      if (!parent || !window.IntersectionObserver) {
-        return;
-      }
-      const newObserver = new IntersectionObserver(callback, {
-        root: parent,
-        threshold: 0.9
-      });
-      setObserver(newObserver);
-      return () => newObserver.disconnect();
-    }, [callback, parent]);
-    (0, import_element250.useEffect)(() => {
-      if (!observer) {
-        return;
-      }
-      if (children.first) {
-        observer.observe(children.first);
-      }
-      if (children.last) {
-        observer.observe(children.last);
-      }
-      return () => {
-        if (children.first) {
-          observer.unobserve(children.first);
-        }
-        if (children.last) {
-          observer.unobserve(children.last);
-        }
-      };
-    }, [children.first, children.last, observer]);
-    return { first, last };
-  }
-
-  // packages/components/build-module/tabs/tablist.mjs
-  var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE113 = "data-wp-hash";
   function getRuntime113() {
     const globalScope = globalThis;
@@ -76060,87 +75903,85 @@ The screen with id ${screen.id} will not be added.`
     registerStyle112("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
   }
   var style_module_default92 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
-  var DEFAULT_SCROLL_MARGIN = 24;
-  function useScrollRectIntoView(parent, rect, { margin = DEFAULT_SCROLL_MARGIN } = {}) {
-    (0, import_element251.useLayoutEffect)(() => {
-      if (!parent || !rect) {
-        return;
-      }
-      const { scrollLeft: parentScroll } = parent;
-      const parentWidth = parent.getBoundingClientRect().width;
-      const { left: childLeft, width: childWidth } = rect;
-      const parentRightEdge = parentScroll + parentWidth;
-      const childRightEdge = childLeft + childWidth;
-      const rightOverflow = childRightEdge + margin - parentRightEdge;
-      const leftOverflow = parentScroll - (childLeft - margin);
-      let scrollLeft = null;
-      if (leftOverflow > 0) {
-        scrollLeft = parentScroll - leftOverflow;
-      } else if (rightOverflow > 0) {
-        scrollLeft = parentScroll + rightOverflow;
-      }
-      if (scrollLeft !== null) {
-        parent.scroll?.({ left: scrollLeft });
-      }
-    }, [margin, parent, rect]);
-  }
-  var TabList3 = (0, import_element251.forwardRef)(function UnforwardedTabList({ children, ...otherProps }, ref) {
-    const { store } = useTabsContext() ?? {};
-    const selectedId = useStoreState(store, "selectedId");
-    const selectOnMove = useStoreState(store, "selectOnMove");
-    const items = useStoreState(store, "items");
-    const [parent, setParent] = (0, import_element251.useState)();
-    const refs = (0, import_compose88.useMergeRefs)([ref, setParent]);
-    const selectedItem = store?.item(selectedId);
-    const renderedItems = useStoreState(store, "renderedItems");
-    const selectedItemIndex = renderedItems && selectedItem ? renderedItems.indexOf(selectedItem) : -1;
-    const selectedRect = useTrackElementOffsetRect(selectedItem?.element, [
-      selectedItemIndex
-    ]);
-    const overflow = useTrackOverflow(parent, {
-      first: items?.at(0)?.element,
-      last: items?.at(-1)?.element
-    });
-    useAnimatedOffsetRect(parent, selectedRect, {
-      prefix: "selected",
-      dataAttribute: "indicator-animated",
-      transitionEndFilter: (event) => event.pseudoElement === "::before",
-      roundRect: true
-    });
-    useScrollRectIntoView(parent, selectedRect);
+  var Tab3 = (0, import_element249.forwardRef)(function UnforwardedTab({ children, tabId, disabled: disabled2, render, className, ...otherProps }, ref) {
+    const { store, instanceId } = useTabsContext() ?? {};
     if (!store) {
-      (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.");
+      (0, import_warning12.default)("`Tabs.Tab` must be wrapped in a `Tabs` component.");
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
-      TabList,
+    const instancedTabId = `${instanceId}-${tabId}`;
+    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
+      Tab,
       {
-        ref: refs,
+        ref,
         store,
-        render: (props) => /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
-          "div",
-          {
-            ...props,
-            tabIndex: props.tabIndex ?? -1
-          }
-        ),
-        "data-select-on-move": selectOnMove ? "true" : "false",
+        id: instancedTabId,
+        disabled: disabled2,
+        render,
         ...otherProps,
-        className: clsx_default(
-          style_module_default92["tab-list"],
-          overflow.first && "is-overflowing-first",
-          overflow.last && "is-overflowing-last",
-          otherProps.className
-        ),
-        children
+        className: clsx_default(style_module_default92.tab, className),
+        children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)("span", { className: style_module_default92["tab-children"], children })
       }
     );
   });
 
-  // packages/components/build-module/tabs/tabpanel.mjs
-  var import_element252 = __toESM(require_element(), 1);
-  var import_warning14 = __toESM(require_warning(), 1);
-  var import_jsx_runtime365 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/tabs/tablist.mjs
+  var import_warning13 = __toESM(require_warning(), 1);
+  var import_element251 = __toESM(require_element(), 1);
+  var import_compose88 = __toESM(require_compose(), 1);
+
+  // packages/components/build-module/tabs/use-track-overflow.mjs
+  var import_element250 = __toESM(require_element(), 1);
+  var import_compose87 = __toESM(require_compose(), 1);
+  function useTrackOverflow(parent, children) {
+    const [first, setFirst] = (0, import_element250.useState)(false);
+    const [last, setLast] = (0, import_element250.useState)(false);
+    const [observer, setObserver] = (0, import_element250.useState)();
+    const callback = (0, import_compose87.useEvent)((entries) => {
+      for (const entry of entries) {
+        if (entry.target === children.first) {
+          setFirst(!entry.isIntersecting);
+        }
+        if (entry.target === children.last) {
+          setLast(!entry.isIntersecting);
+        }
+      }
+    });
+    (0, import_element250.useEffect)(() => {
+      if (!parent || !window.IntersectionObserver) {
+        return;
+      }
+      const newObserver = new IntersectionObserver(callback, {
+        root: parent,
+        threshold: 0.9
+      });
+      setObserver(newObserver);
+      return () => newObserver.disconnect();
+    }, [callback, parent]);
+    (0, import_element250.useEffect)(() => {
+      if (!observer) {
+        return;
+      }
+      if (children.first) {
+        observer.observe(children.first);
+      }
+      if (children.last) {
+        observer.observe(children.last);
+      }
+      return () => {
+        if (children.first) {
+          observer.unobserve(children.first);
+        }
+        if (children.last) {
+          observer.unobserve(children.last);
+        }
+      };
+    }, [children.first, children.last, observer]);
+    return { first, last };
+  }
+
+  // packages/components/build-module/tabs/tablist.mjs
+  var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE114 = "data-wp-hash";
   function getRuntime114() {
     const globalScope = globalThis;
@@ -76225,6 +76066,171 @@ The screen with id ${screen.id} will not be added.`
     registerStyle113("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
   }
   var style_module_default93 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
+  var DEFAULT_SCROLL_MARGIN = 24;
+  function useScrollRectIntoView(parent, rect, { margin = DEFAULT_SCROLL_MARGIN } = {}) {
+    (0, import_element251.useLayoutEffect)(() => {
+      if (!parent || !rect) {
+        return;
+      }
+      const { scrollLeft: parentScroll } = parent;
+      const parentWidth = parent.getBoundingClientRect().width;
+      const { left: childLeft, width: childWidth } = rect;
+      const parentRightEdge = parentScroll + parentWidth;
+      const childRightEdge = childLeft + childWidth;
+      const rightOverflow = childRightEdge + margin - parentRightEdge;
+      const leftOverflow = parentScroll - (childLeft - margin);
+      let scrollLeft = null;
+      if (leftOverflow > 0) {
+        scrollLeft = parentScroll - leftOverflow;
+      } else if (rightOverflow > 0) {
+        scrollLeft = parentScroll + rightOverflow;
+      }
+      if (scrollLeft !== null) {
+        parent.scroll?.({ left: scrollLeft });
+      }
+    }, [margin, parent, rect]);
+  }
+  var TabList3 = (0, import_element251.forwardRef)(function UnforwardedTabList({ children, ...otherProps }, ref) {
+    const { store } = useTabsContext() ?? {};
+    const selectedId = useStoreState(store, "selectedId");
+    const selectOnMove = useStoreState(store, "selectOnMove");
+    const items = useStoreState(store, "items");
+    const [parent, setParent] = (0, import_element251.useState)();
+    const refs = (0, import_compose88.useMergeRefs)([ref, setParent]);
+    const selectedItem = store?.item(selectedId);
+    const renderedItems = useStoreState(store, "renderedItems");
+    const selectedItemIndex = renderedItems && selectedItem ? renderedItems.indexOf(selectedItem) : -1;
+    const selectedRect = useTrackElementOffsetRect(selectedItem?.element, [
+      selectedItemIndex
+    ]);
+    const overflow = useTrackOverflow(parent, {
+      first: items?.at(0)?.element,
+      last: items?.at(-1)?.element
+    });
+    useAnimatedOffsetRect(parent, selectedRect, {
+      prefix: "selected",
+      dataAttribute: "indicator-animated",
+      transitionEndFilter: (event) => event.pseudoElement === "::before",
+      roundRect: true
+    });
+    useScrollRectIntoView(parent, selectedRect);
+    if (!store) {
+      (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.");
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
+      TabList,
+      {
+        ref: refs,
+        store,
+        render: (props) => /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
+          "div",
+          {
+            ...props,
+            tabIndex: props.tabIndex ?? -1
+          }
+        ),
+        "data-select-on-move": selectOnMove ? "true" : "false",
+        ...otherProps,
+        className: clsx_default(
+          style_module_default93["tab-list"],
+          overflow.first && "is-overflowing-first",
+          overflow.last && "is-overflowing-last",
+          otherProps.className
+        ),
+        children
+      }
+    );
+  });
+
+  // packages/components/build-module/tabs/tabpanel.mjs
+  var import_element252 = __toESM(require_element(), 1);
+  var import_warning14 = __toESM(require_warning(), 1);
+  var import_jsx_runtime365 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE115 = "data-wp-hash";
+  function getRuntime115() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument115(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash115(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE115}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE115) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle115(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime115();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash115(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE115, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument115(targetDocument) {
+    const runtime = getRuntime115();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle115(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle114(hash2, css4) {
+    const runtime = getRuntime115();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle115(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle114("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
+  }
+  var style_module_default94 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
   var TabPanel3 = (0, import_element252.forwardRef)(function UnforwardedTabPanel2({ children, tabId, focusable: focusable2 = true, className, ...otherProps }, ref) {
     const context = useTabsContext();
     const selectedId = useStoreState(context?.store, "selectedId");
@@ -76243,7 +76249,7 @@ The screen with id ${screen.id} will not be added.`
         tabId: instancedTabId,
         focusable: focusable2,
         ...otherProps,
-        className: clsx_default(style_module_default93["tab-panel"], className),
+        className: clsx_default(style_module_default94["tab-panel"], className),
         children: selectedId === instancedTabId && children
       }
     );
@@ -76431,8 +76437,8 @@ The screen with id ${screen.id} will not be added.`
   var import_compose91 = __toESM(require_compose(), 1);
   var import_element255 = __toESM(require_element(), 1);
   var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE115 = "data-wp-hash";
-  function getRuntime115() {
+  var STYLE_HASH_ATTRIBUTE116 = "data-wp-hash";
+  function getRuntime116() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -76443,28 +76449,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument115(document);
+      registerDocument116(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash115(targetDocument, hash2) {
+  function documentContainsStyleHash116(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE115}]`
+      `style[${STYLE_HASH_ATTRIBUTE116}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE115) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE116) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle115(targetDocument, hash2, css4) {
+  function injectStyle116(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime115();
+    const runtime = getRuntime116();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -76473,24 +76479,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash115(targetDocument, hash2)) {
+    if (documentContainsStyleHash116(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE115, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE116, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument115(targetDocument) {
-    const runtime = getRuntime115();
+  function registerDocument116(targetDocument) {
+    const runtime = getRuntime116();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle115(targetDocument, hash2, css4);
+      injectStyle116(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -76504,17 +76510,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle114(hash2, css4) {
-    const runtime = getRuntime115();
+  function registerStyle115(hash2, css4) {
+    const runtime = getRuntime116();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle115(targetDocument, hash2, css4);
+      injectStyle116(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle114("284f47c8a8", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
+    registerStyle115("284f47c8a8", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
   }
-  var style_module_default94 = { "editable": "_0f130cee1a924516__editable" };
+  var style_module_default95 = { "editable": "_0f130cee1a924516__editable" };
   function UnforwardedContentEditableControl({
     label,
     id: id3,
@@ -76546,7 +76552,7 @@ The screen with id ${screen.id} will not be added.`
       /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
         "div",
         {
-          className: style_module_default94.editable,
+          className: style_module_default95.editable,
           role: "textbox",
           "aria-multiline": true,
           "aria-labelledby": labelId,
