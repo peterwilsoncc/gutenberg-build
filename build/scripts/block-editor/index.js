@@ -95380,11 +95380,16 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/media-upload/index.mjs
   var import_components109 = __toESM(require_components(), 1);
   var MediaUpload = () => null;
-  var media_upload_default = (0, import_components109.withFilters)("editor.MediaUpload")(MediaUpload);
+  var media_upload_default = (0, import_components109.withFilters)("editor.MediaUpload")(
+    MediaUpload
+  );
 
   // packages/block-editor/build-module/components/media-upload/check.mjs
   var import_data71 = __toESM(require_data(), 1);
-  function MediaUploadCheck({ fallback = null, children }) {
+  function MediaUploadCheck({
+    fallback = null,
+    children
+  }) {
     const hasUploadPermissions = (0, import_data71.useSelect)((select3) => {
       const { getSettings: getSettings9 } = select3(store);
       return !!getSettings9().mediaUpload;
@@ -97002,7 +97007,9 @@ If there's a particular need for this, please submit a feature request at https:
             scrollContainer = (0, import_dom62.getScrollContainer)(contentEl);
             scrollContainerCache.set(contentEl, scrollContainer);
           }
-          const eventScrollContainer = (0, import_dom62.getScrollContainer)(target);
+          const eventScrollContainer = (0, import_dom62.getScrollContainer)(
+            target
+          );
           if (!node.contains(eventScrollContainer)) {
             scrollContainer.scrollBy(deltaX, deltaY);
           }
@@ -97050,6 +97057,7 @@ If there's a particular need for this, please submit a feature request at https:
         return {
           orientation: getBlockListSettings2(_rootClientId)?.orientation || "vertical",
           rootClientId: _rootClientId,
+          // An absent neighboring block is looked up as a missing one.
           isVisible: isBlockVisible2(previousClientId) && isBlockVisible2(nextClientId)
         };
       },
@@ -97375,6 +97383,7 @@ If there's a particular need for this, please submit a feature request at https:
         return {};
       }
       return {
+        // A non-empty order always has an insertion index.
         clientId: order[insertionPoint2.index]
       };
     }, []);
@@ -99768,7 +99777,9 @@ If there's a particular need for this, please submit a feature request at https:
         if (!blockType) {
           return null;
         }
-        const attributes = getBlockAttributes3(clientId);
+        const attributes = getBlockAttributes3(
+          clientId
+        );
         const { isSectionBlock: isSectionBlock2 } = unlock(blockEditorSelect);
         const patternName = attributes?.metadata?.patternName;
         if (patternName && isSectionBlock2(clientId)) {
@@ -110827,7 +110838,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element377 = __toESM(require_element(), 1);
   var import_i18n209 = __toESM(require_i18n(), 1);
   var import_jsx_runtime584 = __toESM(require_jsx_runtime(), 1);
-  var WithToolsPanelItem = ({ setting, children, panelId, ...props }) => {
+  var WithToolsPanelItem = ({
+    setting,
+    children,
+    panelId,
+    ...props
+  }) => {
     const clearValue = () => {
       if (setting.colorValue) {
         setting.onColorChange();
@@ -110855,7 +110871,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var LabeledColorIndicator = ({ colorValue, label }) => /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)(import_components200.__experimentalHStack, { justify: "flex-start", children: [
+  var LabeledColorIndicator = ({
+    colorValue,
+    label
+  }) => /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)(import_components200.__experimentalHStack, { justify: "flex-start", children: [
     /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
       import_components200.ColorIndicator,
       {
@@ -110872,7 +110891,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     )
   ] });
-  var renderToggle = (settings3) => function Toggle2({ onToggle, isOpen }) {
+  var renderToggle = (settings3) => function Toggle2({
+    onToggle,
+    isOpen
+  }) {
     const {
       clearable,
       colorValue,
@@ -111135,7 +111157,9 @@ If there's a particular need for this, please submit a feature request at https:
     __experimentalIsRenderedInSidebar,
     enableAlpha
   }) => {
-    const panelId = (0, import_compose126.useInstanceId)(PanelColorGradientSettingsInner);
+    const panelId = (0, import_compose126.useInstanceId)(
+      PanelColorGradientSettingsInner
+    );
     const { batch: batch2 } = (0, import_data153.useRegistry)();
     if ((!colors2 || colors2.length === 0) && (!gradients || gradients.length === 0) && disableCustomColors && disableCustomGradients && settings3?.every(
       (setting) => (!setting.colors || setting.colors.length === 0) && (!setting.gradients || setting.gradients.length === 0) && (setting.disableCustomColors === void 0 || setting.disableCustomColors) && (setting.disableCustomGradients === void 0 || setting.disableCustomGradients)
@@ -126211,7 +126235,11 @@ If there's a particular need for this, please submit a feature request at https:
   var block_inspector_default = BlockInspector;
 
   // packages/block-editor/build-module/components/block-title/index.mjs
-  function BlockTitle({ clientId, maximumLength, context }) {
+  function BlockTitle({
+    clientId,
+    maximumLength,
+    context
+  }) {
     return useBlockDisplayTitle({ clientId, maximumLength, context });
   }
 
