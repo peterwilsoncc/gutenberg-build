@@ -3043,12 +3043,14 @@ function parseDirectiveValue(rawValue) {
   const namespace = regexResult?.[1] ?? null;
   const rawDirectiveValue = regexResult?.[2] ?? rawValue;
   let value = rawDirectiveValue;
-  try {
-    const parsedValue = JSON.parse(rawDirectiveValue);
-    if (isObject(parsedValue)) {
-      value = parsedValue;
+  if (/^\s*\{/.test(rawDirectiveValue)) {
+    try {
+      const parsedValue = JSON.parse(rawDirectiveValue);
+      if (isObject(parsedValue)) {
+        value = parsedValue;
+      }
+    } catch {
     }
-  } catch {
   }
   return { namespace, value };
 }
@@ -3067,22 +3069,22 @@ function toVdom(root) {
     }
     if (nodeType === 4) {
       nodesToReplace.add(node);
-      return node.nodeValue;
+      return node.data;
     }
     if (nodeType === 8 || nodeType === 7) {
       nodesToRemove.add(node);
       return null;
     }
     const elementNode = node;
-    const { attributes } = elementNode;
     const localName = elementNode.localName;
     const props = {};
     const children = [];
     const directives = [];
     let island = false;
-    for (let i6 = 0; i6 < attributes.length; i6++) {
-      const attributeName = attributes[i6].name;
-      const attributeValue = attributes[i6].value;
+    const attributeNames = elementNode.getAttributeNames();
+    for (let i6 = 0; i6 < attributeNames.length; i6++) {
+      const attributeName = attributeNames[i6];
+      const attributeValue = elementNode.getAttribute(attributeName) ?? "";
       if (attributeName[directivePrefix.length] && attributeName.slice(0, directivePrefix.length) === directivePrefix) {
         if (true) {
           if (attributeName === "data-wp-ignore") {
@@ -3102,6 +3104,8 @@ function toVdom(root) {
         } else {
           directives.push([attributeName, namespace, value]);
         }
+        props[attributeName] = attributeValue;
+        continue;
       } else if (attributeName === "ref") {
         continue;
       }
@@ -3193,7 +3197,7 @@ function toVdom(root) {
   );
   nodesToReplace.forEach(
     (node) => node.replaceWith(
-      new window.Text(node.nodeValue ?? "")
+      new window.Text(node.data)
     )
   );
   return vdom;
