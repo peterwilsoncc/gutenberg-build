@@ -88,6 +88,11 @@ return array(
 		'asset' => 'core-abilities/index.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/core-actions/page',
+		'path' => 'core-actions/page',
+		'asset' => 'core-actions/page.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/core-actions/post_type_supports',
 		'path' => 'core-actions/post_type_supports',
 		'asset' => 'core-actions/post_type_supports.min.asset.php',
