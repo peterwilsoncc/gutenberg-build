@@ -113235,6 +113235,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { editMediaEntity } = (0, import_data154.useSelect)((select3) => {
       const settings3 = select3(store).getSettings();
       return {
+        // The editor sets the media edit function under a private key.
         editMediaEntity: settings3?.[mediaEditKey]
       };
     }, []);
@@ -113295,26 +113296,30 @@ If there's a particular need for this, please submit a feature request at https:
             id: savedImage.id,
             url: savedImage.source_url
           });
-          createSuccessNotice(messages[modifierType], {
-            type: "snackbar",
-            actions: [
-              {
-                label: (0, import_i18n213.__)("Undo"),
-                onClick: () => {
-                  onSaveImage({
-                    id,
-                    url
-                  });
+          createSuccessNotice(
+            messages[modifierType],
+            {
+              type: "snackbar",
+              actions: [
+                {
+                  label: (0, import_i18n213.__)("Undo"),
+                  onClick: () => {
+                    onSaveImage({
+                      id,
+                      url
+                    });
+                  }
                 }
-              }
-            ]
-          });
+              ]
+            }
+          );
         }
       } catch (error2) {
         createErrorNotice(
           (0, import_i18n213.sprintf)(
             /* translators: %s: Error message. */
             (0, import_i18n213.__)("Could not edit image. %s"),
+            // Media edit rejections carry a message.
             (0, import_dom73.__unstableStripHTML)(error2.message)
           ),
           {
@@ -113385,7 +113390,7 @@ If there's a particular need for this, please submit a feature request at https:
         naturalAspectRatio = 1 / defaultAspect;
       }
       if (angle === 0) {
-        setEditedUrl();
+        setEditedUrl(void 0);
         setInternalRotation(angle);
         const newAspectRatio = shouldResetAspect ? aspectRatio : defaultAspect;
         setCropperState({
@@ -113482,7 +113487,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/image-editor/context.mjs
   var import_jsx_runtime593 = __toESM(require_jsx_runtime(), 1);
-  var ImageEditingContext = (0, import_element387.createContext)({});
+  var ImageEditingContext = (0, import_element387.createContext)(
+    {}
+  );
   ImageEditingContext.displayName = "ImageEditingContext";
   var useImageEditingContext = () => (0, import_element387.useContext)(ImageEditingContext);
   function ImageEditingProvider({
@@ -113547,13 +113554,19 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return b ? a / b : a;
   }
-  function presetRatioAsNumber({ ratio, ...rest }) {
+  function presetRatioAsNumber({
+    ratio,
+    ...rest
+  }) {
     return {
+      // Preset ratios are strings.
       ratio: ratioToNumber(ratio),
       ...rest
     };
   }
-  function AspectRatioDropdown({ toggleProps }) {
+  function AspectRatioDropdown({
+    toggleProps
+  }) {
     const { isInProgress, aspect, setAspect, defaultAspect } = useImageEditingContext();
     const [defaultRatios, themeRatios, showDefaultRatios] = useSettings(
       "dimensions.aspectRatios.default",
@@ -113662,6 +113675,7 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         style: {
           ...borderProps?.style,
+          // An unmeasured width is left unset.
           width: width || clientWidth,
           height: editedHeight
         },
@@ -116574,8 +116588,14 @@ If there's a particular need for this, please submit a feature request at https:
       )
     }
   ) });
-  var URLSelectionUI = ({ src, onChangeSrc, onSelectURL }) => {
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element400.useState)(null);
+  var URLSelectionUI = ({
+    src,
+    onChangeSrc,
+    onSelectURL
+  }) => {
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element400.useState)(
+      null
+    );
     const [isURLInputVisible, setIsURLInputVisible] = (0, import_element400.useState)(false);
     const openURLInput = () => {
       setIsURLInputVisible(true);
@@ -116716,8 +116736,10 @@ If there's a particular need for this, please submit a feature request at https:
       mediaUpload2({
         allowedTypes,
         filesList: files,
+        // The upload passes the uploaded media.
         onFileChange: setMedia,
         onError,
+        // `add` allows multiple files like `true`.
         multiple
       });
     };
@@ -116735,25 +116757,30 @@ If there's a particular need for this, please submit a feature request at https:
           }
           return new Promise((resolve, reject) => {
             window.fetch(block.attributes.url).then((response) => response.blob()).then(
-              (blob) => mediaUpload2({
-                filesList: [blob],
-                additionalData: {
-                  title: block.attributes.title,
-                  alt_text: block.attributes.alt,
-                  caption: block.attributes.caption,
-                  type: blockType
-                },
-                onFileChange: ([media]) => {
-                  if (media.id) {
-                    resolve(media);
-                  }
-                },
-                allowedTypes,
-                onError: reject
-              })
+              (blob) => (
+                // Uploads only start where the user can upload media.
+                mediaUpload2({
+                  // The upload reads a blob like a file.
+                  filesList: [blob],
+                  additionalData: {
+                    title: block.attributes.title,
+                    alt_text: block.attributes.alt,
+                    caption: block.attributes.caption,
+                    type: blockType
+                  },
+                  onFileChange: ([media]) => {
+                    if (media.id) {
+                      resolve(media);
+                    }
+                  },
+                  allowedTypes,
+                  onError: reject
+                })
+              )
             ).catch(() => resolve(block.attributes.url));
           });
         })
+        // Callers that accept dropped blocks handle errors.
       ).catch((err) => onError(err));
       if (!uploadedMediaList?.length) {
         return;
@@ -116850,7 +116877,10 @@ If there's a particular need for this, please submit a feature request at https:
               }
             }
             return types.length > 0 && types.every(
-              (type) => allowedTypes.includes(type)
+              (type) => (
+                // Callers that accept dropped blocks set the allowed types.
+                allowedTypes.includes(type)
+              )
             ) && (multiple ? true : types.length === 1);
           }
         }
@@ -116915,7 +116945,10 @@ If there's a particular need for this, please submit a feature request at https:
           onSelect,
           allowedTypes,
           mode: "browse",
-          value: Array.isArray(value) ? value.map(({ id }) => id) : value.id,
+          value: Array.isArray(value) ? (
+            // Media in a gallery have IDs.
+            value.map(({ id }) => id)
+          ) : value.id,
           render: libraryButton
         }
       );
@@ -116998,7 +117031,9 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var media_placeholder_default = (0, import_components228.withFilters)("editor.MediaPlaceholder")(MediaPlaceholder);
+  var media_placeholder_default = (0, import_components228.withFilters)("editor.MediaPlaceholder")(
+    MediaPlaceholder
+  );
 
   // packages/block-editor/build-module/components/panel-color-settings/index.mjs
   var import_jsx_runtime619 = __toESM(require_jsx_runtime(), 1);
