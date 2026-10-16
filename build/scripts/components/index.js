@@ -101,7 +101,7 @@ var wp;
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect25(
+          useLayoutEffect24(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -135,7 +135,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React125 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState100 = React125.useState, useEffect93 = React125.useEffect, useLayoutEffect25 = React125.useLayoutEffect, useDebugValue2 = React125.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React125 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState100 = React125.useState, useEffect93 = React125.useEffect, useLayoutEffect24 = React125.useLayoutEffect, useDebugValue2 = React125.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React125.useSyncExternalStore ? React125.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -23505,17 +23505,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     return cx2;
   };
 
-  // packages/components/build-module/utils/box-sizing.mjs
-  var boxSizingReset = css2`
-	box-sizing: border-box;
-
-	*,
-	*::before,
-	*::after {
-		box-sizing: inherit;
-	}
-`;
-
   // node_modules/.store/memize@2.1.1-roXbtpG2bis3Lggp7SQpAA/node_modules/memize/dist/index.js
   function memize(fn, options2) {
     var size4 = 0;
@@ -23887,19 +23876,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     };
   }
   rtl.watch = () => (0, import_i18n2.isRTL)();
-
-  // packages/components/build-module/utils/font-values.mjs
-  var font_values_default = {
-    "default.fontFamily": "-apple-system, system-ui, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif",
-    "default.fontSize": "13px",
-    "helpText.fontSize": "12px",
-    mobileTextMinFontSize: "16px"
-  };
-
-  // packages/components/build-module/utils/font.mjs
-  function font(value) {
-    return font_values_default[value] ?? "";
-  }
 
   // packages/components/build-module/utils/colors-values.mjs
   var white = "#fff";
@@ -25697,7 +25673,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   };
 
   // node_modules/.store/@emotion/styled@11.14.1-0br7U5HgLvJ7sHZ76nenwA/node_modules/@emotion/styled/dist/emotion-styled.browser.development.esm.js
-  var import_react87 = __toESM(require_react());
+  var import_react86 = __toESM(require_react());
   init_emotion_is_prop_valid_esm();
   var tags = [
     "a",
@@ -28041,7 +28017,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // node_modules/.store/@use-gesture/react@10.3.1-W9bGCbU_i55YPRClUH66IA/node_modules/@use-gesture/react/dist/use-gesture-react.esm.js
-  var import_react89 = __toESM(require_react());
+  var import_react88 = __toESM(require_react());
 
   // node_modules/.store/@use-gesture/core@10.3.1-rkMtxIPQJCnP9mbybvO3Ig/node_modules/@use-gesture/core/dist/use-gesture-core.esm.js
   function _objectWithoutPropertiesLoose(source, excluded) {
@@ -28315,11 +28291,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // node_modules/.store/@use-gesture/react@10.3.1-W9bGCbU_i55YPRClUH66IA/node_modules/@use-gesture/react/dist/use-gesture-react.esm.js
   function useRecognizers(handlers, config = {}, gestureKey, nativeHandlers) {
-    const ctrl = import_react89.default.useMemo(() => new Controller(handlers), []);
+    const ctrl = import_react88.default.useMemo(() => new Controller(handlers), []);
     ctrl.applyHandlers(handlers, nativeHandlers);
     ctrl.applyConfig(config, gestureKey);
-    import_react89.default.useEffect(ctrl.effect.bind(ctrl));
-    import_react89.default.useEffect(() => {
+    import_react88.default.useEffect(ctrl.effect.bind(ctrl));
+    import_react88.default.useEffect(() => {
       return ctrl.clean.bind(ctrl);
     }, []);
     if (config.target === void 0) {
@@ -30095,12 +30071,12 @@ This message will only show in development mode. It won't appear in production. 
 
   // node_modules/.store/@floating-ui/react-dom@2.1.9-AxWcAwqlMfOrAFOinFKSVg/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
   var React10 = __toESM(require_react(), 1);
-  var import_react91 = __toESM(require_react(), 1);
+  var import_react90 = __toESM(require_react(), 1);
   var ReactDOM = __toESM(require_react_dom(), 1);
   var isClient = typeof document !== "undefined";
   var noop7 = function noop8() {
   };
-  var index = isClient ? import_react91.useLayoutEffect : noop7;
+  var index = isClient ? import_react90.useLayoutEffect : noop7;
   function deepEqual(a2, b2) {
     if (a2 === b2) {
       return true;
@@ -30609,7 +30585,7 @@ This message will only show in development mode. It won't appear in production. 
   };
   function StyleProvider(props) {
     const { children, document: document2 } = props;
-    (0, import_element42.useLayoutEffect)(() => {
+    (0, import_element42.useInsertionEffect)(() => {
       if (!document2) {
         return;
       }
@@ -33672,7 +33648,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/range-control/rail.mjs
   var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
-  var import_react94 = __toESM(require_react(), 1);
+  var import_react93 = __toESM(require_react(), 1);
   var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
   function getRuntime20() {
     const globalScope = globalThis;
@@ -33822,7 +33798,7 @@ This message will only show in development mode. It won't appear in production. 
           "components-range-control__marks",
           style_module_default19.marks
         ),
-        children: marksData.map((mark) => /* @__PURE__ */ (0, import_react94.createElement)(
+        children: marksData.map((mark) => /* @__PURE__ */ (0, import_react93.createElement)(
           RangeMark,
           {
             ...mark,
@@ -34741,7 +34717,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element73 = __toESM(require_element(), 1);
 
   // node_modules/.store/react-colorful@5.8.1-ZlsHdwpPAIiwA4_AEInjJA/node_modules/react-colorful/dist/index.mjs
-  var import_react95 = __toESM(require_react(), 1);
+  var import_react94 = __toESM(require_react(), 1);
   function l2() {
     return (l2 = Object.assign || function(e3) {
       for (var r4 = 1; r4 < arguments.length; r4++) {
@@ -34758,7 +34734,7 @@ This message will only show in development mode. It won't appear in production. 
     return o3;
   }
   function i(e3) {
-    var n2 = (0, import_react95.useRef)(e3), t3 = (0, import_react95.useRef)(function(e4) {
+    var n2 = (0, import_react94.useRef)(e3), t3 = (0, import_react94.useRef)(function(e4) {
       n2.current && n2.current(e4);
     });
     return n2.current = e3, t3.current;
@@ -34782,8 +34758,8 @@ This message will only show in development mode. It won't appear in production. 
   var h = function(e3) {
     !f(e3) && e3.preventDefault();
   };
-  var g2 = import_react95.default.memo(function(o3) {
-    var a2 = o3.onMove, u2 = o3.onKey, s2 = o3.onEnd, g3 = c2(o3, ["onMove", "onKey", "onEnd"]), m3 = (0, import_react95.useRef)(null), p3 = i(a2), b2 = i(u2), _2 = i(s2), E2 = (0, import_react95.useRef)(null), C2 = (0, import_react95.useRef)(false), x2 = (0, import_react95.useMemo)(function() {
+  var g2 = import_react94.default.memo(function(o3) {
+    var a2 = o3.onMove, u2 = o3.onKey, s2 = o3.onEnd, g3 = c2(o3, ["onMove", "onKey", "onEnd"]), m3 = (0, import_react94.useRef)(null), p3 = i(a2), b2 = i(u2), _2 = i(s2), E2 = (0, import_react94.useRef)(null), C2 = (0, import_react94.useRef)(false), x2 = (0, import_react94.useMemo)(function() {
       var e3 = function(e4) {
         h(e4), (f(e4) ? e4.touches.length > 0 : e4.buttons > 0) && m3.current ? p3(v2(m3.current, e4, E2.current)) : (n2(false), _2());
       }, r4 = function() {
@@ -34813,16 +34789,16 @@ This message will only show in development mode. It won't appear in production. 
         r5 >= 37 && r5 <= 40 && _2();
       }, n2];
     }, [b2, p3, _2]), H2 = x2[0], M2 = x2[1], N2 = x2[2], w2 = x2[3];
-    return (0, import_react95.useEffect)(function() {
+    return (0, import_react94.useEffect)(function() {
       return w2;
-    }, [w2]), import_react95.default.createElement("div", l2({}, g3, { onTouchStart: H2, onMouseDown: H2, className: "react-colorful__interactive", ref: m3, onKeyDown: M2, onKeyUp: N2, tabIndex: 0, role: "slider" }));
+    }, [w2]), import_react94.default.createElement("div", l2({}, g3, { onTouchStart: H2, onMouseDown: H2, className: "react-colorful__interactive", ref: m3, onKeyDown: M2, onKeyUp: N2, tabIndex: 0, role: "slider" }));
   });
   var m2 = function(e3) {
     return e3.filter(Boolean).join(" ");
   };
   var p2 = function(r4) {
     var n2 = r4.color, t3 = r4.left, o3 = r4.top, a2 = void 0 === o3 ? 0.5 : o3, u2 = m2(["react-colorful__pointer", r4.className]);
-    return import_react95.default.createElement("div", { className: u2, style: { top: 100 * a2 + "%", left: 100 * t3 + "%" } }, import_react95.default.createElement("div", { className: "react-colorful__pointer-fill", style: { backgroundColor: n2 } }));
+    return import_react94.default.createElement("div", { className: u2, style: { top: 100 * a2 + "%", left: 100 * t3 + "%" } }, import_react94.default.createElement("div", { className: "react-colorful__pointer-fill", style: { backgroundColor: n2 } }));
   };
   var b = function(e3, r4, n2) {
     return void 0 === r4 && (r4 = 0), void 0 === n2 && (n2 = Math.pow(10, r4)), Math.round(n2 * e3) / n2;
@@ -34843,21 +34819,21 @@ This message will only show in development mode. It won't appear in production. 
   var A2 = function(e3) {
     return { h: b(e3.h), s: b(e3.s), v: b(e3.v), a: b(e3.a, 2) };
   };
-  var R2 = import_react95.default.memo(function(r4) {
+  var R2 = import_react94.default.memo(function(r4) {
     var n2 = r4.hue, t3 = r4.onChange, o3 = r4.onChangeEnd, a2 = m2(["react-colorful__hue", r4.className]);
-    return import_react95.default.createElement("div", { className: a2 }, import_react95.default.createElement(g2, { onMove: function(e3) {
+    return import_react94.default.createElement("div", { className: a2 }, import_react94.default.createElement(g2, { onMove: function(e3) {
       t3({ h: 360 * e3.left });
     }, onKey: function(e3) {
       t3({ h: s(n2 + 360 * e3.left, 0, 360) });
-    }, onEnd: o3, "aria-label": "Hue", "aria-valuenow": b(n2), "aria-valuemax": "360", "aria-valuemin": "0" }, import_react95.default.createElement(p2, { className: "react-colorful__hue-pointer", left: n2 / 360, color: k2({ h: n2, s: 100, v: 100, a: 1 }) })));
+    }, onEnd: o3, "aria-label": "Hue", "aria-valuenow": b(n2), "aria-valuemax": "360", "aria-valuemin": "0" }, import_react94.default.createElement(p2, { className: "react-colorful__hue-pointer", left: n2 / 360, color: k2({ h: n2, s: 100, v: 100, a: 1 }) })));
   });
-  var S2 = import_react95.default.memo(function(r4) {
+  var S2 = import_react94.default.memo(function(r4) {
     var n2 = r4.hsva, t3 = r4.onChange, o3 = r4.onChangeEnd, a2 = { backgroundColor: k2({ h: n2.h, s: 100, v: 100, a: 1 }) };
-    return import_react95.default.createElement("div", { className: "react-colorful__saturation", style: a2 }, import_react95.default.createElement(g2, { onMove: function(e3) {
+    return import_react94.default.createElement("div", { className: "react-colorful__saturation", style: a2 }, import_react94.default.createElement(g2, { onMove: function(e3) {
       t3({ s: 100 * e3.left, v: 100 - 100 * e3.top });
     }, onKey: function(e3) {
       t3({ s: s(n2.s + 100 * e3.left, 0, 100), v: s(n2.v - 100 * e3.top, 0, 100) });
-    }, onEnd: o3, "aria-label": "Color", "aria-valuetext": "Saturation " + b(n2.s) + "%, Brightness " + b(n2.v) + "%" }, import_react95.default.createElement(p2, { className: "react-colorful__saturation-pointer", top: 1 - n2.v / 100, left: n2.s / 100, color: k2(n2) })));
+    }, onEnd: o3, "aria-label": "Color", "aria-valuetext": "Saturation " + b(n2.s) + "%, Brightness " + b(n2.v) + "%" }, import_react94.default.createElement(p2, { className: "react-colorful__saturation-pointer", top: 1 - n2.v / 100, left: n2.s / 100, color: k2(n2) })));
   });
   var T = function(e3, r4) {
     if (e3 === r4) return true;
@@ -34865,29 +34841,29 @@ This message will only show in development mode. It won't appear in production. 
     return true;
   };
   function X(e3, n2, u2, l3) {
-    var c3 = i(u2), s2 = i(l3), f2 = (0, import_react95.useState)(function() {
+    var c3 = i(u2), s2 = i(l3), f2 = (0, import_react94.useState)(function() {
       return e3.toHsva(n2);
-    }), d2 = f2[0], v3 = f2[1], h2 = (0, import_react95.useRef)({ color: n2, hsva: d2 }), g3 = (0, import_react95.useRef)(false);
-    (0, import_react95.useEffect)(function() {
+    }), d2 = f2[0], v3 = f2[1], h2 = (0, import_react94.useRef)({ color: n2, hsva: d2 }), g3 = (0, import_react94.useRef)(false);
+    (0, import_react94.useEffect)(function() {
       if (!e3.equal(n2, h2.current.color)) {
         var r4 = e3.toHsva(n2);
         h2.current = { hsva: r4, color: n2 }, v3(r4), g3.current = false;
       }
-    }, [n2, e3]), (0, import_react95.useEffect)(function() {
+    }, [n2, e3]), (0, import_react94.useEffect)(function() {
       var r4;
       T(d2, h2.current.hsva) || e3.equal(r4 = e3.fromHsva(d2), h2.current.color) || (h2.current = { hsva: d2, color: r4 }, c3(r4), g3.current = true);
     }, [d2, e3, c3]);
-    var m3 = (0, import_react95.useCallback)(function(e4) {
+    var m3 = (0, import_react94.useCallback)(function(e4) {
       v3(function(r4) {
         return Object.assign({}, r4, e4);
       });
-    }, []), p3 = (0, import_react95.useCallback)(function() {
+    }, []), p3 = (0, import_react94.useCallback)(function() {
       g3.current && (g3.current = false, s2(h2.current.color));
     }, [s2]);
     return [d2, m3, p3];
   }
   var Y;
-  var U = "undefined" != typeof window ? import_react95.useLayoutEffect : import_react95.useEffect;
+  var U = "undefined" != typeof window ? import_react94.useLayoutEffect : import_react94.useEffect;
   var V2 = function() {
     return Y || ("undefined" != typeof __webpack_nonce__ ? __webpack_nonce__ : void 0);
   };
@@ -34907,30 +34883,30 @@ This message will only show in development mode. It won't appear in production. 
     }, []);
   };
   var J = function(n2) {
-    var t3 = n2.className, o3 = n2.colorModel, a2 = n2.color, u2 = void 0 === a2 ? o3.defaultColor : a2, i2 = n2.onChange, s2 = n2.onChangeEnd, f2 = c2(n2, ["className", "colorModel", "color", "onChange", "onChangeEnd"]), d2 = (0, import_react95.useRef)(null);
+    var t3 = n2.className, o3 = n2.colorModel, a2 = n2.color, u2 = void 0 === a2 ? o3.defaultColor : a2, i2 = n2.onChange, s2 = n2.onChangeEnd, f2 = c2(n2, ["className", "colorModel", "color", "onChange", "onChangeEnd"]), d2 = (0, import_react94.useRef)(null);
     G(d2);
     var v3 = X(o3, u2, i2, s2), h2 = v3[0], g3 = v3[1], p3 = v3[2], b2 = m2(["react-colorful", t3]);
-    return import_react95.default.createElement("div", l2({}, f2, { ref: d2, className: b2 }), import_react95.default.createElement(S2, { hsva: h2, onChange: g3, onChangeEnd: p3 }), import_react95.default.createElement(R2, { hue: h2.h, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
+    return import_react94.default.createElement("div", l2({}, f2, { ref: d2, className: b2 }), import_react94.default.createElement(S2, { hsva: h2, onChange: g3, onChangeEnd: p3 }), import_react94.default.createElement(R2, { hue: h2.h, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
   };
   var ee = function(r4) {
     var n2 = r4.className, t3 = r4.hsva, o3 = r4.onChange, a2 = r4.onChangeEnd, u2 = { backgroundImage: "linear-gradient(90deg, " + q2(Object.assign({}, t3, { a: 0 })) + ", " + q2(Object.assign({}, t3, { a: 1 })) + ")" }, l3 = m2(["react-colorful__alpha", n2]), c3 = b(100 * t3.a);
-    return import_react95.default.createElement("div", { className: l3 }, import_react95.default.createElement("div", { className: "react-colorful__alpha-gradient", style: u2 }), import_react95.default.createElement(g2, { onMove: function(e3) {
+    return import_react94.default.createElement("div", { className: l3 }, import_react94.default.createElement("div", { className: "react-colorful__alpha-gradient", style: u2 }), import_react94.default.createElement(g2, { onMove: function(e3) {
       o3({ a: e3.left });
     }, onKey: function(e3) {
       o3({ a: s(t3.a + e3.left) });
-    }, onEnd: a2, "aria-label": "Alpha", "aria-valuetext": c3 + "%", "aria-valuenow": c3, "aria-valuemin": "0", "aria-valuemax": "100" }, import_react95.default.createElement(p2, { className: "react-colorful__alpha-pointer", left: t3.a, color: q2(t3) })));
+    }, onEnd: a2, "aria-label": "Alpha", "aria-valuetext": c3 + "%", "aria-valuenow": c3, "aria-valuemin": "0", "aria-valuemax": "100" }, import_react94.default.createElement(p2, { className: "react-colorful__alpha-pointer", left: t3.a, color: q2(t3) })));
   };
   var re = function(n2) {
-    var t3 = n2.className, o3 = n2.colorModel, a2 = n2.color, u2 = void 0 === a2 ? o3.defaultColor : a2, i2 = n2.onChange, s2 = n2.onChangeEnd, f2 = c2(n2, ["className", "colorModel", "color", "onChange", "onChangeEnd"]), d2 = (0, import_react95.useRef)(null);
+    var t3 = n2.className, o3 = n2.colorModel, a2 = n2.color, u2 = void 0 === a2 ? o3.defaultColor : a2, i2 = n2.onChange, s2 = n2.onChangeEnd, f2 = c2(n2, ["className", "colorModel", "color", "onChange", "onChangeEnd"]), d2 = (0, import_react94.useRef)(null);
     G(d2);
     var v3 = X(o3, u2, i2, s2), h2 = v3[0], g3 = v3[1], p3 = v3[2], b2 = m2(["react-colorful", t3]);
-    return import_react95.default.createElement("div", l2({}, f2, { ref: d2, className: b2 }), import_react95.default.createElement(S2, { hsva: h2, onChange: g3, onChangeEnd: p3 }), import_react95.default.createElement(R2, { hue: h2.h, onChange: g3, onChangeEnd: p3 }), import_react95.default.createElement(ee, { hsva: h2, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
+    return import_react94.default.createElement("div", l2({}, f2, { ref: d2, className: b2 }), import_react94.default.createElement(S2, { hsva: h2, onChange: g3, onChangeEnd: p3 }), import_react94.default.createElement(R2, { hue: h2.h, onChange: g3, onChangeEnd: p3 }), import_react94.default.createElement(ee, { hsva: h2, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
   };
   var de = { defaultColor: { h: 0, s: 0, v: 0, a: 1 }, toHsva: function(e3) {
     return e3;
   }, fromHsva: A2, equal: T };
   var ve = function(r4) {
-    return import_react95.default.createElement(re, l2({}, r4, { colorModel: de }));
+    return import_react94.default.createElement(re, l2({}, r4, { colorModel: de }));
   };
   var me = { defaultColor: { h: 0, s: 0, v: 0 }, toHsva: function(e3) {
     return { h: e3.h, s: e3.s, v: e3.v, a: 1 };
@@ -34939,7 +34915,7 @@ This message will only show in development mode. It won't appear in production. 
     return { h: r4.h, s: r4.s, v: r4.v };
   }, equal: T };
   var pe = function(r4) {
-    return import_react95.default.createElement(J, l2({}, r4, { colorModel: me }));
+    return import_react94.default.createElement(J, l2({}, r4, { colorModel: me }));
   };
 
   // packages/components/build-module/color-picker/picker.mjs
@@ -41405,7 +41381,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useRenderElement.mjs
-  var import_react96 = __toESM(require_react(), 1);
+  var import_react95 = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
     let renderProp = componentProps.render;
     if (params.enabled !== false) {
@@ -41505,14 +41481,14 @@ This message will only show in development mode. It won't appear in production. 
   }
   function renderTag(Tag, props) {
     if (Tag === "button") {
-      return /* @__PURE__ */ (0, import_react96.createElement)("button", {
+      return /* @__PURE__ */ (0, import_react95.createElement)("button", {
         type: "button",
         ...props,
         key: props.key
       });
     }
     if (Tag === "img") {
-      return /* @__PURE__ */ (0, import_react96.createElement)("img", {
+      return /* @__PURE__ */ (0, import_react95.createElement)("img", {
         alt: "",
         ...props,
         key: props.key
@@ -41528,11 +41504,11 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useStableCallback.mjs
-  var useInsertionEffect5 = SafeReact.useInsertionEffect;
+  var useInsertionEffect6 = SafeReact.useInsertionEffect;
   var useSafeInsertionEffect = (
     // React 17 doesn't have useInsertionEffect.
-    useInsertionEffect5 && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
-    useInsertionEffect5 !== SafeReact.useLayoutEffect ? useInsertionEffect5 : (fn) => fn()
+    useInsertionEffect6 && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
+    useInsertionEffect6 !== SafeReact.useLayoutEffect ? useInsertionEffect6 : (fn) => fn()
   );
   function useStableCallback(callback) {
     const stable = useRefWithInit(createStableCallback).current;
@@ -56646,8 +56622,8 @@ This message will only show in development mode. It won't appear in production. 
   );
 
   // packages/react-inert-value/build-module/index.mjs
-  var import_react99 = __toESM(require_react(), 1);
-  var majorVersion2 = parseInt(import_react99.version, 10);
+  var import_react98 = __toESM(require_react(), 1);
+  var majorVersion2 = parseInt(import_react98.version, 10);
   function inertValue2(value) {
     if (majorVersion2 >= 19) {
       return value;
@@ -65060,117 +65036,92 @@ This message will only show in development mode. It won't appear in production. 
     return Math.round(fraction * 100);
   }
 
-  // packages/components/build-module/focal-point-picker/styles/focal-point-picker-style.mjs
-  var Container2 = styled(component_default)`
-	border: 0;
-	padding: 0;
-	margin: 0;
-	font-family: ${font("default.fontFamily")};
-	font-size: ${font("default.fontSize")};
-	${boxSizingReset}
-`;
-  var MediaWrapper = styled.div`
-	background-color: transparent;
-	display: flex;
-	text-align: center;
-	width: 100%;
-	contain: layout;
-`;
-  var MediaContainer = styled.div`
-	align-items: center;
-	border-radius: ${config_values_default.radiusSmall};
-	cursor: pointer;
-	display: inline-flex;
-	justify-content: center;
-	margin: auto;
-	position: relative;
-	height: 100%;
-
-	&:after {
-		border-radius: inherit;
-		bottom: 0;
-		box-shadow: inset 0 0 0 1px rgba( 0, 0, 0, 0.1 );
-		content: '';
-		left: 0;
-		pointer-events: none;
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
-
-	img,
-	video {
-		border-radius: inherit;
-		box-sizing: border-box;
-		display: block;
-		height: auto;
-		margin: 0;
-		max-height: 100%;
-		max-width: 100%;
-		pointer-events: none;
-		user-select: none;
-		width: 100%;
-	}
-`;
-  var MediaPlaceholder = styled.div`
-	background: ${COLORS.gray[100]};
-	border-radius: inherit;
-	box-sizing: border-box;
-	height: ${INITIAL_BOUNDS.height}px;
-	max-width: 280px;
-	min-width: ${INITIAL_BOUNDS.width}px;
-	width: 100%;
-`;
-  var StyledUnitControl = styled(unit_control_default)`
-	width: 100%;
-`;
-  var extraHelpTextMargin = ({
-    hasHelpText = false
-  }) => {
-    return hasHelpText ? css2`
-				padding-bottom: 1em;
-			` : void 0;
-  };
-  var ControlWrapper = styled(component_default3)`
-	max-width: 320px;
-	padding-top: 1em;
-
-	${extraHelpTextMargin}
-`;
-  var GridView = styled.div`
-	left: 50%;
-	overflow: hidden;
-	pointer-events: none;
-	position: absolute;
-	top: 50%;
-	transform: translate3d( -50%, -50%, 0 );
-	z-index: 1;
-
-	@media not ( prefers-reduced-motion ) {
-		transition: opacity 100ms linear;
-	}
-
-	opacity: ${({ showOverlay }) => showOverlay ? 1 : 0};
-`;
-  var GridLine = styled.div`
-	background: rgba( 255, 255, 255, 0.4 );
-	backdrop-filter: blur( 16px ) saturate( 180% );
-	position: absolute;
-	transform: translateZ( 0 );
-`;
-  var GridLineX = styled(GridLine)`
-	height: 1px;
-	left: 1px;
-	right: 1px;
-`;
-  var GridLineY = styled(GridLine)`
-	width: 1px;
-	top: 1px;
-	bottom: 1px;
-`;
-
   // packages/components/build-module/focal-point-picker/controls.mjs
   var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE87 = "data-wp-hash";
+  function getRuntime87() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument87(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash87(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE87}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE87) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle87(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime87();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash87(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE87, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument87(targetDocument) {
+    const runtime = getRuntime87();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle87(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle86(hash2, css4) {
+    const runtime = getRuntime87();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle87(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle86("ccf5dec60a", '.f3136084d94dbb54__root{border:0;box-sizing:border-box;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;margin:0;padding:0}.f3136084d94dbb54__root *,.f3136084d94dbb54__root :after,.f3136084d94dbb54__root :before{box-sizing:inherit}._0846c0c6adbec1fb__media-wrapper{background-color:transparent;contain:layout;display:flex;text-align:center;width:100%}.ad709190b22ab342__media-container{align-items:center;border-radius:2px;cursor:pointer;display:inline-flex;height:100%;justify-content:center;margin:auto;position:relative}.ad709190b22ab342__media-container:after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);content:"";inset:0;pointer-events:none;position:absolute}.ad709190b22ab342__media-container img,.ad709190b22ab342__media-container video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:100%}.ee0f016032dfa895__media-placeholder{background:#f0f0f0;border-radius:inherit;box-sizing:border-box;height:170px;max-width:280px;min-width:200px;width:100%}._43277610c99cd8a7__unit-control{width:100%}._5fe7268dd06b27b6__controls{max-width:320px;padding-top:1em}._5fe7268dd06b27b6__controls:where(._5b543cd2eba2e13b__has-help-text){padding-bottom:1em}._1369d461b9589da1__grid{left:50%;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;transform:translate3d(-50%,-50%,0);z-index:1}@media not (prefers-reduced-motion){._1369d461b9589da1__grid{transition:opacity .1s linear}}._1369d461b9589da1__grid:where(._4e00066f149aa403__show-overlay){opacity:1}._8904f4deec004541__grid-line{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);position:absolute;transform:translateZ(0)}._091be12c9b9dbbb4__grid-line-x{height:1px;inset-inline:1px}.d6f31ab5e23231c8__grid-line-y{inset-block:1px;width:1px}.c42d0a2c8dc8b0c3__pointer{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);border:1px solid hsla(0,0%,100%,.4);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.1);cursor:grab;height:40px;margin-left:-20px;margin-top:-20px;position:absolute;user-select:none;width:40px;will-change:transform;z-index:10000}@media not (prefers-reduced-motion){.c42d0a2c8dc8b0c3__pointer{transition:transform .1s linear}}.c42d0a2c8dc8b0c3__pointer:where(.a4c1c56d62c6af00__is-dragging){box-shadow:0 0 10px rgba(0,0,0,.12);cursor:grabbing;transform:scale(1.1)}');
+  }
+  var style_module_default66 = { "root": "f3136084d94dbb54__root", "media-wrapper": "_0846c0c6adbec1fb__media-wrapper", "media-container": "ad709190b22ab342__media-container", "media-placeholder": "ee0f016032dfa895__media-placeholder", "unit-control": "_43277610c99cd8a7__unit-control", "controls": "_5fe7268dd06b27b6__controls", "has-help-text": "_5b543cd2eba2e13b__has-help-text", "grid": "_1369d461b9589da1__grid", "show-overlay": "_4e00066f149aa403__show-overlay", "grid-line": "_8904f4deec004541__grid-line", "grid-line-x": "_091be12c9b9dbbb4__grid-line-x", "grid-line-y": "d6f31ab5e23231c8__grid-line-y", "pointer": "c42d0a2c8dc8b0c3__pointer", "is-dragging": "a4c1c56d62c6af00__is-dragging" };
   var TEXTCONTROL_MIN = 0;
   var TEXTCONTROL_MAX = 100;
   var noop16 = () => {
@@ -65195,10 +65146,11 @@ This message will only show in development mode. It won't appear in production. 
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(
-      ControlWrapper,
+      component_default3,
       {
-        className: "focal-point-picker__controls",
-        hasHelpText,
+        className: clsx_default(style_module_default66.controls, "focal-point-picker__controls", {
+          [style_module_default66["has-help-text"]]: hasHelpText
+        }),
         gap: 4,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
@@ -65233,9 +65185,12 @@ This message will only show in development mode. It won't appear in production. 
   }
   function FocalPointUnitControl(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
-      StyledUnitControl,
+      unit_control_default,
       {
-        className: "focal-point-picker__controls-position-unit-control",
+        className: clsx_default(
+          style_module_default66["unit-control"],
+          "focal-point-picker__controls-position-unit-control"
+        ),
         labelPosition: "top",
         max: TEXTCONTROL_MAX,
         min: TEXTCONTROL_MIN,
@@ -65245,36 +65200,92 @@ This message will only show in development mode. It won't appear in production. 
     );
   }
 
-  // packages/components/build-module/focal-point-picker/styles/focal-point-style.mjs
-  var PointerCircle = styled.div`
-	background-color: transparent;
-	cursor: grab;
-	height: 40px;
-	margin: -20px 0 0 -20px;
-	position: absolute;
-	user-select: none;
-	width: 40px;
-	will-change: transform;
-	z-index: 10000;
-	background: rgba( 255, 255, 255, 0.4 );
-	border: 1px solid rgba( 255, 255, 255, 0.4 );
-	border-radius: ${config_values_default.radiusRound};
-	backdrop-filter: blur( 16px ) saturate( 180% );
-	box-shadow: rgb( 0 0 0 / 10% ) 0px 0px 8px;
-
-	@media not ( prefers-reduced-motion ) {
-		transition: transform 100ms linear;
-	}
-
-	${({ isDragging: isDragging2 }) => isDragging2 && `
-			box-shadow: rgb( 0 0 0 / 12% ) 0px 0px 10px;
-			transform: scale( 1.1 );
-			cursor: grabbing;
-			`}
-`;
-
   // packages/components/build-module/focal-point-picker/focal-point.mjs
   var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE88 = "data-wp-hash";
+  function getRuntime88() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument88(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash88(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE88}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE88) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle88(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime88();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash88(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE88, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument88(targetDocument) {
+    const runtime = getRuntime88();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle88(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle87(hash2, css4) {
+    const runtime = getRuntime88();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle88(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle87("ccf5dec60a", '.f3136084d94dbb54__root{border:0;box-sizing:border-box;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;margin:0;padding:0}.f3136084d94dbb54__root *,.f3136084d94dbb54__root :after,.f3136084d94dbb54__root :before{box-sizing:inherit}._0846c0c6adbec1fb__media-wrapper{background-color:transparent;contain:layout;display:flex;text-align:center;width:100%}.ad709190b22ab342__media-container{align-items:center;border-radius:2px;cursor:pointer;display:inline-flex;height:100%;justify-content:center;margin:auto;position:relative}.ad709190b22ab342__media-container:after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);content:"";inset:0;pointer-events:none;position:absolute}.ad709190b22ab342__media-container img,.ad709190b22ab342__media-container video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:100%}.ee0f016032dfa895__media-placeholder{background:#f0f0f0;border-radius:inherit;box-sizing:border-box;height:170px;max-width:280px;min-width:200px;width:100%}._43277610c99cd8a7__unit-control{width:100%}._5fe7268dd06b27b6__controls{max-width:320px;padding-top:1em}._5fe7268dd06b27b6__controls:where(._5b543cd2eba2e13b__has-help-text){padding-bottom:1em}._1369d461b9589da1__grid{left:50%;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;transform:translate3d(-50%,-50%,0);z-index:1}@media not (prefers-reduced-motion){._1369d461b9589da1__grid{transition:opacity .1s linear}}._1369d461b9589da1__grid:where(._4e00066f149aa403__show-overlay){opacity:1}._8904f4deec004541__grid-line{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);position:absolute;transform:translateZ(0)}._091be12c9b9dbbb4__grid-line-x{height:1px;inset-inline:1px}.d6f31ab5e23231c8__grid-line-y{inset-block:1px;width:1px}.c42d0a2c8dc8b0c3__pointer{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);border:1px solid hsla(0,0%,100%,.4);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.1);cursor:grab;height:40px;margin-left:-20px;margin-top:-20px;position:absolute;user-select:none;width:40px;will-change:transform;z-index:10000}@media not (prefers-reduced-motion){.c42d0a2c8dc8b0c3__pointer{transition:transform .1s linear}}.c42d0a2c8dc8b0c3__pointer:where(.a4c1c56d62c6af00__is-dragging){box-shadow:0 0 10px rgba(0,0,0,.12);cursor:grabbing;transform:scale(1.1)}');
+  }
+  var style_module_default67 = { "root": "f3136084d94dbb54__root", "media-wrapper": "_0846c0c6adbec1fb__media-wrapper", "media-container": "ad709190b22ab342__media-container", "media-placeholder": "ee0f016032dfa895__media-placeholder", "unit-control": "_43277610c99cd8a7__unit-control", "controls": "_5fe7268dd06b27b6__controls", "has-help-text": "_5b543cd2eba2e13b__has-help-text", "grid": "_1369d461b9589da1__grid", "show-overlay": "_4e00066f149aa403__show-overlay", "grid-line": "_8904f4deec004541__grid-line", "grid-line-x": "_091be12c9b9dbbb4__grid-line-x", "grid-line-y": "d6f31ab5e23231c8__grid-line-y", "pointer": "c42d0a2c8dc8b0c3__pointer", "is-dragging": "a4c1c56d62c6af00__is-dragging" };
   function FocalPoint({
     left = "50%",
     top = "50%",
@@ -65282,10 +65293,15 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     const style2 = { left, top };
     return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(
-      PointerCircle,
+      PolymorphicElement,
       {
+        as: "div",
         ...props,
-        className: "components-focal-point-picker__icon_container",
+        className: clsx_default(
+          style_module_default67.pointer,
+          "components-focal-point-picker__icon_container",
+          { [style_module_default67["is-dragging"]]: props.isDragging }
+        ),
         style: style2
       }
     );
@@ -65293,24 +65309,149 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/focal-point-picker/grid.mjs
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE89 = "data-wp-hash";
+  function getRuntime89() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument89(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash89(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE89}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE89) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle89(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime89();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash89(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE89, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument89(targetDocument) {
+    const runtime = getRuntime89();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle89(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle88(hash2, css4) {
+    const runtime = getRuntime89();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle89(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle88("ccf5dec60a", '.f3136084d94dbb54__root{border:0;box-sizing:border-box;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;margin:0;padding:0}.f3136084d94dbb54__root *,.f3136084d94dbb54__root :after,.f3136084d94dbb54__root :before{box-sizing:inherit}._0846c0c6adbec1fb__media-wrapper{background-color:transparent;contain:layout;display:flex;text-align:center;width:100%}.ad709190b22ab342__media-container{align-items:center;border-radius:2px;cursor:pointer;display:inline-flex;height:100%;justify-content:center;margin:auto;position:relative}.ad709190b22ab342__media-container:after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);content:"";inset:0;pointer-events:none;position:absolute}.ad709190b22ab342__media-container img,.ad709190b22ab342__media-container video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:100%}.ee0f016032dfa895__media-placeholder{background:#f0f0f0;border-radius:inherit;box-sizing:border-box;height:170px;max-width:280px;min-width:200px;width:100%}._43277610c99cd8a7__unit-control{width:100%}._5fe7268dd06b27b6__controls{max-width:320px;padding-top:1em}._5fe7268dd06b27b6__controls:where(._5b543cd2eba2e13b__has-help-text){padding-bottom:1em}._1369d461b9589da1__grid{left:50%;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;transform:translate3d(-50%,-50%,0);z-index:1}@media not (prefers-reduced-motion){._1369d461b9589da1__grid{transition:opacity .1s linear}}._1369d461b9589da1__grid:where(._4e00066f149aa403__show-overlay){opacity:1}._8904f4deec004541__grid-line{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);position:absolute;transform:translateZ(0)}._091be12c9b9dbbb4__grid-line-x{height:1px;inset-inline:1px}.d6f31ab5e23231c8__grid-line-y{inset-block:1px;width:1px}.c42d0a2c8dc8b0c3__pointer{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);border:1px solid hsla(0,0%,100%,.4);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.1);cursor:grab;height:40px;margin-left:-20px;margin-top:-20px;position:absolute;user-select:none;width:40px;will-change:transform;z-index:10000}@media not (prefers-reduced-motion){.c42d0a2c8dc8b0c3__pointer{transition:transform .1s linear}}.c42d0a2c8dc8b0c3__pointer:where(.a4c1c56d62c6af00__is-dragging){box-shadow:0 0 10px rgba(0,0,0,.12);cursor:grabbing;transform:scale(1.1)}');
+  }
+  var style_module_default68 = { "root": "f3136084d94dbb54__root", "media-wrapper": "_0846c0c6adbec1fb__media-wrapper", "media-container": "ad709190b22ab342__media-container", "media-placeholder": "ee0f016032dfa895__media-placeholder", "unit-control": "_43277610c99cd8a7__unit-control", "controls": "_5fe7268dd06b27b6__controls", "has-help-text": "_5b543cd2eba2e13b__has-help-text", "grid": "_1369d461b9589da1__grid", "show-overlay": "_4e00066f149aa403__show-overlay", "grid-line": "_8904f4deec004541__grid-line", "grid-line-x": "_091be12c9b9dbbb4__grid-line-x", "grid-line-y": "d6f31ab5e23231c8__grid-line-y", "pointer": "c42d0a2c8dc8b0c3__pointer", "is-dragging": "a4c1c56d62c6af00__is-dragging" };
   function FocalPointPickerGrid({
     bounds,
     ...props
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime268.jsxs)(
-      GridView,
+      PolymorphicElement,
       {
+        as: "div",
         ...props,
-        className: "components-focal-point-picker__grid",
+        className: clsx_default(
+          style_module_default68.grid,
+          "components-focal-point-picker__grid",
+          { [style_module_default68["show-overlay"]]: props.showOverlay }
+        ),
         style: {
           width: bounds.width,
           height: bounds.height
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(GridLineX, { style: { top: "33%" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(GridLineX, { style: { top: "66%" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(GridLineY, { style: { left: "33%" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(GridLineY, { style: { left: "66%" } })
+          /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
+            "div",
+            {
+              className: clsx_default(
+                style_module_default68["grid-line"],
+                style_module_default68["grid-line-x"]
+              ),
+              style: { top: "33%" }
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
+            "div",
+            {
+              className: clsx_default(
+                style_module_default68["grid-line"],
+                style_module_default68["grid-line-x"]
+              ),
+              style: { top: "66%" }
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
+            "div",
+            {
+              className: clsx_default(
+                style_module_default68["grid-line"],
+                style_module_default68["grid-line-y"]
+              ),
+              style: { left: "33%" }
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
+            "div",
+            {
+              className: clsx_default(
+                style_module_default68["grid-line"],
+                style_module_default68["grid-line-y"]
+              ),
+              style: { left: "66%" }
+            }
+          )
         ]
       }
     );
@@ -65318,6 +65459,90 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/focal-point-picker/media.mjs
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE90 = "data-wp-hash";
+  function getRuntime90() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument90(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash90(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE90}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE90) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle90(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime90();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash90(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE90, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument90(targetDocument) {
+    const runtime = getRuntime90();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle90(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle89(hash2, css4) {
+    const runtime = getRuntime90();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle90(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle89("ccf5dec60a", '.f3136084d94dbb54__root{border:0;box-sizing:border-box;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;margin:0;padding:0}.f3136084d94dbb54__root *,.f3136084d94dbb54__root :after,.f3136084d94dbb54__root :before{box-sizing:inherit}._0846c0c6adbec1fb__media-wrapper{background-color:transparent;contain:layout;display:flex;text-align:center;width:100%}.ad709190b22ab342__media-container{align-items:center;border-radius:2px;cursor:pointer;display:inline-flex;height:100%;justify-content:center;margin:auto;position:relative}.ad709190b22ab342__media-container:after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);content:"";inset:0;pointer-events:none;position:absolute}.ad709190b22ab342__media-container img,.ad709190b22ab342__media-container video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:100%}.ee0f016032dfa895__media-placeholder{background:#f0f0f0;border-radius:inherit;box-sizing:border-box;height:170px;max-width:280px;min-width:200px;width:100%}._43277610c99cd8a7__unit-control{width:100%}._5fe7268dd06b27b6__controls{max-width:320px;padding-top:1em}._5fe7268dd06b27b6__controls:where(._5b543cd2eba2e13b__has-help-text){padding-bottom:1em}._1369d461b9589da1__grid{left:50%;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;transform:translate3d(-50%,-50%,0);z-index:1}@media not (prefers-reduced-motion){._1369d461b9589da1__grid{transition:opacity .1s linear}}._1369d461b9589da1__grid:where(._4e00066f149aa403__show-overlay){opacity:1}._8904f4deec004541__grid-line{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);position:absolute;transform:translateZ(0)}._091be12c9b9dbbb4__grid-line-x{height:1px;inset-inline:1px}.d6f31ab5e23231c8__grid-line-y{inset-block:1px;width:1px}.c42d0a2c8dc8b0c3__pointer{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);border:1px solid hsla(0,0%,100%,.4);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.1);cursor:grab;height:40px;margin-left:-20px;margin-top:-20px;position:absolute;user-select:none;width:40px;will-change:transform;z-index:10000}@media not (prefers-reduced-motion){.c42d0a2c8dc8b0c3__pointer{transition:transform .1s linear}}.c42d0a2c8dc8b0c3__pointer:where(.a4c1c56d62c6af00__is-dragging){box-shadow:0 0 10px rgba(0,0,0,.12);cursor:grabbing;transform:scale(1.1)}');
+  }
+  var style_module_default69 = { "root": "f3136084d94dbb54__root", "media-wrapper": "_0846c0c6adbec1fb__media-wrapper", "media-container": "ad709190b22ab342__media-container", "media-placeholder": "ee0f016032dfa895__media-placeholder", "unit-control": "_43277610c99cd8a7__unit-control", "controls": "_5fe7268dd06b27b6__controls", "has-help-text": "_5b543cd2eba2e13b__has-help-text", "grid": "_1369d461b9589da1__grid", "show-overlay": "_4e00066f149aa403__show-overlay", "grid-line": "_8904f4deec004541__grid-line", "grid-line-x": "_091be12c9b9dbbb4__grid-line-x", "grid-line-y": "d6f31ab5e23231c8__grid-line-y", "pointer": "c42d0a2c8dc8b0c3__pointer", "is-dragging": "a4c1c56d62c6af00__is-dragging" };
   function Media({
     alt,
     autoPlay,
@@ -65331,9 +65556,12 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     if (!src) {
       return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
-        MediaPlaceholder,
+        "div",
         {
-          className: "components-focal-point-picker__media components-focal-point-picker__media--placeholder",
+          className: clsx_default(
+            style_module_default69["media-placeholder"],
+            "components-focal-point-picker__media components-focal-point-picker__media--placeholder"
+          ),
           ref: mediaRef,
           ...props
         }
@@ -65367,6 +65595,90 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/focal-point-picker/index.mjs
   var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE91 = "data-wp-hash";
+  function getRuntime91() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument91(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash91(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE91}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE91) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle91(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime91();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash91(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE91, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument91(targetDocument) {
+    const runtime = getRuntime91();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle91(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle90(hash2, css4) {
+    const runtime = getRuntime91();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle91(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle90("ccf5dec60a", '.f3136084d94dbb54__root{border:0;box-sizing:border-box;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;margin:0;padding:0}.f3136084d94dbb54__root *,.f3136084d94dbb54__root :after,.f3136084d94dbb54__root :before{box-sizing:inherit}._0846c0c6adbec1fb__media-wrapper{background-color:transparent;contain:layout;display:flex;text-align:center;width:100%}.ad709190b22ab342__media-container{align-items:center;border-radius:2px;cursor:pointer;display:inline-flex;height:100%;justify-content:center;margin:auto;position:relative}.ad709190b22ab342__media-container:after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);content:"";inset:0;pointer-events:none;position:absolute}.ad709190b22ab342__media-container img,.ad709190b22ab342__media-container video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:100%}.ee0f016032dfa895__media-placeholder{background:#f0f0f0;border-radius:inherit;box-sizing:border-box;height:170px;max-width:280px;min-width:200px;width:100%}._43277610c99cd8a7__unit-control{width:100%}._5fe7268dd06b27b6__controls{max-width:320px;padding-top:1em}._5fe7268dd06b27b6__controls:where(._5b543cd2eba2e13b__has-help-text){padding-bottom:1em}._1369d461b9589da1__grid{left:50%;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;transform:translate3d(-50%,-50%,0);z-index:1}@media not (prefers-reduced-motion){._1369d461b9589da1__grid{transition:opacity .1s linear}}._1369d461b9589da1__grid:where(._4e00066f149aa403__show-overlay){opacity:1}._8904f4deec004541__grid-line{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);position:absolute;transform:translateZ(0)}._091be12c9b9dbbb4__grid-line-x{height:1px;inset-inline:1px}.d6f31ab5e23231c8__grid-line-y{inset-block:1px;width:1px}.c42d0a2c8dc8b0c3__pointer{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);border:1px solid hsla(0,0%,100%,.4);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.1);cursor:grab;height:40px;margin-left:-20px;margin-top:-20px;position:absolute;user-select:none;width:40px;will-change:transform;z-index:10000}@media not (prefers-reduced-motion){.c42d0a2c8dc8b0c3__pointer{transition:transform .1s linear}}.c42d0a2c8dc8b0c3__pointer:where(.a4c1c56d62c6af00__is-dragging){box-shadow:0 0 10px rgba(0,0,0,.12);cursor:grabbing;transform:scale(1.1)}');
+  }
+  var style_module_default70 = { "root": "f3136084d94dbb54__root", "media-wrapper": "_0846c0c6adbec1fb__media-wrapper", "media-container": "ad709190b22ab342__media-container", "media-placeholder": "ee0f016032dfa895__media-placeholder", "unit-control": "_43277610c99cd8a7__unit-control", "controls": "_5fe7268dd06b27b6__controls", "has-help-text": "_5b543cd2eba2e13b__has-help-text", "grid": "_1369d461b9589da1__grid", "show-overlay": "_4e00066f149aa403__show-overlay", "grid-line": "_8904f4deec004541__grid-line", "grid-line-x": "_091be12c9b9dbbb4__grid-line-x", "grid-line-y": "d6f31ab5e23231c8__grid-line-y", "pointer": "c42d0a2c8dc8b0c3__pointer", "is-dragging": "a4c1c56d62c6af00__is-dragging" };
   var GRID_OVERLAY_TIMEOUT = 600;
   function FocalPointPicker({
     // Prevent passing to internal component.
@@ -65483,7 +65795,11 @@ This message will only show in development mode. It won't appear in production. 
       left: x2 !== void 0 ? x2 * bounds.width : 0.5 * bounds.width,
       top: y3 !== void 0 ? y3 * bounds.height : 0.5 * bounds.height
     };
-    const classes = clsx_default("components-focal-point-picker-control", className);
+    const classes = clsx_default(
+      style_module_default70.root,
+      "components-focal-point-picker-control",
+      className
+    );
     use_update_effect_default(() => {
       setShowGridOverlay(true);
       const timeout = window.setTimeout(() => {
@@ -65491,51 +65807,63 @@ This message will only show in development mode. It won't appear in production. 
       }, GRID_OVERLAY_TIMEOUT);
       return () => window.clearTimeout(timeout);
     }, [x2, y3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(Container2, { ...restProps, as: "fieldset", className: classes, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(component_default, { ...restProps, as: "fieldset", className: classes, children: [
       !!label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(component_default2, { as: "legend", children: label }) : /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(StyledLabel, { as: "legend", children: label })),
-      /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(MediaWrapper, { className: "components-focal-point-picker-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(
-        MediaContainer,
+      /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+        "div",
         {
-          className: "components-focal-point-picker",
-          onKeyDown: arrowKeyStep,
-          onPointerDown: (event) => {
-            if (event.button !== 0) {
-              return;
+          className: clsx_default(
+            style_module_default70["media-wrapper"],
+            "components-focal-point-picker-wrapper"
+          ),
+          children: /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(
+            "div",
+            {
+              className: clsx_default(
+                style_module_default70["media-container"],
+                "components-focal-point-picker"
+              ),
+              onKeyDown: arrowKeyStep,
+              onPointerDown: (event) => {
+                if (event.button !== 0) {
+                  return;
+                }
+                event.currentTarget.setPointerCapture(
+                  event.pointerId
+                );
+              },
+              onMouseDown: startDrag,
+              onBlur: () => {
+                if (isDragging2) {
+                  endDrag();
+                }
+              },
+              ref: dragAreaRef,
+              role: "button",
+              tabIndex: -1,
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(FocalPointPickerGrid, { bounds, showOverlay: showGridOverlay }),
+                /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+                  Media,
+                  {
+                    alt: (0, import_i18n59.__)("Media preview"),
+                    autoPlay,
+                    onLoad: refUpdateBounds.current,
+                    src: url
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+                  FocalPoint,
+                  {
+                    ...focalPointPosition,
+                    isDragging: isDragging2
+                  }
+                )
+              ]
             }
-            event.currentTarget.setPointerCapture(
-              event.pointerId
-            );
-          },
-          onMouseDown: startDrag,
-          onBlur: () => {
-            if (isDragging2) {
-              endDrag();
-            }
-          },
-          ref: dragAreaRef,
-          role: "button",
-          tabIndex: -1,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(FocalPointPickerGrid, { bounds, showOverlay: showGridOverlay }),
-            /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
-              Media,
-              {
-                alt: (0, import_i18n59.__)("Media preview"),
-                autoPlay,
-                onLoad: refUpdateBounds.current,
-                src: url
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
-              FocalPoint,
-              {
-                ...focalPointPosition,
-                isDragging: isDragging2
-              }
-            )
-          ]
+          )
         }
-      ) }),
+      ),
       /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
         FocalPointPickerControls,
         {
@@ -65593,8 +65921,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE87 = "data-wp-hash";
-  function getRuntime87() {
+  var STYLE_HASH_ATTRIBUTE92 = "data-wp-hash";
+  function getRuntime92() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -65605,28 +65933,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument87(document);
+      registerDocument92(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash87(targetDocument, hash2) {
+  function documentContainsStyleHash92(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE87}]`
+      `style[${STYLE_HASH_ATTRIBUTE92}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE87) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE92) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle87(targetDocument, hash2, css4) {
+  function injectStyle92(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime87();
+    const runtime = getRuntime92();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -65635,24 +65963,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash87(targetDocument, hash2)) {
+    if (documentContainsStyleHash92(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE87, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE92, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument87(targetDocument) {
-    const runtime = getRuntime87();
+  function registerDocument92(targetDocument) {
+    const runtime = getRuntime92();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle87(targetDocument, hash2, css4);
+      injectStyle92(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65666,17 +65994,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle86(hash2, css4) {
-    const runtime = getRuntime87();
+  function registerStyle91(hash2, css4) {
+    const runtime = getRuntime92();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle87(targetDocument, hash2, css4);
+      injectStyle92(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle86("bfb85cc84e", "._68ab5c4c906ef17f__container{border:0;display:contents;margin:0;padding:0}._595b429882814ac1__header{height:16px}.d17d9306253ee0bf__header-toggle{margin-top:-4px}._88120fe7dea6e6fa__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._00ba4fdcdcd7e725__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
+    registerStyle91("bfb85cc84e", "._68ab5c4c906ef17f__container{border:0;display:contents;margin:0;padding:0}._595b429882814ac1__header{height:16px}.d17d9306253ee0bf__header-toggle{margin-top:-4px}._88120fe7dea6e6fa__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._00ba4fdcdcd7e725__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
   }
-  var style_module_default66 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
+  var style_module_default71 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
   var DEFAULT_OPTION = {
     key: "default",
     name: (0, import_i18n60.__)("Default"),
@@ -65715,7 +66043,7 @@ This message will only show in development mode. It won't appear in production. 
       {
         className: clsx_default(
           "components-font-size-picker__select",
-          style_module_default66.select
+          style_module_default71.select
         ),
         label: (0, import_i18n60.__)("Font size"),
         hideLabelFromVision: true,
@@ -65826,8 +66154,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/font-size-picker/index.mjs
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE88 = "data-wp-hash";
-  function getRuntime88() {
+  var STYLE_HASH_ATTRIBUTE93 = "data-wp-hash";
+  function getRuntime93() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -65838,28 +66166,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument88(document);
+      registerDocument93(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash88(targetDocument, hash2) {
+  function documentContainsStyleHash93(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE88}]`
+      `style[${STYLE_HASH_ATTRIBUTE93}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE88) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE93) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle88(targetDocument, hash2, css4) {
+  function injectStyle93(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime88();
+    const runtime = getRuntime93();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -65868,24 +66196,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash88(targetDocument, hash2)) {
+    if (documentContainsStyleHash93(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE88, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE93, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument88(targetDocument) {
-    const runtime = getRuntime88();
+  function registerDocument93(targetDocument) {
+    const runtime = getRuntime93();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle88(targetDocument, hash2, css4);
+      injectStyle93(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65899,17 +66227,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle87(hash2, css4) {
-    const runtime = getRuntime88();
+  function registerStyle92(hash2, css4) {
+    const runtime = getRuntime93();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle88(targetDocument, hash2, css4);
+      injectStyle93(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle87("bfb85cc84e", "._68ab5c4c906ef17f__container{border:0;display:contents;margin:0;padding:0}._595b429882814ac1__header{height:16px}.d17d9306253ee0bf__header-toggle{margin-top:-4px}._88120fe7dea6e6fa__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._00ba4fdcdcd7e725__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
+    registerStyle92("bfb85cc84e", "._68ab5c4c906ef17f__container{border:0;display:contents;margin:0;padding:0}._595b429882814ac1__header{height:16px}.d17d9306253ee0bf__header-toggle{margin-top:-4px}._88120fe7dea6e6fa__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._00ba4fdcdcd7e725__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
   }
-  var style_module_default67 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
+  var style_module_default72 = { "container": "_68ab5c4c906ef17f__container", "header": "_595b429882814ac1__header", "header-toggle": "d17d9306253ee0bf__header-toggle", "header-label": "_88120fe7dea6e6fa__header-label", "select": "_00ba4fdcdcd7e725__select" };
   var DEFAULT_UNITS = ["px", "em", "rem", "vw", "vh"];
   var MAX_TOGGLE_GROUP_SIZES = 5;
   var UnforwardedFontSizePicker = (props, ref) => {
@@ -65965,7 +66293,7 @@ This message will only show in development mode. It won't appear in production. 
         ref,
         className: clsx_default(
           "components-font-size-picker",
-          style_module_default67.container
+          style_module_default72.container
         ),
         "aria-labelledby": labelId,
         children: [
@@ -65974,21 +66302,21 @@ This message will only show in development mode. It won't appear in production. 
             {
               className: clsx_default(
                 "components-font-size-picker__header",
-                style_module_default67.header
+                style_module_default72.header
               ),
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
                   base_control_default.VisualLabel,
                   {
                     id: labelId,
-                    className: style_module_default67["header-label"],
+                    className: style_module_default72["header-label"],
                     children: (0, import_i18n63.__)("Font size")
                   }
                 ),
                 !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
                   Button3,
                   {
-                    className: style_module_default67["header-toggle"],
+                    className: style_module_default72["header-toggle"],
                     label: currentPickerType === "custom" ? (0, import_i18n63.__)("Use size preset") : (0, import_i18n63.__)("Set custom size"),
                     icon: settings_default,
                     onClick: () => setUserRequestedCustom(!userRequestedCustom),
@@ -66277,8 +66605,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/index.mjs
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE89 = "data-wp-hash";
-  function getRuntime89() {
+  var STYLE_HASH_ATTRIBUTE94 = "data-wp-hash";
+  function getRuntime94() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -66289,28 +66617,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument89(document);
+      registerDocument94(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash89(targetDocument, hash2) {
+  function documentContainsStyleHash94(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE89}]`
+      `style[${STYLE_HASH_ATTRIBUTE94}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE89) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE94) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle89(targetDocument, hash2, css4) {
+  function injectStyle94(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime89();
+    const runtime = getRuntime94();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -66319,24 +66647,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash89(targetDocument, hash2)) {
+    if (documentContainsStyleHash94(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE89, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE94, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument89(targetDocument) {
-    const runtime = getRuntime89();
+  function registerDocument94(targetDocument) {
+    const runtime = getRuntime94();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle89(targetDocument, hash2, css4);
+      injectStyle94(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -66350,17 +66678,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle88(hash2, css4) {
-    const runtime = getRuntime89();
+  function registerStyle93(hash2, css4) {
+    const runtime = getRuntime94();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle89(targetDocument, hash2, css4);
+      injectStyle94(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle88("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
+    registerStyle93("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
   }
-  var style_module_default68 = { "tokens-and-input": "df878b202c3b3cb7__tokens-and-input" };
+  var style_module_default73 = { "tokens-and-input": "df878b202c3b3cb7__tokens-and-input" };
   var identity3 = (value) => value;
   function FormTokenField(props) {
     const {
@@ -66932,7 +67260,7 @@ This message will only show in development mode. It won't appear in production. 
             /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
               component_default3,
               {
-                className: style_module_default68["tokens-and-input"],
+                className: style_module_default73["tokens-and-input"],
                 justify: "flex-start",
                 align: "center",
                 gap: 1,
@@ -67735,8 +68063,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigator/navigator/component.mjs
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE90 = "data-wp-hash";
-  function getRuntime90() {
+  var STYLE_HASH_ATTRIBUTE95 = "data-wp-hash";
+  function getRuntime95() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -67747,28 +68075,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument90(document);
+      registerDocument95(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash90(targetDocument, hash2) {
+  function documentContainsStyleHash95(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE90}]`
+      `style[${STYLE_HASH_ATTRIBUTE95}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE90) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE95) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle90(targetDocument, hash2, css4) {
+  function injectStyle95(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime90();
+    const runtime = getRuntime95();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -67777,24 +68105,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash90(targetDocument, hash2)) {
+    if (documentContainsStyleHash95(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE90, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE95, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument90(targetDocument) {
-    const runtime = getRuntime90();
+  function registerDocument95(targetDocument) {
+    const runtime = getRuntime95();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle90(targetDocument, hash2, css4);
+      injectStyle95(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -67808,17 +68136,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle89(hash2, css4) {
-    const runtime = getRuntime90();
+  function registerStyle94(hash2, css4) {
+    const runtime = getRuntime95();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle90(targetDocument, hash2, css4);
+      injectStyle95(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle89("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
+    registerStyle94("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
   }
-  var style_module_default69 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
+  var style_module_default74 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
   function addScreen({ screens }, screen) {
     if (screens.some((s2) => s2.path === screen.path)) {
       (0, import_warning8.default)(
@@ -67987,7 +68315,7 @@ The screen with id ${screen.id} will not be added.`
       }),
       [currentLocation, matchedPath, methods]
     );
-    const classes = clsx_default(style_module_default69.wrapper, className);
+    const classes = clsx_default(style_module_default74.wrapper, className);
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(component_default, { ref: forwardedRef, className: classes, ...otherProps, children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(NavigatorContext.Provider, { value: navigatorContextValue, children }) });
   }
   var Navigator = contextConnect(UnconnectedNavigator, "Navigator");
@@ -68005,8 +68333,8 @@ The screen with id ${screen.id} will not be added.`
   var import_i18n68 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/navigator/animation.mjs
-  var STYLE_HASH_ATTRIBUTE91 = "data-wp-hash";
-  function getRuntime91() {
+  var STYLE_HASH_ATTRIBUTE96 = "data-wp-hash";
+  function getRuntime96() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -68017,28 +68345,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument91(document);
+      registerDocument96(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash91(targetDocument, hash2) {
+  function documentContainsStyleHash96(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE91}]`
+      `style[${STYLE_HASH_ATTRIBUTE96}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE91) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE96) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle91(targetDocument, hash2, css4) {
+  function injectStyle96(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime91();
+    const runtime = getRuntime96();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -68047,24 +68375,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash91(targetDocument, hash2)) {
+    if (documentContainsStyleHash96(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE91, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE96, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument91(targetDocument) {
-    const runtime = getRuntime91();
+  function registerDocument96(targetDocument) {
+    const runtime = getRuntime96();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle91(targetDocument, hash2, css4);
+      injectStyle96(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -68078,29 +68406,29 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle90(hash2, css4) {
-    const runtime = getRuntime91();
+  function registerStyle95(hash2, css4) {
+    const runtime = getRuntime96();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle91(targetDocument, hash2, css4);
+      injectStyle96(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle90("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
+    registerStyle95("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
   }
-  var style_module_default70 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
+  var style_module_default75 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
   var TOTAL_ANIMATION_DURATION = {
     IN: 300,
     OUT: 300
   };
   var ANIMATION_END_NAMES = {
     end: {
-      in: style_module_default70["slide-from-right"],
-      out: style_module_default70["slide-to-left"]
+      in: style_module_default75["slide-from-right"],
+      out: style_module_default75["slide-to-left"]
     },
     start: {
-      in: style_module_default70["slide-from-left"],
-      out: style_module_default70["slide-to-right"]
+      in: style_module_default75["slide-from-left"],
+      out: style_module_default75["slide-to-right"]
     }
   };
 
@@ -68198,8 +68526,8 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
   var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE92 = "data-wp-hash";
-  function getRuntime92() {
+  var STYLE_HASH_ATTRIBUTE97 = "data-wp-hash";
+  function getRuntime97() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -68210,28 +68538,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument92(document);
+      registerDocument97(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash92(targetDocument, hash2) {
+  function documentContainsStyleHash97(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE92}]`
+      `style[${STYLE_HASH_ATTRIBUTE97}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE92) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE97) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle92(targetDocument, hash2, css4) {
+  function injectStyle97(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime92();
+    const runtime = getRuntime97();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -68240,24 +68568,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash92(targetDocument, hash2)) {
+    if (documentContainsStyleHash97(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE92, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE97, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument92(targetDocument) {
-    const runtime = getRuntime92();
+  function registerDocument97(targetDocument) {
+    const runtime = getRuntime97();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle92(targetDocument, hash2, css4);
+      injectStyle97(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -68271,17 +68599,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle91(hash2, css4) {
-    const runtime = getRuntime92();
+  function registerStyle96(hash2, css4) {
+    const runtime = getRuntime97();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle92(targetDocument, hash2, css4);
+      injectStyle97(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle91("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
+    registerStyle96("d34ad37b2f", "._56222e33c3023d5a__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}.c8b9fa9b5a79faec__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes d39f6a8b7e7d7212__fade-in{0%{opacity:0}}@keyframes _4227b67d09d2d3ff__fade-out{to{opacity:0}}@keyframes bbe8cfc7f7fcbc26__slide-from-right{0%{transform:translateX(100px)}}@keyframes _4cfea845c519ebbb__slide-to-left{to{transform:translateX(-80px)}}@keyframes ac347176a526a5fe__slide-from-left{0%{transform:translateX(-100px)}}@keyframes _81b0f0162dcdd7e9__slide-to-right{to{transform:translateX(80px)}}._1caa059a70fb6f01__screen-animation{z-index:1}._1caa059a70fb6f01__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,bbe8cfc7f7fcbc26__slide-from-right .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_4cfea845c519ebbb__slide-to-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:d39f6a8b7e7d7212__fade-in 70ms linear 70ms both,ac347176a526a5fe__slide-from-left .3s cubic-bezier(.33,0,0,1) both}._1caa059a70fb6f01__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_4227b67d09d2d3ff__fade-out 70ms linear 40ms both,_81b0f0162dcdd7e9__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
   }
-  var style_module_default71 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
+  var style_module_default76 = { "wrapper": "_56222e33c3023d5a__wrapper", "screen": "c8b9fa9b5a79faec__screen", "screen-animation": "_1caa059a70fb6f01__screen-animation", "fade-in": "d39f6a8b7e7d7212__fade-in", "slide-from-right": "bbe8cfc7f7fcbc26__slide-from-right", "fade-out": "_4227b67d09d2d3ff__fade-out", "slide-to-left": "_4cfea845c519ebbb__slide-to-left", "slide-from-left": "ac347176a526a5fe__slide-from-left", "slide-to-right": "_81b0f0162dcdd7e9__slide-to-right" };
   function UnconnectedNavigatorScreen(props, forwardedRef) {
     if (!/^\//.test(props.path)) {
       (0, import_warning9.default)(
@@ -68316,8 +68644,8 @@ The screen with id ${screen.id} will not be added.`
       skipAnimation: skipAnimationAndFocusRestoration
     });
     const classes = clsx_default(
-      style_module_default71.screen,
-      style_module_default71["screen-animation"],
+      style_module_default76.screen,
+      style_module_default76["screen-animation"],
       className
     );
     const locationRef = (0, import_element179.useRef)(location);
@@ -68714,7 +69042,7 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/notice/list.mjs
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
-  var import_react103 = __toESM(require_react(), 1);
+  var import_react101 = __toESM(require_react(), 1);
   var noop21 = () => {
   };
   function NoticeList({
@@ -68729,7 +69057,7 @@ The screen with id ${screen.id} will not be added.`
       children,
       [...notices].reverse().map((notice) => {
         const { content, ...restNotice } = notice;
-        return /* @__PURE__ */ (0, import_react103.createElement)(
+        return /* @__PURE__ */ (0, import_react101.createElement)(
           notice_default,
           {
             ...restNotice,
@@ -68963,8 +69291,8 @@ The screen with id ${screen.id} will not be added.`
   var import_i18n70 = __toESM(require_i18n(), 1);
   var import_element188 = __toESM(require_element(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE93 = "data-wp-hash";
-  function getRuntime93() {
+  var STYLE_HASH_ATTRIBUTE98 = "data-wp-hash";
+  function getRuntime98() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -68975,28 +69303,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument93(document);
+      registerDocument98(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash93(targetDocument, hash2) {
+  function documentContainsStyleHash98(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE93}]`
+      `style[${STYLE_HASH_ATTRIBUTE98}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE93) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE98) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle93(targetDocument, hash2, css4) {
+  function injectStyle98(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime93();
+    const runtime = getRuntime98();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -69005,24 +69333,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash93(targetDocument, hash2)) {
+    if (documentContainsStyleHash98(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE93, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE98, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument93(targetDocument) {
-    const runtime = getRuntime93();
+  function registerDocument98(targetDocument) {
+    const runtime = getRuntime98();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle93(targetDocument, hash2, css4);
+      injectStyle98(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -69036,26 +69364,26 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle92(hash2, css4) {
-    const runtime = getRuntime93();
+  function registerStyle97(hash2, css4) {
+    const runtime = getRuntime98();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle93(targetDocument, hash2, css4);
+      injectStyle98(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle92("cab58372e5", "._1d8296bd910bb7bb__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:9999px;height:1.5px;outline:2px solid transparent;outline-offset:2px;overflow:hidden;position:relative}:where(._1d8296bd910bb7bb__track){width:160px}.be702ee1b0a3c396__indicator{background-color:var(--wpds-color-background-thumb-neutral,#1e1e1e);border-radius:9999px;display:inline-block;height:100%;outline:2px solid transparent;outline-offset:-2px;position:absolute;top:0;width:var(--indicator-width)}@media not (prefers-reduced-motion){.be702ee1b0a3c396__indicator{transition:width .4s ease-in-out}}.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{--indicator-width:50%;animation:_7c6b2fa174e0d687__indeterminate-slide 1.5s ease-in-out infinite;transition:none}@media (prefers-reduced-motion:reduce){.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{animation-duration:3s;animation-timing-function:steps(4)}}@keyframes _7c6b2fa174e0d687__indeterminate-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}._4c47edc54d8dcb46__progress-element{height:100%;inset-inline-start:0;opacity:0;position:absolute;top:0;width:100%}");
+    registerStyle97("cab58372e5", "._1d8296bd910bb7bb__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:9999px;height:1.5px;outline:2px solid transparent;outline-offset:2px;overflow:hidden;position:relative}:where(._1d8296bd910bb7bb__track){width:160px}.be702ee1b0a3c396__indicator{background-color:var(--wpds-color-background-thumb-neutral,#1e1e1e);border-radius:9999px;display:inline-block;height:100%;outline:2px solid transparent;outline-offset:-2px;position:absolute;top:0;width:var(--indicator-width)}@media not (prefers-reduced-motion){.be702ee1b0a3c396__indicator{transition:width .4s ease-in-out}}.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{--indicator-width:50%;animation:_7c6b2fa174e0d687__indeterminate-slide 1.5s ease-in-out infinite;transition:none}@media (prefers-reduced-motion:reduce){.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{animation-duration:3s;animation-timing-function:steps(4)}}@keyframes _7c6b2fa174e0d687__indeterminate-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}._4c47edc54d8dcb46__progress-element{height:100%;inset-inline-start:0;opacity:0;position:absolute;top:0;width:100%}");
   }
-  var style_module_default72 = { "track": "_1d8296bd910bb7bb__track", "indicator": "be702ee1b0a3c396__indicator", "is-indeterminate": "_125afa179e2803a2__is-indeterminate", "indeterminate-slide": "_7c6b2fa174e0d687__indeterminate-slide", "progress-element": "_4c47edc54d8dcb46__progress-element" };
+  var style_module_default77 = { "track": "_1d8296bd910bb7bb__track", "indicator": "be702ee1b0a3c396__indicator", "is-indeterminate": "_125afa179e2803a2__is-indeterminate", "indeterminate-slide": "_7c6b2fa174e0d687__indeterminate-slide", "progress-element": "_4c47edc54d8dcb46__progress-element" };
   function UnforwardedProgressBar(props, ref) {
     const { className, value, ...progressProps } = props;
     const isIndeterminate = !Number.isFinite(value);
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", { className: clsx_default(style_module_default72.track, className), children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", { className: clsx_default(style_module_default77.track, className), children: [
       /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
         "div",
         {
-          className: clsx_default(style_module_default72.indicator, {
-            [style_module_default72["is-indeterminate"]]: isIndeterminate
+          className: clsx_default(style_module_default77.indicator, {
+            [style_module_default77["is-indeterminate"]]: isIndeterminate
           }),
           style: {
             "--indicator-width": !isIndeterminate ? `${value}%` : void 0
@@ -69065,7 +69393,7 @@ The screen with id ${screen.id} will not be added.`
       /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
         "progress",
         {
-          className: style_module_default72["progress-element"],
+          className: style_module_default77["progress-element"],
           max: 100,
           value,
           "aria-label": (0, import_i18n70.__)("Loading \u2026"),
@@ -69559,12 +69887,12 @@ The screen with id ${screen.id} will not be added.`
 
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/index.js
   var import_jsx_runtime309 = __toESM(require_jsx_runtime());
-  var import_react105 = __toESM(require_react());
+  var import_react103 = __toESM(require_react());
   var import_react_dom9 = __toESM(require_react_dom());
 
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/resizer.js
   var import_jsx_runtime308 = __toESM(require_jsx_runtime());
-  var import_react104 = __toESM(require_react());
+  var import_react102 = __toESM(require_react());
   var __assign2 = function() {
     __assign2 = Object.assign || function(t3) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
@@ -69606,15 +69934,15 @@ The screen with id ${screen.id} will not be added.`
     bottomLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", bottom: "-10px", cursor: "sw-resize" }),
     topLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", top: "-10px", cursor: "nw-resize" })
   };
-  var Resizer = (0, import_react104.memo)(function(props) {
+  var Resizer = (0, import_react102.memo)(function(props) {
     var onResizeStart = props.onResizeStart, direction = props.direction, children = props.children, replaceStyles = props.replaceStyles, className = props.className;
-    var onMouseDown = (0, import_react104.useCallback)(function(e3) {
+    var onMouseDown = (0, import_react102.useCallback)(function(e3) {
       onResizeStart(e3, direction);
     }, [onResizeStart, direction]);
-    var onTouchStart = (0, import_react104.useCallback)(function(e3) {
+    var onTouchStart = (0, import_react102.useCallback)(function(e3) {
       onResizeStart(e3, direction);
     }, [onResizeStart, direction]);
-    var style2 = (0, import_react104.useMemo)(function() {
+    var style2 = (0, import_react102.useMemo)(function() {
       return __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles[direction]), replaceStyles !== null && replaceStyles !== void 0 ? replaceStyles : {});
     }, [replaceStyles, direction]);
     return (0, import_jsx_runtime308.jsx)("div", { className: className || void 0, style: style2, onMouseDown, onTouchStart, children });
@@ -70359,7 +70687,7 @@ The screen with id ${screen.id} will not be added.`
         snapGap: 0
       };
       return Resizable2;
-    })(import_react105.PureComponent)
+    })(import_react103.PureComponent)
   );
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
@@ -70484,8 +70812,8 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE94 = "data-wp-hash";
-  function getRuntime94() {
+  var STYLE_HASH_ATTRIBUTE99 = "data-wp-hash";
+  function getRuntime99() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -70496,28 +70824,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument94(document);
+      registerDocument99(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash94(targetDocument, hash2) {
+  function documentContainsStyleHash99(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE94}]`
+      `style[${STYLE_HASH_ATTRIBUTE99}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE94) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE99) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle94(targetDocument, hash2, css4) {
+  function injectStyle99(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime94();
+    const runtime = getRuntime99();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -70526,24 +70854,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash94(targetDocument, hash2)) {
+    if (documentContainsStyleHash99(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE94, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE99, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument94(targetDocument) {
-    const runtime = getRuntime94();
+  function registerDocument99(targetDocument) {
+    const runtime = getRuntime99();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle94(targetDocument, hash2, css4);
+      injectStyle99(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -70557,17 +70885,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle93(hash2, css4) {
-    const runtime = getRuntime94();
+  function registerStyle98(hash2, css4) {
+    const runtime = getRuntime99();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle94(targetDocument, hash2, css4);
+      injectStyle99(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle93("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
+    registerStyle98("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
   }
-  var style_module_default73 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
+  var style_module_default78 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
   var CORNER_OFFSET = 4;
   var CURSOR_OFFSET_TOP = CORNER_OFFSET * 2.5;
   function Label3({ label, position: position2 = POSITIONS.corner, zIndex = 1e3, ...props }, ref) {
@@ -70609,7 +70937,7 @@ The screen with id ${screen.id} will not be added.`
         "aria-hidden": "true",
         className: clsx_default(
           "components-resizable-tooltip__tooltip-wrapper",
-          style_module_default73["tooltip-wrapper"]
+          style_module_default78["tooltip-wrapper"]
         ),
         ref,
         style: style2,
@@ -70619,10 +70947,10 @@ The screen with id ${screen.id} will not be added.`
           {
             className: clsx_default(
               "components-resizable-tooltip__tooltip",
-              style_module_default73.tooltip
+              style_module_default78.tooltip
             ),
             style: labelStyle,
-            children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(component_default8, { as: "span", className: style_module_default73["label-text"], children: label })
+            children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(component_default8, { as: "span", className: style_module_default78["label-text"], children: label })
           }
         )
       }
@@ -70633,8 +70961,8 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
   var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE95 = "data-wp-hash";
-  function getRuntime95() {
+  var STYLE_HASH_ATTRIBUTE100 = "data-wp-hash";
+  function getRuntime100() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -70645,28 +70973,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument95(document);
+      registerDocument100(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash95(targetDocument, hash2) {
+  function documentContainsStyleHash100(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE95}]`
+      `style[${STYLE_HASH_ATTRIBUTE100}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE95) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE100) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle95(targetDocument, hash2, css4) {
+  function injectStyle100(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime95();
+    const runtime = getRuntime100();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -70675,24 +71003,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash95(targetDocument, hash2)) {
+    if (documentContainsStyleHash100(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE95, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE100, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument95(targetDocument) {
-    const runtime = getRuntime95();
+  function registerDocument100(targetDocument) {
+    const runtime = getRuntime100();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle95(targetDocument, hash2, css4);
+      injectStyle100(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -70706,17 +71034,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle94(hash2, css4) {
-    const runtime = getRuntime95();
+  function registerStyle99(hash2, css4) {
+    const runtime = getRuntime100();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle95(targetDocument, hash2, css4);
+      injectStyle100(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle94("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
+    registerStyle99("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
   }
-  var style_module_default74 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
+  var style_module_default79 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
   var noop24 = () => {
   };
   function ResizeTooltip({
@@ -70742,7 +71070,7 @@ The screen with id ${screen.id} will not be added.`
     if (!isVisible2) {
       return null;
     }
-    const classes = clsx_default("components-resize-tooltip", style_module_default74.root, className);
+    const classes = clsx_default("components-resize-tooltip", style_module_default79.root, className);
     return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(
       PolymorphicElement,
       {
@@ -71277,8 +71605,8 @@ The screen with id ${screen.id} will not be added.`
   var import_element200 = __toESM(require_element(), 1);
   var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE96 = "data-wp-hash";
-  function getRuntime96() {
+  var STYLE_HASH_ATTRIBUTE101 = "data-wp-hash";
+  function getRuntime101() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -71289,28 +71617,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument96(document);
+      registerDocument101(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash96(targetDocument, hash2) {
+  function documentContainsStyleHash101(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE96}]`
+      `style[${STYLE_HASH_ATTRIBUTE101}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE96) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE101) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle96(targetDocument, hash2, css4) {
+  function injectStyle101(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime96();
+    const runtime = getRuntime101();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -71319,24 +71647,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash96(targetDocument, hash2)) {
+    if (documentContainsStyleHash101(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE96, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE101, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument96(targetDocument) {
-    const runtime = getRuntime96();
+  function registerDocument101(targetDocument) {
+    const runtime = getRuntime101();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle96(targetDocument, hash2, css4);
+      injectStyle101(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -71350,17 +71678,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle95(hash2, css4) {
-    const runtime = getRuntime96();
+  function registerStyle100(hash2, css4) {
+    const runtime = getRuntime101();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle96(targetDocument, hash2, css4);
+      injectStyle101(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle95("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
+    registerStyle100("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
   }
-  var style_module_default75 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
+  var style_module_default80 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
   function SuffixItem({ searchRef, onChange, onClose }) {
     if (onClose) {
       (0, import_deprecated28.default)("`onClose` prop in wp.components.SearchControl", {
@@ -71412,7 +71740,7 @@ The screen with id ${screen.id} will not be added.`
         type: "search",
         size: size4,
         className: clsx_default(
-          style_module_default75.input,
+          style_module_default80.input,
           "components-search-control",
           className
         ),
@@ -71423,7 +71751,7 @@ The screen with id ${screen.id} will not be added.`
         prefix: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(InputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
           icon_default3,
           {
-            className: style_module_default75.icon,
+            className: style_module_default80.icon,
             icon: search_default,
             fill: "currentColor"
           }
@@ -71897,8 +72225,8 @@ The screen with id ${screen.id} will not be added.`
   var import_compose76 = __toESM(require_compose(), 1);
   var import_element205 = __toESM(require_element(), 1);
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE97 = "data-wp-hash";
-  function getRuntime97() {
+  var STYLE_HASH_ATTRIBUTE102 = "data-wp-hash";
+  function getRuntime102() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -71909,28 +72237,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument97(document);
+      registerDocument102(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash97(targetDocument, hash2) {
+  function documentContainsStyleHash102(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE97}]`
+      `style[${STYLE_HASH_ATTRIBUTE102}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE97) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE102) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle97(targetDocument, hash2, css4) {
+  function injectStyle102(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime97();
+    const runtime = getRuntime102();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -71939,24 +72267,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash97(targetDocument, hash2)) {
+    if (documentContainsStyleHash102(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE97, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE102, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument97(targetDocument) {
-    const runtime = getRuntime97();
+  function registerDocument102(targetDocument) {
+    const runtime = getRuntime102();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle97(targetDocument, hash2, css4);
+      injectStyle102(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -71970,17 +72298,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle96(hash2, css4) {
-    const runtime = getRuntime97();
+  function registerStyle101(hash2, css4) {
+    const runtime = getRuntime102();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle97(targetDocument, hash2, css4);
+      injectStyle102(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle96("6bf0085cf4", ".aa08a6e706634925__textarea{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));display:block;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;resize:vertical;width:100%}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}.aa08a6e706634925__textarea{line-height:20px;min-height:38px;padding:9px 11px}.aa08a6e706634925__textarea:disabled{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.is-dark-theme .aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.aa08a6e706634925__textarea:disabled::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}");
+    registerStyle101("6bf0085cf4", ".aa08a6e706634925__textarea{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));display:block;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;resize:vertical;width:100%}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}.aa08a6e706634925__textarea{line-height:20px;min-height:38px;padding:9px 11px}.aa08a6e706634925__textarea:disabled{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.is-dark-theme .aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.aa08a6e706634925__textarea:disabled::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}");
   }
-  var style_module_default76 = { "textarea": "aa08a6e706634925__textarea" };
+  var style_module_default81 = { "textarea": "aa08a6e706634925__textarea" };
   function UnforwardedTextareaControl(props, ref) {
     const {
       // Prevent passing this to `textarea`.
@@ -72011,7 +72339,7 @@ The screen with id ${screen.id} will not be added.`
           {
             className: clsx_default(
               "components-textarea-control__input",
-              style_module_default76.textarea
+              style_module_default81.textarea
             ),
             id: id3,
             rows,
@@ -72503,8 +72831,8 @@ The screen with id ${screen.id} will not be added.`
   var useToolsPanelContext = () => (0, import_element216.useContext)(ToolsPanelContext);
 
   // packages/components/build-module/tools-panel/tools-panel-header/hook.mjs
-  var STYLE_HASH_ATTRIBUTE98 = "data-wp-hash";
-  function getRuntime98() {
+  var STYLE_HASH_ATTRIBUTE103 = "data-wp-hash";
+  function getRuntime103() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -72515,28 +72843,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument98(document);
+      registerDocument103(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash98(targetDocument, hash2) {
+  function documentContainsStyleHash103(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE98}]`
+      `style[${STYLE_HASH_ATTRIBUTE103}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE98) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE103) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle98(targetDocument, hash2, css4) {
+  function injectStyle103(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime98();
+    const runtime = getRuntime103();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -72545,24 +72873,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash98(targetDocument, hash2)) {
+    if (documentContainsStyleHash103(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE98, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE103, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument98(targetDocument) {
-    const runtime = getRuntime98();
+  function registerDocument103(targetDocument) {
+    const runtime = getRuntime103();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle98(targetDocument, hash2, css4);
+      injectStyle103(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -72576,17 +72904,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle97(hash2, css4) {
-    const runtime = getRuntime98();
+  function registerStyle102(hash2, css4) {
+    const runtime = getRuntime103();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle98(targetDocument, hash2, css4);
+      injectStyle103(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle97("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle102("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
-  var style_module_default77 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var style_module_default82 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   function useToolsPanelHeader(props) {
     const {
       className,
@@ -72597,20 +72925,20 @@ The screen with id ${screen.id} will not be added.`
     return {
       ...otherProps,
       areAllOptionalControlsHidden,
-      defaultControlsItemClassName: style_module_default77["default-controls-item"],
-      dropdownMenuClassName: style_module_default77["dropdown-menu"],
+      defaultControlsItemClassName: style_module_default82["default-controls-item"],
+      dropdownMenuClassName: style_module_default82["dropdown-menu"],
       hasMenuItems,
-      headingClassName: style_module_default77["tools-panel-heading"],
+      headingClassName: style_module_default82["tools-panel-heading"],
       headingLevel,
       menuItems,
-      className: clsx_default(style_module_default77["tools-panel-header"], className)
+      className: clsx_default(style_module_default82["tools-panel-header"], className)
     };
   }
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
   var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE99 = "data-wp-hash";
-  function getRuntime99() {
+  var STYLE_HASH_ATTRIBUTE104 = "data-wp-hash";
+  function getRuntime104() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -72621,28 +72949,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument99(document);
+      registerDocument104(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash99(targetDocument, hash2) {
+  function documentContainsStyleHash104(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE99}]`
+      `style[${STYLE_HASH_ATTRIBUTE104}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE99) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE104) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle99(targetDocument, hash2, css4) {
+  function injectStyle104(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime99();
+    const runtime = getRuntime104();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -72651,24 +72979,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash99(targetDocument, hash2)) {
+    if (documentContainsStyleHash104(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE99, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE104, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument99(targetDocument) {
-    const runtime = getRuntime99();
+  function registerDocument104(targetDocument) {
+    const runtime = getRuntime104();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle99(targetDocument, hash2, css4);
+      injectStyle104(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -72682,17 +73010,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle98(hash2, css4) {
-    const runtime = getRuntime99();
+  function registerStyle103(hash2, css4) {
+    const runtime = getRuntime104();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle99(targetDocument, hash2, css4);
+      injectStyle104(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle98("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle103("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
-  var style_module_default78 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var style_module_default83 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var DefaultControlsGroup = ({
     itemClassName,
     items,
@@ -72701,7 +73029,7 @@ The screen with id ${screen.id} will not be added.`
     if (!items.length) {
       return null;
     }
-    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("span", { "aria-hidden": true, className: style_module_default78["reset-label"], children: (0, import_i18n78.__)("Reset") });
+    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("span", { "aria-hidden": true, className: style_module_default83["reset-label"], children: (0, import_i18n78.__)("Reset") });
     return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_jsx_runtime333.Fragment, { children: items.map(([label, hasValue]) => {
       if (hasValue) {
         return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
@@ -72888,8 +73216,8 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/tools-panel/tools-panel/hook.mjs
   var import_element217 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE100 = "data-wp-hash";
-  function getRuntime100() {
+  var STYLE_HASH_ATTRIBUTE105 = "data-wp-hash";
+  function getRuntime105() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -72900,28 +73228,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument100(document);
+      registerDocument105(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash100(targetDocument, hash2) {
+  function documentContainsStyleHash105(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE100}]`
+      `style[${STYLE_HASH_ATTRIBUTE105}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE100) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE105) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle100(targetDocument, hash2, css4) {
+  function injectStyle105(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime100();
+    const runtime = getRuntime105();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -72930,24 +73258,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash100(targetDocument, hash2)) {
+    if (documentContainsStyleHash105(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE100, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE105, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument100(targetDocument) {
-    const runtime = getRuntime100();
+  function registerDocument105(targetDocument) {
+    const runtime = getRuntime105();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle100(targetDocument, hash2, css4);
+      injectStyle105(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -72961,17 +73289,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle99(hash2, css4) {
-    const runtime = getRuntime100();
+  function registerStyle104(hash2, css4) {
+    const runtime = getRuntime105();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle100(targetDocument, hash2, css4);
+      injectStyle105(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle99("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle104("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
-  var style_module_default79 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var style_module_default84 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   function emptyState() {
     return { panelItems: [], menuItemOrder: [], menuItemValues: {} };
   }
@@ -73156,9 +73484,9 @@ The screen with id ${screen.id} will not be added.`
       );
     }, [menuItems]);
     const classes = clsx_default(
-      style_module_default79["tools-panel"],
-      hasInnerWrapper && style_module_default79["tools-panel-with-inner-wrapper"],
-      areAllOptionalControlsHidden && style_module_default79["tools-panel-hidden-inner-wrapper"],
+      style_module_default84["tools-panel"],
+      hasInnerWrapper && style_module_default84["tools-panel-with-inner-wrapper"],
+      areAllOptionalControlsHidden && style_module_default84["tools-panel-hidden-inner-wrapper"],
       className
     );
     const toggleItem = (0, import_element217.useCallback)(
@@ -73292,8 +73620,8 @@ The screen with id ${screen.id} will not be added.`
   // packages/components/build-module/tools-panel/tools-panel-item/hook.mjs
   var import_compose78 = __toESM(require_compose(), 1);
   var import_element218 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE101 = "data-wp-hash";
-  function getRuntime101() {
+  var STYLE_HASH_ATTRIBUTE106 = "data-wp-hash";
+  function getRuntime106() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -73304,28 +73632,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument101(document);
+      registerDocument106(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash101(targetDocument, hash2) {
+  function documentContainsStyleHash106(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE101}]`
+      `style[${STYLE_HASH_ATTRIBUTE106}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE101) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE106) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle101(targetDocument, hash2, css4) {
+  function injectStyle106(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime101();
+    const runtime = getRuntime106();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -73334,24 +73662,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash101(targetDocument, hash2)) {
+    if (documentContainsStyleHash106(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE101, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE106, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument101(targetDocument) {
-    const runtime = getRuntime101();
+  function registerDocument106(targetDocument) {
+    const runtime = getRuntime106();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle101(targetDocument, hash2, css4);
+      injectStyle106(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -73365,17 +73693,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle100(hash2, css4) {
-    const runtime = getRuntime101();
+  function registerStyle105(hash2, css4) {
+    const runtime = getRuntime106();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle101(targetDocument, hash2, css4);
+      injectStyle106(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle100("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle105("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
-  var style_module_default80 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var style_module_default85 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var noop26 = () => {
   };
   function useToolsPanelItem(props) {
@@ -73483,8 +73811,8 @@ The screen with id ${screen.id} will not be added.`
     const isShown = isShownByDefault ? isRegistered : isMenuItemChecked;
     const shouldApplyPlaceholderStyles = shouldRenderPlaceholder && !isShown;
     const classes = clsx_default(
-      style_module_default80["tools-panel-item"],
-      shouldApplyPlaceholderStyles && style_module_default80["tools-panel-item-placeholder"],
+      style_module_default85["tools-panel-item"],
+      shouldApplyPlaceholderStyles && style_module_default85["tools-panel-item-placeholder"],
       !shouldApplyPlaceholderStyles && className,
       firstDisplayedItem === label && __experimentalFirstVisibleItemClass,
       lastDisplayedItem === label && __experimentalLastVisibleItemClass
@@ -73917,8 +74245,8 @@ The screen with id ${screen.id} will not be added.`
   var import_deprecated33 = __toESM(require_deprecated(), 1);
   var import_element228 = __toESM(require_element(), 1);
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE102 = "data-wp-hash";
-  function getRuntime102() {
+  var STYLE_HASH_ATTRIBUTE107 = "data-wp-hash";
+  function getRuntime107() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -73929,28 +74257,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument102(document);
+      registerDocument107(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash102(targetDocument, hash2) {
+  function documentContainsStyleHash107(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE102}]`
+      `style[${STYLE_HASH_ATTRIBUTE107}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE102) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE107) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle102(targetDocument, hash2, css4) {
+  function injectStyle107(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime102();
+    const runtime = getRuntime107();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -73959,24 +74287,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash102(targetDocument, hash2)) {
+    if (documentContainsStyleHash107(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE102, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE107, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument102(targetDocument) {
-    const runtime = getRuntime102();
+  function registerDocument107(targetDocument) {
+    const runtime = getRuntime107();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle102(targetDocument, hash2, css4);
+      injectStyle107(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -73990,17 +74318,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle101(hash2, css4) {
-    const runtime = getRuntime102();
+  function registerStyle106(hash2, css4) {
+    const runtime = getRuntime107();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle102(targetDocument, hash2, css4);
+      injectStyle107(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle101("a90faa8747", "._5b8fef2247903a5f__z-stack{display:inline-grid;grid-auto-flow:column;position:relative}._5b8fef2247903a5f__z-stack>._585cd0b86fd70a54__child{justify-self:start;position:relative}._93dbda3c809633d5__layered>._585cd0b86fd70a54__child{grid-column-start:1;grid-row-start:1}._585cd0b86fd70a54__child{z-index:var(--z-stack-z-index,auto)}._585cd0b86fd70a54__child:not(:first-of-type){margin-inline-start:var(--z-stack-offset,0)}");
+    registerStyle106("a90faa8747", "._5b8fef2247903a5f__z-stack{display:inline-grid;grid-auto-flow:column;position:relative}._5b8fef2247903a5f__z-stack>._585cd0b86fd70a54__child{justify-self:start;position:relative}._93dbda3c809633d5__layered>._585cd0b86fd70a54__child{grid-column-start:1;grid-row-start:1}._585cd0b86fd70a54__child{z-index:var(--z-stack-z-index,auto)}._585cd0b86fd70a54__child:not(:first-of-type){margin-inline-start:var(--z-stack-offset,0)}");
   }
-  var style_module_default81 = { "z-stack": "_5b8fef2247903a5f__z-stack", "child": "_585cd0b86fd70a54__child", "layered": "_93dbda3c809633d5__layered" };
+  var style_module_default86 = { "z-stack": "_5b8fef2247903a5f__z-stack", "child": "_585cd0b86fd70a54__child", "layered": "_93dbda3c809633d5__layered" };
   function UnconnectedZStack(props, forwardedRef) {
     (0, import_deprecated33.default)("wp.components.__experimentalZStack", {
       since: "7.2",
@@ -74024,7 +74352,7 @@ The screen with id ${screen.id} will not be added.`
       return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
         "div",
         {
-          className: style_module_default81.child,
+          className: style_module_default86.child,
           style: {
             "--z-stack-offset": `${offsetAmount}px`,
             "--z-stack-z-index": zIndex
@@ -74039,8 +74367,8 @@ The screen with id ${screen.id} will not be added.`
       {
         ...otherProps,
         className: clsx_default(
-          style_module_default81["z-stack"],
-          isLayered && style_module_default81.layered,
+          style_module_default86["z-stack"],
+          isLayered && style_module_default86.layered,
           className
         ),
         ref: forwardedRef,
@@ -74412,628 +74740,6 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/menu/item.mjs
   var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE103 = "data-wp-hash";
-  function getRuntime103() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument103(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash103(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE103}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE103) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle103(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime103();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash103(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE103, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument103(targetDocument) {
-    const runtime = getRuntime103();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle103(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle102(hash2, css4) {
-    const runtime = getRuntime103();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle103(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle102("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
-  }
-  var style_module_default82 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Item3 = (0, import_element236.forwardRef)(function UnforwardedItem({
-    className,
-    prefix: prefix2,
-    suffix,
-    children,
-    disabled: disabled2 = false,
-    hideOnClick = true,
-    store,
-    ...props
-  }, ref) {
-    const menuContext = (0, import_element236.useContext)(Context2);
-    const computedStore = store ?? menuContext?.store;
-    const computedHideOnClick = useMenuItemHideOnClick(
-      computedStore,
-      hideOnClick
-    );
-    if (!menuContext?.store || !computedStore) {
-      throw new Error(
-        "Menu.Item can only be rendered inside a Menu component"
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
-      MenuItem,
-      {
-        ref,
-        ...props,
-        className: clsx_default(style_module_default82.item, className),
-        accessibleWhenDisabled: true,
-        disabled: disabled2,
-        store: computedStore,
-        hideOnClick: computedHideOnClick,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", { className: style_module_default82["item-prefix-wrapper"], children: prefix2 }),
-          /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)("div", { className: style_module_default82["item-content-wrapper"], children: [
-            /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("div", { className: style_module_default82["item-children-wrapper"], children }),
-            suffix && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", { className: style_module_default82["item-suffix-wrapper"], children: suffix })
-          ] })
-        ]
-      }
-    );
-  });
-
-  // packages/components/build-module/menu/checkbox-item.mjs
-  var import_element237 = __toESM(require_element(), 1);
-  var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE104 = "data-wp-hash";
-  function getRuntime104() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument104(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash104(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE104}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE104) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle104(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime104();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash104(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE104, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument104(targetDocument) {
-    const runtime = getRuntime104();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle104(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle103(hash2, css4) {
-    const runtime = getRuntime104();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle104(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle103("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
-  }
-  var style_module_default83 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var CheckboxItem2 = (0, import_element237.forwardRef)(function UnforwardedCheckboxItem({
-    className,
-    suffix,
-    children,
-    disabled: disabled2 = false,
-    hideOnClick = false,
-    ...props
-  }, ref) {
-    const menuContext = (0, import_element237.useContext)(Context2);
-    const store = menuContext?.store;
-    const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
-    if (!store) {
-      throw new Error(
-        "Menu.CheckboxItem can only be rendered inside a Menu component"
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(
-      MenuItemCheckbox,
-      {
-        ref,
-        ...props,
-        className: clsx_default(
-          style_module_default83.item,
-          style_module_default83["checkbox-item"],
-          className
-        ),
-        accessibleWhenDisabled: true,
-        disabled: disabled2,
-        store,
-        hideOnClick: computedHideOnClick,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
-            MenuItemCheck,
-            {
-              store,
-              render: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("span", { className: style_module_default83["item-prefix-wrapper"] }),
-              style: { width: "auto", height: "auto" },
-              children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(icon_default2, { icon: check_default, size: 24 })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)("div", { className: style_module_default83["item-content-wrapper"], children: [
-            /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("div", { className: style_module_default83["item-children-wrapper"], children }),
-            suffix && /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("span", { className: style_module_default83["item-suffix-wrapper"], children: suffix })
-          ] })
-        ]
-      }
-    );
-  });
-
-  // packages/components/build-module/menu/radio-item.mjs
-  var import_element238 = __toESM(require_element(), 1);
-  var import_primitives35 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE105 = "data-wp-hash";
-  function getRuntime105() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument105(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash105(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE105}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE105) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle105(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime105();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash105(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE105, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument105(targetDocument) {
-    const runtime = getRuntime105();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle105(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle104(hash2, css4) {
-    const runtime = getRuntime105();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle105(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle104("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
-  }
-  var style_module_default84 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(import_primitives35.Circle, { cx: 12, cy: 12, r: 3 }) });
-  var RadioItem2 = (0, import_element238.forwardRef)(function UnforwardedRadioItem({
-    className,
-    suffix,
-    children,
-    disabled: disabled2 = false,
-    hideOnClick = false,
-    ...props
-  }, ref) {
-    const menuContext = (0, import_element238.useContext)(Context2);
-    const store = menuContext?.store;
-    const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
-    if (!store) {
-      throw new Error(
-        "Menu.RadioItem can only be rendered inside a Menu component"
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(
-      MenuItemRadio,
-      {
-        ref,
-        ...props,
-        className: clsx_default(style_module_default84.item, style_module_default84["radio-item"], className),
-        accessibleWhenDisabled: true,
-        disabled: disabled2,
-        store,
-        hideOnClick: computedHideOnClick,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
-            MenuItemCheck,
-            {
-              store,
-              render: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("span", { className: style_module_default84["item-prefix-wrapper"] }),
-              style: { width: "auto", height: "auto" },
-              children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(icon_default2, { icon: radioCheck2, size: 24 })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)("div", { className: style_module_default84["item-content-wrapper"], children: [
-            /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("div", { className: style_module_default84["item-children-wrapper"], children }),
-            suffix && /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("span", { className: style_module_default84["item-suffix-wrapper"], children: suffix })
-          ] })
-        ]
-      }
-    );
-  });
-
-  // packages/components/build-module/menu/group.mjs
-  var import_element239 = __toESM(require_element(), 1);
-  var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE106 = "data-wp-hash";
-  function getRuntime106() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument106(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash106(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE106}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE106) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle106(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime106();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash106(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE106, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument106(targetDocument) {
-    const runtime = getRuntime106();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle106(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle105(hash2, css4) {
-    const runtime = getRuntime106();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle106(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle105("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
-  }
-  var style_module_default85 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Group4 = (0, import_element239.forwardRef)(function UnforwardedGroup({ className, ...props }, ref) {
-    const menuContext = (0, import_element239.useContext)(Context2);
-    if (!menuContext?.store) {
-      throw new Error(
-        "Menu.Group can only be rendered inside a Menu component"
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
-      MenuGroup,
-      {
-        ref,
-        ...props,
-        className: clsx_default(style_module_default85.group, className),
-        store: menuContext.store
-      }
-    );
-  });
-
-  // packages/components/build-module/menu/group-label.mjs
-  var import_element240 = __toESM(require_element(), 1);
-  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE107 = "data-wp-hash";
-  function getRuntime107() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument107(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash107(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE107}]`
-    )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE107) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle107(targetDocument, hash2, css4) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime107();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash107(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE107, hash2);
-    style2.appendChild(targetDocument.createTextNode(css4));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument107(targetDocument) {
-    const runtime = getRuntime107();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash2, css4] of runtime.styles) {
-      injectStyle107(targetDocument, hash2, css4);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle106(hash2, css4) {
-    const runtime = getRuntime107();
-    runtime.styles.set(hash2, css4);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle107(targetDocument, hash2, css4);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle106("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
-  }
-  var style_module_default86 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var GroupLabel4 = (0, import_element240.forwardRef)(function Group5({ className, ...props }, ref) {
-    const menuContext = (0, import_element240.useContext)(Context2);
-    if (!menuContext?.store) {
-      throw new Error(
-        "Menu.GroupLabel can only be rendered inside a Menu component"
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-      MenuGroupLabel,
-      {
-        ref,
-        render: (
-          // @ts-expect-error The `children` prop is passed
-          /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            component_default8,
-            {
-              upperCase: true,
-              variant: "muted",
-              size: "11px",
-              weight: config_values_default.fontWeightEmphasis,
-              lineHeight: "16px"
-            }
-          )
-        ),
-        ...props,
-        className: clsx_default(style_module_default86["group-label"], className),
-        store: menuContext.store
-      }
-    );
-  });
-
-  // packages/components/build-module/menu/separator.mjs
-  var import_element241 = __toESM(require_element(), 1);
-  var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE108 = "data-wp-hash";
   function getRuntime108() {
     const globalScope = globalThis;
@@ -75118,29 +74824,51 @@ The screen with id ${screen.id} will not be added.`
     registerStyle107("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default87 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Separator5 = (0, import_element241.forwardRef)(function UnforwardedSeparator({ className, ...props }, ref) {
-    const menuContext = (0, import_element241.useContext)(Context2);
-    if (!menuContext?.store) {
+  var Item3 = (0, import_element236.forwardRef)(function UnforwardedItem({
+    className,
+    prefix: prefix2,
+    suffix,
+    children,
+    disabled: disabled2 = false,
+    hideOnClick = true,
+    store,
+    ...props
+  }, ref) {
+    const menuContext = (0, import_element236.useContext)(Context2);
+    const computedStore = store ?? menuContext?.store;
+    const computedHideOnClick = useMenuItemHideOnClick(
+      computedStore,
+      hideOnClick
+    );
+    if (!menuContext?.store || !computedStore) {
       throw new Error(
-        "Menu.Separator can only be rendered inside a Menu component"
+        "Menu.Item can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-      MenuSeparator,
+    return /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
+      MenuItem,
       {
         ref,
         ...props,
-        className: clsx_default(style_module_default87.separator, className, {
-          [style_module_default87["is-toolbar"]]: menuContext.variant === "toolbar"
-        }),
-        store: menuContext.store
+        className: clsx_default(style_module_default87.item, className),
+        accessibleWhenDisabled: true,
+        disabled: disabled2,
+        store: computedStore,
+        hideOnClick: computedHideOnClick,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", { className: style_module_default87["item-prefix-wrapper"], children: prefix2 }),
+          /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)("div", { className: style_module_default87["item-content-wrapper"], children: [
+            /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("div", { className: style_module_default87["item-children-wrapper"], children }),
+            suffix && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", { className: style_module_default87["item-suffix-wrapper"], children: suffix })
+          ] })
+        ]
       }
     );
   });
 
-  // packages/components/build-module/menu/item-label.mjs
-  var import_element242 = __toESM(require_element(), 1);
-  var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/checkbox-item.mjs
+  var import_element237 = __toESM(require_element(), 1);
+  var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE109 = "data-wp-hash";
   function getRuntime109() {
     const globalScope = globalThis;
@@ -75225,27 +74953,59 @@ The screen with id ${screen.id} will not be added.`
     registerStyle108("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default88 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var ItemLabel2 = (0, import_element242.forwardRef)(function UnforwardedItemLabel({ className, ...props }, ref) {
-    const menuContext = (0, import_element242.useContext)(Context2);
-    if (!menuContext?.store) {
+  var CheckboxItem2 = (0, import_element237.forwardRef)(function UnforwardedCheckboxItem({
+    className,
+    suffix,
+    children,
+    disabled: disabled2 = false,
+    hideOnClick = false,
+    ...props
+  }, ref) {
+    const menuContext = (0, import_element237.useContext)(Context2);
+    const store = menuContext?.store;
+    const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
+    if (!store) {
       throw new Error(
-        "Menu.ItemLabel can only be rendered inside a Menu component"
+        "Menu.CheckboxItem can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
-      component_default7,
+    return /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(
+      MenuItemCheckbox,
       {
-        numberOfLines: 1,
         ref,
         ...props,
-        className: clsx_default(style_module_default88["item-label"], className)
+        className: clsx_default(
+          style_module_default88.item,
+          style_module_default88["checkbox-item"],
+          className
+        ),
+        accessibleWhenDisabled: true,
+        disabled: disabled2,
+        store,
+        hideOnClick: computedHideOnClick,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
+            MenuItemCheck,
+            {
+              store,
+              render: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("span", { className: style_module_default88["item-prefix-wrapper"] }),
+              style: { width: "auto", height: "auto" },
+              children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(icon_default2, { icon: check_default, size: 24 })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)("div", { className: style_module_default88["item-content-wrapper"], children: [
+            /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("div", { className: style_module_default88["item-children-wrapper"], children }),
+            suffix && /* @__PURE__ */ (0, import_jsx_runtime352.jsx)("span", { className: style_module_default88["item-suffix-wrapper"], children: suffix })
+          ] })
+        ]
       }
     );
   });
 
-  // packages/components/build-module/menu/item-help-text.mjs
-  var import_element243 = __toESM(require_element(), 1);
-  var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/radio-item.mjs
+  var import_element238 = __toESM(require_element(), 1);
+  var import_primitives35 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE110 = "data-wp-hash";
   function getRuntime110() {
     const globalScope = globalThis;
@@ -75330,55 +75090,55 @@ The screen with id ${screen.id} will not be added.`
     registerStyle109("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default89 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var ItemHelpText = (0, import_element243.forwardRef)(function UnforwardedItemHelpText({ className, ...props }, ref) {
-    const menuContext = (0, import_element243.useContext)(Context2);
-    if (!menuContext?.store) {
+  var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(import_primitives35.Circle, { cx: 12, cy: 12, r: 3 }) });
+  var RadioItem2 = (0, import_element238.forwardRef)(function UnforwardedRadioItem({
+    className,
+    suffix,
+    children,
+    disabled: disabled2 = false,
+    hideOnClick = false,
+    ...props
+  }, ref) {
+    const menuContext = (0, import_element238.useContext)(Context2);
+    const store = menuContext?.store;
+    const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
+    if (!store) {
       throw new Error(
-        "Menu.ItemHelpText can only be rendered inside a Menu component"
+        "Menu.RadioItem can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-      component_default7,
-      {
-        numberOfLines: 2,
-        ref,
-        ...props,
-        className: clsx_default(style_module_default89["item-help-text"], className)
-      }
-    );
-  });
-
-  // packages/components/build-module/menu/trigger-button.mjs
-  var import_element244 = __toESM(require_element(), 1);
-  var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
-  var TriggerButton = (0, import_element244.forwardRef)(function UnforwardedTriggerButton({ children, disabled: disabled2 = false, ...props }, ref) {
-    const menuContext = (0, import_element244.useContext)(Context2);
-    if (!menuContext?.store) {
-      throw new Error(
-        "Menu.TriggerButton can only be rendered inside a Menu component"
-      );
-    }
-    if (menuContext.store.parent) {
-      throw new Error(
-        "Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead."
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-      MenuButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(
+      MenuItemRadio,
       {
         ref,
         ...props,
+        className: clsx_default(style_module_default89.item, style_module_default89["radio-item"], className),
+        accessibleWhenDisabled: true,
         disabled: disabled2,
-        store: menuContext.store,
-        children
+        store,
+        hideOnClick: computedHideOnClick,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
+            MenuItemCheck,
+            {
+              store,
+              render: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("span", { className: style_module_default89["item-prefix-wrapper"] }),
+              style: { width: "auto", height: "auto" },
+              children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(icon_default2, { icon: radioCheck2, size: 24 })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)("div", { className: style_module_default89["item-content-wrapper"], children: [
+            /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("div", { className: style_module_default89["item-children-wrapper"], children }),
+            suffix && /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("span", { className: style_module_default89["item-suffix-wrapper"], children: suffix })
+          ] })
+        ]
       }
     );
   });
 
-  // packages/components/build-module/menu/submenu-trigger-item.mjs
-  var import_element245 = __toESM(require_element(), 1);
-  var import_i18n79 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime360 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/group.mjs
+  var import_element239 = __toESM(require_element(), 1);
+  var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE111 = "data-wp-hash";
   function getRuntime111() {
     const globalScope = globalThis;
@@ -75463,49 +75223,27 @@ The screen with id ${screen.id} will not be added.`
     registerStyle110("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default90 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var SubmenuTriggerItem = (0, import_element245.forwardRef)(function UnforwardedSubmenuTriggerItem({ suffix, ...otherProps }, ref) {
-    const menuContext = (0, import_element245.useContext)(Context2);
-    if (!menuContext?.store.parent) {
+  var Group4 = (0, import_element239.forwardRef)(function UnforwardedGroup({ className, ...props }, ref) {
+    const menuContext = (0, import_element239.useContext)(Context2);
+    if (!menuContext?.store) {
       throw new Error(
-        "Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component"
+        "Menu.Group can only be rendered inside a Menu component"
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-      MenuButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
+      MenuGroup,
       {
         ref,
-        accessibleWhenDisabled: true,
-        store: menuContext.store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-          Item3,
-          {
-            ...otherProps,
-            store: menuContext.store.parent,
-            suffix: /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(import_jsx_runtime360.Fragment, { children: [
-              suffix,
-              /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-                icon_default3,
-                {
-                  className: clsx_default(
-                    style_module_default90["submenu-chevron-icon"],
-                    { [style_module_default90["is-rtl"]]: (0, import_i18n79.isRTL)() }
-                  ),
-                  "aria-hidden": "true",
-                  icon: chevron_right_small_default,
-                  size: 24,
-                  preserveAspectRatio: "xMidYMid slice"
-                }
-              )
-            ] })
-          }
-        )
+        ...props,
+        className: clsx_default(style_module_default90.group, className),
+        store: menuContext.store
       }
     );
   });
 
-  // packages/components/build-module/menu/popover.mjs
-  var import_element246 = __toESM(require_element(), 1);
-  var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/menu/group-label.mjs
+  var import_element240 = __toESM(require_element(), 1);
+  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE112 = "data-wp-hash";
   function getRuntime112() {
     const globalScope = globalThis;
@@ -75590,6 +75328,596 @@ The screen with id ${screen.id} will not be added.`
     registerStyle111("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default91 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
+  var GroupLabel4 = (0, import_element240.forwardRef)(function Group5({ className, ...props }, ref) {
+    const menuContext = (0, import_element240.useContext)(Context2);
+    if (!menuContext?.store) {
+      throw new Error(
+        "Menu.GroupLabel can only be rendered inside a Menu component"
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+      MenuGroupLabel,
+      {
+        ref,
+        render: (
+          // @ts-expect-error The `children` prop is passed
+          /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+            component_default8,
+            {
+              upperCase: true,
+              variant: "muted",
+              size: "11px",
+              weight: config_values_default.fontWeightEmphasis,
+              lineHeight: "16px"
+            }
+          )
+        ),
+        ...props,
+        className: clsx_default(style_module_default91["group-label"], className),
+        store: menuContext.store
+      }
+    );
+  });
+
+  // packages/components/build-module/menu/separator.mjs
+  var import_element241 = __toESM(require_element(), 1);
+  var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE113 = "data-wp-hash";
+  function getRuntime113() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument113(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash113(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE113}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE113) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle113(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime113();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash113(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE113, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument113(targetDocument) {
+    const runtime = getRuntime113();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle113(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle112(hash2, css4) {
+    const runtime = getRuntime113();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle113(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle112("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
+  }
+  var style_module_default92 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
+  var Separator5 = (0, import_element241.forwardRef)(function UnforwardedSeparator({ className, ...props }, ref) {
+    const menuContext = (0, import_element241.useContext)(Context2);
+    if (!menuContext?.store) {
+      throw new Error(
+        "Menu.Separator can only be rendered inside a Menu component"
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+      MenuSeparator,
+      {
+        ref,
+        ...props,
+        className: clsx_default(style_module_default92.separator, className, {
+          [style_module_default92["is-toolbar"]]: menuContext.variant === "toolbar"
+        }),
+        store: menuContext.store
+      }
+    );
+  });
+
+  // packages/components/build-module/menu/item-label.mjs
+  var import_element242 = __toESM(require_element(), 1);
+  var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE114 = "data-wp-hash";
+  function getRuntime114() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument114(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash114(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE114}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE114) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle114(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime114();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash114(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE114, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument114(targetDocument) {
+    const runtime = getRuntime114();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle114(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle113(hash2, css4) {
+    const runtime = getRuntime114();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle114(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle113("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
+  }
+  var style_module_default93 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
+  var ItemLabel2 = (0, import_element242.forwardRef)(function UnforwardedItemLabel({ className, ...props }, ref) {
+    const menuContext = (0, import_element242.useContext)(Context2);
+    if (!menuContext?.store) {
+      throw new Error(
+        "Menu.ItemLabel can only be rendered inside a Menu component"
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+      component_default7,
+      {
+        numberOfLines: 1,
+        ref,
+        ...props,
+        className: clsx_default(style_module_default93["item-label"], className)
+      }
+    );
+  });
+
+  // packages/components/build-module/menu/item-help-text.mjs
+  var import_element243 = __toESM(require_element(), 1);
+  var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE115 = "data-wp-hash";
+  function getRuntime115() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument115(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash115(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE115}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE115) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle115(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime115();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash115(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE115, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument115(targetDocument) {
+    const runtime = getRuntime115();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle115(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle114(hash2, css4) {
+    const runtime = getRuntime115();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle115(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle114("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
+  }
+  var style_module_default94 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
+  var ItemHelpText = (0, import_element243.forwardRef)(function UnforwardedItemHelpText({ className, ...props }, ref) {
+    const menuContext = (0, import_element243.useContext)(Context2);
+    if (!menuContext?.store) {
+      throw new Error(
+        "Menu.ItemHelpText can only be rendered inside a Menu component"
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+      component_default7,
+      {
+        numberOfLines: 2,
+        ref,
+        ...props,
+        className: clsx_default(style_module_default94["item-help-text"], className)
+      }
+    );
+  });
+
+  // packages/components/build-module/menu/trigger-button.mjs
+  var import_element244 = __toESM(require_element(), 1);
+  var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
+  var TriggerButton = (0, import_element244.forwardRef)(function UnforwardedTriggerButton({ children, disabled: disabled2 = false, ...props }, ref) {
+    const menuContext = (0, import_element244.useContext)(Context2);
+    if (!menuContext?.store) {
+      throw new Error(
+        "Menu.TriggerButton can only be rendered inside a Menu component"
+      );
+    }
+    if (menuContext.store.parent) {
+      throw new Error(
+        "Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead."
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+      MenuButton,
+      {
+        ref,
+        ...props,
+        disabled: disabled2,
+        store: menuContext.store,
+        children
+      }
+    );
+  });
+
+  // packages/components/build-module/menu/submenu-trigger-item.mjs
+  var import_element245 = __toESM(require_element(), 1);
+  var import_i18n79 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime360 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE116 = "data-wp-hash";
+  function getRuntime116() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument116(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash116(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE116}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE116) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle116(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime116();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash116(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE116, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument116(targetDocument) {
+    const runtime = getRuntime116();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle116(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle115(hash2, css4) {
+    const runtime = getRuntime116();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle116(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle115("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
+  }
+  var style_module_default95 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
+  var SubmenuTriggerItem = (0, import_element245.forwardRef)(function UnforwardedSubmenuTriggerItem({ suffix, ...otherProps }, ref) {
+    const menuContext = (0, import_element245.useContext)(Context2);
+    if (!menuContext?.store.parent) {
+      throw new Error(
+        "Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component"
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+      MenuButton,
+      {
+        ref,
+        accessibleWhenDisabled: true,
+        store: menuContext.store,
+        render: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+          Item3,
+          {
+            ...otherProps,
+            store: menuContext.store.parent,
+            suffix: /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(import_jsx_runtime360.Fragment, { children: [
+              suffix,
+              /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+                icon_default3,
+                {
+                  className: clsx_default(
+                    style_module_default95["submenu-chevron-icon"],
+                    { [style_module_default95["is-rtl"]]: (0, import_i18n79.isRTL)() }
+                  ),
+                  "aria-hidden": "true",
+                  icon: chevron_right_small_default,
+                  size: 24,
+                  preserveAspectRatio: "xMidYMid slice"
+                }
+              )
+            ] })
+          }
+        )
+      }
+    );
+  });
+
+  // packages/components/build-module/menu/popover.mjs
+  var import_element246 = __toESM(require_element(), 1);
+  var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE117 = "data-wp-hash";
+  function getRuntime117() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument117(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash117(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE117}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE117) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle117(targetDocument, hash2, css4) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime117();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash117(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE117, hash2);
+    style2.appendChild(targetDocument.createTextNode(css4));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument117(targetDocument) {
+    const runtime = getRuntime117();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css4] of runtime.styles) {
+      injectStyle117(targetDocument, hash2, css4);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle116(hash2, css4) {
+    const runtime = getRuntime117();
+    runtime.styles.set(hash2, css4);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle117(targetDocument, hash2, css4);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle116("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
+  }
+  var style_module_default96 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
   var Popover4 = (0, import_element246.forwardRef)(function UnforwardedPopover2({ gutter, shift: shift4, modal = true, ...otherProps }, ref) {
     const menuContext = (0, import_element246.useContext)(Context2);
     const appliedPlacementSide = useStoreState(
@@ -75619,15 +75947,15 @@ The screen with id ${screen.id} will not be added.`
       );
     }
     const renderMenu = (0, import_element246.useCallback)(
-      (htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)("div", { className: style_module_default91["menu-motion-root"], children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+      (htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)("div", { className: style_module_default96["menu-motion-root"], children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
         "div",
         {
           ...htmlProps,
           className: clsx_default(
-            style_module_default91["menu-surface"],
+            style_module_default96["menu-surface"],
             htmlProps.className,
             {
-              [style_module_default91["is-toolbar"]]: menuContext.variant === "toolbar"
+              [style_module_default96["is-toolbar"]]: menuContext.variant === "toolbar"
             }
           )
         }
@@ -75638,7 +75966,7 @@ The screen with id ${screen.id} will not be added.`
       Menu,
       {
         ...otherProps,
-        className: clsx_default(style_module_default91.menu, otherProps.className),
+        className: clsx_default(style_module_default96.menu, otherProps.className),
         ref,
         modal,
         store: menuContext.store,
@@ -75819,8 +76147,8 @@ The screen with id ${screen.id} will not be added.`
   var import_element249 = __toESM(require_element(), 1);
   var import_warning12 = __toESM(require_warning(), 1);
   var import_jsx_runtime363 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE113 = "data-wp-hash";
-  function getRuntime113() {
+  var STYLE_HASH_ATTRIBUTE118 = "data-wp-hash";
+  function getRuntime118() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -75831,28 +76159,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument113(document);
+      registerDocument118(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash113(targetDocument, hash2) {
+  function documentContainsStyleHash118(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE113}]`
+      `style[${STYLE_HASH_ATTRIBUTE118}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE113) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE118) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle113(targetDocument, hash2, css4) {
+  function injectStyle118(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime113();
+    const runtime = getRuntime118();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -75861,24 +76189,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash113(targetDocument, hash2)) {
+    if (documentContainsStyleHash118(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE113, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE118, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument113(targetDocument) {
-    const runtime = getRuntime113();
+  function registerDocument118(targetDocument) {
+    const runtime = getRuntime118();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle113(targetDocument, hash2, css4);
+      injectStyle118(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -75892,17 +76220,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle112(hash2, css4) {
-    const runtime = getRuntime113();
+  function registerStyle117(hash2, css4) {
+    const runtime = getRuntime118();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle113(targetDocument, hash2, css4);
+      injectStyle118(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle112("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
+    registerStyle117("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
   }
-  var style_module_default92 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
+  var style_module_default97 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
   var Tab3 = (0, import_element249.forwardRef)(function UnforwardedTab({ children, tabId, disabled: disabled2, render, className, ...otherProps }, ref) {
     const { store, instanceId } = useTabsContext() ?? {};
     if (!store) {
@@ -75919,8 +76247,8 @@ The screen with id ${screen.id} will not be added.`
         disabled: disabled2,
         render,
         ...otherProps,
-        className: clsx_default(style_module_default92.tab, className),
-        children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)("span", { className: style_module_default92["tab-children"], children })
+        className: clsx_default(style_module_default97.tab, className),
+        children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)("span", { className: style_module_default97["tab-children"], children })
       }
     );
   });
@@ -75982,8 +76310,8 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/tabs/tablist.mjs
   var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE114 = "data-wp-hash";
-  function getRuntime114() {
+  var STYLE_HASH_ATTRIBUTE119 = "data-wp-hash";
+  function getRuntime119() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -75994,28 +76322,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument114(document);
+      registerDocument119(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash114(targetDocument, hash2) {
+  function documentContainsStyleHash119(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE114}]`
+      `style[${STYLE_HASH_ATTRIBUTE119}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE114) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE119) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle114(targetDocument, hash2, css4) {
+  function injectStyle119(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime114();
+    const runtime = getRuntime119();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -76024,24 +76352,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash114(targetDocument, hash2)) {
+    if (documentContainsStyleHash119(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE114, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE119, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument114(targetDocument) {
-    const runtime = getRuntime114();
+  function registerDocument119(targetDocument) {
+    const runtime = getRuntime119();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle114(targetDocument, hash2, css4);
+      injectStyle119(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -76055,17 +76383,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle113(hash2, css4) {
-    const runtime = getRuntime114();
+  function registerStyle118(hash2, css4) {
+    const runtime = getRuntime119();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle114(targetDocument, hash2, css4);
+      injectStyle119(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle113("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
+    registerStyle118("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
   }
-  var style_module_default93 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
+  var style_module_default98 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
   var DEFAULT_SCROLL_MARGIN = 24;
   function useScrollRectIntoView(parent, rect, { margin = DEFAULT_SCROLL_MARGIN } = {}) {
     (0, import_element251.useLayoutEffect)(() => {
@@ -76133,7 +76461,7 @@ The screen with id ${screen.id} will not be added.`
         "data-select-on-move": selectOnMove ? "true" : "false",
         ...otherProps,
         className: clsx_default(
-          style_module_default93["tab-list"],
+          style_module_default98["tab-list"],
           overflow.first && "is-overflowing-first",
           overflow.last && "is-overflowing-last",
           otherProps.className
@@ -76147,8 +76475,8 @@ The screen with id ${screen.id} will not be added.`
   var import_element252 = __toESM(require_element(), 1);
   var import_warning14 = __toESM(require_warning(), 1);
   var import_jsx_runtime365 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE115 = "data-wp-hash";
-  function getRuntime115() {
+  var STYLE_HASH_ATTRIBUTE120 = "data-wp-hash";
+  function getRuntime120() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -76159,28 +76487,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument115(document);
+      registerDocument120(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash115(targetDocument, hash2) {
+  function documentContainsStyleHash120(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE115}]`
+      `style[${STYLE_HASH_ATTRIBUTE120}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE115) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE120) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle115(targetDocument, hash2, css4) {
+  function injectStyle120(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime115();
+    const runtime = getRuntime120();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -76189,24 +76517,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash115(targetDocument, hash2)) {
+    if (documentContainsStyleHash120(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE115, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE120, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument115(targetDocument) {
-    const runtime = getRuntime115();
+  function registerDocument120(targetDocument) {
+    const runtime = getRuntime120();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle115(targetDocument, hash2, css4);
+      injectStyle120(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -76220,17 +76548,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle114(hash2, css4) {
-    const runtime = getRuntime115();
+  function registerStyle119(hash2, css4) {
+    const runtime = getRuntime120();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle115(targetDocument, hash2, css4);
+      injectStyle120(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle114("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
+    registerStyle119("7818c12ff5", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus)}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]) ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible] ._8273dc452cca5a1c__tab-children:after,._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{flex-grow:0;justify-content:start;position:relative}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children:after{content:"";inset:calc(var(--wpds-dimension-padding-xs, 4px)*-1)}._7fe2d5911cf2dc60__tab-panel:focus{box-shadow:none;outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}');
   }
-  var style_module_default94 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
+  var style_module_default99 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
   var TabPanel3 = (0, import_element252.forwardRef)(function UnforwardedTabPanel2({ children, tabId, focusable: focusable2 = true, className, ...otherProps }, ref) {
     const context = useTabsContext();
     const selectedId = useStoreState(context?.store, "selectedId");
@@ -76249,7 +76577,7 @@ The screen with id ${screen.id} will not be added.`
         tabId: instancedTabId,
         focusable: focusable2,
         ...otherProps,
-        className: clsx_default(style_module_default94["tab-panel"], className),
+        className: clsx_default(style_module_default99["tab-panel"], className),
         children: selectedId === instancedTabId && children
       }
     );
@@ -76437,8 +76765,8 @@ The screen with id ${screen.id} will not be added.`
   var import_compose91 = __toESM(require_compose(), 1);
   var import_element255 = __toESM(require_element(), 1);
   var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE116 = "data-wp-hash";
-  function getRuntime116() {
+  var STYLE_HASH_ATTRIBUTE121 = "data-wp-hash";
+  function getRuntime121() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -76449,28 +76777,28 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument116(document);
+      registerDocument121(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash116(targetDocument, hash2) {
+  function documentContainsStyleHash121(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE116}]`
+      `style[${STYLE_HASH_ATTRIBUTE121}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE116) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE121) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle116(targetDocument, hash2, css4) {
+  function injectStyle121(targetDocument, hash2, css4) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime116();
+    const runtime = getRuntime121();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -76479,24 +76807,24 @@ The screen with id ${screen.id} will not be added.`
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash116(targetDocument, hash2)) {
+    if (documentContainsStyleHash121(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE116, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE121, hash2);
     style2.appendChild(targetDocument.createTextNode(css4));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument116(targetDocument) {
-    const runtime = getRuntime116();
+  function registerDocument121(targetDocument) {
+    const runtime = getRuntime121();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css4] of runtime.styles) {
-      injectStyle116(targetDocument, hash2, css4);
+      injectStyle121(targetDocument, hash2, css4);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -76510,17 +76838,17 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle115(hash2, css4) {
-    const runtime = getRuntime116();
+  function registerStyle120(hash2, css4) {
+    const runtime = getRuntime121();
     runtime.styles.set(hash2, css4);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle116(targetDocument, hash2, css4);
+      injectStyle121(targetDocument, hash2, css4);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle115("284f47c8a8", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
+    registerStyle120("284f47c8a8", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
   }
-  var style_module_default95 = { "editable": "_0f130cee1a924516__editable" };
+  var style_module_default100 = { "editable": "_0f130cee1a924516__editable" };
   function UnforwardedContentEditableControl({
     label,
     id: id3,
@@ -76552,7 +76880,7 @@ The screen with id ${screen.id} will not be added.`
       /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
         "div",
         {
-          className: style_module_default95.editable,
+          className: style_module_default100.editable,
           role: "textbox",
           "aria-multiline": true,
           "aria-labelledby": labelId,
