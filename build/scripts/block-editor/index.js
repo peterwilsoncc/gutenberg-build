@@ -70477,10 +70477,16 @@ var wp;
       blocks2 = files.reduce((accumulator, file) => {
         const transformation = (0, import_blocks29.findTransform)(
           fromTransforms,
-          (transform) => transform.type === "files" && transform.isMatch([file])
+          (transform) => transform.type === "files" && // Files transforms define a matcher.
+          transform.isMatch([file])
         );
         if (transformation) {
-          accumulator.push(transformation.transform([file]));
+          accumulator.push(
+            // The predicate only matches files transforms, which transform.
+            transformation.transform([
+              file
+            ])
+          );
         }
         return accumulator;
       }, []).flat();
@@ -70489,6 +70495,7 @@ var wp;
         HTML: html,
         plainText,
         mode: "BLOCKS",
+        // @ts-expect-error `pasteHandler` ignores this option.
         canUserUseUnfilteredHTML
       });
     }
@@ -70585,7 +70592,10 @@ var wp;
         if (event.metaKey || event.ctrlKey || event.altKey) {
           return;
         }
-        if (!event.target.isContentEditable || hasMultiSelection2()) {
+        if (
+          // Key events reach the listener from elements.
+          !event.target.isContentEditable || hasMultiSelection2()
+        ) {
           return;
         }
         const selection2 = node.ownerDocument.defaultView.getSelection();
@@ -70686,12 +70696,9 @@ var wp;
   };
   var ENTRY_KEYS = ["Enter", " ", "F2", "Escape"];
   function useTabNav() {
-    const containerRef = (
-      /** @type {typeof useRef<HTMLElement>} */
-      (0, import_element181.useRef)()
-    );
-    const focusCaptureBeforeRef = (0, import_element181.useRef)();
-    const focusCaptureAfterRef = (0, import_element181.useRef)();
+    const containerRef = (0, import_element181.useRef)(void 0);
+    const focusCaptureBeforeRef = (0, import_element181.useRef)(void 0);
+    const focusCaptureAfterRef = (0, import_element181.useRef)(void 0);
     const hintId = (0, import_compose40.useInstanceId)(
       useTabNav,
       "block-editor-writing-flow__canvas-stop-hint"
@@ -70707,7 +70714,7 @@ var wp;
       isZoomOut: isZoomOut2
     } = unlock((0, import_data42.useSelect)(store));
     const { setLastFocus: setLastFocus2 } = unlock((0, import_data42.useDispatch)(store));
-    const noCaptureRef = (0, import_element181.useRef)();
+    const noCaptureRef = (0, import_element181.useRef)(void 0);
     function enterCanvas() {
       containerRef.current.ownerDocument.defaultView.focus();
       if (hasMultiSelection2()) {
@@ -70724,9 +70731,13 @@ var wp;
         const sectionRootClientId = getSectionRootClientId2();
         const sectionBlocks = getBlockOrder2(sectionRootClientId);
         if (sectionBlocks.length) {
-          containerRef.current.querySelector(`[data-block="${sectionBlocks[0]}"]`).focus();
+          containerRef.current.querySelector(
+            `[data-block="${sectionBlocks[0]}"]`
+          ).focus();
         } else if (sectionRootClientId) {
-          containerRef.current.querySelector(`[data-block="${sectionRootClientId}"]`).focus();
+          containerRef.current.querySelector(
+            `[data-block="${sectionRootClientId}"]`
+          ).focus();
         } else {
           containerRef.current.focus();
         }
@@ -70829,8 +70840,12 @@ var wp;
         }
         const { target, shiftKey: isShift } = event;
         const direction = isShift ? "findPrevious" : "findNext";
-        const nextTabbable = import_dom47.focus.tabbable[direction](target);
-        const currentBlock = target.closest("[data-block]");
+        const nextTabbable = import_dom47.focus.tabbable[direction](
+          target
+        );
+        const currentBlock = target.closest(
+          "[data-block]"
+        );
         const isElementPartOfSelectedBlock = currentBlock && nextTabbable && (isInSameBlock(currentBlock, nextTabbable) || isInsideRootBlock(currentBlock, nextTabbable));
         if ((0, import_dom47.isFormElement)(nextTabbable) && isElementPartOfSelectedBlock) {
           return;
@@ -70946,10 +70961,13 @@ var wp;
       targetRect = target.getBoundingClientRect();
     }
     function isTabCandidate(node) {
-      if (node.children.length === 1 && isInSameBlock(node, node.firstElementChild) && node.firstElementChild.getAttribute("contenteditable") === "true") {
+      if (node.children.length === 1 && // The node has a single child element.
+      isInSameBlock(node, node.firstElementChild) && node.firstElementChild.getAttribute("contenteditable") === "true") {
         return;
       }
-      const blockType = (0, import_blocks30.getBlockType)(node.getAttribute("data-type"));
+      const blockType = (0, import_blocks30.getBlockType)(
+        node.getAttribute("data-type")
+      );
       if (node.contentEditable !== "true" && getBlockClientId(node) && blockType && (blockType.merge || (0, import_blocks30.hasBlockSupport)(blockType, "__experimentalOnMerge")) && import_dom49.focus.focusable.find(node).filter((element) => !(0, import_dom49.isFormElement)(element)).length !== 0) {
         return false;
       }
@@ -71001,9 +71019,11 @@ var wp;
         }
         const { keyCode, shiftKey, ctrlKey, altKey, metaKey } = event;
         const target = event.target === node && getSelectionEditableElement(
+          // A mounted element's window has a selection.
           node.ownerDocument.defaultView.getSelection(),
           node
-        ) || event.target;
+        ) || // Key events reach the listener from elements.
+        event.target;
         const isUp = keyCode === import_keycodes6.UP;
         const isDown = keyCode === import_keycodes6.DOWN;
         const isLeft = keyCode === import_keycodes6.LEFT;
@@ -71094,6 +71114,7 @@ var wp;
               // When Alt is pressed, place the caret at the furthest
               // horizontal edge and the furthest vertical edge.
               altKey ? !isReverse : isReverse,
+              // The rect is set on the first vertical key press.
               altKey ? void 0 : verticalRect
             );
             event.preventDefault();
@@ -71104,7 +71125,10 @@ var wp;
             isReverseDir,
             node
           );
-          (0, import_dom49.placeCaretAtHorizontalEdge)(closestTabbable, isReverse);
+          (0, import_dom49.placeCaretAtHorizontalEdge)(
+            closestTabbable,
+            isReverse
+          );
           event.preventDefault();
         }
       }
@@ -71149,7 +71173,9 @@ var wp;
           if (!blocks2.length) {
             return;
           }
-          const currentBlock = target.closest("[data-block]");
+          const currentBlock = target.closest(
+            "[data-block]"
+          );
           const currentIndex = currentBlock ? blocks2.indexOf(currentBlock) : -1;
           if (currentIndex === -1) {
             return;
@@ -71197,7 +71223,8 @@ var wp;
         const selectedClientIds = getSelectedBlockClientIds2();
         const { ownerDocument: ownerDocument2 } = node;
         const selection2 = ownerDocument2.defaultView.getSelection();
-        const editable = event.target === node && getSelectionEditableElement(selection2, node) || event.target;
+        const editable = event.target === node && getSelectionEditableElement(selection2, node) || // Key events reach the listener from elements.
+        event.target;
         if (selectedClientIds.length < 2 && !(0, import_dom51.isEntirelySelected)(editable)) {
           if (event.target === node && editable !== node) {
             event.preventDefault();
@@ -71217,6 +71244,7 @@ var wp;
           ownerDocument2.activeElement
         );
         if (activeClientId && activeClientId !== firstSelectedClientId && !isInsideRootBlock(
+          // The selected block and the focused element are rendered.
           ownerDocument2.getElementById(
             "block-" + firstSelectedClientId
           ),
@@ -71289,11 +71317,19 @@ var wp;
         function onMouseDown({ target }) {
           lastMouseDownTarget = target;
         }
-        function onMouseLeave({ buttons, target, relatedTarget }) {
-          if (!target.contains(lastMouseDownTarget)) {
+        function onMouseLeave({
+          buttons,
+          target,
+          relatedTarget
+        }) {
+          if (!target.contains(
+            lastMouseDownTarget
+          )) {
             return;
           }
-          if (target.contains(relatedTarget)) {
+          if (target.contains(
+            relatedTarget
+          )) {
             return;
           }
           if (isDraggingBlocks2()) {
@@ -71308,7 +71344,9 @@ var wp;
           if (node === target) {
             return;
           }
-          if (target.getAttribute("contenteditable") !== "true" && !getSettings9().isPreviewMode) {
+          if (target.getAttribute(
+            "contenteditable"
+          ) !== "true" && !getSettings9().isPreviewMode) {
             return;
           }
           if (!isSelectionEnabled3()) {
@@ -71400,7 +71438,8 @@ var wp;
         let isTripleClick = false;
         function onMouseDown(event) {
           isTripleClick = event.detail === 3;
-          if (event.shiftKey && getBlockSelectionStart2() !== getBlockClientId(event.target)) {
+          if (event.shiftKey && getBlockSelectionStart2() !== // Mouse events reach the listener from nodes.
+          getBlockClientId(event.target)) {
             startMultiSelect2();
           }
         }
@@ -71451,7 +71490,9 @@ var wp;
           let endClientId = getBlockClientId(endNode);
           if (isClickShift) {
             const selectedClientId = getBlockSelectionStart2();
-            const clickedClientId = getBlockClientId(event.target);
+            const clickedClientId = getBlockClientId(
+              event.target
+            );
             const focusNodeIsNonSelectable = clickedClientId !== endClientId;
             if (startClientId === endClientId && selection2.isCollapsed || !endClientId || focusNodeIsNonSelectable) {
               endClientId = clickedClientId;
@@ -71465,7 +71506,9 @@ var wp;
             return;
           }
           if (event.type === "mouseup" && !event.shiftKey && !isMultiSelecting3() && startClientId === endClientId) {
-            const clickedClientId = getBlockClientId(event.target);
+            const clickedClientId = getBlockClientId(
+              event.target
+            );
             if (clickedClientId && clickedClientId !== startClientId) {
               selection2.removeAllRanges();
               return;
@@ -71517,7 +71560,10 @@ var wp;
                 selectBlock2(startClientId);
               }
             } else {
-              multiSelect2(startClientId, startClientId);
+              multiSelect2(
+                startClientId,
+                startClientId
+              );
             }
           } else {
             const startPath = [
@@ -71563,7 +71609,10 @@ var wp;
                 }
               });
             } else {
-              multiSelect2(startClientId, endClientId);
+              multiSelect2(
+                startClientId,
+                endClientId
+              );
             }
           }
         }
@@ -71674,7 +71723,9 @@ var wp;
             return;
           }
           const startClientId = getBlockSelectionStart2();
-          const clickedClientId = getBlockClientId(event.target);
+          const clickedClientId = getBlockClientId(
+            event.target
+          );
           if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && node.ownerDocument.activeElement === node) {
             event.preventDefault();
             return;
@@ -71785,7 +71836,8 @@ var wp;
         if (!hasMultiSelection2()) {
           if (event.keyCode === import_keycodes8.ENTER || event.inputType === "insertParagraph") {
             if (event.shiftKey || // Editables are handled on beforeinput.
-            event.type === "keydown" && event.target.ownerDocument.activeElement.isContentEditable) {
+            event.type === "keydown" && // Key events reach the listener from elements.
+            event.target.ownerDocument.activeElement.isContentEditable) {
               return;
             }
             const clientId = getSelectedBlockClientId2();
@@ -71796,21 +71848,22 @@ var wp;
             const selectionStart = getSelectionStart2();
             const selectionEnd = getSelectionEnd2();
             if (selectionStart.attributeKey === selectionEnd.attributeKey) {
-              const selectedAttributeValue = getBlockAttributes3(clientId)[selectionStart.attributeKey];
+              const selectedAttributeValue = getBlockAttributes3(
+                clientId
+              )[selectionStart.attributeKey];
               const transforms = (0, import_blocks31.getBlockTransforms)("from").filter(
                 ({ type }) => type === "enter"
               );
               const transformation = (0, import_blocks31.findTransform)(
                 transforms,
                 (item) => {
-                  return item.regExp.test(
-                    selectedAttributeValue
-                  );
+                  return item.regExp.test(selectedAttributeValue);
                 }
               );
               if (transformation) {
                 replaceBlocks2(
                   clientId,
+                  // Enter transforms transform.
                   transformation.transform({
                     content: selectedAttributeValue
                   })
@@ -71820,11 +71873,12 @@ var wp;
               }
             }
             const rootClientId = getBlockRootClientId2(clientId);
-            const { activeElement: activeElement2 } = event.target.ownerDocument;
+            const activeElement2 = event.target.ownerDocument.activeElement;
             if (!__unstableIsFullySelected2() && (canInsertBlockType2(
               (0, import_blocks31.getDefaultBlockName)(),
               rootClientId
-            ) || canInsertBlockType2(blockName, rootClientId)) && ((0, import_blocks31.hasBlockSupport)(blockName, "splitting", false) || event.__deprecatedOnSplit)) {
+            ) || canInsertBlockType2(blockName, rootClientId)) && // The selected block has a name.
+            ((0, import_blocks31.hasBlockSupport)(blockName, "splitting", false) || event.__deprecatedOnSplit)) {
               event.preventDefault();
               __unstableSplitSelection2();
             } else if (
@@ -71857,6 +71911,7 @@ var wp;
                   if (canInsertBlockType2(name, clientId)) {
                     event.preventDefault();
                     insertBlock2(
+                      // Blocks are registered, so there is a default block.
                       (0, import_blocks31.createBlock)(
                         name,
                         defaultBlock?.attributes
@@ -71873,7 +71928,10 @@ var wp;
                 }
                 if (nextClientId) {
                   event.preventDefault();
-                  selectBlock2(nextClientId, true);
+                  selectBlock2(
+                    nextClientId,
+                    true
+                  );
                 }
               }
             }
@@ -71886,6 +71944,7 @@ var wp;
           if (__unstableIsFullySelected2()) {
             replaceBlocks2(
               getSelectedBlockClientIds2(),
+              // Blocks are registered, so there is a default block.
               (0, import_blocks31.createBlock)((0, import_blocks31.getDefaultBlockName)())
             );
           } else {
@@ -72104,11 +72163,16 @@ var wp;
             __experimentalCanUserUseUnfilteredHTML: canUserUseUnfilteredHTML,
             mediaUpload: mediaUpload2
           } = getSettings9();
-          const isInternal = event.clipboardData.getData("rich-text") === "true";
+          const isInternal = (
+            // Paste events carry clipboard data.
+            event.clipboardData.getData("rich-text") === "true"
+          );
           if (isInternal) {
             return;
           }
-          const { plainText, html, files } = getPasteEventData(event);
+          const { plainText, html, files } = getPasteEventData(
+            event
+          );
           const isFullySelected = __unstableIsFullySelected2();
           let blocks2 = [];
           if (files.length) {
@@ -72117,23 +72181,29 @@ var wp;
               return;
             }
             const fromTransforms = (0, import_blocks33.getBlockTransforms)("from");
-            blocks2 = files.reduce((accumulator, file) => {
-              const transformation = (0, import_blocks33.findTransform)(
-                fromTransforms,
-                (transform) => transform.type === "files" && transform.isMatch([file])
-              );
-              if (transformation) {
-                accumulator.push(
-                  transformation.transform([file])
+            blocks2 = files.reduce(
+              (accumulator, file) => {
+                const transformation = (0, import_blocks33.findTransform)(
+                  fromTransforms,
+                  (transform) => transform.type === "files" && // Files transforms define a matcher.
+                  transform.isMatch([file])
                 );
-              }
-              return accumulator;
-            }, []).flat();
+                if (transformation) {
+                  accumulator.push(
+                    // The predicate only matches files transforms, which transform.
+                    transformation.transform([file])
+                  );
+                }
+                return accumulator;
+              },
+              []
+            ).flat();
           } else {
             blocks2 = (0, import_blocks33.pasteHandler)({
               HTML: html,
               plainText,
               mode: isFullySelected ? "BLOCKS" : "AUTO",
+              // @ts-expect-error `pasteHandler` ignores this option.
               canUserUseUnfilteredHTML
             });
           }
@@ -72151,6 +72221,7 @@ var wp;
             return;
           }
           if (!hasMultiSelection2() && !(0, import_blocks33.hasBlockSupport)(
+            // The selected block has a name.
             getBlockName2(selectedBlockClientIds[0]),
             "splitting",
             false
@@ -72180,7 +72251,10 @@ var wp;
               newBlocks.push(block);
             } else {
               const rootBlockName = getBlockName2(rootClientId);
-              const switchedBlocks = block.name !== rootBlockName ? (0, import_blocks33.switchToBlockType)(block, rootBlockName) : [block];
+              const switchedBlocks = block.name !== rootBlockName ? (
+                // A block that cannot be inserted has a root block.
+                (0, import_blocks33.switchToBlockType)(block, rootBlockName)
+              ) : [block];
               if (!switchedBlocks) {
                 return;
               }
