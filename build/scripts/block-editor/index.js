@@ -103132,7 +103132,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n159 = __toESM(require_i18n(), 1);
   var import_data117 = __toESM(require_data(), 1);
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
-  function BlockEditVisuallyButton({ clientIds }) {
+  function BlockEditVisuallyButton({
+    clientIds
+  }) {
     const clientId = clientIds.length === 1 ? clientIds[0] : void 0;
     const canEditVisually = (0, import_data117.useSelect)(
       (select3) => !!clientId && select3(store).getBlockMode(clientId) === "html",
@@ -111721,6 +111723,7 @@ If there's a particular need for this, please submit a feature request at https:
     const customRangeValue = parseFloat(value);
     const [availableUnits] = useSettings("spacing.units");
     const units2 = (0, import_components204.__experimentalUseCustomUnits)({
+      // The setting lists unit names.
       availableUnits: availableUnits || [
         "%",
         "px",
@@ -111738,7 +111741,9 @@ If there's a particular need for this, please submit a feature request at https:
       onChange([next, selectedUnit].join(""));
     };
     const handleUnitChange = (newUnit) => {
-      const [currentValue, currentUnit] = (0, import_components204.__experimentalParseQuantityAndUnitFromRawValue)(value);
+      const [currentValue, currentUnit] = (0, import_components204.__experimentalParseQuantityAndUnitFromRawValue)(
+        value
+      );
       if (["em", "rem"].includes(newUnit) && currentUnit === "px") {
         onChange((currentValue / 16).toFixed(2) + newUnit);
       } else if (["em", "rem"].includes(currentUnit) && newUnit === "px") {
@@ -118417,10 +118422,20 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/unit-control/index.mjs
   var import_components232 = __toESM(require_components(), 1);
   var import_jsx_runtime629 = __toESM(require_jsx_runtime(), 1);
-  function UnitControl6({ units: unitsProp, ...props }) {
+  function UnitControl6({
+    units: unitsProp,
+    ...props
+  }) {
     const [availableUnits] = useSettings("spacing.units");
     const units2 = (0, import_components232.__experimentalUseCustomUnits)({
-      availableUnits: availableUnits || ["%", "px", "em", "rem", "vw"],
+      // The setting lists unit names.
+      availableUnits: availableUnits || [
+        "%",
+        "px",
+        "em",
+        "rem",
+        "vw"
+      ],
       units: unitsProp
     });
     return /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(import_components232.__experimentalUnitControl, { units: units2, ...props });
