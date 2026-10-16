@@ -1531,6 +1531,15 @@ var wp;
     }
     return state2;
   }
+  function browserBackup(state2 = null, action) {
+    switch (action.type) {
+      case "VIEW_BROWSER_BACKUP":
+        return action.backup;
+      case "SET_CURRENT_REVISION_ID":
+        return null;
+    }
+    return state2;
+  }
   function revisionPage(state2 = 1, action) {
     switch (action.type) {
       case "SET_REVISION_PAGE":
@@ -1583,6 +1592,7 @@ var wp;
     stylesPath,
     showStylebook,
     revisionId,
+    browserBackup,
     revisionPage,
     showRevisionDiff,
     selectedNote,
@@ -1731,6 +1741,7 @@ var wp;
   var PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
   var ONE_MINUTE_IN_MS = 60 * 1e3;
   var AUTOSAVE_PROPERTIES = ["title", "excerpt", "content"];
+  var BROWSER_BACKUP_NOTICE_ID = "wpEditorAutosaveRestore";
   var TEMPLATE_POST_TYPE = "wp_template";
   var TEMPLATE_PART_POST_TYPE = "wp_template_part";
   var PATTERN_POST_TYPE = "wp_block";
@@ -6395,7 +6406,8 @@ var wp;
     const backup = {
       post_title: title,
       content,
-      excerpt
+      excerpt,
+      time: Date.now()
     };
     if (crdtSnapshot) {
       backup[CRDT_AUTOSAVE_SNAPSHOT_KEY] = crdtSnapshot;
@@ -6644,6 +6656,7 @@ var wp;
     registerPostTypeSchema: () => registerPostTypeSchema,
     removeTemplates: () => removeTemplates,
     resetStylesNavigation: () => resetStylesNavigation,
+    restoreBrowserBackup: () => restoreBrowserBackup,
     restoreRevision: () => restoreRevision,
     revertTemplate: () => revertTemplate,
     selectNote: () => selectNote,
@@ -6658,7 +6671,8 @@ var wp;
     setShowRevisionDiff: () => setShowRevisionDiff,
     setShowStylebook: () => setShowStylebook,
     setStylesPath: () => setStylesPath,
-    showBlockTypes: () => showBlockTypes
+    showBlockTypes: () => showBlockTypes,
+    viewBrowserBackup: () => viewBrowserBackup
   });
   var import_core_data6 = __toESM(require_core_data(), 1);
   var import_block_editor4 = __toESM(require_block_editor(), 1);
@@ -6683,8 +6697,10 @@ var wp;
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
     buildRevisionsPageQuery: () => buildRevisionsPageQuery,
+    getBrowserBackup: () => getBrowserBackup,
     getCanvasHeight: () => getCanvasHeight,
     getCanvasWidth: () => getCanvasWidth,
+    getComparedVersion: () => getComparedVersion,
     getCurrentRevision: () => getCurrentRevision,
     getCurrentRevisionId: () => getCurrentRevisionId,
     getDefaultRenderingMode: () => getDefaultRenderingMode,
@@ -6701,12 +6717,14 @@ var wp;
     getRevisionsPerPage: () => getRevisionsPerPage,
     getSelectedNote: () => getSelectedNote,
     getShowStylebook: () => getShowStylebook,
+    getShownVersion: () => getShownVersion,
     getStylesPath: () => getStylesPath,
     isCollaborationEnabledForCurrentPost: () => isCollaborationEnabledForCurrentPost,
     isEntityReady: () => isEntityReady2,
     isNoteFocused: () => isNoteFocused,
     isRevisionsMode: () => isRevisionsMode,
-    isShowingRevisionDiff: () => isShowingRevisionDiff
+    isShowingRevisionDiff: () => isShowingRevisionDiff,
+    isViewingBrowserBackup: () => isViewingBrowserBackup
   });
   var import_block_editor3 = __toESM(require_block_editor(), 1);
   var import_data5 = __toESM(require_data(), 1);
@@ -6960,13 +6978,19 @@ var wp;
     }
   );
   function isRevisionsMode(state2) {
-    return state2.revisionId !== null;
+    return state2.revisionId !== null || state2.browserBackup !== null;
   }
   function isShowingRevisionDiff(state2) {
     return state2.showRevisionDiff;
   }
   function getCurrentRevisionId(state2) {
     return state2.revisionId;
+  }
+  function isViewingBrowserBackup(state2) {
+    return state2.browserBackup !== null;
+  }
+  function getBrowserBackup(state2) {
+    return state2.browserBackup;
   }
   var getCurrentRevision = (0, import_data5.createRegistrySelector)(
     (select8) => (state2) => {
@@ -7059,6 +7083,33 @@ var wp;
       }
       return null;
     }
+  );
+  var getShownVersion = (0, import_data5.createRegistrySelector)(
+    (select8) => (state2) => state2.browserBackup ?? unlock(select8(STORE_NAME)).getCurrentRevision()
+  );
+  var getComparedVersion = (0, import_data5.createRegistrySelector)(
+    (select8) => (0, import_data5.createSelector)(
+      (state2) => {
+        const editor = unlock(select8(STORE_NAME));
+        if (!state2.browserBackup) {
+          return editor.getPreviousRevision();
+        }
+        return {
+          title: { raw: editor.getEditedPostAttribute("title") },
+          content: { raw: editor.getEditedPostContent() },
+          excerpt: { raw: editor.getEditedPostAttribute("excerpt") }
+        };
+      },
+      (state2) => {
+        const editor = unlock(select8(STORE_NAME));
+        return state2.browserBackup ? [
+          state2.browserBackup,
+          editor.getEditedPostAttribute("title"),
+          editor.getEditedPostContent(),
+          editor.getEditedPostAttribute("excerpt")
+        ] : [state2.browserBackup, editor.getPreviousRevision()];
+      }
+    )
   );
   var isCollaborationEnabledForCurrentPost = (0, import_data5.createRegistrySelector)(
     (select8) => (state2) => {
@@ -7518,6 +7569,30 @@ var wp;
       showDiff
     };
   }
+  function viewBrowserBackup({ title, content, excerpt, time }) {
+    return {
+      type: "VIEW_BROWSER_BACKUP",
+      backup: {
+        date: time ? new Date(time).toISOString() : void 0,
+        title: { raw: title },
+        content: { raw: content },
+        excerpt: { raw: excerpt }
+      }
+    };
+  }
+  var restoreBrowserBackup = () => ({ select: select8, dispatch: dispatch6, registry }) => {
+    const backup = select8.getBrowserBackup();
+    if (!backup) {
+      return;
+    }
+    dispatch6.setCurrentRevisionId(null);
+    dispatch6.editPost({
+      title: backup.title.raw,
+      excerpt: backup.excerpt.raw
+    });
+    dispatch6.resetEditorBlocks((0, import_blocks4.parse)(backup.content.raw));
+    registry.dispatch(import_notices.store).removeNotice(BROWSER_BACKUP_NOTICE_ID);
+  };
   var restoreRevision = (revisionId2) => async ({ select: select8, dispatch: dispatch6, registry }) => {
     const postType2 = select8.getCurrentPostType();
     const postId2 = select8.getCurrentPostId();
@@ -86262,7 +86337,7 @@ If there's a particular need for this, please submit a feature request at https:
     const parsed = (0, import_date10.getDate)(value);
     return parsed && isValid(parsed) ? parsed.getTime() : null;
   }
-  function validateBoundary(item, field, boundary, parse11) {
+  function validateBoundary(item, field, boundary, parse10) {
     const constraint = field.isValid[boundary]?.constraint;
     if (typeof constraint !== "string") {
       return false;
@@ -86272,8 +86347,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (boundaryValue === void 0 || boundaryValue === null || boundaryValue === "") {
       return true;
     }
-    const parsedConstraint = parse11(constraint);
-    const parsedValue = parse11(String(boundaryValue));
+    const parsedConstraint = parse10(constraint);
+    const parsedValue = parse10(String(boundaryValue));
     if (parsedConstraint === null || parsedValue === null) {
       return false;
     }
@@ -93620,7 +93695,7 @@ ${content}
   var import_compose51 = __toESM(require_compose(), 1);
   var import_data54 = __toESM(require_data(), 1);
   var import_i18n140 = __toESM(require_i18n(), 1);
-  var import_blocks14 = __toESM(require_blocks(), 1);
+  var import_date16 = __toESM(require_date(), 1);
   var import_notices5 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/provider/use-entity-contains-snapshot.mjs
@@ -93780,27 +93855,33 @@ ${content}
       if (hasRemoteAutosave) {
         return;
       }
-      const { createWarningNotice, removeNotice } = registry.dispatch(import_notices5.store);
-      const { editPost: editPost2, resetEditorBlocks: resetEditorBlocks2 } = registry.dispatch(store);
-      const id = "wpEditorAutosaveRestore";
+      const { createWarningNotice } = registry.dispatch(import_notices5.store);
+      const { viewBrowserBackup: viewBrowserBackup2 } = unlock(
+        registry.dispatch(store)
+      );
       createWarningNotice(
-        (0, import_i18n140.__)(
+        // Backups written before the time was recorded don't have one.
+        localAutosave.time ? (0, import_i18n140.sprintf)(
+          /* translators: %s: Date and time the backup was made. */
+          (0, import_i18n140.__)(
+            "The backup of this post in your browser from %s is different from the version below."
+          ),
+          (0, import_date16.dateI18n)(
+            (0, import_date16.getSettings)().formats.datetime,
+            localAutosave.time
+          )
+        ) : (0, import_i18n140.__)(
           "The backup of this post in your browser is different from the version below."
         ),
         {
-          id,
+          id: BROWSER_BACKUP_NOTICE_ID,
           actions: [
             {
-              label: (0, import_i18n140.__)("Restore the backup"),
-              onClick() {
-                const {
-                  content: editsContent,
-                  ...editsWithoutContent
-                } = edits;
-                editPost2(editsWithoutContent);
-                resetEditorBlocks2((0, import_blocks14.parse)(edits.content));
-                removeNotice(id);
-              }
+              label: (0, import_i18n140.__)("View the backup"),
+              onClick: () => viewBrowserBackup2({
+                ...edits,
+                time: localAutosave.time
+              })
             }
           ]
         }
@@ -94287,7 +94368,7 @@ ${content}
   // packages/editor/build-module/components/post-template/create-new-template-modal.mjs
   var import_data60 = __toESM(require_data(), 1);
   var import_element290 = __toESM(require_element(), 1);
-  var import_blocks15 = __toESM(require_blocks(), 1);
+  var import_blocks14 = __toESM(require_blocks(), 1);
   var import_components130 = __toESM(require_components(), 1);
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_jsx_runtime483 = __toESM(require_jsx_runtime(), 1);
@@ -94316,33 +94397,33 @@ ${content}
         return;
       }
       setIsBusy(true);
-      const newTemplateContent = defaultBlockTemplate ?? (0, import_blocks15.serialize)([
-        (0, import_blocks15.createBlock)(
+      const newTemplateContent = defaultBlockTemplate ?? (0, import_blocks14.serialize)([
+        (0, import_blocks14.createBlock)(
           "core/group",
           {
             tagName: "header",
             layout: { inherit: true }
           },
           [
-            (0, import_blocks15.createBlock)("core/site-title"),
-            (0, import_blocks15.createBlock)("core/site-tagline")
+            (0, import_blocks14.createBlock)("core/site-title"),
+            (0, import_blocks14.createBlock)("core/site-tagline")
           ]
         ),
-        (0, import_blocks15.createBlock)("core/separator"),
-        (0, import_blocks15.createBlock)(
+        (0, import_blocks14.createBlock)("core/separator"),
+        (0, import_blocks14.createBlock)(
           "core/group",
           {
             tagName: "main"
           },
           [
-            (0, import_blocks15.createBlock)(
+            (0, import_blocks14.createBlock)(
               "core/group",
               {
                 layout: { inherit: true }
               },
-              [(0, import_blocks15.createBlock)("core/post-title")]
+              [(0, import_blocks14.createBlock)("core/post-title")]
             ),
-            (0, import_blocks15.createBlock)("core/post-content", {
+            (0, import_blocks14.createBlock)("core/post-content", {
               layout: { inherit: true }
             })
           ]
@@ -95023,7 +95104,7 @@ ${content}
   var import_i18n146 = __toESM(require_i18n(), 1);
   var import_data65 = __toESM(require_data(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
-  var import_blocks16 = __toESM(require_blocks(), 1);
+  var import_blocks15 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/utils/search-templates.mjs
   var import_block_editor36 = __toESM(require_block_editor(), 1);
@@ -95080,7 +95161,7 @@ ${content}
     const templatesAsPatterns = (0, import_element293.useMemo)(
       () => availableTemplates.map((template2) => ({
         name: template2.slug,
-        blocks: (0, import_blocks16.parse)(template2.content.raw),
+        blocks: (0, import_blocks15.parse)(template2.content.raw),
         title: (0, import_html_entities7.decodeEntities)(template2.title.rendered),
         id: template2.id,
         isDefault: template2.isDefault
@@ -97407,7 +97488,7 @@ ${content}
 
   // packages/editor/build-module/components/post-schedule/index.mjs
   var import_a11y9 = __toESM(require_a11y(), 1);
-  var import_date17 = __toESM(require_date(), 1);
+  var import_date18 = __toESM(require_date(), 1);
   var import_i18n169 = __toESM(require_i18n(), 1);
   var import_components157 = __toESM(require_components(), 1);
   var import_data94 = __toESM(require_data(), 1);
@@ -97417,7 +97498,7 @@ ${content}
 
   // packages/editor/build-module/components/post-schedule/label.mjs
   var import_i18n168 = __toESM(require_i18n(), 1);
-  var import_date16 = __toESM(require_date(), 1);
+  var import_date17 = __toESM(require_date(), 1);
   var import_data93 = __toESM(require_data(), 1);
   function PostScheduleLabel(props) {
     return usePostScheduleLabel(props);
@@ -97433,9 +97514,9 @@ ${content}
     return full ? getFullPostScheduleLabel(date) : getPostScheduleLabel(date, { isFloating });
   }
   function getFullPostScheduleLabel(dateAttribute) {
-    const date = (0, import_date16.getDate)(dateAttribute);
+    const date = (0, import_date17.getDate)(dateAttribute);
     const timezoneAbbreviation = getTimezoneAbbreviation();
-    const formattedDate = (0, import_date16.dateI18n)(
+    const formattedDate = (0, import_date17.dateI18n)(
       // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
       (0, import_i18n168._x)("F j, Y g:i\xA0a", "post schedule full date format"),
       date
@@ -97449,13 +97530,13 @@ ${content}
     if (!isTimezoneSameAsSiteTimezone(now)) {
       return getFullPostScheduleLabel(dateAttribute);
     }
-    const date = (0, import_date16.getDate)(dateAttribute);
+    const date = (0, import_date17.getDate)(dateAttribute);
     if (isSameDay2(date, now)) {
       return (0, import_i18n168.sprintf)(
         // translators: %s: Time of day the post is scheduled for.
         (0, import_i18n168.__)("Today at %s"),
         // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
-        (0, import_date16.dateI18n)((0, import_i18n168._x)("g:i\xA0a", "post schedule time format"), date)
+        (0, import_date17.dateI18n)((0, import_i18n168._x)("g:i\xA0a", "post schedule time format"), date)
       );
     }
     const tomorrow = new Date(now);
@@ -97465,24 +97546,24 @@ ${content}
         // translators: %s: Time of day the post is scheduled for.
         (0, import_i18n168.__)("Tomorrow at %s"),
         // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
-        (0, import_date16.dateI18n)((0, import_i18n168._x)("g:i\xA0a", "post schedule time format"), date)
+        (0, import_date17.dateI18n)((0, import_i18n168._x)("g:i\xA0a", "post schedule time format"), date)
       );
     }
     if (date.getFullYear() === now.getFullYear()) {
-      return (0, import_date16.dateI18n)(
+      return (0, import_date17.dateI18n)(
         // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
         (0, import_i18n168._x)("F j g:i\xA0a", "post schedule date format without year"),
         date
       );
     }
-    return (0, import_date16.dateI18n)(
+    return (0, import_date17.dateI18n)(
       // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
       (0, import_i18n168._x)("F j, Y g:i\xA0a", "post schedule full date format"),
       date
     );
   }
   function getTimezoneAbbreviation() {
-    const { timezone } = (0, import_date16.getSettings)();
+    const { timezone } = (0, import_date17.getSettings)();
     if (timezone.abbr && isNaN(Number(timezone.abbr))) {
       return timezone.abbr;
     }
@@ -97490,7 +97571,7 @@ ${content}
     return `UTC${symbol3}${timezone.offsetFormatted}`;
   }
   function isTimezoneSameAsSiteTimezone(date) {
-    const { timezone } = (0, import_date16.getSettings)();
+    const { timezone } = (0, import_date17.getSettings)();
     const siteOffset = Number(timezone.offset);
     const dateOffset = -1 * (date.getTimezoneOffset() / 60);
     return siteOffset === dateOffset;
@@ -97558,7 +97639,7 @@ ${content}
       })),
       [eventsByPostType]
     );
-    const settings = (0, import_date17.getSettings)();
+    const settings = (0, import_date18.getSettings)();
     const is12HourTime = /a(?!\\)/i.test(
       settings.formats.time.toLowerCase().replace(/\\\\/g, "").split("").reverse().join("")
       // Reverse the string and test for "a" not followed by a slash.
@@ -100247,7 +100328,7 @@ ${content}
   var import_html_entities16 = __toESM(require_html_entities(), 1);
   var import_data119 = __toESM(require_data(), 1);
   var import_block_editor46 = __toESM(require_block_editor(), 1);
-  var import_blocks18 = __toESM(require_blocks(), 1);
+  var import_blocks17 = __toESM(require_blocks(), 1);
   var import_rich_text4 = __toESM(require_rich_text(), 1);
   var import_compose67 = __toESM(require_compose(), 1);
   var import_dom39 = __toESM(require_dom(), 1);
@@ -100576,7 +100657,7 @@ ${content}
 
   // packages/editor/build-module/components/post-revisions-preview/block-diff.mjs
   var import_block_serialization_default_parser = __toESM(require_block_serialization_default_parser(), 1);
-  var import_blocks17 = __toESM(require_blocks(), 1);
+  var import_blocks16 = __toESM(require_blocks(), 1);
   var import_rich_text3 = __toESM(require_rich_text(), 1);
   var import_i18n187 = __toESM(require_i18n(), 1);
 
@@ -100638,7 +100719,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-revisions-preview/block-diff.mjs
-  var { parseRawBlock } = unlock(import_blocks17.privateApis);
+  var { parseRawBlock } = unlock(import_blocks16.privateApis);
   function isWhitespaceRawBlock(rawBlock) {
     return rawBlock.blockName === null && (!rawBlock.innerHTML || !rawBlock.innerHTML.trim());
   }
@@ -101085,7 +101166,7 @@ ${content}
     );
   }
   function applyDiffToBlock(currentBlock, previousBlock, diffStatus) {
-    const blockType = (0, import_blocks17.getBlockType)(currentBlock.name);
+    const blockType = (0, import_blocks16.getBlockType)(currentBlock.name);
     if (!blockType) {
       return;
     }
@@ -101167,7 +101248,7 @@ ${content}
         getCurrentPostId: getCurrentPostId2,
         isRevisionsMode: isRevisionsMode2,
         isShowingRevisionDiff: isShowingRevisionDiff2,
-        getPreviousRevision: getPreviousRevision2
+        getComparedVersion: getComparedVersion2
       } = unlock(select8(store));
       const isDiffing = isRevisionsMode2() && isShowingRevisionDiff2();
       return {
@@ -101175,7 +101256,7 @@ ${content}
         postId: getCurrentPostId2(),
         // The oldest revision has nothing to compare against, so its whole
         // title reads as added.
-        previousTitle: isDiffing ? getPreviousRevision2()?.title?.raw ?? "" : void 0
+        previousTitle: isDiffing ? getComparedVersion2()?.title?.raw ?? "" : void 0
       };
     }, []);
     const [title, setTitle] = (0, import_core_data65.useEntityProp)(
@@ -101277,7 +101358,7 @@ ${content}
       } catch {
         return;
       }
-      const content = (0, import_blocks18.pasteHandler)({
+      const content = (0, import_blocks17.pasteHandler)({
         HTML: html,
         plainText
       });
@@ -101995,7 +102076,7 @@ ${content}
   var import_core_data86 = __toESM(require_core_data(), 1);
   var import_block_editor63 = __toESM(require_block_editor(), 1);
   var import_patterns4 = __toESM(require_patterns(), 1);
-  var import_blocks24 = __toESM(require_blocks(), 1);
+  var import_blocks23 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/components/provider/with-registry-provider.mjs
   var import_element329 = __toESM(require_element(), 1);
@@ -102110,7 +102191,7 @@ ${content}
   var import_i18n215 = __toESM(require_i18n(), 1);
   var import_preferences12 = __toESM(require_preferences(), 1);
   var import_compose71 = __toESM(require_compose(), 1);
-  var import_blocks19 = __toESM(require_blocks(), 1);
+  var import_blocks18 = __toESM(require_blocks(), 1);
   var import_block_editor52 = __toESM(require_block_editor(), 1);
 
   // packages/media-editor/build-module/components/media-editor-provider/index.mjs
@@ -109624,7 +109705,7 @@ ${content}
           getPostType
         } = select8(import_core_data77.store);
         const { get } = select8(import_preferences12.store);
-        const { getBlockTypes: getBlockTypes6 } = select8(import_blocks19.store);
+        const { getBlockTypes: getBlockTypes6 } = select8(import_blocks18.store);
         const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select8(store);
         const { getDeviceType: getDeviceType2, isRevisionsMode: _isRevisionsMode } = unlock(
           select8(store)
@@ -110084,7 +110165,7 @@ ${content}
   // packages/editor/build-module/components/provider/use-revision-blocks.mjs
   var import_data148 = __toESM(require_data(), 1);
   var import_element357 = __toESM(require_element(), 1);
-  var import_blocks20 = __toESM(require_blocks(), 1);
+  var import_blocks19 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/components/post-revisions-preview/preserve-client-ids.mjs
   function preserveClientIds(newBlocks, prevBlocks) {
@@ -110134,16 +110215,16 @@ ${content}
       const {
         isRevisionsMode: isRevisionsMode2,
         isShowingRevisionDiff: isShowingRevisionDiff2,
-        getCurrentRevision: getCurrentRevision2,
-        getPreviousRevision: getPreviousRevision2
+        getShownVersion: getShownVersion2,
+        getComparedVersion: getComparedVersion2
       } = unlock(select8(store));
       const { getCurrentPostType: getCurrentPostType2 } = select8(store);
       const inRevisions = isRevisionsMode2();
       return {
         isInRevisionsMode: inRevisions,
         showDiff: isShowingRevisionDiff2(),
-        revision: inRevisions ? getCurrentRevision2() : void 0,
-        previousRevision: inRevisions ? getPreviousRevision2() : void 0,
+        revision: inRevisions ? getShownVersion2() : void 0,
+        previousRevision: inRevisions ? getComparedVersion2() : void 0,
         postType: getCurrentPostType2()
       };
     }, []);
@@ -110165,11 +110246,11 @@ ${content}
           previousContent
         );
       } else {
-        parsedBlocks = (0, import_blocks20.parse)(currentContent);
+        parsedBlocks = (0, import_blocks19.parse)(currentContent);
       }
       if (postType2 === "wp_navigation") {
         parsedBlocks = [
-          (0, import_blocks20.createBlock)(
+          (0, import_blocks19.createBlock)(
             "core/navigation",
             { templateLock: false },
             parsedBlocks
@@ -110934,7 +111015,7 @@ ${content}
   var import_block_editor57 = __toESM(require_block_editor(), 1);
   var import_data155 = __toESM(require_data(), 1);
   var import_core_data81 = __toESM(require_core_data(), 1);
-  var import_blocks21 = __toESM(require_blocks(), 1);
+  var import_blocks20 = __toESM(require_blocks(), 1);
   var import_preferences14 = __toESM(require_preferences(), 1);
   var import_jsx_runtime575 = __toESM(require_jsx_runtime(), 1);
   var { getPopulatedCategories, searchItems: searchItems3 } = unlock(
@@ -111013,7 +111094,7 @@ ${content}
         onClickPattern: (_pattern, blocks) => {
           editEntityRecord("postType", postType2, postId2, {
             blocks,
-            content: ({ blocks: blocksForSerialization = [] }) => (0, import_blocks21.__unstableSerializeAndClean)(blocksForSerialization)
+            content: ({ blocks: blocksForSerialization = [] }) => (0, import_blocks20.__unstableSerializeAndClean)(blocksForSerialization)
           });
           onChoosePattern();
         }
@@ -111502,7 +111583,7 @@ ${content}
   var import_element363 = __toESM(require_element(), 1);
   var import_block_editor58 = __toESM(require_block_editor(), 1);
   var import_data158 = __toESM(require_data(), 1);
-  var import_blocks22 = __toESM(require_blocks(), 1);
+  var import_blocks21 = __toESM(require_blocks(), 1);
   var import_core_data82 = __toESM(require_core_data(), 1);
   var import_jsx_runtime579 = __toESM(require_jsx_runtime(), 1);
   function useFallbackTemplateContent(slug, isCustom = false) {
@@ -111554,7 +111635,7 @@ ${content}
       return [
         {
           name: "fallback",
-          blocks: (0, import_blocks22.parse)(fallbackContent),
+          blocks: (0, import_blocks21.parse)(fallbackContent),
           title: (0, import_i18n221.__)("Fallback content")
         },
         ...patterns2.filter((pattern) => {
@@ -111564,7 +111645,7 @@ ${content}
         }).map((pattern) => {
           return {
             ...pattern,
-            blocks: (0, import_blocks22.parse)(pattern.content).map(
+            blocks: (0, import_blocks21.parse)(pattern.content).map(
               (block) => injectThemeAttributeInBlockTemplateContent2(block)
             )
           };
@@ -111760,7 +111841,7 @@ ${content}
   var import_data160 = __toESM(require_data(), 1);
   var import_block_editor60 = __toESM(require_block_editor(), 1);
   var import_components191 = __toESM(require_components(), 1);
-  var import_blocks23 = __toESM(require_blocks(), 1);
+  var import_blocks22 = __toESM(require_blocks(), 1);
   var import_i18n223 = __toESM(require_i18n(), 1);
   var import_element365 = __toESM(require_element(), 1);
   var import_notices16 = __toESM(require_notices(), 1);
@@ -111793,7 +111874,7 @@ ${content}
     const onConvert = async (templatePart) => {
       replaceBlocks2(
         clientIds,
-        (0, import_blocks23.createBlock)("core/template-part", {
+        (0, import_blocks22.createBlock)("core/template-part", {
           slug: templatePart.slug,
           theme: templatePart.theme
         })
@@ -112072,6 +112153,7 @@ ${content}
   var import_jsx_runtime584 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider3 } = unlock(import_block_editor63.privateApis);
   var { PatternsMenuItems } = unlock(import_patterns4.privateApis);
+  var { PrivateEntityProvider } = unlock(import_core_data86.privateApis);
   var noop8 = () => {
   };
   var NON_CONTEXTUAL_POST_TYPES = [
@@ -112093,7 +112175,7 @@ ${content}
     const maybeNavigationBlocks = (0, import_element370.useMemo)(() => {
       if (post2.type === "wp_navigation") {
         return [
-          (0, import_blocks24.createBlock)("core/navigation", {
+          (0, import_blocks23.createBlock)("core/navigation", {
             ref: post2.id,
             // As the parent editor is locked with `templateLock`, the template locking
             // must be explicitly "unset" on the block itself to allow the user to modify
@@ -112146,7 +112228,8 @@ ${content}
         defaultMode,
         postTypeEntities,
         isInRevisionsMode,
-        currentRevisionId
+        currentRevisionId,
+        browserBackup: browserBackup2
       } = (0, import_data168.useSelect)(
         (select8) => {
           const {
@@ -112155,7 +112238,8 @@ ${content}
             __unstableIsEditorReady: __unstableIsEditorReady2,
             getDefaultRenderingMode: getDefaultRenderingMode2,
             isRevisionsMode: _isRevisionsMode,
-            getCurrentRevisionId: _getCurrentRevisionId
+            getCurrentRevisionId: _getCurrentRevisionId,
+            getBrowserBackup: _getBrowserBackup
           } = unlock(select8(store));
           const { getEntitiesConfig, getEntityRecordEdits } = select8(import_core_data86.store);
           const _mode = getRenderingMode2();
@@ -112175,7 +112259,8 @@ ${content}
             selection: entityEdits?.selection,
             postTypeEntities: post2.type === "wp_template" ? getEntitiesConfig("postType") : null,
             isInRevisionsMode: _isRevisionsMode(),
-            currentRevisionId: _getCurrentRevisionId()
+            currentRevisionId: _getCurrentRevisionId(),
+            browserBackup: _getBrowserBackup()
           };
         },
         [post2.type, post2.id, hasTemplate, renderingMode2]
@@ -112300,12 +112385,13 @@ ${content}
       }
       const shouldSyncSelection = !isInRevisionsMode && !settings.isPreviewMode;
       return /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(import_core_data86.EntityProvider, { kind: "root", type: "site", children: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
-        import_core_data86.EntityProvider,
+        PrivateEntityProvider,
         {
           kind: "postType",
           type: post2.type,
           id: post2.id,
           revisionId: currentRevisionId ?? void 0,
+          revision: browserBackup2 ?? void 0,
           children: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(import_block_editor63.BlockContextProvider, { value: defaultBlockContext, children: /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)(
             BlockEditorProviderComponent,
             {
@@ -112679,7 +112765,7 @@ ${content}
   var import_compose72 = __toESM(require_compose(), 1);
   var import_block_editor65 = __toESM(require_block_editor(), 1);
   var import_data170 = __toESM(require_data(), 1);
-  var import_blocks25 = __toESM(require_blocks(), 1);
+  var import_blocks24 = __toESM(require_blocks(), 1);
   var import_jsx_runtime587 = __toESM(require_jsx_runtime(), 1);
   var {
     PatternOverridesControls,
@@ -112710,7 +112796,7 @@ ${content}
         const { getCurrentPostType: getCurrentPostType2, getEditedPostAttribute: getEditedPostAttribute2 } = select8(store);
         return {
           // For editing link to the site editor if the theme and user permissions support it.
-          hasPatternOverridesSource: !!(0, import_blocks25.getBlockBindingsSource)(
+          hasPatternOverridesSource: !!(0, import_blocks24.getBlockBindingsSource)(
             "core/pattern-overrides"
           ),
           isEditingSyncedPattern: getCurrentPostType2() === PATTERN_TYPES.user && getEditedPostAttribute2("meta")?.wp_pattern_sync_status !== PATTERN_SYNC_TYPES.unsynced && getEditedPostAttribute2("wp_pattern_sync_status") !== PATTERN_SYNC_TYPES.unsynced
@@ -112894,7 +112980,7 @@ ${content}
   var import_block_editor68 = __toESM(require_block_editor(), 1);
   var import_components196 = __toESM(require_components(), 1);
   var import_i18n229 = __toESM(require_i18n(), 1);
-  var import_blocks27 = __toESM(require_blocks(), 1);
+  var import_blocks26 = __toESM(require_blocks(), 1);
   var import_element377 = __toESM(require_element(), 1);
   var import_data173 = __toESM(require_data(), 1);
   var import_notices18 = __toESM(require_notices(), 1);
@@ -112924,7 +113010,7 @@ ${content}
   // packages/editor/build-module/hooks/push-changes-to-global-styles/apply-globally-modal.mjs
   var import_components195 = __toESM(require_components(), 1);
   var import_i18n228 = __toESM(require_i18n(), 1);
-  var import_blocks26 = __toESM(require_blocks(), 1);
+  var import_blocks25 = __toESM(require_blocks(), 1);
   var import_element376 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/use-review-rows.mjs
@@ -113206,7 +113292,7 @@ ${content}
       ],
       [onApply, onRequestClose]
     );
-    const blockTitle = (0, import_blocks26.getBlockType)(name2)?.title;
+    const blockTitle = (0, import_blocks25.getBlockType)(name2)?.title;
     return /* @__PURE__ */ (0, import_jsx_runtime590.jsxs)(
       import_components195.Modal,
       {
@@ -113259,7 +113345,7 @@ ${content}
   var import_jsx_runtime591 = __toESM(require_jsx_runtime(), 1);
   var { cleanEmptyObject: cleanEmptyObject2 } = unlock(import_block_editor68.privateApis);
   var STYLE_PROPERTY2 = {
-    ...import_blocks27.__EXPERIMENTAL_STYLE_PROPERTY,
+    ...import_blocks26.__EXPERIMENTAL_STYLE_PROPERTY,
     blockGap: { value: ["spacing", "blockGap"] }
   };
   var STYLE_PATH_TO_CSS_VAR_INFIX = {
@@ -113495,7 +113581,7 @@ ${content}
   function useChangesToPush(name2, attributes, userConfig) {
     const supports = (0, import_data173.useSelect)(
       (select8) => {
-        return unlock(select8(import_blocks27.store)).getSupportedStyles(name2);
+        return unlock(select8(import_blocks26.store)).getSupportedStyles(name2);
       },
       [name2]
     );
@@ -113568,7 +113654,7 @@ ${content}
           (0, import_i18n229.sprintf)(
             // translators: %s: Title of the block e.g. 'Heading'.
             (0, import_i18n229.__)("%s styles applied."),
-            (0, import_blocks27.getBlockType)(name2).title
+            (0, import_blocks26.getBlockType)(name2).title
           ),
           {
             type: "snackbar",
@@ -113606,7 +113692,7 @@ ${content}
           (0, import_i18n229.__)(
             "Review and apply this block\u2019s typography, spacing, dimensions, and color styles to all %s blocks."
           ),
-          (0, import_blocks27.getBlockType)(name2).title
+          (0, import_blocks26.getBlockType)(name2).title
         ),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime591.jsx)(import_components196.BaseControl.VisualLabel, { children: (0, import_i18n229.__)("Styles") }),
@@ -113641,7 +113727,7 @@ ${content}
       []
     );
     const supportsStyles = SUPPORTED_STYLES.some(
-      (feature) => (0, import_blocks27.hasBlockSupport)(props.name, feature)
+      (feature) => (0, import_blocks26.hasBlockSupport)(props.name, feature)
     );
     const isDisplayed = blockEditingMode === "default" && supportsStyles && isBlockBasedTheme;
     if (!isDisplayed) {
@@ -117468,13 +117554,14 @@ ${content}
   var import_data189 = __toESM(require_data(), 1);
   var import_components214 = __toESM(require_components(), 1);
   var import_i18n249 = __toESM(require_i18n(), 1);
+  var import_date20 = __toESM(require_date(), 1);
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-slider.mjs
   var import_data188 = __toESM(require_data(), 1);
   var import_components213 = __toESM(require_components(), 1);
   var import_core_data97 = __toESM(require_core_data(), 1);
   var import_i18n248 = __toESM(require_i18n(), 1);
-  var import_date18 = __toESM(require_date(), 1);
+  var import_date19 = __toESM(require_date(), 1);
   var import_element395 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
   var import_jsx_runtime616 = __toESM(require_jsx_runtime(), 1);
@@ -117562,13 +117649,13 @@ ${content}
         setCurrentRevisionId2(revision[revisionKey]);
       }
     };
-    const dateSettings = (0, import_date18.getSettings)();
+    const dateSettings = (0, import_date19.getSettings)();
     const renderTooltipContent = (index3) => {
       const revision = revisions?.[index3];
       if (!revision) {
         return index3;
       }
-      return (0, import_date18.dateI18n)(dateSettings.formats.datetime, revision.date);
+      return (0, import_date19.dateI18n)(dateSettings.formats.datetime, revision.date);
     };
     const showPagination = totalPages > 1;
     if (isLoading && !showPagination) {
@@ -117651,26 +117738,43 @@ ${content}
   // packages/editor/build-module/components/post-revisions-preview/revisions-header.mjs
   var import_jsx_runtime617 = __toESM(require_jsx_runtime(), 1);
   function RevisionsHeader({ showDiff, onToggleDiff }) {
-    const { currentRevisionId, sidebarIsOpened } = (0, import_data189.useSelect)((select8) => {
+    const {
+      currentRevisionId,
+      isViewingBrowserBackup: isViewingBrowserBackup2,
+      browserBackupDate,
+      sidebarIsOpened
+    } = (0, import_data189.useSelect)((select8) => {
+      const editor = unlock(select8(store));
       return {
-        currentRevisionId: unlock(
-          select8(store)
-        ).getCurrentRevisionId(),
+        currentRevisionId: editor.getCurrentRevisionId(),
+        isViewingBrowserBackup: editor.isViewingBrowserBackup(),
+        browserBackupDate: editor.getBrowserBackup()?.date,
         sidebarIsOpened: !!select8(store2).getActiveComplementaryArea(
           "core"
         )
       };
     }, []);
-    const { setCurrentRevisionId: setCurrentRevisionId2, restoreRevision: restoreRevision2 } = unlock(
-      (0, import_data189.useDispatch)(store)
-    );
+    const { setCurrentRevisionId: setCurrentRevisionId2, restoreRevision: restoreRevision2, restoreBrowserBackup: restoreBrowserBackup2 } = unlock((0, import_data189.useDispatch)(store));
     const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data189.useDispatch)(store2);
-    const canRestore = !!currentRevisionId;
+    const canRestore = !!currentRevisionId || isViewingBrowserBackup2;
     const handleRestore = () => {
-      if (currentRevisionId) {
+      if (isViewingBrowserBackup2) {
+        restoreBrowserBackup2();
+      } else if (currentRevisionId) {
         restoreRevision2(currentRevisionId);
       }
     };
+    let browserBackupLabel;
+    if (isViewingBrowserBackup2) {
+      browserBackupLabel = browserBackupDate ? (0, import_i18n249.sprintf)(
+        /* translators: %s: Date and time the backup was made. */
+        (0, import_i18n249.__)("Backup in this browser from %s"),
+        (0, import_date20.dateI18n)(
+          (0, import_date20.getSettings)().formats.datetime,
+          browserBackupDate
+        )
+      ) : (0, import_i18n249.__)("Backup in this browser");
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime617.jsx)(
       HeaderSkeleton,
       {
@@ -117686,7 +117790,7 @@ ${content}
             onClick: onToggleDiff
           }
         ),
-        center: /* @__PURE__ */ (0, import_jsx_runtime617.jsx)(ConnectedRevisionsSlider, {}),
+        center: isViewingBrowserBackup2 ? /* @__PURE__ */ (0, import_jsx_runtime617.jsx)("span", { className: "editor-revisions-header__no-revisions", children: browserBackupLabel }) : /* @__PURE__ */ (0, import_jsx_runtime617.jsx)(ConnectedRevisionsSlider, {}),
         settings: /* @__PURE__ */ (0, import_jsx_runtime617.jsxs)(import_jsx_runtime617.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime617.jsx)(PostPreviewButton, { className: "editor-header__post-preview-button" }),
           /* @__PURE__ */ (0, import_jsx_runtime617.jsx)(
@@ -117746,14 +117850,14 @@ ${content}
   var import_data198 = __toESM(require_data(), 1);
   var import_element401 = __toESM(require_element(), 1);
   var import_hooks62 = __toESM(require_hooks(), 1);
-  var import_blocks31 = __toESM(require_blocks(), 1);
+  var import_blocks30 = __toESM(require_blocks(), 1);
   var import_i18n253 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/visual-editor/index.mjs
   var import_block_editor84 = __toESM(require_block_editor(), 1);
   var import_element399 = __toESM(require_element(), 1);
   var import_data196 = __toESM(require_data(), 1);
-  var import_blocks30 = __toESM(require_blocks(), 1);
+  var import_blocks29 = __toESM(require_blocks(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
   var import_preferences26 = __toESM(require_preferences(), 1);
   var import_components218 = __toESM(require_components(), 1);
@@ -117944,7 +118048,7 @@ ${content}
   var import_data193 = __toESM(require_data(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
   var import_block_editor81 = __toESM(require_block_editor(), 1);
-  var import_blocks28 = __toESM(require_blocks(), 1);
+  var import_blocks27 = __toESM(require_blocks(), 1);
   var CSS2 = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
   function usePaddingAppender(enabled) {
     const registry = (0, import_data193.useRegistry)();
@@ -117970,7 +118074,7 @@ ${content}
           const lastBlockClientId = blockOrder[blockOrder.length - 1];
           const lastBlock = registry.select(import_block_editor81.store).getBlock(lastBlockClientId);
           const { selectBlock: selectBlock2, insertDefaultBlock: insertDefaultBlock2 } = registry.dispatch(import_block_editor81.store);
-          if (lastBlock && (0, import_blocks28.isUnmodifiedDefaultBlock)(lastBlock)) {
+          if (lastBlock && (0, import_blocks27.isUnmodifiedDefaultBlock)(lastBlock)) {
             selectBlock2(lastBlockClientId);
           } else {
             insertDefaultBlock2();
@@ -118025,7 +118129,7 @@ ${content}
   // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_data195 = __toESM(require_data(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
-  var import_blocks29 = __toESM(require_blocks(), 1);
+  var import_blocks28 = __toESM(require_blocks(), 1);
   var import_core_data99 = __toESM(require_core_data(), 1);
   var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_components217 = __toESM(require_components(), 1);
@@ -118116,7 +118220,7 @@ ${content}
     const { onManualRetry, secondsRemaining } = useRetryCountdown(connectionStatus);
     const copyButtonRef = (0, import_compose89.useCopyToClipboard)(() => {
       const blocks = (0, import_data195.select)(import_block_editor83.store).getBlocks();
-      return (0, import_blocks29.serialize)(blocks);
+      return (0, import_blocks28.serialize)(blocks);
     });
     (0, import_element398.useEffect)(() => {
       const timeout = setTimeout(() => {
@@ -118406,7 +118510,7 @@ ${content}
         return getPostContentAttributes(editedPostTemplate?.blocks);
       }
       const parseableContent = typeof editedPostTemplate?.content === "string" ? editedPostTemplate?.content : "";
-      return getPostContentAttributes((0, import_blocks30.parse)(parseableContent));
+      return getPostContentAttributes((0, import_blocks29.parse)(parseableContent));
     }, [
       editedPostTemplate?.content,
       editedPostTemplate?.blocks,
@@ -118420,7 +118524,7 @@ ${content}
         return checkForPostContentAtRootLevel(editedPostTemplate?.blocks);
       }
       const parseableContent = typeof editedPostTemplate?.content === "string" ? editedPostTemplate?.content : "";
-      return checkForPostContentAtRootLevel((0, import_blocks30.parse)(parseableContent)) || false;
+      return checkForPostContentAtRootLevel((0, import_blocks29.parse)(parseableContent)) || false;
     }, [editedPostTemplate?.content, editedPostTemplate?.blocks]);
     const { layout = {}, align = "" } = newestPostContentAttributes || {};
     const postContentLayoutClasses = useLayoutClasses(
@@ -118893,7 +118997,7 @@ ${content}
     const context = (0, import_element401.useContext)(PrivateBlockContext);
     const blockTitle = (0, import_data198.useSelect)(
       (select8) => {
-        const { getActiveBlockVariation, getBlockType: getBlockType7 } = select8(import_blocks31.store);
+        const { getActiveBlockVariation, getBlockType: getBlockType7 } = select8(import_blocks30.store);
         return getActiveBlockVariation(name2, attributes)?.title ?? getBlockType7(name2)?.title;
       },
       [name2, attributes]
@@ -118969,11 +119073,11 @@ ${content}
       };
     }, []);
     const { revision, showDiff } = (0, import_data198.useSelect)((select8) => {
-      const { getCurrentRevision: getCurrentRevision2, isShowingRevisionDiff: isShowingRevisionDiff2 } = unlock(
+      const { getShownVersion: getShownVersion2, isShowingRevisionDiff: isShowingRevisionDiff2 } = unlock(
         select8(store)
       );
       return {
-        revision: getCurrentRevision2(),
+        revision: getShownVersion2(),
         showDiff: isShowingRevisionDiff2()
       };
     }, []);
@@ -119056,13 +119160,13 @@ ${content}
       const editorSelectors = select8(store);
       const coreSelectors = select8(import_core_data101.store);
       const {
-        getCurrentRevision: getCurrentRevision2,
-        getPreviousRevision: getPreviousRevision2,
+        getShownVersion: getShownVersion2,
+        getComparedVersion: getComparedVersion2,
         getRevisionPage: getRevisionPage2,
         getRevisionsPerPage: getRevisionsPerPage2,
         isShowingRevisionDiff: isShowingRevisionDiff2
       } = unlock(editorSelectors);
-      const _previousRevision = getPreviousRevision2();
+      const _previousRevision = getComparedVersion2();
       const _showDiff = isShowingRevisionDiff2();
       const revisionPage2 = getRevisionPage2();
       const totalPages = Math.ceil(
@@ -119089,7 +119193,7 @@ ${content}
         );
       }
       return {
-        revision: getCurrentRevision2(),
+        revision: getShownVersion2(),
         previousRevision: _previousRevision,
         ...getCodeDiffDisplayState({
           previousRevision: _previousRevision,
@@ -120148,12 +120252,12 @@ ${content}
           getPostIcon: getPostIcon2,
           getCurrentPostType: getCurrentPostType2,
           isRevisionsMode: isRevisionsMode2,
-          getCurrentRevision: getCurrentRevision2
+          getShownVersion: getShownVersion2
         } = unlock(select8(store));
         let _title = "";
         if (isRevisionsMode2()) {
           const parentPostType = getCurrentPostType2();
-          const _record2 = getCurrentRevision2();
+          const _record2 = getShownVersion2();
           _title = _record2?.title?.rendered || _record2?.title?.raw || "";
           return {
             postTitle: _title,
@@ -120383,7 +120487,7 @@ ${content}
   var import_components227 = __toESM(require_components(), 1);
   var import_data212 = __toESM(require_data(), 1);
   var import_i18n265 = __toESM(require_i18n(), 1);
-  var import_date19 = __toESM(require_date(), 1);
+  var import_date21 = __toESM(require_date(), 1);
   var import_jsx_runtime634 = __toESM(require_jsx_runtime(), 1);
   function PostLastEditedPanel() {
     const modified = (0, import_data212.useSelect)(
@@ -120396,7 +120500,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime634.jsx)("div", { className: "editor-post-last-edited-panel", children: /* @__PURE__ */ (0, import_jsx_runtime634.jsx)(import_components227.__experimentalText, { children: (0, import_i18n265.sprintf)(
       // translators: %s: Human-readable time difference, e.g. "2 days ago".
       (0, import_i18n265.__)("Last edited %s."),
-      (0, import_date19.humanTimeDiff)(modified)
+      (0, import_date21.humanTimeDiff)(modified)
     ) }) });
   }
 
@@ -121152,7 +121256,7 @@ ${content}
   // packages/editor/build-module/components/post-revisions-timeline/index.mjs
   var import_data221 = __toESM(require_data(), 1);
   var import_core_data114 = __toESM(require_core_data(), 1);
-  var import_date20 = __toESM(require_date(), 1);
+  var import_date22 = __toESM(require_date(), 1);
   var import_element418 = __toESM(require_element(), 1);
   var import_i18n275 = __toESM(require_i18n(), 1);
 
@@ -121234,9 +121338,9 @@ ${content}
   };
   var DAY_IN_MILLISECONDS2 = 864e5;
   function getDisplayDate2(value) {
-    const dateNowInMs = (0, import_date20.getDate)(null).getTime();
-    const date = (0, import_date20.getDate)(value ?? null);
-    return dateNowInMs - date.getTime() > DAY_IN_MILLISECONDS2 ? (0, import_date20.dateI18n)((0, import_date20.getSettings)().formats.datetimeAbbreviated, date) : (0, import_date20.humanTimeDiff)(date);
+    const dateNowInMs = (0, import_date22.getDate)(null).getTime();
+    const date = (0, import_date22.getDate)(value ?? null);
+    return dateNowInMs - date.getTime() > DAY_IN_MILLISECONDS2 ? (0, import_date22.dateI18n)((0, import_date22.getSettings)().formats.datetimeAbbreviated, date) : (0, import_date22.humanTimeDiff)(date);
   }
   function isAutosaveRevision(item) {
     return item.slug?.endsWith("-autosave-v1") ?? false;
@@ -121443,12 +121547,12 @@ ${content}
   }
   function RevisionFieldsDiffPanel() {
     const { revision, previousRevision } = (0, import_data222.useSelect)((select8) => {
-      const { getCurrentRevision: getCurrentRevision2, getPreviousRevision: getPreviousRevision2 } = unlock(
+      const { getShownVersion: getShownVersion2, getComparedVersion: getComparedVersion2 } = unlock(
         select8(store)
       );
       return {
-        revision: getCurrentRevision2(),
-        previousRevision: getPreviousRevision2()
+        revision: getShownVersion2(),
+        previousRevision: getComparedVersion2()
       };
     }, []);
     const entries = (0, import_element419.useMemo)(() => {
@@ -121489,22 +121593,24 @@ ${content}
   // packages/editor/build-module/components/sidebar/post-revision-summary.mjs
   var import_jsx_runtime647 = __toESM(require_jsx_runtime(), 1);
   function PostRevisionSummary() {
-    const { revisionId: revisionId2, postId: postId2 } = (0, import_data223.useSelect)((select8) => {
-      const { getCurrentRevisionId: getCurrentRevisionId2, getCurrentPostId: getCurrentPostId2 } = unlock(
-        select8(store)
-      );
-      return {
-        revisionId: getCurrentRevisionId2(),
-        postId: getCurrentPostId2()
-      };
-    }, []);
-    if (!revisionId2) {
+    const { revisionId: revisionId2, postId: postId2, isViewingBrowserBackup: isViewingBrowserBackup2 } = (0, import_data223.useSelect)(
+      (select8) => {
+        const editor = unlock(select8(store));
+        return {
+          revisionId: editor.getCurrentRevisionId(),
+          postId: editor.getCurrentPostId(),
+          isViewingBrowserBackup: editor.isViewingBrowserBackup()
+        };
+      },
+      []
+    );
+    if (!revisionId2 && !isViewingBrowserBackup2) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime647.jsxs)(import_jsx_runtime647.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime647.jsx)(post_panel_section_default, { className: "editor-post-summary", children: /* @__PURE__ */ (0, import_jsx_runtime647.jsxs)(import_components235.__experimentalVStack, { spacing: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime647.jsx)(PostCardPanel, { postId: postId2, hideActions: true }),
-        /* @__PURE__ */ (0, import_jsx_runtime647.jsx)(
+        !isViewingBrowserBackup2 && /* @__PURE__ */ (0, import_jsx_runtime647.jsx)(
           import_components235.ExternalLink,
           {
             href: (0, import_url19.addQueryArgs)("revision.php", {
@@ -121515,7 +121621,7 @@ ${content}
         )
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime647.jsx)(RevisionFieldsDiffPanel, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime647.jsx)(PostRevisionsTimeline, {})
+      !isViewingBrowserBackup2 && /* @__PURE__ */ (0, import_jsx_runtime647.jsx)(PostRevisionsTimeline, {})
     ] });
   }
 
@@ -121525,13 +121631,13 @@ ${content}
   var import_components236 = __toESM(require_components(), 1);
   var import_i18n278 = __toESM(require_i18n(), 1);
   var import_block_editor93 = __toESM(require_block_editor(), 1);
-  var import_blocks33 = __toESM(require_blocks(), 1);
+  var import_blocks32 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/components/post-transform-panel/hooks.mjs
   var import_data224 = __toESM(require_data(), 1);
   var import_element420 = __toESM(require_element(), 1);
   var import_core_data115 = __toESM(require_core_data(), 1);
-  var import_blocks32 = __toESM(require_blocks(), 1);
+  var import_blocks31 = __toESM(require_blocks(), 1);
   var import_patterns7 = __toESM(require_patterns(), 1);
   var { EXCLUDED_PATTERN_SOURCES, PATTERN_TYPES: PATTERN_TYPES2 } = unlock(import_patterns7.privateApis);
   function injectThemeAttributeInBlockTemplateContent(block, currentThemeStylesheet) {
@@ -121566,7 +121672,7 @@ ${content}
       ...pattern,
       keywords: pattern.keywords || [],
       type: PATTERN_TYPES2.theme,
-      blocks: (0, import_blocks32.parse)(pattern.content, {
+      blocks: (0, import_blocks31.parse)(pattern.content, {
         __unstableSkipMigrationLogs: true
       }).map(
         (block) => injectThemeAttributeInBlockTemplateContent(
@@ -121643,7 +121749,7 @@ ${content}
     const onTemplateSelect = async (selectedTemplate) => {
       await editEntityRecord("postType", postType2, postId2, {
         blocks: selectedTemplate.blocks,
-        content: (0, import_blocks33.serialize)(selectedTemplate.blocks)
+        content: (0, import_blocks32.serialize)(selectedTemplate.blocks)
       });
     };
     if (!availablePatterns?.length) {
@@ -122059,7 +122165,7 @@ ${content}
   // packages/editor/build-module/components/template-part-content-panel/index.mjs
   var import_data230 = __toESM(require_data(), 1);
   var import_element423 = __toESM(require_element(), 1);
-  var import_blocks34 = __toESM(require_blocks(), 1);
+  var import_blocks33 = __toESM(require_blocks(), 1);
   var import_block_editor97 = __toESM(require_block_editor(), 1);
   var import_components240 = __toESM(require_components(), 1);
   var import_i18n283 = __toESM(require_i18n(), 1);
@@ -122067,7 +122173,7 @@ ${content}
   var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor97.privateApis);
   function TemplatePartContentPanelInner() {
     const blockTypes = (0, import_data230.useSelect)((select8) => {
-      const { getBlockTypes: getBlockTypes6 } = select8(import_blocks34.store);
+      const { getBlockTypes: getBlockTypes6 } = select8(import_blocks33.store);
       return getBlockTypes6();
     }, []);
     const themeBlockNames = (0, import_element423.useMemo)(() => {
@@ -122279,14 +122385,14 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/note-byline.mjs
   var import_i18n286 = __toESM(require_i18n(), 1);
-  var import_date21 = __toESM(require_date(), 1);
+  var import_date23 = __toESM(require_date(), 1);
   var import_core_data119 = __toESM(require_core_data(), 1);
   var import_data234 = __toESM(require_data(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime657 = __toESM(require_jsx_runtime(), 1);
   function NoteByline({ avatar, name: name2, date, userId }) {
     const hasAvatar = !!avatar;
-    const dateSettings = (0, import_date21.getSettings)();
+    const dateSettings = (0, import_date23.getSettings)();
     const {
       currentUserAvatar,
       currentUserName,
@@ -122317,11 +122423,11 @@ ${content}
       },
       [hasAvatar]
     );
-    const commentDate = (0, import_date21.getDate)(date);
-    const commentDateTime = (0, import_date21.dateI18n)("c", commentDate);
+    const commentDate = (0, import_date23.getDate)(date);
+    const commentDateTime = (0, import_date23.dateI18n)("c", commentDate);
     const shouldShowHumanTimeDiff = Math.floor((/* @__PURE__ */ new Date() - commentDate) / (1e3 * 60 * 60 * 24)) < 30;
-    const commentDateText = shouldShowHumanTimeDiff ? (0, import_date21.humanTimeDiff)(commentDate) : (0, import_date21.dateI18n)(dateFormat, commentDate);
-    const tooltipText = (0, import_date21.dateI18n)(
+    const commentDateText = shouldShowHumanTimeDiff ? (0, import_date23.humanTimeDiff)(commentDate) : (0, import_date23.dateI18n)(dateFormat, commentDate);
+    const tooltipText = (0, import_date23.dateI18n)(
       // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
       (0, import_i18n286._x)("F j, Y g:i\xA0a", "Note date full date format"),
       date
@@ -124635,7 +124741,7 @@ ${content}
   var import_i18n294 = __toESM(require_i18n(), 1);
   var import_block_editor107 = __toESM(require_block_editor(), 1);
   var import_data241 = __toESM(require_data(), 1);
-  var import_blocks35 = __toESM(require_blocks(), 1);
+  var import_blocks34 = __toESM(require_blocks(), 1);
   var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime669 = __toESM(require_jsx_runtime(), 1);
   var { NoteIconSlotFill } = unlock(import_block_editor107.privateApis);
@@ -124653,7 +124759,7 @@ ${content}
       },
       [clientId]
     );
-    if (!isValid2 || blockName === (0, import_blocks35.getUnregisteredTypeHandlerName)()) {
+    if (!isValid2 || blockName === (0, import_blocks34.getUnregisteredTypeHandlerName)()) {
       return null;
     }
     const isDisabled = isDistractionFree || blockName === "core/freeform";
@@ -125489,7 +125595,7 @@ ${content}
   // packages/editor/build-module/components/block-visibility/index.mjs
   var import_data250 = __toESM(require_data(), 1);
   var import_preferences38 = __toESM(require_preferences(), 1);
-  var import_blocks36 = __toESM(require_blocks(), 1);
+  var import_blocks35 = __toESM(require_blocks(), 1);
   var import_element438 = __toESM(require_element(), 1);
   var import_components253 = __toESM(require_components(), 1);
   var import_i18n301 = __toESM(require_i18n(), 1);
@@ -125507,7 +125613,7 @@ ${content}
       hiddenBlockTypes: _hiddenBlockTypes
     } = (0, import_data250.useSelect)((select8) => {
       return {
-        blockTypes: select8(import_blocks36.store).getBlockTypes(),
+        blockTypes: select8(import_blocks35.store).getBlockTypes(),
         allowedBlockTypes: select8(store).getEditorSettings().allowedBlockTypes,
         hiddenBlockTypes: select8(import_preferences38.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY18
       };
@@ -125521,7 +125627,7 @@ ${content}
       });
     }, [_allowedBlockTypes, blockTypes]);
     const filteredBlockTypes = allowedBlockTypes.filter(
-      (blockType) => (0, import_blocks36.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
+      (blockType) => (0, import_blocks35.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
     );
     const hiddenBlockTypes = _hiddenBlockTypes.filter((hiddenBlock) => {
       return filteredBlockTypes.some(
@@ -126058,7 +126164,7 @@ ${content}
   }
 
   // packages/editor/build-module/bindings/api.mjs
-  var import_blocks37 = __toESM(require_blocks(), 1);
+  var import_blocks36 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/bindings/pattern-overrides.mjs
   var import_block_editor113 = __toESM(require_block_editor(), 1);
@@ -126483,10 +126589,10 @@ ${content}
 
   // packages/editor/build-module/bindings/api.mjs
   function registerCoreBlockBindingsSources() {
-    (0, import_blocks37.registerBlockBindingsSource)(pattern_overrides_default);
-    (0, import_blocks37.registerBlockBindingsSource)(post_data_default);
-    (0, import_blocks37.registerBlockBindingsSource)(post_meta_default);
-    (0, import_blocks37.registerBlockBindingsSource)(term_data_default);
+    (0, import_blocks36.registerBlockBindingsSource)(pattern_overrides_default);
+    (0, import_blocks36.registerBlockBindingsSource)(post_data_default);
+    (0, import_blocks36.registerBlockBindingsSource)(post_meta_default);
+    (0, import_blocks36.registerBlockBindingsSource)(term_data_default);
   }
 
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs

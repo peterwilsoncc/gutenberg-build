@@ -439,6 +439,7 @@ var wp;
   var index_exports = {};
   __export(index_exports, {
     EntityProvider: () => EntityProvider,
+    PrivateEntityProvider: () => PrivateEntityProvider,
     __experimentalFetchLinkSuggestions: () => fetchLinkSuggestions,
     __experimentalFetchUrlData: () => experimental_fetch_url_data_default,
     __experimentalUseEntityRecord: () => useDeprecatedEntityRecord,
@@ -20448,12 +20449,32 @@ ${err.toString()}`);
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   function EntityProvider({
     kind,
-    type: name,
+    type,
     id: id2,
     revisionId,
     children
   }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      PrivateEntityProvider,
+      {
+        kind,
+        type,
+        id: id2,
+        revisionId,
+        children
+      }
+    );
+  }
+  function PrivateEntityProvider({
+    kind,
+    type: name,
+    id: id2,
+    revisionId,
+    revision,
+    children
+  }) {
     const parent = (0, import_element2.useContext)(EntityContext);
+    const providedRevision = revision ?? revisionId;
     const childContext = (0, import_element2.useMemo)(
       () => ({
         ...parent,
@@ -20463,17 +20484,17 @@ ${err.toString()}`);
             [name]: id2
           }
         },
-        ...revisionId !== void 0 && kind && {
+        ...providedRevision !== void 0 && kind && {
           revision: {
             ...parent?.revision,
             [kind]: {
               ...parent?.revision?.[kind],
-              [name]: revisionId
+              [name]: providedRevision
             }
           }
         }
       }),
-      [parent, kind, name, id2, revisionId]
+      [parent, kind, name, id2, providedRevision]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntityContext.Provider, { value: childContext, children });
   }
@@ -21128,11 +21149,14 @@ ${err.toString()}`);
     const providerId = useEntityId(kind, name);
     const id2 = _id ?? providerId;
     const context = (0, import_element7.useContext)(EntityContext);
-    const revisionId = String(id2) === String(providerId) ? context?.revision?.[kind]?.[name] : void 0;
+    const providedRevision = String(id2) === String(providerId) ? context?.revision?.[kind]?.[name] : void 0;
+    const revisionRecord = typeof providedRevision === "object" ? providedRevision : void 0;
+    const revisionId = revisionRecord ? void 0 : providedRevision;
+    const isRevision = !!(revisionRecord || revisionId);
     const { value, fullValue } = (0, import_data16.useSelect)(
       (select6) => {
-        if (revisionId) {
-          const revision = select6(STORE_NAME).getRevision(
+        if (revisionRecord ? prop in revisionRecord : revisionId) {
+          const revision = revisionRecord ?? select6(STORE_NAME).getRevision(
             kind,
             name,
             id2,
@@ -21157,19 +21181,19 @@ ${err.toString()}`);
           fullValue: record[prop]
         } : {};
       },
-      [kind, name, id2, prop, revisionId]
+      [kind, name, id2, prop, revisionId, revisionRecord]
     );
     const { editEntityRecord: editEntityRecord2 } = (0, import_data16.useDispatch)(STORE_NAME);
     const setValue = (0, import_element7.useCallback)(
       (newValue) => {
-        if (revisionId) {
+        if (isRevision) {
           return;
         }
         editEntityRecord2(kind, name, id2, {
           [prop]: newValue
         });
       },
-      [editEntityRecord2, kind, name, id2, prop, revisionId]
+      [editEntityRecord2, kind, name, id2, prop, isRevision]
     );
     return [value, setValue, fullValue];
   }
@@ -22037,6 +22061,7 @@ ${err.toString()}`);
 
   // packages/core-data/build-module/private-apis.mjs
   var lockedApis = {
+    PrivateEntityProvider,
     EntitiesSavedStates,
     EntitiesSavedStatesExtensible,
     getTemplateInfo,
