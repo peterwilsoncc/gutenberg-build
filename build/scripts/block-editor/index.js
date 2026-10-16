@@ -107934,7 +107934,8 @@ If there's a particular need for this, please submit a feature request at https:
     rootClientId,
     description,
     onSelect,
-    additionalBlockContent: AdditionalBlockContent
+    additionalBlockContent: AdditionalBlockContent,
+    showContentPopover = false
   }, ref) {
     if (blocks2) {
       (0, import_deprecated13.default)(
@@ -108183,7 +108184,8 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ) })
         }
-      )
+      ),
+      showContentPopover && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(ListViewContentPopover, { listViewRef: elementRef })
     ] });
   }
   var PrivateListView = (0, import_element370.forwardRef)(ListViewComponent);
@@ -108197,7 +108199,8 @@ If there's a particular need for this, please submit a feature request at https:
         rootClientId: null,
         onSelect: null,
         additionalBlockContent: null,
-        blockSettingsMenu: void 0
+        blockSettingsMenu: void 0,
+        showContentPopover: false
       }
     );
   });

@@ -1662,9 +1662,9 @@ var import_i18n5 = __toESM(require_i18n());
 var import_html_entities = __toESM(require_html_entities());
 
 // routes/navigation-edit/editor/index.tsx
-var import_element6 = __toESM(require_element());
+var import_element5 = __toESM(require_element());
 var import_block_editor3 = __toESM(require_block_editor());
-var import_blocks3 = __toESM(require_blocks());
+var import_blocks2 = __toESM(require_blocks());
 var import_components3 = __toESM(require_components());
 var import_core_data2 = __toESM(require_core_data());
 import { useEditorAssets } from "@wordpress/lazy-editor";
@@ -1680,8 +1680,6 @@ if (typeof document !== "undefined" && (typeof process === "undefined" || true) 
 // routes/navigation-edit/editor/content.tsx
 var import_block_editor2 = __toESM(require_block_editor());
 var import_data2 = __toESM(require_data());
-var import_blocks2 = __toESM(require_blocks());
-var import_element5 = __toESM(require_element());
 var import_core_data = __toESM(require_core_data());
 
 // routes/lock-unlock/index.ts
@@ -1878,28 +1876,19 @@ function NavigationMenuContent({
     },
     [rootClientId]
   );
-  const { replaceBlock, __unstableMarkNextChangeAsNotPersistent } = (0, import_data2.useDispatch)(import_block_editor2.store);
-  const offCanvasOnselect = (0, import_element5.useCallback)(
-    (block) => {
-      if (block.name === "core/navigation-link" && !block.attributes.url) {
-        __unstableMarkNextChangeAsNotPersistent();
-        replaceBlock(
-          block.clientId,
-          (0, import_blocks2.createBlock)("core/navigation-link", block.attributes)
-        );
-      }
-    },
-    [__unstableMarkNextChangeAsNotPersistent, replaceBlock]
+  const { openListViewContentPanel } = unlock(
+    (0, import_data2.useDispatch)(import_block_editor2.store)
   );
   return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
     !isLoading && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
       PrivateListView,
       {
         rootClientId: listViewRootClientId,
-        onSelect: offCanvasOnselect,
+        onSelect: openListViewContentPanel,
         blockSettingsMenu: LeafMoreMenu,
         showAppender: true,
         additionalBlockContent: NavigationLinkUI,
+        showContentPopover: true,
         isExpanded: true
       }
     ),
@@ -1913,13 +1902,18 @@ var noop = () => {
 };
 function NavigationMenuEditor({ id }) {
   const { isReady: assetsReady } = useEditorAssets();
-  const blocks = (0, import_element6.useMemo)(() => {
+  const blocks = (0, import_element5.useMemo)(() => {
     if (!assetsReady || !id) {
       return [];
     }
-    return [(0, import_blocks3.createBlock)("core/navigation", { ref: id })];
+    return [
+      (0, import_blocks2.createBlock)("core/navigation", {
+        ref: id,
+        templateLock: "contentOnly"
+      })
+    ];
   }, [assetsReady, id]);
-  const settings = (0, import_element6.useMemo)(
+  const settings = (0, import_element5.useMemo)(
     () => ({
       __experimentalFetchLinkSuggestions: (search, searchOptions) => (0, import_core_data2.__experimentalFetchLinkSuggestions)(search, searchOptions, {})
     }),
