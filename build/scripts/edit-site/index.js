@@ -61917,13 +61917,6 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/fields/build-module/lock-unlock.mjs
-  var import_private_apis5 = __toESM(require_private_apis(), 1);
-  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/fields"
-  );
-
   // packages/fields/build-module/components/media-edit/index.mjs
   var import_components72 = __toESM(require_components(), 1);
   var import_blob = __toESM(require_blob(), 1);
@@ -61935,6 +61928,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_a11y7 = __toESM(require_a11y(), 1);
   var import_media_utils = __toESM(require_media_utils(), 1);
   var import_notices3 = __toESM(require_notices(), 1);
+
+  // packages/fields/build-module/lock-unlock.mjs
+  var import_private_apis5 = __toESM(require_private_apis(), 1);
+  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/fields"
+  );
 
   // packages/fields/build-module/components/media-edit/use-moving-animation.mjs
   var import_element196 = __toESM(require_element(), 1);
