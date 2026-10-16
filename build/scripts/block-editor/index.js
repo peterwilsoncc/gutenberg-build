@@ -6505,7 +6505,9 @@ var wp;
     const colordColor = A(colorValue);
     const getColorContrast = ({ color }) => colordColor.contrast(color);
     const maxContrast = Math.max(...colors2.map(getColorContrast));
-    return colors2.find((color) => getColorContrast(color) === maxContrast).color;
+    return colors2.find(
+      (color) => getColorContrast(color) === maxContrast
+    ).color;
   }
 
   // packages/block-editor/build-module/components/colors/with-colors.mjs
@@ -17360,12 +17362,15 @@ var wp;
     "withEditorColorPalette"
   );
   function createColorHOC(colorTypes, withColorPalette) {
-    const colorMap = colorTypes.reduce((colorObject, colorType) => {
-      return {
-        ...colorObject,
-        ...typeof colorType === "string" ? { [colorType]: kebabCase(colorType) } : colorType
-      };
-    }, {});
+    const colorMap = colorTypes.reduce(
+      (colorObject, colorType) => {
+        return {
+          ...colorObject,
+          ...typeof colorType === "string" ? { [colorType]: kebabCase(colorType) } : colorType
+        };
+      },
+      {}
+    );
     return (0, import_compose2.compose)([
       withColorPalette,
       (WrappedComponent) => {
@@ -17384,6 +17389,7 @@ var wp;
                   const upperFirstColorAttributeName = upperFirst(colorAttributeName);
                   const colorObject = getColorObjectByAttributeValues(
                     _colors,
+                    // The color attributes hold a slug and a value.
                     attributes[colorAttributeName],
                     attributes[customAttr]
                   );
@@ -17420,7 +17426,10 @@ var wp;
           }, [attributes, _colors, setAttributes]);
           const colorUtils = (0, import_element7.useMemo)(
             () => ({
-              getMostReadableColor: (colorValue) => getMostReadableColor(_colors, colorValue)
+              getMostReadableColor: (colorValue) => (
+                // The palette HOC always passes the colors.
+                getMostReadableColor(_colors, colorValue)
+              )
             }),
             [_colors]
           );
@@ -17494,6 +17503,7 @@ var wp;
       "color.gradients.default"
     );
     const allGradients = (0, import_element8.useMemo)(
+      // The settings list the palettes' gradients.
       () => [
         ...userGradientPalette || [],
         ...themeGradientPalette || [],
@@ -17506,6 +17516,7 @@ var wp;
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
         const attributes = getBlockAttributes3(clientId) || {};
         return {
+          // The gradient attributes hold a value and a slug.
           customGradient: attributes[customGradientAttribute],
           gradient: attributes[gradientAttribute]
         };
@@ -105706,7 +105717,13 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ) });
   };
-  var renderToggleComponent = ({ TextColor, BackgroundColor }) => function ToggleComponent({ onToggle, isOpen }) {
+  var renderToggleComponent = ({
+    TextColor,
+    BackgroundColor
+  }) => function ToggleComponent({
+    onToggle,
+    isOpen
+  }) {
     const openOnArrowDown = (event) => {
       if (!isOpen && event.keyCode === import_keycodes17.DOWN) {
         event.preventDefault();
@@ -105724,7 +105741,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ) });
   };
-  var BlockColorsStyleSelector = ({ children, ...other }) => {
+  var BlockColorsStyleSelector = ({
+    children,
+    ...other
+  }) => {
     (0, import_deprecated12.default)(`wp.blockEditor.BlockColorsStyleSelector`, {
       alternative: "block supports API",
       since: "6.1",
@@ -109866,7 +109886,10 @@ If there's a particular need for this, please submit a feature request at https:
         ...themeColors || [],
         ...defaultColors || [],
         ...customColors || []
-      ] : [...themeColors || [], ...customColors || []];
+      ] : [
+        ...themeColors || [],
+        ...customColors || []
+      ];
       const { colors: colors2 = _colors, disableCustomColors = !enableCustomColors } = props;
       const hasColorsToChoose = colors2 && colors2.length > 0 || !disableCustomColors;
       return /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
@@ -109884,7 +109907,9 @@ If there's a particular need for this, please submit a feature request at https:
   }, "withColorContext");
 
   // packages/block-editor/build-module/components/color-palette/index.mjs
-  var color_palette_default = with_color_context_default(import_components192.ColorPalette);
+  var color_palette_default = with_color_context_default(
+    import_components192.ColorPalette
+  );
 
   // packages/block-editor/build-module/components/colors-gradients/control.mjs
   var import_i18n196 = __toESM(require_i18n(), 1);
@@ -110101,7 +110126,10 @@ If there's a particular need for this, please submit a feature request at https:
     const backgroundColorBrightness = colordBackgroundColor.brightness();
     const isReadableOptions = {
       level: "AA",
-      size: isLargeText || isLargeText !== false && fontSize >= 24 ? "large" : "small"
+      size: (
+        // An unset font size compares as `false`.
+        isLargeText || isLargeText !== false && fontSize >= 24 ? "large" : "small"
+      )
     };
     let message2 = "";
     let speakMessage = "";
@@ -110112,6 +110140,7 @@ If there's a particular need for this, please submit a feature request at https:
       const colordTextColor = A(item.color);
       const isColordTextReadable = colordTextColor.isReadable(
         colordBackgroundColor,
+        // `colord` reads any size but `large` as normal.
         isReadableOptions
       );
       const textHasTransparency = colordTextColor.alpha() < 1;
@@ -116692,7 +116721,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/panel-color-settings/index.mjs
   var import_jsx_runtime619 = __toESM(require_jsx_runtime(), 1);
-  var PanelColorSettings = ({ colorSettings, ...props }) => {
+  var PanelColorSettings = ({
+    colorSettings,
+    ...props
+  }) => {
     const settings3 = colorSettings.map((setting) => {
       if (!setting) {
         return setting;
