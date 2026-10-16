@@ -18688,7 +18688,10 @@ var wp;
     if (presetValue === void 0) {
       return 0;
     }
-    const slug = parseFloat(presetValue, 10) === 0 ? "0" : getPresetSlug(presetValue, presetType);
+    const slug = (
+      // @ts-expect-error `parseFloat` ignores the radix it is passed.
+      parseFloat(presetValue, 10) === 0 ? "0" : getPresetSlug(presetValue, presetType)
+    );
     const sliderValue = presets.findIndex((size4) => {
       return String(size4.slug) === slug;
     });
@@ -18698,7 +18701,10 @@ var wp;
     if (!isValuePreset(value, presetType)) {
       return value;
     }
-    const slug = parseFloat(value, 10) === 0 ? "0" : getPresetSlug(value, presetType);
+    const slug = (
+      // @ts-expect-error `parseFloat` ignores the radix it is passed.
+      parseFloat(value, 10) === 0 ? "0" : getPresetSlug(value, presetType)
+    );
     const preset = presets.find((size4) => String(size4.slug) === slug);
     return preset?.size;
   }
@@ -109584,7 +109590,10 @@ If there's a particular need for this, please submit a feature request at https:
     const handleCustomValueSliderChange = (next) => {
       onChange([next, computedUnit].join(""));
     };
-    const customTooltipContent = (newValue) => value === void 0 ? void 0 : presets[newValue]?.name;
+    const customTooltipContent = (newValue) => (
+      // The tooltip gets the slider position.
+      value === void 0 ? void 0 : presets[newValue]?.name
+    );
     const getNewPresetValue = (next, controlType) => {
       const newValue = parseInt(next, 10);
       if (controlType === "selectList") {
