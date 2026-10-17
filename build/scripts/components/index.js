@@ -18,11 +18,11 @@ var wp;
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
   };
-  var __copyProps = (to, from2, except, desc) => {
-    if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-      for (let key of __getOwnPropNames(from2))
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
         if (!__hasOwnProp.call(to, key) && key !== except)
-          __defProp(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc(from2, key)) || desc.enumerable });
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
     }
     return to;
   };
@@ -87,7 +87,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         function useSyncExternalStore$2(subscribe2, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React124.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React121.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -101,7 +101,7 @@ var wp;
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect24(
+          useLayoutEffect23(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -135,8 +135,8 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React124 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState100 = React124.useState, useEffect93 = React124.useEffect, useLayoutEffect24 = React124.useLayoutEffect, useDebugValue2 = React124.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React124.useSyncExternalStore ? React124.useSyncExternalStore : shim;
+        var React121 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState100 = React121.useState, useEffect93 = React121.useEffect, useLayoutEffect23 = React121.useLayoutEffect, useDebugValue2 = React121.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React121.useSyncExternalStore ? React121.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -301,8 +301,8 @@ var wp;
         if (!Array.isArray(array)) {
           throw new Error("first argument should be an array");
         }
-        return array.reduce(function(prev2, next2) {
-          return deepmerge2(prev2, next2, options2);
+        return array.reduce(function(prev, next) {
+          return deepmerge2(prev, next, options2);
         }, {});
       };
       var deepmerge_1 = deepmerge2;
@@ -318,11 +318,11 @@ var wp;
         if (a2 === b2) return true;
         if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
           if (a2.constructor !== b2.constructor) return false;
-          var length2, i2, keys;
+          var length, i2, keys;
           if (Array.isArray(a2)) {
-            length2 = a2.length;
-            if (length2 != b2.length) return false;
-            for (i2 = length2; i2-- !== 0; )
+            length = a2.length;
+            if (length != b2.length) return false;
+            for (i2 = length; i2-- !== 0; )
               if (!equal(a2[i2], b2[i2])) return false;
             return true;
           }
@@ -341,9 +341,9 @@ var wp;
             return true;
           }
           if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-            length2 = a2.length;
-            if (length2 != b2.length) return false;
-            for (i2 = length2; i2-- !== 0; )
+            length = a2.length;
+            if (length != b2.length) return false;
+            for (i2 = length; i2-- !== 0; )
               if (a2[i2] !== b2[i2]) return false;
             return true;
           }
@@ -351,11 +351,11 @@ var wp;
           if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
           if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
           keys = Object.keys(a2);
-          length2 = keys.length;
-          if (length2 !== Object.keys(b2).length) return false;
-          for (i2 = length2; i2-- !== 0; )
+          length = keys.length;
+          if (length !== Object.keys(b2).length) return false;
+          for (i2 = length; i2-- !== 0; )
             if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-          for (i2 = length2; i2-- !== 0; ) {
+          for (i2 = length; i2-- !== 0; ) {
             var key = keys[i2];
             if (!equal(a2[key], b2[key])) return false;
           }
@@ -484,14 +484,14 @@ var wp;
                 searchWord = escapeRegExpFn(searchWord);
               }
               var regex = new RegExp(searchWord, caseSensitive ? "g" : "gi");
-              var match3 = void 0;
-              while (match3 = regex.exec(textToHighlight)) {
-                var _start = match3.index;
+              var match2 = void 0;
+              while (match2 = regex.exec(textToHighlight)) {
+                var _start = match2.index;
                 var _end = regex.lastIndex;
                 if (_end > _start) {
                   chunks.push({ highlight: false, start: _start, end: _end });
                 }
-                if (match3.index === regex.lastIndex) {
+                if (match2.index === regex.lastIndex) {
                   regex.lastIndex++;
                 }
               }
@@ -502,7 +502,7 @@ var wp;
           var fillInChunks = exports2.fillInChunks = function fillInChunks2(_ref4) {
             var chunksToHighlight = _ref4.chunksToHighlight, totalLength = _ref4.totalLength;
             var allChunks = [];
-            var append2 = function append3(start, end, highlight) {
+            var append = function append2(start, end, highlight) {
               if (end - start > 0) {
                 allChunks.push({
                   start,
@@ -512,15 +512,15 @@ var wp;
               }
             };
             if (chunksToHighlight.length === 0) {
-              append2(0, totalLength, false);
+              append(0, totalLength, false);
             } else {
               var lastIndex = 0;
               chunksToHighlight.forEach(function(chunk) {
-                append2(lastIndex, chunk.start, false);
-                append2(chunk.start, chunk.end, true);
+                append(lastIndex, chunk.start, false);
+                append(chunk.start, chunk.end, true);
                 lastIndex = chunk.end;
               });
-              append2(lastIndex, totalLength, false);
+              append(lastIndex, totalLength, false);
             }
             return allChunks;
           };
@@ -1024,8 +1024,8 @@ var wp;
       var chars = Object.keys(characterMap).join("|");
       var allAccents = new RegExp(chars, "g");
       var firstAccent = new RegExp(chars, "");
-      function matcher(match3) {
-        return characterMap[match3];
+      function matcher(match2) {
+        return characterMap[match2];
       }
       var removeAccents4 = function(string) {
         return string.replace(allAccents, matcher);
@@ -1036,261 +1036,6 @@ var wp;
       module.exports = removeAccents4;
       module.exports.has = hasAccents;
       module.exports.remove = removeAccents4;
-    }
-  });
-
-  // node_modules/.store/react-is@16.13.1-yW_QoHm9UqSzxulsdt_2RQ/node_modules/react-is/cjs/react-is.development.js
-  var require_react_is_development = __commonJS({
-    "node_modules/.store/react-is@16.13.1-yW_QoHm9UqSzxulsdt_2RQ/node_modules/react-is/cjs/react-is.development.js"(exports) {
-      "use strict";
-      if (true) {
-        (function() {
-          "use strict";
-          var hasSymbol = typeof Symbol === "function" && Symbol.for;
-          var REACT_ELEMENT_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.element") : 60103;
-          var REACT_PORTAL_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.portal") : 60106;
-          var REACT_FRAGMENT_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.fragment") : 60107;
-          var REACT_STRICT_MODE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.strict_mode") : 60108;
-          var REACT_PROFILER_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.profiler") : 60114;
-          var REACT_PROVIDER_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.provider") : 60109;
-          var REACT_CONTEXT_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.context") : 60110;
-          var REACT_ASYNC_MODE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.async_mode") : 60111;
-          var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.concurrent_mode") : 60111;
-          var REACT_FORWARD_REF_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.forward_ref") : 60112;
-          var REACT_SUSPENSE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.suspense") : 60113;
-          var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.suspense_list") : 60120;
-          var REACT_MEMO_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.memo") : 60115;
-          var REACT_LAZY_TYPE2 = hasSymbol ? /* @__PURE__ */ Symbol.for("react.lazy") : 60116;
-          var REACT_BLOCK_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.block") : 60121;
-          var REACT_FUNDAMENTAL_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.fundamental") : 60117;
-          var REACT_RESPONDER_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.responder") : 60118;
-          var REACT_SCOPE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.scope") : 60119;
-          function isValidElementType(type) {
-            return typeof type === "string" || typeof type === "function" || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-            type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE2 || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
-          }
-          function typeOf(object) {
-            if (typeof object === "object" && object !== null) {
-              var $$typeof = object.$$typeof;
-              switch ($$typeof) {
-                case REACT_ELEMENT_TYPE:
-                  var type = object.type;
-                  switch (type) {
-                    case REACT_ASYNC_MODE_TYPE:
-                    case REACT_CONCURRENT_MODE_TYPE:
-                    case REACT_FRAGMENT_TYPE:
-                    case REACT_PROFILER_TYPE:
-                    case REACT_STRICT_MODE_TYPE:
-                    case REACT_SUSPENSE_TYPE:
-                      return type;
-                    default:
-                      var $$typeofType = type && type.$$typeof;
-                      switch ($$typeofType) {
-                        case REACT_CONTEXT_TYPE:
-                        case REACT_FORWARD_REF_TYPE:
-                        case REACT_LAZY_TYPE2:
-                        case REACT_MEMO_TYPE:
-                        case REACT_PROVIDER_TYPE:
-                          return $$typeofType;
-                        default:
-                          return $$typeof;
-                      }
-                  }
-                case REACT_PORTAL_TYPE:
-                  return $$typeof;
-              }
-            }
-            return void 0;
-          }
-          var AsyncMode = REACT_ASYNC_MODE_TYPE;
-          var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
-          var ContextConsumer = REACT_CONTEXT_TYPE;
-          var ContextProvider = REACT_PROVIDER_TYPE;
-          var Element2 = REACT_ELEMENT_TYPE;
-          var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment42 = REACT_FRAGMENT_TYPE;
-          var Lazy = REACT_LAZY_TYPE2;
-          var Memo = REACT_MEMO_TYPE;
-          var Portal4 = REACT_PORTAL_TYPE;
-          var Profiler = REACT_PROFILER_TYPE;
-          var StrictMode = REACT_STRICT_MODE_TYPE;
-          var Suspense = REACT_SUSPENSE_TYPE;
-          var hasWarnedAboutDeprecatedIsAsyncMode = false;
-          function isAsyncMode(object) {
-            {
-              if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-                hasWarnedAboutDeprecatedIsAsyncMode = true;
-                console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.");
-              }
-            }
-            return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
-          }
-          function isConcurrentMode(object) {
-            return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
-          }
-          function isContextConsumer(object) {
-            return typeOf(object) === REACT_CONTEXT_TYPE;
-          }
-          function isContextProvider(object) {
-            return typeOf(object) === REACT_PROVIDER_TYPE;
-          }
-          function isElement3(object) {
-            return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-          }
-          function isForwardRef(object) {
-            return typeOf(object) === REACT_FORWARD_REF_TYPE;
-          }
-          function isFragment(object) {
-            return typeOf(object) === REACT_FRAGMENT_TYPE;
-          }
-          function isLazy(object) {
-            return typeOf(object) === REACT_LAZY_TYPE2;
-          }
-          function isMemo(object) {
-            return typeOf(object) === REACT_MEMO_TYPE;
-          }
-          function isPortal(object) {
-            return typeOf(object) === REACT_PORTAL_TYPE;
-          }
-          function isProfiler(object) {
-            return typeOf(object) === REACT_PROFILER_TYPE;
-          }
-          function isStrictMode(object) {
-            return typeOf(object) === REACT_STRICT_MODE_TYPE;
-          }
-          function isSuspense(object) {
-            return typeOf(object) === REACT_SUSPENSE_TYPE;
-          }
-          exports.AsyncMode = AsyncMode;
-          exports.ConcurrentMode = ConcurrentMode;
-          exports.ContextConsumer = ContextConsumer;
-          exports.ContextProvider = ContextProvider;
-          exports.Element = Element2;
-          exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment42;
-          exports.Lazy = Lazy;
-          exports.Memo = Memo;
-          exports.Portal = Portal4;
-          exports.Profiler = Profiler;
-          exports.StrictMode = StrictMode;
-          exports.Suspense = Suspense;
-          exports.isAsyncMode = isAsyncMode;
-          exports.isConcurrentMode = isConcurrentMode;
-          exports.isContextConsumer = isContextConsumer;
-          exports.isContextProvider = isContextProvider;
-          exports.isElement = isElement3;
-          exports.isForwardRef = isForwardRef;
-          exports.isFragment = isFragment;
-          exports.isLazy = isLazy;
-          exports.isMemo = isMemo;
-          exports.isPortal = isPortal;
-          exports.isProfiler = isProfiler;
-          exports.isStrictMode = isStrictMode;
-          exports.isSuspense = isSuspense;
-          exports.isValidElementType = isValidElementType;
-          exports.typeOf = typeOf;
-        })();
-      }
-    }
-  });
-
-  // node_modules/.store/react-is@16.13.1-yW_QoHm9UqSzxulsdt_2RQ/node_modules/react-is/index.js
-  var require_react_is = __commonJS({
-    "node_modules/.store/react-is@16.13.1-yW_QoHm9UqSzxulsdt_2RQ/node_modules/react-is/index.js"(exports, module) {
-      "use strict";
-      if (false) {
-        module.exports = null;
-      } else {
-        module.exports = require_react_is_development();
-      }
-    }
-  });
-
-  // node_modules/.store/hoist-non-react-statics@3.3.2-rbXmAISsNAhE1AG7arnz-A/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-  var require_hoist_non_react_statics_cjs = __commonJS({
-    "node_modules/.store/hoist-non-react-statics@3.3.2-rbXmAISsNAhE1AG7arnz-A/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js"(exports, module) {
-      "use strict";
-      var reactIs = require_react_is();
-      var REACT_STATICS = {
-        childContextTypes: true,
-        contextType: true,
-        contextTypes: true,
-        defaultProps: true,
-        displayName: true,
-        getDefaultProps: true,
-        getDerivedStateFromError: true,
-        getDerivedStateFromProps: true,
-        mixins: true,
-        propTypes: true,
-        type: true
-      };
-      var KNOWN_STATICS = {
-        name: true,
-        length: true,
-        prototype: true,
-        caller: true,
-        callee: true,
-        arguments: true,
-        arity: true
-      };
-      var FORWARD_REF_STATICS = {
-        "$$typeof": true,
-        render: true,
-        defaultProps: true,
-        displayName: true,
-        propTypes: true
-      };
-      var MEMO_STATICS = {
-        "$$typeof": true,
-        compare: true,
-        defaultProps: true,
-        displayName: true,
-        propTypes: true,
-        type: true
-      };
-      var TYPE_STATICS = {};
-      TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
-      TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
-      function getStatics(component) {
-        if (reactIs.isMemo(component)) {
-          return MEMO_STATICS;
-        }
-        return TYPE_STATICS[component["$$typeof"]] || REACT_STATICS;
-      }
-      var defineProperty = Object.defineProperty;
-      var getOwnPropertyNames = Object.getOwnPropertyNames;
-      var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-      var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-      var getPrototypeOf = Object.getPrototypeOf;
-      var objectPrototype = Object.prototype;
-      function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-        if (typeof sourceComponent !== "string") {
-          if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) {
-              hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-            }
-          }
-          var keys = getOwnPropertyNames(sourceComponent);
-          if (getOwnPropertySymbols) {
-            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-          }
-          var targetStatics = getStatics(targetComponent);
-          var sourceStatics = getStatics(sourceComponent);
-          for (var i2 = 0; i2 < keys.length; ++i2) {
-            var key = keys[i2];
-            if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
-              var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-              try {
-                defineProperty(targetComponent, key, descriptor);
-              } catch (e3) {
-              }
-            }
-          }
-        }
-        return targetComponent;
-      }
-      module.exports = hoistNonReactStatics;
     }
   });
 
@@ -1317,9 +1062,9 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React124 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef139 = React124.useRef, useEffect93 = React124.useEffect, useMemo89 = React124.useMemo, useDebugValue2 = React124.useDebugValue;
+        var React121 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef138 = React121.useRef, useEffect93 = React121.useEffect, useMemo89 = React121.useMemo, useDebugValue2 = React121.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual2) {
-          var instRef = useRef139(null);
+          var instRef = useRef138(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -1667,8 +1412,8 @@ var wp;
     if (typeof b2 !== "object") return false;
     const aKeys = Object.keys(a2);
     const bKeys = Object.keys(b2);
-    const { length: length2 } = aKeys;
-    if (bKeys.length !== length2) return false;
+    const { length } = aKeys;
+    if (bKeys.length !== length) return false;
     for (const key of aKeys) if (a2[key] !== b2[key]) return false;
     return true;
   }
@@ -1793,24 +1538,24 @@ var wp;
       return false;
     }
   }
-  function getDocument(node2) {
-    if (!node2) return document;
-    if (isDocument(node2)) return node2;
-    if (isWindow(node2)) return node2.document;
-    const nodeDocument = node2.ownerDocument;
+  function getDocument(node) {
+    if (!node) return document;
+    if (isDocument(node)) return node;
+    if (isWindow(node)) return node.document;
+    const nodeDocument = node.ownerDocument;
     if (isDocument(nodeDocument)) return nodeDocument;
     return document;
   }
-  function getWindow(node2) {
-    if (!node2) return self;
-    if (isWindow(node2)) return node2;
-    const nodeDocument = getDocument(node2);
+  function getWindow(node) {
+    if (!node) return self;
+    if (isWindow(node)) return node;
+    const nodeDocument = getDocument(node);
     const { defaultView } = nodeDocument;
     if (isWindow(defaultView) && ownsDocument(defaultView, nodeDocument)) return defaultView;
     return window;
   }
-  function getActiveElement(node2, { frame: frame2 = true, activeDescendant = false } = {}) {
-    const ownerDocument2 = getDocument(node2);
+  function getActiveElement(node, { frame: frame2 = true, activeDescendant = false } = {}) {
+    const ownerDocument2 = getDocument(node);
     const activeElement2 = activeElementGetter ? activeElementGetter.call(ownerDocument2) : ownerDocument2.activeElement;
     if (!activeElement2?.nodeName) return null;
     if (frame2 && isFrame(activeElement2) && activeElement2.contentDocument?.body) return getActiveElement(activeElement2.contentDocument.body, {
@@ -2327,13 +2072,13 @@ var wp;
   function isCompositeMoveKey(key) {
     return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
   }
-  function isShadowRoot(node2) {
-    return node2.nodeType === node2.DOCUMENT_FRAGMENT_NODE && "host" in node2;
+  function isShadowRoot(node) {
+    return node.nodeType === node.DOCUMENT_FRAGMENT_NODE && "host" in node;
   }
-  function getTreeActiveElement(node2) {
-    const root = node2?.getRootNode();
+  function getTreeActiveElement(node) {
+    const root = node?.getRootNode();
     if (root && isShadowRoot(root) && root.activeElement) return root.activeElement;
-    return getActiveElement(node2);
+    return getActiveElement(node);
   }
   function hasTreeFocus(element) {
     return hasFocus(element) || getTreeActiveElement(element) === element;
@@ -2433,8 +2178,8 @@ var wp;
       if (state == null) return;
       if (!callback) return;
       let prevState = null;
-      callback((prev2) => {
-        prevState = prev2;
+      callback((prev) => {
+        prevState = prev;
         return state;
       });
       return () => {
@@ -2625,16 +2370,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React.createContext(void 0);
     const scopedContext = React.createContext(void 0);
-    const useContext90 = () => React.useContext(context);
+    const useContext87 = () => React.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React.useContext(scopedContext);
-      const store = useContext90();
+      const store = useContext87();
       if (onlyScoped) return scoped;
       return scoped || store;
     };
     const useProviderContext = () => {
       const scoped = React.useContext(scopedContext);
-      const store = useContext90();
+      const store = useContext87();
       if (scoped && scoped === store) return;
       return store;
     };
@@ -2656,7 +2401,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext90,
+      useContext: useContext87,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -3925,7 +3670,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function getMaxRowLength(array) {
     let maxLength = 0;
-    for (const { length: length2 } of array) if (length2 > maxLength) maxLength = length2;
+    for (const { length } of array) if (length > maxLength) maxLength = length;
     return maxLength;
   }
   function createEmptyItem(rowId) {
@@ -4437,10 +4182,10 @@ If there's a particular need for this, please submit a feature request at https:
     });
     useSafeLayoutEffect(() => {
       if (!hasSetValue) return;
-      return subscribe(store, [key], (state, prev2) => {
+      return subscribe(store, [key], (state, prev) => {
         const { value: value2, setValue: setValue2 } = propsRef.current;
         if (!setValue2) return;
-        if (isSameValue2(state[key], prev2[key])) return;
+        if (isSameValue2(state[key], prev[key])) return;
         if (isSameValue2(state[key], value2)) return;
         setValue2(state[key]);
       });
@@ -4493,9 +4238,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (pageUp) return top + itemElement.clientHeight;
     return top;
   }
-  function findNextPageItemId(element, store, next2, pageUp = false) {
+  function findNextPageItemId(element, store, next, pageUp = false) {
     if (!store) return;
-    if (!next2) return;
+    if (!next) return;
     const { renderedItems } = store.getState();
     const scrollingElement = getScrollingElement(element);
     if (!scrollingElement) return;
@@ -4504,7 +4249,7 @@ If there's a particular need for this, please submit a feature request at https:
     let prevDifference;
     for (let i2 = 0; i2 < renderedItems.length; i2 += 1) {
       const previousId = id3;
-      id3 = next2(i2);
+      id3 = next(i2);
       if (!id3) break;
       if (id3 === previousId) continue;
       const itemElement = getEnabledItem(store, id3)?.element;
@@ -5573,8 +5318,8 @@ If there's a particular need for this, please submit a feature request at https:
         scrollPositions = /* @__PURE__ */ new Map();
         scrollPositionRef.current = scrollPositions;
       }
-      const position2 = scrollPositions.get(tabId);
-      element.scroll(position2?.x ?? 0, position2?.y ?? 0);
+      const position = scrollPositions.get(tabId);
+      element.scroll(position?.x ?? 0, position?.y ?? 0);
       const onScroll = () => {
         scrollPositions.set(tabId, {
           x: element.scrollLeft,
@@ -5813,12 +5558,12 @@ If there's a particular need for this, please submit a feature request at https:
     let restoredSelectedId;
     setup(tab, () => {
       pendingRestore = false;
-      return batch(tab, ["selectedId"], (state, prev2) => {
+      return batch(tab, ["selectedId"], (state, prev) => {
         if (pendingRestore) {
           pendingRestore = false;
           if (state.selectedId === restoredSelectedId) return;
         }
-        if (parentComposite && state.selectedId === prev2.selectedId) return;
+        if (parentComposite && state.selectedId === prev.selectedId) return;
         const { activeId, renderedItems } = tab.getState();
         if (activeId === state.selectedId) return;
         const focusedTab = getFocusedTab(renderedItems);
@@ -6133,19 +5878,19 @@ If there's a particular need for this, please submit a feature request at https:
     if (typeof portalElement === "function") return portalElement(element);
     return portalElement;
   }
-  function getRandomId(prefix2 = "id") {
-    return `${prefix2 ? `${prefix2}-` : ""}${Math.random().toString(36).slice(2, 8)}`;
+  function getRandomId(prefix = "id") {
+    return `${prefix ? `${prefix}-` : ""}${Math.random().toString(36).slice(2, 8)}`;
   }
   function queueFocus(element) {
     queueMicrotask(() => {
       element?.focus();
     });
   }
-  function attachPortalRef(ref, node2) {
+  function attachPortalRef(ref, node) {
     return {
       ref,
-      node: node2,
-      cleanup: setRef(ref, node2)
+      node,
+      cleanup: setRef(ref, node)
     };
   }
   function detachPortalRef(attached) {
@@ -8048,9 +7793,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const alignment = getAlignment(placement);
     const alignmentAxis = getAlignmentAxis(placement);
-    const length2 = getAxisLength(alignmentAxis);
+    const length = getAxisLength(alignmentAxis);
     let mainAlignmentSide = alignmentAxis === "x" ? alignment === (rtl ? "end" : "start") ? "right" : "left" : alignment === "start" ? "bottom" : "top";
-    if (rects.reference[length2] > rects.floating[length2]) {
+    if (rects.reference[length] > rects.floating[length]) {
       mainAlignmentSide = getOppositePlacement(mainAlignmentSide);
     }
     return [mainAlignmentSide, getOppositePlacement(mainAlignmentSide)];
@@ -8240,7 +7985,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       placement = "bottom",
       strategy = "absolute",
-      middleware: middleware2 = [],
+      middleware = [],
       platform: platform3
     } = config;
     const platformWithDetectOverflow = platform3.detectOverflow ? platform3 : {
@@ -8260,8 +8005,8 @@ If there's a particular need for this, please submit a feature request at https:
     let statefulPlacement = placement;
     let resetCount = 0;
     const middlewareData = {};
-    for (let i2 = 0; i2 < middleware2.length; i2++) {
-      const currentMiddleware = middleware2[i2];
+    for (let i2 = 0; i2 < middleware.length; i2++) {
+      const currentMiddleware = middleware[i2];
       if (!currentMiddleware) {
         continue;
       }
@@ -8349,27 +8094,27 @@ If there's a particular need for this, please submit a feature request at https:
         y: y3
       };
       const axis = getAlignmentAxis(placement);
-      const length2 = getAxisLength(axis);
+      const length = getAxisLength(axis);
       const arrowDimensions = await platform3.getDimensions(element);
       const isYAxis = axis === "y";
       const minProp = isYAxis ? "top" : "left";
       const maxProp = isYAxis ? "bottom" : "right";
       const clientProp = isYAxis ? "clientHeight" : "clientWidth";
-      const endDiff = rects.reference[length2] + rects.reference[axis] - coords[axis] - rects.floating[length2];
+      const endDiff = rects.reference[length] + rects.reference[axis] - coords[axis] - rects.floating[length];
       const startDiff = coords[axis] - rects.reference[axis];
       const arrowOffsetParent = await (platform3.getOffsetParent == null ? void 0 : platform3.getOffsetParent(element));
       let clientSize = arrowOffsetParent ? arrowOffsetParent[clientProp] : 0;
       if (!clientSize || !await (platform3.isElement == null ? void 0 : platform3.isElement(arrowOffsetParent))) {
-        clientSize = elements2.floating[clientProp] || rects.floating[length2];
+        clientSize = elements2.floating[clientProp] || rects.floating[length];
       }
       const centerToReference = endDiff / 2 - startDiff / 2;
-      const largestPossiblePadding = clientSize / 2 - arrowDimensions[length2] / 2 - 1;
+      const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
       const minPadding = min(paddingObject[minProp], largestPossiblePadding);
       const maxPadding = min(paddingObject[maxProp], largestPossiblePadding);
-      const max2 = clientSize - arrowDimensions[length2] - maxPadding;
-      const center = clientSize / 2 - arrowDimensions[length2] / 2 + centerToReference;
+      const max2 = clientSize - arrowDimensions[length] - maxPadding;
+      const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
       const offset4 = clamp(minPadding, center, max2);
-      const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length2] / 2 - (center < minPadding ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
+      const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length] / 2 - (center < minPadding ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
       const alignmentOffset = shouldAddOffset ? center < minPadding ? center - minPadding : center - max2 : 0;
       return {
         [axis]: coords[axis] + alignmentOffset,
@@ -8771,19 +8516,19 @@ If there's a particular need for this, please submit a feature request at https:
   function hasWindow() {
     return typeof window !== "undefined";
   }
-  function getNodeName(node2) {
-    if (isNode2(node2)) {
-      return (node2.nodeName || "").toLowerCase();
+  function getNodeName(node) {
+    if (isNode2(node)) {
+      return (node.nodeName || "").toLowerCase();
     }
     return "#document";
   }
-  function getWindow2(node2) {
+  function getWindow2(node) {
     var _node$ownerDocument;
-    return (node2 == null || (_node$ownerDocument = node2.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
+    return (node == null || (_node$ownerDocument = node.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
   }
-  function getDocumentElement(node2) {
+  function getDocumentElement(node) {
     var _ref;
-    return (_ref = (isNode2(node2) ? node2.ownerDocument : node2.document) || window.document) == null ? void 0 : _ref.documentElement;
+    return (_ref = (isNode2(node) ? node.ownerDocument : node.document) || window.document) == null ? void 0 : _ref.documentElement;
   }
   function isNode2(value) {
     if (!hasWindow()) {
@@ -8860,8 +8605,8 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return isWebKitValue;
   }
-  function isLastTraversableNode(node2) {
-    return /^(html|body|#document)$/.test(getNodeName(node2));
+  function isLastTraversableNode(node) {
+    return /^(html|body|#document)$/.test(getNodeName(node));
   }
   function getComputedStyle2(element) {
     return getWindow2(element).getComputedStyle(element);
@@ -8878,30 +8623,30 @@ If there's a particular need for this, please submit a feature request at https:
       scrollTop: element.scrollY
     };
   }
-  function getParentNode(node2) {
-    if (getNodeName(node2) === "html") {
-      return node2;
+  function getParentNode(node) {
+    if (getNodeName(node) === "html") {
+      return node;
     }
     const result = (
       // Step into the shadow DOM of the parent of a slotted node.
-      node2.assignedSlot || // DOM Element detected.
-      node2.parentNode || // ShadowRoot detected.
-      isShadowRoot2(node2) && node2.host || // Fallback.
-      getDocumentElement(node2)
+      node.assignedSlot || // DOM Element detected.
+      node.parentNode || // ShadowRoot detected.
+      isShadowRoot2(node) && node.host || // Fallback.
+      getDocumentElement(node)
     );
     return isShadowRoot2(result) ? result.host : result;
   }
-  function getNearestOverflowAncestor(node2) {
-    const parentNode = getParentNode(node2);
+  function getNearestOverflowAncestor(node) {
+    const parentNode = getParentNode(node);
     if (isLastTraversableNode(parentNode)) {
-      return (node2.ownerDocument || node2).body;
+      return (node.ownerDocument || node).body;
     }
     if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
       return parentNode;
     }
     return getNearestOverflowAncestor(parentNode);
   }
-  function getOverflowAncestors(node2, list, traverseIframes) {
+  function getOverflowAncestors(node, list, traverseIframes) {
     var _node$ownerDocument2;
     if (list === void 0) {
       list = [];
@@ -8909,8 +8654,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (traverseIframes === void 0) {
       traverseIframes = true;
     }
-    const scrollableAncestor = getNearestOverflowAncestor(node2);
-    const isBody = scrollableAncestor === ((_node$ownerDocument2 = node2.ownerDocument) == null ? void 0 : _node$ownerDocument2.body);
+    const scrollableAncestor = getNearestOverflowAncestor(node);
+    const isBody = scrollableAncestor === ((_node$ownerDocument2 = node.ownerDocument) == null ? void 0 : _node$ownerDocument2.body);
     const win = getWindow2(scrollableAncestor);
     if (isBody) {
       const frameElement = getFrameElement(win);
@@ -9683,7 +9428,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (!mounted) return;
         if (!arrowElement) defaultArrowElementRef.current = defaultArrowElementRef.current || document.createElement("div");
         const arrow5 = arrowElement || defaultArrowElementRef.current;
-        const middleware2 = [
+        const middleware = [
           getOffsetMiddleware(arrow5, {
             gutter,
             shift: shift4
@@ -9708,7 +9453,7 @@ If there's a particular need for this, please submit a feature request at https:
         const pos = await computePosition2(anchor, popoverElement, {
           placement,
           strategy: fixed ? "fixed" : "absolute",
-          middleware: middleware2
+          middleware
         });
         if (shouldCancelUpdate()) return;
         store?.setState("currentPlacement", pos.placement);
@@ -9821,11 +9566,11 @@ If there's a particular need for this, please submit a feature request at https:
         });
       };
     }, [store]);
-    const position2 = fixed ? "fixed" : "absolute";
+    const position = fixed ? "fixed" : "absolute";
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", {
       ...wrapperProps,
       style: {
-        position: position2,
+        position,
         top: 0,
         left: 0,
         width: "max-content",
@@ -9835,7 +9580,7 @@ If there's a particular need for this, please submit a feature request at https:
       children: element
     }), [
       store,
-      position2,
+      position,
       wrapperProps
     ]);
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(PopoverScopedContextProvider, {
@@ -9882,8 +9627,8 @@ If there's a particular need for this, please submit a feature request at https:
   function isPointInPolygon(point, polygon) {
     const [x2, y3] = point;
     let inside = false;
-    const length2 = polygon.length;
-    for (let l3 = length2, i2 = 0, j2 = l3 - 1; i2 < l3; j2 = i2++) {
+    const length = polygon.length;
+    for (let l3 = length, i2 = 0, j2 = l3 - 1; i2 < l3; j2 = i2++) {
       const currentPoint = polygon[i2];
       const previousPoint = polygon[j2];
       const vertexPoint = polygon[j2 === 0 ? l3 - 1 : j2 - 1];
@@ -10736,8 +10481,8 @@ If there's a particular need for this, please submit a feature request at https:
     const context = usePopoverContext();
     store = store || context;
     invariant(store, "PopoverDisclosureArrow must be wrapped in a PopoverDisclosure component.");
-    const position2 = useStoreState(store, ["placement"], (state) => placement || state.placement);
-    const dir = getBasePlacement(position2);
+    const position = useStoreState(store, ["placement"], (state) => placement || state.placement);
+    const dir = getBasePlacement(position);
     const points = pointsMap[dir];
     props = {
       children: (0, import_react34.useMemo)(() => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("svg", {
@@ -11013,15 +10758,15 @@ If there's a particular need for this, please submit a feature request at https:
     if (!itemText) return false;
     return normalizeString(itemText).trim().toLowerCase().startsWith(text.toLowerCase());
   }
-  function getSameInitialItems({ activeId, char: char2, items, typeaheadState }) {
+  function getSameInitialItems({ activeId, char, items, typeaheadState }) {
     if (!activeId) return items;
     const activeItem = items.find((item) => item.id === activeId);
     if (!activeItem) return items;
-    if (!itemTextStartsWith(activeItem, char2)) return items;
+    if (!itemTextStartsWith(activeItem, char)) return items;
     const { chars } = typeaheadState;
-    if (chars !== char2 && itemTextStartsWith(activeItem, chars)) return items;
-    typeaheadState.chars = char2;
-    return flipItems2(items.filter((item) => itemTextStartsWith(item, char2)), activeId).filter((item) => item.id !== activeId);
+    if (chars !== char && itemTextStartsWith(activeItem, chars)) return items;
+    typeaheadState.chars = char;
+    return flipItems2(items.filter((item) => itemTextStartsWith(item, char)), activeId).filter((item) => item.id !== activeId);
   }
   var useCompositeTypeahead = createHook(function useCompositeTypeahead2({ store, typeahead = true, ...props }) {
     const context = useCompositeScopedContext();
@@ -11043,11 +10788,11 @@ If there's a particular need for this, please submit a feature request at https:
       typeaheadState.cleanupTimeout = window.setTimeout(() => {
         clearChars(typeaheadState);
       }, 500);
-      const char2 = event.key.toLowerCase();
-      typeaheadState.chars += char2;
+      const char = event.key.toLowerCase();
+      typeaheadState.chars += char;
       enabledItems = getSameInitialItems({
         activeId,
-        char: char2,
+        char,
         items: enabledItems,
         typeaheadState
       });
@@ -11089,17 +10834,17 @@ If there's a particular need for this, please submit a feature request at https:
   function getSelectedValues(select) {
     return Array.from(select.selectedOptions).map((option) => option.value);
   }
-  function nextWithValue(store, next2) {
+  function nextWithValue(store, next) {
     return () => {
       const visitedIds = /* @__PURE__ */ new Set();
-      let nextId = next2();
+      let nextId = next();
       while (nextId) {
         const nextItem = store.item(nextId);
         if (!nextItem) return;
         if (nextItem.value != null) return nextItem.id;
         if (visitedIds.has(nextId)) return;
         visitedIds.add(nextId);
-        nextId = next2({ activeId: nextId });
+        nextId = next({ activeId: nextId });
       }
     };
   }
@@ -13410,9 +13155,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/.store/motion-utils@11.18.1-N6R1XkSNe0bS34zaIkHQcA/node_modules/motion-utils/dist/es/progress.mjs
-  var progress = /* @__NO_SIDE_EFFECTS__ */ (from2, to, value) => {
-    const toFromDifference = to - from2;
-    return toFromDifference === 0 ? 1 : (value - from2) / toFromDifference;
+  var progress = /* @__NO_SIDE_EFFECTS__ */ (from, to, value) => {
+    const toFromDifference = to - from;
+    return toFromDifference === 0 ? 1 : (value - from) / toFromDifference;
   };
 
   // node_modules/.store/motion-utils@11.18.1-N6R1XkSNe0bS34zaIkHQcA/node_modules/motion-utils/dist/es/time-conversion.mjs
@@ -14150,7 +13895,7 @@ If there's a particular need for this, please submit a feature request at https:
   var transformProps = new Set(transformPropOrder);
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/render/dom/utils/is-css-variable.mjs
-  var checkStringStartsWith = (token2) => (key) => typeof key === "string" && key.startsWith(token2);
+  var checkStringStartsWith = (token) => (key) => typeof key === "string" && key.startsWith(token);
   var isCSSVariableName = /* @__PURE__ */ checkStringStartsWith("--");
   var startsAsVariableToken = /* @__PURE__ */ checkStringStartsWith("var(--");
   var isCSSVariableToken = (value) => {
@@ -14380,11 +14125,11 @@ If there's a particular need for this, please submit a feature request at https:
     offset: "strokeDashoffset",
     array: "strokeDasharray"
   };
-  function buildSVGPath(attrs, length2, spacing = 1, offset4 = 0, useDashCase = true) {
+  function buildSVGPath(attrs, length, spacing = 1, offset4 = 0, useDashCase = true) {
     attrs.pathLength = 1;
     const keys = useDashCase ? dashKeys : camelKeys;
     attrs[keys.offset] = px.transform(-offset4);
-    const pathLength = px.transform(length2);
+    const pathLength = px.transform(length);
     const pathSpacing = px.transform(spacing);
     attrs[keys.array] = `${pathLength} ${pathSpacing}`;
   }
@@ -14692,14 +14437,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/utils/shallow-compare.mjs
-  function shallowCompare(next2, prev2) {
-    if (!Array.isArray(prev2))
+  function shallowCompare(next, prev) {
+    if (!Array.isArray(prev))
       return false;
-    const prevLength = prev2.length;
-    if (prevLength !== next2.length)
+    const prevLength = prev.length;
+    if (prevLength !== next.length)
       return false;
     for (let i2 = 0; i2 < prevLength; i2++) {
-      if (prev2[i2] !== next2[i2])
+      if (prev[i2] !== next[i2])
         return false;
     }
     return true;
@@ -15314,10 +15059,10 @@ If there's a particular need for this, please submit a feature request at https:
         this.passiveEffect(v3, this.updateAndNotify);
       }
     }
-    setWithVelocity(prev2, current, delta) {
+    setWithVelocity(prev, current, delta) {
       this.set(current);
       this.prev = void 0;
-      this.prevFrameValue = prev2;
+      this.prevFrameValue = prev;
       this.prevUpdatedAt = this.updatedAt - delta;
     }
     /**
@@ -15978,19 +15723,19 @@ If there's a particular need for this, please submit a feature request at https:
     /^var\(--(?:([\w-]+)|([\w-]+), ?([a-zA-Z\d ()%#.,-]+))\)/u
   );
   function parseCSSVariable(current) {
-    const match3 = splitCSSVariableRegex.exec(current);
-    if (!match3)
+    const match2 = splitCSSVariableRegex.exec(current);
+    if (!match2)
       return [,];
-    const [, token1, token2, fallback] = match3;
+    const [, token1, token2, fallback] = match2;
     return [`--${token1 !== null && token1 !== void 0 ? token1 : token2}`, fallback];
   }
   var maxDepth = 4;
   function getVariableValue(current, element, depth = 1) {
     invariant2(depth <= maxDepth, `Max CSS variable fallback depth detected in property "${current}". This may indicate a circular fallback dependency.`);
-    const [token2, fallback] = parseCSSVariable(current);
-    if (!token2)
+    const [token, fallback] = parseCSSVariable(current);
+    if (!token)
       return;
-    const resolved = window.getComputedStyle(element).getPropertyValue(token2);
+    const resolved = window.getComputedStyle(element).getPropertyValue(token);
     if (resolved) {
       const trimmed = resolved.trim();
       return isNumericalString(trimmed) ? parseFloat(trimmed) : trimmed;
@@ -16247,8 +15992,8 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/utils/mix/number.mjs
-  var mixNumber = (from2, to, progress2) => {
-    return from2 + (to - from2) * progress2;
+  var mixNumber = (from, to, progress2) => {
+    return from + (to - from) * progress2;
   };
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/utils/hsla-to-rgba.mjs
@@ -16295,8 +16040,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/utils/mix/color.mjs
-  var mixLinearColor = (from2, to, v3) => {
-    const fromExpo = from2 * from2;
+  var mixLinearColor = (from, to, v3) => {
+    const fromExpo = from * from;
     const expo = v3 * (to * to - fromExpo) + fromExpo;
     return expo < 0 ? 0 : Math.sqrt(expo);
   };
@@ -16313,11 +16058,11 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return model;
   }
-  var mixColor = (from2, to) => {
-    const fromRGBA = asRGBA(from2);
+  var mixColor = (from, to) => {
+    const fromRGBA = asRGBA(from);
     const toRGBA = asRGBA(to);
     if (!fromRGBA || !toRGBA) {
-      return mixImmediate(from2, to);
+      return mixImmediate(from, to);
     }
     const blended = { ...fromRGBA };
     return (v3) => {
@@ -16415,12 +16160,12 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/utils/mix/index.mjs
-  function mix(from2, to, p3) {
-    if (typeof from2 === "number" && typeof to === "number" && typeof p3 === "number") {
-      return mixNumber(from2, to, p3);
+  function mix(from, to, p3) {
+    if (typeof from === "number" && typeof to === "number" && typeof p3 === "number") {
+      return mixNumber(from, to, p3);
     }
-    const mixer = getMixer(from2);
-    return mixer(from2, to);
+    const mixer = getMixer(from);
+    return mixer(from, to);
   }
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/animation/generators/utils/velocity.mjs
@@ -17399,7 +17144,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/animation/utils/is-transition-defined.mjs
-  function isTransitionDefined({ when, delay: _delay, delayChildren, staggerChildren, staggerDirection, repeat, repeatType, repeatDelay, from: from2, elapsed, ...transition }) {
+  function isTransitionDefined({ when, delay: _delay, delayChildren, staggerChildren, staggerDirection, repeat, repeatType, repeatDelay, from, elapsed, ...transition }) {
     return !!Object.keys(transition).length;
   }
 
@@ -17677,23 +17422,23 @@ If there's a particular need for this, please submit a feature request at https:
             motionValue2.liveStyle = false;
         };
         for (const key in allKeys) {
-          const next2 = resolvedValues[key];
-          const prev2 = prevResolvedValues[key];
+          const next = resolvedValues[key];
+          const prev = prevResolvedValues[key];
           if (encounteredKeys.hasOwnProperty(key))
             continue;
           let valueHasChanged = false;
-          if (isKeyframesTarget(next2) && isKeyframesTarget(prev2)) {
-            valueHasChanged = !shallowCompare(next2, prev2);
+          if (isKeyframesTarget(next) && isKeyframesTarget(prev)) {
+            valueHasChanged = !shallowCompare(next, prev);
           } else {
-            valueHasChanged = next2 !== prev2;
+            valueHasChanged = next !== prev;
           }
           if (valueHasChanged) {
-            if (next2 !== void 0 && next2 !== null) {
+            if (next !== void 0 && next !== null) {
               markToAnimate(key);
             } else {
               removedKeys.add(key);
             }
-          } else if (next2 !== void 0 && removedKeys.has(key)) {
+          } else if (next !== void 0 && removedKeys.has(key)) {
             markToAnimate(key);
           } else {
             typeState.protectedKeys[key] = true;
@@ -17760,11 +17505,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
   }
-  function checkVariantsDidChange(prev2, next2) {
-    if (typeof next2 === "string") {
-      return next2 !== prev2;
-    } else if (Array.isArray(next2)) {
-      return !shallowCompare(next2, prev2);
+  function checkVariantsDidChange(prev, next) {
+    if (typeof next === "string") {
+      return next !== prev;
+    } else if (Array.isArray(next)) {
+      return !shallowCompare(next, prev);
     }
     return false;
   }
@@ -17790,9 +17535,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/motion/features/Feature.mjs
   var Feature = class {
-    constructor(node2) {
+    constructor(node) {
       this.isMounted = false;
-      this.node = node2;
+      this.node = node;
     }
     update() {
     }
@@ -17805,9 +17550,9 @@ If there's a particular need for this, please submit a feature request at https:
      * to the underlying animation library. We only want to load that if we load this,
      * so people can optionally code split it out using the `m` component.
      */
-    constructor(node2) {
-      super(node2);
-      node2.animationState || (node2.animationState = createAnimationState(node2));
+    constructor(node) {
+      super(node);
+      node.animationState || (node.animationState = createAnimationState(node));
     }
     updateAnimationControlsSubscription() {
       const { animate } = this.node.getProps();
@@ -18241,19 +17986,19 @@ If there's a particular need for this, please submit a feature request at https:
     if (!treeLength)
       return;
     treeScale.x = treeScale.y = 1;
-    let node2;
+    let node;
     let delta;
     for (let i2 = 0; i2 < treeLength; i2++) {
-      node2 = treePath[i2];
-      delta = node2.projectionDelta;
-      const { visualElement } = node2.options;
+      node = treePath[i2];
+      delta = node.projectionDelta;
+      const { visualElement } = node.options;
       if (visualElement && visualElement.props.style && visualElement.props.style.display === "contents") {
         continue;
       }
-      if (isSharedTransition && node2.options.layoutScroll && node2.scroll && node2 !== node2.root) {
+      if (isSharedTransition && node.options.layoutScroll && node.scroll && node !== node.root) {
         transformBox(box, {
-          x: -node2.scroll.offset.x,
-          y: -node2.scroll.offset.y
+          x: -node.scroll.offset.x,
+          y: -node.scroll.offset.y
         });
       }
       if (delta) {
@@ -18261,8 +18006,8 @@ If there's a particular need for this, please submit a feature request at https:
         treeScale.y *= delta.y.scale;
         applyBoxDelta(box, delta);
       }
-      if (isSharedTransition && hasTransform(node2.latestValues)) {
-        transformBox(box, node2.latestValues);
+      if (isSharedTransition && hasTransform(node.latestValues)) {
+        transformBox(box, node.latestValues);
       }
     }
     if (treeScale.x < TREE_SCALE_SNAP_MAX && treeScale.x > TREE_SCALE_SNAP_MIN) {
@@ -18351,8 +18096,8 @@ If there's a particular need for this, please submit a feature request at https:
             if (projection && projection.layout) {
               const measuredAxis = projection.layout.layoutBox[axis];
               if (measuredAxis) {
-                const length2 = calcLength(measuredAxis);
-                current = length2 * (parseFloat(current) / 100);
+                const length = calcLength(measuredAxis);
+                current = length * (parseFloat(current) / 100);
               }
             }
           }
@@ -18432,11 +18177,11 @@ If there's a particular need for this, please submit a feature request at https:
       if (!offset4 || !shouldDrag(axis, drag3, this.currentDirection))
         return;
       const axisValue = this.getAxisMotionValue(axis);
-      let next2 = this.originPoint[axis] + offset4[axis];
+      let next = this.originPoint[axis] + offset4[axis];
       if (this.constraints && this.constraints[axis]) {
-        next2 = applyConstraints(next2, this.constraints[axis], this.elastic[axis]);
+        next = applyConstraints(next, this.constraints[axis], this.elastic[axis]);
       }
-      axisValue.set(next2);
+      axisValue.set(next);
     }
     resolveConstraints() {
       var _a;
@@ -18658,11 +18403,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/gestures/drag/index.mjs
   var DragGesture = class extends Feature {
-    constructor(node2) {
-      super(node2);
+    constructor(node) {
+      super(node);
       this.removeGroupControls = noop2;
       this.removeListeners = noop2;
-      this.controls = new VisualElementDragControls(node2);
+      this.controls = new VisualElementDragControls(node);
     }
     mount() {
       const { dragControls } = this.node.getProps();
@@ -18745,8 +18490,8 @@ If there's a particular need for this, please submit a feature request at https:
     return pixels / (axis.max - axis.min) * 100;
   }
   var correctBorderRadius = {
-    correct: (latest, node2) => {
-      if (!node2.target)
+    correct: (latest, node) => {
+      if (!node.target)
         return latest;
       if (typeof latest === "string") {
         if (px.test(latest)) {
@@ -18755,8 +18500,8 @@ If there's a particular need for this, please submit a feature request at https:
           return latest;
         }
       }
-      const x2 = pixelsToPercent(latest, node2.target.x);
-      const y3 = pixelsToPercent(latest, node2.target.y);
+      const x2 = pixelsToPercent(latest, node.target.x);
+      const y3 = pixelsToPercent(latest, node.target.y);
       return `${x2}% ${y3}%`;
     }
   };
@@ -19072,24 +18817,24 @@ If there's a particular need for this, please submit a feature request at https:
     constructor() {
       this.members = [];
     }
-    add(node2) {
-      addUniqueItem(this.members, node2);
-      node2.scheduleRender();
+    add(node) {
+      addUniqueItem(this.members, node);
+      node.scheduleRender();
     }
-    remove(node2) {
-      removeItem(this.members, node2);
-      if (node2 === this.prevLead) {
+    remove(node) {
+      removeItem(this.members, node);
+      if (node === this.prevLead) {
         this.prevLead = void 0;
       }
-      if (node2 === this.lead) {
+      if (node === this.lead) {
         const prevLead = this.members[this.members.length - 1];
         if (prevLead) {
           this.promote(prevLead);
         }
       }
     }
-    relegate(node2) {
-      const indexOfNode = this.members.findIndex((member) => node2 === member);
+    relegate(node) {
+      const indexOfNode = this.members.findIndex((member) => node === member);
       if (indexOfNode === 0)
         return false;
       let prevLead;
@@ -19107,36 +18852,36 @@ If there's a particular need for this, please submit a feature request at https:
         return false;
       }
     }
-    promote(node2, preserveFollowOpacity) {
+    promote(node, preserveFollowOpacity) {
       const prevLead = this.lead;
-      if (node2 === prevLead)
+      if (node === prevLead)
         return;
       this.prevLead = prevLead;
-      this.lead = node2;
-      node2.show();
+      this.lead = node;
+      node.show();
       if (prevLead) {
         prevLead.instance && prevLead.scheduleRender();
-        node2.scheduleRender();
-        node2.resumeFrom = prevLead;
+        node.scheduleRender();
+        node.resumeFrom = prevLead;
         if (preserveFollowOpacity) {
-          node2.resumeFrom.preserveOpacity = true;
+          node.resumeFrom.preserveOpacity = true;
         }
         if (prevLead.snapshot) {
-          node2.snapshot = prevLead.snapshot;
-          node2.snapshot.latestValues = prevLead.animationValues || prevLead.latestValues;
+          node.snapshot = prevLead.snapshot;
+          node.snapshot.latestValues = prevLead.animationValues || prevLead.latestValues;
         }
-        if (node2.root && node2.root.isUpdating) {
-          node2.isLayoutDirty = true;
+        if (node.root && node.root.isUpdating) {
+          node.isLayoutDirty = true;
         }
-        const { crossfade } = node2.options;
+        const { crossfade } = node.options;
         if (crossfade === false) {
           prevLead.hide();
         }
       }
     }
     exitAnimationComplete() {
-      this.members.forEach((node2) => {
-        const { options: options2, resumingFrom } = node2;
+      this.members.forEach((node) => {
+        const { options: options2, resumingFrom } = node;
         options2.onExitComplete && options2.onExitComplete();
         if (resumingFrom) {
           resumingFrom.options.onExitComplete && resumingFrom.options.onExitComplete();
@@ -19144,8 +18889,8 @@ If there's a particular need for this, please submit a feature request at https:
       });
     }
     scheduleRender() {
-      this.members.forEach((node2) => {
-        node2.instance && node2.scheduleRender(false);
+      this.members.forEach((node) => {
+        node.instance && node.scheduleRender(false);
       });
     }
     /**
@@ -19427,11 +19172,11 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         this.isLayoutDirty = true;
         for (let i2 = 0; i2 < this.path.length; i2++) {
-          const node2 = this.path[i2];
-          node2.shouldResetTransform = true;
-          node2.updateScroll("snapshot");
-          if (node2.options.layoutRoot) {
-            node2.willUpdate(false);
+          const node = this.path[i2];
+          node.shouldResetTransform = true;
+          node.updateScroll("snapshot");
+          if (node.options.layoutRoot) {
+            node.willUpdate(false);
           }
         }
         const { layoutId, layout: layout2 } = this.options;
@@ -19510,8 +19255,8 @@ If there's a particular need for this, please submit a feature request at https:
         }
         if (this.resumeFrom && !this.resumeFrom.instance) {
           for (let i2 = 0; i2 < this.path.length; i2++) {
-            const node2 = this.path[i2];
-            node2.updateScroll();
+            const node = this.path[i2];
+            node.updateScroll();
           }
         }
         const prevLayout = this.layout;
@@ -19592,9 +19337,9 @@ If there's a particular need for this, please submit a feature request at https:
           return boxWithoutScroll;
         }
         for (let i2 = 0; i2 < this.path.length; i2++) {
-          const node2 = this.path[i2];
-          const { scroll, options: options2 } = node2;
-          if (node2 !== this.root && scroll && options2.layoutScroll) {
+          const node = this.path[i2];
+          const { scroll, options: options2 } = node;
+          if (node !== this.root && scroll && options2.layoutScroll) {
             if (scroll.wasRoot) {
               copyBoxInto(boxWithoutScroll, box);
             }
@@ -19608,16 +19353,16 @@ If there's a particular need for this, please submit a feature request at https:
         const withTransforms = createBox();
         copyBoxInto(withTransforms, box);
         for (let i2 = 0; i2 < this.path.length; i2++) {
-          const node2 = this.path[i2];
-          if (!transformOnly && node2.options.layoutScroll && node2.scroll && node2 !== node2.root) {
+          const node = this.path[i2];
+          if (!transformOnly && node.options.layoutScroll && node.scroll && node !== node.root) {
             transformBox(withTransforms, {
-              x: -node2.scroll.offset.x,
-              y: -node2.scroll.offset.y
+              x: -node.scroll.offset.x,
+              y: -node.scroll.offset.y
             });
           }
-          if (!hasTransform(node2.latestValues))
+          if (!hasTransform(node.latestValues))
             continue;
-          transformBox(withTransforms, node2.latestValues);
+          transformBox(withTransforms, node.latestValues);
         }
         if (hasTransform(this.latestValues)) {
           transformBox(withTransforms, this.latestValues);
@@ -19628,16 +19373,16 @@ If there's a particular need for this, please submit a feature request at https:
         const boxWithoutTransform = createBox();
         copyBoxInto(boxWithoutTransform, box);
         for (let i2 = 0; i2 < this.path.length; i2++) {
-          const node2 = this.path[i2];
-          if (!node2.instance)
+          const node = this.path[i2];
+          if (!node.instance)
             continue;
-          if (!hasTransform(node2.latestValues))
+          if (!hasTransform(node.latestValues))
             continue;
-          hasScale(node2.latestValues) && node2.updateSnapshot();
+          hasScale(node.latestValues) && node.updateSnapshot();
           const sourceBox = createBox();
-          const nodeBox = node2.measurePageBox();
+          const nodeBox = node.measurePageBox();
           copyBoxInto(sourceBox, nodeBox);
-          removeBoxTransforms(boxWithoutTransform, node2.latestValues, node2.snapshot ? node2.snapshot.layoutBox : void 0, sourceBox);
+          removeBoxTransforms(boxWithoutTransform, node.latestValues, node.snapshot ? node.snapshot.layoutBox : void 0, sourceBox);
         }
         if (hasTransform(this.latestValues)) {
           removeBoxTransforms(boxWithoutTransform, this.latestValues);
@@ -19933,16 +19678,16 @@ If there's a particular need for this, please submit a feature request at https:
         transformBox(targetWithTransforms, latestValues);
         calcBoxDelta(this.projectionDeltaWithTransform, this.layoutCorrected, targetWithTransforms, latestValues);
       }
-      registerSharedNode(layoutId, node2) {
+      registerSharedNode(layoutId, node) {
         if (!this.sharedNodes.has(layoutId)) {
           this.sharedNodes.set(layoutId, new NodeStack());
         }
         const stack = this.sharedNodes.get(layoutId);
-        stack.add(node2);
-        const config = node2.options.initialPromotionConfig;
-        node2.promote({
+        stack.add(node);
+        const config = node.options.initialPromotionConfig;
+        node.promote({
           transition: config ? config.transition : void 0,
-          preserveFollowOpacity: config && config.shouldPreserveFollowOpacity ? config.shouldPreserveFollowOpacity(node2) : void 0
+          preserveFollowOpacity: config && config.shouldPreserveFollowOpacity ? config.shouldPreserveFollowOpacity(node) : void 0
         });
       }
       isLead() {
@@ -20079,40 +19824,40 @@ If there's a particular need for this, please submit a feature request at https:
       }
       // Only run on root
       resetTree() {
-        this.root.nodes.forEach((node2) => {
+        this.root.nodes.forEach((node) => {
           var _a;
-          return (_a = node2.currentAnimation) === null || _a === void 0 ? void 0 : _a.stop();
+          return (_a = node.currentAnimation) === null || _a === void 0 ? void 0 : _a.stop();
         });
         this.root.nodes.forEach(clearMeasurements);
         this.root.sharedNodes.clear();
       }
     };
   }
-  function updateLayout(node2) {
-    node2.updateLayout();
+  function updateLayout(node) {
+    node.updateLayout();
   }
-  function notifyLayoutUpdate(node2) {
+  function notifyLayoutUpdate(node) {
     var _a;
-    const snapshot = ((_a = node2.resumeFrom) === null || _a === void 0 ? void 0 : _a.snapshot) || node2.snapshot;
-    if (node2.isLead() && node2.layout && snapshot && node2.hasListeners("didUpdate")) {
-      const { layoutBox: layout2, measuredBox: measuredLayout } = node2.layout;
-      const { animationType } = node2.options;
-      const isShared = snapshot.source !== node2.layout.source;
+    const snapshot = ((_a = node.resumeFrom) === null || _a === void 0 ? void 0 : _a.snapshot) || node.snapshot;
+    if (node.isLead() && node.layout && snapshot && node.hasListeners("didUpdate")) {
+      const { layoutBox: layout2, measuredBox: measuredLayout } = node.layout;
+      const { animationType } = node.options;
+      const isShared = snapshot.source !== node.layout.source;
       if (animationType === "size") {
         eachAxis((axis) => {
           const axisSnapshot = isShared ? snapshot.measuredBox[axis] : snapshot.layoutBox[axis];
-          const length2 = calcLength(axisSnapshot);
+          const length = calcLength(axisSnapshot);
           axisSnapshot.min = layout2[axis].min;
-          axisSnapshot.max = axisSnapshot.min + length2;
+          axisSnapshot.max = axisSnapshot.min + length;
         });
       } else if (shouldAnimatePositionOnly(animationType, snapshot.layoutBox, layout2)) {
         eachAxis((axis) => {
           const axisSnapshot = isShared ? snapshot.measuredBox[axis] : snapshot.layoutBox[axis];
-          const length2 = calcLength(layout2[axis]);
-          axisSnapshot.max = axisSnapshot.min + length2;
-          if (node2.relativeTarget && !node2.currentAnimation) {
-            node2.isProjectionDirty = true;
-            node2.relativeTarget[axis].max = node2.relativeTarget[axis].min + length2;
+          const length = calcLength(layout2[axis]);
+          axisSnapshot.max = axisSnapshot.min + length;
+          if (node.relativeTarget && !node.currentAnimation) {
+            node.isProjectionDirty = true;
+            node.relativeTarget[axis].max = node.relativeTarget[axis].min + length;
           }
         });
       }
@@ -20120,14 +19865,14 @@ If there's a particular need for this, please submit a feature request at https:
       calcBoxDelta(layoutDelta, layout2, snapshot.layoutBox);
       const visualDelta = createDelta();
       if (isShared) {
-        calcBoxDelta(visualDelta, node2.applyTransform(measuredLayout, true), snapshot.measuredBox);
+        calcBoxDelta(visualDelta, node.applyTransform(measuredLayout, true), snapshot.measuredBox);
       } else {
         calcBoxDelta(visualDelta, layout2, snapshot.layoutBox);
       }
       const hasLayoutChanged = !isDeltaZero(layoutDelta);
       let hasRelativeTargetChanged = false;
-      if (!node2.resumeFrom) {
-        const relativeParent = node2.getClosestProjectingParent();
+      if (!node.resumeFrom) {
+        const relativeParent = node.getClosestProjectingParent();
         if (relativeParent && !relativeParent.resumeFrom) {
           const { snapshot: parentSnapshot, layout: parentLayout } = relativeParent;
           if (parentSnapshot && parentLayout) {
@@ -20139,14 +19884,14 @@ If there's a particular need for this, please submit a feature request at https:
               hasRelativeTargetChanged = true;
             }
             if (relativeParent.options.layoutRoot) {
-              node2.relativeTarget = relativeLayout;
-              node2.relativeTargetOrigin = relativeSnapshot;
-              node2.relativeParent = relativeParent;
+              node.relativeTarget = relativeLayout;
+              node.relativeTargetOrigin = relativeSnapshot;
+              node.relativeParent = relativeParent;
             }
           }
         }
       }
-      node2.notifyListeners("didUpdate", {
+      node.notifyListeners("didUpdate", {
         layout: layout2,
         snapshot,
         delta: visualDelta,
@@ -20154,56 +19899,56 @@ If there's a particular need for this, please submit a feature request at https:
         hasLayoutChanged,
         hasRelativeTargetChanged
       });
-    } else if (node2.isLead()) {
-      const { onExitComplete } = node2.options;
+    } else if (node.isLead()) {
+      const { onExitComplete } = node.options;
       onExitComplete && onExitComplete();
     }
-    node2.options.transition = void 0;
+    node.options.transition = void 0;
   }
-  function propagateDirtyNodes(node2) {
+  function propagateDirtyNodes(node) {
     if (isDebug) {
       metrics.totalNodes++;
     }
-    if (!node2.parent)
+    if (!node.parent)
       return;
-    if (!node2.isProjecting()) {
-      node2.isProjectionDirty = node2.parent.isProjectionDirty;
+    if (!node.isProjecting()) {
+      node.isProjectionDirty = node.parent.isProjectionDirty;
     }
-    node2.isSharedProjectionDirty || (node2.isSharedProjectionDirty = Boolean(node2.isProjectionDirty || node2.parent.isProjectionDirty || node2.parent.isSharedProjectionDirty));
-    node2.isTransformDirty || (node2.isTransformDirty = node2.parent.isTransformDirty);
+    node.isSharedProjectionDirty || (node.isSharedProjectionDirty = Boolean(node.isProjectionDirty || node.parent.isProjectionDirty || node.parent.isSharedProjectionDirty));
+    node.isTransformDirty || (node.isTransformDirty = node.parent.isTransformDirty);
   }
-  function cleanDirtyNodes(node2) {
-    node2.isProjectionDirty = node2.isSharedProjectionDirty = node2.isTransformDirty = false;
+  function cleanDirtyNodes(node) {
+    node.isProjectionDirty = node.isSharedProjectionDirty = node.isTransformDirty = false;
   }
-  function clearSnapshot(node2) {
-    node2.clearSnapshot();
+  function clearSnapshot(node) {
+    node.clearSnapshot();
   }
-  function clearMeasurements(node2) {
-    node2.clearMeasurements();
+  function clearMeasurements(node) {
+    node.clearMeasurements();
   }
-  function clearIsLayoutDirty(node2) {
-    node2.isLayoutDirty = false;
+  function clearIsLayoutDirty(node) {
+    node.isLayoutDirty = false;
   }
-  function resetTransformStyle(node2) {
-    const { visualElement } = node2.options;
+  function resetTransformStyle(node) {
+    const { visualElement } = node.options;
     if (visualElement && visualElement.getProps().onBeforeLayoutMeasure) {
       visualElement.notify("BeforeLayoutMeasure");
     }
-    node2.resetTransform();
+    node.resetTransform();
   }
-  function finishAnimation(node2) {
-    node2.finishAnimation();
-    node2.targetDelta = node2.relativeTarget = node2.target = void 0;
-    node2.isProjectionDirty = true;
+  function finishAnimation(node) {
+    node.finishAnimation();
+    node.targetDelta = node.relativeTarget = node.target = void 0;
+    node.isProjectionDirty = true;
   }
-  function resolveTargetDelta(node2) {
-    node2.resolveTargetDelta();
+  function resolveTargetDelta(node) {
+    node.resolveTargetDelta();
   }
-  function calcProjection(node2) {
-    node2.calcProjection();
+  function calcProjection(node) {
+    node.calcProjection();
   }
-  function resetSkewAndRotation(node2) {
-    node2.resetSkewAndRotation();
+  function resetSkewAndRotation(node) {
+    node.resetSkewAndRotation();
   }
   function removeLeadSnapshots(stack) {
     stack.removeLeadSnapshot();
@@ -20214,16 +19959,16 @@ If there's a particular need for this, please submit a feature request at https:
     output.origin = delta.origin;
     output.originPoint = delta.originPoint;
   }
-  function mixAxis(output, from2, to, p3) {
-    output.min = mixNumber(from2.min, to.min, p3);
-    output.max = mixNumber(from2.max, to.max, p3);
+  function mixAxis(output, from, to, p3) {
+    output.min = mixNumber(from.min, to.min, p3);
+    output.max = mixNumber(from.max, to.max, p3);
   }
-  function mixBox(output, from2, to, p3) {
-    mixAxis(output.x, from2.x, to.x, p3);
-    mixAxis(output.y, from2.y, to.y, p3);
+  function mixBox(output, from, to, p3) {
+    mixAxis(output.x, from.x, to.x, p3);
+    mixAxis(output.y, from.y, to.y, p3);
   }
-  function hasOpacityCrossfade(node2) {
-    return node2.animationValues && node2.animationValues.opacityExit !== void 0;
+  function hasOpacityCrossfade(node) {
+    return node.animationValues && node.animationValues.opacityExit !== void 0;
   }
   var defaultLayoutTransition = {
     duration: 0.45,
@@ -20242,9 +19987,9 @@ If there's a particular need for this, please submit a feature request at https:
   function shouldAnimatePositionOnly(animationType, snapshot, layout2) {
     return animationType === "position" || animationType === "preserve-aspect" && !isNear(aspectRatio(snapshot), aspectRatio(layout2), 0.2);
   }
-  function checkNodeWasScrollRoot(node2) {
+  function checkNodeWasScrollRoot(node) {
     var _a;
-    return node2 !== node2.root && ((_a = node2.scroll) === null || _a === void 0 ? void 0 : _a.wasRoot);
+    return node !== node.root && ((_a = node.scroll) === null || _a === void 0 ? void 0 : _a.wasRoot);
   }
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/projection/node/DocumentProjectionNode.mjs
@@ -20294,10 +20039,10 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/gestures/hover.mjs
-  function handleHoverEvent(node2, event, lifecycle) {
-    const { props } = node2;
-    if (node2.animationState && props.whileHover) {
-      node2.animationState.setActive("whileHover", lifecycle === "Start");
+  function handleHoverEvent(node, event, lifecycle) {
+    const { props } = node;
+    if (node.animationState && props.whileHover) {
+      node.animationState.setActive("whileHover", lifecycle === "Start");
     }
     const eventName = "onHover" + lifecycle;
     const callback = props[eventName];
@@ -20351,10 +20096,10 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/gestures/press.mjs
-  function handlePressEvent(node2, event, lifecycle) {
-    const { props } = node2;
-    if (node2.animationState && props.whileTap) {
-      node2.animationState.setActive("whileTap", lifecycle === "Start");
+  function handlePressEvent(node, event, lifecycle) {
+    const { props } = node;
+    if (node.animationState && props.whileTap) {
+      node.animationState.setActive("whileTap", lifecycle === "Start");
     }
     const eventName = "onTap" + (lifecycle === "End" ? "" : lifecycle);
     const callback = props[eventName];
@@ -20520,10 +20265,10 @@ If there's a particular need for this, please submit a feature request at https:
   var visualElementStore = /* @__PURE__ */ new WeakMap();
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/render/utils/motion-values.mjs
-  function updateMotionValuesFromProps(element, next2, prev2) {
-    for (const key in next2) {
-      const nextValue = next2[key];
-      const prevValue = prev2[key];
+  function updateMotionValuesFromProps(element, next, prev) {
+    for (const key in next) {
+      const nextValue = next[key];
+      const prevValue = prev[key];
       if (isMotionValue(nextValue)) {
         element.addValue(key, nextValue);
         if (true) {
@@ -20545,11 +20290,11 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     }
-    for (const key in prev2) {
-      if (next2[key] === void 0)
+    for (const key in prev) {
+      if (next[key] === void 0)
         element.removeValue(key);
     }
-    return next2;
+    return next;
   }
 
   // node_modules/.store/framer-motion@11.18.2-psrXHdCe5S9l_wz-xpDEKw/node_modules/framer-motion/dist/es/render/VisualElement.mjs
@@ -21072,7 +20817,7 @@ If there's a particular need for this, please submit a feature request at https:
     "middle center right": "bottom",
     "middle center top": "bottom"
   };
-  var positionToPlacement = (position2) => POSITION_TO_PLACEMENT[position2] ?? "bottom";
+  var positionToPlacement = (position) => POSITION_TO_PLACEMENT[position] ?? "bottom";
   var PLACEMENT_TO_ANIMATION_ORIGIN = {
     top: { originX: 0.5, originY: 1 },
     // open from bottom, center
@@ -21205,7 +20950,7 @@ If there's a particular need for this, please submit a feature request at https:
       delay: delay2 = TOOLTIP_DELAY,
       hideOnClick = true,
       placement,
-      position: position2,
+      position,
       shortcut,
       text,
       ...restProps
@@ -21224,8 +20969,8 @@ If there's a particular need for this, please submit a feature request at https:
     let computedPlacement;
     if (placement !== void 0) {
       computedPlacement = placement;
-    } else if (position2 !== void 0) {
-      computedPlacement = positionToPlacement(position2);
+    } else if (position !== void 0) {
+      computedPlacement = positionToPlacement(position);
       (0, import_deprecated.default)("`position` prop in wp.components.tooltip", {
         since: "6.4",
         alternative: "`placement` prop"
@@ -21418,47 +21163,47 @@ If there's a particular need for this, please submit a feature request at https:
     var tail;
     options2 = options2 || {};
     function memoized() {
-      var node2 = head, len = arguments.length, args, i2;
-      searchCache: while (node2) {
-        if (node2.args.length !== arguments.length) {
-          node2 = node2.next;
+      var node = head, len = arguments.length, args, i2;
+      searchCache: while (node) {
+        if (node.args.length !== arguments.length) {
+          node = node.next;
           continue;
         }
         for (i2 = 0; i2 < len; i2++) {
-          if (node2.args[i2] !== arguments[i2]) {
-            node2 = node2.next;
+          if (node.args[i2] !== arguments[i2]) {
+            node = node.next;
             continue searchCache;
           }
         }
-        if (node2 !== head) {
-          if (node2 === tail) {
-            tail = node2.prev;
+        if (node !== head) {
+          if (node === tail) {
+            tail = node.prev;
           }
-          node2.prev.next = node2.next;
-          if (node2.next) {
-            node2.next.prev = node2.prev;
+          node.prev.next = node.next;
+          if (node.next) {
+            node.next.prev = node.prev;
           }
-          node2.next = head;
-          node2.prev = null;
-          head.prev = node2;
-          head = node2;
+          node.next = head;
+          node.prev = null;
+          head.prev = node;
+          head = node;
         }
-        return node2.val;
+        return node.val;
       }
       args = new Array(len);
       for (i2 = 0; i2 < len; i2++) {
         args[i2] = arguments[i2];
       }
-      node2 = {
+      node = {
         args,
         // Generate the result from original function
         val: fn.apply(null, args)
       };
       if (head) {
-        head.prev = node2;
-        node2.next = head;
+        head.prev = node;
+        node.next = head;
       } else {
-        tail = node2;
+        tail = node;
       }
       if (size4 === /** @type {MemizeOptions} */
       options2.maxSize) {
@@ -21468,8 +21213,8 @@ If there's a particular need for this, please submit a feature request at https:
       } else {
         size4++;
       }
-      head = node2;
-      return node2.val;
+      head = node;
+      return node.val;
     }
     memoized.clear = function() {
       head = null;
@@ -21945,7 +21690,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (options2 === void 0) {
       options2 = {};
     }
-    var _a = options2.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options2.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options2.transform, transform = _c === void 0 ? lowerCase : _c, _d = options2.delimiter, delimiter2 = _d === void 0 ? " " : _d;
+    var _a = options2.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options2.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options2.transform, transform = _c === void 0 ? lowerCase : _c, _d = options2.delimiter, delimiter = _d === void 0 ? " " : _d;
     var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
     var start = 0;
     var end = result.length;
@@ -21953,7 +21698,7 @@ If there's a particular need for this, please submit a feature request at https:
       start++;
     while (result.charAt(end - 1) === "\0")
       end--;
-    return result.slice(start, end).split("\0").map(transform).join(delimiter2);
+    return result.slice(start, end).split("\0").map(transform).join(delimiter);
   }
   function replace(input, re3, value) {
     if (re3 instanceof RegExp)
@@ -22026,15 +21771,15 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return namespaces;
   }
-  function hasConnectNamespace(Component7, match3) {
+  function hasConnectNamespace(Component7, match2) {
     if (!Component7) {
       return false;
     }
-    if (typeof match3 === "string") {
-      return getConnectNamespace(Component7).includes(match3);
+    if (typeof match2 === "string") {
+      return getConnectNamespace(Component7).includes(match2);
     }
-    if (Array.isArray(match3)) {
-      return match3.some(
+    if (Array.isArray(match2)) {
+      return match2.some(
         (result) => getConnectNamespace(Component7).includes(result)
       );
     }
@@ -22306,20 +22051,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash(targetDocument, hash2) {
+  function documentContainsStyleHash(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle(targetDocument, hash2, css2) {
+  function injectStyle(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -22329,18 +22074,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument(targetDocument) {
     const runtime = getRuntime();
@@ -22348,8 +22093,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -22363,11 +22108,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle(hash2, css2) {
+  function registerStyle(hash, css2) {
     const runtime = getRuntime();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle(targetDocument, hash2, css2);
+      injectStyle(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -22471,20 +22216,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash2(targetDocument, hash2) {
+  function documentContainsStyleHash2(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE2}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE2) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE2) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle2(targetDocument, hash2, css2) {
+  function injectStyle2(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -22494,18 +22239,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash2(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash2(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE2, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE2, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument2(targetDocument) {
     const runtime = getRuntime2();
@@ -22513,8 +22258,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle2(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle2(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -22528,11 +22273,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle2(hash2, css2) {
+  function registerStyle2(hash, css2) {
     const runtime = getRuntime2();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle2(targetDocument, hash2, css2);
+      injectStyle2(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -22749,20 +22494,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash3(targetDocument, hash2) {
+  function documentContainsStyleHash3(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE3}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE3) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE3) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle3(targetDocument, hash2, css2) {
+  function injectStyle3(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -22772,18 +22517,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash3(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash3(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE3, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE3, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument3(targetDocument) {
     const runtime = getRuntime3();
@@ -22791,8 +22536,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle3(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle3(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -22806,11 +22551,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle3(hash2, css2) {
+  function registerStyle3(hash, css2) {
     const runtime = getRuntime3();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle3(targetDocument, hash2, css2);
+      injectStyle3(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -22906,20 +22651,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash4(targetDocument, hash2) {
+  function documentContainsStyleHash4(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE4}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE4) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE4) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle4(targetDocument, hash2, css2) {
+  function injectStyle4(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -22929,18 +22674,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash4(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash4(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE4, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE4, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument4(targetDocument) {
     const runtime = getRuntime4();
@@ -22948,8 +22693,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle4(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle4(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -22963,11 +22708,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle4(hash2, css2) {
+  function registerStyle4(hash, css2) {
     const runtime = getRuntime4();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle4(targetDocument, hash2, css2);
+      injectStyle4(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -23037,20 +22782,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash5(targetDocument, hash2) {
+  function documentContainsStyleHash5(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE5}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE5) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE5) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle5(targetDocument, hash2, css2) {
+  function injectStyle5(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -23060,18 +22805,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash5(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash5(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE5, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE5, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument5(targetDocument) {
     const runtime = getRuntime5();
@@ -23079,8 +22824,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle5(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle5(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -23094,11 +22839,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle5(hash2, css2) {
+  function registerStyle5(hash, css2) {
     const runtime = getRuntime5();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle5(targetDocument, hash2, css2);
+      injectStyle5(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -23397,20 +23142,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash6(targetDocument, hash2) {
+  function documentContainsStyleHash6(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE6}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE6) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE6) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle6(targetDocument, hash2, css2) {
+  function injectStyle6(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -23420,18 +23165,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash6(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash6(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE6, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE6, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument6(targetDocument) {
     const runtime = getRuntime6();
@@ -23439,8 +23184,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle6(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle6(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -23454,11 +23199,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle6(hash2, css2) {
+  function registerStyle6(hash, css2) {
     const runtime = getRuntime6();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle6(targetDocument, hash2, css2);
+      injectStyle6(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -23558,20 +23303,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash7(targetDocument, hash2) {
+  function documentContainsStyleHash7(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE7}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE7) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE7) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle7(targetDocument, hash2, css2) {
+  function injectStyle7(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -23581,18 +23326,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash7(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash7(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE7, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE7, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument7(targetDocument) {
     const runtime = getRuntime7();
@@ -23600,8 +23345,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle7(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle7(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -23615,11 +23360,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle7(hash2, css2) {
+  function registerStyle7(hash, css2) {
     const runtime = getRuntime7();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle7(targetDocument, hash2, css2);
+      injectStyle7(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -23847,20 +23592,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash8(targetDocument, hash2) {
+  function documentContainsStyleHash8(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE8}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE8) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE8) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle8(targetDocument, hash2, css2) {
+  function injectStyle8(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -23870,18 +23615,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash8(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash8(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE8, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE8, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument8(targetDocument) {
     const runtime = getRuntime8();
@@ -23889,8 +23634,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle8(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle8(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -23904,11 +23649,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle8(hash2, css2) {
+  function registerStyle8(hash, css2) {
     const runtime = getRuntime8();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle8(targetDocument, hash2, css2);
+      injectStyle8(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -24072,20 +23817,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash9(targetDocument, hash2) {
+  function documentContainsStyleHash9(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE9}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE9) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE9) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle9(targetDocument, hash2, css2) {
+  function injectStyle9(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -24095,18 +23840,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash9(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash9(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE9, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE9, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument9(targetDocument) {
     const runtime = getRuntime9();
@@ -24114,8 +23859,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle9(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle9(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -24129,11 +23874,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle9(hash2, css2) {
+  function registerStyle9(hash, css2) {
     const runtime = getRuntime9();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle9(targetDocument, hash2, css2);
+      injectStyle9(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -24185,20 +23930,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash10(targetDocument, hash2) {
+  function documentContainsStyleHash10(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE10}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE10) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE10) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle10(targetDocument, hash2, css2) {
+  function injectStyle10(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -24208,18 +23953,18 @@ If there's a particular need for this, please submit a feature request at https:
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash10(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash10(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE10, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE10, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument10(targetDocument) {
     const runtime = getRuntime10();
@@ -24227,8 +23972,8 @@ If there's a particular need for this, please submit a feature request at https:
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle10(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle10(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -24242,11 +23987,11 @@ If there's a particular need for this, please submit a feature request at https:
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle10(hash2, css2) {
+  function registerStyle10(hash, css2) {
     const runtime = getRuntime10();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle10(targetDocument, hash2, css2);
+      injectStyle10(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -24288,7 +24033,7 @@ If there's a particular need for this, please submit a feature request at https:
       id: idProp,
       isBorderless = false,
       label,
-      prefix: prefix2,
+      prefix,
       size: size4 = "default",
       suffix,
       ...restProps
@@ -24348,14 +24093,14 @@ If there's a particular need for this, please submit a feature request at https:
               style: containerStyle,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(ContextSystemProvider, { value: prefixSuffixContextValue, children: [
-                  prefix2 && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+                  prefix && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
                     "span",
                     {
                       className: clsx_default(
                         "components-input-control__prefix",
                         style_module_default10.prefix
                       ),
-                      children: prefix2
+                      children: prefix
                     }
                   ),
                   children,
@@ -24408,11 +24153,11 @@ If there's a particular need for this, please submit a feature request at https:
     if (dimension === 0 || Math.abs(dimension) === Infinity) return Math.pow(distance2, constant * 5);
     return distance2 * dimension * constant / (dimension + constant * distance2);
   }
-  function rubberbandIfOutOfBounds(position2, min2, max2, constant = 0.15) {
-    if (constant === 0) return clamp3(position2, min2, max2);
-    if (position2 < min2) return -rubberband(min2 - position2, max2 - min2, constant) + min2;
-    if (position2 > max2) return +rubberband(position2 - max2, max2 - min2, constant) + max2;
-    return position2;
+  function rubberbandIfOutOfBounds(position, min2, max2, constant = 0.15) {
+    if (constant === 0) return clamp3(position, min2, max2);
+    if (position < min2) return -rubberband(min2 - position, max2 - min2, constant) + min2;
+    if (position > max2) return +rubberband(position - max2, max2 - min2, constant) + max2;
+    return position;
   }
   function computeRubberband(bounds, [Vx, Vy], [Rx, Ry]) {
     const [[X0, X1], [Y0, Y1]] = bounds;
@@ -25960,20 +25705,20 @@ This message will only show in development mode. It won't appear in production. 
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash11(targetDocument, hash2) {
+  function documentContainsStyleHash11(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE11}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE11) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE11) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle11(targetDocument, hash2, css2) {
+  function injectStyle11(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -25983,18 +25728,18 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash11(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash11(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE11, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE11, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument11(targetDocument) {
     const runtime = getRuntime11();
@@ -26002,8 +25747,8 @@ This message will only show in development mode. It won't appear in production. 
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle11(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle11(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -26017,11 +25762,11 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle11(hash2, css2) {
+  function registerStyle11(hash, css2) {
     const runtime = getRuntime11();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle11(targetDocument, hash2, css2);
+      injectStyle11(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -26213,20 +25958,20 @@ This message will only show in development mode. It won't appear in production. 
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash12(targetDocument, hash2) {
+  function documentContainsStyleHash12(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE12}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE12) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE12) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle12(targetDocument, hash2, css2) {
+  function injectStyle12(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -26236,18 +25981,18 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash12(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash12(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE12, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE12, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument12(targetDocument) {
     const runtime = getRuntime12();
@@ -26255,8 +26000,8 @@ This message will only show in development mode. It won't appear in production. 
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle12(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle12(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -26270,11 +26015,11 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle12(hash2, css2) {
+  function registerStyle12(hash, css2) {
     const runtime = getRuntime12();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle12(targetDocument, hash2, css2);
+      injectStyle12(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -26462,7 +26207,7 @@ This message will only show in development mode. It won't appear in production. 
       onChange = noop5,
       onValidate = noop5,
       onKeyDown = noop5,
-      prefix: prefix2,
+      prefix,
       size: size4 = "default",
       style: style2,
       suffix,
@@ -26488,7 +26233,7 @@ This message will only show in development mode. It won't appear in production. 
         justify: "left",
         label,
         labelPosition,
-        prefix: prefix2,
+        prefix,
         size: size4,
         style: style2,
         suffix,
@@ -26503,7 +26248,7 @@ This message will only show in development mode. It won't appear in production. 
             isPressEnterToChange,
             onKeyDown,
             onValidate,
-            paddingInlineStart: prefix2 ? space(1) : void 0,
+            paddingInlineStart: prefix ? space(1) : void 0,
             paddingInlineEnd: suffix ? space(1) : void 0,
             ref,
             size: size4,
@@ -26953,20 +26698,20 @@ This message will only show in development mode. It won't appear in production. 
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash13(targetDocument, hash2) {
+  function documentContainsStyleHash13(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE13}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE13) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE13) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle13(targetDocument, hash2, css2) {
+  function injectStyle13(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -26976,18 +26721,18 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash13(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash13(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE13, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE13, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument13(targetDocument) {
     const runtime = getRuntime13();
@@ -26995,8 +26740,8 @@ This message will only show in development mode. It won't appear in production. 
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle13(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle13(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -27010,11 +26755,11 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle13(hash2, css2) {
+  function registerStyle13(hash, css2) {
     const runtime = getRuntime13();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle13(targetDocument, hash2, css2);
+      injectStyle13(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -27221,20 +26966,20 @@ This message will only show in development mode. It won't appear in production. 
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash14(targetDocument, hash2) {
+  function documentContainsStyleHash14(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE14}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE14) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE14) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle14(targetDocument, hash2, css2) {
+  function injectStyle14(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -27244,18 +26989,18 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash14(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash14(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE14, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE14, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument14(targetDocument) {
     const runtime = getRuntime14();
@@ -27263,8 +27008,8 @@ This message will only show in development mode. It won't appear in production. 
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle14(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle14(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -27278,11 +27023,11 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle14(hash2, css2) {
+  function registerStyle14(hash, css2) {
     const runtime = getRuntime14();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle14(targetDocument, hash2, css2);
+      injectStyle14(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -27332,20 +27077,20 @@ This message will only show in development mode. It won't appear in production. 
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash15(targetDocument, hash2) {
+  function documentContainsStyleHash15(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE15}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE15) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE15) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle15(targetDocument, hash2, css2) {
+  function injectStyle15(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -27355,18 +27100,18 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash15(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash15(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE15, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE15, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument15(targetDocument) {
     const runtime = getRuntime15();
@@ -27374,8 +27119,8 @@ This message will only show in development mode. It won't appear in production. 
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle15(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle15(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -27389,11 +27134,11 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle15(hash2, css2) {
+  function registerStyle15(hash, css2) {
     const runtime = getRuntime15();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle15(targetDocument, hash2, css2);
+      injectStyle15(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -27444,20 +27189,20 @@ This message will only show in development mode. It won't appear in production. 
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash16(targetDocument, hash2) {
+  function documentContainsStyleHash16(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE16}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE16) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE16) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle16(targetDocument, hash2, css2) {
+  function injectStyle16(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -27467,18 +27212,18 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash16(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash16(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE16, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE16, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument16(targetDocument) {
     const runtime = getRuntime16();
@@ -27486,8 +27231,8 @@ This message will only show in development mode. It won't appear in production. 
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle16(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle16(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -27501,11 +27246,11 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle16(hash2, css2) {
+  function registerStyle16(hash, css2) {
     const runtime = getRuntime16();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle16(targetDocument, hash2, css2);
+      injectStyle16(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -27784,14 +27529,14 @@ This message will only show in development mode. It won't appear in production. 
     if (typeof a2 === "function" && a2.toString() === b2.toString()) {
       return true;
     }
-    let length2;
+    let length;
     let i2;
     let keys;
     if (a2 && b2 && typeof a2 === "object") {
       if (Array.isArray(a2)) {
-        length2 = a2.length;
-        if (length2 !== b2.length) return false;
-        for (i2 = length2; i2-- !== 0; ) {
+        length = a2.length;
+        if (length !== b2.length) return false;
+        for (i2 = length; i2-- !== 0; ) {
           if (!deepEqual(a2[i2], b2[i2])) {
             return false;
           }
@@ -27799,16 +27544,16 @@ This message will only show in development mode. It won't appear in production. 
         return true;
       }
       keys = Object.keys(a2);
-      length2 = keys.length;
-      if (length2 !== Object.keys(b2).length) {
+      length = keys.length;
+      if (length !== Object.keys(b2).length) {
         return false;
       }
-      for (i2 = length2; i2-- !== 0; ) {
+      for (i2 = length; i2-- !== 0; ) {
         if (!{}.hasOwnProperty.call(b2, keys[i2])) {
           return false;
         }
       }
-      for (i2 = length2; i2-- !== 0; ) {
+      for (i2 = length; i2-- !== 0; ) {
         const key = keys[i2];
         if (key === "_owner" && a2.$$typeof) {
           continue;
@@ -27846,7 +27591,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       placement = "bottom",
       strategy = "absolute",
-      middleware: middleware2 = [],
+      middleware = [],
       platform: platform3,
       elements: {
         reference: externalReference,
@@ -27864,22 +27609,22 @@ This message will only show in development mode. It won't appear in production. 
       middlewareData: {},
       isPositioned: false
     });
-    const [latestMiddleware, setLatestMiddleware] = React6.useState(middleware2);
-    if (!deepEqual(latestMiddleware, middleware2)) {
-      setLatestMiddleware(middleware2);
+    const [latestMiddleware, setLatestMiddleware] = React6.useState(middleware);
+    if (!deepEqual(latestMiddleware, middleware)) {
+      setLatestMiddleware(middleware);
     }
     const [_reference, _setReference] = React6.useState(null);
     const [_floating, _setFloating] = React6.useState(null);
-    const setReference = React6.useCallback((node2) => {
-      if (node2 !== referenceRef.current) {
-        referenceRef.current = node2;
-        _setReference(node2);
+    const setReference = React6.useCallback((node) => {
+      if (node !== referenceRef.current) {
+        referenceRef.current = node;
+        _setReference(node);
       }
     }, []);
-    const setFloating = React6.useCallback((node2) => {
-      if (node2 !== floatingRef.current) {
-        floatingRef.current = node2;
-        _setFloating(node2);
+    const setFloating = React6.useCallback((node) => {
+      if (node !== floatingRef.current) {
+        floatingRef.current = node;
+        _setFloating(node);
       }
     }, []);
     const referenceEl = externalReference || _reference;
@@ -28145,1970 +27890,6 @@ This message will only show in development mode. It won't appear in production. 
   SlotFillContext.displayName = "SlotFillContext";
   var context_default = SlotFillContext;
 
-  // node_modules/.store/@emotion/react@11.14.0-vvAzPiBVcLWMwzCLfnStmA/node_modules/@emotion/react/dist/emotion-element-489459f2.browser.development.esm.js
-  var React8 = __toESM(require_react());
-  var import_react84 = __toESM(require_react());
-
-  // node_modules/.store/@emotion/sheet@1.4.0-o2T7Dy9pikO0a0BK8eZNqA/node_modules/@emotion/sheet/dist/emotion-sheet.development.esm.js
-  var isDevelopment = true;
-  function sheetForTag(tag) {
-    if (tag.sheet) {
-      return tag.sheet;
-    }
-    for (var i2 = 0; i2 < document.styleSheets.length; i2++) {
-      if (document.styleSheets[i2].ownerNode === tag) {
-        return document.styleSheets[i2];
-      }
-    }
-    return void 0;
-  }
-  function createStyleElement(options2) {
-    var tag = document.createElement("style");
-    tag.setAttribute("data-emotion", options2.key);
-    if (options2.nonce !== void 0) {
-      tag.setAttribute("nonce", options2.nonce);
-    }
-    tag.appendChild(document.createTextNode(""));
-    tag.setAttribute("data-s", "");
-    return tag;
-  }
-  var StyleSheet = /* @__PURE__ */ (function() {
-    function StyleSheet2(options2) {
-      var _this = this;
-      this._insertTag = function(tag) {
-        var before;
-        if (_this.tags.length === 0) {
-          if (_this.insertionPoint) {
-            before = _this.insertionPoint.nextSibling;
-          } else if (_this.prepend) {
-            before = _this.container.firstChild;
-          } else {
-            before = _this.before;
-          }
-        } else {
-          before = _this.tags[_this.tags.length - 1].nextSibling;
-        }
-        _this.container.insertBefore(tag, before);
-        _this.tags.push(tag);
-      };
-      this.isSpeedy = options2.speedy === void 0 ? !isDevelopment : options2.speedy;
-      this.tags = [];
-      this.ctr = 0;
-      this.nonce = options2.nonce;
-      this.key = options2.key;
-      this.container = options2.container;
-      this.prepend = options2.prepend;
-      this.insertionPoint = options2.insertionPoint;
-      this.before = null;
-    }
-    var _proto = StyleSheet2.prototype;
-    _proto.hydrate = function hydrate(nodes) {
-      nodes.forEach(this._insertTag);
-    };
-    _proto.insert = function insert2(rule) {
-      if (this.ctr % (this.isSpeedy ? 65e3 : 1) === 0) {
-        this._insertTag(createStyleElement(this));
-      }
-      var tag = this.tags[this.tags.length - 1];
-      {
-        var isImportRule3 = rule.charCodeAt(0) === 64 && rule.charCodeAt(1) === 105;
-        if (isImportRule3 && this._alreadyInsertedOrderInsensitiveRule) {
-          console.error("You're attempting to insert the following rule:\n" + rule + "\n\n`@import` rules must be before all other types of rules in a stylesheet but other rules have already been inserted. Please ensure that `@import` rules are before all other rules.");
-        }
-        this._alreadyInsertedOrderInsensitiveRule = this._alreadyInsertedOrderInsensitiveRule || !isImportRule3;
-      }
-      if (this.isSpeedy) {
-        var sheet = sheetForTag(tag);
-        try {
-          sheet.insertRule(rule, sheet.cssRules.length);
-        } catch (e3) {
-          if (!/:(-moz-placeholder|-moz-focus-inner|-moz-focusring|-ms-input-placeholder|-moz-read-write|-moz-read-only|-ms-clear|-ms-expand|-ms-reveal){/.test(rule)) {
-            console.error('There was a problem inserting the following rule: "' + rule + '"', e3);
-          }
-        }
-      } else {
-        tag.appendChild(document.createTextNode(rule));
-      }
-      this.ctr++;
-    };
-    _proto.flush = function flush() {
-      this.tags.forEach(function(tag) {
-        var _tag$parentNode;
-        return (_tag$parentNode = tag.parentNode) == null ? void 0 : _tag$parentNode.removeChild(tag);
-      });
-      this.tags = [];
-      this.ctr = 0;
-      {
-        this._alreadyInsertedOrderInsensitiveRule = false;
-      }
-    };
-    return StyleSheet2;
-  })();
-
-  // node_modules/.store/stylis@4.2.0-zyM0pQzX4rxXO7uBPvnK6Q/node_modules/stylis/src/Enum.js
-  var MS = "-ms-";
-  var MOZ = "-moz-";
-  var WEBKIT = "-webkit-";
-  var COMMENT = "comm";
-  var RULESET = "rule";
-  var DECLARATION = "decl";
-  var IMPORT = "@import";
-  var KEYFRAMES = "@keyframes";
-  var LAYER = "@layer";
-
-  // node_modules/.store/stylis@4.2.0-zyM0pQzX4rxXO7uBPvnK6Q/node_modules/stylis/src/Utility.js
-  var abs = Math.abs;
-  var from = String.fromCharCode;
-  var assign = Object.assign;
-  function hash(value, length2) {
-    return charat(value, 0) ^ 45 ? (((length2 << 2 ^ charat(value, 0)) << 2 ^ charat(value, 1)) << 2 ^ charat(value, 2)) << 2 ^ charat(value, 3) : 0;
-  }
-  function trim(value) {
-    return value.trim();
-  }
-  function match(value, pattern) {
-    return (value = pattern.exec(value)) ? value[0] : value;
-  }
-  function replace2(value, pattern, replacement) {
-    return value.replace(pattern, replacement);
-  }
-  function indexof(value, search) {
-    return value.indexOf(search);
-  }
-  function charat(value, index2) {
-    return value.charCodeAt(index2) | 0;
-  }
-  function substr(value, begin, end) {
-    return value.slice(begin, end);
-  }
-  function strlen(value) {
-    return value.length;
-  }
-  function sizeof(value) {
-    return value.length;
-  }
-  function append(value, array) {
-    return array.push(value), value;
-  }
-  function combine(array, callback) {
-    return array.map(callback).join("");
-  }
-
-  // node_modules/.store/stylis@4.2.0-zyM0pQzX4rxXO7uBPvnK6Q/node_modules/stylis/src/Tokenizer.js
-  var line = 1;
-  var column = 1;
-  var length = 0;
-  var position = 0;
-  var character = 0;
-  var characters = "";
-  function node(value, root, parent, type, props, children, length2) {
-    return { value, root, parent, type, props, children, line, column, length: length2, return: "" };
-  }
-  function copy(root, props) {
-    return assign(node("", null, null, "", null, null, 0), root, { length: -root.length }, props);
-  }
-  function char() {
-    return character;
-  }
-  function prev() {
-    character = position > 0 ? charat(characters, --position) : 0;
-    if (column--, character === 10)
-      column = 1, line--;
-    return character;
-  }
-  function next() {
-    character = position < length ? charat(characters, position++) : 0;
-    if (column++, character === 10)
-      column = 1, line++;
-    return character;
-  }
-  function peek() {
-    return charat(characters, position);
-  }
-  function caret() {
-    return position;
-  }
-  function slice(begin, end) {
-    return substr(characters, begin, end);
-  }
-  function token(type) {
-    switch (type) {
-      // \0 \t \n \r \s whitespace token
-      case 0:
-      case 9:
-      case 10:
-      case 13:
-      case 32:
-        return 5;
-      // ! + , / > @ ~ isolate token
-      case 33:
-      case 43:
-      case 44:
-      case 47:
-      case 62:
-      case 64:
-      case 126:
-      // ; { } breakpoint token
-      case 59:
-      case 123:
-      case 125:
-        return 4;
-      // : accompanied token
-      case 58:
-        return 3;
-      // " ' ( [ opening delimit token
-      case 34:
-      case 39:
-      case 40:
-      case 91:
-        return 2;
-      // ) ] closing delimit token
-      case 41:
-      case 93:
-        return 1;
-    }
-    return 0;
-  }
-  function alloc(value) {
-    return line = column = 1, length = strlen(characters = value), position = 0, [];
-  }
-  function dealloc(value) {
-    return characters = "", value;
-  }
-  function delimit(type) {
-    return trim(slice(position - 1, delimiter(type === 91 ? type + 2 : type === 40 ? type + 1 : type)));
-  }
-  function whitespace(type) {
-    while (character = peek())
-      if (character < 33)
-        next();
-      else
-        break;
-    return token(type) > 2 || token(character) > 3 ? "" : " ";
-  }
-  function escaping(index2, count) {
-    while (--count && next())
-      if (character < 48 || character > 102 || character > 57 && character < 65 || character > 70 && character < 97)
-        break;
-    return slice(index2, caret() + (count < 6 && peek() == 32 && next() == 32));
-  }
-  function delimiter(type) {
-    while (next())
-      switch (character) {
-        // ] ) " '
-        case type:
-          return position;
-        // " '
-        case 34:
-        case 39:
-          if (type !== 34 && type !== 39)
-            delimiter(character);
-          break;
-        // (
-        case 40:
-          if (type === 41)
-            delimiter(type);
-          break;
-        // \
-        case 92:
-          next();
-          break;
-      }
-    return position;
-  }
-  function commenter(type, index2) {
-    while (next())
-      if (type + character === 47 + 10)
-        break;
-      else if (type + character === 42 + 42 && peek() === 47)
-        break;
-    return "/*" + slice(index2, position - 1) + "*" + from(type === 47 ? type : next());
-  }
-  function identifier(index2) {
-    while (!token(peek()))
-      next();
-    return slice(index2, position);
-  }
-
-  // node_modules/.store/stylis@4.2.0-zyM0pQzX4rxXO7uBPvnK6Q/node_modules/stylis/src/Parser.js
-  function compile(value) {
-    return dealloc(parse2("", null, null, null, [""], value = alloc(value), 0, [0], value));
-  }
-  function parse2(value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
-    var index2 = 0;
-    var offset4 = 0;
-    var length2 = pseudo;
-    var atrule = 0;
-    var property = 0;
-    var previous = 0;
-    var variable = 1;
-    var scanning = 1;
-    var ampersand = 1;
-    var character2 = 0;
-    var type = "";
-    var props = rules;
-    var children = rulesets;
-    var reference = rule;
-    var characters2 = type;
-    while (scanning)
-      switch (previous = character2, character2 = next()) {
-        // (
-        case 40:
-          if (previous != 108 && charat(characters2, length2 - 1) == 58) {
-            if (indexof(characters2 += replace2(delimit(character2), "&", "&\f"), "&\f") != -1)
-              ampersand = -1;
-            break;
-          }
-        // " ' [
-        case 34:
-        case 39:
-        case 91:
-          characters2 += delimit(character2);
-          break;
-        // \t \n \r \s
-        case 9:
-        case 10:
-        case 13:
-        case 32:
-          characters2 += whitespace(previous);
-          break;
-        // \
-        case 92:
-          characters2 += escaping(caret() - 1, 7);
-          continue;
-        // /
-        case 47:
-          switch (peek()) {
-            case 42:
-            case 47:
-              append(comment(commenter(next(), caret()), root, parent), declarations);
-              break;
-            default:
-              characters2 += "/";
-          }
-          break;
-        // {
-        case 123 * variable:
-          points[index2++] = strlen(characters2) * ampersand;
-        // } ; \0
-        case 125 * variable:
-        case 59:
-        case 0:
-          switch (character2) {
-            // \0 }
-            case 0:
-            case 125:
-              scanning = 0;
-            // ;
-            case 59 + offset4:
-              if (ampersand == -1) characters2 = replace2(characters2, /\f/g, "");
-              if (property > 0 && strlen(characters2) - length2)
-                append(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace2(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
-              break;
-            // @ ;
-            case 59:
-              characters2 += ";";
-            // { rule/at-rule
-            default:
-              append(reference = ruleset(characters2, root, parent, index2, offset4, rules, points, type, props = [], children = [], length2), rulesets);
-              if (character2 === 123)
-                if (offset4 === 0)
-                  parse2(characters2, root, reference, reference, props, rulesets, length2, points, children);
-                else
-                  switch (atrule === 99 && charat(characters2, 3) === 110 ? 100 : atrule) {
-                    // d l m s
-                    case 100:
-                    case 108:
-                    case 109:
-                    case 115:
-                      parse2(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length2), children), rules, children, length2, points, rule ? props : children);
-                      break;
-                    default:
-                      parse2(characters2, reference, reference, reference, [""], children, 0, points, children);
-                  }
-          }
-          index2 = offset4 = property = 0, variable = ampersand = 1, type = characters2 = "", length2 = pseudo;
-          break;
-        // :
-        case 58:
-          length2 = 1 + strlen(characters2), property = previous;
-        default:
-          if (variable < 1) {
-            if (character2 == 123)
-              --variable;
-            else if (character2 == 125 && variable++ == 0 && prev() == 125)
-              continue;
-          }
-          switch (characters2 += from(character2), character2 * variable) {
-            // &
-            case 38:
-              ampersand = offset4 > 0 ? 1 : (characters2 += "\f", -1);
-              break;
-            // ,
-            case 44:
-              points[index2++] = (strlen(characters2) - 1) * ampersand, ampersand = 1;
-              break;
-            // @
-            case 64:
-              if (peek() === 45)
-                characters2 += delimit(next());
-              atrule = peek(), offset4 = length2 = strlen(type = characters2 += identifier(caret())), character2++;
-              break;
-            // -
-            case 45:
-              if (previous === 45 && strlen(characters2) == 2)
-                variable = 0;
-          }
-      }
-    return rulesets;
-  }
-  function ruleset(value, root, parent, index2, offset4, rules, points, type, props, children, length2) {
-    var post = offset4 - 1;
-    var rule = offset4 === 0 ? rules : [""];
-    var size4 = sizeof(rule);
-    for (var i2 = 0, j2 = 0, k3 = 0; i2 < index2; ++i2)
-      for (var x2 = 0, y3 = substr(value, post + 1, post = abs(j2 = points[i2])), z = value; x2 < size4; ++x2)
-        if (z = trim(j2 > 0 ? rule[x2] + " " + y3 : replace2(y3, /&\f/g, rule[x2])))
-          props[k3++] = z;
-    return node(value, root, parent, offset4 === 0 ? RULESET : type, props, children, length2);
-  }
-  function comment(value, root, parent) {
-    return node(value, root, parent, COMMENT, from(char()), substr(value, 2, -2), 0);
-  }
-  function declaration(value, root, parent, length2) {
-    return node(value, root, parent, DECLARATION, substr(value, 0, length2), substr(value, length2 + 1, -1), length2);
-  }
-
-  // node_modules/.store/stylis@4.2.0-zyM0pQzX4rxXO7uBPvnK6Q/node_modules/stylis/src/Serializer.js
-  function serialize(children, callback) {
-    var output = "";
-    var length2 = sizeof(children);
-    for (var i2 = 0; i2 < length2; i2++)
-      output += callback(children[i2], i2, children, callback) || "";
-    return output;
-  }
-  function stringify(element, index2, children, callback) {
-    switch (element.type) {
-      case LAYER:
-        if (element.children.length) break;
-      case IMPORT:
-      case DECLARATION:
-        return element.return = element.return || element.value;
-      case COMMENT:
-        return "";
-      case KEYFRAMES:
-        return element.return = element.value + "{" + serialize(element.children, callback) + "}";
-      case RULESET:
-        element.value = element.props.join(",");
-    }
-    return strlen(children = serialize(element.children, callback)) ? element.return = element.value + "{" + children + "}" : "";
-  }
-
-  // node_modules/.store/stylis@4.2.0-zyM0pQzX4rxXO7uBPvnK6Q/node_modules/stylis/src/Middleware.js
-  function middleware(collection) {
-    var length2 = sizeof(collection);
-    return function(element, index2, children, callback) {
-      var output = "";
-      for (var i2 = 0; i2 < length2; i2++)
-        output += collection[i2](element, index2, children, callback) || "";
-      return output;
-    };
-  }
-
-  // node_modules/.store/@emotion/cache@11.14.0-2qV_T_AJcPZhU9AauhDQwg/node_modules/@emotion/cache/dist/emotion-cache.browser.development.esm.js
-  init_emotion_memoize_esm();
-  var identifierWithPointTracking = function identifierWithPointTracking2(begin, points, index2) {
-    var previous = 0;
-    var character2 = 0;
-    while (true) {
-      previous = character2;
-      character2 = peek();
-      if (previous === 38 && character2 === 12) {
-        points[index2] = 1;
-      }
-      if (token(character2)) {
-        break;
-      }
-      next();
-    }
-    return slice(begin, position);
-  };
-  var toRules = function toRules2(parsed, points) {
-    var index2 = -1;
-    var character2 = 44;
-    do {
-      switch (token(character2)) {
-        case 0:
-          if (character2 === 38 && peek() === 12) {
-            points[index2] = 1;
-          }
-          parsed[index2] += identifierWithPointTracking(position - 1, points, index2);
-          break;
-        case 2:
-          parsed[index2] += delimit(character2);
-          break;
-        case 4:
-          if (character2 === 44) {
-            parsed[++index2] = peek() === 58 ? "&\f" : "";
-            points[index2] = parsed[index2].length;
-            break;
-          }
-        // fallthrough
-        default:
-          parsed[index2] += from(character2);
-      }
-    } while (character2 = next());
-    return parsed;
-  };
-  var getRules = function getRules2(value, points) {
-    return dealloc(toRules(alloc(value), points));
-  };
-  var fixedElements = /* @__PURE__ */ new WeakMap();
-  var compat = function compat2(element) {
-    if (element.type !== "rule" || !element.parent || // positive .length indicates that this rule contains pseudo
-    // negative .length indicates that this rule has been already prefixed
-    element.length < 1) {
-      return;
-    }
-    var value = element.value;
-    var parent = element.parent;
-    var isImplicitRule = element.column === parent.column && element.line === parent.line;
-    while (parent.type !== "rule") {
-      parent = parent.parent;
-      if (!parent) return;
-    }
-    if (element.props.length === 1 && value.charCodeAt(0) !== 58 && !fixedElements.get(parent)) {
-      return;
-    }
-    if (isImplicitRule) {
-      return;
-    }
-    fixedElements.set(element, true);
-    var points = [];
-    var rules = getRules(value, points);
-    var parentRules = parent.props;
-    for (var i2 = 0, k3 = 0; i2 < rules.length; i2++) {
-      for (var j2 = 0; j2 < parentRules.length; j2++, k3++) {
-        element.props[k3] = points[i2] ? rules[i2].replace(/&\f/g, parentRules[j2]) : parentRules[j2] + " " + rules[i2];
-      }
-    }
-  };
-  var removeLabel = function removeLabel2(element) {
-    if (element.type === "decl") {
-      var value = element.value;
-      if (
-        // charcode for l
-        value.charCodeAt(0) === 108 && // charcode for b
-        value.charCodeAt(2) === 98
-      ) {
-        element["return"] = "";
-        element.value = "";
-      }
-    }
-  };
-  var ignoreFlag = "emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason";
-  var isIgnoringComment = function isIgnoringComment2(element) {
-    return element.type === "comm" && element.children.indexOf(ignoreFlag) > -1;
-  };
-  var createUnsafeSelectorsAlarm = function createUnsafeSelectorsAlarm2(cache) {
-    return function(element, index2, children) {
-      if (element.type !== "rule" || cache.compat) return;
-      var unsafePseudoClasses = element.value.match(/(:first|:nth|:nth-last)-child/g);
-      if (unsafePseudoClasses) {
-        var isNested = !!element.parent;
-        var commentContainer = isNested ? element.parent.children : (
-          // global rule at the root level
-          children
-        );
-        for (var i2 = commentContainer.length - 1; i2 >= 0; i2--) {
-          var node2 = commentContainer[i2];
-          if (node2.line < element.line) {
-            break;
-          }
-          if (node2.column < element.column) {
-            if (isIgnoringComment(node2)) {
-              return;
-            }
-            break;
-          }
-        }
-        unsafePseudoClasses.forEach(function(unsafePseudoClass) {
-          console.error('The pseudo class "' + unsafePseudoClass + '" is potentially unsafe when doing server-side rendering. Try changing it to "' + unsafePseudoClass.split("-child")[0] + '-of-type".');
-        });
-      }
-    };
-  };
-  var isImportRule = function isImportRule2(element) {
-    return element.type.charCodeAt(1) === 105 && element.type.charCodeAt(0) === 64;
-  };
-  var isPrependedWithRegularRules = function isPrependedWithRegularRules2(index2, children) {
-    for (var i2 = index2 - 1; i2 >= 0; i2--) {
-      if (!isImportRule(children[i2])) {
-        return true;
-      }
-    }
-    return false;
-  };
-  var nullifyElement = function nullifyElement2(element) {
-    element.type = "";
-    element.value = "";
-    element["return"] = "";
-    element.children = "";
-    element.props = "";
-  };
-  var incorrectImportAlarm = function incorrectImportAlarm2(element, index2, children) {
-    if (!isImportRule(element)) {
-      return;
-    }
-    if (element.parent) {
-      console.error("`@import` rules can't be nested inside other rules. Please move it to the top level and put it before regular rules. Keep in mind that they can only be used within global styles.");
-      nullifyElement(element);
-    } else if (isPrependedWithRegularRules(index2, children)) {
-      console.error("`@import` rules can't be after other rules. Please put your `@import` rules before your other rules.");
-      nullifyElement(element);
-    }
-  };
-  function prefix(value, length2) {
-    switch (hash(value, length2)) {
-      // color-adjust
-      case 5103:
-        return WEBKIT + "print-" + value + value;
-      // animation, animation-(delay|direction|duration|fill-mode|iteration-count|name|play-state|timing-function)
-      case 5737:
-      case 4201:
-      case 3177:
-      case 3433:
-      case 1641:
-      case 4457:
-      case 2921:
-      // text-decoration, filter, clip-path, backface-visibility, column, box-decoration-break
-      case 5572:
-      case 6356:
-      case 5844:
-      case 3191:
-      case 6645:
-      case 3005:
-      // mask, mask-image, mask-(mode|clip|size), mask-(repeat|origin), mask-position, mask-composite,
-      case 6391:
-      case 5879:
-      case 5623:
-      case 6135:
-      case 4599:
-      case 4855:
-      // background-clip, columns, column-(count|fill|gap|rule|rule-color|rule-style|rule-width|span|width)
-      case 4215:
-      case 6389:
-      case 5109:
-      case 5365:
-      case 5621:
-      case 3829:
-        return WEBKIT + value + value;
-      // appearance, user-select, transform, hyphens, text-size-adjust
-      case 5349:
-      case 4246:
-      case 4810:
-      case 6968:
-      case 2756:
-        return WEBKIT + value + MOZ + value + MS + value + value;
-      // flex, flex-direction
-      case 6828:
-      case 4268:
-        return WEBKIT + value + MS + value + value;
-      // order
-      case 6165:
-        return WEBKIT + value + MS + "flex-" + value + value;
-      // align-items
-      case 5187:
-        return WEBKIT + value + replace2(value, /(\w+).+(:[^]+)/, WEBKIT + "box-$1$2" + MS + "flex-$1$2") + value;
-      // align-self
-      case 5443:
-        return WEBKIT + value + MS + "flex-item-" + replace2(value, /flex-|-self/, "") + value;
-      // align-content
-      case 4675:
-        return WEBKIT + value + MS + "flex-line-pack" + replace2(value, /align-content|flex-|-self/, "") + value;
-      // flex-shrink
-      case 5548:
-        return WEBKIT + value + MS + replace2(value, "shrink", "negative") + value;
-      // flex-basis
-      case 5292:
-        return WEBKIT + value + MS + replace2(value, "basis", "preferred-size") + value;
-      // flex-grow
-      case 6060:
-        return WEBKIT + "box-" + replace2(value, "-grow", "") + WEBKIT + value + MS + replace2(value, "grow", "positive") + value;
-      // transition
-      case 4554:
-        return WEBKIT + replace2(value, /([^-])(transform)/g, "$1" + WEBKIT + "$2") + value;
-      // cursor
-      case 6187:
-        return replace2(replace2(replace2(value, /(zoom-|grab)/, WEBKIT + "$1"), /(image-set)/, WEBKIT + "$1"), value, "") + value;
-      // background, background-image
-      case 5495:
-      case 3959:
-        return replace2(value, /(image-set\([^]*)/, WEBKIT + "$1$`$1");
-      // justify-content
-      case 4968:
-        return replace2(replace2(value, /(.+:)(flex-)?(.*)/, WEBKIT + "box-pack:$3" + MS + "flex-pack:$3"), /s.+-b[^;]+/, "justify") + WEBKIT + value + value;
-      // (margin|padding)-inline-(start|end)
-      case 4095:
-      case 3583:
-      case 4068:
-      case 2532:
-        return replace2(value, /(.+)-inline(.+)/, WEBKIT + "$1$2") + value;
-      // (min|max)?(width|height|inline-size|block-size)
-      case 8116:
-      case 7059:
-      case 5753:
-      case 5535:
-      case 5445:
-      case 5701:
-      case 4933:
-      case 4677:
-      case 5533:
-      case 5789:
-      case 5021:
-      case 4765:
-        if (strlen(value) - 1 - length2 > 6) switch (charat(value, length2 + 1)) {
-          // (m)ax-content, (m)in-content
-          case 109:
-            if (charat(value, length2 + 4) !== 45) break;
-          // (f)ill-available, (f)it-content
-          case 102:
-            return replace2(value, /(.+:)(.+)-([^]+)/, "$1" + WEBKIT + "$2-$3$1" + MOZ + (charat(value, length2 + 3) == 108 ? "$3" : "$2-$3")) + value;
-          // (s)tretch
-          case 115:
-            return ~indexof(value, "stretch") ? prefix(replace2(value, "stretch", "fill-available"), length2) + value : value;
-        }
-        break;
-      // position: sticky
-      case 4949:
-        if (charat(value, length2 + 1) !== 115) break;
-      // display: (flex|inline-flex)
-      case 6444:
-        switch (charat(value, strlen(value) - 3 - (~indexof(value, "!important") && 10))) {
-          // stic(k)y
-          case 107:
-            return replace2(value, ":", ":" + WEBKIT) + value;
-          // (inline-)?fl(e)x
-          case 101:
-            return replace2(value, /(.+:)([^;!]+)(;|!.+)?/, "$1" + WEBKIT + (charat(value, 14) === 45 ? "inline-" : "") + "box$3$1" + WEBKIT + "$2$3$1" + MS + "$2box$3") + value;
-        }
-        break;
-      // writing-mode
-      case 5936:
-        switch (charat(value, length2 + 11)) {
-          // vertical-l(r)
-          case 114:
-            return WEBKIT + value + MS + replace2(value, /[svh]\w+-[tblr]{2}/, "tb") + value;
-          // vertical-r(l)
-          case 108:
-            return WEBKIT + value + MS + replace2(value, /[svh]\w+-[tblr]{2}/, "tb-rl") + value;
-          // horizontal(-)tb
-          case 45:
-            return WEBKIT + value + MS + replace2(value, /[svh]\w+-[tblr]{2}/, "lr") + value;
-        }
-        return WEBKIT + value + MS + value + value;
-    }
-    return value;
-  }
-  var prefixer = function prefixer2(element, index2, children, callback) {
-    if (element.length > -1) {
-      if (!element["return"]) switch (element.type) {
-        case DECLARATION:
-          element["return"] = prefix(element.value, element.length);
-          break;
-        case KEYFRAMES:
-          return serialize([copy(element, {
-            value: replace2(element.value, "@", "@" + WEBKIT)
-          })], callback);
-        case RULESET:
-          if (element.length) return combine(element.props, function(value) {
-            switch (match(value, /(::plac\w+|:read-\w+)/)) {
-              // :read-(only|write)
-              case ":read-only":
-              case ":read-write":
-                return serialize([copy(element, {
-                  props: [replace2(value, /:(read-\w+)/, ":" + MOZ + "$1")]
-                })], callback);
-              // :placeholder
-              case "::placeholder":
-                return serialize([copy(element, {
-                  props: [replace2(value, /:(plac\w+)/, ":" + WEBKIT + "input-$1")]
-                }), copy(element, {
-                  props: [replace2(value, /:(plac\w+)/, ":" + MOZ + "$1")]
-                }), copy(element, {
-                  props: [replace2(value, /:(plac\w+)/, MS + "input-$1")]
-                })], callback);
-            }
-            return "";
-          });
-      }
-    }
-  };
-  var defaultStylisPlugins = [prefixer];
-  var getSourceMap;
-  {
-    sourceMapPattern = /\/\*#\ssourceMappingURL=data:application\/json;\S+\s+\*\//g;
-    getSourceMap = function getSourceMap2(styles2) {
-      var matches = styles2.match(sourceMapPattern);
-      if (!matches) return;
-      return matches[matches.length - 1];
-    };
-  }
-  var sourceMapPattern;
-  var createCache = function createCache2(options2) {
-    var key = options2.key;
-    if (!key) {
-      throw new Error("You have to configure `key` for your cache. Please make sure it's unique (and not equal to 'css') as it's used for linking styles to your cache.\nIf multiple caches share the same key they might \"fight\" for each other's style elements.");
-    }
-    if (key === "css") {
-      var ssrStyles = document.querySelectorAll("style[data-emotion]:not([data-s])");
-      Array.prototype.forEach.call(ssrStyles, function(node2) {
-        var dataEmotionAttribute = node2.getAttribute("data-emotion");
-        if (dataEmotionAttribute.indexOf(" ") === -1) {
-          return;
-        }
-        document.head.appendChild(node2);
-        node2.setAttribute("data-s", "");
-      });
-    }
-    var stylisPlugins = options2.stylisPlugins || defaultStylisPlugins;
-    {
-      if (/[^a-z-]/.test(key)) {
-        throw new Error('Emotion key must only contain lower case alphabetical characters and - but "' + key + '" was passed');
-      }
-    }
-    var inserted = {};
-    var container;
-    var nodesToHydrate = [];
-    {
-      container = options2.container || document.head;
-      Array.prototype.forEach.call(
-        // this means we will ignore elements which don't have a space in them which
-        // means that the style elements we're looking at are only Emotion 11 server-rendered style elements
-        document.querySelectorAll('style[data-emotion^="' + key + ' "]'),
-        function(node2) {
-          var attrib = node2.getAttribute("data-emotion").split(" ");
-          for (var i2 = 1; i2 < attrib.length; i2++) {
-            inserted[attrib[i2]] = true;
-          }
-          nodesToHydrate.push(node2);
-        }
-      );
-    }
-    var _insert;
-    var omnipresentPlugins = [compat, removeLabel];
-    {
-      omnipresentPlugins.push(createUnsafeSelectorsAlarm({
-        get compat() {
-          return cache.compat;
-        }
-      }), incorrectImportAlarm);
-    }
-    {
-      var currentSheet;
-      var finalizingPlugins = [stringify, function(element) {
-        if (!element.root) {
-          if (element["return"]) {
-            currentSheet.insert(element["return"]);
-          } else if (element.value && element.type !== COMMENT) {
-            currentSheet.insert(element.value + "{}");
-          }
-        }
-      }];
-      var serializer = middleware(omnipresentPlugins.concat(stylisPlugins, finalizingPlugins));
-      var stylis = function stylis2(styles2) {
-        return serialize(compile(styles2), serializer);
-      };
-      _insert = function insert2(selector2, serialized, sheet, shouldCache) {
-        currentSheet = sheet;
-        if (getSourceMap) {
-          var sourceMap = getSourceMap(serialized.styles);
-          if (sourceMap) {
-            currentSheet = {
-              insert: function insert3(rule) {
-                sheet.insert(rule + sourceMap);
-              }
-            };
-          }
-        }
-        stylis(selector2 ? selector2 + "{" + serialized.styles + "}" : serialized.styles);
-        if (shouldCache) {
-          cache.inserted[serialized.name] = true;
-        }
-      };
-    }
-    var cache = {
-      key,
-      sheet: new StyleSheet({
-        key,
-        container,
-        nonce: options2.nonce,
-        speedy: options2.speedy,
-        prepend: options2.prepend,
-        insertionPoint: options2.insertionPoint
-      }),
-      nonce: options2.nonce,
-      inserted,
-      registered: {},
-      insert: _insert
-    };
-    cache.sheet.hydrate(nodesToHydrate);
-    return cache;
-  };
-
-  // node_modules/.store/@emotion/utils@1.4.2-KEM0u7KEgx0kQkguoqsLRg/node_modules/@emotion/utils/dist/emotion-utils.browser.esm.js
-  var isBrowser3 = true;
-  function getRegisteredStyles(registered, registeredStyles, classNames) {
-    var rawClassName = "";
-    classNames.split(" ").forEach(function(className) {
-      if (registered[className] !== void 0) {
-        registeredStyles.push(registered[className] + ";");
-      } else if (className) {
-        rawClassName += className + " ";
-      }
-    });
-    return rawClassName;
-  }
-  var registerStyles = function registerStyles2(cache, serialized, isStringTag) {
-    var className = cache.key + "-" + serialized.name;
-    if (
-      // we only need to add the styles to the registered cache if the
-      // class name could be used further down
-      // the tree but if it's a string tag, we know it won't
-      // so we don't have to add it to registered cache.
-      // this improves memory usage since we can avoid storing the whole style string
-      (isStringTag === false || // we need to always store it if we're in compat mode and
-      // in node since emotion-server relies on whether a style is in
-      // the registered cache to know whether a style is global or not
-      // also, note that this check will be dead code eliminated in the browser
-      isBrowser3 === false) && cache.registered[className] === void 0
-    ) {
-      cache.registered[className] = serialized.styles;
-    }
-  };
-  var insertStyles = function insertStyles2(cache, serialized, isStringTag) {
-    registerStyles(cache, serialized, isStringTag);
-    var className = cache.key + "-" + serialized.name;
-    if (cache.inserted[serialized.name] === void 0) {
-      var current = serialized;
-      do {
-        cache.insert(serialized === current ? "." + className : "", current, cache.sheet, true);
-        current = current.next;
-      } while (current !== void 0);
-    }
-  };
-
-  // node_modules/.store/@emotion/hash@0.9.2-3t3CsIR-Hogd6z4jTSiTzw/node_modules/@emotion/hash/dist/emotion-hash.esm.js
-  function murmur2(str) {
-    var h2 = 0;
-    var k3, i2 = 0, len = str.length;
-    for (; len >= 4; ++i2, len -= 4) {
-      k3 = str.charCodeAt(i2) & 255 | (str.charCodeAt(++i2) & 255) << 8 | (str.charCodeAt(++i2) & 255) << 16 | (str.charCodeAt(++i2) & 255) << 24;
-      k3 = /* Math.imul(k, m): */
-      (k3 & 65535) * 1540483477 + ((k3 >>> 16) * 59797 << 16);
-      k3 ^= /* k >>> r: */
-      k3 >>> 24;
-      h2 = /* Math.imul(k, m): */
-      (k3 & 65535) * 1540483477 + ((k3 >>> 16) * 59797 << 16) ^ /* Math.imul(h, m): */
-      (h2 & 65535) * 1540483477 + ((h2 >>> 16) * 59797 << 16);
-    }
-    switch (len) {
-      case 3:
-        h2 ^= (str.charCodeAt(i2 + 2) & 255) << 16;
-      case 2:
-        h2 ^= (str.charCodeAt(i2 + 1) & 255) << 8;
-      case 1:
-        h2 ^= str.charCodeAt(i2) & 255;
-        h2 = /* Math.imul(h, m): */
-        (h2 & 65535) * 1540483477 + ((h2 >>> 16) * 59797 << 16);
-    }
-    h2 ^= h2 >>> 13;
-    h2 = /* Math.imul(h, m): */
-    (h2 & 65535) * 1540483477 + ((h2 >>> 16) * 59797 << 16);
-    return ((h2 ^ h2 >>> 15) >>> 0).toString(36);
-  }
-
-  // node_modules/.store/@emotion/unitless@0.10.0-pwTJpbN9a0dtSTSWA-rYCg/node_modules/@emotion/unitless/dist/emotion-unitless.esm.js
-  var unitlessKeys = {
-    animationIterationCount: 1,
-    aspectRatio: 1,
-    borderImageOutset: 1,
-    borderImageSlice: 1,
-    borderImageWidth: 1,
-    boxFlex: 1,
-    boxFlexGroup: 1,
-    boxOrdinalGroup: 1,
-    columnCount: 1,
-    columns: 1,
-    flex: 1,
-    flexGrow: 1,
-    flexPositive: 1,
-    flexShrink: 1,
-    flexNegative: 1,
-    flexOrder: 1,
-    gridRow: 1,
-    gridRowEnd: 1,
-    gridRowSpan: 1,
-    gridRowStart: 1,
-    gridColumn: 1,
-    gridColumnEnd: 1,
-    gridColumnSpan: 1,
-    gridColumnStart: 1,
-    msGridRow: 1,
-    msGridRowSpan: 1,
-    msGridColumn: 1,
-    msGridColumnSpan: 1,
-    fontWeight: 1,
-    lineHeight: 1,
-    opacity: 1,
-    order: 1,
-    orphans: 1,
-    scale: 1,
-    tabSize: 1,
-    widows: 1,
-    zIndex: 1,
-    zoom: 1,
-    WebkitLineClamp: 1,
-    // SVG-related properties
-    fillOpacity: 1,
-    floodOpacity: 1,
-    stopOpacity: 1,
-    strokeDasharray: 1,
-    strokeDashoffset: 1,
-    strokeMiterlimit: 1,
-    strokeOpacity: 1,
-    strokeWidth: 1
-  };
-
-  // node_modules/.store/@emotion/serialize@1.3.3-Uz6tPjx0iWh40PD96cGGjw/node_modules/@emotion/serialize/dist/emotion-serialize.development.esm.js
-  init_emotion_memoize_esm();
-  var isDevelopment2 = true;
-  var ILLEGAL_ESCAPE_SEQUENCE_ERROR = `You have illegal escape sequence in your template literal, most likely inside content's property value.
-Because you write your CSS inside a JavaScript string you actually have to do double escaping, so for example "content: '\\00d7';" should become "content: '\\\\00d7';".
-You can read more about this here:
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#ES2018_revision_of_illegal_escape_sequences`;
-  var UNDEFINED_AS_OBJECT_KEY_ERROR = "You have passed in falsy value as style object's key (can happen when in example you pass unexported component as computed key).";
-  var hyphenateRegex = /[A-Z]|^ms/g;
-  var animationRegex = /_EMO_([^_]+?)_([^]*?)_EMO_/g;
-  var isCustomProperty = function isCustomProperty2(property) {
-    return property.charCodeAt(1) === 45;
-  };
-  var isProcessableValue = function isProcessableValue2(value) {
-    return value != null && typeof value !== "boolean";
-  };
-  var processStyleName = /* @__PURE__ */ memoize(function(styleName) {
-    return isCustomProperty(styleName) ? styleName : styleName.replace(hyphenateRegex, "-$&").toLowerCase();
-  });
-  var processStyleValue = function processStyleValue2(key, value) {
-    switch (key) {
-      case "animation":
-      case "animationName": {
-        if (typeof value === "string") {
-          return value.replace(animationRegex, function(match3, p1, p22) {
-            cursor = {
-              name: p1,
-              styles: p22,
-              next: cursor
-            };
-            return p1;
-          });
-        }
-      }
-    }
-    if (unitlessKeys[key] !== 1 && !isCustomProperty(key) && typeof value === "number" && value !== 0) {
-      return value + "px";
-    }
-    return value;
-  };
-  {
-    contentValuePattern = /(var|attr|counters?|url|element|(((repeating-)?(linear|radial))|conic)-gradient)\(|(no-)?(open|close)-quote/;
-    contentValues = ["normal", "none", "initial", "inherit", "unset"];
-    oldProcessStyleValue = processStyleValue;
-    msPattern = /^-ms-/;
-    hyphenPattern = /-(.)/g;
-    hyphenatedCache = {};
-    processStyleValue = function processStyleValue3(key, value) {
-      if (key === "content") {
-        if (typeof value !== "string" || contentValues.indexOf(value) === -1 && !contentValuePattern.test(value) && (value.charAt(0) !== value.charAt(value.length - 1) || value.charAt(0) !== '"' && value.charAt(0) !== "'")) {
-          throw new Error("You seem to be using a value for 'content' without quotes, try replacing it with `content: '\"" + value + "\"'`");
-        }
-      }
-      var processed = oldProcessStyleValue(key, value);
-      if (processed !== "" && !isCustomProperty(key) && key.indexOf("-") !== -1 && hyphenatedCache[key] === void 0) {
-        hyphenatedCache[key] = true;
-        console.error("Using kebab-case for css properties in objects is not supported. Did you mean " + key.replace(msPattern, "ms-").replace(hyphenPattern, function(str, _char) {
-          return _char.toUpperCase();
-        }) + "?");
-      }
-      return processed;
-    };
-  }
-  var contentValuePattern;
-  var contentValues;
-  var oldProcessStyleValue;
-  var msPattern;
-  var hyphenPattern;
-  var hyphenatedCache;
-  var noComponentSelectorMessage = "Component selectors can only be used in conjunction with @emotion/babel-plugin, the swc Emotion plugin, or another Emotion-aware compiler transform.";
-  function handleInterpolation(mergedProps, registered, interpolation) {
-    if (interpolation == null) {
-      return "";
-    }
-    var componentSelector = interpolation;
-    if (componentSelector.__emotion_styles !== void 0) {
-      if (String(componentSelector) === "NO_COMPONENT_SELECTOR") {
-        throw new Error(noComponentSelectorMessage);
-      }
-      return componentSelector;
-    }
-    switch (typeof interpolation) {
-      case "boolean": {
-        return "";
-      }
-      case "object": {
-        var keyframes2 = interpolation;
-        if (keyframes2.anim === 1) {
-          cursor = {
-            name: keyframes2.name,
-            styles: keyframes2.styles,
-            next: cursor
-          };
-          return keyframes2.name;
-        }
-        var serializedStyles = interpolation;
-        if (serializedStyles.styles !== void 0) {
-          var next2 = serializedStyles.next;
-          if (next2 !== void 0) {
-            while (next2 !== void 0) {
-              cursor = {
-                name: next2.name,
-                styles: next2.styles,
-                next: cursor
-              };
-              next2 = next2.next;
-            }
-          }
-          var styles2 = serializedStyles.styles + ";";
-          return styles2;
-        }
-        return createStringFromObject(mergedProps, registered, interpolation);
-      }
-      case "function": {
-        if (mergedProps !== void 0) {
-          var previousCursor = cursor;
-          var result = interpolation(mergedProps);
-          cursor = previousCursor;
-          return handleInterpolation(mergedProps, registered, result);
-        } else {
-          console.error("Functions that are interpolated in css calls will be stringified.\nIf you want to have a css call based on props, create a function that returns a css call like this\nlet dynamicStyle = (props) => css`color: ${props.color}`\nIt can be called directly with props or interpolated in a styled call like this\nlet SomeComponent = styled('div')`${dynamicStyle}`");
-        }
-        break;
-      }
-      case "string":
-        {
-          var matched = [];
-          var replaced = interpolation.replace(animationRegex, function(_match, _p1, p22) {
-            var fakeVarName = "animation" + matched.length;
-            matched.push("const " + fakeVarName + " = keyframes`" + p22.replace(/^@keyframes animation-\w+/, "") + "`");
-            return "${" + fakeVarName + "}";
-          });
-          if (matched.length) {
-            console.error("`keyframes` output got interpolated into plain string, please wrap it with `css`.\n\nInstead of doing this:\n\n" + [].concat(matched, ["`" + replaced + "`"]).join("\n") + "\n\nYou should wrap it with `css` like this:\n\ncss`" + replaced + "`");
-          }
-        }
-        break;
-    }
-    var asString = interpolation;
-    if (registered == null) {
-      return asString;
-    }
-    var cached = registered[asString];
-    return cached !== void 0 ? cached : asString;
-  }
-  function createStringFromObject(mergedProps, registered, obj) {
-    var string = "";
-    if (Array.isArray(obj)) {
-      for (var i2 = 0; i2 < obj.length; i2++) {
-        string += handleInterpolation(mergedProps, registered, obj[i2]) + ";";
-      }
-    } else {
-      for (var key in obj) {
-        var value = obj[key];
-        if (typeof value !== "object") {
-          var asString = value;
-          if (registered != null && registered[asString] !== void 0) {
-            string += key + "{" + registered[asString] + "}";
-          } else if (isProcessableValue(asString)) {
-            string += processStyleName(key) + ":" + processStyleValue(key, asString) + ";";
-          }
-        } else {
-          if (key === "NO_COMPONENT_SELECTOR" && isDevelopment2) {
-            throw new Error(noComponentSelectorMessage);
-          }
-          if (Array.isArray(value) && typeof value[0] === "string" && (registered == null || registered[value[0]] === void 0)) {
-            for (var _i = 0; _i < value.length; _i++) {
-              if (isProcessableValue(value[_i])) {
-                string += processStyleName(key) + ":" + processStyleValue(key, value[_i]) + ";";
-              }
-            }
-          } else {
-            var interpolated = handleInterpolation(mergedProps, registered, value);
-            switch (key) {
-              case "animation":
-              case "animationName": {
-                string += processStyleName(key) + ":" + interpolated + ";";
-                break;
-              }
-              default: {
-                if (key === "undefined") {
-                  console.error(UNDEFINED_AS_OBJECT_KEY_ERROR);
-                }
-                string += key + "{" + interpolated + "}";
-              }
-            }
-          }
-        }
-      }
-    }
-    return string;
-  }
-  var labelPattern = /label:\s*([^\s;{]+)\s*(;|$)/g;
-  var cursor;
-  function serializeStyles(args, registered, mergedProps) {
-    if (args.length === 1 && typeof args[0] === "object" && args[0] !== null && args[0].styles !== void 0) {
-      return args[0];
-    }
-    var stringMode = true;
-    var styles2 = "";
-    cursor = void 0;
-    var strings = args[0];
-    if (strings == null || strings.raw === void 0) {
-      stringMode = false;
-      styles2 += handleInterpolation(mergedProps, registered, strings);
-    } else {
-      var asTemplateStringsArr = strings;
-      if (asTemplateStringsArr[0] === void 0) {
-        console.error(ILLEGAL_ESCAPE_SEQUENCE_ERROR);
-      }
-      styles2 += asTemplateStringsArr[0];
-    }
-    for (var i2 = 1; i2 < args.length; i2++) {
-      styles2 += handleInterpolation(mergedProps, registered, args[i2]);
-      if (stringMode) {
-        var templateStringsArr = strings;
-        if (templateStringsArr[i2] === void 0) {
-          console.error(ILLEGAL_ESCAPE_SEQUENCE_ERROR);
-        }
-        styles2 += templateStringsArr[i2];
-      }
-    }
-    labelPattern.lastIndex = 0;
-    var identifierName = "";
-    var match3;
-    while ((match3 = labelPattern.exec(styles2)) !== null) {
-      identifierName += "-" + match3[1];
-    }
-    var name = murmur2(styles2) + identifierName;
-    {
-      var devStyles = {
-        name,
-        styles: styles2,
-        next: cursor,
-        toString: function toString() {
-          return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop).";
-        }
-      };
-      return devStyles;
-    }
-  }
-
-  // node_modules/.store/@emotion/use-insertion-effect-with-fallbacks@1.2.0-b3s0TpbDKitxP8LJZkLRtg/node_modules/@emotion/use-insertion-effect-with-fallbacks/dist/emotion-use-insertion-effect-with-fallbacks.browser.esm.js
-  var React7 = __toESM(require_react());
-  var syncFallback = function syncFallback2(create2) {
-    return create2();
-  };
-  var useInsertionEffect4 = React7["useInsertionEffect"] ? React7["useInsertionEffect"] : false;
-  var useInsertionEffectAlwaysWithSyncFallback = useInsertionEffect4 || syncFallback;
-  var useInsertionEffectWithLayoutFallback = useInsertionEffect4 || React7.useLayoutEffect;
-
-  // node_modules/.store/@emotion/react@11.14.0-vvAzPiBVcLWMwzCLfnStmA/node_modules/@emotion/react/dist/emotion-element-489459f2.browser.development.esm.js
-  var EmotionCacheContext = /* @__PURE__ */ React8.createContext(
-    // we're doing this to avoid preconstruct's dead code elimination in this one case
-    // because this module is primarily intended for the browser and node
-    // but it's also required in react native and similar environments sometimes
-    // and we could have a special build just for that
-    // but this is much easier and the native packages
-    // might use a different theme context in the future anyway
-    typeof HTMLElement !== "undefined" ? /* @__PURE__ */ createCache({
-      key: "css"
-    }) : null
-  );
-  {
-    EmotionCacheContext.displayName = "EmotionCacheContext";
-  }
-  var CacheProvider = EmotionCacheContext.Provider;
-  var withEmotionCache = function withEmotionCache2(func) {
-    return /* @__PURE__ */ (0, import_react84.forwardRef)(function(props, ref) {
-      var cache = (0, import_react84.useContext)(EmotionCacheContext);
-      return func(props, cache, ref);
-    });
-  };
-  var ThemeContext = /* @__PURE__ */ React8.createContext({});
-  {
-    ThemeContext.displayName = "EmotionThemeContext";
-  }
-  var hasOwn = {}.hasOwnProperty;
-  var getLastPart = function getLastPart2(functionName) {
-    var parts = functionName.split(".");
-    return parts[parts.length - 1];
-  };
-  var getFunctionNameFromStackTraceLine = function getFunctionNameFromStackTraceLine2(line2) {
-    var match3 = /^\s+at\s+([A-Za-z0-9$.]+)\s/.exec(line2);
-    if (match3) return getLastPart(match3[1]);
-    match3 = /^([A-Za-z0-9$.]+)@/.exec(line2);
-    if (match3) return getLastPart(match3[1]);
-    return void 0;
-  };
-  var internalReactFunctionNames = /* @__PURE__ */ new Set(["renderWithHooks", "processChild", "finishClassComponent", "renderToString"]);
-  var sanitizeIdentifier = function sanitizeIdentifier2(identifier2) {
-    return identifier2.replace(/\$/g, "-");
-  };
-  var getLabelFromStackTrace = function getLabelFromStackTrace2(stackTrace) {
-    if (!stackTrace) return void 0;
-    var lines = stackTrace.split("\n");
-    for (var i2 = 0; i2 < lines.length; i2++) {
-      var functionName = getFunctionNameFromStackTraceLine(lines[i2]);
-      if (!functionName) continue;
-      if (internalReactFunctionNames.has(functionName)) break;
-      if (/^[A-Z]/.test(functionName)) return sanitizeIdentifier(functionName);
-    }
-    return void 0;
-  };
-  var typePropName = "__EMOTION_TYPE_PLEASE_DO_NOT_USE__";
-  var labelPropName = "__EMOTION_LABEL_PLEASE_DO_NOT_USE__";
-  var createEmotionProps = function createEmotionProps2(type, props) {
-    if (typeof props.css === "string" && // check if there is a css declaration
-    props.css.indexOf(":") !== -1) {
-      throw new Error("Strings are not allowed as css prop values, please wrap it in a css template literal from '@emotion/react' like this: css`" + props.css + "`");
-    }
-    var newProps = {};
-    for (var _key in props) {
-      if (hasOwn.call(props, _key)) {
-        newProps[_key] = props[_key];
-      }
-    }
-    newProps[typePropName] = type;
-    if (typeof globalThis !== "undefined" && !!globalThis.EMOTION_RUNTIME_AUTO_LABEL && !!props.css && (typeof props.css !== "object" || !("name" in props.css) || typeof props.css.name !== "string" || props.css.name.indexOf("-") === -1)) {
-      var label = getLabelFromStackTrace(new Error().stack);
-      if (label) newProps[labelPropName] = label;
-    }
-    return newProps;
-  };
-  var Insertion = function Insertion2(_ref) {
-    var cache = _ref.cache, serialized = _ref.serialized, isStringTag = _ref.isStringTag;
-    registerStyles(cache, serialized, isStringTag);
-    useInsertionEffectAlwaysWithSyncFallback(function() {
-      return insertStyles(cache, serialized, isStringTag);
-    });
-    return null;
-  };
-  var Emotion = /* @__PURE__ */ withEmotionCache(function(props, cache, ref) {
-    var cssProp = props.css;
-    if (typeof cssProp === "string" && cache.registered[cssProp] !== void 0) {
-      cssProp = cache.registered[cssProp];
-    }
-    var WrappedComponent = props[typePropName];
-    var registeredStyles = [cssProp];
-    var className = "";
-    if (typeof props.className === "string") {
-      className = getRegisteredStyles(cache.registered, registeredStyles, props.className);
-    } else if (props.className != null) {
-      className = props.className + " ";
-    }
-    var serialized = serializeStyles(registeredStyles, void 0, React8.useContext(ThemeContext));
-    if (serialized.name.indexOf("-") === -1) {
-      var labelFromStack = props[labelPropName];
-      if (labelFromStack) {
-        serialized = serializeStyles([serialized, "label:" + labelFromStack + ";"]);
-      }
-    }
-    className += cache.key + "-" + serialized.name;
-    var newProps = {};
-    for (var _key2 in props) {
-      if (hasOwn.call(props, _key2) && _key2 !== "css" && _key2 !== typePropName && _key2 !== labelPropName) {
-        newProps[_key2] = props[_key2];
-      }
-    }
-    newProps.className = className;
-    if (ref) {
-      newProps.ref = ref;
-    }
-    return /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement(Insertion, {
-      cache,
-      serialized,
-      isStringTag: typeof WrappedComponent === "string"
-    }), /* @__PURE__ */ React8.createElement(WrappedComponent, newProps));
-  });
-  {
-    Emotion.displayName = "EmotionCssPropInternal";
-  }
-  var Emotion$1 = Emotion;
-
-  // node_modules/.store/@emotion/react@11.14.0-vvAzPiBVcLWMwzCLfnStmA/node_modules/@emotion/react/dist/emotion-react.browser.development.esm.js
-  var React9 = __toESM(require_react());
-  var import_hoist_non_react_statics = __toESM(require_hoist_non_react_statics_cjs());
-  var isDevelopment3 = true;
-  var pkg = {
-    name: "@emotion/react",
-    version: "11.14.0",
-    main: "dist/emotion-react.cjs.js",
-    module: "dist/emotion-react.esm.js",
-    types: "dist/emotion-react.cjs.d.ts",
-    exports: {
-      ".": {
-        types: {
-          "import": "./dist/emotion-react.cjs.mjs",
-          "default": "./dist/emotion-react.cjs.js"
-        },
-        development: {
-          "edge-light": {
-            module: "./dist/emotion-react.development.edge-light.esm.js",
-            "import": "./dist/emotion-react.development.edge-light.cjs.mjs",
-            "default": "./dist/emotion-react.development.edge-light.cjs.js"
-          },
-          worker: {
-            module: "./dist/emotion-react.development.edge-light.esm.js",
-            "import": "./dist/emotion-react.development.edge-light.cjs.mjs",
-            "default": "./dist/emotion-react.development.edge-light.cjs.js"
-          },
-          workerd: {
-            module: "./dist/emotion-react.development.edge-light.esm.js",
-            "import": "./dist/emotion-react.development.edge-light.cjs.mjs",
-            "default": "./dist/emotion-react.development.edge-light.cjs.js"
-          },
-          browser: {
-            module: "./dist/emotion-react.browser.development.esm.js",
-            "import": "./dist/emotion-react.browser.development.cjs.mjs",
-            "default": "./dist/emotion-react.browser.development.cjs.js"
-          },
-          module: "./dist/emotion-react.development.esm.js",
-          "import": "./dist/emotion-react.development.cjs.mjs",
-          "default": "./dist/emotion-react.development.cjs.js"
-        },
-        "edge-light": {
-          module: "./dist/emotion-react.edge-light.esm.js",
-          "import": "./dist/emotion-react.edge-light.cjs.mjs",
-          "default": "./dist/emotion-react.edge-light.cjs.js"
-        },
-        worker: {
-          module: "./dist/emotion-react.edge-light.esm.js",
-          "import": "./dist/emotion-react.edge-light.cjs.mjs",
-          "default": "./dist/emotion-react.edge-light.cjs.js"
-        },
-        workerd: {
-          module: "./dist/emotion-react.edge-light.esm.js",
-          "import": "./dist/emotion-react.edge-light.cjs.mjs",
-          "default": "./dist/emotion-react.edge-light.cjs.js"
-        },
-        browser: {
-          module: "./dist/emotion-react.browser.esm.js",
-          "import": "./dist/emotion-react.browser.cjs.mjs",
-          "default": "./dist/emotion-react.browser.cjs.js"
-        },
-        module: "./dist/emotion-react.esm.js",
-        "import": "./dist/emotion-react.cjs.mjs",
-        "default": "./dist/emotion-react.cjs.js"
-      },
-      "./jsx-runtime": {
-        types: {
-          "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.cjs.mjs",
-          "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.cjs.js"
-        },
-        development: {
-          "edge-light": {
-            module: "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.esm.js",
-            "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.cjs.mjs",
-            "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.cjs.js"
-          },
-          worker: {
-            module: "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.esm.js",
-            "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.cjs.mjs",
-            "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.cjs.js"
-          },
-          workerd: {
-            module: "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.esm.js",
-            "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.cjs.mjs",
-            "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.development.edge-light.cjs.js"
-          },
-          browser: {
-            module: "./jsx-runtime/dist/emotion-react-jsx-runtime.browser.development.esm.js",
-            "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.browser.development.cjs.mjs",
-            "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.browser.development.cjs.js"
-          },
-          module: "./jsx-runtime/dist/emotion-react-jsx-runtime.development.esm.js",
-          "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.development.cjs.mjs",
-          "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.development.cjs.js"
-        },
-        "edge-light": {
-          module: "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.esm.js",
-          "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.cjs.mjs",
-          "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.cjs.js"
-        },
-        worker: {
-          module: "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.esm.js",
-          "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.cjs.mjs",
-          "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.cjs.js"
-        },
-        workerd: {
-          module: "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.esm.js",
-          "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.cjs.mjs",
-          "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.edge-light.cjs.js"
-        },
-        browser: {
-          module: "./jsx-runtime/dist/emotion-react-jsx-runtime.browser.esm.js",
-          "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.browser.cjs.mjs",
-          "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.browser.cjs.js"
-        },
-        module: "./jsx-runtime/dist/emotion-react-jsx-runtime.esm.js",
-        "import": "./jsx-runtime/dist/emotion-react-jsx-runtime.cjs.mjs",
-        "default": "./jsx-runtime/dist/emotion-react-jsx-runtime.cjs.js"
-      },
-      "./_isolated-hnrs": {
-        types: {
-          "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.cjs.mjs",
-          "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.cjs.js"
-        },
-        development: {
-          "edge-light": {
-            module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.esm.js",
-            "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.cjs.mjs",
-            "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.cjs.js"
-          },
-          worker: {
-            module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.esm.js",
-            "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.cjs.mjs",
-            "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.cjs.js"
-          },
-          workerd: {
-            module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.esm.js",
-            "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.cjs.mjs",
-            "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.edge-light.cjs.js"
-          },
-          browser: {
-            module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.browser.development.esm.js",
-            "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.browser.development.cjs.mjs",
-            "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.browser.development.cjs.js"
-          },
-          module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.esm.js",
-          "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.cjs.mjs",
-          "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.development.cjs.js"
-        },
-        "edge-light": {
-          module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.esm.js",
-          "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.cjs.mjs",
-          "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.cjs.js"
-        },
-        worker: {
-          module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.esm.js",
-          "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.cjs.mjs",
-          "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.cjs.js"
-        },
-        workerd: {
-          module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.esm.js",
-          "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.cjs.mjs",
-          "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.edge-light.cjs.js"
-        },
-        browser: {
-          module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.browser.esm.js",
-          "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.browser.cjs.mjs",
-          "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.browser.cjs.js"
-        },
-        module: "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.esm.js",
-        "import": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.cjs.mjs",
-        "default": "./_isolated-hnrs/dist/emotion-react-_isolated-hnrs.cjs.js"
-      },
-      "./jsx-dev-runtime": {
-        types: {
-          "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.cjs.mjs",
-          "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.cjs.js"
-        },
-        development: {
-          "edge-light": {
-            module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.esm.js",
-            "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.cjs.mjs",
-            "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.cjs.js"
-          },
-          worker: {
-            module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.esm.js",
-            "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.cjs.mjs",
-            "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.cjs.js"
-          },
-          workerd: {
-            module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.esm.js",
-            "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.cjs.mjs",
-            "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.edge-light.cjs.js"
-          },
-          browser: {
-            module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.browser.development.esm.js",
-            "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.browser.development.cjs.mjs",
-            "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.browser.development.cjs.js"
-          },
-          module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.esm.js",
-          "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.cjs.mjs",
-          "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.development.cjs.js"
-        },
-        "edge-light": {
-          module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.esm.js",
-          "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.cjs.mjs",
-          "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.cjs.js"
-        },
-        worker: {
-          module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.esm.js",
-          "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.cjs.mjs",
-          "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.cjs.js"
-        },
-        workerd: {
-          module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.esm.js",
-          "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.cjs.mjs",
-          "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.edge-light.cjs.js"
-        },
-        browser: {
-          module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.browser.esm.js",
-          "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.browser.cjs.mjs",
-          "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.browser.cjs.js"
-        },
-        module: "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.esm.js",
-        "import": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.cjs.mjs",
-        "default": "./jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.cjs.js"
-      },
-      "./package.json": "./package.json",
-      "./types/css-prop": "./types/css-prop.d.ts",
-      "./macro": {
-        types: {
-          "import": "./macro.d.mts",
-          "default": "./macro.d.ts"
-        },
-        "default": "./macro.js"
-      }
-    },
-    imports: {
-      "#is-development": {
-        development: "./src/conditions/true.ts",
-        "default": "./src/conditions/false.ts"
-      },
-      "#is-browser": {
-        "edge-light": "./src/conditions/false.ts",
-        workerd: "./src/conditions/false.ts",
-        worker: "./src/conditions/false.ts",
-        browser: "./src/conditions/true.ts",
-        "default": "./src/conditions/is-browser.ts"
-      }
-    },
-    files: [
-      "src",
-      "dist",
-      "jsx-runtime",
-      "jsx-dev-runtime",
-      "_isolated-hnrs",
-      "types/css-prop.d.ts",
-      "macro.*"
-    ],
-    sideEffects: false,
-    author: "Emotion Contributors",
-    license: "MIT",
-    scripts: {
-      "test:typescript": "dtslint types"
-    },
-    dependencies: {
-      "@babel/runtime": "^7.18.3",
-      "@emotion/babel-plugin": "^11.13.5",
-      "@emotion/cache": "^11.14.0",
-      "@emotion/serialize": "^1.3.3",
-      "@emotion/use-insertion-effect-with-fallbacks": "^1.2.0",
-      "@emotion/utils": "^1.4.2",
-      "@emotion/weak-memoize": "^0.4.0",
-      "hoist-non-react-statics": "^3.3.1"
-    },
-    peerDependencies: {
-      react: ">=16.8.0"
-    },
-    peerDependenciesMeta: {
-      "@types/react": {
-        optional: true
-      }
-    },
-    devDependencies: {
-      "@definitelytyped/dtslint": "0.0.112",
-      "@emotion/css": "11.13.5",
-      "@emotion/css-prettifier": "1.2.0",
-      "@emotion/server": "11.11.0",
-      "@emotion/styled": "11.14.0",
-      "@types/hoist-non-react-statics": "^3.3.5",
-      "html-tag-names": "^1.1.2",
-      react: "16.14.0",
-      "svg-tag-names": "^1.1.1",
-      typescript: "^5.4.5"
-    },
-    repository: "https://github.com/emotion-js/emotion/tree/main/packages/react",
-    publishConfig: {
-      access: "public"
-    },
-    "umd:main": "dist/emotion-react.umd.min.js",
-    preconstruct: {
-      entrypoints: [
-        "./index.ts",
-        "./jsx-runtime.ts",
-        "./jsx-dev-runtime.ts",
-        "./_isolated-hnrs.ts"
-      ],
-      umdName: "emotionReact",
-      exports: {
-        extra: {
-          "./types/css-prop": "./types/css-prop.d.ts",
-          "./macro": {
-            types: {
-              "import": "./macro.d.mts",
-              "default": "./macro.d.ts"
-            },
-            "default": "./macro.js"
-          }
-        }
-      }
-    }
-  };
-  var jsx102 = function jsx103(type, props) {
-    var args = arguments;
-    if (props == null || !hasOwn.call(props, "css")) {
-      return React9.createElement.apply(void 0, args);
-    }
-    var argsLength = args.length;
-    var createElementArgArray = new Array(argsLength);
-    createElementArgArray[0] = Emotion$1;
-    createElementArgArray[1] = createEmotionProps(type, props);
-    for (var i2 = 2; i2 < argsLength; i2++) {
-      createElementArgArray[i2] = args[i2];
-    }
-    return React9.createElement.apply(null, createElementArgArray);
-  };
-  (function(_jsx38) {
-    var JSX;
-    /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx38.JSX || (_jsx38.JSX = {})));
-  })(jsx102 || (jsx102 = {}));
-  var warnedAboutCssPropForGlobal = false;
-  var Global = /* @__PURE__ */ withEmotionCache(function(props, cache) {
-    if (!warnedAboutCssPropForGlobal && // check for className as well since the user is
-    // probably using the custom createElement which
-    // means it will be turned into a className prop
-    // I don't really want to add it to the type since it shouldn't be used
-    ("className" in props && props.className || "css" in props && props.css)) {
-      console.error("It looks like you're using the css prop on Global, did you mean to use the styles prop instead?");
-      warnedAboutCssPropForGlobal = true;
-    }
-    var styles2 = props.styles;
-    var serialized = serializeStyles([styles2], void 0, React9.useContext(ThemeContext));
-    var sheetRef = React9.useRef();
-    useInsertionEffectWithLayoutFallback(function() {
-      var key = cache.key + "-global";
-      var sheet = new cache.sheet.constructor({
-        key,
-        nonce: cache.sheet.nonce,
-        container: cache.sheet.container,
-        speedy: cache.sheet.isSpeedy
-      });
-      var rehydrating = false;
-      var node2 = document.querySelector('style[data-emotion="' + key + " " + serialized.name + '"]');
-      if (cache.sheet.tags.length) {
-        sheet.before = cache.sheet.tags[0];
-      }
-      if (node2 !== null) {
-        rehydrating = true;
-        node2.setAttribute("data-emotion", key);
-        sheet.hydrate([node2]);
-      }
-      sheetRef.current = [sheet, rehydrating];
-      return function() {
-        sheet.flush();
-      };
-    }, [cache]);
-    useInsertionEffectWithLayoutFallback(function() {
-      var sheetRefCurrent = sheetRef.current;
-      var sheet = sheetRefCurrent[0], rehydrating = sheetRefCurrent[1];
-      if (rehydrating) {
-        sheetRefCurrent[1] = false;
-        return;
-      }
-      if (serialized.next !== void 0) {
-        insertStyles(cache, serialized.next, true);
-      }
-      if (sheet.tags.length) {
-        var element = sheet.tags[sheet.tags.length - 1].nextElementSibling;
-        sheet.before = element;
-        sheet.flush();
-      }
-      cache.insert("", serialized, sheet, false);
-    }, [cache, serialized.name]);
-    return null;
-  });
-  {
-    Global.displayName = "EmotionGlobal";
-  }
-  var classnames = function classnames2(args) {
-    var len = args.length;
-    var i2 = 0;
-    var cls = "";
-    for (; i2 < len; i2++) {
-      var arg = args[i2];
-      if (arg == null) continue;
-      var toAdd = void 0;
-      switch (typeof arg) {
-        case "boolean":
-          break;
-        case "object": {
-          if (Array.isArray(arg)) {
-            toAdd = classnames2(arg);
-          } else {
-            if (arg.styles !== void 0 && arg.name !== void 0) {
-              console.error("You have passed styles created with `css` from `@emotion/react` package to the `cx`.\n`cx` is meant to compose class names (strings) so you should convert those styles to a class name by passing them to the `css` received from <ClassNames/> component.");
-            }
-            toAdd = "";
-            for (var k3 in arg) {
-              if (arg[k3] && k3) {
-                toAdd && (toAdd += " ");
-                toAdd += k3;
-              }
-            }
-          }
-          break;
-        }
-        default: {
-          toAdd = arg;
-        }
-      }
-      if (toAdd) {
-        cls && (cls += " ");
-        cls += toAdd;
-      }
-    }
-    return cls;
-  };
-  function merge(registered, css2, className) {
-    var registeredStyles = [];
-    var rawClassName = getRegisteredStyles(registered, registeredStyles, className);
-    if (registeredStyles.length < 2) {
-      return className;
-    }
-    return rawClassName + css2(registeredStyles);
-  }
-  var Insertion3 = function Insertion4(_ref) {
-    var cache = _ref.cache, serializedArr = _ref.serializedArr;
-    useInsertionEffectAlwaysWithSyncFallback(function() {
-      for (var i2 = 0; i2 < serializedArr.length; i2++) {
-        insertStyles(cache, serializedArr[i2], false);
-      }
-    });
-    return null;
-  };
-  var ClassNames = /* @__PURE__ */ withEmotionCache(function(props, cache) {
-    var hasRendered = false;
-    var serializedArr = [];
-    var css2 = function css3() {
-      if (hasRendered && isDevelopment3) {
-        throw new Error("css can only be used during render");
-      }
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      var serialized = serializeStyles(args, cache.registered);
-      serializedArr.push(serialized);
-      registerStyles(cache, serialized, false);
-      return cache.key + "-" + serialized.name;
-    };
-    var cx = function cx2() {
-      if (hasRendered && isDevelopment3) {
-        throw new Error("cx can only be used during render");
-      }
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
-      return merge(cache.registered, css2, classnames(args));
-    };
-    var content = {
-      css: css2,
-      cx,
-      theme: React9.useContext(ThemeContext)
-    };
-    var ele = props.children(content);
-    hasRendered = true;
-    return /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement(Insertion3, {
-      cache,
-      serializedArr
-    }), ele);
-  });
-  {
-    ClassNames.displayName = "EmotionClassNames";
-  }
-  {
-    isBrowser4 = typeof document !== "undefined";
-    isTestEnv = typeof jest !== "undefined" || typeof vi !== "undefined";
-    if (isBrowser4 && !isTestEnv) {
-      globalContext = typeof globalThis !== "undefined" ? globalThis : isBrowser4 ? window : global;
-      globalKey = "__EMOTION_REACT_" + pkg.version.split(".")[0] + "__";
-      if (globalContext[globalKey]) {
-        console.warn("You are loading @emotion/react when it is already loaded. Running multiple instances may cause problems. This can happen if multiple versions are used, or if multiple builds of the same version are used.");
-      }
-      globalContext[globalKey] = true;
-    }
-  }
-  var isBrowser4;
-  var isTestEnv;
-  var globalContext;
-  var globalKey;
-
-  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/stringify.js
-  var byteToHex = [];
-  for (let i2 = 0; i2 < 256; ++i2) {
-    byteToHex.push((i2 + 256).toString(16).slice(1));
-  }
-  function unsafeStringify(arr, offset4 = 0) {
-    return (byteToHex[arr[offset4 + 0]] + byteToHex[arr[offset4 + 1]] + byteToHex[arr[offset4 + 2]] + byteToHex[arr[offset4 + 3]] + "-" + byteToHex[arr[offset4 + 4]] + byteToHex[arr[offset4 + 5]] + "-" + byteToHex[arr[offset4 + 6]] + byteToHex[arr[offset4 + 7]] + "-" + byteToHex[arr[offset4 + 8]] + byteToHex[arr[offset4 + 9]] + "-" + byteToHex[arr[offset4 + 10]] + byteToHex[arr[offset4 + 11]] + byteToHex[arr[offset4 + 12]] + byteToHex[arr[offset4 + 13]] + byteToHex[arr[offset4 + 14]] + byteToHex[arr[offset4 + 15]]).toLowerCase();
-  }
-
-  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/rng.js
-  var rnds8 = new Uint8Array(16);
-  function rng() {
-    return crypto.getRandomValues(rnds8);
-  }
-
-  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/v4.js
-  function v4(options2, buf, offset4) {
-    if (!buf && !options2 && crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-    return _v4(options2, buf, offset4);
-  }
-  function _v4(options2, buf, offset4) {
-    options2 = options2 || {};
-    const rnds = options2.random ?? options2.rng?.() ?? rng();
-    if (rnds.length < 16) {
-      throw new Error("Random bytes length must be >= 16");
-    }
-    rnds[6] = rnds[6] & 15 | 64;
-    rnds[8] = rnds[8] & 63 | 128;
-    if (buf) {
-      offset4 = offset4 || 0;
-      if (offset4 < 0 || offset4 + 16 > buf.length) {
-        throw new RangeError(`UUID byte range ${offset4}:${offset4 + 15} is out of buffer bounds`);
-      }
-      for (let i2 = 0; i2 < 16; ++i2) {
-        buf[offset4 + i2] = rnds[i2];
-      }
-      return buf;
-    }
-    return unsafeStringify(rnds);
-  }
-  var v4_default = v4;
-
   // packages/components/build-module/style-provider/index.mjs
   var import_element41 = __toESM(require_element(), 1);
   var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
@@ -30128,20 +27909,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash17(targetDocument, hash2) {
+  function documentContainsStyleHash17(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE17}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE17) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE17) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle17(targetDocument, hash2, css2) {
+  function injectStyle17(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -30151,18 +27932,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash17(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash17(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE17, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE17, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument17(targetDocument) {
     const runtime = getRuntime17();
@@ -30170,8 +27951,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle17(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle17(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -30185,21 +27966,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  var uuidCache = /* @__PURE__ */ new Set();
-  var containerCacheMap = /* @__PURE__ */ new WeakMap();
-  var memoizedCreateCacheWithContainer = (container) => {
-    if (containerCacheMap.has(container)) {
-      return containerCacheMap.get(container);
-    }
-    let key = v4_default().replace(/[0-9]/g, "");
-    while (uuidCache.has(key)) {
-      key = v4_default().replace(/[0-9]/g, "");
-    }
-    uuidCache.add(key);
-    const cache = createCache({ container, key });
-    containerCacheMap.set(container, cache);
-    return cache;
-  };
   function StyleProvider(props) {
     const { children, document: document2 } = props;
     (0, import_element41.useInsertionEffect)(() => {
@@ -30211,8 +27977,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     if (!document2) {
       return null;
     }
-    const cache = memoizedCreateCacheWithContainer(document2.head);
-    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(CacheProvider, { value: cache, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_jsx_runtime102.Fragment, { children });
   }
   var style_provider_default = StyleProvider;
 
@@ -30474,14 +28239,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
   function useSlotFills(name) {
     const registry = (0, import_element47.useContext)(context_default);
-    const length2 = useObservableValueWithSelector(
+    const length = useObservableValueWithSelector(
       registry.fills,
       name,
       getLength
     );
     const fills = (0, import_element47.useMemo)(() => {
-      return length2 !== void 0 ? Array.from({ length: length2 }) : void 0;
-    }, [length2]);
+      return length !== void 0 ? Array.from({ length }) : void 0;
+    }, [length]);
     return fills;
   }
 
@@ -30605,7 +28370,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       children,
       className,
       noArrow = true,
-      position: position2,
+      position,
       placement: placementProp = "bottom-start",
       offset: offsetProp = 0,
       focusOnMount = "firstElement",
@@ -30671,16 +28436,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const arrowRef = (0, import_element50.useRef)(null);
     const [fallbackReferenceElement, setFallbackReferenceElement] = (0, import_element50.useState)(null);
     const anchorRefFallback = (0, import_element50.useCallback)(
-      (node2) => {
-        setFallbackReferenceElement(node2);
+      (node) => {
+        setFallbackReferenceElement(node);
       },
       []
     );
     const isMobileViewport = (0, import_compose16.useViewportMatch)("medium", "<");
     const isExpanded = expandOnMobile && isMobileViewport;
     const hasArrow = !isExpanded && !noArrow;
-    const normalizedPlacementFromProps = position2 ? positionToPlacement(position2) : placementProp;
-    const middleware2 = [
+    const normalizedPlacementFromProps = position ? positionToPlacement(position) : placementProp;
+    const middleware = [
       ...placementProp === "overlay" ? overlayMiddlewares() : [],
       offset3(offsetProp),
       computedFlipProp && flip3(),
@@ -30762,15 +28527,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       middlewareData: { arrow: arrowData }
     } = useFloating({
       placement: normalizedPlacementFromProps === "overlay" ? void 0 : normalizedPlacementFromProps,
-      middleware: middleware2,
+      middleware,
       whileElementsMounted: (referenceParam, floatingParam, updateParam) => autoUpdate(referenceParam, floatingParam, updateParam, {
         layoutShift: false,
         animationFrame: true
       })
     });
     const arrowCallbackRef = (0, import_element50.useCallback)(
-      (node2) => {
-        arrowRef.current = node2;
+      (node) => {
+        arrowRef.current = node;
         update2();
       },
       [update2]
@@ -31018,12 +28783,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const popoverRefs = (0, import_compose17.useMergeRefs)([
       popoverRef,
       (0, import_compose17.useRefEffect)(
-        (node2) => {
+        (node) => {
           if (!contentRef.current) {
             return;
           }
           setNeedsA11yCompat(
-            node2.ownerDocument !== contentRef.current.ownerDocument
+            node.ownerDocument !== contentRef.current.ownerDocument
           );
         },
         [contentRef]
@@ -31193,21 +28958,21 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // packages/components/build-module/utils/get-node-text.mjs
-  var getNodeText = (node2) => {
-    if (node2 === null) {
+  var getNodeText = (node) => {
+    if (node === null) {
       return "";
     }
-    switch (typeof node2) {
+    switch (typeof node) {
       case "string":
       case "number":
-        return node2.toString();
+        return node.toString();
       case "object": {
-        if (node2 instanceof Array) {
-          return node2.map(getNodeText).join("");
+        if (node instanceof Array) {
+          return node.map(getNodeText).join("");
         }
-        if ("props" in node2) {
+        if ("props" in node) {
           return getNodeText(
-            node2.props.children
+            node.props.children
           );
         }
         return "";
@@ -31384,19 +29149,19 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           )
         ) : "";
       }
-      const match3 = getAutocompleteMatch(textContent, completers, {
+      const match2 = getAutocompleteMatch(textContent, completers, {
         matchCount: filteredOptions.length,
         isBackspacing: backspacingRef.current,
         getTextAfterSelection,
         lastCompletion: lastCompletionRef.current
       });
-      if (!match3) {
+      if (!match2) {
         if (autocompleter) {
           dispatch({ type: "RESET" });
         }
         return;
       }
-      const { completer, filterValue: query } = match3;
+      const { completer, filterValue: query } = match2;
       if (!autocompleter && !isTextChange) {
         return;
       }
@@ -31523,20 +29288,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash18(targetDocument, hash2) {
+  function documentContainsStyleHash18(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE18}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE18) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE18) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle18(targetDocument, hash2, css2) {
+  function injectStyle18(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -31546,18 +29311,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash18(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash18(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE18, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE18, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument18(targetDocument) {
     const runtime = getRuntime18();
@@ -31565,8 +29330,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle18(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle18(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -31580,11 +29345,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle17(hash2, css2) {
+  function registerStyle17(hash, css2) {
     const runtime = getRuntime18();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle18(targetDocument, hash2, css2);
+      injectStyle18(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -31648,20 +29413,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash19(targetDocument, hash2) {
+  function documentContainsStyleHash19(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE19}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE19) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE19) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle19(targetDocument, hash2, css2) {
+  function injectStyle19(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -31671,18 +29436,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash19(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash19(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE19, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE19, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument19(targetDocument) {
     const runtime = getRuntime19();
@@ -31690,8 +29455,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle19(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle19(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -31705,11 +29470,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle18(hash2, css2) {
+  function registerStyle18(hash, css2) {
     const runtime = getRuntime19();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle19(targetDocument, hash2, css2);
+      injectStyle19(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -32053,15 +29818,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // packages/components/build-module/utils/hooks/use-animated-offset-rect.mjs
   function useAnimatedOffsetRect(container, rect, {
-    prefix: prefix2 = "subelement",
-    dataAttribute = `${prefix2}-animated`,
+    prefix = "subelement",
+    dataAttribute = `${prefix}-animated`,
     transitionEndFilter = () => true,
     roundRect = false
   } = {}) {
     const setProperties = (0, import_compose24.useEvent)(() => {
       Object.keys(rect).forEach(
         (property) => property !== "element" && container?.style.setProperty(
-          `--${prefix2}-${property}`,
+          `--${prefix}-${property}`,
           String(
             roundRect ? Math.floor(rect[property]) : rect[property]
           )
@@ -32105,20 +29870,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash20(targetDocument, hash2) {
+  function documentContainsStyleHash20(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE20}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE20) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE20) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle20(targetDocument, hash2, css2) {
+  function injectStyle20(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -32128,18 +29893,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash20(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash20(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE20, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE20, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument20(targetDocument) {
     const runtime = getRuntime20();
@@ -32147,8 +29912,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle20(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle20(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -32162,11 +29927,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle19(hash2, css2) {
+  function registerStyle19(hash, css2) {
     const runtime = getRuntime20();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle20(targetDocument, hash2, css2);
+      injectStyle20(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -32267,20 +30032,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash21(targetDocument, hash2) {
+  function documentContainsStyleHash21(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE21}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE21) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE21) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle21(targetDocument, hash2, css2) {
+  function injectStyle21(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -32290,18 +30055,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash21(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash21(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE21, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE21, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument21(targetDocument) {
     const runtime = getRuntime21();
@@ -32309,8 +30074,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle21(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle21(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -32324,11 +30089,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle20(hash2, css2) {
+  function registerStyle20(hash, css2) {
     const runtime = getRuntime21();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle21(targetDocument, hash2, css2);
+      injectStyle21(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -32584,14 +30349,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       open: open2,
       defaultOpen,
       // Deprecated props
-      position: position2,
+      position,
       // From context system
       variant
     } = useContextSystem(
       props,
       "Dropdown"
     );
-    if (position2 !== void 0) {
+    if (position !== void 0) {
       (0, import_deprecated7.default)("`position` prop in wp.components.Dropdown", {
         since: "6.2",
         alternative: "`popoverProps.placement` prop",
@@ -32643,7 +30408,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           isOpen && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
             popover_default,
             {
-              position: position2,
+              position,
               onClose: close,
               onFocusOutside: closeIfFocusOutside,
               expandOnMobile,
@@ -32697,20 +30462,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash22(targetDocument, hash2) {
+  function documentContainsStyleHash22(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE22}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE22) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE22) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle22(targetDocument, hash2, css2) {
+  function injectStyle22(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -32720,18 +30485,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash22(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash22(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE22, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE22, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument22(targetDocument) {
     const runtime = getRuntime22();
@@ -32739,8 +30504,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle22(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle22(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -32754,11 +30519,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle21(hash2, css2) {
+  function registerStyle21(hash, css2) {
     const runtime = getRuntime22();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle22(targetDocument, hash2, css2);
+      injectStyle22(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -32796,20 +30561,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash23(targetDocument, hash2) {
+  function documentContainsStyleHash23(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE23}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle23(targetDocument, hash2, css2) {
+  function injectStyle23(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -32819,18 +30584,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash23(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash23(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE23, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE23, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument23(targetDocument) {
     const runtime = getRuntime23();
@@ -32838,8 +30603,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle23(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle23(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -32853,11 +30618,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle22(hash2, css2) {
+  function registerStyle22(hash, css2) {
     const runtime = getRuntime23();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle23(targetDocument, hash2, css2);
+      injectStyle23(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -32896,7 +30661,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       value: valueProp,
       labelPosition = "top",
       children,
-      prefix: prefix2,
+      prefix,
       suffix,
       variant = "default",
       ...restProps
@@ -32930,7 +30695,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         label,
         size: size4,
         suffix: suffix || !multiple && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(chevron_down_default2, {}),
-        prefix: prefix2,
+        prefix,
         labelPosition,
         __unstableInputWidth: variant === "minimal" ? "auto" : void 0,
         className: clsx_default(style_module_default22.root, {
@@ -33076,14 +30841,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     const keyword = value.replace(
       /\\([a-f\d]{1,6})[ \t\n\r\f]?|\\([^\n\r\f])|\/\*[\s\S]*?\*\//gi,
-      (_match, hex2, character2) => {
+      (_match, hex2, character) => {
         if (hex2) {
           const codePoint = parseInt(hex2, 16);
           return String.fromCodePoint(
             codePoint > 0 && codePoint <= 1114111 ? codePoint : 65533
           );
         }
-        return character2 ?? "";
+        return character ?? "";
       }
     ).replace(/^[ \t\n\r\f]+|[ \t\n\r\f]+$/g, "").toLowerCase();
     return CSS_WIDE_KEYWORDS2.has(keyword) ? keyword : void 0;
@@ -33108,20 +30873,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash24(targetDocument, hash2) {
+  function documentContainsStyleHash24(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE24}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE24) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE24) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle24(targetDocument, hash2, css2) {
+  function injectStyle24(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -33131,18 +30896,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash24(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash24(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE24, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE24, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument24(targetDocument) {
     const runtime = getRuntime24();
@@ -33150,8 +30915,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle24(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle24(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -33165,11 +30930,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle23(hash2, css2) {
+  function registerStyle23(hash, css2) {
     const runtime = getRuntime24();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle24(targetDocument, hash2, css2);
+      injectStyle24(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -33219,20 +30984,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash25(targetDocument, hash2) {
+  function documentContainsStyleHash25(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE25}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE25) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE25) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle25(targetDocument, hash2, css2) {
+  function injectStyle25(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -33242,18 +31007,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash25(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash25(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE25, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE25, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument25(targetDocument) {
     const runtime = getRuntime25();
@@ -33261,8 +31026,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle25(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle25(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -33276,11 +31041,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle24(hash2, css2) {
+  function registerStyle24(hash, css2) {
     const runtime = getRuntime25();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle25(targetDocument, hash2, css2);
+      injectStyle25(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -33335,7 +31100,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // packages/components/build-module/range-control/rail.mjs
   var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
-  var import_react86 = __toESM(require_react(), 1);
+  var import_react84 = __toESM(require_react(), 1);
   var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
   function getRuntime26() {
     const globalScope = globalThis;
@@ -33352,20 +31117,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash26(targetDocument, hash2) {
+  function documentContainsStyleHash26(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE26}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE26) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE26) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle26(targetDocument, hash2, css2) {
+  function injectStyle26(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -33375,18 +31140,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash26(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash26(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE26, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE26, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument26(targetDocument) {
     const runtime = getRuntime26();
@@ -33394,8 +31159,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle26(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle26(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -33409,11 +31174,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle25(hash2, css2) {
+  function registerStyle25(hash, css2) {
     const runtime = getRuntime26();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle26(targetDocument, hash2, css2);
+      injectStyle26(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -33485,7 +31250,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           "components-range-control__marks",
           style_module_default25.marks
         ),
-        children: marksData.map((mark) => /* @__PURE__ */ (0, import_react86.createElement)(
+        children: marksData.map((mark) => /* @__PURE__ */ (0, import_react84.createElement)(
           RangeMark,
           {
             ...mark,
@@ -33555,20 +31320,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash27(targetDocument, hash2) {
+  function documentContainsStyleHash27(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE27}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE27) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE27) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle27(targetDocument, hash2, css2) {
+  function injectStyle27(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -33578,18 +31343,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash27(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash27(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE27, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE27, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument27(targetDocument) {
     const runtime = getRuntime27();
@@ -33597,8 +31362,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle27(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle27(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -33612,11 +31377,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle26(hash2, css2) {
+  function registerStyle26(hash, css2) {
     const runtime = getRuntime27();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle27(targetDocument, hash2, css2);
+      injectStyle27(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -33700,20 +31465,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash28(targetDocument, hash2) {
+  function documentContainsStyleHash28(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE28}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE28) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE28) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle28(targetDocument, hash2, css2) {
+  function injectStyle28(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -33723,18 +31488,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash28(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash28(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE28, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE28, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument28(targetDocument) {
     const runtime = getRuntime28();
@@ -33742,8 +31507,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle28(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle28(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -33757,11 +31522,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle27(hash2, css2) {
+  function registerStyle27(hash, css2) {
     const runtime = getRuntime28();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle28(targetDocument, hash2, css2);
+      injectStyle28(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -33862,8 +31627,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       setValue(nextValue);
       onChange(nextValue);
     };
-    const handleOnChange = (next2) => {
-      let nextValue = parseFloat(next2);
+    const handleOnChange = (next) => {
+      let nextValue = parseFloat(next);
       setValue(nextValue);
       if (!isNaN(nextValue)) {
         if (nextValue < min2 || nextValue > max2) {
@@ -34081,20 +31846,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash29(targetDocument, hash2) {
+  function documentContainsStyleHash29(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE29}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE29) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE29) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle29(targetDocument, hash2, css2) {
+  function injectStyle29(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -34104,18 +31869,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash29(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash29(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE29, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE29, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument29(targetDocument) {
     const runtime = getRuntime29();
@@ -34123,8 +31888,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle29(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle29(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -34138,11 +31903,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle28(hash2, css2) {
+  function registerStyle28(hash, css2) {
     const runtime = getRuntime29();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle29(targetDocument, hash2, css2);
+      injectStyle29(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -34404,7 +32169,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var import_element72 = __toESM(require_element(), 1);
 
   // node_modules/.store/react-colorful@5.8.1-ZlsHdwpPAIiwA4_AEInjJA/node_modules/react-colorful/dist/index.mjs
-  var import_react87 = __toESM(require_react(), 1);
+  var import_react85 = __toESM(require_react(), 1);
   function l2() {
     return (l2 = Object.assign || function(e3) {
       for (var r4 = 1; r4 < arguments.length; r4++) {
@@ -34421,7 +32186,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     return o3;
   }
   function i(e3) {
-    var n2 = (0, import_react87.useRef)(e3), t3 = (0, import_react87.useRef)(function(e4) {
+    var n2 = (0, import_react85.useRef)(e3), t3 = (0, import_react85.useRef)(function(e4) {
       n2.current && n2.current(e4);
     });
     return n2.current = e3, t3.current;
@@ -34445,8 +32210,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var h = function(e3) {
     !f(e3) && e3.preventDefault();
   };
-  var g2 = import_react87.default.memo(function(o3) {
-    var a2 = o3.onMove, u2 = o3.onKey, s2 = o3.onEnd, g3 = c2(o3, ["onMove", "onKey", "onEnd"]), m3 = (0, import_react87.useRef)(null), p3 = i(a2), b2 = i(u2), _2 = i(s2), E2 = (0, import_react87.useRef)(null), C2 = (0, import_react87.useRef)(false), x2 = (0, import_react87.useMemo)(function() {
+  var g2 = import_react85.default.memo(function(o3) {
+    var a2 = o3.onMove, u2 = o3.onKey, s2 = o3.onEnd, g3 = c2(o3, ["onMove", "onKey", "onEnd"]), m3 = (0, import_react85.useRef)(null), p3 = i(a2), b2 = i(u2), _2 = i(s2), E2 = (0, import_react85.useRef)(null), C2 = (0, import_react85.useRef)(false), x2 = (0, import_react85.useMemo)(function() {
       var e3 = function(e4) {
         h(e4), (f(e4) ? e4.touches.length > 0 : e4.buttons > 0) && m3.current ? p3(v2(m3.current, e4, E2.current)) : (n2(false), _2());
       }, r4 = function() {
@@ -34476,16 +32241,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         r5 >= 37 && r5 <= 40 && _2();
       }, n2];
     }, [b2, p3, _2]), H2 = x2[0], M2 = x2[1], N2 = x2[2], w2 = x2[3];
-    return (0, import_react87.useEffect)(function() {
+    return (0, import_react85.useEffect)(function() {
       return w2;
-    }, [w2]), import_react87.default.createElement("div", l2({}, g3, { onTouchStart: H2, onMouseDown: H2, className: "react-colorful__interactive", ref: m3, onKeyDown: M2, onKeyUp: N2, tabIndex: 0, role: "slider" }));
+    }, [w2]), import_react85.default.createElement("div", l2({}, g3, { onTouchStart: H2, onMouseDown: H2, className: "react-colorful__interactive", ref: m3, onKeyDown: M2, onKeyUp: N2, tabIndex: 0, role: "slider" }));
   });
   var m2 = function(e3) {
     return e3.filter(Boolean).join(" ");
   };
   var p2 = function(r4) {
     var n2 = r4.color, t3 = r4.left, o3 = r4.top, a2 = void 0 === o3 ? 0.5 : o3, u2 = m2(["react-colorful__pointer", r4.className]);
-    return import_react87.default.createElement("div", { className: u2, style: { top: 100 * a2 + "%", left: 100 * t3 + "%" } }, import_react87.default.createElement("div", { className: "react-colorful__pointer-fill", style: { backgroundColor: n2 } }));
+    return import_react85.default.createElement("div", { className: u2, style: { top: 100 * a2 + "%", left: 100 * t3 + "%" } }, import_react85.default.createElement("div", { className: "react-colorful__pointer-fill", style: { backgroundColor: n2 } }));
   };
   var b = function(e3, r4, n2) {
     return void 0 === r4 && (r4 = 0), void 0 === n2 && (n2 = Math.pow(10, r4)), Math.round(n2 * e3) / n2;
@@ -34506,21 +32271,21 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var A2 = function(e3) {
     return { h: b(e3.h), s: b(e3.s), v: b(e3.v), a: b(e3.a, 2) };
   };
-  var R2 = import_react87.default.memo(function(r4) {
+  var R2 = import_react85.default.memo(function(r4) {
     var n2 = r4.hue, t3 = r4.onChange, o3 = r4.onChangeEnd, a2 = m2(["react-colorful__hue", r4.className]);
-    return import_react87.default.createElement("div", { className: a2 }, import_react87.default.createElement(g2, { onMove: function(e3) {
+    return import_react85.default.createElement("div", { className: a2 }, import_react85.default.createElement(g2, { onMove: function(e3) {
       t3({ h: 360 * e3.left });
     }, onKey: function(e3) {
       t3({ h: s(n2 + 360 * e3.left, 0, 360) });
-    }, onEnd: o3, "aria-label": "Hue", "aria-valuenow": b(n2), "aria-valuemax": "360", "aria-valuemin": "0" }, import_react87.default.createElement(p2, { className: "react-colorful__hue-pointer", left: n2 / 360, color: k2({ h: n2, s: 100, v: 100, a: 1 }) })));
+    }, onEnd: o3, "aria-label": "Hue", "aria-valuenow": b(n2), "aria-valuemax": "360", "aria-valuemin": "0" }, import_react85.default.createElement(p2, { className: "react-colorful__hue-pointer", left: n2 / 360, color: k2({ h: n2, s: 100, v: 100, a: 1 }) })));
   });
-  var S2 = import_react87.default.memo(function(r4) {
+  var S2 = import_react85.default.memo(function(r4) {
     var n2 = r4.hsva, t3 = r4.onChange, o3 = r4.onChangeEnd, a2 = { backgroundColor: k2({ h: n2.h, s: 100, v: 100, a: 1 }) };
-    return import_react87.default.createElement("div", { className: "react-colorful__saturation", style: a2 }, import_react87.default.createElement(g2, { onMove: function(e3) {
+    return import_react85.default.createElement("div", { className: "react-colorful__saturation", style: a2 }, import_react85.default.createElement(g2, { onMove: function(e3) {
       t3({ s: 100 * e3.left, v: 100 - 100 * e3.top });
     }, onKey: function(e3) {
       t3({ s: s(n2.s + 100 * e3.left, 0, 100), v: s(n2.v - 100 * e3.top, 0, 100) });
-    }, onEnd: o3, "aria-label": "Color", "aria-valuetext": "Saturation " + b(n2.s) + "%, Brightness " + b(n2.v) + "%" }, import_react87.default.createElement(p2, { className: "react-colorful__saturation-pointer", top: 1 - n2.v / 100, left: n2.s / 100, color: k2(n2) })));
+    }, onEnd: o3, "aria-label": "Color", "aria-valuetext": "Saturation " + b(n2.s) + "%, Brightness " + b(n2.v) + "%" }, import_react85.default.createElement(p2, { className: "react-colorful__saturation-pointer", top: 1 - n2.v / 100, left: n2.s / 100, color: k2(n2) })));
   });
   var T = function(e3, r4) {
     if (e3 === r4) return true;
@@ -34528,29 +32293,29 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     return true;
   };
   function X(e3, n2, u2, l3) {
-    var c3 = i(u2), s2 = i(l3), f2 = (0, import_react87.useState)(function() {
+    var c3 = i(u2), s2 = i(l3), f2 = (0, import_react85.useState)(function() {
       return e3.toHsva(n2);
-    }), d2 = f2[0], v3 = f2[1], h2 = (0, import_react87.useRef)({ color: n2, hsva: d2 }), g3 = (0, import_react87.useRef)(false);
-    (0, import_react87.useEffect)(function() {
+    }), d2 = f2[0], v3 = f2[1], h2 = (0, import_react85.useRef)({ color: n2, hsva: d2 }), g3 = (0, import_react85.useRef)(false);
+    (0, import_react85.useEffect)(function() {
       if (!e3.equal(n2, h2.current.color)) {
         var r4 = e3.toHsva(n2);
         h2.current = { hsva: r4, color: n2 }, v3(r4), g3.current = false;
       }
-    }, [n2, e3]), (0, import_react87.useEffect)(function() {
+    }, [n2, e3]), (0, import_react85.useEffect)(function() {
       var r4;
       T(d2, h2.current.hsva) || e3.equal(r4 = e3.fromHsva(d2), h2.current.color) || (h2.current = { hsva: d2, color: r4 }, c3(r4), g3.current = true);
     }, [d2, e3, c3]);
-    var m3 = (0, import_react87.useCallback)(function(e4) {
+    var m3 = (0, import_react85.useCallback)(function(e4) {
       v3(function(r4) {
         return Object.assign({}, r4, e4);
       });
-    }, []), p3 = (0, import_react87.useCallback)(function() {
+    }, []), p3 = (0, import_react85.useCallback)(function() {
       g3.current && (g3.current = false, s2(h2.current.color));
     }, [s2]);
     return [d2, m3, p3];
   }
   var Y;
-  var U = "undefined" != typeof window ? import_react87.useLayoutEffect : import_react87.useEffect;
+  var U = "undefined" != typeof window ? import_react85.useLayoutEffect : import_react85.useEffect;
   var V2 = function() {
     return Y || ("undefined" != typeof __webpack_nonce__ ? __webpack_nonce__ : void 0);
   };
@@ -34570,30 +32335,30 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }, []);
   };
   var J = function(n2) {
-    var t3 = n2.className, o3 = n2.colorModel, a2 = n2.color, u2 = void 0 === a2 ? o3.defaultColor : a2, i2 = n2.onChange, s2 = n2.onChangeEnd, f2 = c2(n2, ["className", "colorModel", "color", "onChange", "onChangeEnd"]), d2 = (0, import_react87.useRef)(null);
+    var t3 = n2.className, o3 = n2.colorModel, a2 = n2.color, u2 = void 0 === a2 ? o3.defaultColor : a2, i2 = n2.onChange, s2 = n2.onChangeEnd, f2 = c2(n2, ["className", "colorModel", "color", "onChange", "onChangeEnd"]), d2 = (0, import_react85.useRef)(null);
     G(d2);
     var v3 = X(o3, u2, i2, s2), h2 = v3[0], g3 = v3[1], p3 = v3[2], b2 = m2(["react-colorful", t3]);
-    return import_react87.default.createElement("div", l2({}, f2, { ref: d2, className: b2 }), import_react87.default.createElement(S2, { hsva: h2, onChange: g3, onChangeEnd: p3 }), import_react87.default.createElement(R2, { hue: h2.h, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
+    return import_react85.default.createElement("div", l2({}, f2, { ref: d2, className: b2 }), import_react85.default.createElement(S2, { hsva: h2, onChange: g3, onChangeEnd: p3 }), import_react85.default.createElement(R2, { hue: h2.h, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
   };
   var ee = function(r4) {
     var n2 = r4.className, t3 = r4.hsva, o3 = r4.onChange, a2 = r4.onChangeEnd, u2 = { backgroundImage: "linear-gradient(90deg, " + q2(Object.assign({}, t3, { a: 0 })) + ", " + q2(Object.assign({}, t3, { a: 1 })) + ")" }, l3 = m2(["react-colorful__alpha", n2]), c3 = b(100 * t3.a);
-    return import_react87.default.createElement("div", { className: l3 }, import_react87.default.createElement("div", { className: "react-colorful__alpha-gradient", style: u2 }), import_react87.default.createElement(g2, { onMove: function(e3) {
+    return import_react85.default.createElement("div", { className: l3 }, import_react85.default.createElement("div", { className: "react-colorful__alpha-gradient", style: u2 }), import_react85.default.createElement(g2, { onMove: function(e3) {
       o3({ a: e3.left });
     }, onKey: function(e3) {
       o3({ a: s(t3.a + e3.left) });
-    }, onEnd: a2, "aria-label": "Alpha", "aria-valuetext": c3 + "%", "aria-valuenow": c3, "aria-valuemin": "0", "aria-valuemax": "100" }, import_react87.default.createElement(p2, { className: "react-colorful__alpha-pointer", left: t3.a, color: q2(t3) })));
+    }, onEnd: a2, "aria-label": "Alpha", "aria-valuetext": c3 + "%", "aria-valuenow": c3, "aria-valuemin": "0", "aria-valuemax": "100" }, import_react85.default.createElement(p2, { className: "react-colorful__alpha-pointer", left: t3.a, color: q2(t3) })));
   };
   var re = function(n2) {
-    var t3 = n2.className, o3 = n2.colorModel, a2 = n2.color, u2 = void 0 === a2 ? o3.defaultColor : a2, i2 = n2.onChange, s2 = n2.onChangeEnd, f2 = c2(n2, ["className", "colorModel", "color", "onChange", "onChangeEnd"]), d2 = (0, import_react87.useRef)(null);
+    var t3 = n2.className, o3 = n2.colorModel, a2 = n2.color, u2 = void 0 === a2 ? o3.defaultColor : a2, i2 = n2.onChange, s2 = n2.onChangeEnd, f2 = c2(n2, ["className", "colorModel", "color", "onChange", "onChangeEnd"]), d2 = (0, import_react85.useRef)(null);
     G(d2);
     var v3 = X(o3, u2, i2, s2), h2 = v3[0], g3 = v3[1], p3 = v3[2], b2 = m2(["react-colorful", t3]);
-    return import_react87.default.createElement("div", l2({}, f2, { ref: d2, className: b2 }), import_react87.default.createElement(S2, { hsva: h2, onChange: g3, onChangeEnd: p3 }), import_react87.default.createElement(R2, { hue: h2.h, onChange: g3, onChangeEnd: p3 }), import_react87.default.createElement(ee, { hsva: h2, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
+    return import_react85.default.createElement("div", l2({}, f2, { ref: d2, className: b2 }), import_react85.default.createElement(S2, { hsva: h2, onChange: g3, onChangeEnd: p3 }), import_react85.default.createElement(R2, { hue: h2.h, onChange: g3, onChangeEnd: p3 }), import_react85.default.createElement(ee, { hsva: h2, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
   };
   var de = { defaultColor: { h: 0, s: 0, v: 0, a: 1 }, toHsva: function(e3) {
     return e3;
   }, fromHsva: A2, equal: T };
   var ve = function(r4) {
-    return import_react87.default.createElement(re, l2({}, r4, { colorModel: de }));
+    return import_react85.default.createElement(re, l2({}, r4, { colorModel: de }));
   };
   var me = { defaultColor: { h: 0, s: 0, v: 0 }, toHsva: function(e3) {
     return { h: e3.h, s: e3.s, v: e3.v, a: 1 };
@@ -34602,7 +32367,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     return { h: r4.h, s: r4.s, v: r4.v };
   }, equal: T };
   var pe = function(r4) {
-    return import_react87.default.createElement(J, l2({}, r4, { colorModel: me }));
+    return import_react85.default.createElement(J, l2({}, r4, { colorModel: me }));
   };
 
   // packages/components/build-module/color-picker/picker.mjs
@@ -34654,7 +32419,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       pickerOriginHslaRef.current = null;
       setHsva(
-        (prev2) => toHsvaFromHsla(hsla2, prev2, prevHslaRef.current)
+        (prev) => toHsvaFromHsla(hsla2, prev, prevHslaRef.current)
       );
       prevHslaRef.current = hsla2;
     }, [hsla2]);
@@ -34675,9 +32440,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         onInteractionEnd?.();
       }
     };
-    const handleChange = (next2) => {
-      setHsva(next2);
-      const nextHsla = { ...A(next2).toHsl(), a: next2.a };
+    const handleChange = (next) => {
+      setHsva(next);
+      const nextHsla = { ...A(next).toHsl(), a: next.a };
       pickerOriginHslaRef.current = nextHsla;
       onChange(nextHsla);
     };
@@ -34696,8 +32461,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       pe,
       {
         color: hsv,
-        onChange: (next2) => {
-          handleChange({ ...next2, a: hsva.a });
+        onChange: (next) => {
+          handleChange({ ...next, a: hsva.a });
         },
         ...pointerCaptureProps
       }
@@ -34722,20 +32487,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash30(targetDocument, hash2) {
+  function documentContainsStyleHash30(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE30}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE30) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE30) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle30(targetDocument, hash2, css2) {
+  function injectStyle30(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -34745,18 +32510,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash30(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash30(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE30, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE30, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument30(targetDocument) {
     const runtime = getRuntime30();
@@ -34764,8 +32529,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle30(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle30(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -34779,11 +32544,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle29(hash2, css2) {
+  function registerStyle29(hash, css2) {
     const runtime = getRuntime30();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle30(targetDocument, hash2, css2);
+      injectStyle30(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -34838,7 +32603,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       lastProducedHexRef.current = safeColordColor.toHex();
       const externalHSLA = safeColordColor.toHsl();
-      setInternalHSLA((prev2) => mergeHSLA(externalHSLA, prev2));
+      setInternalHSLA((prev) => mergeHSLA(externalHSLA, prev));
     }, [safeColordColor]);
     const handleHSLAChange = (0, import_element73.useCallback)(
       (nextHSLA) => {
@@ -34855,7 +32620,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const handleChange = (0, import_element73.useCallback)(
       (nextValue) => {
         const nextHSLA = nextValue.toHsl();
-        setInternalHSLA((prev2) => mergeHSLA(nextHSLA, prev2));
+        setInternalHSLA((prev) => mergeHSLA(nextHSLA, prev));
         const nextHex = nextValue.toHex();
         lastProducedHexRef.current = nextHex;
         debouncedSetColor(nextHex);
@@ -35439,20 +33204,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash31(targetDocument, hash2) {
+  function documentContainsStyleHash31(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE31}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE31) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE31) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle31(targetDocument, hash2, css2) {
+  function injectStyle31(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -35462,18 +33227,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash31(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash31(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE31, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE31, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument31(targetDocument) {
     const runtime = getRuntime31();
@@ -35481,8 +33246,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle31(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle31(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -35496,11 +33261,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle30(hash2, css2) {
+  function registerStyle30(hash, css2) {
     const runtime = getRuntime31();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle31(targetDocument, hash2, css2);
+      injectStyle31(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -35602,20 +33367,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash32(targetDocument, hash2) {
+  function documentContainsStyleHash32(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE32}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE32) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE32) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle32(targetDocument, hash2, css2) {
+  function injectStyle32(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -35625,18 +33390,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash32(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash32(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE32, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE32, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument32(targetDocument) {
     const runtime = getRuntime32();
@@ -35644,8 +33409,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle32(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle32(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -35659,11 +33424,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle31(hash2, css2) {
+  function registerStyle31(hash, css2) {
     const runtime = getRuntime32();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle32(targetDocument, hash2, css2);
+      injectStyle32(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -35808,8 +33573,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const [normalizedColorValue, setNormalizedColorValue] = (0, import_element78.useState)(value);
     const clearColor = (0, import_element78.useCallback)(() => onChange(void 0), [onChange]);
     const customColorPaletteCallbackRef = (0, import_element78.useCallback)(
-      (node2) => {
-        setNormalizedColorValue(normalizeColorValue(value, node2));
+      (node) => {
+        setNormalizedColorValue(normalizeColorValue(value, node));
       },
       [value]
     );
@@ -36182,10 +33947,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const matchedUnit = unitMatch?.[1]?.toLowerCase();
     let unitToReturn;
     if (hasUnits(allowedUnits)) {
-      const match3 = allowedUnits.find(
+      const match2 = allowedUnits.find(
         (item) => item.value === matchedUnit
       );
-      unitToReturn = match3?.value;
+      unitToReturn = match2?.value;
     } else {
       unitToReturn = DEFAULT_UNIT.value;
     }
@@ -36257,20 +34022,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash33(targetDocument, hash2) {
+  function documentContainsStyleHash33(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE33}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE33) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE33) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle33(targetDocument, hash2, css2) {
+  function injectStyle33(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -36280,18 +34045,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash33(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash33(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE33, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE33, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument33(targetDocument) {
     const runtime = getRuntime33();
@@ -36299,8 +34064,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle33(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle33(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -36314,11 +34079,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle32(hash2, css2) {
+  function registerStyle32(hash, css2) {
     const runtime = getRuntime33();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle33(targetDocument, hash2, css2);
+      injectStyle33(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -36599,20 +34364,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash34(targetDocument, hash2) {
+  function documentContainsStyleHash34(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE34}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle34(targetDocument, hash2, css2) {
+  function injectStyle34(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -36622,18 +34387,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash34(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash34(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE34, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE34, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument34(targetDocument) {
     const runtime = getRuntime34();
@@ -36641,8 +34406,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle34(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle34(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -36656,11 +34421,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle33(hash2, css2) {
+  function registerStyle33(hash, css2) {
     const runtime = getRuntime34();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle34(targetDocument, hash2, css2);
+      injectStyle34(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -36733,20 +34498,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash35(targetDocument, hash2) {
+  function documentContainsStyleHash35(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE35}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE35) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE35) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle35(targetDocument, hash2, css2) {
+  function injectStyle35(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -36756,18 +34521,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash35(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash35(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE35, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE35, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument35(targetDocument) {
     const runtime = getRuntime35();
@@ -36775,8 +34540,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle35(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle35(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -36790,11 +34555,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle34(hash2, css2) {
+  function registerStyle34(hash, css2) {
     const runtime = getRuntime35();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle35(targetDocument, hash2, css2);
+      injectStyle35(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -36971,20 +34736,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash36(targetDocument, hash2) {
+  function documentContainsStyleHash36(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE36}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE36) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE36) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle36(targetDocument, hash2, css2) {
+  function injectStyle36(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -36994,18 +34759,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash36(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash36(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE36, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE36, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument36(targetDocument) {
     const runtime = getRuntime36();
@@ -37013,8 +34778,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle36(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle36(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -37028,11 +34793,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle35(hash2, css2) {
+  function registerStyle35(hash, css2) {
     const runtime = getRuntime36();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle36(targetDocument, hash2, css2);
+      injectStyle36(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -37281,20 +35046,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash37(targetDocument, hash2) {
+  function documentContainsStyleHash37(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE37}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE37) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE37) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle37(targetDocument, hash2, css2) {
+  function injectStyle37(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -37304,18 +35069,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash37(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash37(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE37, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE37, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument37(targetDocument) {
     const runtime = getRuntime37();
@@ -37323,8 +35088,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle37(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle37(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -37338,11 +35103,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle36(hash2, css2) {
+  function registerStyle36(hash, css2) {
     const runtime = getRuntime37();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle37(targetDocument, hash2, css2);
+      injectStyle37(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -37377,10 +35142,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       ...otherProps
     } = useContextSystem(props, "Grid");
     const columnsAsArray = Array.isArray(columns) ? columns : [columns];
-    const column2 = useResponsiveValue(columnsAsArray);
+    const column = useResponsiveValue(columnsAsArray);
     const rowsAsArray = Array.isArray(rows) ? rows : [rows];
     const row = useResponsiveValue(rowsAsArray);
-    const gridTemplateColumns = templateColumns || !!column2 && `repeat( ${column2}, 1fr )`;
+    const gridTemplateColumns = templateColumns || !!column && `repeat( ${column}, 1fr )`;
     const gridTemplateRows = templateRows || !!row && `repeat( ${row}, 1fr )`;
     const alignmentProps = getAlignmentProps2(alignment);
     const values = {
@@ -37458,20 +35223,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash38(targetDocument, hash2) {
+  function documentContainsStyleHash38(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE38}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE38) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE38) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle38(targetDocument, hash2, css2) {
+  function injectStyle38(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -37481,18 +35246,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash38(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash38(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE38, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE38, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument38(targetDocument) {
     const runtime = getRuntime38();
@@ -37500,8 +35265,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle38(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle38(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -37515,11 +35280,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle37(hash2, css2) {
+  function registerStyle37(hash, css2) {
     const runtime = getRuntime38();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle38(targetDocument, hash2, css2);
+      injectStyle38(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -37712,20 +35477,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const parts = [];
     let current = "";
     let depth = 0;
-    for (const char2 of value.trim()) {
-      if (char2 === "(") {
+    for (const char of value.trim()) {
+      if (char === "(") {
         depth++;
-        current += char2;
-      } else if (char2 === ")") {
+        current += char;
+      } else if (char === ")") {
         depth = Math.max(0, depth - 1);
-        current += char2;
-      } else if (/\s/.test(char2) && depth === 0) {
+        current += char;
+      } else if (/\s/.test(char) && depth === 0) {
         if (current) {
           parts.push(current);
           current = "";
         }
       } else {
-        current += char2;
+        current += char;
       }
     }
     if (current) {
@@ -37887,20 +35652,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash39(targetDocument, hash2) {
+  function documentContainsStyleHash39(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE39}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE39) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE39) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle39(targetDocument, hash2, css2) {
+  function injectStyle39(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -37910,18 +35675,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash39(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash39(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE39, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE39, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument39(targetDocument) {
     const runtime = getRuntime39();
@@ -37929,8 +35694,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle39(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle39(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -37944,11 +35709,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle38(hash2, css2) {
+  function registerStyle38(hash, css2) {
     const runtime = getRuntime39();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle39(targetDocument, hash2, css2);
+      injectStyle39(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -38316,13 +36081,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     if (!isValuePreset(value, presetKey)) {
       return void 0;
     }
-    const match3 = value.match(
+    const match2 = value.match(
       new RegExp(`^var:preset\\|${presetKey}\\|(.+)$`)
     );
-    if (!match3) {
+    if (!match2) {
       return void 0;
     }
-    const slug = match3[1];
+    const slug = match2[1];
     const index2 = presets.findIndex((preset) => {
       return preset.slug === slug;
     });
@@ -38351,20 +36116,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash40(targetDocument, hash2) {
+  function documentContainsStyleHash40(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE40}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE40) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE40) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle40(targetDocument, hash2, css2) {
+  function injectStyle40(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -38374,18 +36139,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash40(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash40(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE40, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE40, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument40(targetDocument) {
     const runtime = getRuntime40();
@@ -38393,8 +36158,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle40(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle40(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -38408,11 +36173,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle39(hash2, css2) {
+  function registerStyle39(hash, css2) {
     const runtime = getRuntime40();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle40(targetDocument, hash2, css2);
+      injectStyle40(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -38519,20 +36284,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash41(targetDocument, hash2) {
+  function documentContainsStyleHash41(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE41}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE41) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE41) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle41(targetDocument, hash2, css2) {
+  function injectStyle41(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -38542,18 +36307,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash41(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash41(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE41, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE41, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument41(targetDocument) {
     const runtime = getRuntime41();
@@ -38561,8 +36326,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle41(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle41(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -38576,11 +36341,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle40(hash2, css2) {
+  function registerStyle40(hash, css2) {
     const runtime = getRuntime41();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle41(targetDocument, hash2, css2);
+      injectStyle41(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -38644,17 +36409,17 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const handleOnChange = (nextValues) => {
       onChange(nextValues);
     };
-    const handleRawOnValueChange = (next2) => {
+    const handleRawOnValueChange = (next) => {
       const nextValues = { ...values };
       defaultValuesToModify.forEach((modifiedSide) => {
-        nextValues[modifiedSide] = next2;
+        nextValues[modifiedSide] = next;
       });
       handleOnChange(nextValues);
     };
-    const handleOnValueChange = (next2, extra) => {
+    const handleOnValueChange = (next, extra) => {
       const nextValues = { ...values };
-      const isNumeric = next2 !== void 0 && !isNaN(parseFloat(next2));
-      const nextValue = isNumeric ? next2 : void 0;
+      const isNumeric = next !== void 0 && !isNaN(parseFloat(next));
+      const nextValue = isNumeric ? next : void 0;
       const modifiedSides = getSidesToModify(
         side,
         sides3,
@@ -38672,10 +36437,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       });
       handleOnChange(nextValues);
     };
-    const handleOnUnitChange = (next2) => {
+    const handleOnUnitChange = (next) => {
       const newUnits = { ...selectedUnits };
       defaultValuesToModify.forEach((modifiedSide) => {
-        newUnits[modifiedSide] = next2;
+        newUnits[modifiedSide] = next;
       });
       setSelectedUnits(newUnits);
     };
@@ -38850,20 +36615,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash42(targetDocument, hash2) {
+  function documentContainsStyleHash42(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE42}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE42) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE42) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle42(targetDocument, hash2, css2) {
+  function injectStyle42(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -38873,18 +36638,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash42(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash42(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE42, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE42, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument42(targetDocument) {
     const runtime = getRuntime42();
@@ -38892,8 +36657,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle42(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle42(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -38907,11 +36672,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle41(hash2, css2) {
+  function registerStyle41(hash, css2) {
     const runtime = getRuntime42();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle42(targetDocument, hash2, css2);
+      injectStyle42(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -39091,20 +36856,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash43(targetDocument, hash2) {
+  function documentContainsStyleHash43(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE43}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE43) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE43) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle43(targetDocument, hash2, css2) {
+  function injectStyle43(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -39114,18 +36879,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash43(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash43(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE43, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE43, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument43(targetDocument) {
     const runtime = getRuntime43();
@@ -39133,8 +36898,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle43(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle43(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39148,11 +36913,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle42(hash2, css2) {
+  function registerStyle42(hash, css2) {
     const runtime = getRuntime43();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle43(targetDocument, hash2, css2);
+      injectStyle43(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -39251,20 +37016,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash44(targetDocument, hash2) {
+  function documentContainsStyleHash44(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE44}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE44) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE44) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle44(targetDocument, hash2, css2) {
+  function injectStyle44(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -39274,18 +37039,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash44(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash44(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE44, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE44, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument44(targetDocument) {
     const runtime = getRuntime44();
@@ -39293,8 +37058,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle44(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle44(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39308,11 +37073,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle43(hash2, css2) {
+  function registerStyle43(hash, css2) {
     const runtime = getRuntime44();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle44(targetDocument, hash2, css2);
+      injectStyle44(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -39386,20 +37151,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash45(targetDocument, hash2) {
+  function documentContainsStyleHash45(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE45}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE45) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE45) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle45(targetDocument, hash2, css2) {
+  function injectStyle45(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -39409,18 +37174,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash45(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash45(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE45, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE45, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument45(targetDocument) {
     const runtime = getRuntime45();
@@ -39428,8 +37193,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle45(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle45(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39443,11 +37208,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle44(hash2, css2) {
+  function registerStyle44(hash, css2) {
     const runtime = getRuntime45();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle45(targetDocument, hash2, css2);
+      injectStyle45(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -39520,20 +37285,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash46(targetDocument, hash2) {
+  function documentContainsStyleHash46(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE46}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE46) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE46) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle46(targetDocument, hash2, css2) {
+  function injectStyle46(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -39543,18 +37308,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash46(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash46(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE46, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE46, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument46(targetDocument) {
     const runtime = getRuntime46();
@@ -39562,8 +37327,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle46(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle46(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39577,11 +37342,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle45(hash2, css2) {
+  function registerStyle45(hash, css2) {
     const runtime = getRuntime46();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle46(targetDocument, hash2, css2);
+      injectStyle46(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -39640,20 +37405,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash47(targetDocument, hash2) {
+  function documentContainsStyleHash47(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE47}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE47) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE47) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle47(targetDocument, hash2, css2) {
+  function injectStyle47(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -39663,18 +37428,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash47(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash47(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE47, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE47, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument47(targetDocument) {
     const runtime = getRuntime47();
@@ -39682,8 +37447,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle47(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle47(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39697,11 +37462,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle46(hash2, css2) {
+  function registerStyle46(hash, css2) {
     const runtime = getRuntime47();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle47(targetDocument, hash2, css2);
+      injectStyle47(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -39754,20 +37519,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash48(targetDocument, hash2) {
+  function documentContainsStyleHash48(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE48}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE48) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE48) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle48(targetDocument, hash2, css2) {
+  function injectStyle48(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -39777,18 +37542,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash48(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash48(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE48, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE48, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument48(targetDocument) {
     const runtime = getRuntime48();
@@ -39796,8 +37561,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle48(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle48(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39811,11 +37576,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle47(hash2, css2) {
+  function registerStyle47(hash, css2) {
     const runtime = getRuntime48();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle48(targetDocument, hash2, css2);
+      injectStyle48(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -39863,20 +37628,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash49(targetDocument, hash2) {
+  function documentContainsStyleHash49(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE49}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE49) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE49) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle49(targetDocument, hash2, css2) {
+  function injectStyle49(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -39886,18 +37651,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash49(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash49(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE49, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE49, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument49(targetDocument) {
     const runtime = getRuntime49();
@@ -39905,8 +37670,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle49(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle49(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39920,11 +37685,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle48(hash2, css2) {
+  function registerStyle48(hash, css2) {
     const runtime = getRuntime49();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle49(targetDocument, hash2, css2);
+      injectStyle49(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -39987,20 +37752,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash50(targetDocument, hash2) {
+  function documentContainsStyleHash50(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE50}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE50) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE50) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle50(targetDocument, hash2, css2) {
+  function injectStyle50(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -40010,18 +37775,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash50(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash50(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE50, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE50, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument50(targetDocument) {
     const runtime = getRuntime50();
@@ -40029,8 +37794,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle50(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle50(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -40044,11 +37809,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle49(hash2, css2) {
+  function registerStyle49(hash, css2) {
     const runtime = getRuntime50();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle50(targetDocument, hash2, css2);
+      injectStyle50(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -40103,20 +37868,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash51(targetDocument, hash2) {
+  function documentContainsStyleHash51(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE51}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE51) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE51) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle51(targetDocument, hash2, css2) {
+  function injectStyle51(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -40126,18 +37891,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash51(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash51(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE51, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE51, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument51(targetDocument) {
     const runtime = getRuntime51();
@@ -40145,8 +37910,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle51(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle51(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -40160,11 +37925,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle50(hash2, css2) {
+  function registerStyle50(hash, css2) {
     const runtime = getRuntime51();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle51(targetDocument, hash2, css2);
+      injectStyle51(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -40217,20 +37982,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash52(targetDocument, hash2) {
+  function documentContainsStyleHash52(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE52}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE52) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE52) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle52(targetDocument, hash2, css2) {
+  function injectStyle52(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -40240,18 +38005,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash52(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash52(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE52, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE52, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument52(targetDocument) {
     const runtime = getRuntime52();
@@ -40259,8 +38024,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle52(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle52(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -40274,11 +38039,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle51(hash2, css2) {
+  function registerStyle51(hash, css2) {
     const runtime = getRuntime52();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle52(targetDocument, hash2, css2);
+      injectStyle52(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -40338,20 +38103,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash53(targetDocument, hash2) {
+  function documentContainsStyleHash53(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE53}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE53) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE53) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle53(targetDocument, hash2, css2) {
+  function injectStyle53(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -40361,18 +38126,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash53(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash53(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE53, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE53, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument53(targetDocument) {
     const runtime = getRuntime53();
@@ -40380,8 +38145,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle53(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle53(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -40395,11 +38160,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle52(hash2, css2) {
+  function registerStyle52(hash, css2) {
     const runtime = getRuntime53();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle53(targetDocument, hash2, css2);
+      injectStyle53(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -40457,20 +38222,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash54(targetDocument, hash2) {
+  function documentContainsStyleHash54(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE54}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE54) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE54) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle54(targetDocument, hash2, css2) {
+  function injectStyle54(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -40480,18 +38245,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash54(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash54(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE54, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE54, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument54(targetDocument) {
     const runtime = getRuntime54();
@@ -40499,8 +38264,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle54(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle54(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -40514,11 +38279,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle53(hash2, css2) {
+  function registerStyle53(hash, css2) {
     const runtime = getRuntime54();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle54(targetDocument, hash2, css2);
+      injectStyle54(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -40577,13 +38342,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const [showCheckedIcon, setShowCheckedIcon] = (0, import_element89.useState)(false);
     const [showIndeterminateIcon, setShowIndeterminateIcon] = (0, import_element89.useState)(false);
     const ref = (0, import_compose39.useRefEffect)(
-      (node2) => {
-        if (!node2) {
+      (node) => {
+        if (!node) {
           return;
         }
-        node2.indeterminate = !!indeterminate;
-        setShowCheckedIcon(node2.matches(":checked"));
-        setShowIndeterminateIcon(node2.matches(":indeterminate"));
+        node.indeterminate = !!indeterminate;
+        setShowCheckedIcon(node.matches(":checked"));
+        setShowIndeterminateIcon(node.matches(":indeterminate"));
       },
       [checked2, indeterminate]
     );
@@ -40716,13 +38481,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var import_compose46 = __toESM(require_compose(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useRenderElement.mjs
-  var React13 = __toESM(require_react(), 1);
+  var React10 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useRefWithInit.mjs
-  var React10 = __toESM(require_react(), 1);
+  var React7 = __toESM(require_react(), 1);
   var UNINITIALIZED = {};
   function useRefWithInit(init2, initArg) {
-    const ref = React10.useRef(UNINITIALIZED);
+    const ref = React7.useRef(UNINITIALIZED);
     if (ref.current === UNINITIALIZED) {
       ref.current = init2(initArg);
     }
@@ -40819,18 +38584,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getReactElementRef.mjs
-  var React12 = __toESM(require_react(), 1);
+  var React9 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/reactVersion.mjs
-  var React11 = __toESM(require_react(), 1);
-  var majorVersion = parseInt(React11.version, 10);
+  var React8 = __toESM(require_react(), 1);
+  var majorVersion = parseInt(React8.version, 10);
   function isReactVersionAtLeast(reactVersionToCheck) {
     return majorVersion >= reactVersionToCheck;
   }
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getReactElementRef.mjs
   function getReactElementRef(element) {
-    if (!/* @__PURE__ */ React12.isValidElement(element)) {
+    if (!/* @__PURE__ */ React9.isValidElement(element)) {
       return null;
     }
     const reactElement = element;
@@ -40860,11 +38625,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) {
     loggedMessages = /* @__PURE__ */ new Set();
   }
-  function createLogOnce(severity, prefix2) {
+  function createLogOnce(severity, prefix) {
     return function logOnce(...messages) {
       if (true) {
         const message = messages.join(" ");
-        const output = prefix2 ? `${prefix2}: ${message}` : message;
+        const output = prefix ? `${prefix}: ${message}` : message;
         const key = `${severity}:${output}`;
         if (!loggedMessages.has(key)) {
           loggedMessages.add(key);
@@ -41068,7 +38833,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useRenderElement.mjs
-  var import_react88 = __toESM(require_react(), 1);
+  var import_react86 = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
     let renderProp = componentProps.render;
     if (params.enabled !== false) {
@@ -41131,8 +38896,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     if (render?.$$typeof !== REACT_LAZY_TYPE) {
       return render;
     }
-    const unwrapped = React13.Children.toArray(render)[0];
-    return /* @__PURE__ */ React13.isValidElement(unwrapped) ? unwrapped : render;
+    const unwrapped = React10.Children.toArray(render)[0];
+    return /* @__PURE__ */ React10.isValidElement(unwrapped) ? unwrapped : render;
   }
   function evaluateRenderProp(element, render, props, state) {
     if (render) {
@@ -41145,11 +38910,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       const mergedProps = mergeProps2(props, render.props);
       mergedProps.ref = props.ref;
       if (true) {
-        if (!/* @__PURE__ */ React13.isValidElement(render)) {
+        if (!/* @__PURE__ */ React10.isValidElement(render)) {
           throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
         }
       }
-      return /* @__PURE__ */ React13.cloneElement(render, mergedProps);
+      return /* @__PURE__ */ React10.cloneElement(render, mergedProps);
     }
     return renderTag(element, props);
   }
@@ -41168,34 +38933,34 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
   function renderTag(Tag, props) {
     if (Tag === "button") {
-      return /* @__PURE__ */ (0, import_react88.createElement)("button", {
+      return /* @__PURE__ */ (0, import_react86.createElement)("button", {
         type: "button",
         ...props,
         key: props.key
       });
     }
     if (Tag === "img") {
-      return /* @__PURE__ */ (0, import_react88.createElement)("img", {
+      return /* @__PURE__ */ (0, import_react86.createElement)("img", {
         alt: "",
         ...props,
         key: props.key
       });
     }
-    return /* @__PURE__ */ React13.createElement(Tag, props);
+    return /* @__PURE__ */ React10.createElement(Tag, props);
   }
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/safeReact.mjs
-  var React14 = __toESM(require_react(), 1);
+  var React11 = __toESM(require_react(), 1);
   var SafeReact = {
-    ...React14
+    ...React11
   };
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useStableCallback.mjs
-  var useInsertionEffect6 = SafeReact.useInsertionEffect;
+  var useInsertionEffect4 = SafeReact.useInsertionEffect;
   var useSafeInsertionEffect = (
     // React 17 doesn't have useInsertionEffect.
-    useInsertionEffect6 && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
-    useInsertionEffect6 !== SafeReact.useLayoutEffect ? useInsertionEffect6 : (fn) => fn()
+    useInsertionEffect4 && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
+    useInsertionEffect4 !== SafeReact.useLayoutEffect ? useInsertionEffect4 : (fn) => fn()
   );
   function useStableCallback(callback) {
     const stable = useRefWithInit(createStableCallback).current;
@@ -41224,21 +38989,21 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-  var React15 = __toESM(require_react(), 1);
+  var React12 = __toESM(require_react(), 1);
   var noop12 = () => {
   };
-  var useIsoLayoutEffect = typeof document !== "undefined" ? React15.useLayoutEffect : noop12;
+  var useIsoLayoutEffect = typeof document !== "undefined" ? React12.useLayoutEffect : noop12;
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-  var React17 = __toESM(require_react(), 1);
+  var React14 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
   var ReactDOM2 = __toESM(require_react_dom(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useOnMount.mjs
-  var React16 = __toESM(require_react(), 1);
+  var React13 = __toESM(require_react(), 1);
   function useOnMount(fn) {
-    React16.useEffect(fn, EMPTY_ARRAY);
+    React13.useEffect(fn, EMPTY_ARRAY);
   }
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useAnimationFrame.mjs
@@ -41446,7 +39211,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = parameters;
     const onComplete = useStableCallback(onCompleteParam);
     const runOnceAnimationsFinish = useAnimationsFinished(ref, open2, batch2);
-    React17.useEffect(() => {
+    React14.useEffect(() => {
       if (!enabled) {
         return void 0;
       }
@@ -41478,10 +39243,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  var React18 = __toESM(require_react(), 1);
+  var React15 = __toESM(require_react(), 1);
   function useTransitionStatus(open2, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
-    const [transitionStatus, setTransitionStatus] = React18.useState(open2 && enableIdleState ? "idle" : void 0);
-    const [mounted, setMounted] = React18.useState(open2 && !animateInitialOpen);
+    const [transitionStatus, setTransitionStatus] = React15.useState(open2 && enableIdleState ? "idle" : void 0);
+    const [mounted, setMounted] = React15.useState(open2 && !animateInitialOpen);
     if (open2 && !mounted) {
       setMounted(true);
       setTransitionStatus("starting");
@@ -41593,7 +39358,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   );
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useControlled.mjs
-  var React19 = __toESM(require_react(), 1);
+  var React16 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
   var error = createLogOnce("error", "Base UI");
@@ -41607,25 +39372,25 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }) {
     const {
       current: isControlled
-    } = React19.useRef(controlled !== void 0);
-    const [valueState, setValue] = React19.useState(() => defaultProp);
+    } = React16.useRef(controlled !== void 0);
+    const [valueState, setValue] = React16.useState(() => defaultProp);
     const value = isControlled && controlled !== void 0 ? controlled : valueState;
     if (true) {
-      React19.useEffect(() => {
+      React16.useEffect(() => {
         if (isControlled !== (controlled !== void 0)) {
           error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
         }
       }, [state, name, controlled]);
       const {
         current: defaultValue2
-      } = React19.useRef(defaultProp);
-      React19.useEffect(() => {
+      } = React16.useRef(defaultProp);
+      React16.useEffect(() => {
         if (!isControlled && serializeToDevModeString(defaultValue2) !== serializeToDevModeString(defaultProp)) {
           error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
         }
       }, [defaultProp]);
     }
-    const setValueIfUncontrolled = React19.useCallback((newValue) => {
+    const setValueIfUncontrolled = React16.useCallback((newValue) => {
       if (!isControlled) {
         setValue(newValue);
       }
@@ -41660,11 +39425,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
-  var React21 = __toESM(require_react(), 1);
+  var React18 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
-  var React20 = __toESM(require_react(), 1);
-  var CompositeListContext = /* @__PURE__ */ React20.createContext({
+  var React17 = __toESM(require_react(), 1);
+  var CompositeListContext = /* @__PURE__ */ React17.createContext({
     register: () => {
     },
     unregister: () => {
@@ -41677,7 +39442,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   });
   if (true) CompositeListContext.displayName = "CompositeListContext";
   function useCompositeListContext() {
-    return React20.useContext(CompositeListContext);
+    return React17.useContext(CompositeListContext);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
@@ -41690,13 +39455,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       onMapChange: onMapChangeProp
     } = props;
     const onMapChange = useStableCallback(onMapChangeProp);
-    const [, setMapTick] = React21.useState(0);
+    const [, setMapTick] = React18.useState(0);
     const listeners = useRefWithInit(createListeners).current;
     const map = useRefWithInit(createMap).current;
-    const nextIndexRef = React21.useRef(0);
-    const isDirtyRef = React21.useRef(true);
-    const itemsRef = React21.useRef(null);
-    const mutationObserverRef = React21.useRef(null);
+    const nextIndexRef = React18.useRef(0);
+    const isDirtyRef = React18.useRef(true);
+    const itemsRef = React18.useRef(null);
+    const mutationObserverRef = React18.useRef(null);
     const scheduleMapUpdate = useStableCallback(() => {
       if (isDirtyRef.current) {
         return;
@@ -41704,12 +39469,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       isDirtyRef.current = true;
       setMapTick((tick) => tick + 1);
     });
-    const register2 = useStableCallback((node2, registration) => {
-      map.set(node2, registration);
+    const register2 = useStableCallback((node, registration) => {
+      map.set(node, registration);
       scheduleMapUpdate();
     });
-    const unregister = useStableCallback((node2) => {
-      map.delete(node2);
+    const unregister = useStableCallback((node) => {
+      map.delete(node);
       scheduleMapUpdate();
     });
     const syncRefs = useStableCallback((items) => {
@@ -41742,16 +39507,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           return;
         }
         let previousConnectedNode = null;
-        for (const node2 of sortedNodes) {
-          if (!node2.isConnected) {
+        for (const node of sortedNodes) {
+          if (!node.isConnected) {
             continue;
           }
-          if (previousConnectedNode && sortByDocumentPosition(previousConnectedNode, node2) > 0) {
+          if (previousConnectedNode && sortByDocumentPosition(previousConnectedNode, node) > 0) {
             mutationObserver.disconnect();
             scheduleMapUpdate();
             return;
           }
-          previousConnectedNode = node2;
+          previousConnectedNode = node;
         }
       });
       mutationObserverRef.current = mutationObserver;
@@ -41811,7 +39576,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         listeners.delete(fn);
       };
     });
-    const contextValue = React21.useMemo(() => ({
+    const contextValue = React18.useMemo(() => ({
       register: register2,
       unregister,
       subscribeMapChange,
@@ -41832,14 +39597,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const reservedIndices = /* @__PURE__ */ new Set();
     const items = [];
     const automaticItems = [];
-    map.forEach((registration, node2) => {
-      if (!node2.isConnected) {
+    map.forEach((registration, node) => {
+      if (!node.isConnected) {
         return;
       }
       const index2 = registration.index;
       const item = {
         index: index2 ?? -1,
-        element: node2,
+        element: node,
         registration
       };
       if (index2 === null) {
@@ -41892,41 +39657,41 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useId.mjs
-  var React23 = __toESM(require_react(), 1);
+  var React20 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useForcedRerendering.mjs
-  var React22 = __toESM(require_react(), 1);
+  var React19 = __toESM(require_react(), 1);
   function useForcedRerendering() {
-    const [, setState] = React22.useState({});
-    return React22.useCallback(() => {
+    const [, setState] = React19.useState({});
+    return React19.useCallback(() => {
       setState({});
     }, []);
   }
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useId.mjs
   var globalId = 0;
-  function useGlobalId(idOverride, prefix2 = "mui") {
-    const defaultId = React23.useRef(void 0);
+  function useGlobalId(idOverride, prefix = "mui") {
+    const defaultId = React20.useRef(void 0);
     const forceRerender = useForcedRerendering();
     const id3 = idOverride ?? defaultId.current;
-    React23.useEffect(() => {
+    React20.useEffect(() => {
       if (defaultId.current == null) {
         globalId += 1;
-        defaultId.current = `${prefix2}-${globalId}`;
+        defaultId.current = `${prefix}-${globalId}`;
         if (idOverride == null) {
           forceRerender();
         }
       }
-    }, [idOverride, prefix2, forceRerender]);
+    }, [idOverride, prefix, forceRerender]);
     return id3;
   }
   var maybeReactUseId = SafeReact.useId;
-  function useId5(idOverride, prefix2) {
+  function useId5(idOverride, prefix) {
     if (maybeReactUseId !== void 0) {
       const reactId = maybeReactUseId();
-      return idOverride ?? (prefix2 ? `${prefix2}-${reactId}` : reactId);
+      return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
     }
-    return useGlobalId(idOverride, prefix2);
+    return useGlobalId(idOverride, prefix);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useBaseUiId.mjs
@@ -42047,7 +39812,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var windowResize = "window-resize";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
-  var React24 = __toESM(require_react(), 1);
+  var React21 = __toESM(require_react(), 1);
   function useCompositeListItem(params = {}) {
     const {
       guess,
@@ -42062,8 +39827,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       subscribeMapChange,
       nextIndexRef
     } = useCompositeListContext();
-    const indexRef = React24.useRef(-1);
-    const [internalIndex, setInternalIndex] = React24.useState(externalIndex == null && guess ? () => {
+    const indexRef = React21.useRef(-1);
+    const [internalIndex, setInternalIndex] = React21.useState(externalIndex == null && guess ? () => {
       if (indexRef.current === -1) {
         const newIndex = nextIndexRef.current;
         nextIndexRef.current += 1;
@@ -42072,15 +39837,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return indexRef.current;
     } : -1);
     const index2 = externalIndex ?? internalIndex;
-    const componentRef = React24.useRef(null);
-    const ref = React24.useCallback((node2) => {
+    const componentRef = React21.useRef(null);
+    const ref = React21.useCallback((node) => {
       const previousNode = componentRef.current;
       if (previousNode) {
         unregister(previousNode);
       }
-      componentRef.current = node2;
-      if (node2) {
-        register2(node2, {
+      componentRef.current = node;
+      if (node) {
+        register2(node, {
           metadata: metadata ?? null,
           index: externalIndex ?? null,
           label,
@@ -42106,14 +39871,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/use-button/useButton.mjs
-  var React27 = __toESM(require_react(), 1);
+  var React24 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-  var React25 = __toESM(require_react(), 1);
-  var CompositeRootContext = /* @__PURE__ */ React25.createContext(void 0);
+  var React22 = __toESM(require_react(), 1);
+  var CompositeRootContext = /* @__PURE__ */ React22.createContext(void 0);
   if (true) CompositeRootContext.displayName = "CompositeRootContext";
   function useCompositeRootContext(optional = false) {
-    const context = React25.useContext(CompositeRootContext);
+    const context = React22.useContext(CompositeRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
     }
@@ -42121,7 +39886,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-  var React26 = __toESM(require_react(), 1);
+  var React23 = __toESM(require_react(), 1);
   function useFocusableWhenDisabled(parameters) {
     const {
       focusableWhenDisabled,
@@ -42132,7 +39897,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = parameters;
     const isFocusableComposite = composite && focusableWhenDisabled !== false;
     const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-    const props = React26.useMemo(() => {
+    const props = React23.useMemo(() => {
       const additionalProps = {
         // allow Tabbing away from focusableWhenDisabled elements
         onKeyDown(event) {
@@ -42161,8 +39926,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/owner.mjs
-  function ownerDocument(node2) {
-    return node2?.ownerDocument || document;
+  function ownerDocument(node) {
+    return node?.ownerDocument || document;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/dispatchClickWithModifiers.mjs
@@ -42192,7 +39957,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       native: isNativeButton = true,
       composite: compositeProp
     } = parameters;
-    const elementRef = React27.useRef(null);
+    const elementRef = React24.useRef(null);
     const compositeRootContext = useCompositeRootContext(true);
     const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
     const {
@@ -42205,7 +39970,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       isNativeButton
     });
     if (true) {
-      React27.useEffect(() => {
+      React24.useEffect(() => {
         if (!elementRef.current) {
           return;
         }
@@ -42223,7 +39988,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
       }, [isNativeButton]);
     }
-    const updateDisabled = React27.useCallback(() => {
+    const updateDisabled = React24.useCallback(() => {
       const element = elementRef.current;
       if (!isButtonElement(element)) {
         return;
@@ -42233,7 +39998,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
     }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
     useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-    const getButtonProps = React27.useCallback((externalProps = {}) => {
+    const getButtonProps = React24.useCallback((externalProps = {}) => {
       const {
         onClick: externalOnClick,
         onMouseDown: externalOnMouseDown,
@@ -42746,18 +40511,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return true;
     }
     if (rootNode && isShadowRoot2(rootNode)) {
-      let next2 = child;
-      while (next2) {
-        if (parent === next2) {
+      let next = child;
+      while (next) {
+        if (parent === next) {
           return true;
         }
-        next2 = next2.parentNode || next2.host;
+        next = next.parentNode || next.host;
       }
     }
     return false;
   }
-  function closest(node2, selector2) {
-    let current = node2;
+  function closest(node, selector2) {
+    let current = node;
     while (current) {
       if (isElement2(current) && current.matches(selector2)) {
         return current;
@@ -42867,15 +40632,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return false;
   }
-  function isEventTargetWithin(event, node2) {
-    if (node2 == null) {
+  function isEventTargetWithin(event, node) {
+    if (node == null) {
       return false;
     }
     if ("composedPath" in event) {
-      return event.composedPath().includes(node2);
+      return event.composedPath().includes(node);
     }
     const eventAgain = event;
-    return eventAgain.target != null && node2.contains(eventAgain.target);
+    return eventAgain.target != null && node.contains(eventAgain.target);
   }
   function isRootElement(element) {
     return element.matches("html,body");
@@ -42940,7 +40705,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
-  var React31 = __toESM(require_react(), 1);
+  var React28 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/mergeCleanups.mjs
   function mergeCleanups(...cleanups2) {
@@ -42955,7 +40720,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FocusGuard.mjs
-  var React28 = __toESM(require_react(), 1);
+  var React25 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/visuallyHidden.mjs
   var visuallyHiddenBase = {
@@ -42982,8 +40747,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FocusGuard.mjs
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
-  var FocusGuard = /* @__PURE__ */ React28.forwardRef(function FocusGuard2(props, ref) {
-    const [role, setRole] = React28.useState();
+  var FocusGuard = /* @__PURE__ */ React25.forwardRef(function FocusGuard2(props, ref) {
+    const [role, setRole] = React25.useState();
     useIsoLayoutEffect(() => {
       if (parts_exports.screenReader.voiceOver && parts_exports.engine.webkit) {
         setRole("button");
@@ -43289,14 +41054,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
   function getNodeChildren(nodes, id3, onlyOpenChildren = true) {
-    const directChildren = nodes.filter((node2) => node2.parentId === id3);
+    const directChildren = nodes.filter((node) => node.parentId === id3);
     return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
   }
   function getNodeAncestors(nodes, id3) {
     let allAncestors = [];
-    let currentParentId = nodes.find((node2) => node2.id === id3)?.parentId;
+    let currentParentId = nodes.find((node) => node.id === id3)?.parentId;
     while (currentParentId) {
-      const currentNode = nodes.find((node2) => node2.id === currentParentId);
+      const currentNode = nodes.find((node) => node.id === currentParentId);
       currentParentId = currentNode?.parentId;
       if (currentNode) {
         allAncestors = allAncestors.concat(currentNode);
@@ -43347,11 +41112,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var uncontrolledElementsSet = /* @__PURE__ */ new WeakSet();
   var markerCounterMap = /* @__PURE__ */ new WeakMap();
   var lockCount = 0;
-  function unwrapHost(node2) {
-    if (!node2) {
+  function unwrapHost(node) {
+    if (!node) {
       return null;
     }
-    return isShadowRoot2(node2) ? node2.host : unwrapHost(node2.parentNode);
+    return isShadowRoot2(node) ? node.host : unwrapHost(node.parentNode);
   }
   var correctElements = (parent, targets) => targets.map((target) => {
     if (parent.contains(target)) {
@@ -43366,10 +41131,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var buildKeepSet = (targets) => {
     const keep = /* @__PURE__ */ new Set();
     targets.forEach((target) => {
-      let node2 = target;
-      while (node2 && !keep.has(node2)) {
-        keep.add(node2);
-        node2 = node2.parentNode;
+      let node = target;
+      while (node && !keep.has(node)) {
+        keep.add(node);
+        node = node.parentNode;
       }
     });
     return keep;
@@ -43380,14 +41145,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       if (!parent || stopElements.has(parent)) {
         return;
       }
-      Array.from(parent.children).forEach((node2) => {
-        if (getNodeName(node2) === "script") {
+      Array.from(parent.children).forEach((node) => {
+        if (getNodeName(node) === "script") {
           return;
         }
-        if (keepElements.has(node2)) {
-          walk(node2);
+        if (keepElements.has(node)) {
+          walk(node);
         } else {
-          outside.push(node2);
+          outside.push(node);
         }
       });
     };
@@ -43405,27 +41170,27 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       const ariaLiveElements = correctElements(body, Array.from(body.querySelectorAll("[aria-live]")));
       const controlElements = avoidElements.concat(ariaLiveElements);
       const controlTargets = collectOutsideElements(body, buildKeepSet(controlElements), new Set(controlElements));
-      controlTargets.forEach((node2) => {
-        const attr2 = node2.getAttribute("aria-hidden");
+      controlTargets.forEach((node) => {
+        const attr2 = node.getAttribute("aria-hidden");
         const alreadyHidden = attr2 !== null && attr2 !== "false";
-        const counterValue = (ariaHiddenCounterMap.get(node2) || 0) + 1;
-        ariaHiddenCounterMap.set(node2, counterValue);
-        hiddenElements.push(node2);
+        const counterValue = (ariaHiddenCounterMap.get(node) || 0) + 1;
+        ariaHiddenCounterMap.set(node, counterValue);
+        hiddenElements.push(node);
         if (counterValue === 1 && alreadyHidden) {
-          uncontrolledElementsSet.add(node2);
+          uncontrolledElementsSet.add(node);
         }
         if (!alreadyHidden) {
-          node2.setAttribute("aria-hidden", "true");
+          node.setAttribute("aria-hidden", "true");
         }
       });
     }
     if (mark) {
-      markerTargets.forEach((node2) => {
-        const markerValue = (markerCounterMap.get(node2) || 0) + 1;
-        markerCounterMap.set(node2, markerValue);
-        markedElements.push(node2);
+      markerTargets.forEach((node) => {
+        const markerValue = (markerCounterMap.get(node) || 0) + 1;
+        markerCounterMap.set(node, markerValue);
+        markedElements.push(node);
         if (markerValue === 1) {
-          node2.setAttribute(markerName, "");
+          node.setAttribute(markerName, "");
         }
       });
     }
@@ -43470,7 +41235,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
-  var React29 = __toESM(require_react(), 1);
+  var React26 = __toESM(require_react(), 1);
   var ReactDOM3 = __toESM(require_react_dom(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/constants.mjs
@@ -43501,9 +41266,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
   var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
-  var PortalContext2 = /* @__PURE__ */ React29.createContext(null);
+  var PortalContext2 = /* @__PURE__ */ React26.createContext(null);
   if (true) PortalContext2.displayName = "PortalContext";
-  var usePortalContext = () => React29.useContext(PortalContext2);
+  var usePortalContext = () => React26.useContext(PortalContext2);
   var attr = createAttribute("portal");
   function useFloatingPortalNode(props = {}) {
     const {
@@ -43515,14 +41280,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const uniqueId = useId5();
     const portalContext = usePortalContext();
     const parentPortalNode = portalContext?.portalNode;
-    const [containerElement, setContainerElement] = React29.useState(null);
-    const [portalNode, setPortalNode] = React29.useState(null);
-    const setPortalNodeRef = useStableCallback((node2) => {
-      if (node2 !== null) {
-        setPortalNode(node2);
+    const [containerElement, setContainerElement] = React26.useState(null);
+    const [portalNode, setPortalNode] = React26.useState(null);
+    const setPortalNodeRef = useStableCallback((node) => {
+      if (node !== null) {
+        setPortalNode(node);
       }
     });
-    const containerRef = React29.useRef(null);
+    const containerRef = React26.useRef(null);
     useIsoLayoutEffect(() => {
       if (containerProp === null) {
         if (containerRef.current) {
@@ -43559,11 +41324,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       node: portalNode,
       // `id` and `render` props can override or remove the generated ID. Use the exact
       // rendered value so `aria-owns` never points at an ID absent from the DOM.
-      nodeId: /* @__PURE__ */ React29.isValidElement(portalElement) ? portalElement.props.id : void 0,
+      nodeId: /* @__PURE__ */ React26.isValidElement(portalElement) ? portalElement.props.id : void 0,
       subtree: portalSubtree
     };
   }
-  var FloatingPortal = /* @__PURE__ */ React29.forwardRef(function FloatingPortal2(componentProps, forwardedRef) {
+  var FloatingPortal = /* @__PURE__ */ React26.forwardRef(function FloatingPortal2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -43583,16 +41348,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       componentProps,
       elementProps
     });
-    const beforeOutsideRef = React29.useRef(null);
-    const afterOutsideRef = React29.useRef(null);
-    const beforeInsideRef = React29.useRef(null);
-    const afterInsideRef = React29.useRef(null);
-    const [focusManagerState, setFocusManagerState] = React29.useState(null);
-    const focusInsideDisabledRef = React29.useRef(false);
+    const beforeOutsideRef = React26.useRef(null);
+    const afterOutsideRef = React26.useRef(null);
+    const beforeInsideRef = React26.useRef(null);
+    const afterInsideRef = React26.useRef(null);
+    const [focusManagerState, setFocusManagerState] = React26.useState(null);
+    const focusInsideDisabledRef = React26.useRef(false);
     const modal = focusManagerState?.modal;
     const open2 = focusManagerState?.open;
     const shouldRenderGuards = !!focusManagerState && !focusManagerState.modal && focusManagerState.open && !!portalNode;
-    React29.useEffect(() => {
+    React26.useEffect(() => {
       if (!portalNode || modal) {
         return void 0;
       }
@@ -43618,7 +41383,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       enableFocusInside(portalNode);
       focusInsideDisabledRef.current = false;
     }, [open2, portalNode]);
-    const portalContextValue = React29.useMemo(() => ({
+    const portalContextValue = React26.useMemo(() => ({
       beforeOutsideRef,
       afterOutsideRef,
       beforeInsideRef,
@@ -43626,7 +41391,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       portalNode,
       setFocusManagerState
     }), [portalNode]);
-    return /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)(React29.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)(React26.Fragment, {
       children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)(PortalContext2.Provider, {
         value: portalContextValue,
         children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(FocusGuard, {
@@ -43667,7 +41432,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) FloatingPortal.displayName = "FloatingPortal";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
-  var React30 = __toESM(require_react(), 1);
+  var React27 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
   function createEventEmitter() {
@@ -43694,11 +41459,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       current: []
     };
     events = createEventEmitter();
-    addNode(node2) {
-      this.nodesRef.current.push(node2);
+    addNode(node) {
+      this.nodesRef.current.push(node);
     }
-    removeNode(node2) {
-      const index2 = this.nodesRef.current.findIndex((n2) => n2 === node2);
+    removeNode(node) {
+      const index2 = this.nodesRef.current.findIndex((n2) => n2 === node);
       if (index2 !== -1) {
         this.nodesRef.current.splice(index2, 1);
       }
@@ -43707,13 +41472,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
-  var FloatingNodeContext = /* @__PURE__ */ React30.createContext(null);
+  var FloatingNodeContext = /* @__PURE__ */ React27.createContext(null);
   if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
-  var FloatingTreeContext = /* @__PURE__ */ React30.createContext(null);
+  var FloatingTreeContext = /* @__PURE__ */ React27.createContext(null);
   if (true) FloatingTreeContext.displayName = "FloatingTreeContext";
-  var useFloatingParentNodeId = () => React30.useContext(FloatingNodeContext)?.id || null;
+  var useFloatingParentNodeId = () => React27.useContext(FloatingNodeContext)?.id || null;
   var useFloatingTree = (externalTree) => {
-    const contextTree = React30.useContext(FloatingTreeContext);
+    const contextTree = React27.useContext(FloatingTreeContext);
     return externalTree ?? contextTree;
   };
   function useFloatingNodeId(externalTree) {
@@ -43724,13 +41489,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       if (!id3) {
         return void 0;
       }
-      const node2 = {
+      const node = {
         id: id3,
         parentId
       };
-      tree?.addNode(node2);
+      tree?.addNode(node);
       return () => {
-        tree?.removeNode(node2);
+        tree?.removeNode(node);
       };
     }, [tree, id3, parentId]);
     return id3;
@@ -43742,7 +41507,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = props;
     const parentId = useFloatingParentNodeId();
     return /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(FloatingNodeContext.Provider, {
-      value: React30.useMemo(() => ({
+      value: React27.useMemo(() => ({
         id: id3,
         parentId
       }), [id3, parentId]),
@@ -43869,14 +41634,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const openRef = useValueAsRef(open2);
     const tree = useFloatingTree(externalTree);
     const portalContext = usePortalContext();
-    const preventReturnFocusRef = React31.useRef(false);
-    const isPointerDownRef = React31.useRef(false);
-    const pointerDownOutsideRef = React31.useRef(false);
-    const lastFocusedTabbableRef = React31.useRef(null);
-    const closeTypeRef = React31.useRef("");
-    const lastInteractionTypeRef = React31.useRef("");
-    const beforeGuardRef = React31.useRef(null);
-    const afterGuardRef = React31.useRef(null);
+    const preventReturnFocusRef = React28.useRef(false);
+    const isPointerDownRef = React28.useRef(false);
+    const pointerDownOutsideRef = React28.useRef(false);
+    const lastFocusedTabbableRef = React28.useRef(null);
+    const closeTypeRef = React28.useRef("");
+    const lastInteractionTypeRef = React28.useRef("");
+    const beforeGuardRef = React28.useRef(null);
+    const afterGuardRef = React28.useRef(null);
     const mergedBeforeGuardRef = useMergedRefs(beforeGuardRef, beforeContentFocusGuardRef, portalContext?.beforeInsideRef);
     const mergedAfterGuardRef = useMergedRefs(afterGuardRef, portalContext?.afterInsideRef);
     const blurTimeout = useTimeout();
@@ -43888,7 +41653,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return container ? tabbable(container) : [];
     });
     const getResolvedInsideElements = useStableCallback(() => getInsideElements?.().filter((element) => element != null) ?? []);
-    React31.useEffect(() => {
+    React28.useEffect(() => {
       if (disabled2 || !modal) {
         return void 0;
       }
@@ -43902,7 +41667,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       const doc = ownerDocument(floatingFocusElement);
       return addEventListener(doc, "keydown", onKeyDown);
     }, [disabled2, floatingFocusElement, modal, isUntrappedTypeableCombobox, getTabbableContent]);
-    React31.useEffect(() => {
+    React28.useEffect(() => {
       if (disabled2 || !open2) {
         return void 0;
       }
@@ -43936,7 +41701,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         clearPointerDownOutside
       );
     }, [disabled2, floating, domReference, floatingFocusElement, open2, portalContext, pointerDownTimeout, getResolvedInsideElements]);
-    React31.useEffect(() => {
+    React28.useEffect(() => {
       if (disabled2 || !closeOnFocusOut) {
         return void 0;
       }
@@ -43965,7 +41730,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           const triggers = store.context.triggerElements;
           const insideElements2 = getResolvedInsideElements();
           const isRelatedFocusGuard = relatedTarget?.hasAttribute(createAttribute("focus-guard")) && [beforeGuardRef.current, afterGuardRef.current, portalContext?.beforeInsideRef.current, portalContext?.afterInsideRef.current, portalContext?.beforeOutsideRef.current, portalContext?.afterOutsideRef.current, resolveRef(previousFocusableElement), resolveRef(nextFocusableElement)].includes(relatedTarget);
-          const movedToUnrelatedNode = !(contains2(domReference, relatedTarget) || contains2(floating, relatedTarget) || contains2(relatedTarget, floating) || contains2(portalContext?.portalNode, relatedTarget) || insideElements2.some((element) => element === relatedTarget || contains2(element, relatedTarget)) || triggers.hasMatchingElement((trigger) => contains2(trigger, relatedTarget)) || isRelatedFocusGuard || tree && (getNodeChildren(tree.nodesRef.current, nodeId).find((node2) => contains2(node2.context?.elements.floating, relatedTarget) || contains2(node2.context?.elements.domReference, relatedTarget)) || getNodeAncestors(tree.nodesRef.current, nodeId).find((node2) => [node2.context?.elements.floating, getFloatingFocusElement(node2.context?.elements.floating)].includes(relatedTarget) || node2.context?.elements.domReference === relatedTarget)));
+          const movedToUnrelatedNode = !(contains2(domReference, relatedTarget) || contains2(floating, relatedTarget) || contains2(relatedTarget, floating) || contains2(portalContext?.portalNode, relatedTarget) || insideElements2.some((element) => element === relatedTarget || contains2(element, relatedTarget)) || triggers.hasMatchingElement((trigger) => contains2(trigger, relatedTarget)) || isRelatedFocusGuard || tree && (getNodeChildren(tree.nodesRef.current, nodeId).find((node) => contains2(node.context?.elements.floating, relatedTarget) || contains2(node.context?.elements.domReference, relatedTarget)) || getNodeAncestors(tree.nodesRef.current, nodeId).find((node) => [node.context?.elements.floating, getFloatingFocusElement(node.context?.elements.floating)].includes(relatedTarget) || node.context?.elements.domReference === relatedTarget)));
           if (currentTarget === domReference && floatingFocusElement) {
             handleTabIndex(floatingFocusElement);
           }
@@ -44018,13 +41783,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return mergeCleanups(domReferenceElement && addEventListener(domReferenceElement, "focusout", handleFocusOutside), domReferenceElement && addEventListener(domReferenceElement, "pointerdown", handlePointerDown), floating && addEventListener(floating, "focusin", handleFocusIn), floating && addEventListener(floating, "focusout", handleFocusOutside), floating && portalContext && addEventListener(floating, "focusout", markInsideReactTree, true));
     }, [disabled2, domReference, floating, floatingFocusElement, modal, tree, portalContext, store, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
-    React31.useEffect(() => {
+    React28.useEffect(() => {
       if (disabled2 || !floating || !open2) {
         return void 0;
       }
       const portalNodes = Array.from(portalContext?.portalNode?.querySelectorAll(`[${createAttribute("portal")}]`) || []);
       const ancestors = tree ? getNodeAncestors(tree.nodesRef.current, getNodeId()) : [];
-      const rootAncestorComboboxDomReference = ancestors.find((node2) => isTypeableCombobox(node2.context?.elements.domReference || null))?.context?.elements.domReference;
+      const rootAncestorComboboxDomReference = ancestors.find((node) => isTypeableCombobox(node.context?.elements.domReference || null))?.context?.elements.domReference;
       const controlInsideElements = [floating, ...portalNodes, beforeGuardRef.current, afterGuardRef.current, portalContext?.beforeOutsideRef.current, portalContext?.afterOutsideRef.current, ...getResolvedInsideElements()];
       const insideElements2 = [...controlInsideElements, rootAncestorComboboxDomReference, resolveRef(previousFocusableElement), resolveRef(nextFocusableElement), isUntrappedTypeableCombobox ? domReference : null].filter((x2) => x2 != null);
       const ariaHiddenCleanup = markOthers(insideElements2, {
@@ -44090,7 +41855,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         });
       });
     }, [disabled2, open2, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef, dataRef]);
-    const pendingReturnFocusRef = React31.useRef(null);
+    const pendingReturnFocusRef = React28.useRef(null);
     useIsoLayoutEffect(() => {
       if (disabled2 || !floatingFocusElement) {
         pendingReturnFocusRef.current = null;
@@ -44158,7 +41923,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         events.off("openchange", onOpenChangeLocal);
         const activeEl = activeElement(doc);
         const insideElements2 = getResolvedInsideElements();
-        const isFocusInsideFloatingTree = contains2(floating, activeEl) || insideElements2.some((element) => element === activeEl || contains2(element, activeEl)) || tree && getNodeChildren(tree.nodesRef.current, getNodeId(), false).some((node2) => contains2(node2.context?.elements.floating, activeEl));
+        const isFocusInsideFloatingTree = contains2(floating, activeEl) || insideElements2.some((element) => element === activeEl || contains2(element, activeEl)) || tree && getNodeChildren(tree.nodesRef.current, getNodeId(), false).some((node) => contains2(node.context?.elements.floating, activeEl));
         const returnFocusValueOrFn = returnFocusRef.current;
         const closeType = closeTypeRef.current;
         const returnElement = getReturnElement(closeType);
@@ -44228,7 +41993,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       };
     }, [disabled2, floatingFocusElement]);
     const shouldRenderGuards = !disabled2 && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
-    return /* @__PURE__ */ (0, import_jsx_runtime175.jsxs)(React31.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime175.jsxs)(React28.Fragment, {
       children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(FocusGuard, {
         "data-type": "inside",
         ref: mergedBeforeGuardRef,
@@ -44269,7 +42034,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useClick.mjs
-  var React32 = __toESM(require_react(), 1);
+  var React29 = __toESM(require_react(), 1);
   function useClick(store, props = {}) {
     const {
       enabled = true,
@@ -44281,10 +42046,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       reason = reason_parts_exports.triggerPress
     } = props;
     const dataRef = store.context.dataRef;
-    const pointerTypeRef = React32.useRef(void 0);
+    const pointerTypeRef = React29.useRef(void 0);
     const frame2 = useAnimationFrame();
     const touchOpenTimeout = useTimeout();
-    const reference = React32.useMemo(() => {
+    const reference = React29.useMemo(() => {
       function setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType) {
         const details = createChangeEventDetails(reason, nativeEvent, target);
         if (nextOpen && pointerType === "touch" && touchOpenDelay > 0) {
@@ -44356,13 +42121,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
       };
     }, [dataRef, eventOption, ignoreMouse, reason, store, stickIfOpen, toggle, frame2, touchOpenTimeout, touchOpenDelay]);
-    return React32.useMemo(() => enabled ? {
+    return React29.useMemo(() => enabled ? {
       reference
     } : EMPTY_OBJECT, [enabled, reference]);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
-  var React33 = __toESM(require_react(), 1);
+  var React30 = __toESM(require_react(), 1);
   function alwaysFalse() {
     return false;
   }
@@ -44397,13 +42162,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       escapeKey: escapeKeyBubbles,
       outsidePress: outsidePressBubbles
     } = normalizeProp(bubbles);
-    const pressStartedInsideRef = React33.useRef(false);
-    const pressStartPreventedRef = React33.useRef(false);
-    const suppressNextOutsideClickRef = React33.useRef(false);
-    const sawPressWhileOpenRef = React33.useRef(false);
-    const isComposingRef = React33.useRef(false);
-    const currentPointerTypeRef = React33.useRef("");
-    const touchStateRef = React33.useRef(null);
+    const pressStartedInsideRef = React30.useRef(false);
+    const pressStartPreventedRef = React30.useRef(false);
+    const suppressNextOutsideClickRef = React30.useRef(false);
+    const sawPressWhileOpenRef = React30.useRef(false);
+    const isComposingRef = React30.useRef(false);
+    const currentPointerTypeRef = React30.useRef("");
+    const touchStateRef = React30.useRef(null);
     const cancelDismissOnEndTimeout = useTimeout();
     const clearInsideReactTreeTimeout = useTimeout();
     const compositionTimeout = useTimeout();
@@ -44473,7 +42238,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         pressStartPreventedRef.current = true;
       }
     });
-    React33.useEffect(() => {
+    React30.useEffect(() => {
       function handleOpenChange(details) {
         if (!details.open) {
           sawPressWhileOpenRef.current = false;
@@ -44484,8 +42249,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         events.off("openchange", handleOpenChange);
       };
     }, [events]);
-    React33.useEffect(() => clearInsideReactTree, [clearInsideReactTree]);
-    React33.useEffect(() => {
+    React30.useEffect(() => clearInsideReactTree, [clearInsideReactTree]);
+    React30.useEffect(() => {
       if (!open2 || !enabled) {
         if (!open2) {
           sawPressWhileOpenRef.current = false;
@@ -44540,7 +42305,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       function isEventWithinFloatingTree(event) {
         const nodeId = dataRef.current.floatingContext?.nodeId;
-        const targetIsInsideChildren = tree && getNodeChildren(tree.nodesRef.current, nodeId).some((node2) => isEventTargetWithin(event, node2.context?.elements.floating));
+        const targetIsInsideChildren = tree && getNodeChildren(tree.nodesRef.current, nodeId).some((node) => isEventTargetWithin(event, node.context?.elements.floating));
         return isEventWithinOwnElements(event) || targetIsInsideChildren;
       }
       function closeOnPressOutside(event) {
@@ -44760,12 +42525,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         suppressNextOutsideClickRef.current = false;
       };
     }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open2, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout, compositionTimeout]);
-    const reference = React33.useMemo(() => ({
+    const reference = React30.useMemo(() => ({
       onKeyDown: closeOnEscapeKeyDown,
       onPointerDown: closeOnReferencePress,
       onClick: closeOnReferencePress
     }), [closeOnEscapeKeyDown, closeOnReferencePress]);
-    const floating = React33.useMemo(() => ({
+    const floating = React30.useMemo(() => ({
       onKeyDown: closeOnEscapeKeyDown,
       // `onMouseDown` may be blocked if `event.preventDefault()` is called in
       // `onPointerDown`, such as with <NumberField.ScrubArea>.
@@ -44785,7 +42550,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       onTouchEndCapture: markInsideReactTree,
       onTouchMoveCapture: markInsideReactTree
     }), [closeOnEscapeKeyDown, markInsideReactTree, markPressStartedInsideReactTree, markInsidePressStartPrevented]);
-    return React33.useMemo(() => enabled ? {
+    return React30.useMemo(() => enabled ? {
       reference,
       floating,
       trigger: reference
@@ -44954,7 +42719,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
-  var React35 = __toESM(require_react(), 1);
+  var React32 = __toESM(require_react(), 1);
   var ReactDOM4 = __toESM(require_react_dom(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
@@ -44993,7 +42758,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useUnmountAfterClose.mjs
-  var React34 = __toESM(require_react(), 1);
+  var React31 = __toESM(require_react(), 1);
   function useUnmountAfterClose(parameters) {
     const {
       open: open2,
@@ -45015,8 +42780,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         setPreventUnmountOnClose(false);
       }
     }, [open2, setPreventUnmountOnClose]);
-    const mountedRef = React34.useRef(mounted);
-    const pendingUnmountRef = React34.useRef(false);
+    const mountedRef = React31.useRef(mounted);
+    const pendingUnmountRef = React31.useRef(false);
     const rerender = useForcedRerendering();
     const unmount = () => {
       mountedRef.current = false;
@@ -45082,7 +42847,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
   }
   function useTriggerRegistration(id3, store) {
-    const registrationRef = React35.useRef(null);
+    const registrationRef = React32.useRef(null);
     return useStableCallback((element) => {
       const registration = registrationRef.current;
       if (registration !== null) {
@@ -45192,7 +42957,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const {
       closeOnActiveTriggerUnmount = false
     } = options2;
-    const resolvedActiveTriggerIdRef = React35.useRef(null);
+    const resolvedActiveTriggerIdRef = React32.useRef(null);
     const open2 = store.useState("open");
     const reactiveTriggerCount = store.useState("triggerCount");
     const activeTriggerId = store.useState("activeTriggerId");
@@ -45412,12 +43177,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   };
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/useStore.mjs
-  var React37 = __toESM(require_react(), 1);
+  var React34 = __toESM(require_react(), 1);
   var import_shim2 = __toESM(require_shim(), 1);
   var import_with_selector = __toESM(require_with_selector(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/fastHooks.mjs
-  var React36 = __toESM(require_react(), 1);
+  var React33 = __toESM(require_react(), 1);
   var hooks = [];
   var currentInstance = void 0;
   function getInstance() {
@@ -45449,7 +43214,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     return FastComponent;
   }
   function fastComponentRef(fn) {
-    return /* @__PURE__ */ React36.forwardRef(fastComponent(fn));
+    return /* @__PURE__ */ React33.forwardRef(fastComponent(fn));
   }
   function createInstance() {
     return {
@@ -45464,7 +43229,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     return useStoreImplementation(store, selector2, a1, a2, a3);
   }
   function useStoreR19(store, selector2, a1, a2, a3) {
-    const getSelection = React37.useCallback(() => selector2(store.getSnapshot(), a1, a2, a3), [store, selector2, a1, a2, a3]);
+    const getSelection = React34.useCallback(() => selector2(store.getSnapshot(), a1, a2, a3), [store, selector2, a1, a2, a3]);
     return (0, import_shim2.useSyncExternalStore)(store.subscribe, getSelection, getSelection);
   }
   register({
@@ -45661,7 +43426,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   };
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/store/ReactStore.mjs
-  var React38 = __toESM(require_react(), 1);
+  var React35 = __toESM(require_react(), 1);
   var ReactStore = class extends Store {
     /**
      * Creates a new ReactStore instance.
@@ -45685,7 +43450,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
      * by `useState` is updated before the next render (similarly to React's `useState`).
      */
     useSyncedValue(key, value) {
-      React38.useDebugValue(key);
+      React35.useDebugValue(key);
       const store = this;
       useIsoLayoutEffect(() => {
         if (store.state[key] !== value) {
@@ -45724,8 +43489,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     useSyncedValues(statePart) {
       const store = this;
       if (true) {
-        React38.useDebugValue(statePart, (p3) => Object.keys(p3));
-        const keys = React38.useRef(Object.keys(statePart)).current;
+        React35.useDebugValue(statePart, (p3) => Object.keys(p3));
+        const keys = React35.useRef(Object.keys(statePart)).current;
         const nextKeys = Object.keys(statePart);
         if (keys.length !== nextKeys.length || keys.some((key, index2) => key !== nextKeys[index2])) {
           console.error("ReactStore.useSyncedValues expects the same prop keys on every render. Keys should be stable.");
@@ -45741,7 +43506,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
      * is non-undefined, the store's state at `key` is updated to match `controlled`.
      */
     useControlledProp(key, controlled) {
-      React38.useDebugValue(key);
+      React35.useDebugValue(key);
       const store = this;
       const isControlled = controlled !== void 0;
       useIsoLayoutEffect(() => {
@@ -45779,7 +43544,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
      * @param key Key of the selector to use.
      */
     useState(key, a1, a2, a3) {
-      React38.useDebugValue(key);
+      React35.useDebugValue(key);
       return useStore2(this, this.selectors[key], a1, a2, a3);
     }
     /**
@@ -45790,7 +43555,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
      * @param fn Function to assign.
      */
     useContextCallback(key, fn) {
-      React38.useDebugValue(key);
+      React35.useDebugValue(key);
       const stableFunction = useStableCallback(fn ?? NOOP);
       this.context[key] = stableFunction;
     }
@@ -45801,7 +43566,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
      * @param key Key of the state to set.
      */
     useStateSetter(key) {
-      const ref = React38.useRef(void 0);
+      const ref = React35.useRef(void 0);
       if (ref.current === void 0) {
         ref.current = (value) => {
           this.set(key, value);
@@ -45992,23 +43757,23 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   };
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/usePopupHandleStore.mjs
-  var React39 = __toESM(require_react(), 1);
+  var React36 = __toESM(require_react(), 1);
   var import_shim3 = __toESM(require_shim(), 1);
   function usePopupHandleStore(handle) {
-    const subscribe2 = React39.useCallback((listener) => {
+    const subscribe2 = React36.useCallback((listener) => {
       if (handle === void 0) {
         return NOOP;
       }
       return handle.subscribeStore(listener);
     }, [handle]);
-    const getSnapshot = React39.useCallback(() => {
+    const getSnapshot = React36.useCallback(() => {
       return handle === void 0 ? void 0 : handle.store;
     }, [handle]);
     return (0, import_shim3.useSyncExternalStore)(subscribe2, getSnapshot, () => handle?.serverStore);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
-  var React40 = __toESM(require_react(), 1);
+  var React37 = __toESM(require_react(), 1);
   var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
   function useFocus(store, props = {}) {
     const {
@@ -46019,11 +43784,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       events,
       dataRef
     } = store.context;
-    const blockFocusRef = React40.useRef(false);
-    const blockedReferenceRef = React40.useRef(null);
-    const keyboardModalityRef = React40.useRef(true);
+    const blockFocusRef = React37.useRef(false);
+    const blockedReferenceRef = React37.useRef(null);
+    const keyboardModalityRef = React37.useRef(true);
     const timeout = useTimeout();
-    React40.useEffect(() => {
+    React37.useEffect(() => {
       const domReference = store.select("domReferenceElement");
       if (!enabled) {
         return void 0;
@@ -46044,7 +43809,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return mergeCleanups(addEventListener(win, "blur", onBlur), isMacSafari && addEventListener(win, "keydown", onKeyDown, true), isMacSafari && addEventListener(win, "pointerdown", onPointerDown, true));
     }, [store, enabled]);
-    React40.useEffect(() => {
+    React37.useEffect(() => {
       if (!enabled) {
         return void 0;
       }
@@ -46062,7 +43827,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         events.off("openchange", onOpenChangeLocal);
       };
     }, [events, enabled, store]);
-    const reference = React40.useMemo(() => {
+    const reference = React37.useMemo(() => {
       function resetBlockedFocus() {
         blockFocusRef.current = false;
         blockedReferenceRef.current = null;
@@ -46128,14 +43893,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
       };
     }, [dataRef, delay2, store, timeout]);
-    return React40.useMemo(() => enabled ? {
+    return React37.useMemo(() => enabled ? {
       reference,
       trigger: reference
     } : {}, [enabled, reference]);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
-  var React41 = __toESM(require_react(), 1);
+  var React38 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
   var HoverInteraction = class _HoverInteraction {
@@ -46243,7 +44008,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         clearPointerEvents();
       }
     }, [open2, instance, clearPointerEvents]);
-    React41.useEffect(() => {
+    React38.useEffect(() => {
       return clearPointerEvents;
     }, [clearPointerEvents]);
     useIsoLayoutEffect(() => {
@@ -46254,7 +44019,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         const ref = domReferenceElement;
         const floatingEl = floatingElement;
         const doc = ownerDocument(floatingElement);
-        const parentFloating = tree?.nodesRef.current.find((node2) => node2.id === parentId)?.context?.elements.floating;
+        const parentFloating = tree?.nodesRef.current.find((node) => node.id === parentId)?.context?.elements.floating;
         if (parentFloating) {
           parentFloating.style.pointerEvents = "";
         }
@@ -46272,7 +44037,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return void 0;
     }, [enabled, open2, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
-    React41.useEffect(() => {
+    React38.useEffect(() => {
       if (!enabled) {
         return void 0;
       }
@@ -46316,7 +44081,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
         const currentNodeId = dataRef.current.floatingContext?.nodeId ?? nodeIdProp;
         const relatedTarget = event.relatedTarget;
-        const isMovingIntoDescendantFloating = tree && currentNodeId && isElement2(relatedTarget) && getNodeChildren(tree.nodesRef.current, currentNodeId, false).some((node2) => contains2(node2.context?.elements.floating, relatedTarget));
+        const isMovingIntoDescendantFloating = tree && currentNodeId && isElement2(relatedTarget) && getNodeChildren(tree.nodesRef.current, currentNodeId, false).some((node) => contains2(node.context?.elements.floating, relatedTarget));
         if (isMovingIntoDescendantFloating) {
           return;
         }
@@ -46347,7 +44112,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
-  var React42 = __toESM(require_react(), 1);
+  var React39 = __toESM(require_react(), 1);
   var ReactDOM5 = __toESM(require_react_dom(), 1);
   var EMPTY_REF = {
     current: null
@@ -46374,7 +44139,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = store.context;
     const tree = useFloatingTree(externalTree);
     const instance = useHoverInteractionSharedState(store);
-    const isHoverCloseActiveRef = React42.useRef(false);
+    const isHoverCloseActiveRef = React39.useRef(false);
     const handleCloseRef = useValueAsRef(handleClose);
     const delayRef = useValueAsRef(delay2);
     const restMsRef = useValueAsRef(restMs);
@@ -46412,8 +44177,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     if (isActiveTrigger) {
       instance.handleCloseOptions = handleClose?.__options;
     }
-    React42.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
-    React42.useEffect(() => {
+    React39.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
+    React39.useEffect(() => {
       if (!enabled) {
         return void 0;
       }
@@ -46434,7 +44199,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         events.off("openchange", onOpenChangeLocal);
       };
     }, [enabled, events, instance, cleanupMouseMoveHandler]);
-    React42.useEffect(() => {
+    React39.useEffect(() => {
       if (!enabled) {
         return void 0;
       }
@@ -46564,7 +44329,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return mergeCleanups(addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
     }, [cleanupMouseMoveHandler, clearPointerEvents, dataRef, delayRef, store, enabled, handleCloseRef, instance, isActiveTrigger, isOverInactiveTrigger, isClickLikeOpenEvent2, mouseOnly, move, restMsRef, triggerElementRef, tree, enabledRef, getHandleCloseContext, isClosingRef, checkShouldOpen, guardStaleOpen]);
-    return React42.useMemo(() => {
+    return React39.useMemo(() => {
       if (!enabled) {
         return void 0;
       }
@@ -46630,7 +44395,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useListNavigation.mjs
-  var React43 = __toESM(require_react(), 1);
+  var React40 = __toESM(require_react(), 1);
   function isStationaryWebKitPointer(event) {
     return parts_exports.engine.webkit && event.movementX === 0 && event.movementY === 0;
   }
@@ -46716,18 +44481,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const floatingFocusElementRef = useValueAsRef(floatingFocusElement);
     const parentId = useFloatingParentNodeId();
     const tree = useFloatingTree(externalTree);
-    const focusItemOnOpenRef = React43.useRef(focusItemOnOpen);
-    const indexRef = React43.useRef(selectedIndex ?? -1);
-    const keyRef = React43.useRef(null);
-    const isPointerModalityRef = React43.useRef(true);
+    const focusItemOnOpenRef = React40.useRef(focusItemOnOpen);
+    const indexRef = React40.useRef(selectedIndex ?? -1);
+    const keyRef = React40.useRef(null);
+    const isPointerModalityRef = React40.useRef(true);
     const onNavigate = useStableCallback((event) => {
       onNavigateProp(indexRef.current === -1 ? null : indexRef.current, event);
     });
-    const previousMountedRef = React43.useRef(!!floatingElement);
-    const previousOpenRef = React43.useRef(open2);
-    const forceSyncFocusRef = React43.useRef(false);
-    const forceScrollIntoViewRef = React43.useRef(false);
-    const cancelQueuedFocusRef = React43.useRef(null);
+    const previousMountedRef = React40.useRef(!!floatingElement);
+    const previousOpenRef = React40.useRef(open2);
+    const forceSyncFocusRef = React40.useRef(false);
+    const forceScrollIntoViewRef = React40.useRef(false);
+    const cancelQueuedFocusRef = React40.useRef(null);
     const disabledIndicesRef = useValueAsRef(disabledIndices);
     const latestOpenRef = useValueAsRef(open2);
     const selectedIndexRef = useValueAsRef(selectedIndex);
@@ -46844,9 +44609,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         return;
       }
       const nodes = tree.nodesRef.current;
-      const parent = nodes.find((node2) => node2.id === parentId)?.context?.elements.floating;
+      const parent = nodes.find((node) => node.id === parentId)?.context?.elements.floating;
       const activeEl = activeElement(ownerDocument(domReferenceElement ?? parent ?? null));
-      const treeContainsActiveEl = nodes.some((node2) => node2.context && contains2(node2.context.elements.floating, activeEl));
+      const treeContainsActiveEl = nodes.some((node) => node.context && contains2(node.context.elements.floating, activeEl));
       if (parent && !treeContainsActiveEl && isPointerModalityRef.current) {
         parent.focus({
           preventScroll: true
@@ -46869,7 +44634,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
     });
     const getParentOrientation = useStableCallback(() => {
-      return parentOrientation ?? tree?.nodesRef.current.find((node2) => node2.id === parentId)?.context?.dataRef?.current.orientation;
+      return parentOrientation ?? tree?.nodesRef.current.find((node) => node.id === parentId)?.context?.dataRef?.current.orientation;
     });
     const getMinEnabledIndex = useStableCallback(() => {
       return getMinListIndex(listRef, disabledIndicesRef.current);
@@ -46951,7 +44716,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         onNavigate(event);
       }
     });
-    const item = React43.useMemo(() => {
+    const item = React40.useMemo(() => {
       const itemProps = {
         onFocus(event) {
           forceSyncFocusRef.current = true;
@@ -47005,12 +44770,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       };
       return itemProps;
     }, [syncCurrentTarget, latestOpenRef, floatingFocusElementRef, focusItemOnHover, listRef, onNavigate, resetOnPointerLeaveRef, virtual]);
-    const ariaActiveDescendantProp = React43.useMemo(() => {
+    const ariaActiveDescendantProp = React40.useMemo(() => {
       return virtual && open2 && hasActiveIndex && {
         "aria-activedescendant": `${id3}-${activeIndex}`
       };
     }, [virtual, open2, hasActiveIndex, id3, activeIndex]);
-    const floating = React43.useMemo(() => {
+    const floating = React40.useMemo(() => {
       return {
         ...!typeableComboboxReference ? ariaActiveDescendantProp : {},
         onKeyDown(event) {
@@ -47038,7 +44803,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
       };
     }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, typeableComboboxReference, store, open2, virtual, domReferenceElement, nestedReturnFocusRef]);
-    const trigger = React43.useMemo(() => {
+    const trigger = React40.useMemo(() => {
       function openOnNavigationKeyDown(event) {
         store.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
       }
@@ -47117,13 +44882,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         onClick: checkVirtualMouse
       };
     }, [commonOnKeyDown, focusItemOnOpen, getMinEnabledIndex, nested, onNavigate, store, openOnArrowKeyDown, orientation, triggerOrientation, getParentOrientation, rtl, selectedIndexRef, virtual, floatingFocusElementRef]);
-    const reference = React43.useMemo(() => {
+    const reference = React40.useMemo(() => {
       return {
         ...ariaActiveDescendantProp,
         ...trigger
       };
     }, [ariaActiveDescendantProp, trigger]);
-    return React43.useMemo(() => enabled ? {
+    return React40.useMemo(() => enabled ? {
       reference,
       floating,
       item,
@@ -47132,7 +44897,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useTypeahead.mjs
-  var React44 = __toESM(require_react(), 1);
+  var React41 = __toESM(require_react(), 1);
   function useTypeahead(store, props) {
     const {
       listRef,
@@ -47148,9 +44913,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const onTyping = useStableCallback(onTypingProp);
     const open2 = store.useState("open");
     const timeout = useTimeout();
-    const stringRef = React44.useRef("");
-    const prevIndexRef = React44.useRef(selectedIndex ?? activeIndex ?? -1);
-    const matchIndexRef = React44.useRef(null);
+    const stringRef = React41.useRef("");
+    const prevIndexRef = React41.useRef(selectedIndex ?? activeIndex ?? -1);
+    const matchIndexRef = React41.useRef(null);
     const onKeyDown = useStableCallback((event) => {
       function getElement(index3) {
         return elementsRef?.current[index3];
@@ -47224,10 +44989,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
     });
     const onBlur = useStableCallback((event) => {
-      const next2 = event.relatedTarget;
+      const next = event.relatedTarget;
       const currentDomReferenceElement = store.select("domReferenceElement");
       const currentFloatingElement = store.select("floatingElement");
-      const withinComposite = contains2(currentDomReferenceElement, next2) || contains2(currentFloatingElement, next2);
+      const withinComposite = contains2(currentDomReferenceElement, next) || contains2(currentFloatingElement, next);
       if (withinComposite) {
         return;
       }
@@ -47247,11 +45012,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         onTyping?.(false);
       }
     }, [open2, selectedIndex, timeout, onTyping]);
-    const sharedProps = React44.useMemo(() => ({
+    const sharedProps = React41.useMemo(() => ({
       onKeyDown,
       onBlur
     }), [onKeyDown, onBlur]);
-    return React44.useMemo(() => enabled ? {
+    return React41.useMemo(() => enabled ? {
       reference: sharedProps,
       floating: sharedProps
     } : {}, [enabled, sharedProps]);
@@ -47506,9 +45271,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/InternalBackdrop.mjs
-  var React45 = __toESM(require_react(), 1);
+  var React42 = __toESM(require_react(), 1);
   var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
-  var InternalBackdrop = /* @__PURE__ */ React45.forwardRef(function InternalBackdrop2(props, ref) {
+  var InternalBackdrop = /* @__PURE__ */ React42.forwardRef(function InternalBackdrop2(props, ref) {
     const {
       cutout,
       ...otherProps
@@ -47535,20 +45300,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) InternalBackdrop.displayName = "InternalBackdrop";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
-  var React48 = __toESM(require_react(), 1);
+  var React45 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useEnhancedClickHandler.mjs
-  var React46 = __toESM(require_react(), 1);
+  var React43 = __toESM(require_react(), 1);
   function useEnhancedClickHandler(handler) {
-    const lastClickInteractionTypeRef = React46.useRef("");
-    const handlePointerDown = React46.useCallback((event) => {
+    const lastClickInteractionTypeRef = React43.useRef("");
+    const handlePointerDown = React43.useCallback((event) => {
       if (event.defaultPrevented) {
         return;
       }
       lastClickInteractionTypeRef.current = event.pointerType;
       handler(event, event.pointerType);
     }, [handler]);
-    const handleClick = React46.useCallback((event) => {
+    const handleClick = React43.useCallback((event) => {
       if (event.detail === 0) {
         handler(event, "keyboard");
         return;
@@ -47567,9 +45332,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useValueChanged.mjs
-  var React47 = __toESM(require_react(), 1);
+  var React44 = __toESM(require_react(), 1);
   function useValueChanged(value, onChange) {
-    const valueRef = React47.useRef(value);
+    const valueRef = React44.useRef(value);
     const onChangeCallback = useStableCallback(onChange);
     useIsoLayoutEffect(() => {
       if (valueRef.current !== value) {
@@ -47594,20 +45359,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       onClick,
       onPointerDown
     } = useEnhancedClickHandler(handleTriggerClick);
-    return React48.useMemo(() => ({
+    return React45.useMemo(() => ({
       onClick,
       onPointerDown
     }), [onClick, onPointerDown]);
   }
   function useOpenInteractionType(open2) {
-    const [openMethod, setOpenMethod] = React48.useState(null);
+    const [openMethod, setOpenMethod] = React45.useState(null);
     const triggerProps = useOpenMethodTriggerProps(open2, setOpenMethod);
     useValueChanged(open2, (previousOpen) => {
       if (previousOpen && !open2) {
         setOpenMethod(null);
       }
     });
-    return React48.useMemo(() => ({
+    return React45.useMemo(() => ({
       openMethod,
       triggerProps
     }), [openMethod, triggerProps]);
@@ -47628,7 +45393,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveValueLabel.mjs
-  var React49 = __toESM(require_react(), 1);
+  var React46 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/serializeValue.mjs
   function serializeValue(value) {
@@ -47726,11 +45491,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
-  var React50 = __toESM(require_react(), 1);
-  var DirectionContext = /* @__PURE__ */ React50.createContext(void 0);
+  var React47 = __toESM(require_react(), 1);
+  var DirectionContext = /* @__PURE__ */ React47.createContext(void 0);
   if (true) DirectionContext.displayName = "DirectionContext";
   function useDirection() {
-    const context = React50.useContext(DirectionContext);
+    const context = React47.useContext(DirectionContext);
     return context?.direction ?? "ltr";
   }
 
@@ -47769,7 +45534,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useInitialLiveRegionTextMutation.mjs
-  var React51 = __toESM(require_react(), 1);
+  var React48 = __toESM(require_react(), 1);
   var LIVE_REGION_MARKER = "\u2060";
   var INITIAL_LIVE_REGION_TEXT_MUTATION_RESET_DELAY = 200;
   function findLastTextNode(root) {
@@ -47785,8 +45550,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
   function useInitialLiveRegionTextMutation(present = true) {
     const timeout = useTimeout();
-    const rootRef = React51.useRef(null);
-    React51.useEffect(() => {
+    const rootRef = React48.useRef(null);
+    React48.useEffect(() => {
       if (!present || parts_exports.os.ios) {
         return void 0;
       }
@@ -47817,10 +45582,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
-  var React53 = __toESM(require_react(), 1);
+  var React50 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
-  var React52 = __toESM(require_react(), 1);
+  var React49 = __toESM(require_react(), 1);
   function useBaseUIFloating(options2) {
     const {
       nodeId,
@@ -47832,15 +45597,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const domReferenceElement = store.useState("domReferenceElement");
     const open2 = store.useState("open");
     const floatingId = store.useState("floatingId");
-    const [positionReference, setPositionReferenceRaw] = React52.useState(null);
-    const domReferenceRef = React52.useRef(null);
+    const [positionReference, setPositionReferenceRaw] = React49.useState(null);
+    const domReferenceRef = React49.useRef(null);
     const tree = useFloatingTree(externalTree);
-    const storeElements = React52.useMemo(() => ({
+    const storeElements = React49.useMemo(() => ({
       reference: referenceElement,
       floating: floatingElement,
       domReference: domReferenceElement
     }), [referenceElement, floatingElement, domReferenceElement]);
-    const position2 = useFloating({
+    const position = useFloating({
       ...options2,
       elements: {
         ...storeElements,
@@ -47849,26 +45614,26 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
       }
     });
-    const setPositionReference = React52.useCallback((node2) => {
-      const computedPositionReference = isElement2(node2) ? {
-        getBoundingClientRect: () => node2.getBoundingClientRect(),
-        getClientRects: () => node2.getClientRects(),
-        contextElement: node2
-      } : node2;
+    const setPositionReference = React49.useCallback((node) => {
+      const computedPositionReference = isElement2(node) ? {
+        getBoundingClientRect: () => node.getBoundingClientRect(),
+        getClientRects: () => node.getClientRects(),
+        contextElement: node
+      } : node;
       setPositionReferenceRaw(computedPositionReference);
-      position2.refs.setReference(computedPositionReference);
-    }, [position2.refs]);
-    const refs = React52.useMemo(() => ({
-      ...position2.refs,
+      position.refs.setReference(computedPositionReference);
+    }, [position.refs]);
+    const refs = React49.useMemo(() => ({
+      ...position.refs,
       setPositionReference,
       domReference: domReferenceRef
-    }), [position2.refs, setPositionReference]);
-    const elements2 = React52.useMemo(() => ({
-      ...position2.elements,
+    }), [position.refs, setPositionReference]);
+    const elements2 = React49.useMemo(() => ({
+      ...position.elements,
       domReference: domReferenceElement
-    }), [position2.elements, domReferenceElement]);
-    const context = React52.useMemo(() => ({
-      ...position2,
+    }), [position.elements, domReferenceElement]);
+    const context = React49.useMemo(() => ({
+      ...position,
       dataRef: store.context.dataRef,
       open: open2,
       onOpenChange: store.setOpen,
@@ -47878,7 +45643,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       elements: elements2,
       nodeId,
       rootStore: store
-    }), [position2, refs, elements2, nodeId, store, open2, floatingId]);
+    }), [position, refs, elements2, nodeId, store, open2, floatingId]);
     useIsoLayoutEffect(() => {
       if (domReferenceElement) {
         domReferenceRef.current = domReferenceElement;
@@ -47886,18 +45651,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }, [domReferenceElement]);
     useIsoLayoutEffect(() => {
       store.context.dataRef.current.floatingContext = context;
-      const node2 = tree?.nodesRef.current.find((n2) => n2.id === nodeId);
-      if (node2) {
-        node2.context = context;
+      const node = tree?.nodesRef.current.find((n2) => n2.id === nodeId);
+      if (node) {
+        node.context = context;
       }
     });
-    return React52.useMemo(() => ({
-      ...position2,
+    return React49.useMemo(() => ({
+      ...position,
       context,
       refs,
       elements: elements2,
       rootStore: store
-    }), [position2, refs, elements2, context, store]);
+    }), [position, refs, elements2, context, store]);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
@@ -47927,24 +45692,24 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         y: y3
       };
       const axis = getAlignmentAxis(placement);
-      const length2 = getAxisLength(axis);
+      const length = getAxisLength(axis);
       const arrowDimensions = await platform3.getDimensions(element);
       const isYAxis = axis === "y";
       const minProp = isYAxis ? "top" : "left";
       const maxProp = isYAxis ? "bottom" : "right";
       const clientProp = isYAxis ? "clientHeight" : "clientWidth";
-      const endDiff = rects.reference[length2] + rects.reference[axis] - coords[axis] - rects.floating[length2];
+      const endDiff = rects.reference[length] + rects.reference[axis] - coords[axis] - rects.floating[length];
       const startDiff = coords[axis] - rects.reference[axis];
-      const clientSize = elements2.floating[clientProp] || rects.floating[length2];
+      const clientSize = elements2.floating[clientProp] || rects.floating[length];
       const centerToReference = endDiff / 2 - startDiff / 2;
-      const largestPossiblePadding = clientSize / 2 - arrowDimensions[length2] / 2 - 1;
+      const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
       const minPadding = Math.min(paddingObject[minProp], largestPossiblePadding);
       const maxPadding = Math.min(paddingObject[maxProp], largestPossiblePadding);
       const min2 = minPadding;
-      const max2 = clientSize - arrowDimensions[length2] - maxPadding;
-      const center = clientSize / 2 - arrowDimensions[length2] / 2 + centerToReference;
+      const max2 = clientSize - arrowDimensions[length] - maxPadding;
+      const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
       const offset4 = clamp(min2, center, max2);
-      const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length2] / 2 - (center < min2 ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
+      const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length] / 2 - (center < min2 ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
       const alignmentOffset = shouldAddOffset ? center < min2 ? center - min2 : center - max2 : 0;
       return {
         [axis]: coords[axis] + alignmentOffset,
@@ -48083,7 +45848,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const mountedRef = useValueAsRef(mounted);
     const direction = useDirection();
     const isRtl = direction === "rtl";
-    const [mountPlacement, setMountPlacement] = React53.useState(null);
+    const [mountPlacement, setMountPlacement] = React50.useState(null);
     if (!mounted && mountPlacement !== null) {
       setMountPlacement(null);
     }
@@ -48125,16 +45890,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       boundary: collisionBoundary === "clipping-ancestors" ? "clippingAncestors" : collisionBoundary,
       padding: collisionPadding
     };
-    const arrowRef = React53.useRef(null);
+    const arrowRef = React50.useRef(null);
     const sideOffsetRef = useValueAsRef(sideOffset);
     const alignOffsetRef = useValueAsRef(alignOffset);
     const sideOffsetDep = typeof sideOffset !== "function" ? sideOffset : 0;
     const alignOffsetDep = typeof alignOffset !== "function" ? alignOffset : 0;
-    const middleware2 = [];
+    const middleware = [];
     if (inlineMiddleware) {
-      middleware2.push(inlineMiddleware);
+      middleware.push(inlineMiddleware);
     }
-    middleware2.push(offset3((state) => {
+    middleware.push(offset3((state) => {
       const data = getOffsetData(state, sideParam, isRtl);
       const sideAxis = typeof sideOffsetRef.current === "function" ? sideOffsetRef.current(data) : sideOffsetRef.current;
       const alignAxis = typeof alignOffsetRef.current === "function" ? alignOffsetRef.current(data) : alignOffsetRef.current;
@@ -48183,11 +45948,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       })
     }, [commonCollisionProps, sticky, shiftCrossAxis, shiftRootBoundary, collisionPadding, collisionAvoidanceAlign]);
     if (collisionAvoidanceSide === "shift" || collisionAvoidanceAlign === "shift" || placementAlign === "center") {
-      middleware2.push(shiftMiddleware, flipMiddleware);
+      middleware.push(shiftMiddleware, flipMiddleware);
     } else {
-      middleware2.push(flipMiddleware, shiftMiddleware);
+      middleware.push(flipMiddleware, shiftMiddleware);
     }
-    middleware2.push(size3({
+    middleware.push(size3({
       ...commonCollisionProps,
       apply({
         elements: {
@@ -48265,7 +46030,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         });
       }
     }, [mounted, floatingRootContext]);
-    const autoUpdateOptions = React53.useMemo(() => ({
+    const autoUpdateOptions = React50.useMemo(() => ({
       ancestorScroll: !disableAnchorTracking,
       elementResize: !disableAnchorTracking && typeof ResizeObserver !== "undefined",
       layoutShift: !disableAnchorTracking && typeof IntersectionObserver !== "undefined"
@@ -48285,7 +46050,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       rootContext: floatingRootContext,
       open: keepMounted ? mounted : void 0,
       placement,
-      middleware: middleware2,
+      middleware,
       strategy: positionMethod,
       whileElementsMounted: keepMounted ? void 0 : (...args) => autoUpdate(...args, autoUpdateOptions),
       nodeId,
@@ -48296,7 +46061,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       sideY
     } = middlewareData.adaptiveOrigin || DEFAULT_SIDES;
     const resolvedPosition = isPositioned ? positionMethod : "fixed";
-    const floatingStyles = React53.useMemo(() => {
+    const floatingStyles = React50.useMemo(() => {
       let base;
       if (!isPositioned) {
         base = {
@@ -48323,7 +46088,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return base;
     }, [adaptiveOrigin2, resolvedPosition, sideX, x2, sideY, y3, originalFloatingStyles, isPositioned]);
-    const registeredPositionReferenceRef = React53.useRef(null);
+    const registeredPositionReferenceRef = React50.useRef(null);
     useIsoLayoutEffect(() => {
       if (!mounted) {
         return;
@@ -48337,7 +46102,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         registeredPositionReferenceRef.current = finalAnchor;
       }
     }, [mounted, refs, anchorDep, anchorValueRef]);
-    React53.useEffect(() => {
+    React50.useEffect(() => {
       if (!mounted) {
         return;
       }
@@ -48350,7 +46115,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         registeredPositionReferenceRef.current = anchorValue.current;
       }
     }, [mounted, refs, anchorDep, anchorValueRef]);
-    React53.useEffect(() => {
+    React50.useEffect(() => {
       if (keepMounted && mounted && elements2.reference && elements2.floating) {
         return autoUpdate(elements2.reference, elements2.floating, update2, autoUpdateOptions);
       }
@@ -48365,13 +46130,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         setMountPlacement(renderedPlacement);
       }
     }, [lazyFlip, lockAlign, mounted, isPositioned, renderedPlacement, renderedSide, renderedAlign, side, placementAlign]);
-    const arrowStyles = React53.useMemo(() => ({
+    const arrowStyles = React50.useMemo(() => ({
       position: "absolute",
       top: middlewareData.arrow?.y,
       left: middlewareData.arrow?.x
     }), [middlewareData.arrow]);
     const arrowUncentered = middlewareData.arrow?.centerOffset !== 0;
-    return React53.useMemo(() => ({
+    return React50.useMemo(() => ({
       positionerStyles: floatingStyles,
       arrowStyles,
       arrowRef,
@@ -48423,10 +46188,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useAnchoredPopupScrollLock.mjs
-  var React54 = __toESM(require_react(), 1);
+  var React51 = __toESM(require_react(), 1);
   var VIEWPORT_WIDTH_TOLERANCE_PX = 20;
   function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, referenceElement) {
-    const [touchOpenShouldLockScroll, setTouchOpenShouldLockScroll] = React54.useState(false);
+    const [touchOpenShouldLockScroll, setTouchOpenShouldLockScroll] = React51.useState(false);
     useIsoLayoutEffect(() => {
       if (!enabled || !touchOpen || positionerElement == null) {
         setTouchOpenShouldLockScroll(false);
@@ -48440,11 +46205,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/context-menu/root/ContextMenuRootContext.mjs
-  var React55 = __toESM(require_react(), 1);
-  var ContextMenuRootContext = /* @__PURE__ */ React55.createContext(void 0);
+  var React52 = __toESM(require_react(), 1);
+  var ContextMenuRootContext = /* @__PURE__ */ React52.createContext(void 0);
   if (true) ContextMenuRootContext.displayName = "ContextMenuRootContext";
   function useContextMenuRootContext(optional = true) {
-    const context = React55.useContext(ContextMenuRootContext);
+    const context = React52.useContext(ContextMenuRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: ContextMenuRootContext is missing. ContextMenu parts must be placed within <ContextMenu.Root>." : formatErrorMessage_default(25));
     }
@@ -48485,14 +46250,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   });
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
-  var React58 = __toESM(require_react(), 1);
+  var React55 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositionerContext.mjs
-  var React56 = __toESM(require_react(), 1);
-  var MenuPositionerContext = /* @__PURE__ */ React56.createContext(void 0);
+  var React53 = __toESM(require_react(), 1);
+  var MenuPositionerContext = /* @__PURE__ */ React53.createContext(void 0);
   if (true) MenuPositionerContext.displayName = "MenuPositionerContext";
   function useMenuPositionerContext(optional) {
-    const context = React56.useContext(MenuPositionerContext);
+    const context = React53.useContext(MenuPositionerContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: MenuPositionerContext is missing. MenuPositioner parts must be placed within <Menu.Positioner>." : formatErrorMessage_default(33));
     }
@@ -48500,11 +46265,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/root/MenuRootContext.mjs
-  var React57 = __toESM(require_react(), 1);
-  var MenuRootContext = /* @__PURE__ */ React57.createContext(void 0);
+  var React54 = __toESM(require_react(), 1);
+  var MenuRootContext = /* @__PURE__ */ React54.createContext(void 0);
   if (true) MenuRootContext.displayName = "MenuRootContext";
   function useMenuRootContext(optional) {
-    const context = React57.useContext(MenuRootContext);
+    const context = React54.useContext(MenuRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: MenuRootContext is missing. Menu parts must be placed within <Menu.Root>." : formatErrorMessage_default(36));
     }
@@ -48512,7 +46277,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/arrow/MenuArrow.mjs
-  var MenuArrow2 = /* @__PURE__ */ React58.forwardRef(function MenuArrow3(componentProps, forwardedRef) {
+  var MenuArrow2 = /* @__PURE__ */ React55.forwardRef(function MenuArrow3(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -48550,8 +46315,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuArrow2.displayName = "MenuArrow";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/backdrop/MenuBackdrop.mjs
-  var React59 = __toESM(require_react(), 1);
-  var MenuBackdrop = /* @__PURE__ */ React59.forwardRef(function MenuBackdrop2(componentProps, forwardedRef) {
+  var React56 = __toESM(require_react(), 1);
+  var MenuBackdrop = /* @__PURE__ */ React56.forwardRef(function MenuBackdrop2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -48588,15 +46353,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuBackdrop.displayName = "MenuBackdrop";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
-  var React64 = __toESM(require_react(), 1);
+  var React61 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterContext.mjs
-  var React60 = __toESM(require_react(), 1);
-  var MenuFilterImplContext = /* @__PURE__ */ React60.createContext(null);
+  var React57 = __toESM(require_react(), 1);
+  var MenuFilterImplContext = /* @__PURE__ */ React57.createContext(null);
   if (true) MenuFilterImplContext.displayName = "MenuFilterImplContext";
   function useMenuFilterImpl(scope = "root") {
-    const impl = React60.useContext(MenuFilterImplContext);
-    const root = React60.useContext(MenuRootContext);
+    const impl = React57.useContext(MenuFilterImplContext);
+    const root = React57.useContext(MenuRootContext);
     if (impl === null || root === void 0) {
       return null;
     }
@@ -48632,11 +46397,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemContext.mjs
-  var React61 = __toESM(require_react(), 1);
-  var MenuCheckboxItemContext = /* @__PURE__ */ React61.createContext(void 0);
+  var React58 = __toESM(require_react(), 1);
+  var MenuCheckboxItemContext = /* @__PURE__ */ React58.createContext(void 0);
   if (true) MenuCheckboxItemContext.displayName = "MenuCheckboxItemContext";
   function useMenuCheckboxItemContext() {
-    const context = React61.useContext(MenuCheckboxItemContext);
+    const context = React58.useContext(MenuCheckboxItemContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: MenuCheckboxItemContext is missing. MenuCheckboxItem parts must be placed within <Menu.CheckboxItem>." : formatErrorMessage_default(30));
     }
@@ -48644,10 +46409,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/useMenuItem.mjs
-  var React63 = __toESM(require_react(), 1);
+  var React60 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/useMenuItemCommonProps.mjs
-  var React62 = __toESM(require_react(), 1);
+  var React59 = __toESM(require_react(), 1);
   function preventMouseDownDefault(event) {
     event.preventDefault();
   }
@@ -48674,7 +46439,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const open2 = store.useState("open");
     const isContextMenu = contextMenuContext !== void 0;
     const tabIndex = !virtualFocus && open2 && highlighted ? 0 : -1;
-    return React62.useMemo(() => ({
+    return React59.useMemo(() => ({
       id: id3,
       role: "menuitem",
       tabIndex,
@@ -48742,7 +46507,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       itemMetadata,
       nodeId
     } = params;
-    const itemRef = React63.useRef(null);
+    const itemRef = React60.useRef(null);
     const {
       getButtonProps,
       buttonRef
@@ -48762,7 +46527,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       itemRef,
       itemMetadata
     });
-    const getItemProps = React63.useCallback((externalProps) => {
+    const getItemProps = React60.useCallback((externalProps) => {
       return mergeProps2(commonProps, {
         onMouseEnter(event) {
           if (itemMetadata.type !== "submenu-trigger") {
@@ -48773,7 +46538,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }, externalProps, getButtonProps);
     }, [commonProps, getButtonProps, itemMetadata]);
     const mergedRef = useMergedRefs(itemRef, buttonRef);
-    return React63.useMemo(() => ({
+    return React60.useMemo(() => ({
       getItemProps,
       itemRef: mergedRef
     }), [getItemProps, mergedRef]);
@@ -48800,7 +46565,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItem.mjs
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
-  var MenuCheckboxItemPlain = /* @__PURE__ */ React64.forwardRef(function MenuCheckboxItemPlain2(componentProps, forwardedRef) {
+  var MenuCheckboxItemPlain = /* @__PURE__ */ React61.forwardRef(function MenuCheckboxItemPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -48840,7 +46605,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       nodeId,
       itemMetadata: REGULAR_ITEM
     });
-    const state = React64.useMemo(() => ({
+    const state = React61.useMemo(() => ({
       disabled: disabled2,
       highlighted,
       checked: checked2
@@ -48867,7 +46632,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
   });
   if (true) MenuCheckboxItemPlain.displayName = "MenuCheckboxItemPlain";
-  var MenuCheckboxItem = /* @__PURE__ */ React64.forwardRef(function MenuCheckboxItem2(props, forwardedRef) {
+  var MenuCheckboxItem = /* @__PURE__ */ React61.forwardRef(function MenuCheckboxItem2(props, forwardedRef) {
     const {
       checked: checkedProp,
       defaultChecked,
@@ -48900,8 +46665,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuCheckboxItem.displayName = "MenuCheckboxItem";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/checkbox-item-indicator/MenuCheckboxItemIndicator.mjs
-  var React65 = __toESM(require_react(), 1);
-  var MenuCheckboxItemIndicator = /* @__PURE__ */ React65.forwardRef(function MenuCheckboxItemIndicator2(componentProps, forwardedRef) {
+  var React62 = __toESM(require_react(), 1);
+  var MenuCheckboxItemIndicator = /* @__PURE__ */ React62.forwardRef(function MenuCheckboxItemIndicator2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -48910,7 +46675,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       ...elementProps
     } = componentProps;
     const item = useMenuCheckboxItemContext();
-    const indicatorRef = React65.useRef(null);
+    const indicatorRef = React62.useRef(null);
     const {
       transitionStatus,
       mounted,
@@ -48948,14 +46713,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuCheckboxItemIndicator.displayName = "MenuCheckboxItemIndicator";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
-  var React67 = __toESM(require_react(), 1);
+  var React64 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroupContext.mjs
-  var React66 = __toESM(require_react(), 1);
-  var MenuGroupContext = /* @__PURE__ */ React66.createContext(void 0);
+  var React63 = __toESM(require_react(), 1);
+  var MenuGroupContext = /* @__PURE__ */ React63.createContext(void 0);
   if (true) MenuGroupContext.displayName = "MenuGroupContext";
   function useMenuGroupRootContext() {
-    const context = React66.useContext(MenuGroupContext);
+    const context = React63.useContext(MenuGroupContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: MenuGroupContext is missing. Menu group parts must be used within <Menu.Group> or <Menu.RadioGroup>." : formatErrorMessage_default(31));
     }
@@ -48964,14 +46729,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group/MenuGroup.mjs
   var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
-  var MenuGroupPlain = /* @__PURE__ */ React67.forwardRef(function MenuGroupPlain2(componentProps, forwardedRef) {
+  var MenuGroupPlain = /* @__PURE__ */ React64.forwardRef(function MenuGroupPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
       style: style2,
       ...elementProps
     } = componentProps;
-    const [labelId, setLabelId] = React67.useState(void 0);
+    const [labelId, setLabelId] = React64.useState(void 0);
     const element = useRenderElement("div", componentProps, {
       ref: forwardedRef,
       props: {
@@ -48986,7 +46751,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
   });
   if (true) MenuGroupPlain.displayName = "MenuGroupPlain";
-  var MenuGroup3 = /* @__PURE__ */ React67.forwardRef(function MenuGroup4(props, forwardedRef) {
+  var MenuGroup3 = /* @__PURE__ */ React64.forwardRef(function MenuGroup4(props, forwardedRef) {
     const Group6 = useMenuFilterImpl()?.Group ?? MenuGroupPlain;
     return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(Group6, {
       ...props,
@@ -48996,8 +46761,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuGroup3.displayName = "MenuGroup";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/group-label/MenuGroupLabel.mjs
-  var React68 = __toESM(require_react(), 1);
-  var MenuGroupLabel3 = /* @__PURE__ */ React68.forwardRef(function MenuGroupLabel4(componentProps, forwardedRef) {
+  var React65 = __toESM(require_react(), 1);
+  var MenuGroupLabel3 = /* @__PURE__ */ React65.forwardRef(function MenuGroupLabel4(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49025,9 +46790,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuGroupLabel3.displayName = "MenuGroupLabel";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/item/MenuItem.mjs
-  var React69 = __toESM(require_react(), 1);
+  var React66 = __toESM(require_react(), 1);
   var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
-  var MenuItemPlain = /* @__PURE__ */ React69.forwardRef(function MenuItemPlain2(componentProps, forwardedRef) {
+  var MenuItemPlain = /* @__PURE__ */ React66.forwardRef(function MenuItemPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49076,7 +46841,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
   });
   if (true) MenuItemPlain.displayName = "MenuItemPlain";
-  var MenuItem3 = /* @__PURE__ */ React69.forwardRef(function MenuItem4(props, forwardedRef) {
+  var MenuItem3 = /* @__PURE__ */ React66.forwardRef(function MenuItem4(props, forwardedRef) {
     const filterItem = useMenuFilterItem(props, forwardedRef);
     if (!filterItem.visible) {
       return null;
@@ -49089,9 +46854,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuItem3.displayName = "MenuItem";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/link-item/MenuLinkItem.mjs
-  var React70 = __toESM(require_react(), 1);
+  var React67 = __toESM(require_react(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
-  var MenuLinkItemPlain = /* @__PURE__ */ React70.forwardRef(function MenuLinkItemPlain2(componentProps, forwardedRef) {
+  var MenuLinkItemPlain = /* @__PURE__ */ React67.forwardRef(function MenuLinkItemPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49104,7 +46869,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const {
       store
     } = useMenuRootContext();
-    const linkRef = React70.useRef(null);
+    const linkRef = React67.useRef(null);
     const listItem = useCompositeListItem({
       guess: true,
       label
@@ -49144,7 +46909,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
   });
   if (true) MenuLinkItemPlain.displayName = "MenuLinkItemPlain";
-  var MenuLinkItem = /* @__PURE__ */ React70.forwardRef(function MenuLinkItem2(props, forwardedRef) {
+  var MenuLinkItem = /* @__PURE__ */ React67.forwardRef(function MenuLinkItem2(props, forwardedRef) {
     const filterItem = useMenuFilterItem(props, forwardedRef);
     if (!filterItem.visible) {
       return null;
@@ -49157,14 +46922,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuLinkItem.displayName = "MenuLinkItem";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
-  var React75 = __toESM(require_react(), 1);
+  var React72 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/toolbar/root/ToolbarRootContext.mjs
-  var React71 = __toESM(require_react(), 1);
-  var ToolbarRootContext = /* @__PURE__ */ React71.createContext(void 0);
+  var React68 = __toESM(require_react(), 1);
+  var ToolbarRootContext = /* @__PURE__ */ React68.createContext(void 0);
   if (true) ToolbarRootContext.displayName = "ToolbarRootContext";
   function useToolbarRootContext(optional) {
-    const context = React71.useContext(ToolbarRootContext);
+    const context = React68.useContext(ToolbarRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: ToolbarRootContext is missing. Toolbar parts must be placed within <Toolbar.Root>." : formatErrorMessage_default(69));
     }
@@ -49172,18 +46937,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRootContext.mjs
-  var React72 = __toESM(require_react(), 1);
-  var MenuSubmenuRootContext = /* @__PURE__ */ React72.createContext(void 0);
+  var React69 = __toESM(require_react(), 1);
+  var MenuSubmenuRootContext = /* @__PURE__ */ React69.createContext(void 0);
   if (true) MenuSubmenuRootContext.displayName = "MenuSubmenuRootContext";
   function useMenuSubmenuRootContext() {
-    return React72.useContext(MenuSubmenuRootContext);
+    return React69.useContext(MenuSubmenuRootContext);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveRenderedId.mjs
-  var React73 = __toESM(require_react(), 1);
+  var React70 = __toESM(require_react(), 1);
   function resolveRenderedId(props, fallbackId) {
     const render = unwrapLazyRenderProp(props.render);
-    if (/* @__PURE__ */ React73.isValidElement(render)) {
+    if (/* @__PURE__ */ React70.isValidElement(render)) {
       const renderProps = render.props;
       if (Object.hasOwn(renderProps, "id")) {
         return renderProps.id ?? "";
@@ -49194,15 +46959,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function useRenderedId(props, defaultId, setId) {
     const id3 = resolveRenderedId(props, defaultId);
     const registeredId = id3 === defaultId ? void 0 : id3;
-    const ref = React73.useCallback((element) => setId?.(element ? registeredId : void 0), [registeredId, setId]);
+    const ref = React70.useCallback((element) => setId?.(element ? registeredId : void 0), [registeredId, setId]);
     return [id3, ref];
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolvePopupLabel.mjs
-  var React74 = __toESM(require_react(), 1);
+  var React71 = __toESM(require_react(), 1);
   function resolvePopupLabel(props, activeTriggerElement, activeTriggerId) {
     const render = unwrapLazyRenderProp(props.render);
-    const renderedElementProps = /* @__PURE__ */ React74.isValidElement(render) ? render.props : void 0;
+    const renderedElementProps = /* @__PURE__ */ React71.isValidElement(render) ? render.props : void 0;
     const ariaLabel = props["aria-label"] ?? renderedElementProps?.["aria-label"];
     let ariaLabelledBy = props["aria-labelledby"] ?? renderedElementProps?.["aria-labelledby"];
     if (ariaLabelledBy == null && !ariaLabel) {
@@ -49213,7 +46978,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/popup/MenuPopup.mjs
   var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
-  var MenuPopupPlain = /* @__PURE__ */ React75.forwardRef(function MenuPopupPlain2(componentProps, forwardedRef) {
+  var MenuPopupPlain = /* @__PURE__ */ React72.forwardRef(function MenuPopupPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49275,7 +47040,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
       }
     });
-    React75.useEffect(() => {
+    React72.useEffect(() => {
       function handleClose(event) {
         store.setOpen(false, createChangeEventDetails(event.reason, event.domEvent));
       }
@@ -49289,7 +47054,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       closeDelay
     });
     const setPopupElement = store.useStateSetter("popupElement");
-    const useParentHandoff = React75.useContext(MenuFilterImplContext)?.useParentHandoff ?? useNoParentHandoff;
+    const useParentHandoff = React72.useContext(MenuFilterImplContext)?.useParentHandoff ?? useNoParentHandoff;
     const {
       parentVirtualFocusRef,
       handleFocus
@@ -49359,7 +47124,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function useNoParentHandoff() {
     return NO_PARENT_HANDOFF;
   }
-  var MenuPopup = /* @__PURE__ */ React75.forwardRef(function MenuPopup2(props, forwardedRef) {
+  var MenuPopup = /* @__PURE__ */ React72.forwardRef(function MenuPopup2(props, forwardedRef) {
     const Popup2 = useMenuFilterImpl()?.Popup ?? MenuPopupPlain;
     return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(Popup2, {
       ...props,
@@ -49369,14 +47134,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuPopup.displayName = "MenuPopup";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
-  var React77 = __toESM(require_react(), 1);
+  var React74 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortalContext.mjs
-  var React76 = __toESM(require_react(), 1);
-  var MenuPortalContext = /* @__PURE__ */ React76.createContext(void 0);
+  var React73 = __toESM(require_react(), 1);
+  var MenuPortalContext = /* @__PURE__ */ React73.createContext(void 0);
   if (true) MenuPortalContext.displayName = "MenuPortalContext";
   function useMenuPortalContext() {
-    const value = React76.useContext(MenuPortalContext);
+    const value = React73.useContext(MenuPortalContext);
     if (value === void 0) {
       throw new Error(true ? "Base UI: <Menu.Portal> is missing." : formatErrorMessage_default(32));
     }
@@ -49385,7 +47150,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/portal/MenuPortal.mjs
   var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
-  var MenuPortal = /* @__PURE__ */ React77.forwardRef(function MenuPortal2(props, forwardedRef) {
+  var MenuPortal = /* @__PURE__ */ React74.forwardRef(function MenuPortal2(props, forwardedRef) {
     const {
       keepMounted = false,
       ...portalProps
@@ -49412,10 +47177,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuPortal.displayName = "MenuPortal";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositioner.mjs
-  var React79 = __toESM(require_react(), 1);
+  var React76 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useTriggerSwitchTransition.mjs
-  var React78 = __toESM(require_react(), 1);
+  var React75 = __toESM(require_react(), 1);
   function useTriggerSwitchTransition(parameters) {
     const {
       store,
@@ -49423,8 +47188,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       positionerElement,
       open: open2
     } = parameters;
-    const previousTriggerRef = React78.useRef(null);
-    const pendingSwitchRef = React78.useRef(null);
+    const previousTriggerRef = React75.useRef(null);
+    const pendingSwitchRef = React75.useRef(null);
     const runOnceAnimationsFinish = useAnimationsFinished(positionerElement);
     useIsoLayoutEffect(() => {
       if (open2) {
@@ -49464,7 +47229,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/positioner/MenuPositioner.mjs
   var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
-  var MenuPositioner = /* @__PURE__ */ React79.forwardRef(function MenuPositioner2(componentProps, forwardedRef) {
+  var MenuPositioner = /* @__PURE__ */ React76.forwardRef(function MenuPositioner2(componentProps, forwardedRef) {
     const {
       anchor: anchorProp,
       positionMethod: positionMethodProp = "absolute",
@@ -49555,7 +47320,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       adaptiveOrigin: adaptiveOrigin2,
       lazyFlip: virtualFocus ? "placement" : false
     });
-    React79.useEffect(() => {
+    React76.useEffect(() => {
       function onMenuOpenChange(details) {
         if (details.open) {
           if (details.parentNodeId === floatingNodeId) {
@@ -49571,7 +47336,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         floatingTreeRoot.events.off("menuopenchange", onMenuOpenChange);
       };
     }, [store, floatingTreeRoot.events, floatingNodeId]);
-    React79.useEffect(() => {
+    React76.useEffect(() => {
       if (store.select("floatingParentNodeId") == null) {
         return void 0;
       }
@@ -49588,12 +47353,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       };
     }, [floatingTreeRoot.events, store]);
     const closeTimeout = useTimeout();
-    React79.useEffect(() => {
+    React76.useEffect(() => {
       if (!open2) {
         closeTimeout.clear();
       }
     }, [open2, closeTimeout]);
-    React79.useEffect(() => {
+    React76.useEffect(() => {
       function onItemHover(event) {
         if (!open2 || event.nodeId !== store.select("floatingParentNodeId")) {
           return;
@@ -49618,7 +47383,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         floatingTreeRoot.events.off("itemhover", onItemHover);
       };
     }, [floatingTreeRoot.events, open2, triggerElement, store, closeTimeout]);
-    React79.useEffect(() => {
+    React76.useEffect(() => {
       const eventDetails = {
         open: open2,
         nodeId: floatingNodeId,
@@ -49679,14 +47444,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuPositioner.displayName = "MenuPositioner";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
-  var React81 = __toESM(require_react(), 1);
+  var React78 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroupContext.mjs
-  var React80 = __toESM(require_react(), 1);
-  var MenuRadioGroupContext = /* @__PURE__ */ React80.createContext(void 0);
+  var React77 = __toESM(require_react(), 1);
+  var MenuRadioGroupContext = /* @__PURE__ */ React77.createContext(void 0);
   if (true) MenuRadioGroupContext.displayName = "MenuRadioGroupContext";
   function useMenuRadioGroupContext() {
-    const context = React80.useContext(MenuRadioGroupContext);
+    const context = React77.useContext(MenuRadioGroupContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: MenuRadioGroupContext is missing. MenuRadioGroup parts must be placed within <Menu.RadioGroup>." : formatErrorMessage_default(34));
     }
@@ -49695,7 +47460,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-group/MenuRadioGroup.mjs
   var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
-  var MenuRadioGroupPlain = /* @__PURE__ */ React81.forwardRef(function MenuRadioGroupPlain2(componentProps, forwardedRef) {
+  var MenuRadioGroupPlain = /* @__PURE__ */ React78.forwardRef(function MenuRadioGroupPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49707,7 +47472,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       "aria-labelledby": ariaLabelledByProp,
       ...elementProps
     } = componentProps;
-    const [labelId, setLabelId] = React81.useState(void 0);
+    const [labelId, setLabelId] = React78.useState(void 0);
     const [value, setValueUnwrapped] = useControlled({
       controlled: valueProp,
       default: defaultValue2,
@@ -49733,7 +47498,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         ...elementProps
       }
     });
-    const context = React81.useMemo(() => ({
+    const context = React78.useMemo(() => ({
       value,
       setValue,
       disabled: disabled2
@@ -49747,7 +47512,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
   });
   if (true) MenuRadioGroupPlain.displayName = "MenuRadioGroupPlain";
-  var MenuRadioGroup = /* @__PURE__ */ React81.memo(/* @__PURE__ */ React81.forwardRef(function MenuRadioGroup2(props, forwardedRef) {
+  var MenuRadioGroup = /* @__PURE__ */ React78.memo(/* @__PURE__ */ React78.forwardRef(function MenuRadioGroup2(props, forwardedRef) {
     const RadioGroup4 = useMenuFilterImpl()?.RadioGroup ?? MenuRadioGroupPlain;
     return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(RadioGroup4, {
       ...props,
@@ -49757,14 +47522,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuRadioGroup.displayName = "MenuRadioGroup";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
-  var React83 = __toESM(require_react(), 1);
+  var React80 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItemContext.mjs
-  var React82 = __toESM(require_react(), 1);
-  var MenuRadioItemContext = /* @__PURE__ */ React82.createContext(void 0);
+  var React79 = __toESM(require_react(), 1);
+  var MenuRadioItemContext = /* @__PURE__ */ React79.createContext(void 0);
   if (true) MenuRadioItemContext.displayName = "MenuRadioItemContext";
   function useMenuRadioItemContext() {
-    const context = React82.useContext(MenuRadioItemContext);
+    const context = React79.useContext(MenuRadioItemContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: MenuRadioItemContext is missing. MenuRadioItem parts must be placed within <Menu.RadioItem>." : formatErrorMessage_default(35));
     }
@@ -49773,7 +47538,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item/MenuRadioItem.mjs
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
-  var MenuRadioItemPlain = /* @__PURE__ */ React83.forwardRef(function MenuRadioItemPlain2(componentProps, forwardedRef) {
+  var MenuRadioItemPlain = /* @__PURE__ */ React80.forwardRef(function MenuRadioItemPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49818,7 +47583,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       nodeId,
       itemMetadata: REGULAR_ITEM
     });
-    const state = React83.useMemo(() => ({
+    const state = React80.useMemo(() => ({
       disabled: disabled2,
       highlighted,
       checked: checked2
@@ -49845,7 +47610,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
   });
   if (true) MenuRadioItemPlain.displayName = "MenuRadioItemPlain";
-  var MenuRadioItem = /* @__PURE__ */ React83.forwardRef(function MenuRadioItem2(props, forwardedRef) {
+  var MenuRadioItem = /* @__PURE__ */ React80.forwardRef(function MenuRadioItem2(props, forwardedRef) {
     const filterItem = useMenuFilterItem(props, forwardedRef);
     if (!filterItem.visible) {
       return null;
@@ -49858,8 +47623,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuRadioItem.displayName = "MenuRadioItem";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/radio-item-indicator/MenuRadioItemIndicator.mjs
-  var React84 = __toESM(require_react(), 1);
-  var MenuRadioItemIndicator = /* @__PURE__ */ React84.forwardRef(function MenuRadioItemIndicator2(componentProps, forwardedRef) {
+  var React81 = __toESM(require_react(), 1);
+  var MenuRadioItemIndicator = /* @__PURE__ */ React81.forwardRef(function MenuRadioItemIndicator2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -49868,7 +47633,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       ...elementProps
     } = componentProps;
     const item = useMenuRadioItemContext();
-    const indicatorRef = React84.useRef(null);
+    const indicatorRef = React81.useRef(null);
     const {
       transitionStatus,
       mounted,
@@ -49906,14 +47671,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuRadioItemIndicator.displayName = "MenuRadioItemIndicator";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/root/MenuRoot.mjs
-  var React88 = __toESM(require_react(), 1);
+  var React85 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menubar/MenubarContext.mjs
-  var React85 = __toESM(require_react(), 1);
-  var MenubarContext = /* @__PURE__ */ React85.createContext(null);
+  var React82 = __toESM(require_react(), 1);
+  var MenubarContext = /* @__PURE__ */ React82.createContext(null);
   if (true) MenubarContext.displayName = "MenubarContext";
   function useMenubarContext2(optional) {
-    const context = React85.useContext(MenubarContext);
+    const context = React82.useContext(MenubarContext);
     if (context === null && !optional) {
       throw new Error(true ? "Base UI: MenubarContext is missing. Menubar parts must be placed within <Menubar>." : formatErrorMessage_default(5));
     }
@@ -49921,7 +47686,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/store/MenuStore.mjs
-  var React86 = __toESM(require_react(), 1);
+  var React83 = __toESM(require_react(), 1);
   var selectors2 = {
     ...popupStoreSelectors,
     disabled: (state) => state.parent.type === "menubar" ? state.parent.context.disabled || state.disabled : state.disabled,
@@ -50052,8 +47817,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
   function createInitialContext(triggerElements) {
     return {
-      positionerRef: /* @__PURE__ */ React86.createRef(),
-      popupRef: /* @__PURE__ */ React86.createRef(),
+      positionerRef: /* @__PURE__ */ React83.createRef(),
+      popupRef: /* @__PURE__ */ React83.createRef(),
       typingRef: {
         current: false
       },
@@ -50070,9 +47835,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         current: false
       },
       virtualFocusRef: void 0,
-      triggerFocusTargetRef: /* @__PURE__ */ React86.createRef(),
-      beforeTriggerFocusGuardRef: /* @__PURE__ */ React86.createRef(),
-      beforeContentFocusGuardRef: /* @__PURE__ */ React86.createRef(),
+      triggerFocusTargetRef: /* @__PURE__ */ React83.createRef(),
+      beforeTriggerFocusGuardRef: /* @__PURE__ */ React83.createRef(),
+      beforeContentFocusGuardRef: /* @__PURE__ */ React83.createRef(),
       onOpenChangeComplete: void 0,
       triggerElements
     };
@@ -50111,8 +47876,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-provider/MenuFilterProviderContext.mjs
-  var React87 = __toESM(require_react(), 1);
-  var MenuFilterProviderContext = /* @__PURE__ */ React87.createContext(null);
+  var React84 = __toESM(require_react(), 1);
+  var MenuFilterProviderContext = /* @__PURE__ */ React84.createContext(null);
   if (true) MenuFilterProviderContext.displayName = "MenuFilterProviderContext";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/utils/isKeyboardOpen.mjs
@@ -50154,7 +47919,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const menubarContext = useMenubarContext2(true);
     const enclosingMenuStore = parentMenuRootContext?.store;
     const parentVirtualFocus = parentMenuRootContext?.virtualFocus ?? false;
-    const parentFromContext = React88.useMemo(() => {
+    const parentFromContext = React85.useMemo(() => {
       if (isSubmenu && enclosingMenuStore) {
         return {
           type: "menu",
@@ -50179,7 +47944,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }, [contextMenuContext, enclosingMenuStore, menubarContext, isSubmenu]);
     const rootId = useBaseUiId();
     const defaultFloatingId = useBaseUiId();
-    const [renderedFloatingId, setRenderedFloatingId] = React88.useState(void 0);
+    const [renderedFloatingId, setRenderedFloatingId] = React85.useState(void 0);
     const floatingId = (renderedFloatingId ?? defaultFloatingId) || void 0;
     const floatingParentNodeIdFromContext = useFloatingParentNodeId();
     const parentMenuStore = parentFromContext.type === "menu" ? parentFromContext.store : void 0;
@@ -50217,10 +47982,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const keyboardOpen = store.useState("keyboardOpen");
     const payload = store.useState("payload");
     const floatingParentNodeId = store.useState("floatingParentNodeId");
-    const openEventRef = React88.useRef(null);
-    const allowOutsidePressDismissalRef = React88.useRef(parent.type !== "context-menu");
+    const openEventRef = React85.useRef(null);
+    const allowOutsidePressDismissalRef = React85.useRef(parent.type !== "context-menu");
     const allowOutsidePressDismissalTimeout = useTimeout();
-    const allowTouchToCloseRef = React88.useRef(true);
+    const allowTouchToCloseRef = React85.useRef(true);
     const allowTouchToCloseTimeout = useTimeout();
     const nested = floatingParentNodeId != null;
     if (true) {
@@ -50247,7 +48012,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       store.set("allowMouseEnter", false);
     }, animateInitialOpen);
     const runOnceAnimationsFinish = useAnimationsFinished(store.context.popupRef);
-    React88.useEffect(() => {
+    React85.useEffect(() => {
       if (seededInstantType === void 0) {
         return void 0;
       }
@@ -50290,7 +48055,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         });
       }
     }, [contextMenuContext, parentMenuRootContext, floatingNodeIdFromContext, floatingParentNodeIdFromContext, activeTriggerElement, store]);
-    React88.useEffect(() => {
+    React85.useEffect(() => {
       if (!open2) {
         openEventRef.current = null;
       }
@@ -50376,10 +48141,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       };
     }, [floatingEvents, setOpen]);
     useIsoLayoutEffect(() => store.subscribeToParentMenu(), [store]);
-    const handleImperativeClose = React88.useCallback(() => {
+    const handleImperativeClose = React85.useCallback(() => {
       store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
     }, [store]);
-    React88.useImperativeHandle(actionsRef, () => ({
+    React85.useImperativeHandle(actionsRef, () => ({
       unmount: forceUnmount,
       close: handleImperativeClose
     }), [forceUnmount, handleImperativeClose]);
@@ -50387,8 +48152,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     if (parent.type === "context-menu") {
       ctx14 = parent.context;
     }
-    React88.useImperativeHandle(ctx14?.positionerRef, () => positionerElement, [positionerElement]);
-    React88.useImperativeHandle(ctx14?.actionsRef, () => ({
+    React85.useImperativeHandle(ctx14?.positionerRef, () => positionerElement, [positionerElement]);
+    React85.useImperativeHandle(ctx14?.actionsRef, () => ({
       setOpen
     }), [setOpen]);
     const dismiss = useDismiss(floatingRootContext, {
@@ -50436,7 +48201,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       focusItemOnHover: highlightItemOnHover,
       resetOnPointerLeave
     });
-    const onTyping = React88.useCallback((nextTyping) => {
+    const onTyping = React85.useCallback((nextTyping) => {
       store.context.typingRef.current = nextTyping;
     }, [store]);
     const typeahead = useTypeahead(floatingRootContext, {
@@ -50454,7 +48219,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       onTyping
     });
     const onItemHighlighted = useStableCallback(onItemHighlightedProp);
-    const lastHighlightIndexRef = React88.useRef(-1);
+    const lastHighlightIndexRef = React85.useRef(-1);
     const syncHighlightedItem = useStableCallback(() => {
       const index2 = store.state.activeIndex;
       const item = index2 === null ? void 0 : store.context.itemDomElements.current[index2] ?? void 0;
@@ -50486,7 +48251,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     useIsoLayoutEffect(() => {
       syncHighlightedItem();
     }, [activeIndex, syncHighlightedItem]);
-    const openTriggerProps = React88.useMemo(() => {
+    const openTriggerProps = React85.useMemo(() => {
       if (!virtualFocus) {
         return listNavigation2.reference;
       }
@@ -50500,7 +48265,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return rest;
     }, [virtualFocus, listNavigation2.reference, listNavigation2.trigger]);
     store.useSyncedValue("inputProps", virtualFocus ? listNavigation2.reference ?? EMPTY_OBJECT : EMPTY_OBJECT);
-    const activeTriggerProps = React88.useMemo(() => {
+    const activeTriggerProps = React85.useMemo(() => {
       const mergedProps = mergeProps2(typeahead.reference, openTriggerProps, dismiss.reference, {
         onMouseMove() {
           store.set("allowMouseEnter", true);
@@ -50510,7 +48275,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       mergedProps["aria-expanded"] = open2;
       return mergedProps;
     }, [store, typeahead.reference, openTriggerProps, dismiss.reference, interactionTypeProps, open2]);
-    const inactiveTriggerProps = React88.useMemo(() => {
+    const inactiveTriggerProps = React85.useMemo(() => {
       const mergedProps = mergeProps2(listNavigation2.trigger, dismiss.trigger, interactionTypeProps);
       mergedProps["aria-haspopup"] = "menu";
       mergedProps["aria-expanded"] = false;
@@ -50522,7 +48287,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       });
       return null;
     });
-    const popupProps = React88.useMemo(() => mergeProps2(FOCUSABLE_POPUP_PROPS, {
+    const popupProps = React85.useMemo(() => mergeProps2(FOCUSABLE_POPUP_PROPS, {
       onMouseMove() {
         store.set("allowMouseEnter", true);
         if (parent.type === "menu") {
@@ -50549,7 +48314,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       popupProps,
       itemProps
     });
-    const context = React88.useMemo(() => ({
+    const context = React85.useMemo(() => ({
       store,
       parent: parentFromContext,
       orientation,
@@ -50581,7 +48346,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   });
   if (true) MenuRootInternal.displayName = "MenuRootInternal";
   function MenuRoot(props) {
-    const filterProvider = React88.useContext(MenuFilterProviderContext);
+    const filterProvider = React85.useContext(MenuFilterProviderContext);
     if (filterProvider === null) {
       return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(MenuRootInternal, {
         ...props
@@ -50601,12 +48366,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-root/MenuSubmenuRoot.mjs
-  var React89 = __toESM(require_react(), 1);
+  var React86 = __toESM(require_react(), 1);
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_SUBMENU_ROOT_CONTEXT = {};
   function MenuSubmenuRoot(props) {
     useMenuRootContext();
-    const filterProvider = React89.useContext(MenuFilterProviderContext);
+    const filterProvider = React86.useContext(MenuFilterProviderContext);
     if (filterProvider !== null) {
       const FilterSubmenuRoot = filterProvider.SubmenuRoot;
       return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(MenuFilterProviderContext.Provider, {
@@ -50627,10 +48392,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
-  var React92 = __toESM(require_react(), 1);
+  var React89 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
-  var React90 = __toESM(require_react(), 1);
+  var React87 = __toESM(require_react(), 1);
   function useCompositeItem3(params = {}) {
     const {
       highlightItemOnHover,
@@ -50642,7 +48407,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       index: index2
     } = useCompositeListItem(params);
     const isHighlighted = highlightedIndex === index2;
-    const itemRef = React90.useRef(null);
+    const itemRef = React87.useRef(null);
     const mergedRef = useMergedRefs(ref, itemRef);
     const compositeProps = {
       tabIndex: isHighlighted ? 0 : -1,
@@ -50697,14 +48462,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/utils/findRootOwnerId.mjs
-  function findRootOwnerId(node2) {
-    if (isHTMLElement(node2) && node2.hasAttribute("data-rootownerid")) {
-      return node2.getAttribute("data-rootownerid");
+  function findRootOwnerId(node) {
+    if (isHTMLElement(node) && node.hasAttribute("data-rootownerid")) {
+      return node.getAttribute("data-rootownerid");
     }
-    if (isLastTraversableNode(node2)) {
+    if (isLastTraversableNode(node)) {
       return void 0;
     }
-    return findRootOwnerId(getParentNode(node2));
+    return findRootOwnerId(getParentNode(node));
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popups/useTriggerFocusGuards.mjs
@@ -50735,15 +48500,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useMixedToggleClickHandler.mjs
-  var React91 = __toESM(require_react(), 1);
+  var React88 = __toESM(require_react(), 1);
   function useMixedToggleClickHandler(params) {
     const {
       enabled = true,
       mouseDownAction,
       open: open2
     } = params;
-    const ignoreClickRef = React91.useRef(false);
-    return React91.useMemo(() => {
+    const ignoreClickRef = React88.useRef(false);
+    return React88.useMemo(() => {
       if (!enabled) {
         return EMPTY_OBJECT;
       }
@@ -50796,11 +48561,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const floatingRootContext = store.useState("floatingRootContext");
     const isOpenedByThisTrigger = store.useState("isOpenedByTrigger", thisTriggerId);
     const controlsId = store.useState("triggerControlsId", thisTriggerId);
-    const triggerElementRef = React92.useRef(null);
+    const triggerElementRef = React89.useRef(null);
     const parent = useMenuParent();
     const compositeRootContext = useCompositeRootContext(true);
     const floatingTreeRootFromContext = useFloatingTree();
-    const floatingTreeRoot = React92.useMemo(() => {
+    const floatingTreeRoot = React89.useMemo(() => {
       return floatingTreeRootFromContext ?? new FloatingTreeStore();
     }, [floatingTreeRootFromContext]);
     const floatingNodeId = useFloatingNodeId(floatingTreeRoot);
@@ -50827,12 +48592,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       disabled: disabled2,
       native: nativeButton
     });
-    React92.useEffect(() => {
+    React89.useEffect(() => {
       if (!isOpenedByThisTrigger && parent.type === void 0) {
         store.context.allowMouseUpTriggerRef.current = false;
       }
     }, [store, isOpenedByThisTrigger, parent.type]);
-    const triggerRef = React92.useRef(null);
+    const triggerRef = React89.useRef(null);
     const allowMouseUpTriggerTimeout = useTimeout();
     const handleDocumentMouseUp = useStableCallback((mouseEvent) => {
       if (!triggerRef.current) {
@@ -50855,7 +48620,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         reason: reason_parts_exports.cancelOpen
       });
     });
-    React92.useEffect(() => {
+    React89.useEffect(() => {
       const doc = ownerDocument(triggerRef.current);
       if (isOpenedByThisTrigger && store.select("lastOpenChangeReason") === reason_parts_exports.triggerHover) {
         doc.addEventListener("mouseup", handleDocumentMouseUp, {
@@ -50901,7 +48666,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       enabled: isInMenubar,
       mouseDownAction: "open"
     });
-    const localInteractionProps = React92.useMemo(() => mergeProps2(focus5.reference, click.reference), [focus5.reference, click.reference]);
+    const localInteractionProps = React89.useMemo(() => mergeProps2(focus5.reference, click.reference), [focus5.reference, click.reference]);
     const rootTriggerProps = store.useState("triggerProps", isMountedByThisTrigger);
     const filterTriggerProps = store.useState("filterTriggerProps");
     const {
@@ -50952,11 +48717,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       });
     }
     if (isOpenedByThisTrigger) {
-      return /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(React92.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(React89.Fragment, {
         children: [/* @__PURE__ */ (0, import_jsx_runtime189.jsx)(FocusGuard, {
           ref: store.context.beforeTriggerFocusGuardRef,
           onFocus: handlePreFocusGuardFocus
-        }, `${thisTriggerId}-pre-focus-guard`), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(React92.Fragment, {
+        }, `${thisTriggerId}-pre-focus-guard`), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(React89.Fragment, {
           children: element
         }, thisTriggerId), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(FocusGuard, {
           ref: store.context.triggerFocusTargetRef,
@@ -50964,14 +48729,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }, `${thisTriggerId}-post-focus-guard`)]
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(React92.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(React89.Fragment, {
       children: element
     }, thisTriggerId);
   });
   if (true) MenuTrigger.displayName = "MenuTrigger";
   function useStickIfOpen(open2, openReason) {
     const stickIfOpenTimeout = useTimeout();
-    const [stickIfOpen, setStickIfOpen] = React92.useState(false);
+    const [stickIfOpen, setStickIfOpen] = React89.useState(false);
     useIsoLayoutEffect(() => {
       if (open2 && openReason === reason_parts_exports.triggerHover) {
         setStickIfOpen(true);
@@ -50987,7 +48752,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
   function useMenuParent() {
     const menubarContext = useMenubarContext2(true);
-    const parent = React92.useMemo(() => {
+    const parent = React89.useMemo(() => {
       if (menubarContext) {
         return {
           type: "menubar",
@@ -51002,16 +48767,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
-  var React97 = __toESM(require_react(), 1);
+  var React94 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupViewport.mjs
-  var React96 = __toESM(require_react(), 1);
+  var React93 = __toESM(require_react(), 1);
   var ReactDOM7 = __toESM(require_react_dom(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/usePreviousValue.mjs
-  var React93 = __toESM(require_react(), 1);
+  var React90 = __toESM(require_react(), 1);
   function usePreviousValue(value) {
-    const [state, setState] = React93.useState({
+    const [state, setState] = React90.useState({
       current: value,
       previous: null
     });
@@ -51025,7 +48790,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
-  var React94 = __toESM(require_react(), 1);
+  var React91 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getCssDimensions.mjs
   function getCssDimensions2(element) {
@@ -51064,10 +48829,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = parameters;
     const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true);
     const animationFrame = useAnimationFrame();
-    const committedDimensionsRef = React94.useRef(null);
+    const committedDimensionsRef = React91.useRef(null);
     const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
     const onMeasureLayoutComplete = useStableCallback(onMeasureLayoutCompleteParam);
-    const anchoringStyles = React94.useMemo(() => getPopupAnchoringStyles(side, direction), [side, direction]);
+    const anchoringStyles = React91.useMemo(() => getPopupAnchoringStyles(side, direction), [side, direction]);
     useIsoLayoutEffect(() => {
       if (!mounted) {
         committedDimensionsRef.current = null;
@@ -51166,13 +48931,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
-  var React95 = __toESM(require_react(), 1);
+  var React92 = __toESM(require_react(), 1);
   var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
   var DirectionProvider = function DirectionProvider2(props) {
     const {
       direction = "ltr"
     } = props;
-    const contextValue = React95.useMemo(() => ({
+    const contextValue = React92.useMemo(() => ({
       direction
     }), [direction]);
     return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DirectionContext.Provider, {
@@ -51276,16 +49041,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const positionerElement = store.useState("positionerElement");
     const previousActiveTrigger = usePreviousValue(open2 ? activeTrigger : null);
     const currentContentKey = usePopupContentKey(activeTriggerId, payload);
-    const capturedNodeRef = React96.useRef(null);
-    const [previousContentNode, setPreviousContentNode] = React96.useState(null);
-    const [newTriggerOffset, setNewTriggerOffset] = React96.useState(null);
-    const currentContainerRef = React96.useRef(null);
-    const previousContainerRef = React96.useRef(null);
+    const capturedNodeRef = React93.useRef(null);
+    const [previousContentNode, setPreviousContentNode] = React93.useState(null);
+    const [newTriggerOffset, setNewTriggerOffset] = React93.useState(null);
+    const currentContainerRef = React93.useRef(null);
+    const previousContainerRef = React93.useRef(null);
     const onAnimationsFinished = useAnimationsFinished(currentContainerRef, true);
     const cleanupFrame = useAnimationFrame();
-    const cleanupControllerRef = React96.useRef(null);
-    const [previousContentDimensions, setPreviousContentDimensions] = React96.useState(null);
-    const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React96.useState(false);
+    const cleanupControllerRef = React93.useRef(null);
+    const [previousContentDimensions, setPreviousContentDimensions] = React93.useState(null);
+    const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React93.useState(false);
     useIsoLayoutEffect(() => {
       store.set("adaptiveOrigin", adaptiveOrigin);
       return () => {
@@ -51315,7 +49080,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         capturedNodeRef.current = null;
       }, controller.signal);
     });
-    const lastHandledTriggerRef = React96.useRef(null);
+    const lastHandledTriggerRef = React93.useRef(null);
     useIsoLayoutEffect(() => {
       if (!open2 || !mounted) {
         lastHandledTriggerRef.current = null;
@@ -51363,7 +49128,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         children
       }, currentContentKey);
     } else {
-      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(React96.Fragment, {
+      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(React93.Fragment, {
         children: [/* @__PURE__ */ (0, import_jsx_runtime191.jsx)("div", {
           "data-previous": true,
           inert: inertValue(true),
@@ -51425,8 +49190,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return "";
   }
-  function calculateRelativePosition(from2, to) {
-    const fromRect = from2.getBoundingClientRect();
+  function calculateRelativePosition(from, to) {
+    const fromRect = from.getBoundingClientRect();
     const toRect = to.getBoundingClientRect();
     const fromCenter = {
       x: fromRect.left + fromRect.width / 2,
@@ -51442,10 +49207,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     };
   }
   function usePopupContentKey(activeTriggerId, payload) {
-    const [contentKey, setContentKey] = React96.useState(0);
-    const previousActiveTriggerIdRef = React96.useRef(activeTriggerId);
-    const previousPayloadRef = React96.useRef(payload);
-    const pendingPayloadUpdateRef = React96.useRef(false);
+    const [contentKey, setContentKey] = React93.useState(0);
+    const previousActiveTriggerIdRef = React93.useRef(activeTriggerId);
+    const previousPayloadRef = React93.useRef(payload);
+    const pendingPayloadUpdateRef = React93.useRef(false);
     useIsoLayoutEffect(() => {
       const previousActiveTriggerId = previousActiveTriggerIdRef.current;
       const previousPayload = previousPayloadRef.current;
@@ -51465,7 +49230,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/viewport/MenuViewport.mjs
-  var MenuViewport = /* @__PURE__ */ React97.forwardRef(function MenuViewport2(componentProps, forwardedRef) {
+  var MenuViewport = /* @__PURE__ */ React94.forwardRef(function MenuViewport2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -51505,8 +49270,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuViewport.displayName = "MenuViewport";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/separator/Separator.mjs
-  var React98 = __toESM(require_react(), 1);
-  var Separator3 = /* @__PURE__ */ React98.forwardRef(function SeparatorComponent(componentProps, forwardedRef) {
+  var React95 = __toESM(require_react(), 1);
+  var Separator3 = /* @__PURE__ */ React95.forwardRef(function SeparatorComponent(componentProps, forwardedRef) {
     const {
       className,
       render,
@@ -51530,7 +49295,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) Separator3.displayName = "Separator";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/submenu-trigger/MenuSubmenuTrigger.mjs
-  var React99 = __toESM(require_react(), 1);
+  var React96 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/isElementDisabled.mjs
   function isElementDisabled(element) {
@@ -51542,7 +49307,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var VOICE_OVER_EXPANDED_PROPS = {
     "aria-expanded": void 0
   };
-  var MenuSubmenuTriggerPlain = /* @__PURE__ */ React99.forwardRef(function MenuSubmenuTriggerPlain2(componentProps, forwardedRef) {
+  var MenuSubmenuTriggerPlain = /* @__PURE__ */ React96.forwardRef(function MenuSubmenuTriggerPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -51573,7 +49338,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
     const thisTriggerId = useBaseUiId(idProp);
     const open2 = store.useState("open");
-    const focusReturnedThroughGuardRef = React99.useRef(false);
+    const focusReturnedThroughGuardRef = React96.useRef(false);
     const positionerElement = store.useState("positionerElement");
     const floatingRootContext = store.useState("floatingRootContext");
     const floatingTreeRoot = store.useState("floatingTreeRoot");
@@ -51590,8 +49355,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         });
       }
     });
-    const triggerElementRef = React99.useRef(null);
-    const handleTriggerElementRef = React99.useCallback((el) => {
+    const triggerElementRef = React96.useRef(null);
+    const handleTriggerElementRef = React96.useCallback((el) => {
       triggerElementRef.current = el;
       store.set("activeTriggerElement", el);
     }, [store]);
@@ -51619,7 +49384,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const parentDisabled = parentMenuStore.useState("disabled");
     const disabled2 = disabledProp || rootDisabled || parentDisabled;
     if (true) {
-      React99.useEffect(() => {
+      React96.useEffect(() => {
         const element2 = triggerElementRef.current;
         if (element2 && isElementDisabled(element2) && !disabled2) {
           const ownerStackMessage = SafeReact.captureOwnerStack?.() || "";
@@ -51629,7 +49394,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     const itemProps = parentMenuStore.useState("itemProps");
     const highlighted = parentMenuStore.useState("isActive", listItem.index);
-    const itemMetadata = React99.useMemo(() => ({
+    const itemMetadata = React96.useMemo(() => ({
       type: "submenu-trigger",
       setActive(event) {
         if (parentMenuStore.select("highlightItemOnHover")) {
@@ -51742,7 +49507,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     return element;
   });
   if (true) MenuSubmenuTriggerPlain.displayName = "MenuSubmenuTriggerPlain";
-  var MenuSubmenuTrigger = /* @__PURE__ */ React99.forwardRef(function MenuSubmenuTrigger2(props, forwardedRef) {
+  var MenuSubmenuTrigger = /* @__PURE__ */ React96.forwardRef(function MenuSubmenuTrigger2(props, forwardedRef) {
     const filterItem = useMenuFilterItem(props, forwardedRef, "submenu-trigger");
     if (!filterItem.visible) {
       return null;
@@ -51791,23 +49556,23 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-provider/MenuFilterProvider.mjs
-  var React116 = __toESM(require_react(), 1);
+  var React113 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterRoot.mjs
-  var React114 = __toESM(require_react(), 1);
+  var React111 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterDropdown.mjs
-  var React112 = __toESM(require_react(), 1);
+  var React109 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/FilterDropdownRoot.mjs
-  var React102 = __toESM(require_react(), 1);
+  var React99 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useItemRegistry.mjs
-  var React100 = __toESM(require_react(), 1);
+  var React97 = __toESM(require_react(), 1);
   function useItemRegistry() {
     const itemRegistry = useRefWithInit(() => /* @__PURE__ */ new Map()).current;
-    const [registryVersion, setRegistryVersion] = React100.useState(0);
-    const isUpdateScheduledRef = React100.useRef(false);
+    const [registryVersion, setRegistryVersion] = React97.useState(0);
+    const isUpdateScheduledRef = React97.useRef(false);
     const scheduleRegistryUpdate = useStableCallback(() => {
       if (isUpdateScheduledRef.current) {
         return;
@@ -51823,7 +49588,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         scheduleRegistryUpdate();
       };
     });
-    const registeredItems = React100.useMemo(
+    const registeredItems = React97.useMemo(
       () => new Map(itemRegistry),
       // The mutable registry is stable. Its version explicitly controls when to publish a copy.
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51840,30 +49605,30 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/FilterDropdownRootContext.mjs
-  var React101 = __toESM(require_react(), 1);
+  var React98 = __toESM(require_react(), 1);
   function throwMissingFilterRoot() {
     throw new Error(true ? "Base UI: Filter parts are missing their filter context and cannot access the query or items. Wrap the component root in its filter provider." : formatErrorMessage_default(103));
   }
-  var FilterDropdownItemContext = /* @__PURE__ */ React101.createContext(null);
+  var FilterDropdownItemContext = /* @__PURE__ */ React98.createContext(null);
   if (true) FilterDropdownItemContext.displayName = "FilterDropdownItemContext";
   function useFilterDropdownItemContext(optional = false) {
-    const context = React101.useContext(FilterDropdownItemContext);
+    const context = React98.useContext(FilterDropdownItemContext);
     if (context === null && !optional) {
       throwMissingFilterRoot();
     }
     return context;
   }
-  var FilterDropdownRootContext = /* @__PURE__ */ React101.createContext(null);
+  var FilterDropdownRootContext = /* @__PURE__ */ React98.createContext(null);
   if (true) FilterDropdownRootContext.displayName = "FilterDropdownRootContext";
   function useFilterDropdownRootContext(optional = false) {
-    const context = React101.useContext(FilterDropdownRootContext);
+    const context = React98.useContext(FilterDropdownRootContext);
     if (context === null && !optional) {
       throwMissingFilterRoot();
     }
     return context;
   }
   function useFilterContextForList(listRef) {
-    let context = React101.useContext(FilterDropdownItemContext);
+    let context = React98.useContext(FilterDropdownItemContext);
     if (listRef === null) {
       return null;
     }
@@ -51872,10 +49637,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return context;
   }
-  var FilterDropdownValueContext = /* @__PURE__ */ React101.createContext("");
+  var FilterDropdownValueContext = /* @__PURE__ */ React98.createContext("");
   if (true) FilterDropdownValueContext.displayName = "FilterDropdownValueContext";
   function useFilterDropdownValueContext() {
-    return React101.useContext(FilterDropdownValueContext);
+    return React98.useContext(FilterDropdownValueContext);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/store.mjs
@@ -51917,11 +49682,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       setActiveIndex,
       focusOwnerRef: focusOwnerRefProp
     } = props;
-    const parentItemContext = React102.useContext(FilterDropdownItemContext);
-    const [renderedListId, setRenderedListId] = React102.useState(void 0);
-    const [inputFocusVisible, setInputFocusVisible] = React102.useState(openedByKeyboard);
-    const [keyboardModality, setKeyboardModality] = React102.useState(openedByKeyboard);
-    const [previousOpenedByKeyboard, setPreviousOpenedByKeyboard] = React102.useState(openedByKeyboard);
+    const parentItemContext = React99.useContext(FilterDropdownItemContext);
+    const [renderedListId, setRenderedListId] = React99.useState(void 0);
+    const [inputFocusVisible, setInputFocusVisible] = React99.useState(openedByKeyboard);
+    const [keyboardModality, setKeyboardModality] = React99.useState(openedByKeyboard);
+    const [previousOpenedByKeyboard, setPreviousOpenedByKeyboard] = React99.useState(openedByKeyboard);
     if (openedByKeyboard !== previousOpenedByKeyboard) {
       setPreviousOpenedByKeyboard(openedByKeyboard);
       setInputFocusVisible(openedByKeyboard);
@@ -51942,9 +49707,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         store.set("registeredItemCount", liveItems.size);
       };
     });
-    const fallbackFocusOwnerRef = React102.useRef(null);
-    const lastFilterQueryRef = React102.useRef(null);
-    const defaultMatchItem = React102.useMemo(() => getFilter({
+    const fallbackFocusOwnerRef = React99.useRef(null);
+    const lastFilterQueryRef = React99.useRef(null);
+    const defaultMatchItem = React99.useMemo(() => getFilter({
       locale
     }).contains, [locale]);
     const focusOwnerRef = focusOwnerRefProp ?? fallbackFocusOwnerRef;
@@ -52011,7 +49776,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         setActiveIndex(0);
       }
     }, [open2, query, filterQuery, registeredItems, liveItems, matchItem, autoHighlightEnabled, store, setActiveIndex, getActiveIndex]);
-    const contextValue = React102.useMemo(() => ({
+    const contextValue = React99.useMemo(() => ({
       open: open2,
       disabled: disabled2,
       inputFocusVisible,
@@ -52028,7 +49793,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       onItemsChange: handleItemsChange,
       onValueChange: handleValueChange
     }), [open2, disabled2, inputFocusVisible, keyboardModality, autoHighlight, triggerId, defaultListId, listId, focusOwnerRef, setActiveIndex, handleItemsChange, handleValueChange]);
-    const itemContextValue = React102.useMemo(() => ({
+    const itemContextValue = React99.useMemo(() => ({
       parent: parentItemContext,
       store,
       registerItem,
@@ -52047,7 +49812,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/root/useFilterDropdownCloseQuery.mjs
-  var React103 = __toESM(require_react(), 1);
+  var React100 = __toESM(require_react(), 1);
   function useFilterDropdownCloseQuery(parameters) {
     const {
       open: open2,
@@ -52055,8 +49820,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       value,
       onValueChange
     } = parameters;
-    const [closeQuery, setCloseQuery] = React103.useState(null);
-    const previousOpenRef = React103.useRef(open2);
+    const [closeQuery, setCloseQuery] = React100.useState(null);
+    const previousOpenRef = React100.useRef(open2);
     useIsoLayoutEffect(() => {
       const wasOpen = previousOpenRef.current;
       previousOpenRef.current = open2;
@@ -52071,10 +49836,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterPopup.mjs
-  var React105 = __toESM(require_react(), 1);
+  var React102 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterPopup.mjs
-  var React104 = __toESM(require_react(), 1);
+  var React101 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/utils/refocusOwner.mjs
   var refocusing = false;
@@ -52099,13 +49864,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const {
       focusOwnerRef
     } = context;
-    const nestedFocusRef = React104.useRef(null);
-    const pointerTypeRef = React104.useRef("mouse");
+    const nestedFocusRef = React101.useRef(null);
+    const pointerTypeRef = React101.useRef("mouse");
     function trackPointerType(event) {
       pointerTypeRef.current = event.pointerType || "mouse";
     }
     if (true) {
-      React104.useEffect(() => {
+      React101.useEffect(() => {
         if (context.open && focusOwnerRef.current === null) {
           warn4("A filterable menu opened without a <Menu.Input>. Render the input inside <Menu.Popup>, or drop <Menu.FilterProvider> for a menu that does not filter.");
         }
@@ -52121,15 +49886,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         return;
       }
       let submenuTrigger = null;
-      const nearestPopup = event.nativeEvent.composedPath().find((node2) => {
-        if (!isHTMLElement(node2)) {
+      const nearestPopup = event.nativeEvent.composedPath().find((node) => {
+        if (!isHTMLElement(node)) {
           return false;
         }
-        if (node2.getAttribute("role") === "dialog" || node2.hasAttribute("data-rootownerid")) {
+        if (node.getAttribute("role") === "dialog" || node.hasAttribute("data-rootownerid")) {
           return true;
         }
-        if (node2.hasAttribute("aria-haspopup")) {
-          submenuTrigger = node2;
+        if (node.hasAttribute("aria-haspopup")) {
+          submenuTrigger = node;
         }
         return false;
       });
@@ -52199,7 +49964,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterPopup.mjs
   var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
-  var MenuFilterPopup = /* @__PURE__ */ React105.forwardRef(function MenuFilterPopup2(props, forwardedRef) {
+  var MenuFilterPopup = /* @__PURE__ */ React102.forwardRef(function MenuFilterPopup2(props, forwardedRef) {
     const {
       store,
       orientation
@@ -52232,22 +49997,22 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuFilterPopup.displayName = "MenuFilterPopup";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterList.mjs
-  var React108 = __toESM(require_react(), 1);
+  var React105 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/list/FilterDropdownList.mjs
-  var React107 = __toESM(require_react(), 1);
+  var React104 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/group/FilterDropdownGroupContext.mjs
-  var React106 = __toESM(require_react(), 1);
-  var FilterDropdownGroupContext = /* @__PURE__ */ React106.createContext(null);
+  var React103 = __toESM(require_react(), 1);
+  var FilterDropdownGroupContext = /* @__PURE__ */ React103.createContext(null);
   if (true) FilterDropdownGroupContext.displayName = "FilterDropdownGroupContext";
   function useFilterDropdownGroupContext() {
-    return React106.useContext(FilterDropdownGroupContext);
+    return React103.useContext(FilterDropdownGroupContext);
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/list/FilterDropdownList.mjs
   var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
-  var FilterDropdownList = /* @__PURE__ */ React107.forwardRef(function FilterDropdownList2(componentProps, forwardedRef) {
+  var FilterDropdownList = /* @__PURE__ */ React104.forwardRef(function FilterDropdownList2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -52424,20 +50189,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       minIndex: getMinListIndex(listRef, EMPTY_ARRAY),
       maxIndex: getMaxListIndex(listRef, EMPTY_ARRAY)
     });
-    const next2 = items[index2];
-    if (next2) {
+    const next = items[index2];
+    if (next) {
       store.setActiveIndex(index2, reason_parts_exports.keyboard, event.nativeEvent);
-      next2.scrollIntoView?.({
+      next.scrollIntoView?.({
         block: "nearest",
         inline: "nearest"
       });
     }
-    return next2 ?? void 0;
+    return next ?? void 0;
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterList.mjs
   var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
-  var MenuFilterList = /* @__PURE__ */ React108.forwardRef(function MenuFilterList2(componentProps, forwardedRef) {
+  var MenuFilterList = /* @__PURE__ */ React105.forwardRef(function MenuFilterList2(componentProps, forwardedRef) {
     const {
       store,
       orientation,
@@ -52491,7 +50256,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         return popupId != null && isHTMLElement(item) && contains2(root.getElementById(popupId), target);
       });
     }
-    const previousItemsRef = React108.useRef(null);
+    const previousItemsRef = React105.useRef(null);
     const handleItemMapChange = useStableCallback(() => {
       const items = [...listRef.current];
       const previousItems = previousItemsRef.current;
@@ -52519,10 +50284,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuFilterList.displayName = "MenuFilterList";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterGroup.mjs
-  var React110 = __toESM(require_react(), 1);
+  var React107 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/group/useFilterDropdownGroup.mjs
-  var React109 = __toESM(require_react(), 1);
+  var React106 = __toESM(require_react(), 1);
   function isGroupHidden(state, items) {
     if (state.visibleItemIds === null || items.size === 0) {
       return false;
@@ -52547,7 +50312,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const groupId = useRefWithInit(() => /* @__PURE__ */ Symbol("filter-dropdown-group")).current;
     const registerInParent = parentContext?.registerItem;
     useIsoLayoutEffect(() => registerInParent?.(groupId, !hidden), [registerInParent, groupId, hidden]);
-    const context = React109.useMemo(() => ({
+    const context = React106.useMemo(() => ({
       registerItem
     }), [registerItem]);
     return {
@@ -52558,7 +50323,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/MenuFilterGroup.mjs
   var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
-  var MenuFilterGroup = /* @__PURE__ */ React110.forwardRef(function MenuFilterGroup2(props, forwardedRef) {
+  var MenuFilterGroup = /* @__PURE__ */ React107.forwardRef(function MenuFilterGroup2(props, forwardedRef) {
     const {
       hidden,
       context
@@ -52573,7 +50338,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
   });
   if (true) MenuFilterGroup.displayName = "MenuFilterGroup";
-  var MenuFilterRadioGroup = /* @__PURE__ */ React110.forwardRef(function MenuFilterRadioGroup2(props, forwardedRef) {
+  var MenuFilterRadioGroup = /* @__PURE__ */ React107.forwardRef(function MenuFilterRadioGroup2(props, forwardedRef) {
     const {
       hidden,
       context
@@ -52590,7 +50355,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuFilterRadioGroup.displayName = "MenuFilterRadioGroup";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/item/useFilterDropdownItem.mjs
-  var React111 = __toESM(require_react(), 1);
+  var React108 = __toESM(require_react(), 1);
   function childrenText(children) {
     if (typeof children === "string" || typeof children === "number") {
       return String(children);
@@ -52598,7 +50363,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     if (Array.isArray(children)) {
       return children.map(childrenText).join("");
     }
-    if (/* @__PURE__ */ React111.isValidElement(children)) {
+    if (/* @__PURE__ */ React108.isValidElement(children)) {
       return childrenText(children.props.children);
     }
     return "";
@@ -52620,14 +50385,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = owner ?? DETACHED_OWNER;
     const registerGroupItem = groupContext?.registerItem;
     const itemId = useRefWithInit(() => /* @__PURE__ */ Symbol("filter-dropdown-item")).current;
-    const ref = React111.useRef(null);
-    const registeredTextRef = React111.useRef(void 0);
+    const ref = React108.useRef(null);
+    const registeredTextRef = React108.useRef(void 0);
     const matched = useStore2(store, selectors3.isItemVisible, itemId);
-    const [registered, setRegistered] = React111.useState(matched);
+    const [registered, setRegistered] = React108.useState(matched);
     const childrenRef = useValueAsRef(children);
     const renderRef = useValueAsRef(render);
-    const childrenTextRef = React111.useRef(void 0);
-    const resolveText = React111.useCallback(() => {
+    const childrenTextRef = React108.useRef(void 0);
+    const resolveText = React108.useCallback(() => {
       if (label != null) {
         return label;
       }
@@ -52642,7 +50407,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return fromChildren;
     }, [label, childrenRef, renderRef]);
-    const register2 = React111.useCallback((resolvedText) => {
+    const register2 = React108.useCallback((resolvedText) => {
       const text = resolvedText ?? resolveText();
       if (text) {
         registeredTextRef.current = text;
@@ -52865,7 +50630,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = useMenuRootContext();
     const isInMenubar = useMenubarContext2(true) != null;
     const handleInputKeyDown = useMenuFilterKeyDown(hasValue);
-    return React112.useMemo(() => ({
+    return React109.useMemo(() => ({
       "aria-haspopup": "dialog",
       onPointerDown(event) {
         store.context.virtualPress = isVirtualPointerEvent(event.nativeEvent);
@@ -52897,7 +50662,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-root/useMenuFilterRoot.mjs
-  var React113 = __toESM(require_react(), 1);
+  var React110 = __toESM(require_react(), 1);
   function useMenuFilterRoot(props) {
     const {
       children,
@@ -52909,7 +50674,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       locale,
       ...otherProps
     } = props;
-    const virtualFocusRef = React113.useRef(null);
+    const virtualFocusRef = React110.useRef(null);
     return {
       children,
       rootProps: {
@@ -52948,7 +50713,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/filter-submenu-root/MenuFilterSubmenuRoot.mjs
-  var React115 = __toESM(require_react(), 1);
+  var React112 = __toESM(require_react(), 1);
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   function MenuFilterSubmenuRoot(props) {
     const parent = useMenuRootContext();
@@ -52958,7 +50723,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       rootProps,
       dropdownProps
     } = useMenuFilterRoot(props);
-    const parentReferenceRef = React115.useRef(null);
+    const parentReferenceRef = React112.useRef(null);
     function handleSubmenuEnter(trigger, event) {
       const focusedElement = parent.virtualFocus ? parentStore.context.virtualFocusRef?.current : activeElement(ownerDocument(trigger));
       if (isHTMLElement(focusedElement)) {
@@ -53041,7 +50806,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = useMenuRootContext();
     const direction = useDirection();
     const mounted = store.useState("mounted");
-    const wasMountedRef = React115.useRef(false);
+    const wasMountedRef = React112.useRef(false);
     const handleReturnFocus = useStableCallback(() => {
       const [ownTrigger] = store.context.triggerElements.elements();
       return getReturnElement() ?? (isHTMLElement(ownTrigger) ? ownTrigger : null);
@@ -53064,8 +50829,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         });
       }
     }, [mounted, store, parentStore, handleReturnFocus]);
-    function moveInParent(from2, event) {
-      const item = moveHighlightFrom(parentStore, from2, event, {
+    function moveInParent(from, event) {
+      const item = moveHighlightFrom(parentStore, from, event, {
         orientation: parentOrientation,
         rtl: direction === "rtl",
         loopFocus: parentLoopFocus,
@@ -53133,7 +50898,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         close(event);
       }
     });
-    const contextValue = React115.useMemo(() => ({
+    const contextValue = React112.useMemo(() => ({
       getReturnElement: handleReturnFocus,
       onTriggerKeyDown: handleTriggerKeyDown,
       onPopupKeyDown: handlePopupKeyDown
@@ -53156,7 +50921,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       autoHighlight,
       locale
     } = props;
-    const contextValue = React116.useMemo(() => ({
+    const contextValue = React113.useMemo(() => ({
       Root: MenuFilterRoot,
       SubmenuRoot: MenuFilterSubmenuRoot,
       options: {
@@ -53175,11 +50940,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/input/MenuInput.mjs
-  var React118 = __toESM(require_react(), 1);
+  var React115 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/input/FilterDropdownInput.mjs
-  var React117 = __toESM(require_react(), 1);
-  var FilterDropdownInput = /* @__PURE__ */ React117.forwardRef(function FilterDropdownInput2(componentProps, forwardedRef) {
+  var React114 = __toESM(require_react(), 1);
+  var FilterDropdownInput = /* @__PURE__ */ React114.forwardRef(function FilterDropdownInput2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -53196,8 +50961,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       listRef
     } = useFilterDropdownItemContext();
     const value = useFilterDropdownValueContext();
-    const [composingValue, setComposingValue] = React117.useState(null);
-    const isComposingRef = React117.useRef(false);
+    const [composingValue, setComposingValue] = React114.useState(null);
+    const isComposingRef = React114.useRef(false);
     function commitValue(nextValue, nativeEvent) {
       if (!context.open) {
         return;
@@ -53267,8 +51032,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           if (context.autoHighlight === "always" || isRefocusingOwner()) {
             return;
           }
-          const from2 = event.relatedTarget;
-          if (from2 !== null && listRef.current.includes(from2)) {
+          const from = event.relatedTarget;
+          if (from !== null && listRef.current.includes(from)) {
             context.setActiveIndex(null);
           }
         },
@@ -53282,7 +51047,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/input/MenuInput.mjs
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
-  var MenuInput = /* @__PURE__ */ React118.forwardRef(function MenuInput2(componentProps, forwardedRef) {
+  var MenuInput = /* @__PURE__ */ React115.forwardRef(function MenuInput2(componentProps, forwardedRef) {
     useMenuFilterPart("Input");
     const {
       store
@@ -53294,7 +51059,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = store.useState("inputProps");
     const activeItemId = store.useState("highlightedItemId");
     const handleKeyDown = useMenuFilterKeyDown(value !== "");
-    const handleInputRef = React118.useCallback((input) => {
+    const handleInputRef = React115.useCallback((input) => {
       store.set("inputFocused", input !== null && activeElement(ownerDocument(input)) === input);
     }, [store]);
     const mergedRefs = useMergedRefs(forwardedRef, handleInputRef);
@@ -53317,9 +51082,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuInput.displayName = "MenuInput";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/list/MenuList.mjs
-  var React119 = __toESM(require_react(), 1);
+  var React116 = __toESM(require_react(), 1);
   var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
-  var MenuListPlain = /* @__PURE__ */ React119.forwardRef(function MenuListPlain2(componentProps, forwardedRef) {
+  var MenuListPlain = /* @__PURE__ */ React116.forwardRef(function MenuListPlain2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -53335,7 +51100,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const activeTriggerElement = store.useState("activeTriggerElement");
     const setListElement = store.useStateSetter("listElement");
     const id3 = useBaseUiId(idProp);
-    const renderedIdRef = React119.useRef(id3);
+    const renderedIdRef = React116.useRef(id3);
     useIsoLayoutEffect(() => {
       if (renderedIdRef.current !== id3) {
         renderedIdRef.current = id3;
@@ -53357,7 +51122,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     });
   });
   if (true) MenuListPlain.displayName = "MenuListPlain";
-  var MenuList3 = /* @__PURE__ */ React119.forwardRef(function MenuList4(props, forwardedRef) {
+  var MenuList3 = /* @__PURE__ */ React116.forwardRef(function MenuList4(props, forwardedRef) {
     const List = useMenuFilterImpl()?.List ?? MenuListPlain;
     return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(List, {
       ...props,
@@ -53367,11 +51132,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuList3.displayName = "MenuList";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/clear/MenuClear.mjs
-  var React121 = __toESM(require_react(), 1);
+  var React118 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/clear/FilterDropdownClear.mjs
-  var React120 = __toESM(require_react(), 1);
-  var FilterDropdownClear = /* @__PURE__ */ React120.forwardRef(function FilterDropdownClear2(componentProps, forwardedRef) {
+  var React117 = __toESM(require_react(), 1);
+  var FilterDropdownClear = /* @__PURE__ */ React117.forwardRef(function FilterDropdownClear2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -53418,7 +51183,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/clear/MenuClear.mjs
   var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
-  var MenuClear = /* @__PURE__ */ React121.forwardRef(function MenuClear2(props, forwardedRef) {
+  var MenuClear = /* @__PURE__ */ React118.forwardRef(function MenuClear2(props, forwardedRef) {
     useMenuFilterPart("Clear");
     return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(FilterDropdownClear, {
       ...props,
@@ -53428,11 +51193,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   if (true) MenuClear.displayName = "MenuClear";
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/empty/MenuEmpty.mjs
-  var React123 = __toESM(require_react(), 1);
+  var React120 = __toESM(require_react(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/filter-dropdown/empty/FilterDropdownEmpty.mjs
-  var React122 = __toESM(require_react(), 1);
-  var FilterDropdownEmpty = /* @__PURE__ */ React122.forwardRef(function FilterDropdownEmpty2(componentProps, forwardedRef) {
+  var React119 = __toESM(require_react(), 1);
+  var FilterDropdownEmpty = /* @__PURE__ */ React119.forwardRef(function FilterDropdownEmpty2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -53443,7 +51208,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       store
     } = useFilterDropdownItemContext();
     const isEmpty = useStore2(store, selectors3.isEmpty);
-    const [ready, setReady] = React122.useState(false);
+    const [ready, setReady] = React119.useState(false);
     useIsoLayoutEffect(() => {
       setReady(true);
     }, []);
@@ -53463,7 +51228,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/menu/empty/MenuEmpty.mjs
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
-  var MenuEmpty = /* @__PURE__ */ React123.forwardRef(function MenuEmpty2(props, forwardedRef) {
+  var MenuEmpty = /* @__PURE__ */ React120.forwardRef(function MenuEmpty2(props, forwardedRef) {
     useMenuFilterPart("Empty");
     return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(FilterDropdownEmpty, {
       ...props,
@@ -53495,20 +51260,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash55(targetDocument, hash2) {
+  function documentContainsStyleHash55(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE55}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE55) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE55) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle55(targetDocument, hash2, css2) {
+  function injectStyle55(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -53518,18 +51283,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash55(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash55(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE55, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE55, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument55(targetDocument) {
     const runtime = getRuntime55();
@@ -53537,8 +51302,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle55(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle55(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -53552,11 +51317,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle54(hash2, css2) {
+  function registerStyle54(hash, css2) {
     const runtime = getRuntime55();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle55(targetDocument, hash2, css2);
+      injectStyle55(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -53606,20 +51371,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash56(targetDocument, hash2) {
+  function documentContainsStyleHash56(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE56}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE56) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE56) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle56(targetDocument, hash2, css2) {
+  function injectStyle56(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -53629,18 +51394,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash56(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash56(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE56, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE56, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument56(targetDocument) {
     const runtime = getRuntime56();
@@ -53648,8 +51413,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle56(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle56(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -53663,11 +51428,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle55(hash2, css2) {
+  function registerStyle55(hash, css2) {
     const runtime = getRuntime56();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle56(targetDocument, hash2, css2);
+      injectStyle56(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -53764,20 +51529,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash57(targetDocument, hash2) {
+  function documentContainsStyleHash57(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE57}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE57) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE57) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle57(targetDocument, hash2, css2) {
+  function injectStyle57(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -53787,18 +51552,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash57(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash57(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE57, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE57, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument57(targetDocument) {
     const runtime = getRuntime57();
@@ -53806,8 +51571,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle57(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle57(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -53821,11 +51586,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle56(hash2, css2) {
+  function registerStyle56(hash, css2) {
     const runtime = getRuntime57();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle57(targetDocument, hash2, css2);
+      injectStyle57(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -53983,20 +51748,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash58(targetDocument, hash2) {
+  function documentContainsStyleHash58(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE58}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE58) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE58) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle58(targetDocument, hash2, css2) {
+  function injectStyle58(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -54006,18 +51771,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash58(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash58(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE58, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE58, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument58(targetDocument) {
     const runtime = getRuntime58();
@@ -54025,8 +51790,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle58(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle58(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -54040,11 +51805,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle57(hash2, css2) {
+  function registerStyle57(hash, css2) {
     const runtime = getRuntime58();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle58(targetDocument, hash2, css2);
+      injectStyle58(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -54092,20 +51857,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash59(targetDocument, hash2) {
+  function documentContainsStyleHash59(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE59}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE59) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE59) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle59(targetDocument, hash2, css2) {
+  function injectStyle59(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -54115,18 +51880,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash59(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash59(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE59, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE59, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument59(targetDocument) {
     const runtime = getRuntime59();
@@ -54134,8 +51899,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle59(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle59(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -54149,11 +51914,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle58(hash2, css2) {
+  function registerStyle58(hash, css2) {
     const runtime = getRuntime59();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle59(targetDocument, hash2, css2);
+      injectStyle59(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -54198,20 +51963,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash60(targetDocument, hash2) {
+  function documentContainsStyleHash60(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE60}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE60) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE60) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle60(targetDocument, hash2, css2) {
+  function injectStyle60(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -54221,18 +51986,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash60(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash60(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE60, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE60, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument60(targetDocument) {
     const runtime = getRuntime60();
@@ -54240,8 +52005,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle60(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle60(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -54255,11 +52020,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle59(hash2, css2) {
+  function registerStyle59(hash, css2) {
     const runtime = getRuntime60();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle60(targetDocument, hash2, css2);
+      injectStyle60(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -54319,13 +52084,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
   function ItemContent({
     children,
-    prefix: prefix2,
+    prefix,
     shortcut,
     shortcutDescriptionId,
     suffix,
     trailing
   }) {
-    const hasPrefix = import_element111.Children.toArray(prefix2).some(
+    const hasPrefix = import_element111.Children.toArray(prefix).some(
       (child) => child !== ""
     );
     const hasSuffix = import_element111.Children.toArray(suffix).some(
@@ -54366,7 +52131,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
       ),
       descriptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime210.jsx)("span", { className: style_default6["item-descriptions"], children: descriptions }),
-      hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime210.jsx)("span", { "aria-hidden": "true", className: style_default6["item-prefix"], children: prefix2 }),
+      hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime210.jsx)("span", { "aria-hidden": "true", className: style_default6["item-prefix"], children: prefix }),
       shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
         KeyboardShortcutDescription,
         {
@@ -54379,7 +52144,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var Item = (0, import_element111.forwardRef)(function MenuItem5({
     children,
     className,
-    prefix: prefix2,
+    prefix,
     shortcut,
     suffix,
     "aria-describedby": ariaDescribedBy,
@@ -54415,7 +52180,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
           ItemContent,
           {
-            prefix: prefix2,
+            prefix,
             shortcut,
             shortcutDescriptionId,
             suffix,
@@ -54444,20 +52209,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash61(targetDocument, hash2) {
+  function documentContainsStyleHash61(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE61}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE61) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE61) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle61(targetDocument, hash2, css2) {
+  function injectStyle61(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -54467,18 +52232,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash61(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash61(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE61, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE61, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument61(targetDocument) {
     const runtime = getRuntime61();
@@ -54486,8 +52251,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle61(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle61(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -54501,11 +52266,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle60(hash2, css2) {
+  function registerStyle60(hash, css2) {
     const runtime = getRuntime61();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle61(targetDocument, hash2, css2);
+      injectStyle61(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -54524,7 +52289,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     function MenuCheckboxItem3({
       children,
       className,
-      prefix: prefix2,
+      prefix,
       shortcut,
       suffix,
       "aria-describedby": ariaDescribedBy,
@@ -54577,7 +52342,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
             /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
               ItemContent,
               {
-                prefix: prefix2,
+                prefix,
                 shortcut,
                 shortcutDescriptionId,
                 suffix,
@@ -54609,20 +52374,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash62(targetDocument, hash2) {
+  function documentContainsStyleHash62(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE62}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE62) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE62) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle62(targetDocument, hash2, css2) {
+  function injectStyle62(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -54632,18 +52397,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash62(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash62(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE62, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE62, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument62(targetDocument) {
     const runtime = getRuntime62();
@@ -54651,8 +52416,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle62(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle62(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -54666,11 +52431,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle61(hash2, css2) {
+  function registerStyle61(hash, css2) {
     const runtime = getRuntime62();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle62(targetDocument, hash2, css2);
+      injectStyle62(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -54713,20 +52478,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash63(targetDocument, hash2) {
+  function documentContainsStyleHash63(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE63}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE63) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE63) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle63(targetDocument, hash2, css2) {
+  function injectStyle63(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -54736,18 +52501,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash63(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash63(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE63, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE63, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument63(targetDocument) {
     const runtime = getRuntime63();
@@ -54755,8 +52520,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle63(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle63(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -54770,11 +52535,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle62(hash2, css2) {
+  function registerStyle62(hash, css2) {
     const runtime = getRuntime63();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle63(targetDocument, hash2, css2);
+      injectStyle63(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -54814,20 +52579,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash64(targetDocument, hash2) {
+  function documentContainsStyleHash64(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE64}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE64) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE64) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle64(targetDocument, hash2, css2) {
+  function injectStyle64(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -54837,18 +52602,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash64(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash64(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE64, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE64, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument64(targetDocument) {
     const runtime = getRuntime64();
@@ -54856,8 +52621,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle64(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle64(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -54871,11 +52636,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle63(hash2, css2) {
+  function registerStyle63(hash, css2) {
     const runtime = getRuntime64();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle64(targetDocument, hash2, css2);
+      injectStyle64(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -54895,7 +52660,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     className,
     openInNewTab = false,
     target,
-    prefix: prefix2,
+    prefix,
     shortcut,
     suffix,
     "aria-describedby": ariaDescribedBy,
@@ -54947,7 +52712,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
           ItemContent,
           {
-            prefix: prefix2,
+            prefix,
             shortcut,
             shortcutDescriptionId,
             suffix,
@@ -54990,20 +52755,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash65(targetDocument, hash2) {
+  function documentContainsStyleHash65(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE65}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE65) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE65) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle65(targetDocument, hash2, css2) {
+  function injectStyle65(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -55013,18 +52778,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash65(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash65(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE65, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE65, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument65(targetDocument) {
     const runtime = getRuntime65();
@@ -55032,8 +52797,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle65(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle65(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -55047,11 +52812,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle64(hash2, css2) {
+  function registerStyle64(hash, css2) {
     const runtime = getRuntime65();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle65(targetDocument, hash2, css2);
+      injectStyle65(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -55155,20 +52920,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash66(targetDocument, hash2) {
+  function documentContainsStyleHash66(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE66}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE66) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE66) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle66(targetDocument, hash2, css2) {
+  function injectStyle66(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -55178,18 +52943,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash66(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash66(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE66, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE66, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument66(targetDocument) {
     const runtime = getRuntime66();
@@ -55197,8 +52962,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle66(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle66(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -55212,11 +52977,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle65(hash2, css2) {
+  function registerStyle65(hash, css2) {
     const runtime = getRuntime66();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle66(targetDocument, hash2, css2);
+      injectStyle66(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -55365,20 +53130,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash67(targetDocument, hash2) {
+  function documentContainsStyleHash67(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE67}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE67) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE67) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle67(targetDocument, hash2, css2) {
+  function injectStyle67(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -55388,18 +53153,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash67(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash67(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE67, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE67, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument67(targetDocument) {
     const runtime = getRuntime67();
@@ -55407,8 +53172,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle67(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle67(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -55422,11 +53187,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle66(hash2, css2) {
+  function registerStyle66(hash, css2) {
     const runtime = getRuntime67();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle67(targetDocument, hash2, css2);
+      injectStyle67(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -55481,20 +53246,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash68(targetDocument, hash2) {
+  function documentContainsStyleHash68(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE68}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE68) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE68) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle68(targetDocument, hash2, css2) {
+  function injectStyle68(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -55504,18 +53269,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash68(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash68(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE68, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE68, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument68(targetDocument) {
     const runtime = getRuntime68();
@@ -55523,8 +53288,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle68(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle68(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -55538,11 +53303,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle67(hash2, css2) {
+  function registerStyle67(hash, css2) {
     const runtime = getRuntime68();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle68(targetDocument, hash2, css2);
+      injectStyle68(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -55587,20 +53352,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash69(targetDocument, hash2) {
+  function documentContainsStyleHash69(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE69}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE69) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE69) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle69(targetDocument, hash2, css2) {
+  function injectStyle69(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -55610,18 +53375,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash69(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash69(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE69, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE69, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument69(targetDocument) {
     const runtime = getRuntime69();
@@ -55629,8 +53394,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle69(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle69(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -55644,11 +53409,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle68(hash2, css2) {
+  function registerStyle68(hash, css2) {
     const runtime = getRuntime69();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle69(targetDocument, hash2, css2);
+      injectStyle69(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -55694,20 +53459,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash70(targetDocument, hash2) {
+  function documentContainsStyleHash70(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE70}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE70) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE70) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle70(targetDocument, hash2, css2) {
+  function injectStyle70(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -55717,18 +53482,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash70(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash70(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE70, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE70, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument70(targetDocument) {
     const runtime = getRuntime70();
@@ -55736,8 +53501,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle70(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle70(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -55751,11 +53516,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle69(hash2, css2) {
+  function registerStyle69(hash, css2) {
     const runtime = getRuntime70();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle70(targetDocument, hash2, css2);
+      injectStyle70(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -55775,7 +53540,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     function MenuRadioItem3({
       children,
       className,
-      prefix: prefix2,
+      prefix,
       shortcut,
       suffix,
       "aria-describedby": ariaDescribedBy,
@@ -55827,7 +53592,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
             /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
               ItemContent,
               {
-                prefix: prefix2,
+                prefix,
                 shortcut,
                 shortcutDescriptionId,
                 suffix,
@@ -55856,18 +53621,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return null;
     }
   }
-  function forEachIframe(node2, callback) {
-    if (node2.nodeType !== Node.ELEMENT_NODE) {
+  function forEachIframe(node, callback) {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
       return;
     }
-    const element = node2;
+    const element = node;
     if (element.tagName === "IFRAME") {
       callback(element);
     }
     element.querySelectorAll("iframe").forEach(callback);
   }
-  function getNodeDocument(node2) {
-    return node2?.nodeType === Node.DOCUMENT_NODE ? node2 : node2?.ownerDocument ?? null;
+  function getNodeDocument(node) {
+    return node?.nodeType === Node.DOCUMENT_NODE ? node : node?.ownerDocument ?? null;
   }
   function isInsideCurrentPopup(event, trigger) {
     const popupId = trigger.getAttribute("aria-controls");
@@ -55938,10 +53703,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         const observer = MutationObserverConstructor ? new MutationObserverConstructor((records) => {
           records.forEach((record) => {
             record.removedNodes.forEach(
-              (node2) => forEachIframe(node2, removeIframe)
+              (node) => forEachIframe(node, removeIframe)
             );
             record.addedNodes.forEach(
-              (node2) => forEachIframe(node2, addIframe)
+              (node) => forEachIframe(node, addIframe)
             );
           });
         }) : null;
@@ -56051,20 +53816,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash71(targetDocument, hash2) {
+  function documentContainsStyleHash71(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE71}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE71) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE71) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle71(targetDocument, hash2, css2) {
+  function injectStyle71(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -56074,18 +53839,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash71(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash71(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE71, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE71, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument71(targetDocument) {
     const runtime = getRuntime71();
@@ -56093,8 +53858,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle71(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle71(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -56108,11 +53873,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle70(hash2, css2) {
+  function registerStyle70(hash, css2) {
     const runtime = getRuntime71();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle71(targetDocument, hash2, css2);
+      injectStyle71(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -56160,20 +53925,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash72(targetDocument, hash2) {
+  function documentContainsStyleHash72(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE72}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE72) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE72) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle72(targetDocument, hash2, css2) {
+  function injectStyle72(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -56183,18 +53948,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash72(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash72(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE72, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE72, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument72(targetDocument) {
     const runtime = getRuntime72();
@@ -56202,8 +53967,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle72(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle72(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -56217,11 +53982,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle71(hash2, css2) {
+  function registerStyle71(hash, css2) {
     const runtime = getRuntime72();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle72(targetDocument, hash2, css2);
+      injectStyle72(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -56240,7 +54005,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     function MenuSubmenuTrigger3({
       children,
       className,
-      prefix: prefix2,
+      prefix,
       shortcut,
       suffix,
       "aria-describedby": ariaDescribedBy,
@@ -56278,7 +54043,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           children: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
             ItemContent,
             {
-              prefix: prefix2,
+              prefix,
               shortcut,
               shortcutDescriptionId,
               suffix,
@@ -56309,8 +54074,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   );
 
   // packages/react-inert-value/build-module/index.mjs
-  var import_react91 = __toESM(require_react(), 1);
-  var majorVersion2 = parseInt(import_react91.version, 10);
+  var import_react89 = __toESM(require_react(), 1);
+  var majorVersion2 = parseInt(import_react89.version, 10);
   function inertValue2(value) {
     if (majorVersion2 >= 19) {
       return value;
@@ -56656,20 +54421,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash73(targetDocument, hash2) {
+  function documentContainsStyleHash73(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE73}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE73) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE73) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle73(targetDocument, hash2, css2) {
+  function injectStyle73(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -56679,18 +54444,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash73(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash73(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE73, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE73, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument73(targetDocument) {
     const runtime = getRuntime73();
@@ -56698,8 +54463,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle73(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle73(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -56713,11 +54478,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle72(hash2, css2) {
+  function registerStyle72(hash, css2) {
     const runtime = getRuntime73();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle73(targetDocument, hash2, css2);
+      injectStyle73(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -56776,20 +54541,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash74(targetDocument, hash2) {
+  function documentContainsStyleHash74(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE74}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE74) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE74) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle74(targetDocument, hash2, css2) {
+  function injectStyle74(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -56799,18 +54564,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash74(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash74(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE74, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE74, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument74(targetDocument) {
     const runtime = getRuntime74();
@@ -56818,8 +54583,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle74(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle74(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -56833,11 +54598,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle73(hash2, css2) {
+  function registerStyle73(hash, css2) {
     const runtime = getRuntime74();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle74(targetDocument, hash2, css2);
+      injectStyle74(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -57134,20 +54899,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash75(targetDocument, hash2) {
+  function documentContainsStyleHash75(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE75}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE75) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE75) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle75(targetDocument, hash2, css2) {
+  function injectStyle75(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -57157,18 +54922,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash75(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash75(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE75, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE75, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument75(targetDocument) {
     const runtime = getRuntime75();
@@ -57176,8 +54941,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle75(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle75(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -57191,11 +54956,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle74(hash2, css2) {
+  function registerStyle74(hash, css2) {
     const runtime = getRuntime75();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle75(targetDocument, hash2, css2);
+      injectStyle75(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -57275,20 +55040,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash76(targetDocument, hash2) {
+  function documentContainsStyleHash76(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE76}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE76) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE76) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle76(targetDocument, hash2, css2) {
+  function injectStyle76(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -57298,18 +55063,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash76(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash76(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE76, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE76, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument76(targetDocument) {
     const runtime = getRuntime76();
@@ -57317,8 +55082,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle76(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle76(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -57332,11 +55097,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle75(hash2, css2) {
+  function registerStyle75(hash, css2) {
     const runtime = getRuntime76();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle76(targetDocument, hash2, css2);
+      injectStyle76(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -57426,15 +55191,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const initialPosition = value[initialIndex].position;
     const minPosition = Math.min(initialPosition, newPosition);
     const maxPosition = Math.max(initialPosition, newPosition);
-    return value.some(({ position: position2 }, index2) => {
-      return index2 !== initialIndex && (Math.abs(position2 - newPosition) < minDistance || minPosition < position2 && position2 < maxPosition);
+    return value.some(({ position }, index2) => {
+      return index2 !== initialIndex && (Math.abs(position - newPosition) < minDistance || minPosition < position && position < maxPosition);
     });
   }
-  function addControlPoint(points, position2, color2) {
+  function addControlPoint(points, position, color2) {
     const nextIndex = points.findIndex(
-      (point) => point.position > position2
+      (point) => point.position > position
     );
-    const newPoint = { color: color2, position: position2 };
+    const newPoint = { color: color2, position };
     const newPoints = points.slice();
     newPoints.splice(nextIndex - 1, 0, newPoint);
     return newPoints;
@@ -57466,8 +55231,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     };
     return updateControlPoint(points, index2, newPoint);
   }
-  function updateControlPointColorByPosition(points, position2, newColor) {
-    const index2 = points.findIndex((point) => point.position === position2);
+  function updateControlPointColorByPosition(points, position, newColor) {
+    const index2 = points.findIndex((point) => point.position === position);
     return updateControlPointColor(points, index2, newColor);
   }
   function getHorizontalRelativeGradientPosition(mouseXCoordinate, containerElement) {
@@ -57485,7 +55250,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
   function ControlPointButton({
     isOpen,
-    position: position2,
+    position,
     color: color2,
     disablePositioning,
     ...additionalProps
@@ -57501,7 +55266,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
             (0, import_i18n40.__)(
               "Gradient control point at position %1$d%% with color code %2$s."
             ),
-            position2,
+            position,
             color2
           ),
           "aria-describedby": descriptionId,
@@ -57881,8 +55646,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         event.clientX,
         gradientMarkersContainerDomRef.current
       );
-      if (controlPoints.some(({ position: position2 }) => {
-        return Math.abs(insertPosition - position2) < MINIMUM_DISTANCE_BETWEEN_INSERTER_AND_POINT;
+      if (controlPoints.some(({ position }) => {
+        return Math.abs(insertPosition - position) < MINIMUM_DISTANCE_BETWEEN_INSERTER_AND_POINT;
       })) {
         if (gradientBarState.id === "MOVING_INSERTER") {
           gradientBarStateDispatch({ type: "STOP_INSERTER_MOVE" });
@@ -57978,33 +55743,33 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var GradientParser = GradientParser || {};
   GradientParser.stringify = /* @__PURE__ */ (function() {
     var visitor = {
-      "visit_linear-gradient": function(node2) {
-        return visitor.visit_gradient(node2);
+      "visit_linear-gradient": function(node) {
+        return visitor.visit_gradient(node);
       },
-      "visit_repeating-linear-gradient": function(node2) {
-        return visitor.visit_gradient(node2);
+      "visit_repeating-linear-gradient": function(node) {
+        return visitor.visit_gradient(node);
       },
-      "visit_radial-gradient": function(node2) {
-        return visitor.visit_gradient(node2);
+      "visit_radial-gradient": function(node) {
+        return visitor.visit_gradient(node);
       },
-      "visit_repeating-radial-gradient": function(node2) {
-        return visitor.visit_gradient(node2);
+      "visit_repeating-radial-gradient": function(node) {
+        return visitor.visit_gradient(node);
       },
-      "visit_conic-gradient": function(node2) {
-        return visitor.visit_gradient(node2);
+      "visit_conic-gradient": function(node) {
+        return visitor.visit_gradient(node);
       },
-      "visit_repeating-conic-gradient": function(node2) {
-        return visitor.visit_gradient(node2);
+      "visit_repeating-conic-gradient": function(node) {
+        return visitor.visit_gradient(node);
       },
-      "visit_gradient": function(node2) {
-        var orientation = visitor.visit(node2.orientation);
+      "visit_gradient": function(node) {
+        var orientation = visitor.visit(node.orientation);
         if (orientation) {
           orientation += ", ";
         }
-        return node2.type + "(" + orientation + visitor.visit(node2.colorStops) + ")";
+        return node.type + "(" + orientation + visitor.visit(node.colorStops) + ")";
       },
-      "visit_shape": function(node2) {
-        var result = node2.value, at = visitor.visit(node2.at), style2 = visitor.visit(node2.style);
+      "visit_shape": function(node) {
+        var result = node.value, at = visitor.visit(node.at), style2 = visitor.visit(node.style);
         if (style2) {
           result += " " + style2;
         }
@@ -58013,10 +55778,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
         return result;
       },
-      "visit_default-radial": function(node2) {
-        var result = "", at = visitor.visit(node2.at);
+      "visit_default-radial": function(node) {
+        var result = "", at = visitor.visit(node.at);
         if (at) {
-          if (node2.hasAtKeyword) {
+          if (node.hasAtKeyword) {
             result += "at " + at;
           } else {
             result += at;
@@ -58024,100 +55789,100 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
         return result;
       },
-      "visit_extent-keyword": function(node2) {
-        var result = node2.value, at = visitor.visit(node2.at);
+      "visit_extent-keyword": function(node) {
+        var result = node.value, at = visitor.visit(node.at);
         if (at) {
           result += " at " + at;
         }
         return result;
       },
-      "visit_position-keyword": function(node2) {
-        return node2.value;
+      "visit_position-keyword": function(node) {
+        return node.value;
       },
-      "visit_position": function(node2) {
-        return visitor.visit(node2.value.x) + " " + visitor.visit(node2.value.y);
+      "visit_position": function(node) {
+        return visitor.visit(node.value.x) + " " + visitor.visit(node.value.y);
       },
-      "visit_%": function(node2) {
-        return node2.value + "%";
+      "visit_%": function(node) {
+        return node.value + "%";
       },
-      "visit_em": function(node2) {
-        return node2.value + "em";
+      "visit_em": function(node) {
+        return node.value + "em";
       },
-      "visit_px": function(node2) {
-        return node2.value + "px";
+      "visit_px": function(node) {
+        return node.value + "px";
       },
-      "visit_rem": function(node2) {
-        return node2.value + "rem";
+      "visit_rem": function(node) {
+        return node.value + "rem";
       },
-      "visit_vw": function(node2) {
-        return node2.value + "vw";
+      "visit_vw": function(node) {
+        return node.value + "vw";
       },
-      "visit_vh": function(node2) {
-        return node2.value + "vh";
+      "visit_vh": function(node) {
+        return node.value + "vh";
       },
-      "visit_vmin": function(node2) {
-        return node2.value + "vmin";
+      "visit_vmin": function(node) {
+        return node.value + "vmin";
       },
-      "visit_vmax": function(node2) {
-        return node2.value + "vmax";
+      "visit_vmax": function(node) {
+        return node.value + "vmax";
       },
-      "visit_ch": function(node2) {
-        return node2.value + "ch";
+      "visit_ch": function(node) {
+        return node.value + "ch";
       },
-      "visit_ex": function(node2) {
-        return node2.value + "ex";
+      "visit_ex": function(node) {
+        return node.value + "ex";
       },
-      "visit_calc": function(node2) {
-        return "calc(" + node2.value + ")";
+      "visit_calc": function(node) {
+        return "calc(" + node.value + ")";
       },
-      "visit_literal": function(node2) {
-        return visitor.visit_color(node2.value, node2);
+      "visit_literal": function(node) {
+        return visitor.visit_color(node.value, node);
       },
-      "visit_hex": function(node2) {
-        return visitor.visit_color("#" + node2.value, node2);
+      "visit_hex": function(node) {
+        return visitor.visit_color("#" + node.value, node);
       },
-      "visit_rgb": function(node2) {
-        return visitor.visit_color("rgb(" + node2.value.join(", ") + ")", node2);
+      "visit_rgb": function(node) {
+        return visitor.visit_color("rgb(" + node.value.join(", ") + ")", node);
       },
-      "visit_rgba": function(node2) {
-        return visitor.visit_color("rgba(" + node2.value.join(", ") + ")", node2);
+      "visit_rgba": function(node) {
+        return visitor.visit_color("rgba(" + node.value.join(", ") + ")", node);
       },
-      "visit_hsl": function(node2) {
-        return visitor.visit_color("hsl(" + node2.value[0] + ", " + node2.value[1] + "%, " + node2.value[2] + "%)", node2);
+      "visit_hsl": function(node) {
+        return visitor.visit_color("hsl(" + node.value[0] + ", " + node.value[1] + "%, " + node.value[2] + "%)", node);
       },
-      "visit_hsla": function(node2) {
-        return visitor.visit_color("hsla(" + node2.value[0] + ", " + node2.value[1] + "%, " + node2.value[2] + "%, " + node2.value[3] + ")", node2);
+      "visit_hsla": function(node) {
+        return visitor.visit_color("hsla(" + node.value[0] + ", " + node.value[1] + "%, " + node.value[2] + "%, " + node.value[3] + ")", node);
       },
-      "visit_var": function(node2) {
-        return visitor.visit_color("var(" + node2.value + ")", node2);
+      "visit_var": function(node) {
+        return visitor.visit_color("var(" + node.value + ")", node);
       },
-      "visit_color": function(resultColor, node2) {
-        var result = resultColor, length2 = visitor.visit(node2.length);
+      "visit_color": function(resultColor, node) {
+        var result = resultColor, length = visitor.visit(node.length);
+        if (length) {
+          result += " " + length;
+        }
+        var length2 = visitor.visit(node.length2);
         if (length2) {
           result += " " + length2;
         }
-        var length22 = visitor.visit(node2.length2);
-        if (length22) {
-          result += " " + length22;
-        }
         return result;
       },
-      "visit_angular": function(node2) {
-        return node2.value + (node2.unit || "deg");
+      "visit_angular": function(node) {
+        return node.value + (node.unit || "deg");
       },
-      "visit_directional": function(node2) {
-        return "to " + node2.value;
+      "visit_directional": function(node) {
+        return "to " + node.value;
       },
-      "visit_conic": function(node2) {
+      "visit_conic": function(node) {
         var result = "";
-        if (node2.angle) {
-          result += "from " + visitor.visit(node2.angle);
+        if (node.angle) {
+          result += "from " + visitor.visit(node.angle);
         }
-        if (node2.at) {
+        if (node.at) {
           if (result) {
             result += " ";
           }
-          result += "at " + visitor.visit(node2.at);
+          result += "at " + visitor.visit(node.at);
         }
         return result;
       },
@@ -58279,7 +56044,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       if (sideOrCorner) {
         return sideOrCorner;
       }
-      var legacyDirection = match3("position-keyword", tokens.positionKeywords, 1);
+      var legacyDirection = match2("position-keyword", tokens.positionKeywords, 1);
       if (legacyDirection) {
         return {
           type: "directional",
@@ -58300,7 +56065,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
     }
     function matchFrom() {
-      if (match3("from", /^from/, 0)) {
+      if (match2("from", /^from/, 0)) {
         var angle = matchAngle();
         if (!angle) {
           error2('Missing angle after "from" in conic-gradient');
@@ -58309,7 +56074,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
     }
     function matchSideOrCorner() {
-      return match3("directional", tokens.sideOrCorner, 1);
+      return match2("directional", tokens.sideOrCorner, 1);
     }
     function matchAngle() {
       return matchAngularWithUnit("deg", tokens.angleValue) || matchAngularWithUnit("rad", tokens.radianValue) || matchAngularWithUnit("grad", tokens.gradianValue) || matchAngularWithUnit("turn", tokens.turnValue);
@@ -58375,24 +56140,24 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return radialType;
     }
     function matchCircle() {
-      var circle = match3("shape", /^(circle)/i, 0);
+      var circle = match2("shape", /^(circle)/i, 0);
       if (circle) {
         circle.style = matchLength() || matchExtentKeyword();
       }
       return circle;
     }
     function matchEllipse() {
-      var ellipse = match3("shape", /^(ellipse)/i, 0);
+      var ellipse = match2("shape", /^(ellipse)/i, 0);
       if (ellipse) {
         ellipse.style = matchPositioning() || matchDistance() || matchExtentKeyword();
       }
       return ellipse;
     }
     function matchExtentKeyword() {
-      return match3("extent-keyword", tokens.extentKeywords, 1);
+      return match2("extent-keyword", tokens.extentKeywords, 1);
     }
     function matchAtPosition() {
-      if (match3("position", /^at/, 0)) {
+      if (match2("position", /^at/, 0)) {
         var positioning = matchPositioning();
         if (!positioning) {
           error2("Missing positioning value");
@@ -58445,10 +56210,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return matchHexColor() || matchHSLAColor() || matchHSLColor() || matchRGBAColor() || matchRGBColor() || matchVarColor() || matchLiteralColor();
     }
     function matchLiteralColor() {
-      return match3("literal", tokens.literalColor, 0);
+      return match2("literal", tokens.literalColor, 0);
     }
     function matchHexColor() {
-      return match3("hex", tokens.hexColor, 1);
+      return match2("hex", tokens.hexColor, 1);
     }
     function matchRGBColor() {
       return matchCall(tokens.rgbColor, function() {
@@ -58547,20 +56312,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return scan(tokens.number)[1];
     }
     function matchDistance() {
-      return match3("%", tokens.percentageValue, 1) || matchPositionKeyword() || matchCalc() || matchLength();
+      return match2("%", tokens.percentageValue, 1) || matchPositionKeyword() || matchCalc() || matchLength();
     }
     function matchPositionKeyword() {
-      return match3("position-keyword", tokens.positionKeywords, 1);
+      return match2("position-keyword", tokens.positionKeywords, 1);
     }
     function matchCalc() {
       return matchCall(tokens.calcValue, function() {
         var openParenCount = 1;
         var i2 = 0;
         while (openParenCount > 0 && i2 < input.length) {
-          var char2 = input.charAt(i2);
-          if (char2 === "(") {
+          var char = input.charAt(i2);
+          if (char === "(") {
             openParenCount++;
-          } else if (char2 === ")") {
+          } else if (char === ")") {
             openParenCount--;
           }
           i2++;
@@ -58577,9 +56342,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       });
     }
     function matchLength() {
-      return match3("px", tokens.pixelValue, 1) || match3("em", tokens.emValue, 1) || match3("rem", tokens.remValue, 1) || match3("vw", tokens.vwValue, 1) || match3("vh", tokens.vhValue, 1) || match3("vmin", tokens.vminValue, 1) || match3("vmax", tokens.vmaxValue, 1) || match3("ch", tokens.chValue, 1) || match3("ex", tokens.exValue, 1);
+      return match2("px", tokens.pixelValue, 1) || match2("em", tokens.emValue, 1) || match2("rem", tokens.remValue, 1) || match2("vw", tokens.vwValue, 1) || match2("vh", tokens.vhValue, 1) || match2("vmin", tokens.vminValue, 1) || match2("vmax", tokens.vmaxValue, 1) || match2("ch", tokens.chValue, 1) || match2("ex", tokens.exValue, 1);
     }
-    function match3(type, pattern, captureIndex) {
+    function match2(type, pattern, captureIndex) {
       var captures = scan(pattern);
       if (captures) {
         return {
@@ -58611,8 +56376,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return getAST();
     };
   })();
-  var parse3 = GradientParser.parse;
-  var stringify2 = GradientParser.stringify;
+  var parse2 = GradientParser.parse;
+  var stringify = GradientParser.stringify;
   var esm_default = { parse: GradientParser.parse, stringify: GradientParser.stringify };
 
   // packages/components/build-module/custom-gradient-picker/constants.mjs
@@ -58693,11 +56458,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return `${type}(${value.join(",")})`;
   }
-  function serializeGradientPosition(position2) {
-    if (!position2) {
+  function serializeGradientPosition(position) {
+    if (!position) {
       return "";
     }
-    const { value, type } = position2;
+    const { value, type } = position;
     if (type === "calc") {
       return `calc(${value})`;
     }
@@ -58706,12 +56471,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function serializeGradientColorStop({
     type,
     value,
-    length: length2
+    length
   }) {
     return `${serializeGradientColor({
       type,
       value
-    })} ${serializeGradientPosition(length2)}`;
+    })} ${serializeGradientPosition(length)}`;
   }
   function serializeGradientOrientation(orientation) {
     if (Array.isArray(orientation) || !orientation || orientation.type !== "angular") {
@@ -58758,28 +56523,28 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
   function readFirstArgument(gradient, start) {
     const tokens = [];
-    let token2 = "";
+    let token = "";
     let depth = 0;
     for (let index2 = start; index2 < gradient.length; index2++) {
-      const char2 = gradient[index2];
-      if (depth === 0 && (char2 === "," || char2 === ")")) {
-        if (token2) {
-          tokens.push(token2);
+      const char = gradient[index2];
+      if (depth === 0 && (char === "," || char === ")")) {
+        if (token) {
+          tokens.push(token);
         }
         return { tokens, end: index2 };
       }
-      if (char2 === "(") {
+      if (char === "(") {
         depth++;
-      } else if (char2 === ")") {
+      } else if (char === ")") {
         depth--;
       }
-      if (depth === 0 && /\s/.test(char2)) {
-        if (token2) {
-          tokens.push(token2);
+      if (depth === 0 && /\s/.test(char)) {
+        if (token) {
+          tokens.push(token);
         }
-        token2 = "";
+        token = "";
       } else {
-        token2 += char2;
+        token += char;
       }
     }
     return void 0;
@@ -58791,28 +56556,28 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return { gradient };
     }
     const { tokens, end } = firstArgument;
-    const words = tokens.map((token2) => token2.toLowerCase());
+    const words = tokens.map((token) => token.toLowerCase());
     const index2 = words.indexOf("in");
     if (index2 === -1) {
       return { gradient };
     }
     const colorSpace = words[index2 + 1];
-    let length2;
+    let length;
     if (POLAR_INTERPOLATION_COLOR_SPACES.includes(colorSpace) && HUE_INTERPOLATION_METHODS.includes(words[index2 + 2]) && words[index2 + 3] === "hue") {
-      length2 = 4;
+      length = 4;
     } else if (RECTANGULAR_INTERPOLATION_COLOR_SPACES.includes(colorSpace) || POLAR_INTERPOLATION_COLOR_SPACES.includes(colorSpace)) {
-      length2 = 2;
+      length = 2;
     } else {
       return { gradient };
     }
     const remainder = [
       ...tokens.slice(0, index2),
-      ...tokens.slice(index2 + length2)
+      ...tokens.slice(index2 + length)
     ].join(" ");
     const hasEmptyFirstArgument = !remainder && gradient[end] === ",";
     return {
       gradient: gradient.slice(0, start) + remainder + gradient.slice(hasEmptyFirstArgument ? end + 1 : end),
-      colorInterpolation: words.slice(index2, index2 + length2).join(" ")
+      colorInterpolation: words.slice(index2, index2 + length).join(" ")
     };
   }
   function getGradientAstWithDefault(value) {
@@ -58865,12 +56630,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function getGradientAstWithControlPoints(gradientAST, newControlPoints) {
     return {
       ...gradientAST,
-      colorStops: newControlPoints.map(({ position: position2, color: color2 }) => {
+      colorStops: newControlPoints.map(({ position, color: color2 }) => {
         const { r: r4, g: g3, b: b2, a: a2 } = A(color2).toRgb();
         return {
           length: {
             type: "%",
-            value: position2?.toString()
+            value: position?.toString()
           },
           type: a2 < 1 ? "rgba" : "rgb",
           value: a2 < 1 ? [`${r4}`, `${g3}`, `${b2}`, `${a2}`] : [`${r4}`, `${g3}`, `${b2}`]
@@ -58920,20 +56685,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash77(targetDocument, hash2) {
+  function documentContainsStyleHash77(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE77}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE77) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE77) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle77(targetDocument, hash2, css2) {
+  function injectStyle77(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -58943,18 +56708,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash77(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash77(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE77, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE77, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument77(targetDocument) {
     const runtime = getRuntime77();
@@ -58962,8 +56727,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle77(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle77(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -58977,11 +56742,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle76(hash2, css2) {
+  function registerStyle76(hash, css2) {
     const runtime = getRuntime77();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle77(targetDocument, hash2, css2);
+      injectStyle77(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -59050,11 +56815,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         })
       );
     };
-    const handleOnChange = (next2) => {
-      if (next2 === "linear-gradient") {
+    const handleOnChange = (next) => {
+      if (next === "linear-gradient") {
         onSetLinearGradient();
       }
-      if (next2 === "radial-gradient") {
+      if (next === "radial-gradient") {
         onSetRadialGradient();
       }
     };
@@ -59155,20 +56920,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash78(targetDocument, hash2) {
+  function documentContainsStyleHash78(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE78}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE78) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE78) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle78(targetDocument, hash2, css2) {
+  function injectStyle78(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -59178,18 +56943,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash78(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash78(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE78, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE78, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument78(targetDocument) {
     const runtime = getRuntime78();
@@ -59197,8 +56962,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle78(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle78(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -59212,11 +56977,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle77(hash2, css2) {
+  function registerStyle77(hash, css2) {
     const runtime = getRuntime78();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle78(targetDocument, hash2, css2);
+      injectStyle78(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -59441,7 +57206,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           __next40pxDefaultSize: true,
           className: "components-color-list-picker__swatch-button",
           id: labelId,
-          onClick: () => setIsOpen((prev2) => !prev2),
+          onClick: () => setIsOpen((prev) => !prev),
           "aria-expanded": isOpen,
           "aria-controls": contentId,
           icon: value ? /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
@@ -59735,20 +57500,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash79(targetDocument, hash2) {
+  function documentContainsStyleHash79(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE79}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE79) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE79) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle79(targetDocument, hash2, css2) {
+  function injectStyle79(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -59758,18 +57523,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash79(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash79(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE79, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE79, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument79(targetDocument) {
     const runtime = getRuntime79();
@@ -59777,8 +57542,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle79(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle79(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -59792,11 +57557,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle78(hash2, css2) {
+  function registerStyle78(hash, css2) {
     const runtime = getRuntime79();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle79(targetDocument, hash2, css2);
+      injectStyle79(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -59921,7 +57686,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function getNameAndSlugForPosition(elements2, slugPrefix, variant = "color") {
     const stem = variant === "duotone" ? "duotone" : "color";
     const nameRegex = new RegExp(`^${slugPrefix}${stem}-([\\d]+)$`);
-    const position2 = elements2.reduce((previousValue, currentValue) => {
+    const position = elements2.reduce((previousValue, currentValue) => {
       if (typeof currentValue?.slug === "string") {
         const matches = currentValue?.slug.match(nameRegex);
         if (matches) {
@@ -59937,13 +57702,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       name: variant === "duotone" ? (0, import_i18n46.sprintf)(
         /* translators: %d: is an id for a custom duotone */
         (0, import_i18n46.__)("Duotone %d"),
-        position2
+        position
       ) : (0, import_i18n46.sprintf)(
         /* translators: %d: is an id for a custom color */
         (0, import_i18n46.__)("Color %d"),
-        position2
+        position
       ),
-      slug: `${slugPrefix}${stem}-${position2}`
+      slug: `${slugPrefix}${stem}-${position}`
     };
   }
   function ColorPickerPopover({
@@ -60553,7 +58318,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function SuggestionsList({
     selectedIndex,
     scrollIntoView,
-    match: match3,
+    match: match2,
     onHover,
     onSelect,
     suggestions = [],
@@ -60584,7 +58349,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       };
     };
     const computeSuggestionMatch = (suggestion) => {
-      const matchText = displayTransform(match3).normalize("NFKC").toLocaleLowerCase();
+      const matchText = displayTransform(match2).normalize("NFKC").toLocaleLowerCase();
       if (matchText.length === 0) {
         return null;
       }
@@ -60666,8 +58431,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     (WrappedComponent) => function WithFocusOutside(props) {
       const [handleFocusOutside, setHandleFocusOutside] = (0, import_element140.useState)(void 0);
       const bindFocusOutsideHandler = (0, import_element140.useCallback)(
-        (node2) => setHandleFocusOutside(
-          () => node2?.handleFocusOutside ? node2.handleFocusOutside.bind(node2) : void 0
+        (node) => setHandleFocusOutside(
+          () => node?.handleFocusOutside ? node.handleFocusOutside.bind(node) : void 0
         ),
         []
       );
@@ -60701,20 +58466,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash80(targetDocument, hash2) {
+  function documentContainsStyleHash80(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE80}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE80) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE80) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle80(targetDocument, hash2, css2) {
+  function injectStyle80(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -60724,18 +58489,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash80(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash80(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE80, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE80, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument80(targetDocument) {
     const runtime = getRuntime80();
@@ -60743,8 +58508,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle80(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle80(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -60758,11 +58523,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle79(hash2, css2) {
+  function registerStyle79(hash, css2) {
     const runtime = getRuntime80();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle80(targetDocument, hash2, css2);
+      injectStyle80(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -60831,20 +58596,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash81(targetDocument, hash2) {
+  function documentContainsStyleHash81(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE81}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE81) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE81) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle81(targetDocument, hash2, css2) {
+  function injectStyle81(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -60854,18 +58619,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash81(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash81(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE81, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE81, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument81(targetDocument) {
     const runtime = getRuntime81();
@@ -60873,8 +58638,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle81(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle81(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -60888,11 +58653,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle80(hash2, css2) {
+  function registerStyle80(hash, css2) {
     const runtime = getRuntime81();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle81(targetDocument, hash2, css2);
+      injectStyle81(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -60948,9 +58713,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const matchingSuggestions = (0, import_element142.useMemo)(() => {
       const startsWithMatch = [];
       const containsMatch = [];
-      const match3 = normalizeTextString(inputValue);
+      const match2 = normalizeTextString(inputValue);
       options2.forEach((option) => {
-        const index2 = normalizeTextString(option.label).indexOf(match3);
+        const index2 = normalizeTextString(option.label).indexOf(match2);
         if (index2 === 0) {
           startsWithMatch.push(option);
         } else if (index2 > 0) {
@@ -61182,10 +58947,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         ...props,
         id: (0, import_compose50.useInstanceId)(store, props.baseId, props.id)
       };
-      Object.entries(propMap).forEach(([from2, to]) => {
-        if (props.hasOwnProperty(from2)) {
-          Object.assign(props, { [to]: props[from2] });
-          delete props[from2];
+      Object.entries(propMap).forEach(([from, to]) => {
+        if (props.hasOwnProperty(from)) {
+          Object.assign(props, { [to]: props[from] });
+          delete props[from];
         }
       });
       delete props.baseId;
@@ -61411,13 +59176,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const contentRef = (0, import_element146.useRef)(null);
     const childrenContainerRef = (0, import_element146.useRef)(null);
     const focusContentRef = (0, import_compose52.useRefEffect)(
-      (node2) => {
-        if (!shouldFocusContent || node2.contains(node2.ownerDocument.activeElement)) {
+      (node) => {
+        if (!shouldFocusContent || node.contains(node.ownerDocument.activeElement)) {
           return;
         }
         const timerId = setTimeout(() => {
           const childrenContainer = childrenContainerRef.current;
-          const target = childrenContainer && import_dom29.focus.tabbable.find(childrenContainer)[0] || import_dom29.focus.tabbable.find(node2)[0] || node2;
+          const target = childrenContainer && import_dom29.focus.tabbable.find(childrenContainer)[0] || import_dom29.focus.tabbable.find(node)[0] || node;
           target.focus({ preventScroll: true });
         }, 0);
         return () => clearTimeout(timerId);
@@ -61666,20 +59431,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash82(targetDocument, hash2) {
+  function documentContainsStyleHash82(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE82}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE82) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE82) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle82(targetDocument, hash2, css2) {
+  function injectStyle82(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -61689,18 +59454,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash82(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash82(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE82, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE82, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument82(targetDocument) {
     const runtime = getRuntime82();
@@ -61708,8 +59473,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle82(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle82(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -61723,11 +59488,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle81(hash2, css2) {
+  function registerStyle81(hash, css2) {
     const runtime = getRuntime82();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle82(targetDocument, hash2, css2);
+      injectStyle82(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -61852,20 +59617,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash83(targetDocument, hash2) {
+  function documentContainsStyleHash83(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE83}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE83) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE83) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle83(targetDocument, hash2, css2) {
+  function injectStyle83(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -61875,18 +59640,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash83(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash83(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE83, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE83, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument83(targetDocument) {
     const runtime = getRuntime83();
@@ -61894,8 +59659,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle83(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle83(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -61909,11 +59674,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle82(hash2, css2) {
+  function registerStyle82(hash, css2) {
     const runtime = getRuntime83();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle83(targetDocument, hash2, css2);
+      injectStyle83(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -62047,20 +59812,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash84(targetDocument, hash2) {
+  function documentContainsStyleHash84(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE84}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE84) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE84) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle84(targetDocument, hash2, css2) {
+  function injectStyle84(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -62070,18 +59835,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash84(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash84(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE84, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE84, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument84(targetDocument) {
     const runtime = getRuntime84();
@@ -62089,8 +59854,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle84(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle84(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -62104,11 +59869,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle83(hash2, css2) {
+  function registerStyle83(hash, css2) {
     const runtime = getRuntime84();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle84(targetDocument, hash2, css2);
+      injectStyle84(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -62159,20 +59924,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash85(targetDocument, hash2) {
+  function documentContainsStyleHash85(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE85}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE85) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE85) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle85(targetDocument, hash2, css2) {
+  function injectStyle85(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -62182,18 +59947,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash85(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash85(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE85, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE85, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument85(targetDocument) {
     const runtime = getRuntime85();
@@ -62201,8 +59966,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle85(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle85(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -62216,11 +59981,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle84(hash2, css2) {
+  function registerStyle84(hash, css2) {
     const runtime = getRuntime85();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle85(targetDocument, hash2, css2);
+      injectStyle85(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -62643,20 +60408,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash86(targetDocument, hash2) {
+  function documentContainsStyleHash86(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE86}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE86) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE86) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle86(targetDocument, hash2, css2) {
+  function injectStyle86(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -62666,18 +60431,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash86(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash86(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE86, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE86, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument86(targetDocument) {
     const runtime = getRuntime86();
@@ -62685,8 +60450,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle86(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle86(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -62700,11 +60465,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle85(hash2, css2) {
+  function registerStyle85(hash, css2) {
     const runtime = getRuntime86();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle86(targetDocument, hash2, css2);
+      injectStyle86(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -62934,7 +60699,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
   function Day({
     day,
-    column: column2,
+    column,
     isSelected: isSelected2,
     isFocusable: isFocusable2,
     isFocusAllowed,
@@ -62969,7 +60734,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
             }
           ),
           style: {
-            "--_wp-components-date-picker-column": column2
+            "--_wp-components-date-picker-column": column
           },
           disabled: isInvalid,
           tabIndex: isFocusable2 ? 0 : -1,
@@ -63033,20 +60798,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash87(targetDocument, hash2) {
+  function documentContainsStyleHash87(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE87}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE87) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE87) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle87(targetDocument, hash2, css2) {
+  function injectStyle87(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -63056,18 +60821,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash87(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash87(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE87, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE87, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument87(targetDocument) {
     const runtime = getRuntime87();
@@ -63075,8 +60840,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle87(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle87(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -63090,11 +60855,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle86(hash2, css2) {
+  function registerStyle86(hash, css2) {
     const runtime = getRuntime87();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle87(targetDocument, hash2, css2);
+      injectStyle87(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -63154,20 +60919,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash88(targetDocument, hash2) {
+  function documentContainsStyleHash88(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE88}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE88) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE88) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle88(targetDocument, hash2, css2) {
+  function injectStyle88(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -63177,18 +60942,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash88(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash88(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE88, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE88, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument88(targetDocument) {
     const runtime = getRuntime88();
@@ -63196,8 +60961,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle88(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle88(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -63211,11 +60976,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle87(hash2, css2) {
+  function registerStyle87(hash, css2) {
     const runtime = getRuntime88();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle88(targetDocument, hash2, css2);
+      injectStyle88(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -63404,20 +61169,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash89(targetDocument, hash2) {
+  function documentContainsStyleHash89(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE89}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE89) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE89) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle89(targetDocument, hash2, css2) {
+  function injectStyle89(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -63427,18 +61192,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash89(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash89(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE89, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE89, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument89(targetDocument) {
     const runtime = getRuntime89();
@@ -63446,8 +61211,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle89(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle89(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -63461,11 +61226,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle88(hash2, css2) {
+  function registerStyle88(hash, css2) {
     const runtime = getRuntime89();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle89(targetDocument, hash2, css2);
+      injectStyle89(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -63697,20 +61462,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash90(targetDocument, hash2) {
+  function documentContainsStyleHash90(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE90}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE90) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE90) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle90(targetDocument, hash2, css2) {
+  function injectStyle90(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -63720,18 +61485,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash90(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash90(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE90, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE90, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument90(targetDocument) {
     const runtime = getRuntime90();
@@ -63739,8 +61504,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle90(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle90(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -63754,11 +61519,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle89(hash2, css2) {
+  function registerStyle89(hash, css2) {
     const runtime = getRuntime90();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle90(targetDocument, hash2, css2);
+      injectStyle90(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -63839,20 +61604,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash91(targetDocument, hash2) {
+  function documentContainsStyleHash91(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE91}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE91) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE91) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle91(targetDocument, hash2, css2) {
+  function injectStyle91(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -63862,18 +61627,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash91(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash91(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE91, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE91, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument91(targetDocument) {
     const runtime = getRuntime91();
@@ -63881,8 +61646,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle91(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle91(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -63896,11 +61661,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle90(hash2, css2) {
+  function registerStyle90(hash, css2) {
     const runtime = getRuntime91();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle91(targetDocument, hash2, css2);
+      injectStyle91(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -63988,20 +61753,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash92(targetDocument, hash2) {
+  function documentContainsStyleHash92(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE92}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE92) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE92) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle92(targetDocument, hash2, css2) {
+  function injectStyle92(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -64011,18 +61776,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash92(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash92(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE92, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE92, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument92(targetDocument) {
     const runtime = getRuntime92();
@@ -64030,8 +61795,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle92(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle92(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -64045,11 +61810,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle91(hash2, css2) {
+  function registerStyle91(hash, css2) {
     const runtime = getRuntime92();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle92(targetDocument, hash2, css2);
+      injectStyle92(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -64385,17 +62150,17 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function UnforwardedNavigableMenu({ role = "menu", orientation = "vertical", ...rest }, ref) {
     const eventToOffset = (evt) => {
       const { code } = evt;
-      let next2 = ["ArrowDown"];
+      let next = ["ArrowDown"];
       let previous = ["ArrowUp"];
       if (orientation === "horizontal") {
-        next2 = ["ArrowRight"];
+        next = ["ArrowRight"];
         previous = ["ArrowLeft"];
       }
       if (orientation === "both") {
-        next2 = ["ArrowRight", "ArrowDown"];
+        next = ["ArrowRight", "ArrowDown"];
         previous = ["ArrowLeft", "ArrowUp"];
       }
-      if (next2.includes(code)) {
+      if (next.includes(code)) {
         return 1;
       } else if (previous.includes(code)) {
         return -1;
@@ -64741,20 +62506,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash93(targetDocument, hash2) {
+  function documentContainsStyleHash93(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE93}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE93) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE93) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle93(targetDocument, hash2, css2) {
+  function injectStyle93(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -64764,18 +62529,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash93(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash93(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE93, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE93, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument93(targetDocument) {
     const runtime = getRuntime93();
@@ -64783,8 +62548,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle93(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle93(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -64798,11 +62563,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle92(hash2, css2) {
+  function registerStyle92(hash, css2) {
     const runtime = getRuntime93();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle93(targetDocument, hash2, css2);
+      injectStyle93(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -64846,8 +62611,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
               label: (0, import_i18n59.__)("Left"),
               "aria-label": (0, import_i18n59.__)("Focal point left position"),
               value: [valueX, "%"].join(""),
-              onChange: ((next2) => handleChange(
-                next2,
+              onChange: ((next) => handleChange(
+                next,
                 "x"
               )),
               dragDirection: "e"
@@ -64859,8 +62624,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
               label: (0, import_i18n59.__)("Top"),
               "aria-label": (0, import_i18n59.__)("Focal point top position"),
               value: [valueY, "%"].join(""),
-              onChange: ((next2) => handleChange(
-                next2,
+              onChange: ((next) => handleChange(
+                next,
                 "y"
               )),
               dragDirection: "s"
@@ -64905,20 +62670,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash94(targetDocument, hash2) {
+  function documentContainsStyleHash94(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE94}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE94) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE94) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle94(targetDocument, hash2, css2) {
+  function injectStyle94(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -64928,18 +62693,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash94(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash94(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE94, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE94, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument94(targetDocument) {
     const runtime = getRuntime94();
@@ -64947,8 +62712,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle94(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle94(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -64962,11 +62727,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle93(hash2, css2) {
+  function registerStyle93(hash, css2) {
     const runtime = getRuntime94();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle94(targetDocument, hash2, css2);
+      injectStyle94(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -65012,20 +62777,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash95(targetDocument, hash2) {
+  function documentContainsStyleHash95(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE95}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE95) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE95) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle95(targetDocument, hash2, css2) {
+  function injectStyle95(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -65035,18 +62800,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash95(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash95(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE95, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE95, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument95(targetDocument) {
     const runtime = getRuntime95();
@@ -65054,8 +62819,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle95(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle95(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65069,11 +62834,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle94(hash2, css2) {
+  function registerStyle94(hash, css2) {
     const runtime = getRuntime95();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle95(targetDocument, hash2, css2);
+      injectStyle95(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -65162,20 +62927,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash96(targetDocument, hash2) {
+  function documentContainsStyleHash96(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE96}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE96) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE96) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle96(targetDocument, hash2, css2) {
+  function injectStyle96(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -65185,18 +62950,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash96(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash96(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE96, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE96, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument96(targetDocument) {
     const runtime = getRuntime96();
@@ -65204,8 +62969,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle96(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle96(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65219,11 +62984,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle95(hash2, css2) {
+  function registerStyle95(hash, css2) {
     const runtime = getRuntime96();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle96(targetDocument, hash2, css2);
+      injectStyle96(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -65298,20 +63063,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash97(targetDocument, hash2) {
+  function documentContainsStyleHash97(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE97}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE97) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE97) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle97(targetDocument, hash2, css2) {
+  function injectStyle97(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -65321,18 +63086,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash97(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash97(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE97, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE97, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument97(targetDocument) {
     const runtime = getRuntime97();
@@ -65340,8 +63105,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle97(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle97(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65355,11 +63120,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle96(hash2, css2) {
+  function registerStyle96(hash, css2) {
     const runtime = getRuntime97();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle97(targetDocument, hash2, css2);
+      injectStyle97(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -65624,20 +63389,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash98(targetDocument, hash2) {
+  function documentContainsStyleHash98(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE98}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE98) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE98) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle98(targetDocument, hash2, css2) {
+  function injectStyle98(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -65647,18 +63412,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash98(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash98(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE98, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE98, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument98(targetDocument) {
     const runtime = getRuntime98();
@@ -65666,8 +63431,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle98(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle98(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65681,11 +63446,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle97(hash2, css2) {
+  function registerStyle97(hash, css2) {
     const runtime = getRuntime98();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle98(targetDocument, hash2, css2);
+      injectStyle98(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -65857,20 +63622,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash99(targetDocument, hash2) {
+  function documentContainsStyleHash99(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE99}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE99) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE99) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle99(targetDocument, hash2, css2) {
+  function injectStyle99(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -65880,18 +63645,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash99(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash99(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE99, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE99, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument99(targetDocument) {
     const runtime = getRuntime99();
@@ -65899,8 +63664,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle99(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle99(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -65914,11 +63679,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle98(hash2, css2) {
+  function registerStyle98(hash, css2) {
     const runtime = getRuntime99();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle99(targetDocument, hash2, css2);
+      injectStyle99(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -66308,20 +64073,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash100(targetDocument, hash2) {
+  function documentContainsStyleHash100(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE100}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE100) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE100) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle100(targetDocument, hash2, css2) {
+  function injectStyle100(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -66331,18 +64096,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash100(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash100(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE100, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE100, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument100(targetDocument) {
     const runtime = getRuntime100();
@@ -66350,8 +64115,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle100(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle100(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -66365,11 +64130,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle99(hash2, css2) {
+  function registerStyle99(hash, css2) {
     const runtime = getRuntime100();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle100(targetDocument, hash2, css2);
+      injectStyle100(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -66389,7 +64154,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       maxSuggestions = 100,
       value = [],
       displayTransform = identity3,
-      saveTransform = (token2) => token2.trim(),
+      saveTransform = (token) => token.trim(),
       onChange = () => {
       },
       onInputChange = () => {
@@ -66595,8 +64360,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           hasFailures ? items : tokensToProcess
         );
         if (hasFailures) {
-          const rejected = items.filter((token2) => {
-            const transformed = saveTransform(token2);
+          const rejected = items.filter((token) => {
+            const transformed = saveTransform(token);
             if (!transformed) {
               return false;
             }
@@ -66735,7 +64500,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     function addNewTokens(tokens) {
       const tokensToAdd = [
         ...new Set(
-          tokens.map(saveTransform).filter(Boolean).filter((token2) => !valueContainsToken(token2)).filter((token2) => __experimentalValidateInput(token2))
+          tokens.map(saveTransform).filter(Boolean).filter((token) => !valueContainsToken(token)).filter((token) => __experimentalValidateInput(token))
         )
       ];
       if (tokensToAdd.length > 0) {
@@ -66745,12 +64510,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return new Set(tokensToAdd);
     }
-    function addNewToken(token2) {
-      if (!__experimentalValidateInput(token2)) {
+    function addNewToken(token) {
+      if (!__experimentalValidateInput(token)) {
         (0, import_a11y6.speak)(messages.__experimentalInvalid, "assertive");
         return false;
       }
-      addNewTokens([token2]);
+      addNewTokens([token]);
       (0, import_a11y6.speak)(messages.added, "assertive");
       setIncompleteTokenValue("");
       setSelectedSuggestionIndex(-1);
@@ -66761,21 +64526,21 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return true;
     }
-    function deleteToken(token2) {
+    function deleteToken(token) {
       const newTokens = value.filter((item) => {
-        return getTokenValue(item) !== getTokenValue(token2);
+        return getTokenValue(item) !== getTokenValue(token);
       });
       onChange(newTokens);
       (0, import_a11y6.speak)(messages.removed, "assertive");
     }
-    function getTokenValue(token2) {
-      if ("object" === typeof token2) {
-        return token2.value;
+    function getTokenValue(token) {
+      if ("object" === typeof token) {
+        return token.value;
       }
-      return token2;
+      return token;
     }
     function getMatchingSuggestions(searchValue = incompleteTokenValue, _suggestions = suggestions, _value = value, _maxSuggestions = maxSuggestions, _saveTransform = saveTransform) {
-      let match3 = _saveTransform(searchValue);
+      let match2 = _saveTransform(searchValue);
       const startsWithMatch = [];
       const containsMatch = [];
       const normalizedValue = _value.map((item) => {
@@ -66784,14 +64549,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
         return item.value;
       });
-      if (match3.length === 0) {
+      if (match2.length === 0) {
         _suggestions = _suggestions.filter(
           (suggestion) => !normalizedValue.includes(suggestion)
         );
       } else {
-        match3 = match3.normalize("NFKC").toLocaleLowerCase();
+        match2 = match2.normalize("NFKC").toLocaleLowerCase();
         _suggestions.forEach((suggestion) => {
-          const index2 = suggestion.normalize("NFKC").toLocaleLowerCase().indexOf(match3);
+          const index2 = suggestion.normalize("NFKC").toLocaleLowerCase().indexOf(match2);
           if (normalizedValue.indexOf(suggestion) === -1) {
             if (index2 === 0) {
               startsWithMatch.push(suggestion);
@@ -66810,9 +64575,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       return void 0;
     }
-    function valueContainsToken(token2) {
+    function valueContainsToken(token) {
       return value.some((item) => {
-        return getTokenValue(token2) === getTokenValue(item);
+        return getTokenValue(token) === getTokenValue(item);
       });
     }
     function getIndexOfInput() {
@@ -66859,9 +64624,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       components.splice(getIndexOfInput(), 0, renderInput());
       return components;
     }
-    function renderToken(token2, index2, tokens) {
-      const _value = getTokenValue(token2);
-      const status = typeof token2 !== "string" ? token2.status : void 0;
+    function renderToken(token, index2, tokens) {
+      const _value = getTokenValue(token);
+      const status = typeof token !== "string" ? token.status : void 0;
       const termPosition = index2 + 1;
       const termsCount = tokens.length;
       return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(component_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
@@ -66869,12 +64634,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         {
           value: _value,
           status,
-          title: typeof token2 !== "string" ? token2.title : void 0,
+          title: typeof token !== "string" ? token.title : void 0,
           displayTransform,
           onClickRemove: onTokenClickRemove,
-          isBorderless: typeof token2 !== "string" && token2.isBorderless || isBorderless,
-          onMouseEnter: typeof token2 !== "string" ? token2.onMouseEnter : void 0,
-          onMouseLeave: typeof token2 !== "string" ? token2.onMouseLeave : void 0,
+          isBorderless: typeof token !== "string" && token.isBorderless || isBorderless,
+          onMouseEnter: typeof token !== "string" ? token.onMouseEnter : void 0,
+          onMouseLeave: typeof token !== "string" ? token.onMouseLeave : void 0,
           disabled: "error" !== status && disabled2,
           messages,
           termsCount,
@@ -67385,24 +65150,24 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     var tokens = [];
     var i2 = 0;
     while (i2 < str.length) {
-      var char2 = str[i2];
-      if (char2 === "*" || char2 === "+" || char2 === "?") {
+      var char = str[i2];
+      if (char === "*" || char === "+" || char === "?") {
         tokens.push({ type: "MODIFIER", index: i2, value: str[i2++] });
         continue;
       }
-      if (char2 === "\\") {
+      if (char === "\\") {
         tokens.push({ type: "ESCAPED_CHAR", index: i2++, value: str[i2++] });
         continue;
       }
-      if (char2 === "{") {
+      if (char === "{") {
         tokens.push({ type: "OPEN", index: i2, value: str[i2++] });
         continue;
       }
-      if (char2 === "}") {
+      if (char === "}") {
         tokens.push({ type: "CLOSE", index: i2, value: str[i2++] });
         continue;
       }
-      if (char2 === ":") {
+      if (char === ":") {
         var name = "";
         var j2 = i2 + 1;
         while (j2 < str.length) {
@@ -67425,7 +65190,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         i2 = j2;
         continue;
       }
-      if (char2 === "(") {
+      if (char === "(") {
         var count = 1;
         var pattern = "";
         var j2 = i2 + 1;
@@ -67464,12 +65229,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     tokens.push({ type: "END", index: i2, value: "" });
     return tokens;
   }
-  function parse4(str, options2) {
+  function parse3(str, options2) {
     if (options2 === void 0) {
       options2 = {};
     }
     var tokens = lexer(str);
-    var _a = options2.prefixes, prefixes = _a === void 0 ? "./" : _a, _b = options2.delimiter, delimiter2 = _b === void 0 ? "/#?" : _b;
+    var _a = options2.prefixes, prefixes = _a === void 0 ? "./" : _a, _b = options2.delimiter, delimiter = _b === void 0 ? "/#?" : _b;
     var result = [];
     var key = 0;
     var i2 = 0;
@@ -67494,32 +65259,32 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return result2;
     };
     var isSafe = function(value2) {
-      for (var _i = 0, delimiter_1 = delimiter2; _i < delimiter_1.length; _i++) {
-        var char3 = delimiter_1[_i];
-        if (value2.indexOf(char3) > -1)
+      for (var _i = 0, delimiter_1 = delimiter; _i < delimiter_1.length; _i++) {
+        var char2 = delimiter_1[_i];
+        if (value2.indexOf(char2) > -1)
           return true;
       }
       return false;
     };
-    var safePattern = function(prefix3) {
-      var prev2 = result[result.length - 1];
-      var prevText = prefix3 || (prev2 && typeof prev2 === "string" ? prev2 : "");
-      if (prev2 && !prevText) {
-        throw new TypeError('Must have text between two parameters, missing text after "'.concat(prev2.name, '"'));
+    var safePattern = function(prefix2) {
+      var prev = result[result.length - 1];
+      var prevText = prefix2 || (prev && typeof prev === "string" ? prev : "");
+      if (prev && !prevText) {
+        throw new TypeError('Must have text between two parameters, missing text after "'.concat(prev.name, '"'));
       }
       if (!prevText || isSafe(prevText))
-        return "[^".concat(escapeString(delimiter2), "]+?");
-      return "(?:(?!".concat(escapeString(prevText), ")[^").concat(escapeString(delimiter2), "])+?");
+        return "[^".concat(escapeString(delimiter), "]+?");
+      return "(?:(?!".concat(escapeString(prevText), ")[^").concat(escapeString(delimiter), "])+?");
     };
     while (i2 < tokens.length) {
-      var char2 = tryConsume("CHAR");
+      var char = tryConsume("CHAR");
       var name = tryConsume("NAME");
       var pattern = tryConsume("PATTERN");
       if (name || pattern) {
-        var prefix2 = char2 || "";
-        if (prefixes.indexOf(prefix2) === -1) {
-          path += prefix2;
-          prefix2 = "";
+        var prefix = char || "";
+        if (prefixes.indexOf(prefix) === -1) {
+          path += prefix;
+          prefix = "";
         }
         if (path) {
           result.push(path);
@@ -67527,14 +65292,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
         result.push({
           name: name || key++,
-          prefix: prefix2,
+          prefix,
           suffix: "",
-          pattern: pattern || safePattern(prefix2),
+          pattern: pattern || safePattern(prefix),
           modifier: tryConsume("MODIFIER") || ""
         });
         continue;
       }
-      var value = char2 || tryConsume("ESCAPED_CHAR");
+      var value = char || tryConsume("ESCAPED_CHAR");
       if (value) {
         path += value;
         continue;
@@ -67545,15 +65310,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
       var open2 = tryConsume("OPEN");
       if (open2) {
-        var prefix2 = consumeText();
+        var prefix = consumeText();
         var name_1 = tryConsume("NAME") || "";
         var pattern_1 = tryConsume("PATTERN") || "";
         var suffix = consumeText();
         mustConsume("CLOSE");
         result.push({
           name: name_1 || (pattern_1 ? key++ : ""),
-          pattern: name_1 && !pattern_1 ? safePattern(prefix2) : pattern_1,
-          prefix: prefix2,
+          pattern: name_1 && !pattern_1 ? safePattern(prefix) : pattern_1,
+          prefix,
           suffix,
           modifier: tryConsume("MODIFIER") || ""
         });
@@ -67563,7 +65328,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return result;
   }
-  function match2(str, options2) {
+  function match(str, options2) {
     var keys = [];
     var re3 = pathToRegexp(str, keys, options2);
     return regexpToFunction(re3, keys, options2);
@@ -67631,7 +65396,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     return new RegExp("(?:".concat(parts.join("|"), ")"), flags(options2));
   }
   function stringToRegexp(path, keys, options2) {
-    return tokensToRegexp(parse4(path, options2), keys, options2);
+    return tokensToRegexp(parse3(path, options2), keys, options2);
   }
   function tokensToRegexp(tokens, keys, options2) {
     if (options2 === void 0) {
@@ -67639,35 +65404,35 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     var _a = options2.strict, strict = _a === void 0 ? false : _a, _b = options2.start, start = _b === void 0 ? true : _b, _c = options2.end, end = _c === void 0 ? true : _c, _d = options2.encode, encode = _d === void 0 ? function(x2) {
       return x2;
-    } : _d, _e = options2.delimiter, delimiter2 = _e === void 0 ? "/#?" : _e, _f = options2.endsWith, endsWith = _f === void 0 ? "" : _f;
+    } : _d, _e = options2.delimiter, delimiter = _e === void 0 ? "/#?" : _e, _f = options2.endsWith, endsWith = _f === void 0 ? "" : _f;
     var endsWithRe = "[".concat(escapeString(endsWith), "]|$");
-    var delimiterRe = "[".concat(escapeString(delimiter2), "]");
+    var delimiterRe = "[".concat(escapeString(delimiter), "]");
     var route = start ? "^" : "";
     for (var _i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++) {
-      var token2 = tokens_1[_i];
-      if (typeof token2 === "string") {
-        route += escapeString(encode(token2));
+      var token = tokens_1[_i];
+      if (typeof token === "string") {
+        route += escapeString(encode(token));
       } else {
-        var prefix2 = escapeString(encode(token2.prefix));
-        var suffix = escapeString(encode(token2.suffix));
-        if (token2.pattern) {
+        var prefix = escapeString(encode(token.prefix));
+        var suffix = escapeString(encode(token.suffix));
+        if (token.pattern) {
           if (keys)
-            keys.push(token2);
-          if (prefix2 || suffix) {
-            if (token2.modifier === "+" || token2.modifier === "*") {
-              var mod = token2.modifier === "*" ? "?" : "";
-              route += "(?:".concat(prefix2, "((?:").concat(token2.pattern, ")(?:").concat(suffix).concat(prefix2, "(?:").concat(token2.pattern, "))*)").concat(suffix, ")").concat(mod);
+            keys.push(token);
+          if (prefix || suffix) {
+            if (token.modifier === "+" || token.modifier === "*") {
+              var mod = token.modifier === "*" ? "?" : "";
+              route += "(?:".concat(prefix, "((?:").concat(token.pattern, ")(?:").concat(suffix).concat(prefix, "(?:").concat(token.pattern, "))*)").concat(suffix, ")").concat(mod);
             } else {
-              route += "(?:".concat(prefix2, "(").concat(token2.pattern, ")").concat(suffix, ")").concat(token2.modifier);
+              route += "(?:".concat(prefix, "(").concat(token.pattern, ")").concat(suffix, ")").concat(token.modifier);
             }
           } else {
-            if (token2.modifier === "+" || token2.modifier === "*") {
-              throw new TypeError('Can not repeat "'.concat(token2.name, '" without a prefix and suffix'));
+            if (token.modifier === "+" || token.modifier === "*") {
+              throw new TypeError('Can not repeat "'.concat(token.name, '" without a prefix and suffix'));
             }
-            route += "(".concat(token2.pattern, ")").concat(token2.modifier);
+            route += "(".concat(token.pattern, ")").concat(token.modifier);
           }
         } else {
-          route += "(?:".concat(prefix2).concat(suffix, ")").concat(token2.modifier);
+          route += "(?:".concat(prefix).concat(suffix, ")").concat(token.modifier);
         }
       }
     }
@@ -67697,7 +65462,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // packages/components/build-module/navigator/utils/router.mjs
   function matchPath(path, pattern) {
-    const matchingFunction = match2(pattern, {
+    const matchingFunction = match(pattern, {
       decode: decodeURIComponent
     });
     return matchingFunction(path);
@@ -67766,20 +65531,20 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash101(targetDocument, hash2) {
+  function documentContainsStyleHash101(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE101}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE101) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE101) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle101(targetDocument, hash2, css2) {
+  function injectStyle101(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -67789,18 +65554,18 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash101(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash101(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE101, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE101, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument101(targetDocument) {
     const runtime = getRuntime101();
@@ -67808,8 +65573,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle101(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle101(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -67823,11 +65588,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle100(hash2, css2) {
+  function registerStyle100(hash, css2) {
     const runtime = getRuntime101();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle101(targetDocument, hash2, css2);
+      injectStyle101(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -67855,7 +65620,7 @@ The screen with id ${screen.id} will not be added.`
       isBack = false,
       skipFocus = false,
       // Extract to avoid forwarding
-      replace: replace3,
+      replace: replace2,
       focusTargetSelector,
       // Rest
       ...restOptions
@@ -68036,20 +65801,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash102(targetDocument, hash2) {
+  function documentContainsStyleHash102(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE102}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE102) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE102) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle102(targetDocument, hash2, css2) {
+  function injectStyle102(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -68059,18 +65824,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash102(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash102(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE102, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE102, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument102(targetDocument) {
     const runtime = getRuntime102();
@@ -68078,8 +65843,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle102(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle102(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -68093,11 +65858,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle101(hash2, css2) {
+  function registerStyle101(hash, css2) {
     const runtime = getRuntime102();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle102(targetDocument, hash2, css2);
+      injectStyle102(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -68229,20 +65994,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash103(targetDocument, hash2) {
+  function documentContainsStyleHash103(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE103}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE103) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE103) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle103(targetDocument, hash2, css2) {
+  function injectStyle103(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -68252,18 +66017,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash103(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash103(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE103, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE103, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument103(targetDocument) {
     const runtime = getRuntime103();
@@ -68271,8 +66036,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle103(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle103(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -68286,11 +66051,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle102(hash2, css2) {
+  function registerStyle102(hash, css2) {
     const runtime = getRuntime103();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle103(targetDocument, hash2, css2);
+      injectStyle103(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -68311,9 +66076,9 @@ The screen with id ${screen.id} will not be added.`
       onAnimationEnd: onAnimationEndProp,
       ...otherProps
     } = useContextSystem(props, "Navigator.Screen");
-    const { location, match: match3, addScreen: addScreen2, removeScreen: removeScreen2 } = (0, import_element178.useContext)(NavigatorContext);
+    const { location, match: match2, addScreen: addScreen2, removeScreen: removeScreen2 } = (0, import_element178.useContext)(NavigatorContext);
     const { isInitial, isBack, focusTargetSelector, skipFocus } = location;
-    const isMatch = match3 === screenId;
+    const isMatch = match2 === screenId;
     const wrapperRef = (0, import_element178.useRef)(null);
     const skipAnimationAndFocusRestoration = !!isInitial && !isBack;
     (0, import_element178.useEffect)(() => {
@@ -68729,7 +66494,7 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/notice/list.mjs
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
-  var import_react94 = __toESM(require_react(), 1);
+  var import_react92 = __toESM(require_react(), 1);
   var noop21 = () => {
   };
   function NoticeList({
@@ -68744,7 +66509,7 @@ The screen with id ${screen.id} will not be added.`
       children,
       [...notices].reverse().map((notice) => {
         const { content, ...restNotice } = notice;
-        return /* @__PURE__ */ (0, import_react94.createElement)(
+        return /* @__PURE__ */ (0, import_react92.createElement)(
           notice_default,
           {
             ...restNotice,
@@ -68813,9 +66578,9 @@ The screen with id ${screen.id} will not be added.`
     const scrollBehavior = (0, import_compose66.useReducedMotion)() ? "auto" : "smooth";
     const handleOnToggle = (event) => {
       event.preventDefault();
-      const next2 = !isOpened;
-      setIsOpened(next2);
-      onToggle(next2);
+      const next = !isOpened;
+      setIsOpened(next);
+      onToggle(next);
     };
     const scrollAfterOpenRef = (0, import_element184.useRef)(void 0);
     scrollAfterOpenRef.current = scrollAfterOpen;
@@ -68994,20 +66759,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash104(targetDocument, hash2) {
+  function documentContainsStyleHash104(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE104}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE104) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE104) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle104(targetDocument, hash2, css2) {
+  function injectStyle104(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -69017,18 +66782,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash104(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash104(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE104, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE104, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument104(targetDocument) {
     const runtime = getRuntime104();
@@ -69036,8 +66801,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle104(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle104(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -69051,11 +66816,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle103(hash2, css2) {
+  function registerStyle103(hash, css2) {
     const runtime = getRuntime104();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle104(targetDocument, hash2, css2);
+      injectStyle104(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -69574,12 +67339,12 @@ The screen with id ${screen.id} will not be added.`
 
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/index.js
   var import_jsx_runtime308 = __toESM(require_jsx_runtime());
-  var import_react96 = __toESM(require_react());
+  var import_react94 = __toESM(require_react());
   var import_react_dom9 = __toESM(require_react_dom());
 
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/resizer.js
   var import_jsx_runtime307 = __toESM(require_jsx_runtime());
-  var import_react95 = __toESM(require_react());
+  var import_react93 = __toESM(require_react());
   var __assign2 = function() {
     __assign2 = Object.assign || function(t3) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
@@ -69621,15 +67386,15 @@ The screen with id ${screen.id} will not be added.`
     bottomLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", bottom: "-10px", cursor: "sw-resize" }),
     topLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", top: "-10px", cursor: "nw-resize" })
   };
-  var Resizer = (0, import_react95.memo)(function(props) {
+  var Resizer = (0, import_react93.memo)(function(props) {
     var onResizeStart = props.onResizeStart, direction = props.direction, children = props.children, replaceStyles = props.replaceStyles, className = props.className;
-    var onMouseDown = (0, import_react95.useCallback)(function(e3) {
+    var onMouseDown = (0, import_react93.useCallback)(function(e3) {
       onResizeStart(e3, direction);
     }, [onResizeStart, direction]);
-    var onTouchStart = (0, import_react95.useCallback)(function(e3) {
+    var onTouchStart = (0, import_react93.useCallback)(function(e3) {
       onResizeStart(e3, direction);
     }, [onResizeStart, direction]);
-    var style2 = (0, import_react95.useMemo)(function() {
+    var style2 = (0, import_react93.useMemo)(function() {
       return __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles[direction]), replaceStyles !== null && replaceStyles !== void 0 ? replaceStyles : {});
     }, [replaceStyles, direction]);
     return (0, import_jsx_runtime307.jsx)("div", { className: className || void 0, style: style2, onMouseDown, onTouchStart, children });
@@ -69690,8 +67455,8 @@ The screen with id ${screen.id} will not be added.`
     if (snapGap === void 0) {
       snapGap = 0;
     }
-    var closestGapIndex = snapArray.reduce(function(prev2, curr, index2) {
-      return Math.abs(curr - n2) < Math.abs(snapArray[prev2] - n2) ? index2 : prev2;
+    var closestGapIndex = snapArray.reduce(function(prev, curr, index2) {
+      return Math.abs(curr - n2) < Math.abs(snapArray[prev] - n2) ? index2 : prev;
     }, 0);
     var gap = Math.abs(snapArray[closestGapIndex] - n2);
     return snapGap === 0 || gap < snapGap ? snapArray[closestGapIndex] : n2;
@@ -70374,7 +68139,7 @@ The screen with id ${screen.id} will not be added.`
         snapGap: 0
       };
       return Resizable2;
-    })(import_react96.PureComponent)
+    })(import_react94.PureComponent)
   );
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
@@ -70397,7 +68162,7 @@ The screen with id ${screen.id} will not be added.`
     axis,
     fadeTimeout = 180,
     onResize = noop23,
-    position: position2 = POSITIONS.bottom,
+    position = POSITIONS.bottom,
     showPx = false
   }) {
     const [resizeListener, sizes] = (0, import_compose69.useResizeObserver)();
@@ -70452,7 +68217,7 @@ The screen with id ${screen.id} will not be added.`
       height,
       moveX,
       moveY,
-      position: position2,
+      position,
       showPx,
       width
     });
@@ -70466,14 +68231,14 @@ The screen with id ${screen.id} will not be added.`
     height,
     moveX = false,
     moveY = false,
-    position: position2 = POSITIONS.bottom,
+    position = POSITIONS.bottom,
     showPx = false,
     width
   }) {
     if (!moveX && !moveY) {
       return void 0;
     }
-    if (position2 === POSITIONS.corner) {
+    if (position === POSITIONS.corner) {
       return `${width} x ${height}`;
     }
     const labelUnit = showPx ? " px" : "";
@@ -70515,20 +68280,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash105(targetDocument, hash2) {
+  function documentContainsStyleHash105(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE105}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE105) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE105) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle105(targetDocument, hash2, css2) {
+  function injectStyle105(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -70538,18 +68303,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash105(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash105(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE105, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE105, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument105(targetDocument) {
     const runtime = getRuntime105();
@@ -70557,8 +68322,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle105(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle105(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -70572,11 +68337,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle104(hash2, css2) {
+  function registerStyle104(hash, css2) {
     const runtime = getRuntime105();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle105(targetDocument, hash2, css2);
+      injectStyle105(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -70585,10 +68350,10 @@ The screen with id ${screen.id} will not be added.`
   var style_module_default84 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
   var CORNER_OFFSET = 4;
   var CURSOR_OFFSET_TOP = CORNER_OFFSET * 2.5;
-  function Label2({ label, position: position2 = POSITIONS.corner, zIndex = 1e3, ...props }, ref) {
+  function Label2({ label, position = POSITIONS.corner, zIndex = 1e3, ...props }, ref) {
     const showLabel = !!label;
-    const isBottom = position2 === POSITIONS.bottom;
-    const isCorner = position2 === POSITIONS.corner;
+    const isBottom = position === POSITIONS.bottom;
+    const isCorner = position === POSITIONS.corner;
     if (!showLabel) {
       return null;
     }
@@ -70664,20 +68429,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash106(targetDocument, hash2) {
+  function documentContainsStyleHash106(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE106}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE106) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE106) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle106(targetDocument, hash2, css2) {
+  function injectStyle106(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -70687,18 +68452,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash106(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash106(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE106, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE106, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument106(targetDocument) {
     const runtime = getRuntime106();
@@ -70706,8 +68471,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle106(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle106(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -70721,11 +68486,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle105(hash2, css2) {
+  function registerStyle105(hash, css2) {
     const runtime = getRuntime106();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle106(targetDocument, hash2, css2);
+      injectStyle106(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -70742,7 +68507,7 @@ The screen with id ${screen.id} will not be added.`
     isVisible: isVisible2 = true,
     labelRef,
     onResize = noop24,
-    position: position2 = POSITIONS.bottom,
+    position = POSITIONS.bottom,
     showPx = true,
     zIndex = 1e3,
     ...props
@@ -70752,7 +68517,7 @@ The screen with id ${screen.id} will not be added.`
       fadeTimeout,
       onResize,
       showPx,
-      position: position2
+      position
     });
     if (!isVisible2) {
       return null;
@@ -70773,7 +68538,7 @@ The screen with id ${screen.id} will not be added.`
             {
               "aria-hidden": props["aria-hidden"],
               label,
-              position: position2,
+              position,
               ref: labelRef,
               zIndex
             }
@@ -71308,20 +69073,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash107(targetDocument, hash2) {
+  function documentContainsStyleHash107(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE107}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE107) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE107) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle107(targetDocument, hash2, css2) {
+  function injectStyle107(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -71331,18 +69096,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash107(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash107(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE107, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE107, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument107(targetDocument) {
     const runtime = getRuntime107();
@@ -71350,8 +69115,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle107(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle107(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -71365,11 +69130,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle106(hash2, css2) {
+  function registerStyle106(hash, css2) {
     const runtime = getRuntime107();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle107(targetDocument, hash2, css2);
+      injectStyle107(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -71928,20 +69693,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash108(targetDocument, hash2) {
+  function documentContainsStyleHash108(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE108}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE108) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE108) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle108(targetDocument, hash2, css2) {
+  function injectStyle108(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -71951,18 +69716,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash108(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash108(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE108, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE108, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument108(targetDocument) {
     const runtime = getRuntime108();
@@ -71970,8 +69735,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle108(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle108(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -71985,11 +69750,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle107(hash2, css2) {
+  function registerStyle107(hash, css2) {
     const runtime = getRuntime108();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle108(targetDocument, hash2, css2);
+      injectStyle108(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -72534,20 +70299,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash109(targetDocument, hash2) {
+  function documentContainsStyleHash109(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE109}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE109) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE109) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle109(targetDocument, hash2, css2) {
+  function injectStyle109(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -72557,18 +70322,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash109(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash109(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE109, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE109, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument109(targetDocument) {
     const runtime = getRuntime109();
@@ -72576,8 +70341,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle109(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle109(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -72591,11 +70356,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle108(hash2, css2) {
+  function registerStyle108(hash, css2) {
     const runtime = getRuntime109();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle109(targetDocument, hash2, css2);
+      injectStyle109(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -72640,20 +70405,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash110(targetDocument, hash2) {
+  function documentContainsStyleHash110(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE110}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE110) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE110) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle110(targetDocument, hash2, css2) {
+  function injectStyle110(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -72663,18 +70428,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash110(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash110(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE110, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE110, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument110(targetDocument) {
     const runtime = getRuntime110();
@@ -72682,8 +70447,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle110(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle110(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -72697,11 +70462,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle109(hash2, css2) {
+  function registerStyle109(hash, css2) {
     const runtime = getRuntime110();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle110(targetDocument, hash2, css2);
+      injectStyle110(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -72919,20 +70684,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash111(targetDocument, hash2) {
+  function documentContainsStyleHash111(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE111}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE111) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE111) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle111(targetDocument, hash2, css2) {
+  function injectStyle111(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -72942,18 +70707,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash111(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash111(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE111, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE111, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument111(targetDocument) {
     const runtime = getRuntime111();
@@ -72961,8 +70726,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle111(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle111(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -72976,11 +70741,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle110(hash2, css2) {
+  function registerStyle110(hash, css2) {
     const runtime = getRuntime111();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle111(targetDocument, hash2, css2);
+      injectStyle111(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -73068,11 +70833,11 @@ The screen with id ${screen.id} will not be added.`
         if (!hidden.length) {
           return values;
         }
-        const next2 = { ...values };
+        const next = { ...values };
         hidden.forEach(({ label }) => {
-          next2[label] = false;
+          next[label] = false;
         });
-        return next2;
+        return next;
       }
       default:
         return values;
@@ -73323,20 +71088,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash112(targetDocument, hash2) {
+  function documentContainsStyleHash112(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE112}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE112) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE112) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle112(targetDocument, hash2, css2) {
+  function injectStyle112(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -73346,18 +71111,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash112(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash112(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE112, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE112, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument112(targetDocument) {
     const runtime = getRuntime112();
@@ -73365,8 +71130,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle112(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle112(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -73380,11 +71145,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle111(hash2, css2) {
+  function registerStyle111(hash, css2) {
     const runtime = getRuntime112();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle112(targetDocument, hash2, css2);
+      injectStyle112(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -73948,20 +71713,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash113(targetDocument, hash2) {
+  function documentContainsStyleHash113(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE113}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE113) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE113) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle113(targetDocument, hash2, css2) {
+  function injectStyle113(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -73971,18 +71736,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash113(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash113(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE113, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE113, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument113(targetDocument) {
     const runtime = getRuntime113();
@@ -73990,8 +71755,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle113(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle113(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -74005,11 +71770,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle112(hash2, css2) {
+  function registerStyle112(hash, css2) {
     const runtime = getRuntime113();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle113(targetDocument, hash2, css2);
+      injectStyle113(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -74139,12 +71904,12 @@ The screen with id ${screen.id} will not be added.`
       ref: (0, import_compose80.useMergeRefs)([ref, clickRef]),
       className: isFocusingRegions ? "is-focusing-regions" : "",
       onKeyDown(event) {
-        if (shortcuts.previous.some(({ modifier, character: character2 }) => {
-          return import_keycodes7.isKeyboardEvent[modifier](event, character2);
+        if (shortcuts.previous.some(({ modifier, character }) => {
+          return import_keycodes7.isKeyboardEvent[modifier](event, character);
         })) {
           focusRegion(-1);
-        } else if (shortcuts.next.some(({ modifier, character: character2 }) => {
-          return import_keycodes7.isKeyboardEvent[modifier](event, character2);
+        } else if (shortcuts.next.some(({ modifier, character }) => {
+          return import_keycodes7.isKeyboardEvent[modifier](event, character);
         })) {
           focusRegion(1);
         }
@@ -74180,10 +71945,10 @@ The screen with id ${screen.id} will not be added.`
       const [fallbackStyles, setFallbackStyles] = (0, import_element229.useState)(void 0);
       const nodeRef = (0, import_element229.useRef)(null);
       (0, import_compose82.useIsomorphicLayoutEffect)(() => {
-        const node2 = props.node ?? nodeRef.current;
+        const node = props.node ?? nodeRef.current;
         const grabStylesCompleted = !!fallbackStyles && Object.values(fallbackStyles).every(Boolean);
-        if (node2 && !grabStylesCompleted) {
-          const newFallbackStyles = mapNodeToProps(node2, props);
+        if (node && !grabStylesCompleted) {
+          const newFallbackStyles = mapNodeToProps(node, props);
           if (!(0, import_es63.default)(newFallbackStyles, fallbackStyles)) {
             setFallbackStyles(newFallbackStyles);
           }
@@ -74294,6 +72059,50 @@ The screen with id ${screen.id} will not be added.`
     });
     return children;
   };
+
+  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/stringify.js
+  var byteToHex = [];
+  for (let i2 = 0; i2 < 256; ++i2) {
+    byteToHex.push((i2 + 256).toString(16).slice(1));
+  }
+  function unsafeStringify(arr, offset4 = 0) {
+    return (byteToHex[arr[offset4 + 0]] + byteToHex[arr[offset4 + 1]] + byteToHex[arr[offset4 + 2]] + byteToHex[arr[offset4 + 3]] + "-" + byteToHex[arr[offset4 + 4]] + byteToHex[arr[offset4 + 5]] + "-" + byteToHex[arr[offset4 + 6]] + byteToHex[arr[offset4 + 7]] + "-" + byteToHex[arr[offset4 + 8]] + byteToHex[arr[offset4 + 9]] + "-" + byteToHex[arr[offset4 + 10]] + byteToHex[arr[offset4 + 11]] + byteToHex[arr[offset4 + 12]] + byteToHex[arr[offset4 + 13]] + byteToHex[arr[offset4 + 14]] + byteToHex[arr[offset4 + 15]]).toLowerCase();
+  }
+
+  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/rng.js
+  var rnds8 = new Uint8Array(16);
+  function rng() {
+    return crypto.getRandomValues(rnds8);
+  }
+
+  // node_modules/.store/uuid@14.0.2-ALlTd6-Rf9bZs703d7TIjQ/node_modules/uuid/dist/v4.js
+  function v4(options2, buf, offset4) {
+    if (!buf && !options2 && crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    return _v4(options2, buf, offset4);
+  }
+  function _v4(options2, buf, offset4) {
+    options2 = options2 || {};
+    const rnds = options2.random ?? options2.rng?.() ?? rng();
+    if (rnds.length < 16) {
+      throw new Error("Random bytes length must be >= 16");
+    }
+    rnds[6] = rnds[6] & 15 | 64;
+    rnds[8] = rnds[8] & 63 | 128;
+    if (buf) {
+      offset4 = offset4 || 0;
+      if (offset4 < 0 || offset4 + 16 > buf.length) {
+        throw new RangeError(`UUID byte range ${offset4}:${offset4 + 15} is out of buffer bounds`);
+      }
+      for (let i2 = 0; i2 < 16; ++i2) {
+        buf[offset4 + i2] = rnds[i2];
+      }
+      return buf;
+    }
+    return unsafeStringify(rnds);
+  }
+  var v4_default = v4;
 
   // packages/components/build-module/higher-order/with-notices/index.mjs
   var import_element232 = __toESM(require_element(), 1);
@@ -74443,20 +72252,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash114(targetDocument, hash2) {
+  function documentContainsStyleHash114(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE114}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE114) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE114) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle114(targetDocument, hash2, css2) {
+  function injectStyle114(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -74466,18 +72275,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash114(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash114(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE114, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE114, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument114(targetDocument) {
     const runtime = getRuntime114();
@@ -74485,8 +72294,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle114(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle114(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -74500,11 +72309,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle113(hash2, css2) {
+  function registerStyle113(hash, css2) {
     const runtime = getRuntime114();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle114(targetDocument, hash2, css2);
+      injectStyle114(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -74513,7 +72322,7 @@ The screen with id ${screen.id} will not be added.`
   var style_module_default93 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
   var Item3 = (0, import_element235.forwardRef)(function UnforwardedItem({
     className,
-    prefix: prefix2,
+    prefix,
     suffix,
     children,
     disabled: disabled2 = false,
@@ -74543,7 +72352,7 @@ The screen with id ${screen.id} will not be added.`
         store: computedStore,
         hideOnClick: computedHideOnClick,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime350.jsx)("span", { className: style_module_default93["item-prefix-wrapper"], children: prefix2 }),
+          /* @__PURE__ */ (0, import_jsx_runtime350.jsx)("span", { className: style_module_default93["item-prefix-wrapper"], children: prefix }),
           /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)("div", { className: style_module_default93["item-content-wrapper"], children: [
             /* @__PURE__ */ (0, import_jsx_runtime350.jsx)("div", { className: style_module_default93["item-children-wrapper"], children }),
             suffix && /* @__PURE__ */ (0, import_jsx_runtime350.jsx)("span", { className: style_module_default93["item-suffix-wrapper"], children: suffix })
@@ -74572,20 +72381,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash115(targetDocument, hash2) {
+  function documentContainsStyleHash115(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE115}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE115) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE115) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle115(targetDocument, hash2, css2) {
+  function injectStyle115(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -74595,18 +72404,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash115(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash115(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE115, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE115, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument115(targetDocument) {
     const runtime = getRuntime115();
@@ -74614,8 +72423,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle115(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle115(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -74629,11 +72438,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle114(hash2, css2) {
+  function registerStyle114(hash, css2) {
     const runtime = getRuntime115();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle115(targetDocument, hash2, css2);
+      injectStyle115(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -74709,20 +72518,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash116(targetDocument, hash2) {
+  function documentContainsStyleHash116(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE116}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE116) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE116) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle116(targetDocument, hash2, css2) {
+  function injectStyle116(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -74732,18 +72541,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash116(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash116(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE116, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE116, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument116(targetDocument) {
     const runtime = getRuntime116();
@@ -74751,8 +72560,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle116(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle116(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -74766,11 +72575,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle115(hash2, css2) {
+  function registerStyle115(hash, css2) {
     const runtime = getRuntime116();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle116(targetDocument, hash2, css2);
+      injectStyle116(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -74842,20 +72651,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash117(targetDocument, hash2) {
+  function documentContainsStyleHash117(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE117}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE117) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE117) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle117(targetDocument, hash2, css2) {
+  function injectStyle117(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -74865,18 +72674,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash117(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash117(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE117, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE117, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument117(targetDocument) {
     const runtime = getRuntime117();
@@ -74884,8 +72693,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle117(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle117(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -74899,11 +72708,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle116(hash2, css2) {
+  function registerStyle116(hash, css2) {
     const runtime = getRuntime117();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle117(targetDocument, hash2, css2);
+      injectStyle117(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -74947,20 +72756,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash118(targetDocument, hash2) {
+  function documentContainsStyleHash118(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE118}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE118) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE118) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle118(targetDocument, hash2, css2) {
+  function injectStyle118(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -74970,18 +72779,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash118(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash118(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE118, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE118, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument118(targetDocument) {
     const runtime = getRuntime118();
@@ -74989,8 +72798,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle118(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle118(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -75004,11 +72813,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle117(hash2, css2) {
+  function registerStyle117(hash, css2) {
     const runtime = getRuntime118();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle118(targetDocument, hash2, css2);
+      injectStyle118(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -75065,20 +72874,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash119(targetDocument, hash2) {
+  function documentContainsStyleHash119(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE119}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE119) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE119) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle119(targetDocument, hash2, css2) {
+  function injectStyle119(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -75088,18 +72897,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash119(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash119(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE119, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE119, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument119(targetDocument) {
     const runtime = getRuntime119();
@@ -75107,8 +72916,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle119(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle119(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -75122,11 +72931,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle118(hash2, css2) {
+  function registerStyle118(hash, css2) {
     const runtime = getRuntime119();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle119(targetDocument, hash2, css2);
+      injectStyle119(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -75172,20 +72981,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash120(targetDocument, hash2) {
+  function documentContainsStyleHash120(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE120}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE120) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE120) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle120(targetDocument, hash2, css2) {
+  function injectStyle120(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -75195,18 +73004,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash120(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash120(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE120, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE120, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument120(targetDocument) {
     const runtime = getRuntime120();
@@ -75214,8 +73023,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle120(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle120(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -75229,11 +73038,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle119(hash2, css2) {
+  function registerStyle119(hash, css2) {
     const runtime = getRuntime120();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle120(targetDocument, hash2, css2);
+      injectStyle120(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -75277,20 +73086,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash121(targetDocument, hash2) {
+  function documentContainsStyleHash121(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE121}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE121) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE121) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle121(targetDocument, hash2, css2) {
+  function injectStyle121(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -75300,18 +73109,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash121(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash121(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE121, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE121, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument121(targetDocument) {
     const runtime = getRuntime121();
@@ -75319,8 +73128,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle121(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle121(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -75334,11 +73143,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle120(hash2, css2) {
+  function registerStyle120(hash, css2) {
     const runtime = getRuntime121();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle121(targetDocument, hash2, css2);
+      injectStyle121(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -75410,20 +73219,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash122(targetDocument, hash2) {
+  function documentContainsStyleHash122(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE122}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE122) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE122) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle122(targetDocument, hash2, css2) {
+  function injectStyle122(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -75433,18 +73242,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash122(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash122(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE122, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE122, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument122(targetDocument) {
     const runtime = getRuntime122();
@@ -75452,8 +73261,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle122(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle122(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -75467,11 +73276,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle121(hash2, css2) {
+  function registerStyle121(hash, css2) {
     const runtime = getRuntime122();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle122(targetDocument, hash2, css2);
+      injectStyle122(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -75537,20 +73346,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash123(targetDocument, hash2) {
+  function documentContainsStyleHash123(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE123}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE123) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE123) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle123(targetDocument, hash2, css2) {
+  function injectStyle123(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -75560,18 +73369,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash123(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash123(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE123, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE123, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument123(targetDocument) {
     const runtime = getRuntime123();
@@ -75579,8 +73388,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle123(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle123(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -75594,11 +73403,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle122(hash2, css2) {
+  function registerStyle122(hash, css2) {
     const runtime = getRuntime123();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle123(targetDocument, hash2, css2);
+      injectStyle123(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -75850,20 +73659,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash124(targetDocument, hash2) {
+  function documentContainsStyleHash124(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE124}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE124) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE124) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle124(targetDocument, hash2, css2) {
+  function injectStyle124(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -75873,18 +73682,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash124(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash124(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE124, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE124, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument124(targetDocument) {
     const runtime = getRuntime124();
@@ -75892,8 +73701,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle124(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle124(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -75907,11 +73716,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle123(hash2, css2) {
+  function registerStyle123(hash, css2) {
     const runtime = getRuntime124();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle124(targetDocument, hash2, css2);
+      injectStyle124(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -76013,20 +73822,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash125(targetDocument, hash2) {
+  function documentContainsStyleHash125(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE125}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE125) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE125) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle125(targetDocument, hash2, css2) {
+  function injectStyle125(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -76036,18 +73845,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash125(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash125(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE125, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE125, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument125(targetDocument) {
     const runtime = getRuntime125();
@@ -76055,8 +73864,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle125(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle125(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -76070,11 +73879,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle124(hash2, css2) {
+  function registerStyle124(hash, css2) {
     const runtime = getRuntime125();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle125(targetDocument, hash2, css2);
+      injectStyle125(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -76178,20 +73987,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash126(targetDocument, hash2) {
+  function documentContainsStyleHash126(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE126}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE126) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE126) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle126(targetDocument, hash2, css2) {
+  function injectStyle126(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -76201,18 +74010,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash126(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash126(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE126, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE126, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument126(targetDocument) {
     const runtime = getRuntime126();
@@ -76220,8 +74029,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle126(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle126(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -76235,11 +74044,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle125(hash2, css2) {
+  function registerStyle125(hash, css2) {
     const runtime = getRuntime126();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle126(targetDocument, hash2, css2);
+      injectStyle126(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -76468,20 +74277,20 @@ The screen with id ${screen.id} will not be added.`
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash127(targetDocument, hash2) {
+  function documentContainsStyleHash127(targetDocument, hash) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
       `style[${STYLE_HASH_ATTRIBUTE127}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE127) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE127) === hash) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle127(targetDocument, hash2, css2) {
+  function injectStyle127(targetDocument, hash, css2) {
     if (!targetDocument.head) {
       return;
     }
@@ -76491,18 +74300,18 @@ The screen with id ${screen.id} will not be added.`
       injectedStyles = /* @__PURE__ */ new Set();
       runtime.injectedStyles.set(targetDocument, injectedStyles);
     }
-    if (injectedStyles.has(hash2)) {
+    if (injectedStyles.has(hash)) {
       return;
     }
-    if (documentContainsStyleHash127(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
+    if (documentContainsStyleHash127(targetDocument, hash)) {
+      injectedStyles.add(hash);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE127, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE127, hash);
     style2.appendChild(targetDocument.createTextNode(css2));
     targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
+    injectedStyles.add(hash);
   }
   function registerDocument127(targetDocument) {
     const runtime = getRuntime127();
@@ -76510,8 +74319,8 @@ The screen with id ${screen.id} will not be added.`
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
-    for (const [hash2, css2] of runtime.styles) {
-      injectStyle127(targetDocument, hash2, css2);
+    for (const [hash, css2] of runtime.styles) {
+      injectStyle127(targetDocument, hash, css2);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -76525,11 +74334,11 @@ The screen with id ${screen.id} will not be added.`
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle126(hash2, css2) {
+  function registerStyle126(hash, css2) {
     const runtime = getRuntime127();
-    runtime.styles.set(hash2, css2);
+    runtime.styles.set(hash, css2);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle127(targetDocument, hash2, css2);
+      injectStyle127(targetDocument, hash, css2);
     }
   }
   if (typeof process === "undefined" || true) {
@@ -76714,16 +74523,6 @@ use-sync-external-store/cjs/use-sync-external-store-shim.development.js:
    * use-sync-external-store-shim.development.js
    *
    * Copyright (c) Meta Platforms, Inc. and affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
-
-react-is/cjs/react-is.development.js:
-  (** @license React v16.13.1
-   * react-is.development.js
-   *
-   * Copyright (c) Facebook, Inc. and its affiliates.
    *
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
