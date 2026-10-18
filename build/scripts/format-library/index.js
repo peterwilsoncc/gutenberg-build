@@ -302,10 +302,10 @@ var wp;
   // packages/icons/build-module/icon/index.mjs
   var import_element = __toESM(require_element(), 1);
   var icon_default = (0, import_element.forwardRef)(
-    ({ icon, size: size4 = 24, style, ...props }, ref) => {
-      const intrinsicStyle = icon.props.style;
+    ({ icon: icon2, size: size4 = 24, style, ...props }, ref) => {
+      const intrinsicStyle = icon2.props.style;
       const mergedStyle = intrinsicStyle || style ? { ...intrinsicStyle, ...style } : void 0;
-      return (0, import_element.cloneElement)(icon, {
+      return (0, import_element.cloneElement)(icon2, {
         width: size4,
         height: size4,
         ...props,
@@ -1438,13 +1438,13 @@ var wp;
   var import_primitives19 = __toESM(require_primitives(), 1);
   var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   var Icon = (0, import_element2.forwardRef)(
-    function UnforwardedIcon({ icon, size: size4 = 24, style, ...restProps }, ref) {
-      const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
+    function UnforwardedIcon({ icon: icon2, size: size4 = 24, style, ...restProps }, ref) {
+      const mergedStyle = icon2.props.style || style ? { ...icon2.props.style, ...style } : void 0;
       return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
         import_primitives19.SVG,
         {
           ref,
-          ...icon.props,
+          ...icon2.props,
           ...restProps,
           ...mergedStyle ? { style: mergedStyle } : {},
           width: size4,
@@ -19104,6 +19104,16 @@ var wp;
   var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
   var name15 = "core/non-breaking-space";
   var title15 = (0, import_i18n23.__)("Non breaking space");
+  var NBSP = "\xA0";
+  var icon = /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components7.Path, { d: "M4.5 9.5H6V14h12V9.5h1.5v6h-15z" }) });
+  function getNonBreakingSpaceRange({ text, start, end }) {
+    if (start === void 0 || end === void 0) {
+      return null;
+    }
+    const from = start === end ? Math.max(start - 1, 0) : start;
+    const to = start === end ? end + 1 : end;
+    return text.slice(from, to).includes(NBSP) ? [from, to] : null;
+  }
   function PopoverAnchor({
     contentRef
   }) {
@@ -19119,9 +19129,22 @@ var wp;
     title: title15,
     tagName: "span",
     className: "non-breaking-space",
-    edit({ value, onChange, contentRef }) {
+    edit({ value, onChange, onFocus, contentRef }) {
       function addNonBreakingSpace() {
-        onChange((0, import_rich_text17.insert)(value, "\xA0"));
+        onChange((0, import_rich_text17.insert)(value, NBSP));
+      }
+      const range = getNonBreakingSpaceRange(value);
+      function replaceNonBreakingSpaces() {
+        if (!range) {
+          return;
+        }
+        const [from, to] = range;
+        const { text } = value;
+        onChange({
+          ...value,
+          text: text.slice(0, from) + text.slice(from, to).replaceAll(NBSP, " ") + text.slice(to)
+        });
+        onFocus();
       }
       const selectedValue = value.start && value.end ? value.text.slice(value.start, value.end) : null;
       return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(import_jsx_runtime101.Fragment, { children: [
@@ -19133,12 +19156,21 @@ var wp;
             onUse: addNonBreakingSpace
           }
         ),
-        selectedValue === "\xA0" && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(PopoverAnchor, { contentRef })
+        range && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          import_block_editor17.RichTextToolbarButton,
+          {
+            name: "non-breaking-space",
+            icon,
+            title: (0, import_i18n23.__)("Replace non-breaking spaces"),
+            onClick: replaceNonBreakingSpaces,
+            isActive: true
+          }
+        ),
+        selectedValue === NBSP && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(PopoverAnchor, { contentRef })
       ] });
     },
     __experimentalCreatePrepareEditableTree() {
       return (formats, text) => {
-        const NBSP = "\xA0";
         let record = { formats, text };
         let index3 = -1;
         do {

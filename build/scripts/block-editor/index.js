@@ -72678,13 +72678,15 @@ var wp;
   };
   var FormatToolbar = () => {
     return /* @__PURE__ */ (0, import_jsx_runtime348.jsxs)(import_jsx_runtime348.Fragment, { children: [
-      ["bold", "italic", "link", "unknown"].map((format7) => /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
-        import_components29.Slot,
-        {
-          name: `RichText.ToolbarControls.${format7}`
-        },
-        format7
-      )),
+      ["bold", "italic", "link", "unknown", "non-breaking-space"].map(
+        (format7) => /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+          import_components29.Slot,
+          {
+            name: `RichText.ToolbarControls.${format7}`
+          },
+          format7
+        )
+      ),
       /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_components29.Slot, { name: "RichText.ToolbarControls", children: (fills) => {
         if (!fills.length) {
           return null;

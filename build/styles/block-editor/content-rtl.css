@@ -951,9 +951,7 @@ figcaption.block-editor-rich-text__editable [data-rich-text-placeholder]::before
 }
 
 .is-selected .non-breaking-space {
-  outline: 1px solid currentColor;
-  outline-offset: -1px;
-  opacity: 0.8;
+  background: radial-gradient(circle, #cc1818 2px, transparent 2.5px) center/100% 100% no-repeat;
 }
 
 .block-editor-warning {
