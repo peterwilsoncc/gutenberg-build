@@ -67044,7 +67044,12 @@ var wp;
   var import_compose26 = __toESM(require_compose(), 1);
   var { subscribeDelegatedListener: subscribeDelegatedListener2 } = unlock(import_compose26.privateApis);
   function useFocusHandler(clientId) {
-    const { isBlockSelected: isBlockSelected2, isBlockMultiSelected: isBlockMultiSelected2, isMultiSelecting: isMultiSelecting3 } = (0, import_data23.useSelect)(store);
+    const {
+      isBlockSelected: isBlockSelected2,
+      isBlockMultiSelected: isBlockMultiSelected2,
+      isAncestorMultiSelected: isAncestorMultiSelected2,
+      isMultiSelecting: isMultiSelecting3
+    } = (0, import_data23.useSelect)(store);
     const { selectBlock: selectBlock2, selectionChange: selectionChange2 } = (0, import_data23.useDispatch)(store);
     return (0, import_compose26.useRefEffect)(
       (node) => {
@@ -67058,7 +67063,7 @@ var wp;
           if (isMultiSelecting3()) {
             return;
           }
-          if (isBlockMultiSelected2(clientId)) {
+          if (isBlockMultiSelected2(clientId) || isAncestorMultiSelected2(clientId)) {
             return;
           }
           if (!isInsideRootBlock(node, event.target)) {
@@ -67249,14 +67254,18 @@ var wp;
   var import_keycodes2 = __toESM(require_keycodes(), 1);
   var import_data25 = __toESM(require_data(), 1);
   var import_compose28 = __toESM(require_compose(), 1);
+  var PILE_OFFSET = 8;
   function isColorTransparent(color) {
     return !color || color === "transparent" || color === "rgba(0, 0, 0, 0)";
   }
-  function useEventHandlers({ clientId, isSelected: isSelected2 }) {
+  function useEventHandlers({ clientId, isSelected: isSelected2, isMultiSelected }) {
     const {
       getBlockRootClientId: getBlockRootClientId2,
+      getSelectedBlockClientIds: getSelectedBlockClientIds2,
+      canMoveBlocks: canMoveBlocks2,
       isZoomOut: isZoomOut2,
       hasMultiSelection: hasMultiSelection2,
+      __unstableIsFullySelected: __unstableIsFullySelected2,
       isSectionBlock: isSectionBlock2,
       editedContentOnlySection: editedContentOnlySection2,
       getBlock: getBlock2
@@ -67270,7 +67279,7 @@ var wp;
     } = unlock((0, import_data25.useDispatch)(store));
     return (0, import_compose28.useRefEffect)(
       (node) => {
-        if (!isSelected2) {
+        if (!isSelected2 && !isMultiSelected) {
           return;
         }
         function onKeyDown(event) {
@@ -67291,16 +67300,127 @@ var wp;
             removeBlock2(clientId);
           }
         }
+        function onMouseDown(event) {
+          if (event.button !== 0 || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey || !isMultiSelected || !hasMultiSelection2() || !__unstableIsFullySelected2() || !canMoveBlocks2(getSelectedBlockClientIds2())) {
+            return;
+          }
+          const { ownerDocument: ownerDocument2 } = node;
+          const hadDraggable = node.getAttribute("draggable");
+          node.setAttribute("draggable", "true");
+          const editables = [
+            node.parentElement.closest('[contenteditable="true"]'),
+            event.target.closest('[contenteditable="true"]')
+          ].filter(Boolean);
+          for (const element of editables) {
+            element.contentEditable = "false";
+          }
+          function restore2() {
+            if (hadDraggable === null) {
+              node.removeAttribute("draggable");
+            } else {
+              node.setAttribute("draggable", hadDraggable);
+            }
+            for (const element of editables) {
+              element.contentEditable = "true";
+            }
+            ownerDocument2.removeEventListener("mouseup", restore2);
+            ownerDocument2.removeEventListener("dragend", restore2);
+          }
+          ownerDocument2.addEventListener("mouseup", restore2);
+          ownerDocument2.addEventListener("dragend", restore2);
+        }
+        function startPile(event, clientIds, rect, inverted) {
+          const { ownerDocument: ownerDocument2 } = node;
+          const index3 = clientIds.indexOf(clientId);
+          const backNode = ownerDocument2.querySelector(
+            `[data-block="${clientIds[index3 + 1] ?? clientIds[index3 - 1]}"]`
+          );
+          const cardScale = ({ width: width2, height: height2 }) => Math.min(1, 420 / Math.hypot(width2, height2));
+          const toTransform = (from, x2, y2, scale2, turn = 0) => `translate(${(x2 - from.left - from.width * (1 - scale2) / 2) * inverted}px, ${(y2 - from.top - from.height * (1 - scale2) / 2) * inverted}px) scale(${scale2}) rotate(${turn}deg)`;
+          const left = event.clientX + PILE_OFFSET;
+          const top = event.clientY + PILE_OFFSET;
+          const scale = cardScale(rect);
+          const width = rect.width * scale;
+          const height = rect.height * scale;
+          ownerDocument2.documentElement.dataset.dragPile = "true";
+          node.dataset.dragPile = "true";
+          node.style.transformOrigin = "50% 50%";
+          node.style.transform = toTransform(rect, left, top, scale);
+          node.style.opacity = "";
+          let restoreBackNode;
+          if (backNode) {
+            const backRect = backNode.getBoundingClientRect();
+            const backScale = cardScale(backRect);
+            const backStyle = backNode.getAttribute("style");
+            const backId = backNode.id;
+            const backClone = backNode.cloneNode();
+            backClone.style.display = "none";
+            backNode.id = null;
+            backNode.after(backClone);
+            backNode.dataset.dragPile = "true";
+            restoreBackNode = () => {
+              backNode.setAttribute("style", backStyle ?? "");
+              delete backNode.dataset.dragPile;
+              backNode.id = backId;
+              backClone.remove();
+            };
+            const { style } = backNode;
+            if (isColorTransparent(
+              ownerDocument2.defaultView.getComputedStyle(
+                backNode
+              ).backgroundColor
+            )) {
+              style.backgroundColor = node.style.backgroundColor;
+            }
+            style.transition = "transform 0.2s ease-out";
+            style.transform = toTransform(
+              backRect,
+              left - 12,
+              top + height + 24 - backRect.height * backScale,
+              backScale,
+              1.5
+            );
+          }
+          const countBadge = ownerDocument2.createElement("div");
+          countBadge.className = "block-editor-block-list__drag-count";
+          countBadge.textContent = String(clientIds.length);
+          ownerDocument2.body.appendChild(countBadge);
+          function positionCountBadge(clientX, clientY) {
+            countBadge.style.left = `${(clientX + PILE_OFFSET + width) * inverted - 12}px`;
+            countBadge.style.top = `${(clientY + PILE_OFFSET) * inverted - 12}px`;
+          }
+          positionCountBadge(event.clientX, event.clientY);
+          return {
+            move(clientX, clientY) {
+              if (backNode) {
+                backNode.style.pointerEvents = "none";
+                backNode.style.top = node.style.top;
+                backNode.style.left = node.style.left;
+              }
+              positionCountBadge(clientX, clientY);
+            },
+            end() {
+              delete ownerDocument2.documentElement.dataset.dragPile;
+              delete node.dataset.dragPile;
+              restoreBackNode?.();
+              countBadge.remove();
+            }
+          };
+        }
         function onDragStart(event) {
           const { target } = event;
-          if (node.isContentEditable || node.ownerDocument.activeElement !== node || hasMultiSelection2() || target.nodeType !== target.ELEMENT_NODE || target.closest('[draggable="true"]') !== node) {
+          const { activeElement: activeElement2 } = node.ownerDocument;
+          const isDirectBlockDrag = !node.isContentEditable && activeElement2 === node && !hasMultiSelection2() && target.nodeType === target.ELEMENT_NODE && target.closest('[draggable="true"]') === node;
+          const isMultiSelectionDrag = isMultiSelected && hasMultiSelection2() && __unstableIsFullySelected2() && canMoveBlocks2(getSelectedBlockClientIds2());
+          if (!isDirectBlockDrag && !isMultiSelectionDrag) {
             event.preventDefault();
             return;
           }
+          const clientIds = isMultiSelectionDrag ? getSelectedBlockClientIds2() : [clientId];
           const data = JSON.stringify({
             type: "block",
-            srcClientIds: [clientId],
-            srcRootClientId: getBlockRootClientId2(clientId)
+            srcClientIds: clientIds,
+            srcRootClientId: getBlockRootClientId2(clientIds[0])
           });
           event.dataTransfer.effectAllowed = "move";
           event.dataTransfer.clearData();
@@ -67378,6 +67498,7 @@ var wp;
             }
             node.style.backgroundColor = bgColor;
           }
+          const pile = isMultiSelectionDrag ? startPile(event, clientIds, rect, inverted) : void 0;
           let hasStarted = false;
           let lastClientX = originClientX;
           let lastClientY = originClientY;
@@ -67404,6 +67525,7 @@ var wp;
             const leftDelta = pointerXDelta + scrollLeftDelta;
             node.style.top = `${topDelta * inverted}px`;
             node.style.left = `${leftDelta * inverted}px`;
+            pile?.move(lastClientX, lastClientY);
           }
           function end() {
             ownerDocument2.removeEventListener("dragover", dragOver);
@@ -67417,6 +67539,7 @@ var wp;
             }
             clone.remove();
             node.id = id;
+            pile?.end();
             dragElement.remove();
             stopDraggingBlocks2();
             document.body.classList.remove(
@@ -67430,14 +67553,21 @@ var wp;
           ownerDocument2.addEventListener("dragend", end);
           ownerDocument2.addEventListener("drop", end);
           ownerDocument2.addEventListener("scroll", over);
-          startDraggingBlocks2([clientId]);
+          startDraggingBlocks2(clientIds);
           document.body.classList.add(
             "is-dragging-components-draggable"
           );
           ownerDocument2.documentElement.classList.add("is-dragging");
         }
-        node.addEventListener("keydown", onKeyDown);
         node.addEventListener("dragstart", onDragStart);
+        node.addEventListener("mousedown", onMouseDown);
+        if (!isSelected2) {
+          return () => {
+            node.removeEventListener("dragstart", onDragStart);
+            node.removeEventListener("mousedown", onMouseDown);
+          };
+        }
+        node.addEventListener("keydown", onKeyDown);
         function onDoubleClick(event) {
           const isSection = isSectionBlock2(clientId);
           const block = getBlock2(clientId);
@@ -67454,13 +67584,16 @@ var wp;
         return () => {
           node.removeEventListener("keydown", onKeyDown);
           node.removeEventListener("dragstart", onDragStart);
+          node.removeEventListener("mousedown", onMouseDown);
           node.removeEventListener("dblclick", onDoubleClick);
         };
       },
       [
         clientId,
         isSelected2,
+        isMultiSelected,
         getBlockRootClientId2,
+        getSelectedBlockClientIds2,
         getBlock2,
         import_blocks22.isReusableBlock,
         import_blocks22.isTemplatePart,
@@ -67468,6 +67601,7 @@ var wp;
         isZoomOut2,
         resetZoomLevel2,
         hasMultiSelection2,
+        canMoveBlocks2,
         startDraggingBlocks2,
         stopDraggingBlocks2,
         isSectionBlock2,
@@ -68333,7 +68467,7 @@ var wp;
       useFocusFirstElement({ clientId, initialPosition: initialPosition2 }),
       useBlockRefProvider(clientId),
       useFocusHandler(clientId),
-      useEventHandlers({ clientId, isSelected: isSelected2 }),
+      useEventHandlers({ clientId, isSelected: isSelected2, isMultiSelected }),
       useIsHovered({ isEnabled: isHoverEnabled }),
       useIntersectionObserver(),
       use_moving_animation_default({ triggerAnimationOnChange: index3, clientId }),
@@ -68388,6 +68522,7 @@ var wp;
           "is-selected": isSelected2,
           "is-highlighted": isHighlighted,
           "is-multi-selected": isMultiSelected,
+          "is-movable-multi-selected": isMultiSelected && canMove,
           "is-partially-selected": isPartiallySelected,
           "is-reusable": isReusable,
           "is-dragging": isDragging3,
@@ -71426,6 +71561,7 @@ var wp;
     const {
       getBlockParents: getBlockParents2,
       getBlockSelectionStart: getBlockSelectionStart2,
+      isDraggingBlocks: isDraggingBlocks2,
       isMultiSelecting: isMultiSelecting3,
       getSelectionStart: getSelectionStart2,
       getSelectionEnd: getSelectionEnd2,
@@ -71448,6 +71584,9 @@ var wp;
           isTripleClick = false;
         }
         function onSelectionChange(event) {
+          if (isDraggingBlocks2()) {
+            return;
+          }
           const selection2 = defaultView.getSelection();
           if (!selection2.rangeCount) {
             return;
@@ -71711,15 +71850,22 @@ var wp;
       isSelectionEnabled: isSelectionEnabled3,
       getBlockSelectionStart: getBlockSelectionStart2,
       getSelectionStart: getSelectionStart2,
-      hasMultiSelection: hasMultiSelection2
+      hasMultiSelection: hasMultiSelection2,
+      isBlockMultiSelected: isBlockMultiSelected2,
+      isAncestorMultiSelected: isAncestorMultiSelected2,
+      __unstableIsFullySelected: __unstableIsFullySelected2,
+      canMoveBlocks: canMoveBlocks2,
+      getSelectedBlockClientIds: getSelectedBlockClientIds2
     } = (0, import_data49.useSelect)(store);
     return (0, import_compose47.useRefEffect)(
       (node) => {
         let pointerType;
+        let clickCollapseClientId;
         function onPointerDown(event) {
           pointerType = event.pointerType;
         }
         function onMouseDown(event) {
+          clickCollapseClientId = void 0;
           if (!isSelectionEnabled3() || event.button !== 0) {
             return;
           }
@@ -71756,14 +71902,51 @@ var wp;
               }
             }
           } else if (hasMultiSelection2()) {
-            selectBlock2(clickedClientId);
+            if (clickedClientId && __unstableIsFullySelected2() && canMoveBlocks2(getSelectedBlockClientIds2()) && (isBlockMultiSelected2(clickedClientId) || isAncestorMultiSelected2(clickedClientId))) {
+              clickCollapseClientId = clickedClientId;
+            } else {
+              selectBlock2(clickedClientId);
+            }
           }
+        }
+        function onClick(event) {
+          const clientId = clickCollapseClientId;
+          clickCollapseClientId = void 0;
+          if (!clientId || !hasMultiSelection2()) {
+            return;
+          }
+          const { ownerDocument: ownerDocument2 } = node;
+          const { clientX, clientY } = event;
+          let textNode = null;
+          let offset4 = 0;
+          if (ownerDocument2.caretPositionFromPoint) {
+            const position = ownerDocument2.caretPositionFromPoint(
+              clientX,
+              clientY
+            );
+            textNode = position?.offsetNode ?? null;
+            offset4 = position?.offset ?? 0;
+          } else {
+            const range2 = ownerDocument2.caretRangeFromPoint?.(
+              clientX,
+              clientY
+            );
+            textNode = range2?.startContainer ?? null;
+            offset4 = range2?.startOffset ?? 0;
+          }
+          if (textNode?.nodeType === textNode?.TEXT_NODE && getBlockClientId(textNode) === clientId) {
+            ownerDocument2.defaultView.getSelection().collapse(textNode, offset4);
+            return;
+          }
+          selectBlock2(clientId);
         }
         node.addEventListener("pointerdown", onPointerDown);
         node.addEventListener("mousedown", onMouseDown);
+        node.addEventListener("click", onClick);
         return () => {
           node.removeEventListener("pointerdown", onPointerDown);
           node.removeEventListener("mousedown", onMouseDown);
+          node.removeEventListener("click", onClick);
         };
       },
       [
@@ -71771,7 +71954,12 @@ var wp;
         isSelectionEnabled3,
         getBlockSelectionStart2,
         getSelectionStart2,
-        hasMultiSelection2
+        hasMultiSelection2,
+        isBlockMultiSelected2,
+        isAncestorMultiSelected2,
+        __unstableIsFullySelected2,
+        canMoveBlocks2,
+        getSelectedBlockClientIds2
       ]
     );
   }
@@ -98422,7 +98610,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
       if (dropType === "block") {
         const sourceBlockIndex = getBlockIndex2(sourceClientIds[0]);
-        if (sourceRootClientId === targetRootClientId && sourceBlockIndex === targetBlockIndex) {
+        const lastSamePositionIndex = operation === "insert" ? sourceBlockIndex + sourceClientIds.length : sourceBlockIndex;
+        if (sourceRootClientId === targetRootClientId && targetBlockIndex >= sourceBlockIndex && targetBlockIndex <= lastSamePositionIndex) {
           return;
         }
         if (
