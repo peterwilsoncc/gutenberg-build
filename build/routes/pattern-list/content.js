@@ -51931,7 +51931,7 @@ var DEFAULT_VIEWS = [
   },
   {
     slug: "my-patterns",
-    label: (0, import_i18n58.__)("My patterns")
+    label: (0, import_i18n58.__)("Site patterns")
   },
   {
     slug: "registered",
@@ -52500,7 +52500,9 @@ function PatternListView({
   const { data: posts, paginationInfo } = (0, import_element158.useMemo)(() => {
     const viewWithoutFilters = { ...view };
     delete viewWithoutFilters.search;
-    viewWithoutFilters.filters = [];
+    viewWithoutFilters.filters = view.filters?.filter(
+      ({ field }) => field === "author"
+    );
     return filterSortAndPaginate(
       patternsWithPermissions,
       viewWithoutFilters,

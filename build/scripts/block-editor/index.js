@@ -7107,6 +7107,7 @@ var wp;
   var globalStylesLinksDataKey = /* @__PURE__ */ Symbol("globalStylesLinks");
   var selectBlockPatternsKey = /* @__PURE__ */ Symbol("selectBlockPatternsKey");
   var reusableBlocksSelectKey = /* @__PURE__ */ Symbol("reusableBlocksSelect");
+  var currentUserIdSelectKey = /* @__PURE__ */ Symbol("currentUserIdSelect");
   var userPatternCategoriesSelectKey = /* @__PURE__ */ Symbol(
     "userPatternCategoriesSelect"
   );
@@ -13155,7 +13156,8 @@ var wp;
             block,
             state.settings[userPatternCategoriesSelectKey]?.(
               select3
-            ) ?? state.settings.__experimentalUserPatternCategories
+            ) ?? state.settings.__experimentalUserPatternCategories,
+            state.settings[currentUserIdSelectKey]?.(select3)
           );
         }
         return [
@@ -13166,7 +13168,8 @@ var wp;
       },
       (state, patternName) => patternName?.startsWith("core/block/") ? [
         unlock(select3(STORE_NAME)).getReusableBlocks(),
-        state.settings.__experimentalReusableBlocks
+        state.settings.__experimentalReusableBlocks,
+        state.settings[currentUserIdSelectKey]?.(select3)
       ] : [
         state.settings.__experimentalBlockPatterns,
         state.settings[selectBlockPatternsKey]?.(select3)
@@ -13181,7 +13184,8 @@ var wp;
             userPattern,
             state.settings[userPatternCategoriesSelectKey]?.(
               select3
-            ) ?? state.settings.__experimentalUserPatternCategories
+            ) ?? state.settings.__experimentalUserPatternCategories,
+            state.settings[currentUserIdSelectKey]?.(select3)
           )
         ),
         // This setting is left for back compat.
@@ -13477,13 +13481,16 @@ var wp;
     full: "fully",
     unsynced: "unsynced"
   };
+  var INSERTER_AUTHOR_TYPES = {
+    currentUser: "currentUser"
+  };
   var allPatternsCategory = {
     name: "allPatterns",
     label: (0, import_i18n3._x)("All", "patterns")
   };
-  var myPatternsCategory = {
-    name: "myPatterns",
-    label: (0, import_i18n3.__)("My patterns")
+  var sitePatternsCategory = {
+    name: "sitePatterns",
+    label: (0, import_i18n3.__)("Site patterns")
   };
   var starterPatternsCategory = {
     name: "core/starter-content",
@@ -13513,7 +13520,7 @@ var wp;
     }
     return categories;
   }
-  function isPatternFiltered(pattern, sourceFilter, syncFilter) {
+  function isPatternFiltered(pattern, sourceFilter, syncFilter, authorFilter) {
     const isUserPattern = pattern.name.startsWith("core/block");
     const isDirectoryPattern = pattern.source === "core" || pattern.source?.startsWith("pattern-directory");
     if (sourceFilter === INSERTER_PATTERN_TYPES.theme && (isUserPattern || isDirectoryPattern)) {
@@ -13523,6 +13530,9 @@ var wp;
       return true;
     }
     if (sourceFilter === INSERTER_PATTERN_TYPES.user && pattern.type !== INSERTER_PATTERN_TYPES.user) {
+      return true;
+    }
+    if (authorFilter === INSERTER_AUTHOR_TYPES.currentUser && !pattern.isCurrentUserPattern) {
       return true;
     }
     if (syncFilter === INSERTER_SYNC_TYPES.full && pattern.syncStatus !== "") {
@@ -13538,7 +13548,7 @@ var wp;
   var isFiltered = /* @__PURE__ */ Symbol("isFiltered");
   var parsedPatternCache = /* @__PURE__ */ new WeakMap();
   var grammarMapCache = /* @__PURE__ */ new WeakMap();
-  function mapUserPattern(userPattern, __experimentalUserPatternCategories = []) {
+  function mapUserPattern(userPattern, __experimentalUserPatternCategories = [], currentUserId) {
     return {
       name: `core/block/${userPattern.id}`,
       id: userPattern.id,
@@ -13551,7 +13561,8 @@ var wp;
         return category ? category.slug : catId;
       }),
       content: userPattern.content?.raw,
-      syncStatus: userPattern.wp_pattern_sync_status
+      syncStatus: userPattern.wp_pattern_sync_status,
+      isCurrentUserPattern: !!currentUserId && userPattern.author === currentUserId
     };
   }
   function parsePattern(pattern) {
@@ -13630,6 +13641,7 @@ var wp;
       state.settings[userPatternCategoriesSelectKey]?.(select3) ?? state.settings.__experimentalUserPatternCategories,
       state.settings.__experimentalReusableBlocks,
       state.settings[selectBlockPatternsKey]?.(select3),
+      state.settings[currentUserIdSelectKey]?.(select3),
       // @ts-expect-error The store has no `blockPatterns`, so this is always undefined.
       state.blockPatterns,
       unlock(select3(STORE_NAME)).getReusableBlocks()
@@ -75999,7 +76011,7 @@ var wp;
         if (selectedCategory === allPatternsCategory.name) {
           return true;
         }
-        if (selectedCategory === myPatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
+        if (selectedCategory === sitePatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
           return true;
         }
         if (selectedCategory === starterPatternsCategory.name && pattern.blockTypes?.includes("core/post-content")) {
@@ -76105,7 +76117,7 @@ var wp;
       if (filteredPatterns.some(
         (pattern) => pattern.type === INSERTER_PATTERN_TYPES.user
       )) {
-        categories.unshift(myPatternsCategory);
+        categories.unshift(sitePatternsCategory);
       }
       if (filteredPatterns.length > 0) {
         categories.unshift({
@@ -76269,7 +76281,7 @@ var wp;
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   var getShouldDisableSyncFilter = (sourceFilter) => sourceFilter !== "all" && sourceFilter !== "user";
   var getShouldHideSourcesFilter = (category) => {
-    return category.name === myPatternsCategory.name;
+    return category.name === sitePatternsCategory.name;
   };
   var PATTERN_SOURCE_MENU_OPTIONS = [
     {
@@ -76289,19 +76301,32 @@ var wp;
       label: (0, import_i18n68.__)("User")
     }
   ];
+  var PATTERN_AUTHOR_MENU_OPTIONS = [
+    {
+      value: "all",
+      label: (0, import_i18n68._x)("All", "patterns")
+    },
+    {
+      value: INSERTER_AUTHOR_TYPES.currentUser,
+      label: (0, import_i18n68.__)("My patterns")
+    }
+  ];
   function PatternsFilter({
     setPatternSyncFilter,
     setPatternSourceFilter,
+    setPatternAuthorFilter,
     patternSyncFilter,
     patternSourceFilter,
+    patternAuthorFilter,
     scrollContainerRef,
     category
   }) {
-    const currentPatternSourceFilter = category.name === myPatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
+    const currentPatternSourceFilter = category.name === sitePatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
     const shouldDisableSyncFilter = getShouldDisableSyncFilter(
       currentPatternSourceFilter
     );
     const shouldHideSourcesFilter = getShouldHideSourcesFilter(category);
+    const shouldShowAuthorFilter = currentPatternSourceFilter === INSERTER_PATTERN_TYPES.user;
     const patternSyncMenuOptions = (0, import_element209.useMemo)(
       () => [
         {
@@ -76372,6 +76397,20 @@ var wp;
               value: currentPatternSourceFilter
             }
           ) }),
+          shouldShowAuthorFilter && /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_components48.MenuGroup, { label: (0, import_i18n68.__)("Author"), children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
+            import_components48.MenuItemsChoice,
+            {
+              choices: PATTERN_AUTHOR_MENU_OPTIONS,
+              onSelect: (value) => {
+                setPatternAuthorFilter(value);
+                scrollContainerRef.current?.scrollTo(
+                  0,
+                  0
+                );
+              },
+              value: patternAuthorFilter
+            }
+          ) }),
           /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_components48.MenuGroup, { label: (0, import_i18n68.__)("Type"), children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
             import_components48.MenuItemsChoice,
             {
@@ -76424,6 +76463,9 @@ var wp;
     );
     const [patternSyncFilter, setPatternSyncFilter] = (0, import_element210.useState)("all");
     const [patternSourceFilter, setPatternSourceFilter] = (0, import_element210.useState)("all");
+    const [patternAuthorFilter, setPatternAuthorFilter] = (0, import_element210.useState)("all");
+    const isUserSource = category.name === sitePatternsCategory.name || patternSourceFilter === INSERTER_PATTERN_TYPES.user;
+    const currentPatternAuthorFilter = isUserSource ? patternAuthorFilter : "all";
     const availableCategories = usePatternCategories(
       rootClientId,
       patternSourceFilter
@@ -76434,14 +76476,15 @@ var wp;
         if (isPatternFiltered(
           pattern,
           patternSourceFilter,
-          patternSyncFilter
+          patternSyncFilter,
+          currentPatternAuthorFilter
         )) {
           return false;
         }
         if (category.name === allPatternsCategory.name) {
           return true;
         }
-        if (category.name === myPatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
+        if (category.name === sitePatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
           return true;
         }
         if (category.name === starterPatternsCategory.name && pattern.blockTypes?.includes("core/post-content")) {
@@ -76462,7 +76505,8 @@ var wp;
         availableCategories,
         category.name,
         patternSourceFilter,
-        patternSyncFilter
+        patternSyncFilter,
+        currentPatternAuthorFilter
       ]
     );
     const pagingProps = usePatternsPaging(
@@ -76485,6 +76529,13 @@ var wp;
         changePage(1);
       },
       [setPatternSourceFilter, changePage]
+    );
+    const onSetPatternAuthorFilter = (0, import_element210.useCallback)(
+      (value) => {
+        setPatternAuthorFilter(value);
+        changePage(1);
+      },
+      [setPatternAuthorFilter, changePage]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(import_jsx_runtime376.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(
@@ -76509,8 +76560,10 @@ var wp;
                 {
                   patternSyncFilter,
                   patternSourceFilter,
+                  patternAuthorFilter: currentPatternAuthorFilter,
                   setPatternSyncFilter: onSetPatternSyncFilter,
                   setPatternSourceFilter: onSetPatternSourceFilter,
+                  setPatternAuthorFilter: onSetPatternAuthorFilter,
                   scrollContainerRef,
                   category
                 }
@@ -136978,6 +137031,7 @@ If there's a particular need for this, please submit a feature request at https:
     requiresWrapperOnCopy,
     PrivateInserterLibrary,
     reusableBlocksSelectKey,
+    currentUserIdSelectKey,
     userPatternCategoriesSelectKey,
     PrivateBlockPopover,
     PrivatePublishDateTimePicker,

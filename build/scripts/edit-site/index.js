@@ -80365,7 +80365,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
       sortedCategories.unshift({
         name: PATTERN_USER_CATEGORY,
-        label: (0, import_i18n152.__)("My patterns"),
+        label: (0, import_i18n152.__)("Site patterns"),
         count: userPatterns.length
       });
       sortedCategories.unshift({
@@ -81138,7 +81138,9 @@ If there's a particular need for this, please submit a feature request at https:
       const viewWithoutFilters = { ...view };
       delete viewWithoutFilters.search;
       if (postType2 !== TEMPLATE_PART_POST_TYPE) {
-        viewWithoutFilters.filters = [];
+        viewWithoutFilters.filters = view.filters?.filter(
+          ({ field }) => field === "author"
+        );
       }
       return filterSortAndPaginate(patterns2, viewWithoutFilters, fields2);
     }, [patterns2, view, fields2, postType2]);

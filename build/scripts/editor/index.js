@@ -109835,6 +109835,9 @@ ${content}
   function __experimentalUserPatternCategoriesSelect(select8) {
     return select8(import_core_data77.store).getUserPatternCategories();
   }
+  function currentUserIdSelect(select8) {
+    return select8(import_core_data77.store).getCurrentUser()?.id;
+  }
   var BLOCK_EDITOR_SETTINGS = [
     "__experimentalBlockBindingsSupportedAttributes",
     "__experimentalBlockDirectory",
@@ -109894,6 +109897,7 @@ ${content}
     globalStylesLinksDataKey,
     selectBlockPatternsKey,
     reusableBlocksSelectKey,
+    currentUserIdSelectKey,
     userPatternCategoriesSelectKey,
     sectionRootClientIdKey,
     mediaEditKey,
@@ -110115,6 +110119,7 @@ ${content}
           return hasFinishedResolution("getBlockPatterns") ? patterns2 : void 0;
         },
         [reusableBlocksSelectKey]: __experimentalReusableBlocksSelect,
+        [currentUserIdSelectKey]: currentUserIdSelect,
         [userPatternCategoriesSelectKey]: __experimentalUserPatternCategoriesSelect,
         __experimentalBlockPatternCategories: blockPatternCategories,
         __experimentalFetchLinkSuggestions: (search, searchOptions) => (0, import_core_data77.__experimentalFetchLinkSuggestions)(search, searchOptions, settings),

@@ -16225,6 +16225,9 @@ function AuthorView({ item }) {
   const text = author?.name || item?._embedded?.author?.[0]?.name;
   const imageUrl = author?.avatar_urls?.[48] || item?._embedded?.author?.[0]?.avatar_urls?.[48];
   const [isImageLoaded, setIsImageLoaded] = (0, import_element40.useState)(false);
+  if (!authorId) {
+    return null;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(Stack, { direction: "row", align: "center", children: [
     !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
       "div",
