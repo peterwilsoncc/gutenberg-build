@@ -1659,7 +1659,7 @@ var page_default = Page;
 // routes/navigation-edit/stage.tsx
 var import_data3 = __toESM(require_data());
 var import_core_data3 = __toESM(require_core_data());
-var import_i18n5 = __toESM(require_i18n());
+var import_i18n6 = __toESM(require_i18n());
 var import_html_entities = __toESM(require_html_entities());
 
 // routes/navigation-edit/editor/index.tsx
@@ -1671,16 +1671,17 @@ var import_core_data2 = __toESM(require_core_data());
 import { useEditorAssets } from "@wordpress/lazy-editor";
 
 // routes/navigation-edit/editor/style.scss
-if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='ab713497c1']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='a4dcac87c4']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "ab713497c1");
-  style.appendChild(document.createTextNode(".navigation-edit-editor__hidden-blocks{display:none}"));
+  style.setAttribute("data-wp-hash", "a4dcac87c4");
+  style.appendChild(document.createTextNode(".navigation-edit-editor__hidden-blocks{display:none}.navigation-edit-editor__empty-message{margin:0 0 var(--wpds-dimension-gap-md,12px)}"));
   document.head.appendChild(style);
 }
 
 // routes/navigation-edit/editor/content.tsx
 var import_block_editor2 = __toESM(require_block_editor());
 var import_data2 = __toESM(require_data());
+var import_i18n5 = __toESM(require_i18n());
 var import_core_data = __toESM(require_core_data());
 
 // routes/lock-unlock/index.ts
@@ -1852,7 +1853,7 @@ function NavigationMenuContent({
   const { NavigationLinkUI } = unlock(
     window.wp.blockLibrary.privateApis
   );
-  const { listViewRootClientId, isLoading } = (0, import_data2.useSelect)(
+  const { listViewRootClientId, isLoading, hasChildren } = (0, import_data2.useSelect)(
     (select) => {
       const {
         areInnerBlocksControlled,
@@ -1870,6 +1871,7 @@ function NavigationMenuContent({
       );
       return {
         listViewRootClientId: pageListHasBlocks ? blockClientIds[0] : rootClientId,
+        hasChildren: blockClientIds.length > 0,
         // This is a small hack to wait for the navigation block
         // to actually load its inner blocks.
         isLoading: !areInnerBlocksControlled(rootClientId) || isLoadingPages
@@ -1881,6 +1883,7 @@ function NavigationMenuContent({
     (0, import_data2.useDispatch)(import_block_editor2.store)
   );
   return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+    !isLoading && !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "navigation-edit-editor__empty-message", children: (0, import_i18n5.__)("This Navigation Menu is empty.") }),
     !isLoading && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
       PrivateListView,
       {
@@ -2067,7 +2070,7 @@ function NavigationEditStage() {
         {
           items: [
             {
-              label: (0, import_i18n5.__)("Navigation"),
+              label: (0, import_i18n6.__)("Navigation"),
               to: "/navigation/list"
             },
             {

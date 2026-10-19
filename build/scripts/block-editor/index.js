@@ -107579,6 +107579,7 @@ If there's a particular need for this, please submit a feature request at https:
       expansionState,
       draggedClientIds
     } = useListViewTreeState();
+    const insertedBlockClientId = useInsertedBlockClientId();
     if (!canParentExpand) {
       return null;
     }
@@ -107625,6 +107626,7 @@ If there's a particular need for this, please submit a feature request at https:
       const hasNestedBlocks = !!innerBlocks?.length;
       const shouldExpand = hasNestedBlocks ? expansionState[clientId] ?? isExpanded : void 0;
       const isSelected2 = isClientIdSelected(clientId, selectedClientIds);
+      const isSync = isSelected2 || clientId === insertedBlockClientId;
       const isSelectedBranch = isBranchSelected || isSelected2 && hasNestedBlocks;
       const showBlock = isDragged || blockInView || isSelected2 && clientId === selectedClientIds[0] || index3 === 0 || index3 === blockCount - 1;
       const showNestedBlocks = hasNestedBlocks && shouldExpand && !isDragged;
@@ -107645,7 +107647,7 @@ If there's a particular need for this, please submit a feature request at https:
         isDragged
       });
       rows.push(
-        /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(import_data140.AsyncModeProvider, { value: !isSelected2, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(import_data140.AsyncModeProvider, { value: !isSync, children: [
           showBlock && /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
             block_default3,
             {

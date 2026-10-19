@@ -72001,12 +72001,12 @@ If there's a particular need for this, please submit a feature request at https:
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__160) {
+            } catch (__161) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__160) {
+            } catch (__161) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
@@ -79115,10 +79115,10 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/index.mjs
-  var import_i18n151 = __toESM(require_i18n(), 1);
+  var import_i18n152 = __toESM(require_i18n(), 1);
   var import_core_data40 = __toESM(require_core_data(), 1);
   var import_data63 = __toESM(require_data(), 1);
-  var import_html_entities9 = __toESM(require_html_entities(), 1);
+  var import_html_entities8 = __toESM(require_html_entities(), 1);
   var import_components134 = __toESM(require_components(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/constants.mjs
@@ -79130,7 +79130,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/single-navigation-menu.mjs
-  var import_i18n148 = __toESM(require_i18n(), 1);
+  var import_i18n149 = __toESM(require_i18n(), 1);
   var import_html_entities7 = __toESM(require_html_entities(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
@@ -79321,6 +79321,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.mjs
   var import_block_editor22 = __toESM(require_block_editor(), 1);
   var import_data59 = __toESM(require_data(), 1);
+  var import_i18n147 = __toESM(require_i18n(), 1);
   var import_core_data36 = __toESM(require_core_data(), 1);
   var import_block_library = __toESM(require_block_library(), 1);
 
@@ -79456,7 +79457,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   ];
   function NavigationMenuContent({ rootClientId }) {
-    const { listViewRootClientId, isLoading } = (0, import_data59.useSelect)(
+    const { listViewRootClientId, isLoading, hasChildren } = (0, import_data59.useSelect)(
       (select4) => {
         const {
           areInnerBlocksControlled,
@@ -79474,6 +79475,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
         return {
           listViewRootClientId: pageListHasBlocks ? blockClientIds[0] : rootClientId,
+          hasChildren: blockClientIds.length > 0,
           // This is a small hack to wait for the navigation block
           // to actually load its inner blocks.
           isLoading: !areInnerBlocksControlled(rootClientId) || isLoadingPages
@@ -79485,6 +79487,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data59.useDispatch)(import_block_editor22.store)
     );
     return /* @__PURE__ */ (0, import_jsx_runtime413.jsxs)(import_jsx_runtime413.Fragment, { children: [
+      !isLoading && !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime413.jsx)("p", { className: "edit-site-sidebar-navigation-screen-navigation-menus__empty-message", children: (0, import_i18n147.__)("This Navigation Menu is empty.") }),
       !isLoading && /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
         PrivateListView,
         {
@@ -79545,18 +79548,18 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/build-navigation-label.mjs
-  var import_i18n147 = __toESM(require_i18n(), 1);
+  var import_i18n148 = __toESM(require_i18n(), 1);
   var import_html_entities6 = __toESM(require_html_entities(), 1);
   function buildNavigationLabel(title, id, status) {
     if (!title?.rendered) {
-      return (0, import_i18n147.sprintf)((0, import_i18n147.__)("(no title %s)"), id);
+      return (0, import_i18n148.sprintf)((0, import_i18n148.__)("(no title %s)"), id);
     }
     if (status === "publish") {
       return (0, import_html_entities6.decodeEntities)(title?.rendered);
     }
-    return (0, import_i18n147.sprintf)(
+    return (0, import_i18n148.sprintf)(
       // translators: 1: title of the menu. 2: status of the menu (draft, pending, etc.).
-      (0, import_i18n147._x)("%1$s (%2$s)", "menu label"),
+      (0, import_i18n148._x)("%1$s (%2$s)", "menu label"),
       (0, import_html_entities6.decodeEntities)(title?.rendered),
       status
     );
@@ -79591,7 +79594,7 @@ If there's a particular need for this, please submit a feature request at https:
           navigationMenu?.id,
           navigationMenu?.status
         ),
-        description: (0, import_i18n148.__)(
+        description: (0, import_i18n149.__)(
           "Navigation Menus are a curated collection of blocks that allow visitors to get around your site."
         ),
         children: /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(NavigationMenuEditor, { navigationMenuId: navigationMenu?.id })
@@ -79601,7 +79604,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.mjs
   var import_core_data39 = __toESM(require_core_data(), 1);
-  var import_i18n150 = __toESM(require_i18n(), 1);
+  var import_i18n151 = __toESM(require_i18n(), 1);
   var import_data62 = __toESM(require_data(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
   var import_router24 = __toESM(require_router(), 1);
@@ -79609,9 +79612,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/index.mjs
   var import_core_data38 = __toESM(require_core_data(), 1);
   var import_components133 = __toESM(require_components(), 1);
-  var import_i18n149 = __toESM(require_i18n(), 1);
+  var import_i18n150 = __toESM(require_i18n(), 1);
   var import_data61 = __toESM(require_data(), 1);
-  var import_html_entities8 = __toESM(require_html_entities(), 1);
   var import_router23 = __toESM(require_router(), 1);
   var import_jsx_runtime416 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation22 } = unlock(import_router23.privateApis);
@@ -79640,7 +79642,6 @@ If there's a particular need for this, please submit a feature request at https:
       [postId]
     );
     const isLoading = isResolving || isSaving || isDeleting;
-    const menuTitle = navigationMenu?.title?.rendered || navigationMenu?.slug;
     const { handleSave, handleDelete, handleDuplicate } = useNavigationMenuHandlers();
     const _handleDelete = () => handleDelete(navigationMenu);
     const _handleSave = (edits) => handleSave(navigationMenu, edits);
@@ -79649,7 +79650,7 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
         SidebarNavigationScreenWrapper,
         {
-          description: (0, import_i18n149.__)(
+          description: (0, import_i18n150.__)(
             "Navigation Menus are a curated collection of blocks that allow visitors to get around your site."
           ),
           backPath,
@@ -79661,32 +79662,8 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
         SidebarNavigationScreenWrapper,
         {
-          description: (0, import_i18n149.__)("Navigation Menu missing."),
+          description: (0, import_i18n150.__)("Navigation Menu missing."),
           backPath
-        }
-      );
-    }
-    if (!navigationMenu?.content?.raw) {
-      return /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
-        SidebarNavigationScreenWrapper,
-        {
-          actions: /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
-            ScreenNavigationMoreMenu,
-            {
-              menuId: navigationMenu?.id,
-              menuTitle: (0, import_html_entities8.decodeEntities)(menuTitle),
-              onDelete: _handleDelete,
-              onSave: _handleSave,
-              onDuplicate: _handleDuplicate
-            }
-          ),
-          backPath,
-          title: buildNavigationLabel(
-            navigationMenu?.title,
-            navigationMenu?.id,
-            navigationMenu?.status
-          ),
-          description: (0, import_i18n149.__)("This Navigation Menu is empty.")
         }
       );
     }
@@ -79723,7 +79700,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         );
         createSuccessNotice(
-          (0, import_i18n150.__)("Navigation Menu successfully deleted."),
+          (0, import_i18n151.__)("Navigation Menu successfully deleted."),
           {
             type: "snackbar"
           }
@@ -79731,9 +79708,9 @@ If there's a particular need for this, please submit a feature request at https:
         history.navigate("/navigation");
       } catch (error2) {
         createErrorNotice(
-          (0, import_i18n150.sprintf)(
+          (0, import_i18n151.sprintf)(
             /* translators: %s: error message describing why the navigation menu could not be deleted. */
-            (0, import_i18n150.__)(`Unable to delete Navigation Menu (%s).`),
+            (0, import_i18n151.__)(`Unable to delete Navigation Menu (%s).`),
             error2?.message
           ),
           {
@@ -79778,15 +79755,15 @@ If there's a particular need for this, please submit a feature request at https:
             throwOnError: true
           }
         );
-        createSuccessNotice((0, import_i18n150.__)("Renamed Navigation Menu"), {
+        createSuccessNotice((0, import_i18n151.__)("Renamed Navigation Menu"), {
           type: "snackbar"
         });
       } catch (error2) {
         editEntityRecord("postType", postType, postId, originalRecord);
         createErrorNotice(
-          (0, import_i18n150.sprintf)(
+          (0, import_i18n151.sprintf)(
             /* translators: %s: error message describing why the navigation menu could not be renamed. */
-            (0, import_i18n150.__)(`Unable to rename Navigation Menu (%s).`),
+            (0, import_i18n151.__)(`Unable to rename Navigation Menu (%s).`),
             error2?.message
           ),
           {
@@ -79808,9 +79785,9 @@ If there's a particular need for this, please submit a feature request at https:
           "postType",
           postType,
           {
-            title: (0, import_i18n150.sprintf)(
+            title: (0, import_i18n151.sprintf)(
               /* translators: %s: Navigation menu title */
-              (0, import_i18n150._x)("%s (Copy)", "navigation menu"),
+              (0, import_i18n151._x)("%s (Copy)", "navigation menu"),
               menuTitle
             ),
             content: navigationMenu?.content?.raw,
@@ -79821,16 +79798,16 @@ If there's a particular need for this, please submit a feature request at https:
           }
         );
         if (savedRecord) {
-          createSuccessNotice((0, import_i18n150.__)("Duplicated Navigation Menu"), {
+          createSuccessNotice((0, import_i18n151.__)("Duplicated Navigation Menu"), {
             type: "snackbar"
           });
           history.navigate(`/wp_navigation/${savedRecord.id}`);
         }
       } catch (error2) {
         createErrorNotice(
-          (0, import_i18n150.sprintf)(
+          (0, import_i18n151.sprintf)(
             /* translators: %s: error message describing why the navigation menu could not be deleted. */
-            (0, import_i18n150.__)(`Unable to duplicate Navigation Menu (%s).`),
+            (0, import_i18n151.__)(`Unable to duplicate Navigation Menu (%s).`),
             error2?.message
           ),
           {
@@ -79853,15 +79830,15 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime417 = __toESM(require_jsx_runtime(), 1);
   function buildMenuLabel(title, id, status) {
     if (!title) {
-      return (0, import_i18n151.sprintf)((0, import_i18n151.__)("(no title %s)"), id);
+      return (0, import_i18n152.sprintf)((0, import_i18n152.__)("(no title %s)"), id);
     }
     if (status === "publish") {
-      return (0, import_html_entities9.decodeEntities)(title);
+      return (0, import_html_entities8.decodeEntities)(title);
     }
-    return (0, import_i18n151.sprintf)(
+    return (0, import_i18n152.sprintf)(
       // translators: 1: title of the menu. 2: status of the menu (draft, pending, etc.).
-      (0, import_i18n151._x)("%1$s (%2$s)", "menu label"),
-      (0, import_html_entities9.decodeEntities)(title),
+      (0, import_i18n152._x)("%1$s (%2$s)", "menu label"),
+      (0, import_html_entities8.decodeEntities)(title),
       status
     );
   }
@@ -79895,7 +79872,7 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
         SidebarNavigationScreenWrapper,
         {
-          description: (0, import_i18n151.__)("No Navigation Menus found."),
+          description: (0, import_i18n152.__)("No Navigation Menus found."),
           backPath
         }
       );
@@ -79933,9 +79910,9 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
       SidebarNavigationScreen,
       {
-        title: title || (0, import_i18n151.__)("Navigation"),
+        title: title || (0, import_i18n152.__)("Navigation"),
         actions,
-        description: description || (0, import_i18n151.__)(
+        description: description || (0, import_i18n152.__)(
           "Manage the menus that help visitors find their way around your site."
         ),
         backPath,
@@ -80008,7 +79985,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
   var import_components135 = __toESM(require_components(), 1);
   var import_element252 = __toESM(require_element(), 1);
-  var import_i18n153 = __toESM(require_i18n(), 1);
+  var import_i18n154 = __toESM(require_i18n(), 1);
   var import_router25 = __toESM(require_router(), 1);
   var import_core_data45 = __toESM(require_core_data(), 1);
 
@@ -80043,7 +80020,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.mjs
   var import_element251 = __toESM(require_element(), 1);
-  var import_i18n152 = __toESM(require_i18n(), 1);
+  var import_i18n153 = __toESM(require_i18n(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-default-pattern-categories.mjs
   var import_core_data41 = __toESM(require_core_data(), 1);
@@ -80380,7 +80357,7 @@ If there's a particular need for this, please submit a feature request at https:
     const defaultCategories = useDefaultPatternCategories();
     defaultCategories.push({
       name: TEMPLATE_PART_AREA_DEFAULT_CATEGORY,
-      label: (0, import_i18n152.__)("Uncategorized")
+      label: (0, import_i18n153.__)("Uncategorized")
     });
     const themePatterns = useThemePatterns();
     const { patterns: userPatterns, categories: userPatternCategories } = use_patterns_default(PATTERN_TYPES.user);
@@ -80436,13 +80413,13 @@ If there's a particular need for this, please submit a feature request at https:
       );
       sortedCategories.unshift({
         name: PATTERN_USER_CATEGORY,
-        label: (0, import_i18n152.__)("Site patterns"),
+        label: (0, import_i18n153.__)("Site patterns"),
         count: userPatterns.length
       });
       sortedCategories.unshift({
         name: PATTERN_DEFAULT_CATEGORY,
-        label: (0, import_i18n152.__)("All patterns"),
-        description: (0, import_i18n152.__)("A list of all patterns from all sources."),
+        label: (0, import_i18n153.__)("All patterns"),
+        description: (0, import_i18n153.__)("A list of all patterns from all sources."),
         count: themePatterns.length + userPatterns.length
       });
       return sortedCategories;
@@ -80583,16 +80560,16 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(
       SidebarNavigationScreen,
       {
-        title: (0, import_i18n153.__)("Patterns"),
-        description: (0, import_i18n153.__)(
+        title: (0, import_i18n154.__)("Patterns"),
+        description: (0, import_i18n154.__)(
           "Manage what patterns are available when editing your site."
         ),
         isRoot: !backPath,
         backPath,
         content: /* @__PURE__ */ (0, import_jsx_runtime421.jsxs)(import_jsx_runtime421.Fragment, { children: [
-          isLoading && (0, import_i18n153.__)("Loading items\u2026"),
+          isLoading && (0, import_i18n154.__)("Loading items\u2026"),
           !isLoading && /* @__PURE__ */ (0, import_jsx_runtime421.jsxs)(import_jsx_runtime421.Fragment, { children: [
-            !hasTemplateParts && !hasPatterns && /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_components135.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_components135.__experimentalItem, { children: (0, import_i18n153.__)("No items found") }) }),
+            !hasTemplateParts && !hasPatterns && /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_components135.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_components135.__experimentalItem, { children: (0, import_i18n154.__)("No items found") }) }),
             /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(
               CategoriesGroup,
               {
@@ -80611,7 +80588,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/page-patterns/index.mjs
-  var import_i18n160 = __toESM(require_i18n(), 1);
+  var import_i18n161 = __toESM(require_i18n(), 1);
   var import_element259 = __toESM(require_element(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
@@ -80682,12 +80659,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/actions.mjs
   var import_components139 = __toESM(require_components(), 1);
-  var import_i18n157 = __toESM(require_i18n(), 1);
+  var import_i18n158 = __toESM(require_i18n(), 1);
 
   // packages/edit-site/build-module/components/add-new-pattern/index.mjs
   var import_components136 = __toESM(require_components(), 1);
   var import_element254 = __toESM(require_element(), 1);
-  var import_i18n154 = __toESM(require_i18n(), 1);
+  var import_i18n155 = __toESM(require_i18n(), 1);
   var import_data69 = __toESM(require_data(), 1);
   var import_router26 = __toESM(require_router(), 1);
   var import_patterns2 = __toESM(require_patterns(), 1);
@@ -80764,7 +80741,7 @@ If there's a particular need for this, please submit a feature request at https:
         onClick: () => {
           patternUploadInputRef.current.click();
         },
-        title: (0, import_i18n154.__)("Import pattern from JSON")
+        title: (0, import_i18n155.__)("Import pattern from JSON")
       });
     }
     const { categoryMap, findOrCreateTerm } = useAddPatternCategory();
@@ -80840,9 +80817,9 @@ If there's a particular need for this, please submit a feature request at https:
                 );
               }
               createSuccessNotice(
-                (0, import_i18n154.sprintf)(
+                (0, import_i18n155.sprintf)(
                   // translators: %s: The imported pattern's title.
-                  (0, import_i18n154.__)('Imported "%s" from JSON.'),
+                  (0, import_i18n155.__)('Imported "%s" from JSON.'),
                   pattern.title.raw
                 ),
                 {
@@ -80867,14 +80844,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/rename-category-menu-item.mjs
   var import_components137 = __toESM(require_components(), 1);
   var import_element255 = __toESM(require_element(), 1);
-  var import_i18n155 = __toESM(require_i18n(), 1);
+  var import_i18n156 = __toESM(require_i18n(), 1);
   var import_patterns3 = __toESM(require_patterns(), 1);
   var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
   var { RenamePatternCategoryModal } = unlock(import_patterns3.privateApis);
   function RenameCategoryMenuItem({ category, onClose }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element255.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(import_jsx_runtime423.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_components137.MenuItem, { onClick: () => setIsModalOpen(true), children: (0, import_i18n155.__)("Rename") }),
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_components137.MenuItem, { onClick: () => setIsModalOpen(true), children: (0, import_i18n156.__)("Rename") }),
       isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
         RenameModal2,
         {
@@ -80912,8 +80889,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data48 = __toESM(require_core_data(), 1);
   var import_data70 = __toESM(require_data(), 1);
   var import_element256 = __toESM(require_element(), 1);
-  var import_html_entities10 = __toESM(require_html_entities(), 1);
-  var import_i18n156 = __toESM(require_i18n(), 1);
+  var import_html_entities9 = __toESM(require_html_entities(), 1);
+  var import_i18n157 = __toESM(require_i18n(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
   var import_router27 = __toESM(require_router(), 1);
   var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
@@ -80939,9 +80916,9 @@ If there's a particular need for this, please submit a feature request at https:
           { per_page: -1 }
         ]);
         createSuccessNotice(
-          (0, import_i18n156.sprintf)(
+          (0, import_i18n157.sprintf)(
             /* translators: %s: The pattern category's name */
-            (0, import_i18n156._x)('"%s" deleted.', "pattern category"),
+            (0, import_i18n157._x)('"%s" deleted.', "pattern category"),
             category.label
           ),
           { type: "snackbar", id: "pattern-category-delete" }
@@ -80951,7 +80928,7 @@ If there's a particular need for this, please submit a feature request at https:
           `/pattern?categoryId=${PATTERN_DEFAULT_CATEGORY}`
         );
       } catch (error2) {
-        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n156.__)(
+        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n157.__)(
           "An error occurred while deleting the pattern category."
         );
         createErrorNotice(errorMessage, {
@@ -80961,28 +80938,28 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime424.jsxs)(import_jsx_runtime424.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_components138.MenuItem, { isDestructive: true, onClick: () => setIsModalOpen(true), children: (0, import_i18n156.__)("Delete") }),
+      /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_components138.MenuItem, { isDestructive: true, onClick: () => setIsModalOpen(true), children: (0, import_i18n157.__)("Delete") }),
       /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
         import_components138.__experimentalConfirmDialog,
         {
           isOpen: isModalOpen,
           onConfirm: onDelete,
           onCancel: () => setIsModalOpen(false),
-          confirmButtonText: (0, import_i18n156.__)("Delete"),
+          confirmButtonText: (0, import_i18n157.__)("Delete"),
           className: "edit-site-patterns__delete-modal",
-          title: (0, import_i18n156.sprintf)(
+          title: (0, import_i18n157.sprintf)(
             // translators: %s: The pattern category's name.
-            (0, import_i18n156._x)('Delete "%s"?', "pattern category"),
-            (0, import_html_entities10.decodeEntities)(category.label)
+            (0, import_i18n157._x)('Delete "%s"?', "pattern category"),
+            (0, import_html_entities9.decodeEntities)(category.label)
           ),
           size: "medium",
           __experimentalHideHeader: false,
-          children: (0, import_i18n156.sprintf)(
+          children: (0, import_i18n157.sprintf)(
             // translators: %s: The pattern category's name.
-            (0, import_i18n156.__)(
+            (0, import_i18n157.__)(
               'Are you sure you want to delete the category "%s"? The patterns will not be deleted.'
             ),
-            (0, import_html_entities10.decodeEntities)(category.label)
+            (0, import_html_entities9.decodeEntities)(category.label)
           )
         }
       )
@@ -81005,7 +80982,7 @@ If there's a particular need for this, please submit a feature request at https:
         import_components139.DropdownMenu,
         {
           icon: more_vertical_default,
-          label: (0, import_i18n157.__)("Actions"),
+          label: (0, import_i18n158.__)("Actions"),
           toggleProps: {
             className: "edit-site-patterns__button",
             size: "compact"
@@ -81032,7 +81009,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/dataviews-actions/index.mjs
-  var import_i18n158 = __toESM(require_i18n(), 1);
+  var import_i18n159 = __toESM(require_i18n(), 1);
   var import_element257 = __toESM(require_element(), 1);
   var import_router28 = __toESM(require_router(), 1);
   var import_url16 = __toESM(require_url(), 1);
@@ -81042,7 +81019,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_element257.useMemo)(
       () => ({
         id: "edit-post",
-        label: (0, import_i18n158.__)("Edit"),
+        label: (0, import_i18n159.__)("Edit"),
         icon: pencil_default,
         isEligible(post2) {
           if (post2.status === "trash") {
@@ -81064,7 +81041,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_element257.useMemo)(
       () => ({
         id: "quick-edit",
-        label: (0, import_i18n158.__)("Quick Edit"),
+        label: (0, import_i18n159.__)("Quick Edit"),
         icon: drawer_right_default,
         isPrimary: true,
         supportsBulk: true,
@@ -81089,7 +81066,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/page-patterns/fields.mjs
-  var import_i18n159 = __toESM(require_i18n(), 1);
+  var import_i18n160 = __toESM(require_i18n(), 1);
   var import_element258 = __toESM(require_element(), 1);
   var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_blocks11 = __toESM(require_blocks(), 1);
@@ -81114,8 +81091,8 @@ If there's a particular need for this, please submit a feature request at https:
         style: { backgroundColor },
         "aria-describedby": !!description ? descriptionId : void 0,
         children: [
-          isEmpty2 && isTemplatePart2 && (0, import_i18n159.__)("Empty template part"),
-          isEmpty2 && !isTemplatePart2 && (0, import_i18n159.__)("Empty pattern"),
+          isEmpty2 && isTemplatePart2 && (0, import_i18n160.__)("Empty template part"),
+          isEmpty2 && !isTemplatePart2 && (0, import_i18n160.__)("Empty pattern"),
           !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(import_block_editor26.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
             import_block_editor26.BlockPreview,
             {
@@ -81129,7 +81106,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   var previewField = {
-    label: (0, import_i18n159.__)("Preview"),
+    label: (0, import_i18n160.__)("Preview"),
     id: "preview",
     render: PreviewField,
     enableSorting: false
@@ -81153,8 +81130,8 @@ If there's a particular need for this, please submit a feature request at https:
       const templatePartArea = templatePartAreas.find(
         (area) => area.area === categoryId
       );
-      title = templatePartArea?.label || (0, import_i18n160.__)("All Template Parts");
-      description = templatePartArea?.description || (0, import_i18n160.__)("Includes every template part defined for any area.");
+      title = templatePartArea?.label || (0, import_i18n161.__)("All Template Parts");
+      description = templatePartArea?.description || (0, import_i18n161.__)("Includes every template part defined for any area.");
     } else if (type === PATTERN_TYPES.user && !!categoryId) {
       patternCategory = patternCategories.find(
         (category) => category.name === categoryId
@@ -81338,7 +81315,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data55 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.mjs
-  var import_i18n161 = __toESM(require_i18n(), 1);
+  var import_i18n162 = __toESM(require_i18n(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
   var import_core_data50 = __toESM(require_core_data(), 1);
@@ -81443,8 +81420,8 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
       SidebarNavigationScreen,
       {
-        title: (0, import_i18n161.__)("Templates"),
-        description: (0, import_i18n161.__)(
+        title: (0, import_i18n162.__)("Templates"),
+        description: (0, import_i18n162.__)(
           "Manage the templates that define the structure of your pages, or reset any customizations made to those supplied by your theme."
         ),
         backPath,
@@ -81454,7 +81431,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
-  var import_i18n167 = __toESM(require_i18n(), 1);
+  var import_i18n168 = __toESM(require_i18n(), 1);
   var import_element265 = __toESM(require_element(), 1);
   var import_core_data54 = __toESM(require_core_data(), 1);
   var import_router32 = __toESM(require_router(), 1);
@@ -81464,21 +81441,21 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_components143 = __toESM(require_components(), 1);
-  var import_html_entities13 = __toESM(require_html_entities(), 1);
+  var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_element263 = __toESM(require_element(), 1);
   var import_data74 = __toESM(require_data(), 1);
   var import_core_data53 = __toESM(require_core_data(), 1);
-  var import_i18n165 = __toESM(require_i18n(), 1);
+  var import_i18n166 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
   var import_router31 = __toESM(require_router(), 1);
   var import_dom36 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
   var import_element261 = __toESM(require_element(), 1);
-  var import_i18n163 = __toESM(require_i18n(), 1);
+  var import_i18n164 = __toESM(require_i18n(), 1);
   var import_components141 = __toESM(require_components(), 1);
   var import_core_data52 = __toESM(require_core_data(), 1);
-  var import_html_entities12 = __toESM(require_html_entities(), 1);
+  var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_compose45 = __toESM(require_compose(), 1);
   var import_dom35 = __toESM(require_dom(), 1);
   var import_url20 = __toESM(require_url(), 1);
@@ -81486,9 +81463,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template/utils.mjs
   var import_data73 = __toESM(require_data(), 1);
   var import_core_data51 = __toESM(require_core_data(), 1);
-  var import_html_entities11 = __toESM(require_html_entities(), 1);
+  var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_element260 = __toESM(require_element(), 1);
-  var import_i18n162 = __toESM(require_i18n(), 1);
+  var import_i18n163 = __toESM(require_i18n(), 1);
   var import_url19 = __toESM(require_url(), 1);
   var EMPTY_OBJECT2 = {};
   var getValueFromObjectPath2 = (object, path) => {
@@ -81504,7 +81481,7 @@ If there's a particular need for this, please submit a feature request at https:
   var mapToIHasNameAndId = (entities, path) => {
     return (entities || []).map((entity) => ({
       ...entity,
-      name: (0, import_html_entities11.decodeEntities)(getValueFromObjectPath2(entity, path))
+      name: (0, import_html_entities10.decodeEntities)(getValueFromObjectPath2(entity, path))
     }));
   };
   var useExistingTemplates = () => {
@@ -81583,24 +81560,24 @@ If there's a particular need for this, please submit a feature request at https:
       ).map((postType2) => {
         let title;
         if (needsUniqueIdentifier(postType2)) {
-          title = (0, import_i18n162.sprintf)(
+          title = (0, import_i18n163.sprintf)(
             // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-            (0, import_i18n162.__)("Archive: %1$s (%2$s)"),
+            (0, import_i18n163.__)("Archive: %1$s (%2$s)"),
             postType2.labels.singular_name,
             postType2.slug
           );
         } else {
-          title = (0, import_i18n162.sprintf)(
+          title = (0, import_i18n163.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n162.__)("Archive: %s"),
+            (0, import_i18n163.__)("Archive: %s"),
             postType2.labels.singular_name
           );
         }
         return {
           slug: "archive-" + postType2.slug,
-          description: (0, import_i18n162.sprintf)(
+          description: (0, import_i18n163.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n162.__)(
+            (0, import_i18n163.__)(
               "Displays an archive with the latest posts of type: %s."
             ),
             postType2.labels.singular_name
@@ -81659,20 +81636,20 @@ If there's a particular need for this, please submit a feature request at https:
         );
         const hasGeneralTemplate = existingTemplateSlugs?.includes(generalTemplateSlug);
         const _needsUniqueIdentifier = needsUniqueIdentifier(postType2);
-        let menuItemTitle = labels.template_name || (0, import_i18n162.sprintf)(
+        let menuItemTitle = labels.template_name || (0, import_i18n163.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n162.__)("Single item: %s"),
+          (0, import_i18n163.__)("Single item: %s"),
           labels.singular_name
         );
         if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n162.sprintf)(
+          menuItemTitle = labels.template_name ? (0, import_i18n163.sprintf)(
             // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n162._x)("%1$s (%2$s)", "post type menu label"),
+            (0, import_i18n163._x)("%1$s (%2$s)", "post type menu label"),
             labels.template_name,
             slug
-          ) : (0, import_i18n162.sprintf)(
+          ) : (0, import_i18n163.sprintf)(
             // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n162._x)(
+            (0, import_i18n163._x)(
               "Single item: %1$s (%2$s)",
               "post type menu label"
             ),
@@ -81686,9 +81663,9 @@ If there's a particular need for this, please submit a feature request at https:
         } : {
           slug: generalTemplateSlug,
           title: menuItemTitle,
-          description: (0, import_i18n162.sprintf)(
+          description: (0, import_i18n163.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n162.__)("Displays a single item: %s."),
+            (0, import_i18n163.__)("Displays a single item: %s."),
             labels.singular_name
           ),
           // `icon` is the `menu_icon` property of a post type. We
@@ -81805,14 +81782,14 @@ If there's a particular need for this, please submit a feature request at https:
         );
         let menuItemTitle = labels.template_name || labels.singular_name;
         if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n162.sprintf)(
+          menuItemTitle = labels.template_name ? (0, import_i18n163.sprintf)(
             // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n162._x)("%1$s (%2$s)", "taxonomy template menu label"),
+            (0, import_i18n163._x)("%1$s (%2$s)", "taxonomy template menu label"),
             labels.template_name,
             slug
-          ) : (0, import_i18n162.sprintf)(
+          ) : (0, import_i18n163.sprintf)(
             // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n162._x)("%1$s (%2$s)", "taxonomy menu label"),
+            (0, import_i18n163._x)("%1$s (%2$s)", "taxonomy menu label"),
             labels.singular_name,
             slug
           );
@@ -81823,9 +81800,9 @@ If there's a particular need for this, please submit a feature request at https:
         } : {
           slug: generalTemplateSlug,
           title: menuItemTitle,
-          description: (0, import_i18n162.sprintf)(
+          description: (0, import_i18n163.sprintf)(
             // translators: %s: Name of the taxonomy e.g: "Product Categories".
-            (0, import_i18n162.__)("Displays taxonomy: %s."),
+            (0, import_i18n163.__)("Displays taxonomy: %s."),
             labels.singular_name
           ),
           icon: block_meta_default,
@@ -81902,7 +81879,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     if (!authorMenuItem) {
       authorMenuItem = {
-        description: (0, import_i18n162.__)(
+        description: (0, import_i18n163.__)(
           "Displays latest posts written by a single author."
         ),
         slug: "author",
@@ -81940,10 +81917,10 @@ If there's a particular need for this, please submit a feature request at https:
             }
           },
           labels: {
-            singular_name: (0, import_i18n162.__)("Author"),
-            search_items: (0, import_i18n162.__)("Search Authors"),
-            not_found: (0, import_i18n162.__)("No authors found."),
-            all_items: (0, import_i18n162.__)("All Authors")
+            singular_name: (0, import_i18n163.__)("Author"),
+            search_items: (0, import_i18n163.__)("Search Authors"),
+            not_found: (0, import_i18n163.__)("No authors found."),
+            all_items: (0, import_i18n163.__)("All Authors")
           },
           hasGeneralTemplate,
           template
@@ -82101,7 +82078,7 @@ If there's a particular need for this, please submit a feature request at https:
               children: /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
                 import_components141.TextHighlight,
                 {
-                  text: (0, import_html_entities12.decodeEntities)(suggestion.name),
+                  text: (0, import_html_entities11.decodeEntities)(suggestion.name),
                   highlight: search
                 }
               )
@@ -82183,7 +82160,7 @@ If there's a particular need for this, please submit a feature request at https:
           orientation: "vertical",
           role: "listbox",
           className: "edit-site-custom-template-modal__suggestions_list",
-          "aria-label": (0, import_i18n163.__)("Suggestions list"),
+          "aria-label": (0, import_i18n164.__)("Suggestions list"),
           children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
             SuggestionListItem,
             {
@@ -82231,7 +82208,7 @@ If there's a particular need for this, please submit a feature request at https:
         alignment: "left",
         children: [
           !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(import_jsx_runtime434.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_components141.__experimentalText, { as: "p", children: (0, import_i18n163.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_components141.__experimentalText, { as: "p", children: (0, import_i18n164.__)(
               "Select whether to create a single template for all items or a specific one."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(
@@ -82276,7 +82253,7 @@ If there's a particular need for this, please submit a feature request at https:
                             as: "span",
                             lineHeight: 1.53846153846,
                             // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n163.__)("For all items")
+                            children: (0, import_i18n164.__)("For all items")
                           }
                         )
                       ]
@@ -82306,7 +82283,7 @@ If there's a particular need for this, please submit a feature request at https:
                             as: "span",
                             lineHeight: 1.53846153846,
                             // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n163.__)("For a specific item")
+                            children: (0, import_i18n164.__)("For a specific item")
                           }
                         )
                       ]
@@ -82321,12 +82298,12 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onBack,
-                children: (0, import_i18n163.__)("Back")
+                children: (0, import_i18n164.__)("Back")
               }
             ) })
           ] }),
           showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(import_jsx_runtime434.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_components141.__experimentalText, { as: "p", children: (0, import_i18n163.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_components141.__experimentalText, { as: "p", children: (0, import_i18n164.__)(
               "This template will be used only for the specific item chosen."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
@@ -82348,7 +82325,7 @@ If there's a particular need for this, please submit a feature request at https:
                     setShowSearchEntities(false);
                   }
                 },
-                children: (0, import_i18n163.__)("Back")
+                children: (0, import_i18n164.__)("Back")
               }
             ) })
           ] })
@@ -82360,12 +82337,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-generic-template-modal-content.mjs
   var import_element262 = __toESM(require_element(), 1);
-  var import_i18n164 = __toESM(require_i18n(), 1);
+  var import_i18n165 = __toESM(require_i18n(), 1);
   var import_components142 = __toESM(require_components(), 1);
   var import_jsx_runtime435 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent({ createTemplate, onBack }) {
     const [title, setTitle] = (0, import_element262.useState)("");
-    const defaultTitle = (0, import_i18n164.__)("Custom Template");
+    const defaultTitle = (0, import_i18n165.__)("Custom Template");
     const [isBusy, setIsBusy] = (0, import_element262.useState)(false);
     const inputRef = (0, import_element262.useRef)();
     (0, import_element262.useEffect)(() => {
@@ -82395,13 +82372,13 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
         import_components142.TextControl,
         {
-          label: (0, import_i18n164.__)("Name"),
+          label: (0, import_i18n165.__)("Name"),
           value: title,
           onChange: setTitle,
           placeholder: defaultTitle,
           disabled: isBusy,
           ref: inputRef,
-          help: (0, import_i18n164.__)(
+          help: (0, import_i18n165.__)(
             // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
             'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
           )
@@ -82419,7 +82396,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onBack,
-                children: (0, import_i18n164.__)("Back")
+                children: (0, import_i18n165.__)("Back")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
@@ -82430,7 +82407,7 @@ If there's a particular need for this, please submit a feature request at https:
                 type: "submit",
                 isBusy,
                 "aria-disabled": isBusy,
-                children: (0, import_i18n164.__)("Create")
+                children: (0, import_i18n165.__)("Create")
               }
             )
           ]
@@ -82558,17 +82535,17 @@ If there's a particular need for this, please submit a feature request at https:
           `/${TEMPLATE_POST_TYPE}/${newTemplate.id}?canvas=edit`
         );
         createSuccessNotice(
-          (0, import_i18n165.sprintf)(
+          (0, import_i18n166.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
-            (0, import_i18n165.__)('"%s" successfully created.'),
-            (0, import_html_entities13.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n165.__)("(no title)")
+            (0, import_i18n166.__)('"%s" successfully created.'),
+            (0, import_html_entities12.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n166.__)("(no title)")
           ),
           {
             type: "snackbar"
           }
         );
       } catch (error2) {
-        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n165.__)("An error occurred while creating the template.");
+        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n166.__)("An error occurred while creating the template.");
         createErrorNotice(errorMessage, {
           type: "snackbar"
         });
@@ -82580,15 +82557,15 @@ If there's a particular need for this, please submit a feature request at https:
       onClose();
       setModalContent(modalContentMap.templatesList);
     };
-    let modalTitle = (0, import_i18n165.__)("Add template");
+    let modalTitle = (0, import_i18n166.__)("Add template");
     if (modalContent === modalContentMap.customTemplate) {
-      modalTitle = (0, import_i18n165.sprintf)(
+      modalTitle = (0, import_i18n166.sprintf)(
         // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n165.__)("Add template: %s"),
+        (0, import_i18n166.__)("Add template: %s"),
         entityForSuggestions.labels.singular_name
       );
     } else if (modalContent === modalContentMap.customGenericTemplate) {
-      modalTitle = (0, import_i18n165.__)("Create custom template");
+      modalTitle = (0, import_i18n166.__)("Create custom template");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime436.jsxs)(
       import_components143.Modal,
@@ -82611,7 +82588,7 @@ If there's a particular need for this, please submit a feature request at https:
               justify: "center",
               className: "edit-site-add-new-template__template-list__contents",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(import_components143.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n165.__)(
+                /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(import_components143.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n166.__)(
                   "Select what the new template should apply to:"
                 ) }),
                 missingTemplates.map((template) => {
@@ -82631,9 +82608,9 @@ If there's a particular need for this, please submit a feature request at https:
                 /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
                   TemplateListItem,
                   {
-                    title: (0, import_i18n165.__)("Custom template"),
+                    title: (0, import_i18n166.__)("Custom template"),
                     className: "edit-site-add-new-template__custom-template-button",
-                    description: (0, import_i18n165.__)(
+                    description: (0, import_i18n166.__)(
                       "A custom template can be manually applied to any post or page."
                     ),
                     icon: pencil_default,
@@ -82739,7 +82716,7 @@ If there's a particular need for this, please submit a feature request at https:
   var add_new_template_default = (0, import_element263.memo)(NewTemplate);
 
   // packages/edit-site/build-module/components/page-templates/fields.mjs
-  var import_i18n166 = __toESM(require_i18n(), 1);
+  var import_i18n167 = __toESM(require_i18n(), 1);
   var import_element264 = __toESM(require_element(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_block_editor28 = __toESM(require_block_editor(), 1);
@@ -82759,14 +82736,14 @@ If there's a particular need for this, please submit a feature request at https:
         className: "page-templates-preview-field",
         style: { backgroundColor },
         children: [
-          isEmpty2 && (0, import_i18n166.__)("Empty template"),
+          isEmpty2 && (0, import_i18n167.__)("Empty template"),
           !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_block_editor28.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_block_editor28.BlockPreview, { blocks }) })
         ]
       }
     ) });
   }
   var previewField2 = {
-    label: (0, import_i18n166.__)("Preview"),
+    label: (0, import_i18n167.__)("Preview"),
     id: "preview",
     render: PreviewField2,
     enableSorting: false
@@ -82859,7 +82836,7 @@ If there's a particular need for this, please submit a feature request at https:
       page_default2,
       {
         className: "edit-site-page-templates",
-        title: (0, import_i18n167.__)("Templates"),
+        title: (0, import_i18n168.__)("Templates"),
         headingLevel: 2,
         actions: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(add_new_template_default, {}),
         children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
@@ -82983,7 +82960,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
-  var import_i18n170 = __toESM(require_i18n(), 1);
+  var import_i18n171 = __toESM(require_i18n(), 1);
   var import_data79 = __toESM(require_data(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
 
@@ -82999,12 +82976,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-post/index.mjs
   var import_components144 = __toESM(require_components(), 1);
-  var import_i18n168 = __toESM(require_i18n(), 1);
+  var import_i18n169 = __toESM(require_i18n(), 1);
   var import_data76 = __toESM(require_data(), 1);
   var import_element266 = __toESM(require_element(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
-  var import_html_entities14 = __toESM(require_html_entities(), 1);
+  var import_html_entities13 = __toESM(require_html_entities(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
   var import_jsx_runtime441 = __toESM(require_jsx_runtime(), 1);
   function AddNewPostModal({ postType: postType2, onSave, onClose }) {
@@ -83043,15 +83020,15 @@ If there's a particular need for this, please submit a feature request at https:
         );
         onSave(newPage);
         createSuccessNotice(
-          (0, import_i18n168.sprintf)(
+          (0, import_i18n169.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
-            (0, import_i18n168.__)('"%s" successfully created.'),
-            (0, import_html_entities14.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n168.__)("(no title)")
+            (0, import_i18n169.__)('"%s" successfully created.'),
+            (0, import_html_entities13.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n169.__)("(no title)")
           ),
           { type: "snackbar" }
         );
       } catch (error2) {
-        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n168.__)("An error occurred while creating the item.");
+        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n169.__)("An error occurred while creating the item.");
         createErrorNotice(errorMessage, {
           type: "snackbar"
         });
@@ -83064,7 +83041,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         title: (
           // translators: %s: post type singular_name label e.g: "Page".
-          (0, import_i18n168.sprintf)((0, import_i18n168.__)("Draft new: %s"), labels?.singular_name)
+          (0, import_i18n169.sprintf)((0, import_i18n169.__)("Draft new: %s"), labels?.singular_name)
         ),
         onRequestClose: onClose,
         focusOnMount: "firstContentElement",
@@ -83073,9 +83050,9 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
             import_components144.TextControl,
             {
-              label: (0, import_i18n168.__)("Title"),
+              label: (0, import_i18n169.__)("Title"),
               onChange: setTitle,
-              placeholder: (0, import_i18n168.__)("No title"),
+              placeholder: (0, import_i18n169.__)("No title"),
               value: title
             }
           ),
@@ -83086,7 +83063,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onClose,
-                children: (0, import_i18n168.__)("Cancel")
+                children: (0, import_i18n169.__)("Cancel")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
@@ -83097,7 +83074,7 @@ If there's a particular need for this, please submit a feature request at https:
                 type: "submit",
                 isBusy: isCreatingPost,
                 "aria-disabled": isCreatingPost,
-                children: (0, import_i18n168.__)("Create draft")
+                children: (0, import_i18n169.__)("Create draft")
               }
             )
           ] })
@@ -83139,7 +83116,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/quick-edit-modal.mjs
-  var import_i18n169 = __toESM(require_i18n(), 1);
+  var import_i18n170 = __toESM(require_i18n(), 1);
   var import_data77 = __toESM(require_data(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_components145 = __toESM(require_components(), 1);
@@ -83284,7 +83261,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "secondary",
                 onClick: closeModal,
-                children: (0, import_i18n169.__)("Cancel")
+                children: (0, import_i18n170.__)("Cancel")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
@@ -83293,7 +83270,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "primary",
                 onClick: onSave,
-                children: (0, import_i18n169.__)("Done")
+                children: (0, import_i18n170.__)("Done")
               }
             )
           ] })
@@ -83592,8 +83569,8 @@ If there's a particular need for this, please submit a feature request at https:
         return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n170.__)("Pages"),
-            description: (0, import_i18n170.__)(
+            title: (0, import_i18n171.__)("Pages"),
+            description: (0, import_i18n171.__)(
               "Manage or edit the pages that make up your site, and their appearance."
             ),
             backPath: "/",
@@ -83633,7 +83610,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/page-item.mjs
-  var import_i18n171 = __toESM(require_i18n(), 1);
+  var import_i18n172 = __toESM(require_i18n(), 1);
   var import_jsx_runtime445 = __toESM(require_jsx_runtime(), 1);
   var pageItemRoute = {
     name: "page-item",
@@ -83646,7 +83623,7 @@ If there's a particular need for this, please submit a feature request at https:
         return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n171.__)("Pages"),
+            title: (0, import_i18n172.__)("Pages"),
             backPath: "/",
             content: /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(DataViewsSidebarContent, { postType: "page" })
           }
@@ -83663,7 +83640,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
-  var import_i18n172 = __toESM(require_i18n(), 1);
+  var import_i18n173 = __toESM(require_i18n(), 1);
   var import_editor39 = __toESM(require_editor(), 1);
   var import_jsx_runtime446 = __toESM(require_jsx_runtime(), 1);
   var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor39.privateApis);
@@ -83678,9 +83655,9 @@ If there's a particular need for this, please submit a feature request at https:
         return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n172.__)("Styles"),
+            title: (0, import_i18n173.__)("Styles"),
             backPath: "/",
-            description: (0, import_i18n172.__)(
+            description: (0, import_i18n173.__)(
               `Preview your website's visual identity: colors, typography, and blocks.`
             )
           }
@@ -83708,11 +83685,11 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/notfound.mjs
-  var import_i18n173 = __toESM(require_i18n(), 1);
+  var import_i18n174 = __toESM(require_i18n(), 1);
   var import_components147 = __toESM(require_components(), 1);
   var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
   function NotFoundError() {
-    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(import_components147.Notice, { status: "error", isDismissible: false, children: (0, import_i18n173.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(import_components147.Notice, { status: "error", isDismissible: false, children: (0, import_i18n174.__)(
       "The requested page could not be found. Please check the URL."
     ) });
   }

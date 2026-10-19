@@ -5053,6 +5053,10 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   color: var(--wpds-color-foreground-interactive-brand-strong-active, #fff);
 }
 
+.edit-site-sidebar-navigation-screen-navigation-menus__empty-message {
+  margin: 0 0 8px;
+}
+
 .edit-site-sidebar-navigation-screen-navigation-menus__loading.components-spinner {
   margin-left: auto;
   margin-right: auto;
