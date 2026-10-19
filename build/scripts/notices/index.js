@@ -61,6 +61,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/components
+  var require_components = __commonJS({
+    "package-external:@wordpress/components"(exports, module) {
+      module.exports = window.wp.components;
+    }
+  });
+
   // package-external:@wordpress/i18n
   var require_i18n = __commonJS({
     "package-external:@wordpress/i18n"(exports, module) {
@@ -272,18 +279,12 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/components
-  var require_components = __commonJS({
-    "package-external:@wordpress/components"(exports, module) {
-      module.exports = window.wp.components;
-    }
-  });
-
   // packages/notices/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     InlineNotices: () => InlineNotices,
     SnackbarNotices: () => SnackbarNotices,
+    privateApis: () => privateApis,
     store: () => store
   });
 
@@ -328,6 +329,7 @@ var wp;
   // packages/notices/build-module/store/constants.mjs
   var DEFAULT_CONTEXT = "global";
   var DEFAULT_STATUS = "info";
+  var NOTICE_SLOT = /* @__PURE__ */ Symbol("NOTICE_SLOT");
 
   // packages/notices/build-module/store/actions.mjs
   var uniqueId = 0;
@@ -352,6 +354,7 @@ var wp;
         hint: "Pass the message as plain text, and any longer account of what happened as `details`."
       });
     }
+    const slot = options[NOTICE_SLOT];
     return {
       type: "CREATE_NOTICE",
       context,
@@ -368,7 +371,8 @@ var wp;
         type,
         icon,
         explicitDismiss,
-        onDismiss
+        onDismiss,
+        ...slot && { [NOTICE_SLOT]: slot }
       }
     };
   }
@@ -446,6 +450,7 @@ var wp;
 
   // packages/notices/build-module/components/inline-notices/inline-notice.mjs
   var import_a11y2 = __toESM(require_a11y(), 1);
+  var import_components = __toESM(require_components(), 1);
   var import_element35 = __toESM(require_element(), 1);
   var import_i18n7 = __toESM(require_i18n(), 1);
 
@@ -12012,13 +12017,20 @@ var wp;
       onDismiss
     } = notice;
     const actions = notice.actions;
+    const slot = notice[NOTICE_SLOT];
     const [isOpen, setIsOpen] = (0, import_element35.useState)(false);
     useAnnouncement(notice);
     const canCopy = !!details && !__unstableHTML;
     const hasActions = actions.length > 0 || !!details;
     const children = /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_jsx_runtime42.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(VisuallyHidden, { children: getStatusLabel(status) }),
-      __unstableHTML ? /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(notice_exports.Description, { render: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", {}), children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_element35.RawHTML, { children: content }) }) : /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(notice_exports.Description, { children: content }),
+      __unstableHTML ? /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(notice_exports.Description, { render: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", {}), children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_element35.RawHTML, { children: content }) }) : /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(notice_exports.Description, { children: [
+        content,
+        slot && /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_jsx_runtime42.Fragment, { children: [
+          " ",
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_components.Slot, { name: slot })
+        ] })
+      ] }),
       hasActions && /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(notice_exports.Actions, { children: [
         actions.map((action, index2) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(NoticeActionControl, { action }, index2)),
         !!details && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
@@ -12149,7 +12161,7 @@ ${details}`,
   }
 
   // packages/notices/build-module/components/snackbar-notices/index.mjs
-  var import_components = __toESM(require_components(), 1);
+  var import_components2 = __toESM(require_components(), 1);
   var import_data4 = __toESM(require_data(), 1);
   var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var MAX_VISIBLE_NOTICES = -3;
@@ -12164,7 +12176,7 @@ ${details}`,
     const { removeNotice: removeNotice2 } = (0, import_data4.useDispatch)(store);
     const snackbarNotices = notices2.filter(({ type }) => type === "snackbar").slice(MAX_VISIBLE_NOTICES);
     return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
-      import_components.SnackbarList,
+      import_components2.SnackbarList,
       {
         notices: snackbarNotices,
         className: clsx_default("components-notices__snackbar", className),
@@ -12172,6 +12184,19 @@ ${details}`,
       }
     );
   }
+
+  // packages/notices/build-module/lock-unlock.mjs
+  var import_private_apis2 = __toESM(require_private_apis(), 1);
+  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/notices"
+  );
+
+  // packages/notices/build-module/private-apis.mjs
+  var privateApis = {};
+  lock2(privateApis, {
+    NOTICE_SLOT
+  });
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
