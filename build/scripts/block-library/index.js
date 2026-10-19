@@ -66657,11 +66657,13 @@ ${text}
         if (!updatedLink) {
           return;
         }
+        const settingsUpdateAttributes = updatedLink.opensInNewTab !== void 0 ? { opensInNewTab: updatedLink.opensInNewTab } : {};
         const attrs = {
           url: updatedLink.url,
           kind: updatedLink.kind,
           type: updatedLink.type,
-          id: updatedLink.id
+          id: updatedLink.id,
+          ...settingsUpdateAttributes
         };
         const currentText = attributes2.label ? (0, import_dom40.__unstableStripHTML)(attributes2.label) : "";
         const updatedText = updatedLink.title ?? "";
@@ -66678,6 +66680,7 @@ ${text}
             kind: "custom",
             type: "custom",
             id: void 0,
+            ...settingsUpdateAttributes,
             ...textUpdateAttributes
           });
         } else {
