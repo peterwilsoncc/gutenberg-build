@@ -5334,35 +5334,6 @@ div.dataviews-view-list {
   bottom: 8px;
 }
 
-.editor-note-indicator__avatar {
-  width: 24px;
-  border-radius: 50%;
-  margin-right: -12px;
-  border-width: var(--wp-admin-border-width-focus);
-  border-style: solid;
-  padding: var(--wp-admin-border-width-focus);
-  background: #fff;
-  box-sizing: border-box;
-}
-.editor-note-indicator__avatar:first-child {
-  margin-right: 0;
-}
-
-.editor-note-indicator__overflow {
-  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
-}
-
-.show-icon-labels .editor-note-indicator {
-  width: auto;
-}
-.show-icon-labels .editor-note-indicator div {
-  display: none;
-}
-.show-icon-labels .editor-note-indicator::after {
-  content: attr(aria-label);
-  font-size: 12px;
-}
-
 mark.wp-note {
   border-radius: 1px;
   transition: background-color 0.1s ease-in-out;

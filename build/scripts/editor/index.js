@@ -472,14 +472,14 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React265 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore7 = shim.useSyncExternalStore, useRef178 = React265.useRef, useEffect136 = React265.useEffect, useMemo194 = React265.useMemo, useDebugValue2 = React265.useDebugValue;
+        var React265 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore7 = shim.useSyncExternalStore, useRef178 = React265.useRef, useEffect136 = React265.useEffect, useMemo193 = React265.useMemo, useDebugValue2 = React265.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe4, getSnapshot, getServerSnapshot, selector2, isEqual) {
           var instRef = useRef178(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo194(
+          instRef = useMemo193(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -122538,10 +122538,10 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n299 = __toESM(require_i18n(), 1);
   var import_data246 = __toESM(require_data(), 1);
-  var import_element437 = __toESM(require_element(), 1);
+  var import_element436 = __toESM(require_element(), 1);
   var import_compose100 = __toESM(require_compose(), 1);
   var import_components248 = __toESM(require_components(), 1);
-  var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts14 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor110 = __toESM(require_block_editor(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
 
@@ -125333,87 +125333,70 @@ ${content}
     ) });
   }
 
-  // packages/editor/build-module/components/collab-sidebar/note-indicator-toolbar.mjs
+  // packages/editor/build-module/components/collab-sidebar/add-note-toolbar-button.mjs
   var import_components247 = __toESM(require_components(), 1);
   var import_i18n298 = __toESM(require_i18n(), 1);
-  var import_element435 = __toESM(require_element(), 1);
   var import_block_editor108 = __toESM(require_block_editor(), 1);
   var import_data244 = __toESM(require_data(), 1);
+  var import_blocks36 = __toESM(require_blocks(), 1);
+  var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime672 = __toESM(require_jsx_runtime(), 1);
   var { NoteIconToolbarSlotFill } = unlock(import_block_editor108.privateApis);
-  function ThreadParticipants({ participants }) {
-    const defaultAvatar = (0, import_data244.useSelect)((select8) => {
-      const { getSettings: getSettings11 } = select8(import_block_editor108.store);
-      const { __experimentalDiscussionSettings } = getSettings11();
-      return __experimentalDiscussionSettings?.avatarURL;
-    }, []);
-    const maxAvatars = 3;
-    const isOverflow = participants.length > maxAvatars;
-    const visibleParticipants = isOverflow ? participants.slice(0, maxAvatars - 1) : participants;
-    const overflowCount = Math.max(
-      0,
-      participants.length - visibleParticipants.length
+  function NoteToolbarButton({
+    clientId,
+    count,
+    onClick
+  }) {
+    const { canAddNote, shortcut } = (0, import_data244.useSelect)(
+      (select8) => {
+        const { getBlockName: getBlockName2, isBlockValid: isBlockValid2 } = select8(import_block_editor108.store);
+        const blockName = getBlockName2(clientId);
+        return {
+          canAddNote: isBlockValid2(clientId) && blockName !== "core/freeform" && blockName !== (0, import_blocks36.getUnregisteredTypeHandlerName)(),
+          shortcut: select8(
+            import_keyboard_shortcuts13.store
+          ).getShortcutRepresentation("core/editor/new-note")
+        };
+      },
+      [clientId]
     );
-    const threadHasMoreParticipants = participants.length > 100;
-    const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0, import_i18n298.__)("100+") : (0, import_i18n298.sprintf)(
-      // translators: %s: Number of participants.
-      (0, import_i18n298.__)("+%s"),
-      overflowCount
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime672.jsxs)(Stack, { direction: "row", align: "center", gap: "xs", children: [
-      visibleParticipants.map((participant) => /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
-        "img",
-        {
-          src: participant.avatar || defaultAvatar,
-          alt: participant.name,
-          className: "editor-note-indicator__avatar",
-          style: {
-            borderColor: getAvatarBorderColor(participant.id)
-          }
-        },
-        participant.id
-      )),
-      overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime672.jsx)("span", { className: "editor-note-indicator__overflow", children: overflowText })
-    ] });
-  }
-  function NoteAvatarIndicator({ onClick, note }) {
-    const threadParticipants = (0, import_element435.useMemo)(() => {
-      if (!note) {
-        return [];
-      }
-      const participantsMap = /* @__PURE__ */ new Map();
-      const allNotes = [note, ...note.reply].sort(
-        (a, b) => new Date(a.date) - new Date(b.date)
-      );
-      for (const entry of allNotes) {
-        if (!entry.author_name || participantsMap.has(entry.author)) {
-          continue;
-        }
-        participantsMap.set(entry.author, {
-          id: entry.author,
-          name: entry.author_name,
-          avatar: entry.author_avatar_urls?.["48"] || entry.author_avatar_urls?.["96"]
-        });
-      }
-      return Array.from(participantsMap.values());
-    }, [note]);
-    if (!threadParticipants.length) {
+    if (!canAddNote) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(NoteIconToolbarSlotFill.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
       import_components247.ToolbarButton,
       {
-        className: "editor-note-indicator",
-        label: (0, import_i18n298.__)("View notes"),
-        onClick: () => onClick(),
-        showTooltip: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(ThreadParticipants, { participants: threadParticipants })
+        icon: comment_default,
+        label: count ? (0, import_i18n298.sprintf)(
+          // translators: %d: Number of notes on the block.
+          (0, import_i18n298._n)(
+            "Add note (%d note)",
+            "Add note (%d notes)",
+            count
+          ),
+          count
+        ) : (0, import_i18n298.__)("Add note"),
+        shortcut: shortcut ?? void 0,
+        onClick
+      }
+    );
+  }
+  function AddNoteToolbarButton({
+    count,
+    onClick
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(NoteIconToolbarSlotFill.Fill, { children: ({ clientIds }) => clientIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
+      NoteToolbarButton,
+      {
+        clientId: clientIds[0],
+        count,
+        onClick: () => onClick(clientIds[0])
       }
     ) });
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-highlight-styles.mjs
-  var import_element436 = __toESM(require_element(), 1);
+  var import_element435 = __toESM(require_element(), 1);
   var import_data245 = __toESM(require_data(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
   var import_core_data124 = __toESM(require_core_data(), 1);
@@ -125445,7 +125428,7 @@ ${content}
       (select8) => select8(import_core_data124.store).getCurrentUser()?.id,
       []
     );
-    const css = (0, import_element436.useMemo)(
+    const css = (0, import_element435.useMemo)(
       () => buildHighlightCss(
         [...threads, { id: "new", author: currentUserId }],
         selectedId
@@ -125459,15 +125442,14 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_jsx_runtime673 = __toESM(require_jsx_runtime(), 1);
   function NotesSidebar({ postId: postId2, drafts }) {
-    const sidebarRef = (0, import_element437.useRef)(null);
+    const sidebarRef = (0, import_element436.useRef)(null);
     const isLargeViewport = (0, import_compose100.useViewportMatch)("medium");
     const { ref: canvasMarginRef } = (0, import_components248.__experimentalUseSlot)(CanvasMargin.name);
-    const { clientId, noteId, isClassicBlock } = (0, import_data246.useSelect)((select8) => {
-      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select8(import_block_editor110.store);
+    const { clientId, isClassicBlock } = (0, import_data246.useSelect)((select8) => {
+      const { getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select8(import_block_editor110.store);
       const _clientId = getSelectedBlockClientId2();
       return {
         clientId: _clientId,
-        noteId: _clientId ? getBlockAttributes2(_clientId)?.metadata?.noteId : null,
         isClassicBlock: _clientId ? getBlockName2(_clientId) === "core/freeform" : false
       };
     }, []);
@@ -125494,7 +125476,6 @@ ${content}
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data246.useDispatch)(store2);
     const { set: setPreference } = (0, import_data246.useDispatch)(import_preferences33.store);
     const pickNote = usePickNote({ drafts, onDiscard });
-    const blockNoteIds = getNoteIdsFromMetadata({ noteId });
     const areNotesHidden = notesDisplayMode === "hidden";
     const showAllNotesSidebar = notes.length > 0 || !isLargeViewport || isAllNotesSidebarOpen;
     const selectedThread = notes.find(
@@ -125518,17 +125499,6 @@ ${content}
       }
       pickNote(targetNoteId, targetClientId, { focus: true });
     }
-    function openNoteForBlock(targetClientId) {
-      const blockThreads = notes.filter(
-        (thread) => thread.blockClientId === targetClientId
-      );
-      const target = pickPrimaryNote(blockThreads);
-      return focusNote({
-        targetClientId,
-        noteId: target?.id ?? "new",
-        isApproved: target?.status === "approved"
-      });
-    }
     function addNewNoteForBlock(targetClientId) {
       return focusNote({
         targetClientId,
@@ -125536,7 +125506,7 @@ ${content}
         isApproved: false
       });
     }
-    (0, import_keyboard_shortcuts13.useShortcut)(
+    (0, import_keyboard_shortcuts14.useShortcut)(
       "core/editor/new-note",
       (event) => {
         event.preventDefault();
@@ -125546,8 +125516,6 @@ ${content}
         isDisabled: isClassicBlock || !clientId
       }
     );
-    const currentThreads = blockNoteIds.length > 0 ? notes.filter((thread) => blockNoteIds.includes(thread.id)) : [];
-    const currentThread = pickPrimaryNote(currentThreads);
     return /* @__PURE__ */ (0, import_jsx_runtime673.jsxs)(import_jsx_runtime673.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
         NoteHighlightStyles,
@@ -125556,17 +125524,19 @@ ${content}
           selectedId: selectedNoteId
         }
       ),
-      !!currentThread && /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-        NoteAvatarIndicator,
-        {
-          note: currentThread,
-          onClick: () => openNoteForBlock(clientId)
-        }
-      ),
       /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
         AddNoteMenuItem,
         {
           onClick: (menuClientId) => addNewNoteForBlock(menuClientId)
+        }
+      ),
+      notes.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
+        AddNoteToolbarButton,
+        {
+          count: notes.filter(
+            (thread) => thread.blockClientId === clientId
+          ).length,
+          onClick: addNewNoteForBlock
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
@@ -125610,7 +125580,7 @@ ${content}
     ] });
   }
   function NotesSidebarContainer() {
-    const [drafts] = (0, import_element437.useState)(() => /* @__PURE__ */ new Map());
+    const [drafts] = (0, import_element436.useState)(() => /* @__PURE__ */ new Map());
     const { postId: postId2, editorMode, revisionsMode, isDistractionFree } = (0, import_data246.useSelect)(
       (select8) => {
         const { getCurrentPostId: getCurrentPostId2, getEditorMode: getEditorMode2, isRevisionsMode: isRevisionsMode2 } = unlock(
@@ -125641,7 +125611,7 @@ ${content}
   var import_components251 = __toESM(require_components(), 1);
   var import_i18n302 = __toESM(require_i18n(), 1);
   var import_data249 = __toESM(require_data(), 1);
-  var import_element438 = __toESM(require_element(), 1);
+  var import_element437 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
   var import_compose101 = __toESM(require_compose(), 1);
   var import_core_data126 = __toESM(require_core_data(), 1);
@@ -125888,7 +125858,7 @@ ${content}
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
     const previousActiveArea = (0, import_compose101.usePrevious)(activeComplementaryArea);
     const hasRequestedPath = stylesPath2 !== "/" && !shouldResetNavigation;
-    (0, import_element438.useEffect)(() => {
+    (0, import_element437.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles" && !hasRequestedPath) {
         resetStylesNavigation2();
       }
@@ -125898,7 +125868,7 @@ ${content}
       hasRequestedPath,
       resetStylesNavigation2
     ]);
-    (0, import_element438.useEffect)(() => {
+    (0, import_element437.useEffect)(() => {
       if (shouldResetNavigation) {
         resetStylesNavigation2();
       }
@@ -126108,7 +126078,7 @@ ${content}
   var import_i18n305 = __toESM(require_i18n(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_data253 = __toESM(require_data(), 1);
-  var import_element440 = __toESM(require_element(), 1);
+  var import_element439 = __toESM(require_element(), 1);
   var import_preferences39 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
@@ -126134,8 +126104,8 @@ ${content}
   // packages/editor/build-module/components/block-visibility/index.mjs
   var import_data252 = __toESM(require_data(), 1);
   var import_preferences38 = __toESM(require_preferences(), 1);
-  var import_blocks36 = __toESM(require_blocks(), 1);
-  var import_element439 = __toESM(require_element(), 1);
+  var import_blocks37 = __toESM(require_blocks(), 1);
+  var import_element438 = __toESM(require_element(), 1);
   var import_components253 = __toESM(require_components(), 1);
   var import_i18n304 = __toESM(require_i18n(), 1);
   var import_block_editor112 = __toESM(require_block_editor(), 1);
@@ -126152,12 +126122,12 @@ ${content}
       hiddenBlockTypes: _hiddenBlockTypes
     } = (0, import_data252.useSelect)((select8) => {
       return {
-        blockTypes: select8(import_blocks36.store).getBlockTypes(),
+        blockTypes: select8(import_blocks37.store).getBlockTypes(),
         allowedBlockTypes: select8(store).getEditorSettings().allowedBlockTypes,
         hiddenBlockTypes: select8(import_preferences38.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY18
       };
     }, []);
-    const allowedBlockTypes = (0, import_element439.useMemo)(() => {
+    const allowedBlockTypes = (0, import_element438.useMemo)(() => {
       if (_allowedBlockTypes === true) {
         return blockTypes;
       }
@@ -126166,7 +126136,7 @@ ${content}
       });
     }, [_allowedBlockTypes, blockTypes]);
     const filteredBlockTypes = allowedBlockTypes.filter(
-      (blockType) => (0, import_blocks36.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
+      (blockType) => (0, import_blocks37.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
     );
     const hiddenBlockTypes = _hiddenBlockTypes.filter((hiddenBlock) => {
       return filteredBlockTypes.some(
@@ -126265,7 +126235,7 @@ ${content}
     );
     const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data253.useDispatch)(store);
     const { set: setPreference } = (0, import_data253.useDispatch)(import_preferences39.store);
-    const sections = (0, import_element440.useMemo)(
+    const sections = (0, import_element439.useMemo)(
       () => [
         {
           name: "general",
@@ -126703,7 +126673,7 @@ ${content}
   }
 
   // packages/editor/build-module/bindings/api.mjs
-  var import_blocks37 = __toESM(require_blocks(), 1);
+  var import_blocks38 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/bindings/pattern-overrides.mjs
   var import_block_editor113 = __toESM(require_block_editor(), 1);
@@ -127128,15 +127098,15 @@ ${content}
 
   // packages/editor/build-module/bindings/api.mjs
   function registerCoreBlockBindingsSources() {
-    (0, import_blocks37.registerBlockBindingsSource)(pattern_overrides_default);
-    (0, import_blocks37.registerBlockBindingsSource)(post_data_default);
-    (0, import_blocks37.registerBlockBindingsSource)(post_meta_default);
-    (0, import_blocks37.registerBlockBindingsSource)(term_data_default);
+    (0, import_blocks38.registerBlockBindingsSource)(pattern_overrides_default);
+    (0, import_blocks38.registerBlockBindingsSource)(post_data_default);
+    (0, import_blocks38.registerBlockBindingsSource)(post_meta_default);
+    (0, import_blocks38.registerBlockBindingsSource)(term_data_default);
   }
 
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
   var import_data255 = __toESM(require_data(), 1);
-  var import_element441 = __toESM(require_element(), 1);
+  var import_element440 = __toESM(require_element(), 1);
   var import_i18n309 = __toESM(require_i18n(), 1);
   var import_a11y19 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
@@ -127175,7 +127145,7 @@ ${content}
       };
     }, []);
     const tracker = useTracker();
-    const csmOriginals = (0, import_element441.useMemo)(
+    const csmOriginals = (0, import_element440.useMemo)(
       () => items.filter((item) => !item.parentId),
       [items]
     );
@@ -127183,20 +127153,20 @@ ${content}
     const trackedRemaining = tracker ? tracker.total - tracker.completed : 0;
     const remaining = csmRemaining + trackedRemaining;
     const sessionTotal = csmRemaining + (tracker ? tracker.total : 0);
-    const peakRef = (0, import_element441.useRef)(0);
+    const peakRef = (0, import_element440.useRef)(0);
     const { createNotice, removeNotice } = (0, import_data255.useDispatch)(import_notices28.store);
-    const dismissedRef = (0, import_element441.useRef)(false);
-    const wasUploadingRef = (0, import_element441.useRef)(false);
-    const failuresAtStartRef = (0, import_element441.useRef)(0);
-    const completionTimeoutRef = (0, import_element441.useRef)(null);
-    (0, import_element441.useEffect)(() => {
+    const dismissedRef = (0, import_element440.useRef)(false);
+    const wasUploadingRef = (0, import_element440.useRef)(false);
+    const failuresAtStartRef = (0, import_element440.useRef)(0);
+    const completionTimeoutRef = (0, import_element440.useRef)(null);
+    (0, import_element440.useEffect)(() => {
       return () => {
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
         }
       };
     }, []);
-    (0, import_element441.useEffect)(() => {
+    (0, import_element440.useEffect)(() => {
       const isUploading = remaining > 0;
       const failures = csmFailureCount + getFailureCount();
       if (isUploading && !wasUploadingRef.current) {

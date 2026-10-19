@@ -103436,7 +103436,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime529 = __toESM(require_jsx_runtime(), 1);
   function BlockSettingsMenu({ clientIds, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime529.jsxs)(import_components152.ToolbarGroup, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(note_icon_toolbar_slot_default.Slot, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(note_icon_toolbar_slot_default.Slot, { fillProps: { clientIds } }),
       /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(import_components152.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
         block_settings_dropdown_default,
         {
