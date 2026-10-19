@@ -3123,7 +3123,7 @@ body.lockscroll {
 .components-tab-panel__tabs .components-tab-panel__tabs-item:not(:disabled, [aria-disabled=true]):is(:hover, :active):not([aria-selected=true]), .components-tab-panel__tabs .components-tab-panel__tabs-item:not(:disabled, [aria-disabled=true]):focus-visible {
   color: var(--wpds-color-foreground-interactive-neutral-active, #1e1e1e);
 }
-.components-tab-panel__tabs .components-tab-panel__tabs-item:not(:disabled, [aria-disabled=true]):is(:hover, :active):not([aria-selected=true])::before, .components-tab-panel__tabs .components-tab-panel__tabs-item:not(:disabled, [aria-disabled=true]):is(:hover, :active):not([aria-selected=true]) .components-tab-panel__tabs-item-label::before, .components-tab-panel__tabs .components-tab-panel__tabs-item:not(:disabled, [aria-disabled=true]):focus-visible::before, .components-tab-panel__tabs .components-tab-panel__tabs-item:not(:disabled, [aria-disabled=true]):focus-visible .components-tab-panel__tabs-item-label::before {
+.components-tab-panel__tabs .components-tab-panel__tabs-item:not(:disabled, [aria-disabled=true]):is(:hover, :active):not([aria-selected=true])::before, .components-tab-panel__tabs .components-tab-panel__tabs-item:not(:disabled, [aria-disabled=true]):focus-visible::before {
   background-color: var(--wpds-color-background-interactive-neutral-weak-active, #ededed);
 }
 .components-tab-panel__tabs-item:focus:not(:disabled) {
@@ -3153,36 +3153,24 @@ body.lockscroll {
 }
 .components-tab-panel__tabs-item::before {
   content: "";
-}
-.components-tab-panel__tabs-item::before, .components-tab-panel__tabs-item .components-tab-panel__tabs-item-label::before {
   position: absolute;
   z-index: -1;
   inset: var(--wpds-dimension-padding-md, 12px);
   pointer-events: none;
   border-radius: var(--wpds-border-radius-sm, 2px);
 }
-.components-tab-panel__tabs-item:focus-visible::before, .components-tab-panel__tabs-item:focus-visible .components-tab-panel__tabs-item-label::before {
+.components-tab-panel__tabs-item:focus-visible::before {
   outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
   outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
   outline-offset: 0;
 }
 .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item::before {
-  content: none;
-}
-.components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item.has-icon::before {
-  content: "";
-  inset-block: var(--wpds-dimension-padding-sm, 8px);
-  inset-inline-start: calc(50% - var(--wpds-dimension-size-sm, 24px) / 2 - var(--wpds-dimension-padding-xs, 4px));
-  inset-inline-end: auto;
-  width: calc(var(--wpds-dimension-size-sm, 24px) + 2 * var(--wpds-dimension-padding-xs, 4px));
+  inset: 0;
+  outline-offset: calc(-1 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
 }
 .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item .components-tab-panel__tabs-item-label {
   position: relative;
   display: inline-flex;
-}
-.components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item .components-tab-panel__tabs-item-label::before {
-  content: "";
-  inset: calc(-1 * var(--wpds-dimension-padding-xs, 4px));
 }
 .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item::after {
   inset-block-start: 50%;
