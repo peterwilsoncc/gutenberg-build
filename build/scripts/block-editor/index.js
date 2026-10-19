@@ -80565,20 +80565,40 @@ var wp;
           {
             div: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)("div", { "aria-hidden": true }),
             // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
-            CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
-              import_components64.SelectControl,
+            CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(
+              select_exports.Root,
               {
-                "aria-label": (0, import_i18n85.__)("Current page"),
                 value: currentPage.toString(),
-                options: pageSelectOptions,
-                onChange: (newValue) => {
+                onValueChange: (newValue) => {
+                  if (newValue === null) {
+                    return;
+                  }
                   onChangeView({
                     ...view,
                     page: +newValue
                   });
                 },
-                size: "small",
-                variant: "minimal"
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+                    select_exports.Trigger,
+                    {
+                      className: "dataviews-pagination__page-select-trigger",
+                      size: "small",
+                      variant: "minimal",
+                      "aria-label": (0, import_i18n85.__)("Current page")
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(select_exports.Popup, { width: "content", children: pageSelectOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+                    select_exports.Item,
+                    {
+                      value: option.value,
+                      size: "small",
+                      "aria-label": option["aria-label"],
+                      children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(select_exports.ItemLabel, { children: option.label })
+                    },
+                    option.value
+                  )) })
+                ]
               }
             )
           }
@@ -88065,14 +88085,15 @@ If there's a particular need for this, please submit a feature request at https:
         align: "center",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(import_components74.FlexItem, { className: "dataviews-filters__summary-operators-filter-name", children: filter.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
-            import_components74.SelectControl,
+          /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(
+            select_exports.Root,
             {
-              className: "dataviews-filters__summary-operators-filter-select",
-              label: (0, import_i18n96.__)("Conditions"),
+              items: operatorOptions,
               value,
-              options: operatorOptions,
-              onChange: (newValue) => {
+              onValueChange: (newValue) => {
+                if (newValue === null) {
+                  return;
+                }
                 const newOperator = newValue;
                 const currentOperator = currentFilter?.operator;
                 const newFilters = currentFilter ? [
@@ -88112,9 +88133,27 @@ If there's a particular need for this, please submit a feature request at https:
                   filters: newFilters
                 });
               },
-              size: "small",
-              variant: "minimal",
-              hideLabelFromVision: true
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
+                  select_exports.Trigger,
+                  {
+                    size: "small",
+                    variant: "minimal",
+                    "aria-label": (0, import_i18n96.__)("Conditions"),
+                    className: "dataviews-filters__summary-operators-filter-select",
+                    style: { minWidth: 0 }
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(select_exports.Popup, { width: "content", children: operatorOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
+                  select_exports.Item,
+                  {
+                    value: option.value,
+                    size: "small",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(select_exports.ItemLabel, { children: option.label })
+                  },
+                  option.value
+                )) })
+              ]
             }
           )
         ]

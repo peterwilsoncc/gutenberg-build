@@ -456,9 +456,7 @@ body.admin-color-fresh {
 }
 
 .dataviews-filters__summary-operators-container .dataviews-filters__summary-operators-filter-select {
-  width: 100%;
   min-width: 0;
-  white-space: nowrap;
 }
 
 .dataviews-filters__summary {
@@ -1058,12 +1056,14 @@ body.admin-color-fresh {
   text-transform: uppercase;
 }
 
-@media (min-width: 600px) {
-  .dataviews-pagination__page-select .components-select-control__input {
-    font-size: 11px !important;
-    font-weight: var(--wpds-typography-font-weight-emphasis, 600);
-  }
+.dataviews-pagination__page-select-trigger {
+  font-size: inherit;
 }
+
+.dataviews-pagination__page-select-trigger button {
+  font-weight: inherit;
+}
+
 .dataviews-action-modal {
   z-index: 1000001;
 }
@@ -3567,12 +3567,14 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   text-transform: uppercase;
 }
 
-@media (min-width: 600px) {
-  .font-library__page-selection .components-select-control__input {
-    font-size: 11px !important;
-    font-weight: var(--wpds-typography-font-weight-emphasis, 600);
-  }
+.font-library__page-selection-trigger {
+  font-size: inherit;
 }
+
+.font-library__page-selection-trigger button {
+  font-weight: inherit;
+}
+
 .font-library__search {
   width: 240px;
 }
