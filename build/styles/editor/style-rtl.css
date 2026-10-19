@@ -6401,6 +6401,11 @@ mark.wp-note {
 .show-icon-labels .editor-header .components-button.has-icon[aria-disabled=true] {
   background-color: transparent;
 }
+.show-icon-labels.interface-pinned-items .components-button.has-icon.editor-collapsible-block-toolbar__toggle,
+.show-icon-labels .editor-header .components-button.has-icon.editor-collapsible-block-toolbar__toggle {
+  min-width: auto;
+  padding-right: 4px;
+}
 .show-icon-labels.interface-pinned-items .is-tertiary:active,
 .show-icon-labels .editor-header .is-tertiary:active {
   box-shadow: 0 0 0 1.5px var(--wp-admin-theme-color);
