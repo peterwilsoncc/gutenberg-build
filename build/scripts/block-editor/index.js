@@ -807,6 +807,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/warning
+  var require_warning = __commonJS({
+    "package-external:@wordpress/warning"(exports, module) {
+      module.exports = window.wp.warning;
+    }
+  });
+
   // node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
   var require_use_sync_external_store_shim_development = __commonJS({
     "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
@@ -966,13 +973,6 @@ var wp;
   var require_theme = __commonJS({
     "package-external:@wordpress/theme"(exports, module) {
       module.exports = window.wp.theme;
-    }
-  });
-
-  // package-external:@wordpress/warning
-  var require_warning = __commonJS({
-    "package-external:@wordpress/warning"(exports, module) {
-      module.exports = window.wp.warning;
     }
   });
 

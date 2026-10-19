@@ -105,6 +105,13 @@ var require_react_dom = __commonJS({
   }
 });
 
+// package-external:@wordpress/warning
+var require_warning = __commonJS({
+  "package-external:@wordpress/warning"(exports, module) {
+    module.exports = window.wp.warning;
+  }
+});
+
 // node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
 var require_use_sync_external_store_shim_development = __commonJS({
   "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
@@ -278,13 +285,6 @@ var require_theme = __commonJS({
 var require_private_apis = __commonJS({
   "package-external:@wordpress/private-apis"(exports, module) {
     module.exports = window.wp.privateApis;
-  }
-});
-
-// package-external:@wordpress/warning
-var require_warning = __commonJS({
-  "package-external:@wordpress/warning"(exports, module) {
-    module.exports = window.wp.warning;
   }
 });
 

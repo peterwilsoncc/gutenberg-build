@@ -63,6 +63,13 @@ var require_element = __commonJS({
   }
 });
 
+// package-external:@wordpress/warning
+var require_warning = __commonJS({
+  "package-external:@wordpress/warning"(exports, module) {
+    module.exports = window.wp.warning;
+  }
+});
+
 // package-external:@wordpress/primitives
 var require_primitives = __commonJS({
   "package-external:@wordpress/primitives"(exports, module) {
@@ -243,13 +250,6 @@ var require_theme = __commonJS({
 var require_private_apis = __commonJS({
   "package-external:@wordpress/private-apis"(exports, module) {
     module.exports = window.wp.privateApis;
-  }
-});
-
-// package-external:@wordpress/warning
-var require_warning = __commonJS({
-  "package-external:@wordpress/warning"(exports, module) {
-    module.exports = window.wp.warning;
   }
 });
 

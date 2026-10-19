@@ -158,6 +158,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/warning
+  var require_warning = __commonJS({
+    "package-external:@wordpress/warning"(exports, module) {
+      module.exports = window.wp.warning;
+    }
+  });
+
   // package-external:@wordpress/primitives
   var require_primitives = __commonJS({
     "package-external:@wordpress/primitives"(exports, module) {
@@ -338,13 +345,6 @@ var wp;
   var require_theme = __commonJS({
     "package-external:@wordpress/theme"(exports, module) {
       module.exports = window.wp.theme;
-    }
-  });
-
-  // package-external:@wordpress/warning
-  var require_warning = __commonJS({
-    "package-external:@wordpress/warning"(exports, module) {
-      module.exports = window.wp.warning;
     }
   });
 
