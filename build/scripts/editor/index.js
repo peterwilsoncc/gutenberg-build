@@ -6443,6 +6443,9 @@ var wp;
   var AUTO_SAVE_FAILURE_NOTICE = (0, import_i18n3.__)(
     "Auto-save failed. You can also save manually."
   );
+  var AUTO_SAVE_NO_RESPONSE_FAILURE_NOTICE = (0, import_i18n3.__)(
+    "Auto-save failed because there was no response from the server. You can also save manually."
+  );
   var AUTO_SAVE_OFFLINE_FAILURE_NOTICE = (0, import_i18n3.__)(
     "Auto-save failed because you were offline. You can also save manually once you\u2019re back online."
   );
@@ -6541,7 +6544,7 @@ var wp;
     };
     let noticeMessage = !isPublished && edits.status in messages ? messages[edits.status] : messages.default;
     if (options?.isAutosave) {
-      noticeMessage = AUTO_SAVE_FAILURE_NOTICE;
+      noticeMessage = error2.code === "fetch_error" ? AUTO_SAVE_NO_RESPONSE_FAILURE_NOTICE : AUTO_SAVE_FAILURE_NOTICE;
     }
     return [noticeMessage, { id }];
   }
@@ -7800,7 +7803,11 @@ var wp;
 
   // packages/editor/build-module/store/actions.mjs
   var { getEntitySnapshot } = unlock(import_core_data7.privateApis);
-  var CLIENT_GENERATED_ERROR_CODES = ["offline_error", "fetch_error"];
+  var CLIENT_GENERATED_ERROR_CODES = [
+    "offline_error",
+    "fetch_error",
+    "invalid_json"
+  ];
   var LINE_BREAK_ELEMENTS = "p, div, li, h1, h2, h3, h4, h5, h6, tr";
   function getFailureDetails(message2) {
     if (!/<\/?[a-z][^>]*>/i.test(message2)) {
@@ -7991,8 +7998,18 @@ var wp;
       });
       if (args.length && !(options.isAutosave && isManualSaveFailureShown)) {
         const phpError = error2.data?.error?.message;
+        const status = error2.data?.status;
+        const message2 = error2.message && !CLIENT_GENERATED_ERROR_CODES.includes(error2.code) ? getFailureDetails(error2.message) : "";
+        const summary = [
+          Number.isInteger(status) && status >= 400 ? (0, import_i18n5.sprintf)(
+            /* translators: %d: HTTP status code, such as 500. */
+            (0, import_i18n5.__)("Error code %d."),
+            status
+          ) : "",
+          message2
+        ].filter(Boolean).join(" ");
         const details = [
-          error2.message && !CLIENT_GENERATED_ERROR_CODES.includes(error2.code) ? getFailureDetails(error2.message) : "",
+          summary,
           typeof phpError === "string" ? phpError.trim() : ""
         ].filter(Boolean).join("\n\n");
         if (details) {
