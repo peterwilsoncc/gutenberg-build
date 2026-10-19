@@ -101853,6 +101853,7 @@ If there's a particular need for this, please submit a feature request at https:
           getParentSectionBlock: getParentSectionBlock2,
           getEnabledBlockParents: getEnabledBlockParents2,
           getBlockName: getBlockName2,
+          getBlockListSettings: getBlockListSettings2,
           getNextBlockClientId: getNextBlockClientId2,
           hasInserterItems: hasInserterItems2
         } = unlock(select3(store));
@@ -101870,6 +101871,10 @@ If there's a particular need for this, please submit a feature request at https:
           getBlockName2(_parentClientId)
         );
         const isTextFlowWrapper = parentBlockType?.merge || (0, import_blocks56.hasBlockSupport)(parentBlockType, "__experimentalOnMerge");
+        const allowedBlocks = getBlockListSettings2(_parentClientId)?.allowedBlocks ?? parentBlockType?.allowedBlocks;
+        const allowsOnlyUnsplittable = Array.isArray(allowedBlocks) && allowedBlocks.every(
+          (name) => !(0, import_blocks56.hasBlockSupport)(name, "splitting")
+        );
         return {
           parentClientId: _parentClientId,
           nextSiblingClientId: getNextBlockClientId2(
@@ -101879,7 +101884,7 @@ If there's a particular need for this, please submit a feature request at https:
           // within a section, nor when the parent is locked against
           // adding blocks (e.g. templateLock: 'all') — the Inserter would
           // render nothing and leave an empty toolbar group behind.
-          showInserter: !!_parentClientId && _parentClientId === immediateParentClientId && !parentSection && !isTextFlowWrapper && hasInserterItems2(_parentClientId)
+          showInserter: !!_parentClientId && _parentClientId === immediateParentClientId && !parentSection && !isTextFlowWrapper && allowsOnlyUnsplittable && hasInserterItems2(_parentClientId)
         };
       },
       []
