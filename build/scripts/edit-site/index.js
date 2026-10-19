@@ -79547,6 +79547,21 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime412 = __toESM(require_jsx_runtime(), 1);
   var { PrivateListView } = unlock(import_block_editor22.privateApis);
   var { NavigationLinkUI } = unlock(import_block_library.privateApis);
+  var ALLOWED_BLOCK_NAMES = [
+    "core/home-link",
+    "core/search",
+    "core/loginout",
+    "core/site-title"
+  ];
+  function SidebarNavigationLinkUI(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
+      NavigationLinkUI,
+      {
+        ...props,
+        allowedBlockNames: ALLOWED_BLOCK_NAMES
+      }
+    );
+  }
   var MAX_PAGE_COUNT = 100;
   var PAGES_QUERY = [
     "postType",
@@ -79600,7 +79615,7 @@ If there's a particular need for this, please submit a feature request at https:
           onSelect: openListViewContentPanel,
           blockSettingsMenu: LeafMoreMenu,
           showAppender: true,
-          additionalBlockContent: NavigationLinkUI,
+          additionalBlockContent: SidebarNavigationLinkUI,
           showContentPopover: true,
           isExpanded: true
         }

@@ -67083,6 +67083,7 @@ ${text}
     const { transformSuggestions, insertBlockFromSuggestion } = useBlockSuggestions({
       clientId,
       isEnabled: canAddBlock && !link?.url?.length,
+      allowedBlockNames: props.allowedBlockNames,
       onBlockInsert: props.onBlockInsert,
       onClose: props.onClose
     });
@@ -67869,6 +67870,7 @@ ${text}
   function useBlockSuggestions({
     clientId,
     isEnabled,
+    allowedBlockNames,
     onBlockInsert,
     onClose
   }) {
@@ -67880,12 +67882,17 @@ ${text}
     } = (0, import_data88.useSelect)(import_block_editor151.store);
     const { insertBlock, replaceBlock } = (0, import_data88.useDispatch)(import_block_editor151.store);
     const transformSuggestions = (0, import_element154.useCallback)(
-      (suggestions, { isInitialSuggestions, searchTerm }) => isInitialSuggestions ? suggestions : addBlockSuggestions(
-        suggestions,
-        getInserterItems(getBlockRootClientId(clientId)),
-        searchTerm
-      ),
-      [clientId, getBlockRootClientId, getInserterItems]
+      (suggestions, { isInitialSuggestions, searchTerm }) => {
+        if (isInitialSuggestions || allowedBlockNames?.length === 0) {
+          return suggestions;
+        }
+        const items = getInserterItems(getBlockRootClientId(clientId));
+        const blockItems = allowedBlockNames ? items.filter(
+          ({ name: name118 }) => allowedBlockNames.includes(name118)
+        ) : items;
+        return addBlockSuggestions(suggestions, blockItems, searchTerm);
+      },
+      [clientId, getBlockRootClientId, getInserterItems, allowedBlockNames]
     );
     const insertBlockFromSuggestion = (itemId) => {
       const rootClientId = getBlockRootClientId(clientId);
@@ -67932,7 +67939,8 @@ ${text}
   ];
   function NavigationLinkUI({
     insertedBlockClientId,
-    setInsertedBlockClientId
+    setInsertedBlockClientId,
+    allowedBlockNames
   }) {
     const { updateBlockAttributes, removeBlock } = (0, import_data89.useDispatch)(import_block_editor152.store);
     const { getBlock } = (0, import_data89.useSelect)(import_block_editor152.store);
@@ -67981,6 +67989,7 @@ ${text}
       {
         clientId: insertedBlockClientId,
         link: insertedBlockAttributes,
+        allowedBlockNames,
         onBlockInsert: handleSetInsertedBlock,
         onClose: () => {
           cleanupInsertedBlock();
