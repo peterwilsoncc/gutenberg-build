@@ -7609,6 +7609,34 @@ var wp;
     dispatch6.resetEditorBlocks((0, import_blocks5.parse)(backup.content.raw));
     registry.dispatch(import_notices.store).removeNotice(BROWSER_BACKUP_NOTICE_ID);
   };
+  function createRestoreWhileSavingNotice(registry) {
+    registry.dispatch(import_notices.store).createErrorNotice(
+      (0, import_i18n4.__)(
+        "The revision could not be restored while the post is saving. Wait for the save to finish, then try again."
+      ),
+      // Revisions mode does not show inline notices, so use a snackbar.
+      {
+        type: "snackbar",
+        explicitDismiss: true,
+        id: "editor-revision-restore-failed"
+      }
+    );
+  }
+  var UNPUBLISHED_POST_STATUSES = ["auto-draft", "draft", "pending"];
+  function hasContentToReplace(fields2, edits) {
+    const hasDifferentFields = ["title", "content", "excerpt"].some(
+      (attribute) => edits[attribute] !== void 0 && fields2[attribute] !== edits[attribute]
+    );
+    if (hasDifferentFields || edits.meta === void 0) {
+      return hasDifferentFields;
+    }
+    return Object.keys(edits.meta).some(
+      (key) => JSON.stringify(fields2.meta?.[key]) !== JSON.stringify(edits.meta[key])
+    );
+  }
+  function didSaveFail(select8) {
+    return select8.didPostSaveRequestFail() || select8.isEditedPostDirty();
+  }
   var restoreRevision = (revisionId2) => async ({ select: select8, dispatch: dispatch6, registry }) => {
     const postType2 = select8.getCurrentPostType();
     const postId2 = select8.getCurrentPostId();
@@ -7646,13 +7674,96 @@ var wp;
     if (revision.meta !== void 0) {
       edits.meta = revision.meta;
     }
+    if (select8.isSavingPost()) {
+      createRestoreWhileSavingNotice(registry);
+      return;
+    }
+    const shouldSaveCurrentContent = select8.isEditedPostSaveable() && UNPUBLISHED_POST_STATUSES.includes(
+      select8.getCurrentPostAttribute("status")
+    ) && UNPUBLISHED_POST_STATUSES.includes(
+      select8.getEditedPostAttribute("status")
+    ) && hasContentToReplace(
+      {
+        title: select8.getEditedPostAttribute("title"),
+        content: select8.getEditedPostContent(),
+        excerpt: select8.getEditedPostAttribute("excerpt"),
+        meta: select8.getEditedPostAttribute("meta")
+      },
+      edits
+    );
+    if (shouldSaveCurrentContent) {
+      await dispatch6.savePost();
+      if (didSaveFail(select8)) {
+        registry.dispatch(import_notices.store).createErrorNotice(
+          (0, import_i18n4.__)(
+            "The revision was not restored because the current version of the post could not be saved first. Your content has not been changed."
+          ),
+          // Revisions mode does not show inline notices, so use
+          // a snackbar.
+          {
+            type: "snackbar",
+            explicitDismiss: true,
+            id: "editor-revision-restore-failed"
+          }
+        );
+        return;
+      }
+    }
+    const previousFields = {
+      title: select8.getCurrentPostAttribute("title"),
+      content: select8.getCurrentPostAttribute("content"),
+      excerpt: select8.getCurrentPostAttribute("excerpt")
+    };
+    if (edits.meta !== void 0) {
+      const savedMeta = select8.getCurrentPostAttribute("meta") ?? {};
+      previousFields.meta = Object.fromEntries(
+        Object.keys(edits.meta).map((key) => [
+          key,
+          savedMeta[key]
+        ])
+      );
+    }
+    if (select8.isSavingPost()) {
+      createRestoreWhileSavingNotice(registry);
+      return;
+    }
     dispatch6.editPost(edits);
     dispatch6.setCurrentRevisionId(null);
     await dispatch6.savePost();
-    if (select8.didPostSaveRequestFail()) {
+    if (didSaveFail(select8)) {
+      registry.dispatch(import_notices.store).createErrorNotice(
+        (0, import_i18n4.__)(
+          "The revision was restored in the editor but could not be saved. Save the post before leaving this page to keep the restored content."
+        ),
+        { id: "editor-revision-restore-failed" }
+      );
       return;
     }
     registry.dispatch(import_notices.store).removeNotice("autosave-exists");
+    const undoRestore = async () => {
+      if (select8.getCurrentPostId() !== postId2 || select8.getCurrentPostType() !== postType2) {
+        return;
+      }
+      if (select8.isSavingPost()) {
+        registry.dispatch(import_notices.store).createErrorNotice(
+          (0, import_i18n4.__)(
+            "The restore could not be undone while the post is saving. Wait for the save to finish, then try again."
+          ),
+          { id: "editor-revision-restore-failed" }
+        );
+        return;
+      }
+      dispatch6.editPost({ blocks: void 0, ...previousFields });
+      await dispatch6.savePost();
+      if (didSaveFail(select8)) {
+        return;
+      }
+      registry.dispatch(import_notices.store).createSuccessNotice((0, import_i18n4.__)("Restore undone."), {
+        type: "snackbar",
+        id: "editor-revision-restore-undone"
+      });
+    };
+    const canUndo = hasContentToReplace(previousFields, edits);
     registry.dispatch(import_notices.store).createSuccessNotice(
       (0, import_i18n4.sprintf)(
         /* translators: %s: Date and time of the revision. */
@@ -7661,7 +7772,15 @@ var wp;
       ),
       {
         type: "snackbar",
-        id: "editor-revision-restored"
+        id: "editor-revision-restored",
+        ...canUndo && {
+          actions: [
+            {
+              label: (0, import_i18n4.__)("Undo"),
+              onClick: undoRestore
+            }
+          ]
+        }
       }
     );
   };
