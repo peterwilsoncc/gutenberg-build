@@ -6441,10 +6441,10 @@ var wp;
   // packages/editor/build-module/store/utils/notice-builder.mjs
   var import_i18n3 = __toESM(require_i18n(), 1);
   var AUTO_SAVE_FAILURE_NOTICE = (0, import_i18n3.__)(
-    "Auto-save failed. We\u2019ll try to save a backup in this browser. You can also save manually."
+    "Auto-save failed. You can also save manually."
   );
   var AUTO_SAVE_OFFLINE_FAILURE_NOTICE = (0, import_i18n3.__)(
-    "Auto-save failed because you were offline. We\u2019ll try to save a backup in this browser. Please verify your connection and save manually."
+    "Auto-save failed because you were offline. You can also save manually once you\u2019re back online."
   );
   function getNotificationArgumentsForSaveSuccess(data) {
     const { previousPost, post: post2, postType: postType2 } = data;
@@ -6527,16 +6527,16 @@ var wp;
     }
     const messages = {
       publish: (0, import_i18n3.__)(
-        "Publishing failed. We\u2019ll try to save a backup in this browser. Please try publishing again."
+        "Publishing failed. Keep this page open and try publishing again."
       ),
       private: (0, import_i18n3.__)(
-        "Publishing failed. We\u2019ll try to save a backup in this browser. Please try publishing again."
+        "Publishing failed. Keep this page open and try publishing again."
       ),
       future: (0, import_i18n3.__)(
-        "Scheduling failed. We\u2019ll try to save a backup in this browser. Please try scheduling again."
+        "Scheduling failed. Keep this page open and try scheduling again."
       ),
       default: (0, import_i18n3.__)(
-        "Updating failed. We\u2019ll try to save a backup in this browser. Please try updating again."
+        "Updating failed. Keep this page open and try updating again."
       )
     };
     let noticeMessage = !isPublished && edits.status in messages ? messages[edits.status] : messages.default;
