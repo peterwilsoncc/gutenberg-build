@@ -632,6 +632,9 @@ iframe[name=editor-canvas] {
   padding-left: 12px;
   padding-right: 12px;
 }
+.show-icon-labels .components-popover.block-editor-block-list__block-popover .components-popover__content {
+  max-width: fit-content;
+}
 .show-icon-labels .components-popover.block-editor-block-list__block-popover .block-editor-block-parent-selector {
   position: relative;
   right: auto;
@@ -4053,6 +4056,48 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   display: inline-flex;
 }
 
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) {
+  background-color: transparent;
+  border: none;
+}
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar {
+  flex-wrap: wrap;
+  overflow: visible;
+  max-width: 100%;
+}
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .block-editor-block-toolbar__slot {
+  flex-wrap: wrap;
+}
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .components-toolbar-group {
+  background-color: #fff;
+}
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .components-toolbar-group,
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .components-toolbar,
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .block-editor-block-parent-selector:not(:has(.components-toolbar-group)) {
+  border: 1px solid #1e1e1e;
+  margin: 0 0 -1px -1px;
+  padding: 0;
+}
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .components-toolbar-group .components-toolbar-group,
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .components-toolbar .components-toolbar-group,
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .block-editor-block-parent-selector:not(:has(.components-toolbar-group)) .components-toolbar-group {
+  border: none;
+  margin: 0;
+}
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .components-toolbar-group .components-toolbar-group + .components-toolbar-group,
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .components-toolbar .components-toolbar-group + .components-toolbar-group,
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .block-editor-block-parent-selector:not(:has(.components-toolbar-group)) .components-toolbar-group + .components-toolbar-group {
+  border-right: 1px solid #1e1e1e;
+}
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .block-editor-block-parent-selector,
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .block-editor-block-parent-selector__button {
+  border: none;
+  margin: 0;
+}
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .block-editor-block-parent-selector .components-toolbar-group:last-child,
+.show-icon-labels .block-editor-block-contextual-toolbar:not(.editor-header__toolbar *) .block-editor-block-toolbar .block-editor-block-parent-selector__button .components-toolbar-group:last-child {
+  border-left: 1px solid #1e1e1e;
+}
 .show-icon-labels .block-editor-block-toolbar .components-button.has-icon:where(:not(.has-text)) {
   width: auto;
 }
