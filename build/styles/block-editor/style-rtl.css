@@ -1755,6 +1755,11 @@ iframe[name=editor-canvas] {
   text-transform: capitalize;
 }
 
+.block-editor-font-family-control__hint {
+  margin-inline-start: var(--wpds-dimension-gap-sm, 8px);
+  color: var(--wpds-color-foreground-interactive-neutral-weak, #707070);
+}
+
 .block-editor-global-styles__toggle-icon {
   fill: currentColor;
 }
@@ -1974,7 +1979,8 @@ iframe[name=editor-canvas] {
 
 .is-inherited-from-global-styles .components-base-control__label,
 .is-inherited-from-global-styles .components-input-control__label,
-.is-inherited-from-global-styles .block-editor-font-appearance-control__label {
+.is-inherited-from-global-styles .block-editor-font-appearance-control__label,
+.is-inherited-from-global-styles .block-editor-font-family-control__label {
   text-decoration-line: underline;
   text-decoration-style: dotted;
   text-decoration-thickness: 1px;
