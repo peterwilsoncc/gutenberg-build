@@ -81708,6 +81708,7 @@ ${text}
         __experimentalTextTransform: true,
         __experimentalTextDecoration: true,
         __experimentalLetterSpacing: true,
+        fitText: true,
         __experimentalDefaultControls: {
           fontSize: true
         }
@@ -81740,7 +81741,15 @@ ${text}
   var import_element179 = __toESM(require_element(), 1);
   var import_jsx_runtime475 = __toESM(require_jsx_runtime(), 1);
   function PostTitleEdit({
-    attributes: { level, levelOptions, isLink, rel, linkTarget, placeholder: placeholder2 },
+    attributes: {
+      level,
+      levelOptions,
+      isLink,
+      rel,
+      linkTarget,
+      placeholder: placeholder2,
+      fitText
+    },
     setAttributes,
     context: { postType, postId, queryId }
   }) {
@@ -81804,7 +81813,10 @@ ${text}
           value: rawTitle,
           onChange: setTitle,
           __experimentalVersion: 2,
-          disableLineBreaks: true
+          disableLineBreaks: true,
+          style: {
+            whiteSpace: fitText ? "inherit" : "pre-wrap"
+          }
         }
       ) }) : /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
         "a",
