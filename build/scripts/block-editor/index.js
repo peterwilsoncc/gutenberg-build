@@ -8398,31 +8398,6 @@ var wp;
     }
     return state;
   }
-  function hasBlockSpotlight(state, action) {
-    switch (action.type) {
-      case "TOGGLE_BLOCK_SPOTLIGHT":
-        const { clientId, hasBlockSpotlight: _hasBlockSpotlight } = action;
-        if (_hasBlockSpotlight) {
-          return clientId;
-        } else if (state === clientId) {
-          return null;
-        }
-        return state;
-      case "SELECT_BLOCK":
-        if (action.clientId !== state) {
-          return null;
-        }
-        return state;
-      case "SELECTION_CHANGE":
-        if (action.start?.clientId !== state || action.end?.clientId !== state) {
-          return null;
-        }
-        return state;
-      case "CLEAR_SELECTED_BLOCK":
-        return null;
-    }
-    return state;
-  }
   function expandedBlock(state = null, action) {
     switch (action.type) {
       case "SET_BLOCK_EXPANDED_IN_LIST_VIEW":
@@ -8691,7 +8666,6 @@ var wp;
     blockRemovalRules,
     registeredInserterMediaCategories,
     zoomLevel,
-    hasBlockSpotlight,
     openedListViewPanels,
     listViewExpandRevision,
     listViewContentPanelOpen,
@@ -10215,7 +10189,7 @@ var wp;
     getViewportModalClientIds: () => getViewportModalClientIds,
     getZoomLevel: () => getZoomLevel,
     hasAllowedPatterns: () => hasAllowedPatterns,
-    hasBlockSpotlight: () => hasBlockSpotlight2,
+    hasBlockSpotlight: () => hasBlockSpotlight,
     isBlockHiddenAnywhere: () => isBlockHiddenAnywhere,
     isBlockHiddenAtViewport: () => isBlockHiddenAtViewport,
     isBlockHiddenEverywhere: () => isBlockHiddenEverywhere,
@@ -13392,8 +13366,8 @@ var wp;
       (parentId) => isBlockHiddenAtViewport(state, parentId, viewport)
     );
   };
-  function hasBlockSpotlight2(state) {
-    return !!state.hasBlockSpotlight || !!state.editedContentOnlySection;
+  function hasBlockSpotlight(state) {
+    return !!state.editedContentOnlySection;
   }
   function isEditLockedBlock(state, clientId) {
     const attributes = getBlockAttributes(state, clientId);
@@ -15465,8 +15439,7 @@ var wp;
     showViewportModal: () => showViewportModal,
     startDragging: () => startDragging,
     stopDragging: () => stopDragging,
-    stopEditingContentOnlySection: () => stopEditingContentOnlySection,
-    toggleBlockSpotlight: () => toggleBlockSpotlight
+    stopEditingContentOnlySection: () => stopEditingContentOnlySection
   });
   var import_deprecated3 = __toESM(require_deprecated(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
@@ -15704,13 +15677,6 @@ var wp;
   function resetZoomLevel() {
     return {
       type: "RESET_ZOOM_LEVEL"
-    };
-  }
-  function toggleBlockSpotlight(clientId, hasBlockSpotlight3) {
-    return {
-      type: "TOGGLE_BLOCK_SPOTLIGHT",
-      clientId,
-      hasBlockSpotlight: hasBlockSpotlight3
     };
   }
   function openListViewContentPanel() {
@@ -99708,7 +99674,7 @@ If there's a particular need for this, please submit a feature request at https:
       const {
         getSettings: getSettings9,
         isTyping: isTyping3,
-        hasBlockSpotlight: hasBlockSpotlight3,
+        hasBlockSpotlight: hasBlockSpotlight2,
         getEditedContentOnlySection: getEditedContentOnlySection2
       } = unlock(select3(store));
       const {
@@ -99723,7 +99689,7 @@ If there's a particular need for this, please submit a feature request at https:
          * has nothing to offer a canvas that cannot be edited — a preview
          * would just render most of its content faded out.
          */
-        isFocusMode: !_isPreviewMode && (focusMode || hasBlockSpotlight3()),
+        isFocusMode: !_isPreviewMode && (focusMode || hasBlockSpotlight2()),
         isPreviewMode: _isPreviewMode,
         editedContentOnlySection: getEditedContentOnlySection2()
       };
