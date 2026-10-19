@@ -59079,13 +59079,10 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n39 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/constants.mjs
-  var GRADIENT_MARKERS_WIDTH = 16;
-  var INSERT_POINT_WIDTH = 16;
   var MINIMUM_DISTANCE_BETWEEN_INSERTER_AND_POINT = 10;
   var MINIMUM_DISTANCE_BETWEEN_POINTS = 0;
   var MINIMUM_SIGNIFICANT_MOVE = 5;
   var KEYBOARD_CONTROL_POINT_VARIATION = MINIMUM_DISTANCE_BETWEEN_INSERTER_AND_POINT;
-  var MINIMUM_DISTANCE_BETWEEN_INSERTER_AND_MARKER = (INSERT_POINT_WIDTH + GRADIENT_MARKERS_WIDTH) / 2;
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/utils.mjs
   function clampPercent(value) {
