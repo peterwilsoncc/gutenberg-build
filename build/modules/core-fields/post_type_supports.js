@@ -103,7 +103,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState26({
+        cachedValue = useState24({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -141,7 +141,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React94 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState26 = React94.useState, useEffect14 = React94.useEffect, useLayoutEffect3 = React94.useLayoutEffect, useDebugValue2 = React94.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React94 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState24 = React94.useState, useEffect14 = React94.useEffect, useLayoutEffect3 = React94.useLayoutEffect, useDebugValue2 = React94.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React94.useSyncExternalStore ? React94.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -17435,7 +17435,7 @@ var getSlug = (item) => {
   if (typeof item !== "object") {
     return "";
   }
-  return item.slug || item.generated_slug || (0, import_url2.cleanForSlug)(getItemTitle(item)) || (item.id?.toString() ?? "");
+  return item.slug || (0, import_url2.cleanForSlug)(getItemTitle(item, ""));
 };
 
 // packages/core-fields/build-module/post_type_supports/slug/edit.mjs
@@ -17537,9 +17537,7 @@ var SlugEdit = ({
     PERMALINK_POSTNAME_REGEX
   );
   const isEditable = PERMALINK_POSTNAME_REGEX.test(permalinkTemplate) && hasActionLink(data, "wp:action-publish");
-  const [originalSlug] = (0, import_element46.useState)(slug);
-  const slugToDisplay = slug || originalSlug;
-  const permalink = isEditable ? `${permalinkPrefix}${slugToDisplay}${permalinkSuffix}` : (0, import_url3.safeDecodeURIComponent)(data.link || "");
+  const permalink = isEditable && slug ? `${permalinkPrefix}${slug}${permalinkSuffix}` : (0, import_url3.safeDecodeURIComponent)(data.link || "");
   const onChangeControl = (0, import_element46.useCallback)(
     (newValue) => onChange({
       [id]: newValue
@@ -17591,27 +17589,22 @@ var SlugEdit = ({
           onValueChange: (newValue) => {
             onChangeControl(newValue);
           },
-          onBlur: () => {
-            if (slug === "") {
-              onChangeControl(originalSlug);
-            }
-          },
           "aria-describedby": postUrlSlugDescriptionId
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)("div", { className: style_default19.help, children: [
         /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { children: (0, import_i18n17.__)("Permalink:") }),
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
           Link,
           {
             className: style_default19["help-link"],
             href: permalink,
             openInNewTab: true,
-            children: [
+            children: slug ? /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(import_jsx_runtime77.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { children: permalinkPrefix }),
-              /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { className: style_default19["help-slug"], children: slugToDisplay }),
+              /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { className: style_default19["help-slug"], children: slug }),
               /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { children: permalinkSuffix })
-            ]
+            ] }) : permalink
           }
         )
       ] })
@@ -17630,12 +17623,9 @@ var SlugEdit = ({
 var edit_default = SlugEdit;
 
 // packages/core-fields/build-module/post_type_supports/slug/view.mjs
-var import_element47 = __toESM(require_element(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 var SlugView = ({ item }) => {
-  const slug = getSlug(item);
-  const [originalSlug] = (0, import_element47.useState)(slug);
-  const slugToDisplay = slug || originalSlug;
-  return `${slugToDisplay}`;
+  return getSlug(item) || (0, import_i18n18.__)("None");
 };
 var view_default2 = SlugView;
 
@@ -17777,8 +17767,8 @@ var fieldExtensions14 = {
 // packages/core-fields/build-module/post_type_supports/template/edit.mjs
 var import_core_data7 = __toESM(require_core_data(), 1);
 var import_data8 = __toESM(require_data(), 1);
-var import_element48 = __toESM(require_element(), 1);
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_element47 = __toESM(require_element(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 
 // packages/core-fields/build-module/post_type_supports/template/hooks.mjs
 var import_core_data6 = __toESM(require_core_data(), 1);
@@ -17889,7 +17879,7 @@ function ClassicTemplateEdit({
   onChange
 }) {
   const value = field.getValue({ item: data });
-  const items = (0, import_element48.useMemo)(
+  const items = (0, import_element47.useMemo)(
     () => Object.entries(data?.available_templates ?? {}).map(
       ([templateSlug, title]) => ({
         label: title,
@@ -17902,7 +17892,7 @@ function ClassicTemplateEdit({
   return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
     SelectControl2,
     {
-      label: (0, import_i18n18.__)("Template"),
+      label: (0, import_i18n19.__)("Template"),
       hideLabelFromVision: true,
       value: items.find((item) => item.value === value) ?? items[0] ?? null,
       items,
@@ -17937,7 +17927,7 @@ function BlockThemeTemplateEdit({
     slug
   );
   const value = field.getValue({ item: data });
-  const items = (0, import_element48.useMemo)(
+  const items = (0, import_element47.useMemo)(
     () => [
       { label: defaultTemplateLabel, value: "" },
       ...templates.map((template) => ({
@@ -17950,7 +17940,7 @@ function BlockThemeTemplateEdit({
   return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
     SelectControl2,
     {
-      label: (0, import_i18n18.__)("Template"),
+      label: (0, import_i18n19.__)("Template"),
       hideLabelFromVision: true,
       value: items.find((item) => item.value === value) ?? items[0] ?? null,
       items,
@@ -17964,7 +17954,7 @@ function TemplateEdit({
   field,
   onChange
 }) {
-  const onChangeControl = (0, import_element48.useCallback)(
+  const onChangeControl = (0, import_element47.useCallback)(
     (newValue) => onChange({
       [field.id]: newValue
     }),
@@ -17981,12 +17971,12 @@ function TemplateEdit({
 // packages/core-fields/build-module/post_type_supports/template/view.mjs
 var import_core_data8 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 function ClassicTemplateView({ item, field }) {
   const templateSlug = field.getValue({ item });
   const availableTemplates = item?.available_templates ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_jsx_runtime80.Fragment, { children: templateSlug && availableTemplates[templateSlug] ? availableTemplates[templateSlug] : (0, import_i18n19.__)("Default template") });
+  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_jsx_runtime80.Fragment, { children: templateSlug && availableTemplates[templateSlug] ? availableTemplates[templateSlug] : (0, import_i18n20.__)("Default template") });
 }
 function BlockThemeTemplateView({ item, field }) {
   const postType = item.type;
@@ -18034,7 +18024,7 @@ var fieldExtensions15 = {
 };
 
 // packages/core-fields/build-module/shared/title/view.mjs
-var import_i18n20 = __toESM(require_i18n(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
 var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
 function getRuntime35() {
@@ -18135,7 +18125,7 @@ function BaseTitleView({
       gap: "sm",
       className: clsx_default("fields-field__title", style_default21.title, className),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("span", { children: renderedTitle || (0, import_i18n20.__)("(no title)") }),
+        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("span", { children: renderedTitle || (0, import_i18n21.__)("(no title)") }),
         children
       ]
     }

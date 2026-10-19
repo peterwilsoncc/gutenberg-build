@@ -472,9 +472,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React265 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore7 = shim.useSyncExternalStore, useRef177 = React265.useRef, useEffect136 = React265.useEffect, useMemo194 = React265.useMemo, useDebugValue2 = React265.useDebugValue;
+        var React265 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore7 = shim.useSyncExternalStore, useRef178 = React265.useRef, useEffect136 = React265.useEffect, useMemo194 = React265.useMemo, useDebugValue2 = React265.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe4, getSnapshot, getServerSnapshot, selector2, isEqual) {
-          var instRef = useRef177(null);
+          var instRef = useRef178(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -5973,12 +5973,15 @@ var wp;
     }
     const { prefix, postName, suffix } = permalinkParts;
     if (isPermalinkEditable(state2)) {
+      if (!postName) {
+        return getCurrentPostAttribute(state2, "link") ?? null;
+      }
       return prefix + postName + suffix;
     }
     return prefix;
   }
   function getEditedPostSlug(state2) {
-    return getEditedPostAttribute(state2, "slug") || getEditedPostAttribute(state2, "generated_slug") || (0, import_url.cleanForSlug)(getEditedPostAttribute(state2, "title")) || getCurrentPostId(state2);
+    return getEditedPostAttribute(state2, "slug") || (0, import_url.cleanForSlug)(getEditedPostAttribute(state2, "title"));
   }
   function getPermalinkParts(state2) {
     const permalinkTemplate = getEditedPostAttribute(
@@ -5988,7 +5991,7 @@ var wp;
     if (!permalinkTemplate) {
       return null;
     }
-    const postName = getEditedPostAttribute(state2, "slug") || getEditedPostAttribute(state2, "generated_slug");
+    const postName = getEditedPostSlug(state2);
     const [prefix, suffix] = permalinkTemplate.split(
       PERMALINK_POSTNAME_REGEX
     );
@@ -101745,7 +101748,6 @@ ${content}
     const {
       isEditable,
       postSlug,
-      hasSlug,
       postLink,
       permalinkPrefix,
       permalinkSuffix,
@@ -101761,7 +101763,6 @@ ${content}
         postSlug: (0, import_url12.safeDecodeURIComponent)(
           select8(store).getEditedPostSlug()
         ),
-        hasSlug: !!select8(store).getEditedPostAttribute("slug"),
         viewPostLabel: postType2?.labels?.view_item,
         postLink: post2.link,
         permalinkPrefix: permalinkParts?.prefix,
@@ -101774,6 +101775,7 @@ ${content}
     const { editPost: editPost2 } = (0, import_data123.useDispatch)(store);
     const { createNotice } = (0, import_data123.useDispatch)(import_notices10.store);
     const [forceEmptyField, setForceEmptyField] = (0, import_element324.useState)(false);
+    const slugOnFocusRef = (0, import_element324.useRef)();
     const copyButtonRef = (0, import_compose68.useCopyToClipboard)(permalink, () => {
       createNotice("info", (0, import_i18n191.__)("Copied Permalink to clipboard."), {
         isDismissible: true,
@@ -101840,8 +101842,11 @@ ${content}
                     setForceEmptyField(false);
                   }
                 },
+                onFocus: (event) => {
+                  slugOnFocusRef.current = event.target.value;
+                },
                 onBlur: (event) => {
-                  if (hasSlug) {
+                  if (event.target.value !== slugOnFocusRef.current) {
                     editPost2({
                       slug: (0, import_url12.cleanForSlug)(
                         event.target.value
@@ -101857,17 +101862,20 @@ ${content}
             ),
             /* @__PURE__ */ (0, import_jsx_runtime548.jsxs)("p", { className: "editor-post-url__permalink", children: [
               /* @__PURE__ */ (0, import_jsx_runtime548.jsx)("span", { className: "editor-post-url__permalink-visual-label", children: (0, import_i18n191.__)("Permalink:") }),
-              /* @__PURE__ */ (0, import_jsx_runtime548.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
                 import_components176.ExternalLink,
                 {
                   className: "editor-post-url__link",
                   href: postLink,
                   target: "_blank",
-                  children: [
+                  children: postSlug ? /* @__PURE__ */ (0, import_jsx_runtime548.jsxs)(import_jsx_runtime548.Fragment, { children: [
                     /* @__PURE__ */ (0, import_jsx_runtime548.jsx)("span", { className: "editor-post-url__link-prefix", children: permalinkPrefix }),
                     /* @__PURE__ */ (0, import_jsx_runtime548.jsx)("span", { className: "editor-post-url__link-slug", children: postSlug }),
                     /* @__PURE__ */ (0, import_jsx_runtime548.jsx)("span", { className: "editor-post-url__link-suffix", children: permalinkSuffix })
-                  ]
+                  ] }) : (
+                    // Without a slug the post only has its plain permalink.
+                    permalink
+                  )
                 }
               )
             ] })
@@ -101987,7 +101995,7 @@ ${content}
         slug: select8(store).getEditedPostSlug()
       };
     }, []);
-    const decodedSlug = (0, import_url14.safeDecodeURIComponent)(slug);
+    const decodedSlug = (0, import_url14.safeDecodeURIComponent)(slug) || (0, import_i18n192.__)("None");
     return /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
       import_components177.Button,
       {
