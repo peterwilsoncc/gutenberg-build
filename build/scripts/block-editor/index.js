@@ -21616,7 +21616,7 @@ var wp;
     } = props;
     const onMapChange = useStableCallback(onMapChangeProp);
     const [, setMapTick] = React12.useState(0);
-    const listeners = useRefWithInit(createListeners).current;
+    const listeners2 = useRefWithInit(createListeners).current;
     const map = useRefWithInit(createMap).current;
     const nextIndexRef = React12.useRef(0);
     const isDirtyRef = React12.useRef(true);
@@ -21705,7 +21705,7 @@ var wp;
       if (!changed) {
         return;
       }
-      listeners.forEach((listener) => listener(nextMap));
+      listeners2.forEach((listener) => listener(nextMap));
       onMapChange(nextMap);
     });
     useIsoLayoutEffect(() => {
@@ -21731,9 +21731,9 @@ var wp;
       };
     }, []);
     const subscribeMapChange = useStableCallback((fn) => {
-      listeners.add(fn);
+      listeners2.add(fn);
       return () => {
-        listeners.delete(fn);
+        listeners2.delete(fn);
       };
     });
     const contextValue = React12.useMemo(() => ({
@@ -82080,7 +82080,7 @@ var wp;
   var import_i18n96 = __toESM(require_i18n(), 1);
   var import_element243 = __toESM(require_element(), 1);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/button/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/button/utils.js
   function withDefaultButtonType(props) {
     const { render: render4, type } = props;
     if (render4 || type !== void 0) return props;
@@ -82090,7 +82090,7 @@ var wp;
     };
   }
 
-  // node_modules/.store/@ariakit/utils@0.2.1-YOB-0_MVoA4gcTIEeAgqYA/node_modules/@ariakit/utils/dist/index.js
+  // node_modules/.store/@ariakit/utils@0.2.2-pGTZG_8OyOn9imlarPyF4g/node_modules/@ariakit/utils/dist/index.js
   function toArray2(arg) {
     if (Array.isArray(arg)) return arg;
     return typeof arg !== "undefined" ? [arg] : [];
@@ -82351,22 +82351,25 @@ var wp;
     if (!hasOwnProperty(itemRoleByPopupRole, popupRole)) return;
     return itemRoleByPopupRole[popupRole];
   }
-  function getScrollingElement(element) {
+  function getScrollingElement(element, options = {}) {
     if (!element) return null;
+    const { axis, stopAt } = options;
+    if (element === stopAt) return element;
     const isScrollableOverflow = (overflow) => {
       if (overflow === "auto") return true;
       if (overflow === "scroll") return true;
       return false;
     };
-    if (element.clientHeight && element.scrollHeight > element.clientHeight) {
+    if (axis !== "x" && element.clientHeight && element.scrollHeight > element.clientHeight) {
       const { overflowY } = getComputedStyle(element);
       if (isScrollableOverflow(overflowY)) return element;
-    } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
+    }
+    if (axis !== "y" && element.clientWidth && element.scrollWidth > element.clientWidth) {
       const { overflowX } = getComputedStyle(element);
       if (isScrollableOverflow(overflowX)) return element;
     }
     const doc = getDocument(element);
-    return getScrollingElement(element.parentElement) || doc.scrollingElement || doc.body;
+    return getScrollingElement(element.parentElement, options) || doc.scrollingElement || doc.body;
   }
   function setSelectionRange(element, ...args) {
     if (/text|search|password|tel|url/i.test(element.type)) element.setSelectionRange(...args);
@@ -82606,7 +82609,7 @@ var wp;
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/C4_D9PgF.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/C4_D9PgF.js
   var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
   function accessibleWhenDisabledFromProps(props) {
     return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
@@ -82632,11 +82635,11 @@ var wp;
     return hasFocus(element) || getTreeActiveElement(element) === element;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
   var import_react65 = __toESM(require_react(), 1);
   var FocusableContext = (0, import_react65.createContext)(true);
 
-  // node_modules/.store/@ariakit/react-utils@0.2.7-w6BBn4LVqMPN0vaiP2Jw4Q/node_modules/@ariakit/react-utils/dist/index.js
+  // node_modules/.store/@ariakit/react-utils@0.2.8-duN40eWASGERw9i-DIMDVw/node_modules/@ariakit/react-utils/dist/index.js
   var React244 = __toESM(require_react(), 1);
   var import_react66 = __toESM(require_react(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
@@ -82947,7 +82950,7 @@ var wp;
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/focusable/focusable.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/focusable/focusable.js
   var import_react67 = __toESM(require_react(), 1);
   var TagName = "div";
   var isSafariBrowser = isSafari();
@@ -83231,7 +83234,7 @@ var wp;
     return createElement6(TagName, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/command/command.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/command/command.js
   var import_react68 = __toESM(require_react(), 1);
   var TagName2 = "button";
   function isNativeClick(event) {
@@ -83343,7 +83346,7 @@ var wp;
     return createElement6(TagName2, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/collection/collection-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-context.js
   var ctx = createStoreContext();
   var useCollectionContext = ctx.useContext;
   var useCollectionScopedContext = ctx.useScopedContext;
@@ -83351,7 +83354,7 @@ var wp;
   var CollectionContextProvider = ctx.ContextProvider;
   var CollectionScopedContextProvider = ctx.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/collection/collection-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-item.js
   var import_react69 = __toESM(require_react(), 1);
   var TagName3 = "div";
   var useCollectionItem = createHook(function useCollectionItem2({ store: store2, shouldRegisterItem = true, getItem = identity2, element, ...props }) {
@@ -83386,7 +83389,7 @@ var wp;
     return createElement6(TagName3, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-context.js
   var import_react70 = __toESM(require_react(), 1);
   var ctx2 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
   var useCompositeContext = ctx2.useContext;
@@ -83397,10 +83400,25 @@ var wp;
   var CompositeItemContext = (0, import_react70.createContext)(void 0);
   var CompositeRowContext = (0, import_react70.createContext)(void 0);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/DJQz4DCk.js
+  var listeners = /* @__PURE__ */ new WeakMap();
+  function prepareScrollIntoView(request) {
+    const cleanups = [];
+    let ancestor = request.element.parentElement;
+    while (ancestor) {
+      const cleanup = listeners.get(ancestor)?.(request);
+      if (cleanup) cleanups.push(cleanup);
+      ancestor = ancestor.parentElement;
+    }
+    return () => {
+      for (const cleanup of cleanups) cleanup();
+    };
+  }
+
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/utils.js
   var import_react71 = __toESM(require_react(), 1);
 
-  // node_modules/.store/@ariakit/store@0.1.10-tkEeU1qj6cwY7nBH6-ymFg/node_modules/@ariakit/store/dist/index.js
+  // node_modules/.store/@ariakit/store@0.1.11-R6p47bgYcFWqOHfW2C0v-A/node_modules/@ariakit/store/dist/index.js
   function getInternal(store2, key) {
     const internals = store2.__unstableInternals;
     invariant(internals, "Invalid store");
@@ -83430,22 +83448,22 @@ var wp;
   function addKeyedListener(map, keys, listener) {
     if (!keys) return;
     for (const key of keys) {
-      let listeners = map.get(key);
-      if (!listeners) {
-        listeners = /* @__PURE__ */ new Set();
-        map.set(key, listeners);
+      let listeners2 = map.get(key);
+      if (!listeners2) {
+        listeners2 = /* @__PURE__ */ new Set();
+        map.set(key, listeners2);
       }
-      listeners.add(listener);
+      listeners2.add(listener);
     }
   }
   function deleteKeyedListener(map, keys, listener) {
     if (!map) return;
     if (!keys) return;
     for (const key of keys) {
-      const listeners = map.get(key);
-      if (!listeners) continue;
-      listeners.delete(listener);
-      if (!listeners.size) map.delete(key);
+      const listeners2 = map.get(key);
+      if (!listeners2) continue;
+      listeners2.delete(listener);
+      if (!listeners2.size) map.delete(key);
     }
   }
   function getFastPathNotifiedListeners(frame) {
@@ -83910,7 +83928,7 @@ If there's a particular need for this, please submit a feature request at https:
 `);
   }
 
-  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/collection/collection-store.js
+  // node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/collection/collection-store.js
   function getCommonParent(items) {
     const firstItem = items.find((item) => !!item.element);
     const lastElement = [...items].reverse().find((item) => !!item.element)?.element;
@@ -84110,7 +84128,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/composite/composite-store.js
+  // node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/composite/composite-store.js
   var NULL_ITEM = { id: null };
   function findFirstEnabledItem(items, excludeId) {
     return items.find((item) => {
@@ -84371,7 +84389,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/utils.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/utils.js
   var findFirstEnabledItem2 = findFirstEnabledItem;
   var groupItemsByRows2 = groupItemsByRows;
   var unmountingItems = /* @__PURE__ */ new WeakSet();
@@ -84455,10 +84473,12 @@ If there's a particular need for this, please submit a feature request at https:
       return item.element;
     };
     let removeFocusListeners;
+    let cancelScroll;
     let unsubscribe;
     const cancel = () => {
       done = true;
       removeFocusListeners?.();
+      cancelScroll?.();
       unsubscribe?.();
     };
     let consumed = false;
@@ -84468,6 +84488,7 @@ If there's a particular need for this, please submit a feature request at https:
       onConsume?.();
     };
     const settle = () => {
+      cancelScroll?.();
       if (done) return;
       consume();
       return cancel();
@@ -84522,6 +84543,17 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isVisible(element)) return;
       if ("unstable_placing" in state && state.unstable_placing) return;
       if (!focusWithheld) settle();
+      const scrollTarget = element;
+      cancelScroll?.();
+      cancelScroll = prepareScrollIntoView({
+        element: scrollTarget,
+        isCurrent: () => {
+          const state2 = store2.getState();
+          if (abandonedByState(state2)) return false;
+          if (state2.activeId !== resolvedId) return false;
+          return stillOwnsFocus(scrollTarget);
+        }
+      });
       if (scrollIntoView) {
         scrollIntoView(element);
         return;
@@ -84600,11 +84632,11 @@ If there's a particular need for this, please submit a feature request at https:
     return true;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-item.js
   var import_react72 = __toESM(require_react(), 1);
   var import_jsx_runtime407 = __toESM(require_jsx_runtime(), 1);
 
-  // node_modules/.store/@ariakit/react-store@0.1.12-W5z3hCzhi_z6bEUegMVTow/node_modules/@ariakit/react-store/dist/index.js
+  // node_modules/.store/@ariakit/react-store@0.1.13-C6ZWls7CuvAmgvZYqqkd5Q/node_modules/@ariakit/react-store/dist/index.js
   var React245 = __toESM(require_react(), 1);
   var import_shim4 = __toESM(require_shim(), 1);
   var noopSubscribe = () => () => {
@@ -84756,7 +84788,7 @@ If there's a particular need for this, please submit a feature request at https:
     })];
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-item.js
   var TagName4 = "button";
   function isEditableElement(element) {
     if (isTextbox(element)) return true;
@@ -85068,7 +85100,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement6(TagName4, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/CDh2UhnG.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/CDh2UhnG.js
   var sourceEvents = /* @__PURE__ */ new WeakMap();
   function fireProxiedKeyboardEvent(element, source, eventInit) {
     const { KeyboardEvent } = getWindow2(element);
@@ -85080,7 +85112,7 @@ If there's a particular need for this, please submit a feature request at https:
     return sourceEvents.get(event) ?? event;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/xFYjARz5.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/xFYjARz5.js
   var cancelled = /* @__PURE__ */ Symbol("cancelled");
   var moveRequests = /* @__PURE__ */ new WeakMap();
   function getMoveRequest(store2, source) {
@@ -85109,7 +85141,7 @@ If there's a particular need for this, please submit a feature request at https:
     return request;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite.js
   var import_react73 = __toESM(require_react(), 1);
   var import_jsx_runtime408 = __toESM(require_jsx_runtime(), 1);
   var TagName5 = "div";
@@ -85215,6 +85247,43 @@ If there's a particular need for this, please submit a feature request at https:
     const ref = (0, import_react73.useRef)(null);
     const previousElementRef = (0, import_react73.useRef)(null);
     const present = usePresentItem(store2);
+    const scheduleFocusUpdateRef = (0, import_react73.useRef)(void 0);
+    useSafeLayoutEffect(() => {
+      if (!composite) return;
+      let focusElement = null;
+      let pending = false;
+      let disposed = false;
+      const update4 = () => {
+        pending = false;
+        if (disposed) return;
+        const { activeId: activeId2, compositeElement } = store2.getState();
+        const ownerHasFocus = !!compositeElement && compositeElement === ref.current && getTreeActiveElement(compositeElement) === compositeElement;
+        const itemElement = store2.item(activeId2)?.element;
+        const nextElement = ownerHasFocus && itemElement?.isConnected && itemElement !== compositeElement ? itemElement : null;
+        if (focusElement === nextElement) return;
+        focusElement?.removeAttribute("data-focus");
+        nextElement?.setAttribute("data-focus", "true");
+        focusElement = nextElement;
+      };
+      const schedule2 = () => {
+        if (pending) return;
+        pending = true;
+        queueMicrotask(update4);
+      };
+      scheduleFocusUpdateRef.current = schedule2;
+      const unsubscribe = subscribe(store2, [
+        "activeId",
+        "items",
+        "compositeElement"
+      ], schedule2);
+      schedule2();
+      return () => {
+        disposed = true;
+        scheduleFocusUpdateRef.current = void 0;
+        unsubscribe();
+        focusElement?.removeAttribute("data-focus");
+      };
+    }, [store2, composite]);
     const [, setCompositeElement] = useTransactionState(composite ? store2.setCompositeElement : null);
     const virtualFocus = useStoreState(store2, "virtualFocus");
     const activeId = useStoreState(store2, composite && virtualFocus ? ["activeId"] : [], (state) => composite && virtualFocus ? state.activeId : null);
@@ -85238,6 +85307,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onKeyUpCapture = useKeyboardEventProxy(store2, props.onKeyUpCapture, previousElementRef);
     const onFocusCaptureProp = props.onFocusCapture;
     const onFocusCapture = useEvent2((event) => {
+      scheduleFocusUpdateRef.current?.();
       onFocusCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!store2) return;
@@ -85280,6 +85350,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const onBlurCaptureProp = props.onBlurCapture;
     const onBlurCapture = useEvent2((event) => {
+      scheduleFocusUpdateRef.current?.();
       onBlurCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!store2) return;
@@ -85407,7 +85478,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement6(TagName5, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
   var ctx3 = createStoreContext();
   var useDisclosureContext = ctx3.useContext;
   var useDisclosureScopedContext = ctx3.useScopedContext;
@@ -85415,7 +85486,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DisclosureContextProvider = ctx3.ContextProvider;
   var DisclosureScopedContextProvider = ctx3.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
   var import_react74 = __toESM(require_react(), 1);
   var ctx4 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
   var useDialogContext = ctx4.useContext;
@@ -85426,7 +85497,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DialogHeadingContext = (0, import_react74.createContext)(void 0);
   var DialogDescriptionContext = (0, import_react74.createContext)(void 0);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
   var import_react75 = __toESM(require_react(), 1);
   var import_jsx_runtime409 = __toESM(require_jsx_runtime(), 1);
   var import_react_dom4 = __toESM(require_react_dom(), 1);
@@ -85581,7 +85652,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(DisclosureContentImpl, { ...props });
   });
 
-  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
+  // node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
   function getParentHideRequest(store2) {
     const onHideRequest = store2?.unstable_onHideRequest;
     const requestHide = store2?.unstable_requestHide;
@@ -85674,7 +85745,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
   function useDisclosureStoreProps(store2, update4, props) {
     useUpdateEffect(update4, [
       props.store,
@@ -85687,7 +85758,7 @@ If there's a particular need for this, please submit a feature request at https:
     return Object.assign(store2, { disclosure: props.disclosure });
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/popover/popover-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover-context.js
   var ctx5 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
   var usePopoverContext = ctx5.useContext;
   var usePopoverScopedContext = ctx5.useScopedContext;
@@ -85695,7 +85766,7 @@ If there's a particular need for this, please submit a feature request at https:
   var PopoverContextProvider = ctx5.ContextProvider;
   var PopoverScopedContextProvider = ctx5.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
   var import_react76 = __toESM(require_react(), 1);
   var ComboboxListRoleContext = (0, import_react76.createContext)(null);
   var ctx6 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
@@ -85708,14 +85779,14 @@ If there's a particular need for this, please submit a feature request at https:
   var ComboboxItemCheckedContext = (0, import_react76.createContext)(false);
   var ComboboxHeadingContext = (0, import_react76.createContext)(null);
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/collection/collection-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-store.js
   function useCollectionStoreProps(store2, update4, props) {
     useUpdateEffect(update4, [props.store, update4]);
     useStoreProps(store2, props, "items", "setItems");
     return store2;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-store.js
   function useCompositeStoreOptions(props) {
     return {
       id: useId10(props.id),
@@ -85737,17 +85808,17 @@ If there's a particular need for this, please submit a feature request at https:
     return store2;
   }
 
-  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/dialog/dialog-store.js
+  // node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/dialog/dialog-store.js
   function createDialogStore(props = {}) {
     return createDisclosureStore(props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
   function useDialogStoreProps(store2, update4, props) {
     return useDisclosureStoreProps(store2, update4, props);
   }
 
-  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/popover/popover-store.js
+  // node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/popover/popover-store.js
   function createPopoverStore({ popover: otherPopover, ...props } = {}) {
     const store2 = mergeStore(props.store, omit2(otherPopover, [
       "arrowElement",
@@ -85795,14 +85866,14 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/popover/popover-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover-store.js
   function usePopoverStoreProps(store2, update4, props) {
     useUpdateEffect(update4, [props.popover, update4]);
     useStoreProps(store2, props, "placement");
     return useDialogStoreProps(store2, update4, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
   var import_react77 = __toESM(require_react(), 1);
   var TagName7 = "div";
   function hoveringInside(event) {
@@ -85869,7 +85940,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement6(TagName7, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/__chunks/HXejjTMM.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/HXejjTMM.js
   var openingMovesBySelect = /* @__PURE__ */ new WeakMap();
   var scrollItemIntoViewByStore = /* @__PURE__ */ new WeakMap();
   function scrollIntoViewNearest(element) {
@@ -85938,7 +86009,7 @@ If there's a particular need for this, please submit a feature request at https:
     return scrollItemIntoView;
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox.js
   var import_react78 = __toESM(require_react(), 1);
   var import_jsx_runtime410 = __toESM(require_jsx_runtime(), 1);
   var TagName8 = "input";
@@ -86372,7 +86443,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement6(TagName8, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
   var import_react79 = __toESM(require_react(), 1);
   var import_jsx_runtime411 = __toESM(require_jsx_runtime(), 1);
   var TagName9 = "div";
@@ -86529,7 +86600,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement6(TagName9, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
   var import_react80 = __toESM(require_react(), 1);
   var import_jsx_runtime412 = __toESM(require_jsx_runtime(), 1);
   var TagName10 = "span";
@@ -86648,7 +86719,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement6(TagName10, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox-label.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-label.js
   var TagName11 = "label";
   var useComboboxLabel = createHook(function useComboboxLabel2({ store: store2, ...props }) {
     const scopedContext = useComboboxScopedContext(true);
@@ -86672,7 +86743,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement6(TagName11, htmlProps);
   }));
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
   var import_react81 = __toESM(require_react(), 1);
   var import_jsx_runtime413 = __toESM(require_jsx_runtime(), 1);
   var TagName12 = "div";
@@ -86780,7 +86851,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement6(TagName12, htmlProps);
   });
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/tag/tag-context.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tag/tag-context.js
   var import_react82 = __toESM(require_react(), 1);
   var TagValueContext = (0, import_react82.createContext)(null);
   var TagRemoveIdContext = (0, import_react82.createContext)(null);
@@ -86791,7 +86862,7 @@ If there's a particular need for this, please submit a feature request at https:
   var TagContextProvider = ctx7.ContextProvider;
   var TagScopedContextProvider = ctx7.ScopedContextProvider;
 
-  // node_modules/.store/@ariakit/components@0.1.14-LY5snkwIfivHs3k-20UEzg/node_modules/@ariakit/components/dist/combobox/combobox-store.js
+  // node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/combobox/combobox-store.js
   var isTouchSafari = isSafari() && isTouchDevice();
   function createComboboxStore({ tag, ...props } = {}) {
     const store2 = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
@@ -87006,7 +87077,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox-store.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-store.js
   function useComboboxStoreOptions(props) {
     const tag = useTagContext();
     props = {
@@ -87034,7 +87105,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useComboboxStoreProps(store2, update4, props);
   }
 
-  // node_modules/.store/@ariakit/react-components@0.7.0-SPgsuugSDrFrx2DGVqJK3g/node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
+  // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
   var import_jsx_runtime414 = __toESM(require_jsx_runtime(), 1);
   function ComboboxProvider(props = {}) {
     const store2 = useComboboxStore(props);
