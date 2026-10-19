@@ -115254,10 +115254,16 @@ If there's a particular need for this, please submit a feature request at https:
                     gap: 2,
                     children: !isEmptyURL ? /* @__PURE__ */ (0, import_jsx_runtime608.jsxs)(import_jsx_runtime608.Fragment, { children: [
                       /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-                        import_components217.ExternalLink,
+                        Link,
                         {
                           className: "block-editor-link-control__preview-title",
                           href: value.url,
+                          openInNewTab: true,
+                          onClick: (event) => {
+                            if (value.url?.startsWith("#")) {
+                              event.preventDefault();
+                            }
+                          },
                           children: /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(import_components217.__experimentalTruncate, { numberOfLines: 1, children: displayTitle })
                         }
                       ),

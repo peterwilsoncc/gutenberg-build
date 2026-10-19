@@ -2623,6 +2623,8 @@ iframe[name=editor-canvas] {
   max-height: 32px;
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title {
+  display: flex;
+  align-items: baseline;
   line-height: var(--wpds-typography-line-height-sm, 20px);
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title mark {
@@ -2632,16 +2634,6 @@ iframe[name=editor-canvas] {
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title span {
   font-weight: 400;
-}
-.block-editor-link-control__preview .block-editor-link-control__preview-title .components-external-link__icon {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  border: 0;
 }
 
 .block-editor-link-control__preview.is-fetching .block-editor-link-control__preview-icon svg,
