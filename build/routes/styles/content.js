@@ -161,14 +161,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React49 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef24 = React49.useRef, useEffect22 = React49.useEffect, useMemo34 = React49.useMemo, useDebugValue2 = React49.useDebugValue;
+      var React49 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef24 = React49.useRef, useEffect22 = React49.useEffect, useMemo36 = React49.useMemo, useDebugValue2 = React49.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef24(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo34(
+        instRef = useMemo36(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -2532,9 +2532,9 @@ function disableFocusInside(container) {
   });
 }
 function enableFocusInside(container) {
-  const elements2 = [];
-  appendMatchingElements(container, "[data-tabindex]", elements2);
-  elements2.forEach((element) => {
+  const elements = [];
+  appendMatchingElements(container, "[data-tabindex]", elements);
+  elements.forEach((element) => {
     const tabindex = element.dataset.tabindex;
     delete element.dataset.tabindex;
     if (tabindex) {
@@ -5287,7 +5287,7 @@ function safePolygon(options = {}) {
     x: x2,
     y: y2,
     placement,
-    elements: elements2,
+    elements,
     onClose,
     nodeId,
     tree
@@ -5321,8 +5321,8 @@ function safePolygon(options = {}) {
     }
     return function onMouseMove(event) {
       timeout.clear();
-      const domReference = elements2.domReference;
-      const floating = elements2.floating;
+      const domReference = elements.domReference;
+      const floating = elements.floating;
       if (!domReference || !floating || side == null || x2 == null || y2 == null) {
         return void 0;
       }
@@ -5523,7 +5523,7 @@ async function detectOverflow(state, options) {
     y: y2,
     platform: platform3,
     rects,
-    elements: elements2,
+    elements,
     strategy
   } = state;
   const {
@@ -5535,9 +5535,9 @@ async function detectOverflow(state, options) {
   } = evaluate(options, state);
   const paddingObject = getPaddingObject(padding);
   const altContext = elementContext === "floating" ? "reference" : "floating";
-  const element = elements2[altBoundary ? altContext : elementContext];
+  const element = elements[altBoundary ? altContext : elementContext];
   const clippingClientRect = rectToClientRect(await platform3.getClippingRect({
-    element: ((_await$platform$isEle = await (platform3.isElement == null ? void 0 : platform3.isElement(element))) != null ? _await$platform$isEle : true) ? element : element.contextElement || await (platform3.getDocumentElement == null ? void 0 : platform3.getDocumentElement(elements2.floating)),
+    element: ((_await$platform$isEle = await (platform3.isElement == null ? void 0 : platform3.isElement(element))) != null ? _await$platform$isEle : true) ? element : element.contextElement || await (platform3.getDocumentElement == null ? void 0 : platform3.getDocumentElement(elements.floating)),
     boundary,
     rootBoundary,
     strategy
@@ -5548,13 +5548,13 @@ async function detectOverflow(state, options) {
     width: rects.floating.width,
     height: rects.floating.height
   } : rects.reference;
-  const offsetParent = await (platform3.getOffsetParent == null ? void 0 : platform3.getOffsetParent(elements2.floating));
+  const offsetParent = await (platform3.getOffsetParent == null ? void 0 : platform3.getOffsetParent(elements.floating));
   const offsetScale = await (platform3.isElement == null ? void 0 : platform3.isElement(offsetParent)) && await (platform3.getScale == null ? void 0 : platform3.getScale(offsetParent)) || {
     x: 1,
     y: 1
   };
   const elementClientRect = rectToClientRect(platform3.convertOffsetParentRelativeRectToViewportRelativeRect ? await platform3.convertOffsetParentRelativeRectToViewportRelativeRect({
-    elements: elements2,
+    elements,
     rect,
     offsetParent,
     strategy
@@ -5669,7 +5669,7 @@ var flip = function(options) {
         rects,
         initialPlacement,
         platform: platform3,
-        elements: elements2
+        elements
       } = state;
       const {
         mainAxis: checkMainAxis = true,
@@ -5686,7 +5686,7 @@ var flip = function(options) {
       const side = getSide(placement);
       const initialSideAxis = getSideAxis(initialPlacement);
       const isBasePlacement = getSide(initialPlacement) === initialPlacement;
-      const rtl = await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements2.floating));
+      const rtl = await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements.floating));
       const fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipAlignment ? [getOppositePlacement(initialPlacement)] : getExpandedPlacements(initialPlacement));
       const hasFallbackAxisSideDirection = fallbackAxisSideDirection !== "none";
       if (!specifiedFallbackPlacements && hasFallbackAxisSideDirection) {
@@ -5768,9 +5768,9 @@ async function convertValueToCoords(state, options) {
   const {
     placement,
     platform: platform3,
-    elements: elements2
+    elements
   } = state;
-  const rtl = await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements2.floating));
+  const rtl = await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements.floating));
   const side = getSide(placement);
   const alignment = getAlignment(placement);
   const isVertical = getSideAxis(placement) === "y";
@@ -5974,7 +5974,7 @@ var size = function(options) {
         placement,
         rects,
         platform: platform3,
-        elements: elements2
+        elements
       } = state;
       const {
         apply = () => {
@@ -5993,7 +5993,7 @@ var size = function(options) {
       let widthSide;
       if (side === "top" || side === "bottom") {
         heightSide = side;
-        widthSide = alignment === (await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements2.floating)) ? "start" : "end") ? "left" : "right";
+        widthSide = alignment === (await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements.floating)) ? "start" : "end") ? "left" : "right";
       } else {
         widthSide = side;
         heightSide = alignment === "end" ? "top" : "bottom";
@@ -6024,7 +6024,7 @@ var size = function(options) {
         availableWidth: availableWidth2,
         availableHeight: availableHeight2
       });
-      const nextDimensions = await platform3.getDimensions(elements2.floating);
+      const nextDimensions = await platform3.getDimensions(elements.floating);
       if (width !== nextDimensions.width || height !== nextDimensions.height) {
         return {
           reset: {
@@ -6170,14 +6170,14 @@ function getHTMLOffset(documentElement, scroll) {
 }
 function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
   let {
-    elements: elements2,
+    elements,
     rect,
     offsetParent,
     strategy
   } = _ref;
   const isFixed = strategy === "fixed";
   const documentElement = getDocumentElement(offsetParent);
-  const topLayer = elements2 ? isTopLayer(elements2.floating) : false;
+  const topLayer = elements ? isTopLayer(elements.floating) : false;
   if (offsetParent === documentElement || topLayer && isFixed) {
     return rect;
   }
@@ -6830,7 +6830,7 @@ function useFloating(options) {
     setReference,
     setFloating
   }), [setReference, setFloating]);
-  const elements2 = React27.useMemo(() => ({
+  const elements = React27.useMemo(() => ({
     reference: referenceEl,
     floating: floatingEl
   }), [referenceEl, floatingEl]);
@@ -6840,16 +6840,16 @@ function useFloating(options) {
       left: 0,
       top: 0
     };
-    if (!elements2.floating) {
+    if (!elements.floating) {
       return initialStyles;
     }
-    const x2 = roundByDPR(elements2.floating, data.x);
-    const y2 = roundByDPR(elements2.floating, data.y);
+    const x2 = roundByDPR(elements.floating, data.x);
+    const y2 = roundByDPR(elements.floating, data.y);
     if (transform) {
       return {
         ...initialStyles,
         transform: "translate(" + x2 + "px, " + y2 + "px)",
-        ...getDPR(elements2.floating) >= 1.5 && {
+        ...getDPR(elements.floating) >= 1.5 && {
           willChange: "transform"
         }
       };
@@ -6859,14 +6859,14 @@ function useFloating(options) {
       left: x2,
       top: y2
     };
-  }, [strategy, transform, elements2.floating, data.x, data.y]);
+  }, [strategy, transform, elements.floating, data.x, data.y]);
   return React27.useMemo(() => ({
     ...data,
     update: update2,
     refs,
-    elements: elements2,
+    elements,
     floatingStyles
-  }), [data, update2, refs, elements2, floatingStyles]);
+  }), [data, update2, refs, elements, floatingStyles]);
 }
 var offset3 = (options, deps) => {
   const result = offset2(options);
@@ -6987,7 +6987,7 @@ function useBaseUIFloating(options) {
     setPositionReference,
     domReference: domReferenceRef
   }), [position.refs, setPositionReference]);
-  const elements2 = React29.useMemo(() => ({
+  const elements = React29.useMemo(() => ({
     ...position.elements,
     domReference: domReferenceElement
   }), [position.elements, domReferenceElement]);
@@ -6999,10 +6999,10 @@ function useBaseUIFloating(options) {
     events: store.context.events,
     floatingId,
     refs,
-    elements: elements2,
+    elements,
     nodeId,
     rootStore: store
-  }), [position, refs, elements2, nodeId, store, open2, floatingId]);
+  }), [position, refs, elements, nodeId, store, open2, floatingId]);
   useIsoLayoutEffect(() => {
     if (domReferenceElement) {
       domReferenceRef.current = domReferenceElement;
@@ -7019,9 +7019,9 @@ function useBaseUIFloating(options) {
     ...position,
     context,
     refs,
-    elements: elements2,
+    elements,
     rootStore: store
-  }), [position, refs, elements2, context, store]);
+  }), [position, refs, elements, context, store]);
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
@@ -7035,7 +7035,7 @@ var baseArrow = (options) => ({
       placement,
       rects,
       platform: platform3,
-      elements: elements2,
+      elements,
       middlewareData
     } = state;
     const {
@@ -7059,7 +7059,7 @@ var baseArrow = (options) => ({
     const clientProp = isYAxis ? "clientHeight" : "clientWidth";
     const endDiff = rects.reference[length] + rects.reference[axis] - coords[axis] - rects.floating[length];
     const startDiff = coords[axis] - rects.reference[axis];
-    const clientSize = elements2.floating[clientProp] || rects.floating[length];
+    const clientSize = elements.floating[clientProp] || rects.floating[length];
     const centerToReference = endDiff / 2 - startDiff / 2;
     const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
     const minPadding = Math.min(paddingObject[minProp], largestPossiblePadding);
@@ -7396,7 +7396,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
   }), [disableAnchorTracking]);
   const {
     refs,
-    elements: elements2,
+    elements,
     x: x2,
     y: y2,
     middlewareData,
@@ -7475,11 +7475,11 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     }
   }, [mounted, refs, anchorDep, anchorValueRef]);
   React30.useEffect(() => {
-    if (keepMounted && mounted && elements2.reference && elements2.floating) {
-      return autoUpdate(elements2.reference, elements2.floating, update2, autoUpdateOptions);
+    if (keepMounted && mounted && elements.reference && elements.floating) {
+      return autoUpdate(elements.reference, elements.floating, update2, autoUpdateOptions);
     }
     return void 0;
-  }, [keepMounted, mounted, elements2, update2, autoUpdateOptions]);
+  }, [keepMounted, mounted, elements, update2, autoUpdateOptions]);
   const renderedSide = getSide(renderedPlacement);
   const logicalRenderedSide = getLogicalSide(sideParam, renderedSide, isRtl);
   const renderedAlign = getAlignment(renderedPlacement) || "center";
@@ -10499,16 +10499,16 @@ var stage = Stage;
 var import_editor2 = __toESM(require_editor());
 var import_components57 = __toESM(require_components());
 var import_data14 = __toESM(require_data());
-var import_core_data14 = __toESM(require_core_data());
+var import_core_data13 = __toESM(require_core_data());
 import { useNavigate as useNavigate2, useSearch as useSearch2 } from "@wordpress/route";
 import { useEditorAssets, useEditorSettings as useEditorSettings2 } from "@wordpress/lazy-editor";
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
 var import_components56 = __toESM(require_components(), 1);
-var import_blocks5 = __toESM(require_blocks(), 1);
+var import_blocks6 = __toESM(require_blocks(), 1);
 var import_data13 = __toESM(require_data(), 1);
 var import_block_editor15 = __toESM(require_block_editor(), 1);
-var import_element56 = __toESM(require_element(), 1);
+var import_element57 = __toESM(require_element(), 1);
 var import_compose8 = __toESM(require_compose(), 1);
 
 // packages/global-styles-engine/build-module/utils/object.mjs
@@ -11700,7 +11700,7 @@ function resolveThemeFileBackgroundImage(value, globalStyles, links) {
 function computeResolvedStyle(globalStyles, {
   blockName,
   variationName = null,
-  elements: elements2 = null,
+  elements = null,
   viewport = null,
   pseudoState = null
 } = {}) {
@@ -11714,7 +11714,7 @@ function computeResolvedStyle(globalStyles, {
   const selectedState = { viewport, pseudoState };
   const root = styles;
   const block = styles.blocks?.[blockName] ?? null;
-  const elementLayers = (elements2 ?? []).map((elementName) => styles.elements?.[elementName] ?? null).filter((layer) => !!layer);
+  const elementLayers = (elements ?? []).map((elementName) => styles.elements?.[elementName] ?? null).filter((layer) => !!layer);
   const variation = variationName ? getVariationStyle(globalStyles, blockName, variationName) ?? null : null;
   const contributions = [
     createContribution(
@@ -12673,12 +12673,12 @@ var preview_styles_default = PreviewStyles;
 var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
-var import_blocks2 = __toESM(require_blocks(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
-var import_components12 = __toESM(require_components(), 1);
-var import_data5 = __toESM(require_data(), 1);
-var import_element28 = __toESM(require_element(), 1);
-var import_block_editor4 = __toESM(require_block_editor(), 1);
+var import_blocks5 = __toESM(require_blocks(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
+var import_components16 = __toESM(require_components(), 1);
+var import_data6 = __toESM(require_data(), 1);
+var import_element32 = __toESM(require_element(), 1);
+var import_block_editor8 = __toESM(require_block_editor(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 import { speak } from "@wordpress/a11y";
 
@@ -12712,17 +12712,167 @@ var import_block_editor3 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
 var { StateControl, StateControlBadges } = unlock4(import_block_editor3.privateApis);
 
-// packages/global-styles-ui/build-module/screen-block-list.mjs
+// packages/global-styles-ui/build-module/screen-element.mjs
+var import_i18n15 = __toESM(require_i18n(), 1);
+var import_element31 = __toESM(require_element(), 1);
+var import_components15 = __toESM(require_components(), 1);
+var import_block_editor7 = __toESM(require_block_editor(), 1);
+
+// packages/global-styles-ui/build-module/element-preview.mjs
+var import_i18n13 = __toESM(require_i18n(), 1);
+var import_element28 = __toESM(require_element(), 1);
+var import_data5 = __toESM(require_data(), 1);
+var import_blocks2 = __toESM(require_blocks(), 1);
+var import_block_editor4 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/screen-block.mjs
+var import_blocks4 = __toESM(require_blocks(), 1);
+var import_block_editor6 = __toESM(require_block_editor(), 1);
+var import_element30 = __toESM(require_element(), 1);
+var import_components14 = __toESM(require_components(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
+
+// packages/global-styles-ui/build-module/block-preview-panel.mjs
+var import_block_editor5 = __toESM(require_block_editor(), 1);
+var import_blocks3 = __toESM(require_blocks(), 1);
+var import_components12 = __toESM(require_components(), 1);
+var import_element29 = __toESM(require_element(), 1);
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var { getViewportBreakpoints: getViewportBreakpoints3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels2 } = unlock4(
+  privateApis
+);
+
+// packages/global-styles-ui/build-module/subtitle.mjs
+var import_components13 = __toESM(require_components(), 1);
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+function Subtitle({ children, level = 2 }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_components13.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
+}
+
+// packages/global-styles-ui/build-module/screen-block.mjs
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel: useHasDimensionsPanel2,
   useHasTypographyPanel: useHasTypographyPanel2,
   useHasBorderPanel,
   useSettingsForBlockElement: useSettingsForBlockElement2,
   useHasColorPanel: useHasColorPanel2,
+  useHasFiltersPanel,
+  useHasImageSettingsPanel,
   useHasBackgroundPanel: useHasBackgroundPanel2,
+  BackgroundPanel: StylesBackgroundPanel,
+  BorderPanel: StylesBorderPanel,
+  ColorPanel: StylesColorPanel,
+  TypographyPanel: StylesTypographyPanel,
+  DimensionsPanel: StylesDimensionsPanel,
+  FiltersPanel: StylesFiltersPanel,
+  ImageSettingsPanel,
+  AdvancedPanel: StylesAdvancedPanel
+} = unlock4(import_block_editor6.privateApis);
+
+// packages/global-styles-ui/build-module/screen-element.mjs
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var {
+  useSettingsForBlockElement: useSettingsForBlockElement3,
+  useHasBackgroundPanel: useHasBackgroundPanel3,
+  useHasBorderPanel: useHasBorderPanel2,
+  useHasDimensionsPanel: useHasDimensionsPanel3,
+  useHasTypographyPanel: useHasTypographyPanel3,
+  BackgroundPanel: StylesBackgroundPanel2,
+  BorderPanel: StylesBorderPanel2,
+  DimensionsPanel: StylesDimensionsPanel2,
+  TypographyPanel: StylesTypographyPanel2,
+  AdvancedPanel: StylesAdvancedPanel2
+} = unlock4(import_block_editor7.privateApis);
+var ELEMENTS = {
+  text: {
+    description: (0, import_i18n15.__)("Manage the fonts used on the site."),
+    title: (0, import_i18n15.__)("Text")
+  },
+  link: {
+    description: (0, import_i18n15.__)("Manage the appearance of links."),
+    title: (0, import_i18n15.__)("Link")
+  },
+  caption: {
+    description: (0, import_i18n15.__)("Manage the appearance of captions."),
+    title: (0, import_i18n15.__)("Caption")
+  },
+  cite: {
+    description: (0, import_i18n15.__)("Manage the appearance of citations."),
+    title: (0, import_i18n15.__)("Citation")
+  },
+  heading: {
+    description: (0, import_i18n15.__)("Manage the appearance of all headings."),
+    title: (0, import_i18n15.__)("All headings")
+  },
+  h1: {
+    description: (0, import_i18n15.__)("Manage the appearance of level 1 headings."),
+    title: (0, import_i18n15.__)("Heading 1")
+  },
+  h2: {
+    description: (0, import_i18n15.__)("Manage the appearance of level 2 headings."),
+    title: (0, import_i18n15.__)("Heading 2")
+  },
+  h3: {
+    description: (0, import_i18n15.__)("Manage the appearance of level 3 headings."),
+    title: (0, import_i18n15.__)("Heading 3")
+  },
+  h4: {
+    description: (0, import_i18n15.__)("Manage the appearance of level 4 headings."),
+    title: (0, import_i18n15.__)("Heading 4")
+  },
+  h5: {
+    description: (0, import_i18n15.__)("Manage the appearance of level 5 headings."),
+    title: (0, import_i18n15.__)("Heading 5")
+  },
+  h6: {
+    description: (0, import_i18n15.__)("Manage the appearance of level 6 headings."),
+    title: (0, import_i18n15.__)("Heading 6")
+  },
+  textInput: {
+    description: (0, import_i18n15.__)("Manage the appearance of inputs."),
+    title: (0, import_i18n15.__)("Input")
+  },
+  select: {
+    description: (0, import_i18n15.__)("Manage the appearance of selects."),
+    title: (0, import_i18n15.__)("Select")
+  },
+  button: {
+    description: (0, import_i18n15.__)("Manage the appearance of buttons."),
+    // Disambiguated from the Button block, whose screen is also titled
+    // "Button" and which sits in the same list.
+    title: (0, import_i18n15.__)("Button (element)")
+  }
+};
+
+// packages/global-styles-ui/build-module/screen-block-list.mjs
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var {
+  useHasDimensionsPanel: useHasDimensionsPanel4,
+  useHasTypographyPanel: useHasTypographyPanel4,
+  useHasBorderPanel: useHasBorderPanel3,
+  useSettingsForBlockElement: useSettingsForBlockElement4,
+  useHasColorPanel: useHasColorPanel3,
+  useHasBackgroundPanel: useHasBackgroundPanel4,
   searchItems
-} = unlock4(import_block_editor4.privateApis);
+} = unlock4(import_block_editor8.privateApis);
+var ELEMENT_GROUPS = [
+  {
+    title: (0, import_i18n16.__)("Elements"),
+    elements: ["link", "caption", "cite"]
+  },
+  {
+    title: (0, import_i18n16.__)("Headings"),
+    // `heading` styles every level at once; each level can then override
+    // it. Themes set most of their heading styles here.
+    elements: ["heading", "h1", "h2", "h3", "h4", "h5", "h6"]
+  },
+  {
+    title: (0, import_i18n16.__)("Form controls"),
+    elements: ["textInput", "select", "button"]
+  }
+];
 function hasAnyValue(value) {
   if (value === void 0 || value === null) {
     return false;
@@ -12739,8 +12889,8 @@ function hasUserStylesForBlock(user, blockName) {
   return hasAnyValue(user?.styles?.blocks?.[blockName]) || hasAnyValue(user?.settings?.blocks?.[blockName]);
 }
 function useSortedBlockTypes() {
-  const blockItems = (0, import_data5.useSelect)(
-    (select) => select(import_blocks2.store).getBlockTypes(),
+  const blockItems = (0, import_data6.useSelect)(
+    (select) => select(import_blocks5.store).getBlockTypes(),
     []
   );
   const groupByType = (blocks, block) => {
@@ -12757,12 +12907,12 @@ function useSortedBlockTypes() {
 }
 function useBlockHasGlobalStyles(blockName) {
   const [rawSettings] = useSetting("", blockName);
-  const settings = useSettingsForBlockElement2(rawSettings, blockName);
-  const hasTypographyPanel = useHasTypographyPanel2(settings);
-  const hasColorPanel = useHasColorPanel2(settings);
-  const hasBackgroundPanel = useHasBackgroundPanel2(settings);
-  const hasBorderPanel = useHasBorderPanel(settings);
-  const hasDimensionsPanel = useHasDimensionsPanel2(settings);
+  const settings = useSettingsForBlockElement4(rawSettings, blockName);
+  const hasTypographyPanel = useHasTypographyPanel4(settings);
+  const hasColorPanel = useHasColorPanel3(settings);
+  const hasBackgroundPanel = useHasBackgroundPanel4(settings);
+  const hasBorderPanel = useHasBorderPanel3(settings);
+  const hasDimensionsPanel = useHasDimensionsPanel4(settings);
   const hasLayoutPanel = hasBorderPanel || hasDimensionsPanel;
   const hasVariationsPanel = !!useBlockVariations(blockName)?.length;
   const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasVariationsPanel;
@@ -12773,30 +12923,39 @@ function BlockMenuItem({ block }) {
   if (!hasBlockMenuItem) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
     NavigationButtonAsItem,
     {
       path: "/blocks/" + encodeURIComponent(block.name),
-      children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_components12.__experimentalHStack, { justify: "flex-start", spacing: 2, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-          import_block_editor4.BlockIcon,
+      children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(import_components16.__experimentalHStack, { justify: "flex-start", spacing: 2, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+          import_block_editor8.BlockIcon,
           {
             className: "global-styles-ui-block-types-item__icon",
             icon: block.icon
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_components12.FlexItem, { children: block.title })
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_components16.FlexItem, { children: block.title })
       ] })
     }
   );
 }
-function EmptyBlockList({
+function ElementMenuItem({ element }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(NavigationButtonAsItem, { path: "/blocks/elements/" + element, children: ELEMENTS[element].title });
+}
+function ListGroup({ title, children }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "global-styles-ui-block-types-group", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "global-styles-ui-block-types-group__title", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Subtitle, { level: 3, children: title }) }),
+    children
+  ] });
+}
+function EmptyList({
   filterValue,
   styleFilter
 }) {
-  const label = "customized" === styleFilter && !filterValue ? (0, import_i18n13.__)("You haven't customized any blocks yet.") : (0, import_i18n13.__)("No blocks found.");
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-    import_components12.__experimentalText,
+  const label = "customized" === styleFilter && !filterValue ? (0, import_i18n16.__)("You haven't customized any blocks or elements yet.") : (0, import_i18n16.__)("No results found.");
+  return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+    import_components16.__experimentalText,
     {
       align: "center",
       as: "p",
@@ -12805,11 +12964,24 @@ function EmptyBlockList({
     }
   );
 }
-function BlockList({ filterValue, styleFilter }) {
+function getFilteredElementGroups(filterValue, styleFilter, customizedElementNames) {
+  const search = filterValue.trim().toLowerCase();
+  return ELEMENT_GROUPS.map((group) => ({
+    ...group,
+    elements: group.elements.filter(
+      (element) => (
+        // The element's name and group title match too, so "h1" finds
+        // Heading 1 and "form" lists the form controls.
+        (!search || [ELEMENTS[element].title, element, group.title].join(" ").toLowerCase().includes(search)) && (styleFilter !== "customized" || customizedElementNames.has(element))
+      )
+    )
+  })).filter((group) => group.elements.length > 0);
+}
+function BlockAndElementList({ filterValue, styleFilter }) {
   const sortedBlockTypes = useSortedBlockTypes();
   const debouncedSpeak = (0, import_compose3.useDebounce)(speak, 500);
-  const { user } = (0, import_element28.useContext)(GlobalStylesContext);
-  const customizedBlockNames = (0, import_element28.useMemo)(() => {
+  const { user } = (0, import_element32.useContext)(GlobalStylesContext);
+  const customizedBlockNames = (0, import_element32.useMemo)(() => {
     const names = /* @__PURE__ */ new Set();
     const blockNames = [
       ...Object.keys(user?.styles?.blocks ?? {}),
@@ -12822,6 +12994,22 @@ function BlockList({ filterValue, styleFilter }) {
     });
     return names;
   }, [user]);
+  const customizedElementNames = (0, import_element32.useMemo)(() => {
+    const names = /* @__PURE__ */ new Set();
+    Object.entries(user?.styles?.elements ?? {}).forEach(
+      ([name2, styles]) => {
+        if (hasAnyValue(styles)) {
+          names.add(name2);
+        }
+      }
+    );
+    return names;
+  }, [user]);
+  const filteredElementGroups = getFilteredElementGroups(
+    filterValue,
+    styleFilter,
+    customizedElementNames
+  );
   const searchedBlockTypes = searchItems(
     sortedBlockTypes,
     filterValue
@@ -12829,123 +13017,99 @@ function BlockList({ filterValue, styleFilter }) {
   const filteredBlockTypes = styleFilter === "customized" ? searchedBlockTypes.filter(
     (blockType) => customizedBlockNames.has(blockType.name)
   ) : searchedBlockTypes;
-  const blockTypesListRef = (0, import_element28.useRef)(null);
-  const hasResults = filteredBlockTypes.length > 0;
-  (0, import_element28.useEffect)(() => {
+  const blockTypesListRef = (0, import_element32.useRef)(null);
+  const elementCount = filteredElementGroups.reduce(
+    (total, group) => total + group.elements.length,
+    0
+  );
+  const hasBlockResults = filteredBlockTypes.length > 0;
+  (0, import_element32.useEffect)(() => {
     if (!filterValue && styleFilter === "all") {
       return;
     }
-    const count = hasResults ? blockTypesListRef.current?.childElementCount || 0 : 0;
-    const resultsFoundMessage = (0, import_i18n13.sprintf)(
+    const blockCount = hasBlockResults ? blockTypesListRef.current?.childElementCount || 0 : 0;
+    const count = elementCount + blockCount;
+    const resultsFoundMessage = (0, import_i18n16.sprintf)(
       /* translators: %d: number of results. */
-      (0, import_i18n13._n)("%d result found.", "%d results found.", count),
+      (0, import_i18n16._n)("%d result found.", "%d results found.", count),
       count
     );
     debouncedSpeak(resultsFoundMessage, "polite");
-  }, [filterValue, styleFilter, hasResults, debouncedSpeak]);
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-    "div",
-    {
-      ref: blockTypesListRef,
-      className: "global-styles-ui-block-types-item-list",
-      role: "list",
-      children: filteredBlockTypes.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-        EmptyBlockList,
-        {
-          filterValue,
-          styleFilter
-        }
-      ) : filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-        BlockMenuItem,
-        {
-          block
-        },
-        "menu-itemblock-" + block.name
-      ))
-    }
-  );
+  }, [
+    filterValue,
+    styleFilter,
+    hasBlockResults,
+    elementCount,
+    debouncedSpeak
+  ]);
+  if (!elementCount && !hasBlockResults) {
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+      EmptyList,
+      {
+        filterValue,
+        styleFilter
+      }
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(import_jsx_runtime44.Fragment, { children: [
+    filteredElementGroups.map((group) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ListGroup, { title: group.title, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_components16.__experimentalItemGroup, { children: group.elements.map((element) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+      ElementMenuItem,
+      {
+        element
+      },
+      element
+    )) }) }, group.title)),
+    hasBlockResults && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ListGroup, { title: (0, import_i18n16.__)("Blocks"), children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+      "div",
+      {
+        ref: blockTypesListRef,
+        className: "global-styles-ui-block-types-item-list",
+        role: "list",
+        children: filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+          BlockMenuItem,
+          {
+            block
+          },
+          "menu-itemblock-" + block.name
+        ))
+      }
+    ) })
+  ] });
 }
-var MemoizedBlockList = (0, import_element28.memo)(BlockList);
-
-// packages/global-styles-ui/build-module/screen-block.mjs
-var import_blocks4 = __toESM(require_blocks(), 1);
-var import_block_editor6 = __toESM(require_block_editor(), 1);
-var import_element30 = __toESM(require_element(), 1);
-var import_data6 = __toESM(require_data(), 1);
-var import_core_data5 = __toESM(require_core_data(), 1);
-var import_components15 = __toESM(require_components(), 1);
-var import_i18n14 = __toESM(require_i18n(), 1);
-
-// packages/global-styles-ui/build-module/block-preview-panel.mjs
-var import_block_editor5 = __toESM(require_block_editor(), 1);
-var import_blocks3 = __toESM(require_blocks(), 1);
-var import_components13 = __toESM(require_components(), 1);
-var import_element29 = __toESM(require_element(), 1);
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
-var { getViewportBreakpoints: getViewportBreakpoints3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels2 } = unlock4(
-  privateApis
-);
-
-// packages/global-styles-ui/build-module/subtitle.mjs
-var import_components14 = __toESM(require_components(), 1);
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
-function Subtitle({ children, level = 2 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_components14.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
-}
-
-// packages/global-styles-ui/build-module/screen-block.mjs
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
-var {
-  useHasDimensionsPanel: useHasDimensionsPanel3,
-  useHasTypographyPanel: useHasTypographyPanel3,
-  useHasBorderPanel: useHasBorderPanel2,
-  useSettingsForBlockElement: useSettingsForBlockElement3,
-  useHasColorPanel: useHasColorPanel3,
-  useHasFiltersPanel,
-  useHasImageSettingsPanel,
-  useHasBackgroundPanel: useHasBackgroundPanel3,
-  BackgroundPanel: StylesBackgroundPanel,
-  BorderPanel: StylesBorderPanel,
-  ColorPanel: StylesColorPanel,
-  TypographyPanel: StylesTypographyPanel,
-  DimensionsPanel: StylesDimensionsPanel,
-  FiltersPanel: StylesFiltersPanel,
-  ImageSettingsPanel,
-  AdvancedPanel: StylesAdvancedPanel
-} = unlock4(import_block_editor6.privateApis);
+var MemoizedBlockAndElementList = (0, import_element32.memo)(BlockAndElementList);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
-var import_i18n30 = __toESM(require_i18n(), 1);
-var import_element42 = __toESM(require_element(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
+var import_element44 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-body.mjs
-var import_components16 = __toESM(require_components(), 1);
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var import_components17 = __toESM(require_components(), 1);
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/typography-elements.mjs
-var import_i18n15 = __toESM(require_i18n(), 1);
-var import_components17 = __toESM(require_components(), 1);
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
+var import_components18 = __toESM(require_components(), 1);
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/variations/variations-typography.mjs
-var import_components19 = __toESM(require_components(), 1);
+var import_components20 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/preview-typography.mjs
-var import_components18 = __toESM(require_components(), 1);
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+var import_components19 = __toESM(require_components(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 var StylesPreviewTypography = ({
   variation,
   isFocused,
   withHoverView
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
     preview_wrapper_default,
     {
       label: variation.title,
       isFocused,
       withHoverView,
-      children: ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
-        import_components18.__experimentalHStack,
+      children: ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+        import_components19.__experimentalHStack,
         {
           spacing: 10 * ratio,
           justify: "center",
@@ -12953,7 +13117,7 @@ var StylesPreviewTypography = ({
             height: "100%",
             overflow: "hidden"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
             PreviewTypography,
             {
               variation,
@@ -12969,10 +13133,10 @@ var StylesPreviewTypography = ({
 var preview_typography_default = StylesPreviewTypography;
 
 // packages/global-styles-ui/build-module/variations/variation.mjs
-var import_element31 = __toESM(require_element(), 1);
+var import_element33 = __toESM(require_element(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
-var import_i18n16 = __toESM(require_i18n(), 1);
-var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 function Variation({
   variation,
   children,
@@ -12980,13 +13144,13 @@ function Variation({
   properties,
   showTooltip = false
 }) {
-  const [isFocused, setIsFocused] = (0, import_element31.useState)(false);
+  const [isFocused, setIsFocused] = (0, import_element33.useState)(false);
   const {
     base,
     user,
     onChange: setUserConfig
-  } = (0, import_element31.useContext)(GlobalStylesContext);
-  const context = (0, import_element31.useMemo)(() => {
+  } = (0, import_element33.useContext)(GlobalStylesContext);
+  const context = (0, import_element33.useMemo)(() => {
     let merged = mergeGlobalStyles(base, variation);
     if (properties) {
       merged = filterObjectByProperties(merged, properties);
@@ -13006,20 +13170,20 @@ function Variation({
       selectVariation();
     }
   };
-  const isActive = (0, import_element31.useMemo)(
+  const isActive = (0, import_element33.useMemo)(
     () => areGlobalStylesEqual(user, variation),
     [user, variation]
   );
   let label = variation?.title;
   if (variation?.description) {
-    label = (0, import_i18n16.sprintf)(
+    label = (0, import_i18n18.sprintf)(
       /* translators: 1: variation title. 2: variation description. */
-      (0, import_i18n16._x)("%1$s (%2$s)", "variation label"),
+      (0, import_i18n18._x)("%1$s (%2$s)", "variation label"),
       variation?.title,
       variation?.description
     );
   }
-  const content = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+  const content = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
     "div",
     {
       className: clsx_default("global-styles-ui-variations_item", {
@@ -13033,7 +13197,7 @@ function Variation({
       "aria-current": isActive,
       onFocus: () => setIsFocused(true),
       onBlur: () => setIsFocused(false),
-      children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
         "div",
         {
           className: clsx_default("global-styles-ui-variations_item-preview", {
@@ -13044,14 +13208,14 @@ function Variation({
       )
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(tooltip_exports.Trigger, { render: content }),
-    /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(tooltip_exports.Popup, { children: variation?.title })
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(tooltip_exports.Trigger, { render: content }),
+    /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(tooltip_exports.Popup, { children: variation?.title })
   ] }) : content });
 }
 
 // packages/global-styles-ui/build-module/variations/variations-typography.mjs
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 var propertiesToFilter = ["typography"];
 function TypographyVariations({
   title,
@@ -13061,23 +13225,23 @@ function TypographyVariations({
   if (typographyVariations?.length <= 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(import_components19.__experimentalVStack, { spacing: 3, children: [
-    title && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Subtitle, { level: 3, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
-      import_components19.__experimentalGrid,
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(import_components20.__experimentalVStack, { spacing: 3, children: [
+    title && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Subtitle, { level: 3, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+      import_components20.__experimentalGrid,
       {
         columns: 3,
         gap,
         className: "global-styles-ui-style-variations-container",
         children: typographyVariations.map(
           (variation, index2) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
               Variation,
               {
                 variation,
                 properties: propertiesToFilter,
                 showTooltip: true,
-                children: () => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+                children: () => /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
                   preview_typography_default,
                   {
                     variation
@@ -13094,110 +13258,110 @@ function TypographyVariations({
 }
 
 // packages/global-styles-ui/build-module/font-families.mjs
-var import_i18n27 = __toESM(require_i18n(), 1);
-var import_components29 = __toESM(require_components(), 1);
-var import_element41 = __toESM(require_element(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
+var import_components30 = __toESM(require_components(), 1);
+var import_element43 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-library/context.mjs
-var import_element32 = __toESM(require_element(), 1);
+var import_element34 = __toESM(require_element(), 1);
 var import_data7 = __toESM(require_data(), 1);
-var import_core_data7 = __toESM(require_core_data(), 1);
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_core_data6 = __toESM(require_core_data(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/font-library/api.mjs
 var import_api_fetch2 = __toESM(require_api_fetch(), 1);
-var import_core_data6 = __toESM(require_core_data(), 1);
+var import_core_data5 = __toESM(require_core_data(), 1);
 
 // packages/global-styles-ui/build-module/font-library/utils/constants.mjs
-var import_i18n17 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 var FONT_WEIGHTS = {
-  100: (0, import_i18n17._x)("Thin", "font weight"),
-  200: (0, import_i18n17._x)("Extra-light", "font weight"),
-  300: (0, import_i18n17._x)("Light", "font weight"),
-  400: (0, import_i18n17._x)("Normal", "font weight"),
-  500: (0, import_i18n17._x)("Medium", "font weight"),
-  600: (0, import_i18n17._x)("Semi-bold", "font weight"),
-  700: (0, import_i18n17._x)("Bold", "font weight"),
-  800: (0, import_i18n17._x)("Extra-bold", "font weight"),
-  900: (0, import_i18n17._x)("Black", "font weight")
+  100: (0, import_i18n19._x)("Thin", "font weight"),
+  200: (0, import_i18n19._x)("Extra-light", "font weight"),
+  300: (0, import_i18n19._x)("Light", "font weight"),
+  400: (0, import_i18n19._x)("Normal", "font weight"),
+  500: (0, import_i18n19._x)("Medium", "font weight"),
+  600: (0, import_i18n19._x)("Semi-bold", "font weight"),
+  700: (0, import_i18n19._x)("Bold", "font weight"),
+  800: (0, import_i18n19._x)("Extra-bold", "font weight"),
+  900: (0, import_i18n19._x)("Black", "font weight")
 };
 var FONT_STYLES = {
-  normal: (0, import_i18n17._x)("Normal", "font style"),
-  italic: (0, import_i18n17._x)("Italic", "font style")
+  normal: (0, import_i18n19._x)("Normal", "font style"),
+  italic: (0, import_i18n19._x)("Italic", "font style")
 };
 
 // packages/global-styles-ui/build-module/font-library/utils/index.mjs
 var { File } = window;
 
 // packages/global-styles-ui/build-module/font-library/context.mjs
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
-var FontLibraryContext = (0, import_element32.createContext)(
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var FontLibraryContext = (0, import_element34.createContext)(
   {}
 );
 FontLibraryContext.displayName = "FontLibraryContext";
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-var import_i18n25 = __toESM(require_i18n(), 1);
-var import_components27 = __toESM(require_components(), 1);
-var import_core_data10 = __toESM(require_core_data(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
+var import_components28 = __toESM(require_components(), 1);
+var import_core_data9 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
 
 // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
-var import_components22 = __toESM(require_components(), 1);
-var import_core_data8 = __toESM(require_core_data(), 1);
+var import_components23 = __toESM(require_components(), 1);
+var import_core_data7 = __toESM(require_core_data(), 1);
 var import_data8 = __toESM(require_data(), 1);
-var import_element36 = __toESM(require_element(), 1);
-var import_i18n20 = __toESM(require_i18n(), 1);
+var import_element38 = __toESM(require_element(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-card.mjs
-var import_i18n19 = __toESM(require_i18n(), 1);
-var import_element34 = __toESM(require_element(), 1);
-var import_components20 = __toESM(require_components(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
+var import_element36 = __toESM(require_element(), 1);
+var import_components21 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-demo.mjs
-var import_element33 = __toESM(require_element(), 1);
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
-
-// packages/global-styles-ui/build-module/font-library/font-card.mjs
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
-
-// packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
 var import_element35 = __toESM(require_element(), 1);
-var import_components21 = __toESM(require_components(), 1);
 var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
+// packages/global-styles-ui/build-module/font-library/font-card.mjs
 var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-library/font-collection.mjs
-var import_element38 = __toESM(require_element(), 1);
-var import_components25 = __toESM(require_components(), 1);
-var import_compose4 = __toESM(require_compose(), 1);
-var import_i18n23 = __toESM(require_i18n(), 1);
-var import_core_data9 = __toESM(require_core_data(), 1);
-
-// packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.mjs
-var import_i18n21 = __toESM(require_i18n(), 1);
-var import_components23 = __toESM(require_components(), 1);
+// packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
+var import_element37 = __toESM(require_element(), 1);
+var import_components22 = __toESM(require_components(), 1);
 var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
-var import_element37 = __toESM(require_element(), 1);
-var import_components24 = __toESM(require_components(), 1);
-var import_i18n22 = __toESM(require_i18n(), 1);
+// packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
 var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-collection.mjs
+var import_element40 = __toESM(require_element(), 1);
+var import_components26 = __toESM(require_components(), 1);
+var import_compose4 = __toESM(require_compose(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
+var import_core_data8 = __toESM(require_core_data(), 1);
+
+// packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.mjs
+var import_i18n23 = __toESM(require_i18n(), 1);
+var import_components24 = __toESM(require_components(), 1);
 var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
+var import_element39 = __toESM(require_element(), 1);
+var import_components25 = __toESM(require_components(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/font-library/font-collection.mjs
+var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_CATEGORY = {
   slug: "all",
-  name: (0, import_i18n23._x)("All", "font categories")
+  name: (0, import_i18n25._x)("All", "font categories")
 };
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
-var import_components26 = __toESM(require_components(), 1);
-var import_element39 = __toESM(require_element(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
+var import_components27 = __toESM(require_components(), 1);
+var import_element41 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
 var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
@@ -16135,8 +16299,8 @@ var unbrotli_default = (function() {
                           ringbuffer,
                           ringbuffer_size
                         );
-                        for (var _x8 = 0; _x8 < copy_dst - ringbuffer_end; _x8++)
-                          ringbuffer[_x8] = ringbuffer[ringbuffer_end + _x8];
+                        for (var _x7 = 0; _x7 < copy_dst - ringbuffer_end; _x7++)
+                          ringbuffer[_x7] = ringbuffer[ringbuffer_end + _x7];
                       }
                     } else {
                       throw new Error(
@@ -17015,12 +17179,12 @@ var inflate_default = (function() {
           var STR_APPLY_UIA_OK = true;
           try {
             String.fromCharCode.apply(null, [0]);
-          } catch (__50) {
+          } catch (__51) {
             STR_APPLY_OK = false;
           }
           try {
             String.fromCharCode.apply(null, new Uint8Array(1));
-          } catch (__50) {
+          } catch (__51) {
             STR_APPLY_UIA_OK = false;
           }
           var _utf8len = new utils.Buf8(256);
@@ -23232,126 +23396,67 @@ var LongVertMetric = class {
 var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
-var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var { Tabs } = unlock4(import_components27.privateApis);
+var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+var { Tabs } = unlock4(import_components28.privateApis);
 var DEFAULT_TAB = {
   id: "installed-fonts",
-  title: (0, import_i18n25._x)("Library", "Font library")
+  title: (0, import_i18n27._x)("Library", "Font library")
 };
 var UPLOAD_TAB = {
   id: "upload-fonts",
-  title: (0, import_i18n25._x)("Upload", "noun")
+  title: (0, import_i18n27._x)("Upload", "noun")
 };
 
 // packages/global-styles-ui/build-module/font-family-item.mjs
-var import_i18n26 = __toESM(require_i18n(), 1);
-var import_components28 = __toESM(require_components(), 1);
-var import_element40 = __toESM(require_element(), 1);
-var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-
-// packages/global-styles-ui/build-module/font-families.mjs
-var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-
-// packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
 var import_i18n28 = __toESM(require_i18n(), 1);
-var import_components30 = __toESM(require_components(), 1);
+var import_components29 = __toESM(require_components(), 1);
+var import_element42 = __toESM(require_element(), 1);
 var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/text-shadows.mjs
-var import_i18n29 = __toESM(require_i18n(), 1);
-var import_components31 = __toESM(require_components(), 1);
+// packages/global-styles-ui/build-module/font-families.mjs
 var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-typography.mjs
+// packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
+var import_i18n30 = __toESM(require_i18n(), 1);
+var import_components31 = __toESM(require_components(), 1);
 var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-typography-element.mjs
+// packages/global-styles-ui/build-module/text-shadows.mjs
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_components32 = __toESM(require_components(), 1);
-var import_element43 = __toESM(require_element(), 1);
-
-// packages/global-styles-ui/build-module/typography-panel.mjs
-var import_block_editor7 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock4(import_block_editor7.privateApis);
 
-// packages/global-styles-ui/build-module/typography-preview.mjs
+// packages/global-styles-ui/build-module/screen-typography.mjs
 var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-typography-element.mjs
-var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
-var elements = {
-  text: {
-    description: (0, import_i18n31.__)("Manage the fonts used on the site."),
-    title: (0, import_i18n31.__)("Text")
-  },
-  link: {
-    description: (0, import_i18n31.__)("Manage the fonts and typography used on the links."),
-    title: (0, import_i18n31.__)("Links")
-  },
-  heading: {
-    description: (0, import_i18n31.__)("Manage the fonts and typography used on headings."),
-    title: (0, import_i18n31.__)("Headings")
-  },
-  caption: {
-    description: (0, import_i18n31.__)("Manage the fonts and typography used on captions."),
-    title: (0, import_i18n31.__)("Captions")
-  },
-  cite: {
-    description: (0, import_i18n31.__)("Manage the fonts and typography used on citations."),
-    title: (0, import_i18n31.__)("Citations")
-  },
-  button: {
-    description: (0, import_i18n31.__)("Manage the fonts and typography used on buttons."),
-    title: (0, import_i18n31.__)("Buttons")
-  },
-  textInput: {
-    description: (0, import_i18n31.__)("Manage the fonts and typography used on inputs."),
-    title: (0, import_i18n31.__)("Inputs")
-  },
-  select: {
-    description: (0, import_i18n31.__)("Manage the fonts and typography used on selects."),
-    title: (0, import_i18n31.__)("Selects")
-  }
-};
-
 // packages/global-styles-ui/build-module/screen-colors.mjs
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
 var import_components34 = __toESM(require_components(), 1);
-var import_block_editor8 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/palette.mjs
 var import_components33 = __toESM(require_components(), 1);
-var import_i18n32 = __toESM(require_i18n(), 1);
-var import_element44 = __toESM(require_element(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
+var import_element45 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
-var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/palette.mjs
-var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-colors.mjs
-var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock4(
-  import_block_editor8.privateApis
-);
-var ADDITIONAL_ELEMENTS = [
-  { name: "cite", label: (0, import_i18n33.__)("Citations") },
-  { name: "textInput", label: (0, import_i18n33.__)("Inputs") },
-  { name: "select", label: (0, import_i18n33.__)("Selects") }
-];
+var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/color-palette-panel.mjs
 var import_compose5 = __toESM(require_compose(), 1);
 var import_components37 = __toESM(require_components(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/variations/variations-color.mjs
 var import_components36 = __toESM(require_components(), 1);
@@ -23360,10 +23465,10 @@ var import_components36 = __toESM(require_components(), 1);
 var import_components35 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/preset-colors.mjs
-var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
 function PresetColors() {
   const { paletteColors } = useStylesPreviewColors();
-  return paletteColors.slice(0, 4).map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+  return paletteColors.slice(0, 4).map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
     "div",
     {
       style: {
@@ -23377,7 +23482,7 @@ function PresetColors() {
 }
 
 // packages/global-styles-ui/build-module/preview-colors.mjs
-var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
 var firstFrameVariants2 = {
   start: {
     scale: 1,
@@ -23393,13 +23498,13 @@ var StylesPreviewColors = ({
   isFocused,
   withHoverView
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
     preview_wrapper_default,
     {
       label,
       isFocused,
       withHoverView,
-      children: ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+      children: ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
         import_components35.__unstableMotion.div,
         {
           variants: firstFrameVariants2,
@@ -23407,7 +23512,7 @@ var StylesPreviewColors = ({
             height: "100%",
             overflow: "hidden"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
             import_components35.__experimentalHStack,
             {
               spacing: 0,
@@ -23416,7 +23521,7 @@ var StylesPreviewColors = ({
                 height: "100%",
                 overflow: "hidden"
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(PresetColors, {})
+              children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(PresetColors, {})
             }
           )
         },
@@ -23428,7 +23533,7 @@ var StylesPreviewColors = ({
 var preview_colors_default = StylesPreviewColors;
 
 // packages/global-styles-ui/build-module/variations/variations-color.mjs
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
 var propertiesToFilter2 = ["color"];
 function ColorVariations({
   title,
@@ -23438,16 +23543,16 @@ function ColorVariations({
   if (colorVariations?.length <= 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(import_components36.__experimentalVStack, { spacing: 3, children: [
-    title && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(Subtitle, { level: 3, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(import_components36.__experimentalGrid, { gap, children: colorVariations.map((variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components36.__experimentalVStack, { spacing: 3, children: [
+    title && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(Subtitle, { level: 3, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(import_components36.__experimentalGrid, { gap, children: colorVariations.map((variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
       Variation,
       {
         variation,
         isPill: true,
         properties: propertiesToFilter2,
         showTooltip: true,
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(preview_colors_default, {})
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(preview_colors_default, {})
       },
       index2
     )) })
@@ -23455,134 +23560,134 @@ function ColorVariations({
 }
 
 // packages/global-styles-ui/build-module/color-palette-panel.mjs
-var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
 var import_compose6 = __toESM(require_compose(), 1);
 var import_components38 = __toESM(require_components(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
+var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/duotone-palette-panel.mjs
 var import_compose7 = __toESM(require_compose(), 1);
-var import_element45 = __toESM(require_element(), 1);
+var import_element46 = __toESM(require_element(), 1);
 var import_components39 = __toESM(require_components(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-background.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 var import_block_editor10 = __toESM(require_block_editor(), 1);
 var import_components40 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/background-panel.mjs
 var import_block_editor9 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
-var { BackgroundPanel: StylesBackgroundPanel2 } = unlock4(
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var { BackgroundPanel: StylesBackgroundPanel3 } = unlock4(
   import_block_editor9.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-background.mjs
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock4(import_block_editor10.privateApis);
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+var { useHasBackgroundPanel: useHasBackgroundPanel5 } = unlock4(import_block_editor10.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_components42 = __toESM(require_components(), 1);
-var import_i18n40 = __toESM(require_i18n(), 1);
-var import_element46 = __toESM(require_element(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
+var import_element47 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-reset-dialog.mjs
 var import_components41 = __toESM(require_components(), 1);
-var import_i18n39 = __toESM(require_i18n(), 1);
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
 var import_components46 = __toESM(require_components(), 1);
-var import_i18n44 = __toESM(require_i18n(), 1);
-var import_element48 = __toESM(require_element(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
+var import_element49 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
 var import_components43 = __toESM(require_components(), 1);
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
 var import_components44 = __toESM(require_components(), 1);
-var import_i18n42 = __toESM(require_i18n(), 1);
-var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/dialogs/rename-dialog.mjs
 var import_components45 = __toESM(require_components(), 1);
-var import_i18n43 = __toESM(require_i18n(), 1);
-var import_element47 = __toESM(require_element(), 1);
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
+var import_element48 = __toESM(require_element(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-shadows.mjs
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows.mjs
-var import_i18n45 = __toESM(require_i18n(), 1);
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-text-shadows-edit.mjs
 var import_components47 = __toESM(require_components(), 1);
-var import_i18n46 = __toESM(require_i18n(), 1);
-var import_element49 = __toESM(require_element(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var import_i18n47 = __toESM(require_i18n(), 1);
+var import_element50 = __toESM(require_element(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_i18n47 = __toESM(require_i18n(), 1);
+var import_i18n48 = __toESM(require_i18n(), 1);
 var import_block_editor12 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/dimensions-panel.mjs
 var import_block_editor11 = __toESM(require_block_editor(), 1);
-var import_element50 = __toESM(require_element(), 1);
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock4(import_block_editor11.privateApis);
+var import_element51 = __toESM(require_element(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var { useSettingsForBlockElement: useSettingsForBlockElement5, DimensionsPanel: StylesDimensionsPanel3 } = unlock4(import_block_editor11.privateApis);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
-var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock4(
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var { useHasDimensionsPanel: useHasDimensionsPanel5, useSettingsForBlockElement: useSettingsForBlockElement6 } = unlock4(
   import_block_editor12.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
 var import_components50 = __toESM(require_components(), 1);
-var import_i18n50 = __toESM(require_i18n(), 1);
+var import_i18n51 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_i18n49 = __toESM(require_i18n(), 1);
+var import_i18n50 = __toESM(require_i18n(), 1);
 var import_components49 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-container.mjs
-var import_core_data11 = __toESM(require_core_data(), 1);
+var import_core_data10 = __toESM(require_core_data(), 1);
 var import_data10 = __toESM(require_data(), 1);
-var import_element51 = __toESM(require_element(), 1);
+var import_element52 = __toESM(require_element(), 1);
 var import_components48 = __toESM(require_components(), 1);
-var import_i18n48 = __toESM(require_i18n(), 1);
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var import_i18n49 = __toESM(require_i18n(), 1);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 function StyleVariationsContainer({
   gap = 2
 }) {
-  const { user } = (0, import_element51.useContext)(GlobalStylesContext);
+  const { user } = (0, import_element52.useContext)(GlobalStylesContext);
   const userStyles = user?.styles;
   const variations = (0, import_data10.useSelect)((select) => {
     const result = select(
-      import_core_data11.store
+      import_core_data10.store
     ).__experimentalGetCurrentThemeGlobalStylesVariations();
     return Array.isArray(result) ? result : void 0;
   }, []);
@@ -23594,10 +23699,10 @@ function StyleVariationsContainer({
       ]);
     }
   );
-  const themeVariations = (0, import_element51.useMemo)(() => {
+  const themeVariations = (0, import_element52.useMemo)(() => {
     const withEmptyVariation = [
       {
-        title: (0, import_i18n48.__)("Default"),
+        title: (0, import_i18n49.__)("Default"),
         settings: {},
         styles: {}
       },
@@ -23640,14 +23745,14 @@ function StyleVariationsContainer({
   if (!fullStyleVariations || fullStyleVariations.length < 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
     import_components48.__experimentalGrid,
     {
       columns: 2,
       className: "global-styles-ui-style-variations-container",
       gap,
       children: themeVariations.map(
-        (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
           preview_styles_default,
           {
             label: variation?.title,
@@ -23663,27 +23768,27 @@ function StyleVariationsContainer({
 var style_variations_container_default = StyleVariationsContainer;
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-css.mjs
-var import_i18n51 = __toESM(require_i18n(), 1);
+var import_i18n52 = __toESM(require_i18n(), 1);
 var import_components51 = __toESM(require_components(), 1);
 var import_block_editor13 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var { AdvancedPanel: StylesAdvancedPanel2 } = unlock4(import_block_editor13.privateApis);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var { AdvancedPanel: StylesAdvancedPanel3 } = unlock4(import_block_editor13.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_i18n53 = __toESM(require_i18n(), 1);
+var import_i18n54 = __toESM(require_i18n(), 1);
 var import_components52 = __toESM(require_components(), 1);
-var import_element54 = __toESM(require_element(), 1);
+var import_element55 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
 var import_data11 = __toESM(require_data(), 1);
-var import_core_data12 = __toESM(require_core_data(), 1);
-var import_element52 = __toESM(require_element(), 1);
+var import_core_data11 = __toESM(require_core_data(), 1);
+var import_element53 = __toESM(require_element(), 1);
 var SITE_EDITOR_AUTHORS_QUERY = {
   per_page: -1,
   _fields: "id,name,avatar_urls",
@@ -23695,8 +23800,8 @@ var EMPTY_ARRAY3 = [];
 function useGlobalStylesRevisions({
   query
 } = {}) {
-  const { user: userConfig } = (0, import_element52.useContext)(GlobalStylesContext);
-  const _query = (0, import_element52.useMemo)(
+  const { user: userConfig } = (0, import_element53.useContext)(GlobalStylesContext);
+  const _query = (0, import_element53.useMemo)(
     () => ({ ...DEFAULT_QUERY, ...query }),
     [query]
   );
@@ -23717,7 +23822,7 @@ function useGlobalStylesRevisions({
         __experimentalGetCurrentGlobalStylesId,
         getEntityRecord,
         isResolving
-      } = select(import_core_data12.store);
+      } = select(import_core_data11.store);
       const dirtyEntityRecords = __experimentalGetDirtyEntityRecords() || [];
       const _currentUser = getCurrentUser();
       const _isDirty = dirtyEntityRecords.length > 0;
@@ -23748,7 +23853,7 @@ function useGlobalStylesRevisions({
     },
     [_query]
   );
-  return (0, import_element52.useMemo)(() => {
+  return (0, import_element53.useMemo)(() => {
     if (!authors.length || isLoadingGlobalStylesRevisions) {
       return {
         revisions: EMPTY_ARRAY3,
@@ -23813,44 +23918,44 @@ function useGlobalStylesRevisions({
 }
 
 // packages/global-styles-ui/build-module/screen-revisions/revisions-list.mjs
-var import_i18n52 = __toESM(require_i18n(), 1);
+var import_i18n53 = __toESM(require_i18n(), 1);
 var import_date = __toESM(require_date(), 1);
-var import_core_data13 = __toESM(require_core_data(), 1);
+var import_core_data12 = __toESM(require_core_data(), 1);
 var import_data12 = __toESM(require_data(), 1);
-var import_element53 = __toESM(require_element(), 1);
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var import_element54 = __toESM(require_element(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
-var import_i18n54 = __toESM(require_i18n(), 1);
+var import_i18n55 = __toESM(require_i18n(), 1);
 var import_components53 = __toESM(require_components(), 1);
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_i18n56 = __toESM(require_i18n(), 1);
+var import_i18n57 = __toESM(require_i18n(), 1);
 var import_components55 = __toESM(require_components(), 1);
-var import_element55 = __toESM(require_element(), 1);
+var import_element56 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor14 = __toESM(require_block_editor(), 1);
-var import_i18n55 = __toESM(require_i18n(), 1);
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var import_i18n56 = __toESM(require_i18n(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/size-control/index.mjs
 var import_components54 = __toESM(require_components(), 1);
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/with-global-styles-provider.mjs
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 function withGlobalStylesProvider(Component) {
   return function WrappedComponent({
     value,
@@ -23858,13 +23963,13 @@ function withGlobalStylesProvider(Component) {
     onChange,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
       GlobalStylesProvider,
       {
         value,
         baseValue,
         onChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Component, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(Component, { ...props })
       }
     );
   };
@@ -23880,10 +23985,10 @@ var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
 // packages/global-styles-ui/build-module/font-library/font-library.mjs
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 
 // routes/styles/canvas.tsx
-var import_jsx_runtime103 = __toESM(require_jsx_runtime());
+var import_jsx_runtime102 = __toESM(require_jsx_runtime());
 var { StyleBookPreview } = unlock2(import_editor2.privateApis);
 function RevisionStyleBookPreview({
   revisionId,
@@ -23898,7 +24003,7 @@ function RevisionStyleBookPreview({
   const selectedRevision = revisions.find(
     (revision) => String(revision.id) === revisionId
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     StyleBookPreview,
     {
       path: section,
@@ -23913,7 +24018,7 @@ function Canvas() {
   const navigate = useNavigate2();
   const search = useSearch2({ strict: false });
   const { globalStylesId, isBlockTheme } = (0, import_data14.useSelect)((select) => {
-    const { getCurrentTheme, __experimentalGetCurrentGlobalStylesId } = select(import_core_data14.store);
+    const { getCurrentTheme, __experimentalGetCurrentGlobalStylesId } = select(import_core_data13.store);
     return {
       globalStylesId: __experimentalGetCurrentGlobalStylesId(),
       isBlockTheme: !!getCurrentTheme()?.is_block_theme
@@ -23932,7 +24037,7 @@ function Canvas() {
     });
   };
   if (!assetsReady || !settingsReady) {
-    return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
       "div",
       {
         style: {
@@ -23941,16 +24046,16 @@ function Canvas() {
           alignItems: "center",
           height: "100%"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components57.Spinner, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components57.Spinner, {})
       }
     );
   }
   if (!isBlockTheme) {
-    return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(StyleBookPreview, { isStatic: true, settings: editorSettings });
+    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(StyleBookPreview, { isStatic: true, settings: editorSettings });
   }
   const revisionId = section.match(/^\/revisions\/(.+)$/)?.[1];
   if (revisionId) {
-    return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
       RevisionStyleBookPreview,
       {
         revisionId,
@@ -23960,7 +24065,7 @@ function Canvas() {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     StyleBookPreview,
     {
       path: section,

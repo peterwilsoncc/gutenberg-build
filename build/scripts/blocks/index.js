@@ -2440,6 +2440,19 @@ var wp;
     "textShadow",
     "letterSpacing"
   ];
+  var ELEMENT_BLOCK_SUPPORTS = [
+    ...ROOT_BLOCK_SUPPORTS,
+    "backgroundGradient",
+    "backgroundImage",
+    "backgroundSize",
+    "borderColor",
+    "borderRadius",
+    "borderStyle",
+    "borderWidth",
+    "margin",
+    "shadow",
+    "writingMode"
+  ];
   function filterElementBlockSupports(blockSupports, name, element) {
     return blockSupports.filter((support) => {
       if (support === "fontSize" && element === "heading") {
@@ -2464,14 +2477,19 @@ var wp;
       if (support === "textColumns" && !name) {
         return false;
       }
+      const isElement = !name && !!element && element in __EXPERIMENTAL_ELEMENTS;
+      if (["blockGap", "contentSize", "wideSize"].includes(support) && isElement) {
+        return false;
+      }
       return true;
     });
   }
   var getSupportedStyles = (0, import_data3.createSelector)(
     (state, name, element) => {
       if (!name) {
+        const isElement = !!element && element in __EXPERIMENTAL_ELEMENTS;
         return filterElementBlockSupports(
-          ROOT_BLOCK_SUPPORTS,
+          isElement ? ELEMENT_BLOCK_SUPPORTS : ROOT_BLOCK_SUPPORTS,
           name,
           element
         );
