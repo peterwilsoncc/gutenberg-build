@@ -23535,89 +23535,29 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/build-module/text/utils.mjs
   var import_highlight_words_core = __toESM(require_dist(), 1);
   var import_element23 = __toESM(require_element(), 1);
-  var lowercaseProps = (object) => {
-    const mapped = {};
-    for (const key in object) {
-      mapped[key.toLowerCase()] = object[key];
-    }
-    return mapped;
-  };
-  var memoizedLowercaseProps = memize(lowercaseProps);
   function createHighlighterText({
-    activeClassName = "",
-    activeIndex = -1,
-    activeStyle,
     autoEscape,
     caseSensitive = false,
     children,
-    findChunks,
-    highlightClassName = "",
-    highlightStyle = {},
-    highlightTag = "mark",
     sanitize: sanitize2,
-    searchWords = [],
-    unhighlightClassName = "",
-    unhighlightStyle
+    searchWords = []
   }) {
     if (!children) {
       return null;
     }
-    if (typeof children !== "string") {
-      return children;
-    }
-    const textToHighlight = children;
     const chunks = (0, import_highlight_words_core.findAll)({
       autoEscape,
       caseSensitive,
-      findChunks,
       sanitize: sanitize2,
       searchWords,
-      textToHighlight
+      textToHighlight: children
     });
-    const HighlightTag = highlightTag;
-    let highlightIndex = -1;
-    let highlightClassNames = "";
-    let highlightStyles;
-    const textContent = chunks.map((chunk, index2) => {
-      const text = textToHighlight.substr(
-        chunk.start,
-        chunk.end - chunk.start
-      );
-      if (chunk.highlight) {
-        highlightIndex++;
-        let highlightClass;
-        if (typeof highlightClassName === "object") {
-          if (!caseSensitive) {
-            highlightClassName = memoizedLowercaseProps(highlightClassName);
-            highlightClass = highlightClassName[text.toLowerCase()];
-          } else {
-            highlightClass = highlightClassName[text];
-          }
-        } else {
-          highlightClass = highlightClassName;
-        }
-        const isActive = highlightIndex === +activeIndex;
-        highlightClassNames = `${highlightClass} ${isActive ? activeClassName : ""}`;
-        highlightStyles = isActive === true && activeStyle !== null ? Object.assign({}, highlightStyle, activeStyle) : highlightStyle;
-        const props = {
-          children: text,
-          className: highlightClassNames,
-          key: index2,
-          style: highlightStyles
-        };
-        if (typeof HighlightTag !== "string") {
-          props.highlightIndex = highlightIndex;
-        }
-        return (0, import_element23.createElement)(HighlightTag, props);
-      }
-      return (0, import_element23.createElement)("span", {
-        children: text,
-        className: unhighlightClassName,
-        key: index2,
-        style: unhighlightStyle
-      });
-    });
-    return textContent;
+    return chunks.map(
+      (chunk, index2) => (0, import_element23.createElement)(chunk.highlight ? "mark" : "span", {
+        children: children.slice(chunk.start, chunk.end),
+        key: index2
+      })
+    );
   }
 
   // packages/components/build-module/utils/font-size.mjs
