@@ -110280,8 +110280,8 @@ If there's a particular need for this, please submit a feature request at https:
       currentValue = !showCustomValueControl ? getSliderValueFromPreset(value, presets, presetType) : getCustomValueFromPreset(value, presets, presetType);
     }
     const options = selectListOptions.map((size4, index3) => ({
-      value: index3,
-      label: size4.name
+      value: String(index3),
+      label: size4.name ?? ""
     }));
     const resolvedPresetValue = isValuePreset(value, presetType) ? getCustomValueFromPreset(value, presets, presetType) : value;
     const [parsedQuantity, parsedUnit] = (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(resolvedPresetValue);
@@ -110386,15 +110386,17 @@ If there's a particular need for this, please submit a feature request at https:
               withInputField: false
             }
           ),
-          hasPresets && !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(
-            select_exports.Root,
+          hasPresets && !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
+            SelectControl2,
             {
+              label: ariaLabel,
+              hideLabelFromVision: true,
               items: options,
               onValueChange: (selection2) => {
-                if (!selection2) {
+                if (!selection2 || selection2.value === null) {
                   return;
                 }
-                if (showCustomValueInSelectList && selection2.value === options.length - 1) {
+                if (showCustomValueInSelectList && selection2.value === String(options.length - 1)) {
                   setShowCustomValueControl(true);
                 } else {
                   onChange(
@@ -110406,22 +110408,18 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               },
               value: options.find(
-                (option) => option.value === currentValue
+                (option) => option.value === String(currentValue)
               ) ?? options[0],
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-                  select_exports.Trigger,
-                  {
-                    className: "preset-input-control__custom-select-control",
-                    "aria-label": ariaLabel,
-                    onBlur: onMouseOut,
-                    onFocus: onMouseOver,
-                    onMouseOut,
-                    onMouseOver
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(select_exports.Popup, { children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(select_exports.Item, { value: option, children: /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(select_exports.ItemLabel, { children: option.label }) }, option.value)) })
-              ]
+              trigger: /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
+                SelectControl2.Trigger,
+                {
+                  className: "preset-input-control__custom-select-control",
+                  onBlur: onMouseOut,
+                  onFocus: onMouseOver,
+                  onMouseOut,
+                  onMouseOver
+                }
+              )
             }
           ),
           hasPresets && !disableCustomValues && /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
