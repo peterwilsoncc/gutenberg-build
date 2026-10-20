@@ -260,6 +260,13 @@ var require_private_apis = __commonJS({
   }
 });
 
+// package-external:@wordpress/deprecated
+var require_deprecated = __commonJS({
+  "package-external:@wordpress/deprecated"(exports, module) {
+    module.exports = window.wp.deprecated;
+  }
+});
+
 // package-external:@wordpress/components
 var require_components = __commonJS({
   "package-external:@wordpress/components"(exports, module) {
@@ -753,13 +760,6 @@ var require_remove_accents = __commonJS({
 var require_date = __commonJS({
   "package-external:@wordpress/date"(exports, module) {
     module.exports = window.wp.date;
-  }
-});
-
-// package-external:@wordpress/deprecated
-var require_deprecated = __commonJS({
-  "package-external:@wordpress/deprecated"(exports, module) {
-    module.exports = window.wp.deprecated;
   }
 });
 
