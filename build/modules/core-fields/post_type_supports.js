@@ -17862,6 +17862,13 @@ function useDefaultTemplateLabel(postType, postId, slug) {
 // packages/core-fields/build-module/post_type_supports/template/edit.mjs
 var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 var EMPTY_ARRAY2 = [];
+var DEFAULT_TEMPLATE_VALUE = "//default";
+function toItemValue(template) {
+  return template || DEFAULT_TEMPLATE_VALUE;
+}
+function fromItemValue(itemValue) {
+  return !itemValue || itemValue === DEFAULT_TEMPLATE_VALUE ? "" : itemValue;
+}
 function useCanSwitchTemplate(postType, postId) {
   return (0, import_data8.useSelect)(
     (select) => {
@@ -17886,7 +17893,7 @@ function ClassicTemplateEdit({
     () => Object.entries(data?.available_templates ?? {}).map(
       ([templateSlug, title]) => ({
         label: title,
-        value: templateSlug
+        value: toItemValue(templateSlug)
       })
     ),
     [data]
@@ -17897,9 +17904,9 @@ function ClassicTemplateEdit({
     {
       label: (0, import_i18n19.__)("Template"),
       hideLabelFromVision: true,
-      value: items.find((item) => item.value === value) ?? items[0] ?? null,
+      value: items.find((item) => item.value === toItemValue(value)) ?? items[0] ?? null,
       items,
-      onValueChange: (item) => onChange(item?.value ?? ""),
+      onValueChange: (item) => onChange(fromItemValue(item?.value)),
       disabled: !canSwitchTemplate
     }
   );
@@ -17932,7 +17939,7 @@ function BlockThemeTemplateEdit({
   const value = field.getValue({ item: data });
   const items = (0, import_element47.useMemo)(
     () => [
-      { label: defaultTemplateLabel, value: "" },
+      { label: defaultTemplateLabel, value: DEFAULT_TEMPLATE_VALUE },
       ...templates.map((template) => ({
         label: getItemTitle(template),
         value: template.slug
@@ -17945,9 +17952,9 @@ function BlockThemeTemplateEdit({
     {
       label: (0, import_i18n19.__)("Template"),
       hideLabelFromVision: true,
-      value: items.find((item) => item.value === value) ?? items[0] ?? null,
+      value: items.find((item) => item.value === toItemValue(value)) ?? items[0] ?? null,
       items,
-      onValueChange: (item) => onChange(item?.value ?? ""),
+      onValueChange: (item) => onChange(fromItemValue(item?.value)),
       disabled: !canSwitchTemplate
     }
   );
