@@ -1303,6 +1303,16 @@ var VALID_ELEMENT_PSEUDO_SELECTORS = {
     ":focus",
     ":focus-visible",
     ":active"
+  ],
+  // Validation states come before focus states because an edited field can match
+  // both at once, so user action styles must be output last to win.
+  textInput: [
+    ":required",
+    ":user-valid",
+    ":user-invalid",
+    ":focus",
+    ":focus-visible",
+    "::placeholder"
   ]
 };
 function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
@@ -1743,6 +1753,18 @@ function getPseudoStyleNodes(node) {
     ];
   });
 }
+function isPseudoElementSelector(selectorSuffix) {
+  return selectorSuffix?.startsWith("::") ?? false;
+}
+function getPseudoRuleSelector(baseSelector, pseudoSelector) {
+  if (isPseudoElementSelector(pseudoSelector)) {
+    return `:root :where(${baseSelector})${pseudoSelector}`;
+  }
+  return `:root :where(${appendToSelector(
+    baseSelector,
+    pseudoSelector
+  )})`;
+}
 function getResponsiveStyleNodes(node, responsiveMediaQueries) {
   const {
     styles,
@@ -2159,13 +2181,16 @@ function renderStylesNode(node, {
     Object.entries(featureDeclarations).forEach(
       ([featureSelector, declarations2]) => {
         if (declarations2.length) {
-          let selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
+          const selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
             variationName,
             featureSelector
           ) : featureSelector;
-          selectorForRule = selectorSuffix ? appendToSelector(selectorForRule, selectorSuffix) : selectorForRule;
+          const featureRuleSelector = selectorSuffix ? getPseudoRuleSelector(
+            selectorForRule,
+            selectorSuffix
+          ) : `:root :where(${selectorForRule})`;
           const rules = declarations2.join(";");
-          ruleset += `:root :where(${selectorForRule}){${rules};}`;
+          ruleset += `${featureRuleSelector}{${rules};}`;
         }
       }
     );
@@ -2207,7 +2232,12 @@ function renderStylesNode(node, {
     baseStyles
   );
   if (styleDeclarations?.length) {
-    const generalSelector = skipSelectorWrapper ? effectiveSelector : `:root :where(${effectiveSelector})`;
+    let generalSelector = `:root :where(${effectiveSelector})`;
+    if (skipSelectorWrapper) {
+      generalSelector = effectiveSelector;
+    } else if (selectorSuffix) {
+      generalSelector = getPseudoRuleSelector(selector, selectorSuffix);
+    }
     ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
   }
   if (styles?.css) {
