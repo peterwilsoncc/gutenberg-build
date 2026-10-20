@@ -3026,7 +3026,8 @@ body.lockscroll {
   }
 }
 .components-snackbar:focus {
-  box-shadow: inset 0 0 0 1px #fff, 0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
 }
 .components-snackbar.components-snackbar-explicit-dismiss {
   cursor: default;
