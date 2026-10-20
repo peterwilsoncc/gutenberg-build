@@ -132400,11 +132400,15 @@ If there's a particular need for this, please submit a feature request at https:
   function paintsItsOwnBackground(stateStyles) {
     return !!stateStyles?.background?.gradient || !!stateStyles?.background?.backgroundImage || !!stateStyles?.color?.gradient;
   }
+  function getValidStateClip(stateStyles) {
+    const stateClip = stateStyles?.background?.backgroundClip;
+    return import_style_engine6.VALID_BACKGROUND_CLIP_VALUES.includes(stateClip) ? stateClip : void 0;
+  }
   function getStateTextClipEscapeCSS(stateStyles, baseStyle, selector5) {
     if ("text" !== baseStyle?.background?.backgroundClip) {
       return void 0;
     }
-    const stateClip = stateStyles?.background?.backgroundClip;
+    const stateClip = getValidStateClip(stateStyles);
     if (!stateClip || "text" === stateClip) {
       return void 0;
     }
@@ -132415,7 +132419,7 @@ If there's a particular need for this, please submit a feature request at https:
     return selector5 ? `${selector5} { ${declaration}; }` : `${declaration};`;
   }
   function getStateTextFillResetCSS(stateStyles, baseStyle, selector5) {
-    if (!baseStyle || !stateStyles?.color?.text || stateStyles?.background?.backgroundClip || paintsItsOwnBackground(stateStyles)) {
+    if (!baseStyle || !stateStyles?.color?.text || getValidStateClip(stateStyles) || paintsItsOwnBackground(stateStyles)) {
       return void 0;
     }
     const declaration = "-webkit-text-fill-color: currentColor !important";
