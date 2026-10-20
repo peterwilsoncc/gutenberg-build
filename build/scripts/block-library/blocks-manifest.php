@@ -9250,17 +9250,11 @@ return array(
 			'summary'
 		),
 		'textdomain' => 'default',
+		'usesContext' => array(
+			'postId',
+			'postType'
+		),
 		'attributes' => array(
-			'headings' => array(
-				'type' => 'array',
-				'items' => array(
-					'type' => 'object'
-				),
-				'default' => array(
-					
-				),
-				'role' => 'local'
-			),
 			'onlyIncludeCurrentPage' => array(
 				'type' => 'boolean',
 				'default' => false
