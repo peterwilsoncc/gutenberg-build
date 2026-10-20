@@ -96134,7 +96134,24 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-panel.mjs
   var import_jsx_runtime483 = __toESM(require_jsx_runtime(), 1);
-  var MEDIA_ITEMS_PER_PAGE = 8;
+  var MIN_ITEMS_PER_PAGE = 8;
+  var ITEMS_PER_PAGE_BY_WINDOW_HEIGHT = [
+    [2060, 20],
+    [1890, 18],
+    [1720, 16],
+    [1550, 14],
+    [1390, 12],
+    [1220, 10]
+  ];
+  function getItemsPerPage() {
+    if (typeof window === "undefined") {
+      return MIN_ITEMS_PER_PAGE;
+    }
+    const band = ITEMS_PER_PAGE_BY_WINDOW_HEIGHT.find(
+      ([height]) => window.innerHeight >= height
+    );
+    return band?.[1] ?? MIN_ITEMS_PER_PAGE;
+  }
   var ATTACH_ALLOWED_TYPES = ["image"];
   function MediaCategoryPanel({
     onInsert,
@@ -96147,19 +96164,27 @@ If there's a particular need for this, please submit a feature request at https:
     sourceMenu,
     footer
   }) {
+    const panelRef = (0, import_element299.useRef)();
     const [page, setPage] = (0, import_element299.useState)(1);
+    const [perPage, setPerPage] = (0, import_element299.useState)(getItemsPerPage);
     const previousCategory = (0, import_compose89.usePrevious)(category.name);
     const previousSearch = (0, import_compose89.usePrevious)(search);
     if ((previousCategory !== category.name || previousSearch !== search) && page !== 1) {
       setPage(1);
     }
+    if (previousCategory !== category.name) {
+      const nextPerPage = getItemsPerPage();
+      if (nextPerPage !== perPage) {
+        setPerPage(nextPerPage);
+      }
+    }
     const query = (0, import_element299.useMemo)(
       () => ({
-        per_page: MEDIA_ITEMS_PER_PAGE,
+        per_page: perPage,
         page,
         search
       }),
-      [page, search]
+      [perPage, page, search]
     );
     const { actions, attach, handleAttach, refreshKey } = useAttachmentActions(
       { category, query }
@@ -96169,7 +96194,6 @@ If there's a particular need for this, please submit a feature request at https:
     if (typeof totalPages === "number" && page > numPages) {
       setPage(numPages);
     }
-    const panelRef = (0, import_element299.useRef)();
     const changePage = (0, import_element299.useCallback)((nextPage) => {
       (0, import_dom61.getScrollContainer)(panelRef.current)?.scrollTo?.(0, 0);
       setPage(nextPage);
@@ -96207,7 +96231,7 @@ If there's a particular need for this, please submit a feature request at https:
           totalItems,
           totalPages,
           page,
-          perPage: MEDIA_ITEMS_PER_PAGE,
+          perPage,
           onChangePage: changePage,
           search,
           onChangeSearch,
