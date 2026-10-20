@@ -99004,7 +99004,12 @@ If there's a particular need for this, please submit a feature request at https:
       (pointLateralPosition - edgeLateralPosition) ** 2 + (pointForwardPosition - edgeForwardPosition) ** 2
     );
   }
-  function getDistanceToNearestEdge(point, rect, allowedEdges = ["top", "bottom", "left", "right"]) {
+  function getDistanceToNearestEdge(point, rect, allowedEdges = [
+    "top",
+    "bottom",
+    "left",
+    "right"
+  ]) {
     let candidateDistance;
     let candidateEdge;
     allowedEdges.forEach((edge) => {
@@ -99188,6 +99193,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = unlock((0, import_data88.useDispatch)(store));
     const onBlockDrop2 = useOnBlockDrop(
       dropTarget.operation === "before" || dropTarget.operation === "after" ? parentBlockClientId : targetRootClientId,
+      // Until a drag over sets it, a `null` index inserts at the end.
       dropTarget.index,
       {
         operation: dropTarget.operation,
@@ -99298,6 +99304,7 @@ If there's a particular need for this, please submit a feature request at https:
               getDraggedBlockClientIds2()
             ]);
             const groupBlockVariations = getBlockVariations2(
+              // A grouping block type is registered.
               getGroupingBlockName(),
               "block"
             );
@@ -99359,7 +99366,10 @@ If there's a particular need for this, please submit a feature request at https:
       isDisabled,
       onDrop: onBlockDrop2,
       onDragOver(event) {
-        throttled(event, event.currentTarget.ownerDocument);
+        throttled(
+          event,
+          event.currentTarget.ownerDocument
+        );
       },
       onDragLeave(event) {
         const { ownerDocument: ownerDocument2 } = event.currentTarget;
