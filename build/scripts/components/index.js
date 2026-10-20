@@ -71398,66 +71398,71 @@ The screen with id ${screen.id} will not be added.`
         disabled: disabled2,
         "aria-describedby": !!help ? generateHelpId(id3) : void 0,
         children: [
-          hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(component_default2, { as: "legend", children: label }) : /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(base_control_default.VisualLabel, { as: "legend", children: label }),
-          /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-            component_default18,
+          hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(VisuallyHidden4, { render: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)("legend", {}), children: label }) : /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(base_control_default.VisualLabel, { as: "legend", children: label }),
+          /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(
+            Stack,
             {
-              spacing: 3,
+              direction: "column",
+              gap: "md",
+              align: "stretch",
               className: clsx_default("components-radio-control__group-wrapper", {
                 "has-help": !!help
               }),
-              children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(
-                "div",
-                {
-                  className: "components-radio-control__option",
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-                      "input",
-                      {
-                        id: generateOptionId(id3, index2),
-                        className: "components-radio-control__input",
-                        type: "radio",
-                        name: id3,
-                        value: option.value,
-                        disabled: option.disabled,
-                        onChange: onChangeValue,
-                        checked: option.value === selected,
-                        "aria-describedby": !!option.description ? generateOptionDescriptionId(id3, index2) : void 0,
-                        onClick: (event) => {
-                          event.currentTarget.focus();
-                          onClick?.(event);
-                        },
-                        ...additionalProps
-                      }
-                    ),
-                    /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-                      "label",
-                      {
-                        className: "components-radio-control__label",
-                        htmlFor: generateOptionId(id3, index2),
-                        children: option.label
-                      }
-                    ),
-                    !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-                      StyledHelp,
-                      {
-                        id: generateOptionDescriptionId(id3, index2),
-                        className: "components-radio-control__option-description",
-                        children: option.description
-                      }
-                    ) : null
-                  ]
-                },
-                generateOptionId(id3, index2)
-              ))
-            }
-          ),
-          !!help && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-            StyledHelp,
-            {
-              id: generateHelpId(id3),
-              className: "components-base-control__help",
-              children: help
+              children: [
+                !!help && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+                  Text2,
+                  {
+                    id: generateHelpId(id3),
+                    variant: "body-sm",
+                    className: "components-radio-control__help",
+                    children: help
+                  }
+                ),
+                options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(
+                  "div",
+                  {
+                    className: "components-radio-control__option",
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+                        "input",
+                        {
+                          id: generateOptionId(id3, index2),
+                          className: "components-radio-control__input",
+                          type: "radio",
+                          name: id3,
+                          value: option.value,
+                          disabled: option.disabled,
+                          onChange: onChangeValue,
+                          checked: option.value === selected,
+                          "aria-describedby": !!option.description ? generateOptionDescriptionId(id3, index2) : void 0,
+                          onClick: (event) => {
+                            event.currentTarget.focus();
+                            onClick?.(event);
+                          },
+                          ...additionalProps
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+                        "label",
+                        {
+                          className: "components-radio-control__label",
+                          htmlFor: generateOptionId(id3, index2),
+                          children: option.label
+                        }
+                      ),
+                      !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+                        StyledHelp,
+                        {
+                          id: generateOptionDescriptionId(id3, index2),
+                          className: "components-radio-control__option-description",
+                          children: option.description
+                        }
+                      ) : null
+                    ]
+                  },
+                  generateOptionId(id3, index2)
+                ))
+              ]
             }
           )
         ]

@@ -2691,8 +2691,8 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   font-size: 13px;
 }
 
-.components-radio-control__group-wrapper.has-help {
-  margin-block-end: 12px;
+.components-radio-control__help {
+  color: var(--wpds-color-foreground-content-neutral-weak, #707070);
 }
 
 .components-radio-control__option {
