@@ -78417,7 +78417,7 @@ function GridItem3({
           "div",
           {
             ref: setActivatorNodeRef,
-            ...attributes,
+            ...dragDisabled ? {} : attributes,
             ...listeners2,
             style: {
               height: "100%",
@@ -80079,7 +80079,7 @@ function LanesItem({
           "div",
           {
             ref: setActivatorNodeRef,
-            ...attributes,
+            ...dragDisabled ? {} : attributes,
             ...listeners2,
             style: {
               height: "100%",
