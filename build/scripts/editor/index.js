@@ -52422,6 +52422,16 @@ var wp;
   // packages/ui/build-module/form/select-control/select-control.mjs
   var import_element130 = __toESM(require_element(), 1);
 
+  // packages/ui/build-module/form/select-control/dev-warnings.mjs
+  var import_warning4 = __toESM(require_warning(), 1);
+  function warnSelectControlProps(items, itemToStringValue) {
+    if (!itemToStringValue && items?.some((item) => item.value === "")) {
+      (0, import_warning4.default)(
+        "SelectControl: empty string item values are treated as empty selections by default. Use a non-empty item value or return a non-empty string from `itemToStringValue`. Use `null` for an option that clears the selection."
+      );
+    }
+  }
+
   // packages/ui/build-module/form/select-control/item.mjs
   var import_element128 = __toESM(require_element(), 1);
   var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
@@ -52455,6 +52465,9 @@ var wp;
     trigger,
     ...restProps
   }, ref) {
+    if (true) {
+      warnSelectControlProps(items, restProps.itemToStringValue);
+    }
     const triggerElement = useRender({
       render: trigger ?? DEFAULT_TRIGGER2,
       ref,
@@ -84634,7 +84647,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components83 = __toESM(require_components(), 1);
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_element227 = __toESM(require_element(), 1);
-  var import_warning4 = __toESM(require_warning(), 1);
+  var import_warning5 = __toESM(require_warning(), 1);
   var import_compose30 = __toESM(require_compose(), 1);
   var import_jsx_runtime403 = __toESM(require_jsx_runtime(), 1);
   var DATAVIEWS_CONFIG_POPOVER_PROPS = {
@@ -84686,7 +84699,7 @@ If there's a particular need for this, please submit a feature request at https:
                   ...defaultLayouts2[value]
                 });
             }
-            (0, import_warning4.default)("Invalid dataview");
+            (0, import_warning5.default)("Invalid dataview");
           },
           children: availableLayouts.map((layout) => {
             const config = VIEW_LAYOUTS.find(
@@ -84775,7 +84788,7 @@ If there's a particular need for this, please submit a feature request at https:
             });
             return;
           }
-          (0, import_warning4.default)("Invalid direction");
+          (0, import_warning5.default)("Invalid direction");
         },
         children: SORTING_DIRECTIONS.map((direction) => {
           return /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(
@@ -96126,6 +96139,7 @@ ${content}
 
   // packages/editor/build-module/components/post-template/classic-theme.mjs
   var import_jsx_runtime488 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_TEMPLATE_VALUE = "//default";
   function PostTemplateToggle({ isOpen: isOpen2, onClick }) {
     const templateTitle = (0, import_data63.useSelect)((select8) => {
       const templateSlug = select8(store).getEditedPostAttribute("template");
@@ -96196,10 +96210,13 @@ ${content}
             title.rendered
           ])
         )
-      }).map(([slug, title]) => ({ value: slug, label: title })),
+      }).map(([slug, title]) => ({
+        value: slug || DEFAULT_TEMPLATE_VALUE,
+        label: title
+      })),
       [availableTemplates, fetchedTemplates]
     );
-    const selectedOption = options.find((option) => option.value === selectedTemplateSlug) ?? options.find((option) => !option.value);
+    const selectedOption = options.find((option) => option.value === selectedTemplateSlug) ?? options.find((option) => option.value === DEFAULT_TEMPLATE_VALUE);
     const { editPost: editPost2 } = (0, import_data63.useDispatch)(store);
     const { createSuccessNotice } = (0, import_data63.useDispatch)(import_notices7.store);
     const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element297.useState)(false);
@@ -96228,7 +96245,9 @@ ${content}
           label: (0, import_i18n147.__)("Template"),
           value: selectedOption ?? null,
           items: options,
-          onValueChange: (item) => editPost2({ template: item?.value ?? "" })
+          onValueChange: (item) => editPost2({
+            template: !item?.value || item.value === DEFAULT_TEMPLATE_VALUE ? "" : item.value
+          })
         }
       ),
       canEdit && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime488.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
@@ -96304,7 +96323,7 @@ ${content}
   var import_components133 = __toESM(require_components(), 1);
   var import_plugins3 = __toESM(require_plugins(), 1);
   var import_data65 = __toESM(require_data(), 1);
-  var import_warning5 = __toESM(require_warning(), 1);
+  var import_warning6 = __toESM(require_warning(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-plugin-document-setting-panel.mjs
   var import_components132 = __toESM(require_components(), 1);
@@ -96372,7 +96391,7 @@ ${content}
     );
     const { toggleEditorPanelOpened: toggleEditorPanelOpened2 } = (0, import_data65.useDispatch)(store);
     if (void 0 === name2) {
-      (0, import_warning5.default)("PluginDocumentSettingPanel requires a name property.");
+      (0, import_warning6.default)("PluginDocumentSettingPanel requires a name property.");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_jsx_runtime491.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
