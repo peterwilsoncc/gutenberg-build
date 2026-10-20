@@ -527,7 +527,7 @@ var wp;
     let lastCharacter;
     append3(tree, "");
     for (let i = 0; i < formatsLength; i++) {
-      const character = text.charAt(i);
+      let character = text.charAt(i);
       const shouldInsertPadding = isEditableTree && // Pad the line if the line is empty.
       (!lastCharacter || // Pad the line if the previous character is a line break, otherwise
       // the line break won't be visible.
@@ -657,10 +657,21 @@ var wp;
           object: true
         });
         pointer = append3(getParent3(pointer), "");
-      } else if (!isText3(pointer)) {
-        pointer = append3(getParent3(pointer), character);
       } else {
-        appendText3(pointer, character);
+        let runEnd = i + 1;
+        while (runEnd < text.length && formats[runEnd] === characterFormats && runEnd !== start && runEnd !== end && text[runEnd] !== OBJECT_REPLACEMENT_CHARACTER && (preserveWhiteSpace || text[runEnd] !== "\n")) {
+          runEnd++;
+        }
+        if (runEnd > i + 1) {
+          character = text.slice(i, runEnd);
+          i = runEnd - 1;
+        }
+        if (!isText3(pointer)) {
+          pointer = append3(getParent3(pointer), character);
+        } else {
+          appendText3(pointer, character);
+        }
+        character = text.charAt(i);
       }
       if (onStartIndex && start === i + 1) {
         onStartIndex(tree, pointer);
