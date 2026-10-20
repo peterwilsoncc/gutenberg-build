@@ -98065,6 +98065,7 @@ ${text}
   // packages/block-library/build-module/template-part/edit/advanced-controls.mjs
   var import_jsx_runtime608 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl7 } = unlock2(import_block_editor268.privateApis);
+  var DEFAULT_TAG_NAME = "__default";
   function TemplatePartAdvancedControls({
     tagName,
     setAttributes,
@@ -98123,8 +98124,10 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
         HTMLElementControl7,
         {
-          tagName: tagName || "",
-          onChange: (value) => setAttributes({ tagName: value }),
+          tagName: tagName || DEFAULT_TAG_NAME,
+          onChange: (value) => setAttributes({
+            tagName: value === DEFAULT_TAG_NAME ? "" : value
+          }),
           clientId,
           options: [
             {
@@ -98133,7 +98136,7 @@ ${text}
                 (0, import_i18n257.__)("Default based on area (%s)"),
                 `<${defaultWrapper}>`
               ),
-              value: ""
+              value: DEFAULT_TAG_NAME
             },
             { label: "<header>", value: "header" },
             { label: "<main>", value: "main" },

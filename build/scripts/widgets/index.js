@@ -102,6 +102,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/warning
+  var require_warning = __commonJS({
+    "package-external:@wordpress/warning"(exports, module) {
+      module.exports = window.wp.warning;
+    }
+  });
+
   // node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
   var require_use_sync_external_store_shim_development = __commonJS({
     "node_modules/.store/use-sync-external-store@1.7.0-jHNF5n8408rkWhZ5NHKclA/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
@@ -14429,6 +14436,16 @@ var wp;
   // packages/ui/build-module/form/select-control/select-control.mjs
   var import_element34 = __toESM(require_element(), 1);
 
+  // packages/ui/build-module/form/select-control/dev-warnings.mjs
+  var import_warning = __toESM(require_warning(), 1);
+  function warnSelectControlProps(items, itemToStringValue) {
+    if (!itemToStringValue && items?.some((item) => item.value === "")) {
+      (0, import_warning.default)(
+        "SelectControl: empty string item values are treated as empty selections by default. Use a non-empty item value or return a non-empty string from `itemToStringValue`. Use `null` for an option that clears the selection."
+      );
+    }
+  }
+
   // packages/ui/build-module/form/select-control/item.mjs
   var import_element32 = __toESM(require_element(), 1);
   var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
@@ -14462,6 +14479,9 @@ var wp;
     trigger,
     ...restProps
   }, ref) {
+    if (true) {
+      warnSelectControlProps(items, restProps.itemToStringValue);
+    }
     const triggerElement = useRender({
       render: trigger ?? DEFAULT_TRIGGER,
       ref,
@@ -14549,7 +14569,7 @@ var wp;
       return (0, import_i18n4.__)("There are no widgets available.");
     }
     const items = [
-      { value: "", label: (0, import_i18n4.__)("Select widget") },
+      { value: null, label: (0, import_i18n4.__)("Select widget") },
       ...widgetTypes.map((widgetType) => ({
         value: widgetType.id,
         label: widgetType.name
@@ -14559,7 +14579,9 @@ var wp;
       SelectControl2,
       {
         label: (0, import_i18n4.__)("Legacy widget"),
-        value: items.find((item) => item.value === selectedId) ?? items[0],
+        value: items.find(
+          (item) => item.value === (selectedId ?? null)
+        ) ?? items[0],
         items,
         onValueChange: (item) => {
           const value = item?.value;

@@ -4287,9 +4287,9 @@ var wp;
               opts.plugin = this.lastPlugin.postcssPlugin;
             }
           }
-          let warning8 = new Warning2(text, opts);
-          this.messages.push(warning8);
-          return warning8;
+          let warning9 = new Warning2(text, opts);
+          this.messages.push(warning9);
+          return warning9;
         }
         warnings() {
           return this.messages.filter((i) => i.type === "warning");
@@ -61354,6 +61354,16 @@ var wp;
   // packages/ui/build-module/form/select-control/select-control.mjs
   var import_element130 = __toESM(require_element(), 1);
 
+  // packages/ui/build-module/form/select-control/dev-warnings.mjs
+  var import_warning2 = __toESM(require_warning(), 1);
+  function warnSelectControlProps(items, itemToStringValue) {
+    if (!itemToStringValue && items?.some((item) => item.value === "")) {
+      (0, import_warning2.default)(
+        "SelectControl: empty string item values are treated as empty selections by default. Use a non-empty item value or return a non-empty string from `itemToStringValue`. Use `null` for an option that clears the selection."
+      );
+    }
+  }
+
   // packages/ui/build-module/form/select-control/item.mjs
   var import_element128 = __toESM(require_element(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
@@ -61387,6 +61397,9 @@ var wp;
     trigger,
     ...restProps
   }, ref) {
+    if (true) {
+      warnSelectControlProps(items, restProps.itemToStringValue);
+    }
     const triggerElement = useRender({
       render: trigger ?? DEFAULT_TRIGGER,
       ref,
@@ -64522,9 +64535,9 @@ var wp;
   // packages/block-editor/build-module/components/block-list/block-crash-warning.mjs
   var import_i18n36 = __toESM(require_i18n(), 1);
   var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
-  var warning = /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(warning_default, { className: "block-editor-block-list__block-crash-warning", children: (0, import_i18n36.__)("This block has encountered an error and cannot be previewed.") });
+  var warning2 = /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(warning_default, { className: "block-editor-block-list__block-crash-warning", children: (0, import_i18n36.__)("This block has encountered an error and cannot be previewed.") });
   function BlockCrashWarning() {
-    return warning;
+    return warning2;
   }
 
   // packages/block-editor/build-module/components/block-list/block-crash-boundary.mjs
@@ -64641,7 +64654,7 @@ var wp;
   var import_blocks24 = __toESM(require_blocks(), 1);
   var import_compose34 = __toESM(require_compose(), 1);
   var import_data31 = __toESM(require_data(), 1);
-  var import_warning4 = __toESM(require_warning(), 1);
+  var import_warning5 = __toESM(require_warning(), 1);
 
   // node_modules/.store/@react-spring/shared@10.1.2-3ptIGZgAKMkeKnB2V4vn3A/node_modules/@react-spring/shared/dist/chunk.mjs
   var __defProp2 = Object.defineProperty;
@@ -69040,7 +69053,7 @@ var wp;
       view: defaultViewRef.current
     });
     if (blockApiVersion < 2 && clientId === blockEditContext.clientId) {
-      (0, import_warning4.default)(
+      (0, import_warning5.default)(
         `Block type "${name}" must support API version 2 or higher to work correctly with "useBlockProps" method.`
       );
     }
@@ -70606,7 +70619,7 @@ var wp;
   var import_data37 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts4 = __toESM(require_keyboard_shortcuts(), 1);
   var import_blocks28 = __toESM(require_blocks(), 1);
-  var import_warning5 = __toESM(require_warning(), 1);
+  var import_warning6 = __toESM(require_warning(), 1);
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
   function useDeclaredBlockShortcuts() {
     return (0, import_data37.useSelect)(
@@ -70727,7 +70740,7 @@ var wp;
         const previous = registered.get(shortcut.name);
         if (previous !== void 0) {
           if (previous !== serialized) {
-            (0, import_warning5.default)(
+            (0, import_warning6.default)(
               `Block keyboard shortcut "${shortcut.name}" is declared more than once with different settings.`
             );
           }
@@ -70736,7 +70749,7 @@ var wp;
         const { modifier, character } = shortcut.keyCombination;
         const combination = `${modifier ?? ""}+${character}`;
         if (combinations.has(combination)) {
-          (0, import_warning5.default)(
+          (0, import_warning6.default)(
             `Block keyboard shortcut "${shortcut.name}" uses the same key combination as "${combinations.get(
               combination
             )}".`
@@ -73328,7 +73341,7 @@ var wp;
   // packages/block-editor/build-module/components/block-controls/slot.mjs
   var import_element185 = __toESM(require_element(), 1);
   var import_components28 = __toESM(require_components(), 1);
-  var import_warning6 = __toESM(require_warning(), 1);
+  var import_warning7 = __toESM(require_warning(), 1);
   var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
   var { ComponentsContext } = unlock(import_components28.privateApis);
   function BlockControlsSlot({
@@ -73349,7 +73362,7 @@ var wp;
     const slotFill = groups_default[group];
     const fills = (0, import_components28.__experimentalUseSlotFills)(slotFill.name);
     if (!slotFill) {
-      (0, import_warning6.default)(`Unknown BlockControls group "${group}" provided.`);
+      (0, import_warning7.default)(`Unknown BlockControls group "${group}" provided.`);
       return null;
     }
     if (!fills?.length) {
@@ -89762,7 +89775,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components79 = __toESM(require_components(), 1);
   var import_i18n102 = __toESM(require_i18n(), 1);
   var import_element255 = __toESM(require_element(), 1);
-  var import_warning7 = __toESM(require_warning(), 1);
+  var import_warning8 = __toESM(require_warning(), 1);
   var import_compose74 = __toESM(require_compose(), 1);
   var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
   var DATAVIEWS_CONFIG_POPOVER_PROPS = {
@@ -89814,7 +89827,7 @@ If there's a particular need for this, please submit a feature request at https:
                   ...defaultLayouts[value]
                 });
             }
-            (0, import_warning7.default)("Invalid dataview");
+            (0, import_warning8.default)("Invalid dataview");
           },
           children: availableLayouts.map((layout) => {
             const config2 = VIEW_LAYOUTS.find(
@@ -89903,7 +89916,7 @@ If there's a particular need for this, please submit a feature request at https:
             });
             return;
           }
-          (0, import_warning7.default)("Invalid direction");
+          (0, import_warning8.default)("Invalid direction");
         },
         children: SORTING_DIRECTIONS.map((direction) => {
           return /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
@@ -100812,7 +100825,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls/fill.mjs
   var import_components127 = __toESM(require_components(), 1);
-  var import_warning8 = __toESM(require_warning(), 1);
+  var import_warning9 = __toESM(require_warning(), 1);
   var import_element325 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/groups.mjs
@@ -101016,7 +101029,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isInListViewTree = context[isInListViewBlockSupportTreeKey];
     const Fill5 = groups_default2[group]?.Fill;
     if (!Fill5) {
-      (0, import_warning8.default)(`Unknown InspectorControls group "${group}" provided.`);
+      (0, import_warning9.default)(`Unknown InspectorControls group "${group}" provided.`);
       return null;
     }
     if (isPatternEditing) {
@@ -101082,7 +101095,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/inspector-controls/slot.mjs
   var import_components130 = __toESM(require_components(), 1);
   var import_element329 = __toESM(require_element(), 1);
-  var import_warning9 = __toESM(require_warning(), 1);
+  var import_warning10 = __toESM(require_warning(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.mjs
   var import_components128 = __toESM(require_components(), 1);
@@ -101240,7 +101253,7 @@ If there's a particular need for this, please submit a feature request at https:
     const slotFill = groups_default2[group];
     const fills = (0, import_components130.__experimentalUseSlotFills)(slotFill?.name);
     if (!slotFill) {
-      (0, import_warning9.default)(`Unknown InspectorControls group "${group}" provided.`);
+      (0, import_warning10.default)(`Unknown InspectorControls group "${group}" provided.`);
       return null;
     }
     if (!fills?.length) {
@@ -101377,7 +101390,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { getResponsiveMediaQueries: getResponsiveMediaQueries2 } = unlock(privateApis);
   var POSITION_SUPPORT_KEY = "position";
   var DEFAULT_OPTION = {
-    value: "",
+    value: "__default",
     label: (0, import_i18n142.__)("Default")
   };
   var STICKY_OPTION = {
@@ -101571,7 +101584,9 @@ If there's a particular need for this, please submit a feature request at https:
         items: options,
         value: selectedOption,
         onValueChange: (selectedItem) => {
-          onChangeType(selectedItem.value);
+          onChangeType(
+            selectedItem.value === DEFAULT_OPTION.value ? "" : selectedItem.value
+          );
         }
       }
     ) }) : null;
@@ -111644,18 +111659,18 @@ If there's a particular need for this, please submit a feature request at https:
     return { message: message2, speakMessage };
   }
   function ContrastChecker(props) {
-    const warning8 = getContrastWarning(props);
-    if (!warning8) {
+    const warning9 = getContrastWarning(props);
+    if (!warning9) {
       return null;
     }
-    (0, import_a11y22.speak)(warning8.speakMessage);
+    (0, import_a11y22.speak)(warning9.speakMessage);
     return /* @__PURE__ */ (0, import_jsx_runtime581.jsx)("div", { className: "block-editor-contrast-checker", children: /* @__PURE__ */ (0, import_jsx_runtime581.jsx)(
       import_components193.Notice,
       {
         spokenMessage: null,
         status: "warning",
         isDismissible: false,
-        children: warning8.message
+        children: warning9.message
       }
     ) });
   }
@@ -122646,20 +122661,20 @@ If there's a particular need for this, please submit a feature request at https:
         observer.disconnect();
       };
     }, [enabled, blockEl, blockType]);
-    const warning8 = enabled ? getContrastWarning({
+    const warning9 = enabled ? getContrastWarning({
       backgroundColor: colors2.backgroundColor,
       textColor: checkTextColor ? colors2.textColor : void 0,
       linkColor: checkLinkColor ? colors2.linkColor : void 0,
       messageOverride,
       enableAlphaChecker: true
     }) : null;
-    const speakMessage = warning8?.speakMessage;
+    const speakMessage = warning9?.speakMessage;
     (0, import_element424.useEffect)(() => {
       if (speakMessage) {
         (0, import_a11y25.speak)(speakMessage);
       }
     }, [speakMessage]);
-    return warning8?.message;
+    return warning9?.message;
   }
 
   // packages/block-editor/build-module/components/global-styles/background-panel.mjs
@@ -124515,6 +124530,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime658 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY18 = [];
   var PRESETS_SELECT_THRESHOLD = 7;
+  var DEFAULT_VALUE = "__default";
   function getTextShadowPresetSlug(rawValue) {
     if (!rawValue || typeof rawValue !== "string") {
       return void 0;
@@ -124586,7 +124602,10 @@ If there's a particular need for this, please submit a feature request at https:
         label: preset.name
       }))
     ];
-    const items = [{ value: "", label: (0, import_i18n263.__)("Default") }, ...choices];
+    const items = [
+      { value: DEFAULT_VALUE, label: (0, import_i18n263.__)("Default") },
+      ...choices
+    ];
     const activeSlug = getTextShadowPresetSlug(textShadow);
     const activeValue = activeSlug ? `var:preset|text-shadow|${activeSlug}` : textShadow ?? "";
     const previewValue = activeSlug ? presets.find((preset) => preset.slug === activeSlug)?.textShadow : textShadow;
@@ -124611,9 +124630,13 @@ If there's a particular need for this, please submit a feature request at https:
             {
               hideLabelFromVision: true,
               label: (0, import_i18n263.__)("Text shadow preset"),
-              value: items.find((item) => item.value === activeValue) ?? items[0],
+              value: items.find(
+                (item) => item.value === (activeValue || DEFAULT_VALUE)
+              ) ?? items[0],
               items,
-              onValueChange: (item) => onChange(item?.value ?? "")
+              onValueChange: (item) => onChange(
+                !item?.value || item.value === DEFAULT_VALUE ? "" : item.value
+              )
             }
           ) : /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
             import_components251.Composite,
