@@ -125423,7 +125423,9 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useFitText({ fitText, name, clientId }) {
-    const [fontSize, setFontSize] = (0, import_element432.useState)(null);
+    const [fontSize, setFontSize] = (0, import_element432.useState)(
+      null
+    );
     const hasFitTextSupport2 = (0, import_blocks105.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
     const blockElement = useBlockElement(clientId);
     const { blockAttributes, parentId, blockMode } = (0, import_data178.useSelect)(
@@ -125514,6 +125516,7 @@ If there's a particular need for this, please submit a feature request at https:
         });
         return () => window.cancelAnimationFrame(frameId);
       }
+      return void 0;
     }, [
       blockAttributes,
       fitText,
@@ -125601,7 +125604,10 @@ If there's a particular need for this, please submit a feature request at https:
       className
     };
   }
-  function useBlockProps9({ name, fitText }) {
+  function useBlockProps9({
+    name,
+    fitText
+  }) {
     if (fitText && (0, import_blocks105.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
       return {
         className: "has-fit-text"
@@ -125617,7 +125623,12 @@ If there's a particular need for this, please submit a feature request at https:
   var hasFitTextSupport = (blockNameOrType) => {
     return (0, import_blocks105.hasBlockSupport)(blockNameOrType, FIT_TEXT_SUPPORT_KEY);
   };
-  function FitTextFontSize({ fitText, name, clientId, isSelected: isSelected2 }) {
+  function FitTextFontSize({
+    fitText,
+    name,
+    clientId,
+    isSelected: isSelected2
+  }) {
     const { fontSize } = useFitText({ fitText, name, clientId });
     if (isSelected2 && fontSize && fontSize < MIN_FONT_SIZE_FOR_WARNING) {
       return /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(FitTextSizeWarning, {}) });
@@ -128491,7 +128502,11 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-manager/checklist.mjs
   var import_components268 = __toESM(require_components(), 1);
   var import_jsx_runtime680 = __toESM(require_jsx_runtime(), 1);
-  function BlockTypesChecklist({ blockTypes, value, onItemChange }) {
+  function BlockTypesChecklist({
+    blockTypes,
+    value,
+    onItemChange
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime680.jsx)("ul", { className: "block-editor-block-manager__checklist", children: blockTypes.map((blockType) => /* @__PURE__ */ (0, import_jsx_runtime680.jsxs)(
       "li",
       {
