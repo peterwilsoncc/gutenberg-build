@@ -21406,8 +21406,8 @@ var seen_default = /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(import_primit
 var import_primitives42 = __toESM(require_primitives(), 1);
 var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 var tag_default = /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_primitives42.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-  /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_primitives42.Path, { d: "M4.75 12.5429V4.85C4.75 4.79477 4.79477 4.75 4.85 4.75H12.5429C12.6755 4.75 12.8027 4.80268 12.8964 4.89645L20.1464 12.1464C20.3417 12.3417 20.3417 12.6583 20.1464 12.8536L12.8536 20.1464C12.6583 20.3417 12.3417 20.3417 12.1464 20.1464L4.89645 12.8964C4.80268 12.8027 4.75 12.6755 4.75 12.5429Z" }),
-  /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_primitives42.Path, { d: "M9.75 8.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z", fill: "currentColor", stroke: "none" })
+  /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_primitives42.Path, { d: "M19.25 12.5429V4.85C19.25 4.79477 19.20523 4.75 19.15 4.75H11.4571C11.3245 4.75 11.1973 4.80268 11.1036 4.89645L3.8536 12.1464C3.6583 12.3417 3.6583 12.6583 3.8536 12.8536L11.1464 20.1464C11.3417 20.3417 11.6583 20.3417 11.8536 20.1464L19.10355 12.8964C19.19732 12.8027 19.25 12.6755 19.25 12.5429Z" }),
+  /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_primitives42.Path, { d: "M16.25 8.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z", fill: "currentColor", stroke: "none" })
 ] });
 
 // packages/icons/build-module/library/unseen.mjs
