@@ -21366,6 +21366,64 @@ If there's a particular need for this, please submit a feature request at https:
   var CONNECTED_NAMESPACE = "data-wp-c16t";
   var CONNECT_STATIC_NAMESPACE = "__contextSystemKey__";
 
+  // node_modules/.store/tslib@2.8.1-LT-dxu1EkVy7OUDyVf5glQ/node_modules/tslib/tslib.es6.mjs
+  var __assign = function() {
+    __assign = Object.assign || function __assign4(t3) {
+      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
+        s2 = arguments[i2];
+        for (var p3 in s2) if (Object.prototype.hasOwnProperty.call(s2, p3)) t3[p3] = s2[p3];
+      }
+      return t3;
+    };
+    return __assign.apply(this, arguments);
+  };
+
+  // node_modules/.store/lower-case@2.0.2-5YZP5nczP5_f_8Vt5KBPjA/node_modules/lower-case/dist.es2015/index.js
+  function lowerCase(str) {
+    return str.toLowerCase();
+  }
+
+  // node_modules/.store/no-case@3.0.4-R4Hzt6qn-erEsTak7ojDpg/node_modules/no-case/dist.es2015/index.js
+  var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
+  var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
+  function noCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    var _a = options2.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options2.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options2.transform, transform = _c === void 0 ? lowerCase : _c, _d = options2.delimiter, delimiter = _d === void 0 ? " " : _d;
+    var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
+    var start = 0;
+    var end = result.length;
+    while (result.charAt(start) === "\0")
+      start++;
+    while (result.charAt(end - 1) === "\0")
+      end--;
+    return result.slice(start, end).split("\0").map(transform).join(delimiter);
+  }
+  function replace(input, re3, value) {
+    if (re3 instanceof RegExp)
+      return input.replace(re3, value);
+    return re3.reduce(function(input2, re4) {
+      return input2.replace(re4, value);
+    }, input);
+  }
+
+  // node_modules/.store/dot-case@3.0.4-hi-rLWlWmiZ169n4dWcbUA/node_modules/dot-case/dist.es2015/index.js
+  function dotCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    return noCase(input, __assign({ delimiter: "." }, options2));
+  }
+
+  // node_modules/.store/param-case@3.0.4-rdAht_VwpGpefPRylN2bTA/node_modules/param-case/dist.es2015/index.js
+  function paramCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    return dotCase(input, __assign({ delimiter: "-" }, options2));
+  }
+
   // node_modules/.store/memize@2.1.1-roXbtpG2bis3Lggp7SQpAA/node_modules/memize/dist/index.js
   function memize(fn, options2) {
     var size4 = 0;
@@ -21436,7 +21494,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/build-module/context/get-styled-class-name-from-key.mjs
   function getStyledClassName(namespace) {
-    const kebab = namespace.replace(/([a-z0-9])([A-Z])/g, "$1-$2").replace(/([A-Z])([A-Z][a-z])/g, "$1-$2").replace(/[^A-Z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
+    const kebab = paramCase(namespace);
     return `components-${kebab}`;
   }
   var getStyledClassNameFromKey = memize(getStyledClassName);
@@ -69694,7 +69752,7 @@ The screen with id ${screen.id} will not be added.`
       isBack = false,
       skipFocus = false,
       // Extract to avoid forwarding
-      replace,
+      replace: replace2,
       focusTargetSelector,
       // Rest
       ...restOptions
@@ -71419,8 +71477,8 @@ The screen with id ${screen.id} will not be added.`
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/resizer.js
   var import_jsx_runtime330 = __toESM(require_jsx_runtime());
   var import_react93 = __toESM(require_react());
-  var __assign = function() {
-    __assign = Object.assign || function(t3) {
+  var __assign2 = function() {
+    __assign2 = Object.assign || function(t3) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
         for (var p3 in s2) if (Object.prototype.hasOwnProperty.call(s2, p3))
@@ -71428,7 +71486,7 @@ The screen with id ${screen.id} will not be added.`
       }
       return t3;
     };
-    return __assign.apply(this, arguments);
+    return __assign2.apply(this, arguments);
   };
   var rowSizeBase = {
     width: "100%",
@@ -71451,14 +71509,14 @@ The screen with id ${screen.id} will not be added.`
     zIndex: 1
   };
   var styles = {
-    top: __assign(__assign({}, rowSizeBase), { top: "-5px" }),
-    right: __assign(__assign({}, colSizeBase), { left: void 0, right: "-5px" }),
-    bottom: __assign(__assign({}, rowSizeBase), { top: void 0, bottom: "-5px" }),
-    left: __assign(__assign({}, colSizeBase), { left: "-5px" }),
-    topRight: __assign(__assign({}, edgeBase), { right: "-10px", top: "-10px", cursor: "ne-resize" }),
-    bottomRight: __assign(__assign({}, edgeBase), { right: "-10px", bottom: "-10px", cursor: "se-resize" }),
-    bottomLeft: __assign(__assign({}, edgeBase), { left: "-10px", bottom: "-10px", cursor: "sw-resize" }),
-    topLeft: __assign(__assign({}, edgeBase), { left: "-10px", top: "-10px", cursor: "nw-resize" })
+    top: __assign2(__assign2({}, rowSizeBase), { top: "-5px" }),
+    right: __assign2(__assign2({}, colSizeBase), { left: void 0, right: "-5px" }),
+    bottom: __assign2(__assign2({}, rowSizeBase), { top: void 0, bottom: "-5px" }),
+    left: __assign2(__assign2({}, colSizeBase), { left: "-5px" }),
+    topRight: __assign2(__assign2({}, edgeBase), { right: "-10px", top: "-10px", cursor: "ne-resize" }),
+    bottomRight: __assign2(__assign2({}, edgeBase), { right: "-10px", bottom: "-10px", cursor: "se-resize" }),
+    bottomLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", bottom: "-10px", cursor: "sw-resize" }),
+    topLeft: __assign2(__assign2({}, edgeBase), { left: "-10px", top: "-10px", cursor: "nw-resize" })
   };
   var Resizer = (0, import_react93.memo)(function(props) {
     var onResizeStart = props.onResizeStart, direction = props.direction, children = props.children, replaceStyles = props.replaceStyles, className = props.className;
@@ -71469,7 +71527,7 @@ The screen with id ${screen.id} will not be added.`
       onResizeStart(e3, direction);
     }, [onResizeStart, direction]);
     var style2 = (0, import_react93.useMemo)(function() {
-      return __assign(__assign({ position: "absolute", userSelect: "none" }, styles[direction]), replaceStyles !== null && replaceStyles !== void 0 ? replaceStyles : {});
+      return __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles[direction]), replaceStyles !== null && replaceStyles !== void 0 ? replaceStyles : {});
     }, [replaceStyles, direction]);
     return (0, import_jsx_runtime330.jsx)("div", { className: className || void 0, style: style2, onMouseDown, onTouchStart, children });
   });
@@ -71494,8 +71552,8 @@ The screen with id ${screen.id} will not be added.`
       d2.prototype = b2 === null ? Object.create(b2) : (__67.prototype = b2.prototype, new __67());
     };
   })();
-  var __assign2 = function() {
-    __assign2 = Object.assign || function(t3) {
+  var __assign3 = function() {
+    __assign3 = Object.assign || function(t3) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
         for (var p3 in s2) if (Object.prototype.hasOwnProperty.call(s2, p3))
@@ -71503,7 +71561,7 @@ The screen with id ${screen.id} will not be added.`
       }
       return t3;
     };
-    return __assign2.apply(this, arguments);
+    return __assign3.apply(this, arguments);
   };
   var DEFAULT_SIZE = {
     width: "auto",
@@ -72022,7 +72080,7 @@ The screen with id ${screen.id} will not be added.`
             height: this.size.height
           },
           isResizing: true,
-          backgroundStyle: __assign2(__assign2({}, this.state.backgroundStyle), { cursor: this.window.getComputedStyle(event.target).cursor || "auto" }),
+          backgroundStyle: __assign3(__assign3({}, this.state.backgroundStyle), { cursor: this.window.getComputedStyle(event.target).cursor || "auto" }),
           direction,
           flexBasis
         };
@@ -72138,7 +72196,7 @@ The screen with id ${screen.id} will not be added.`
         this.unbindEvents();
         this.setState({
           isResizing: false,
-          backgroundStyle: __assign2(__assign2({}, this.state.backgroundStyle), { cursor: "auto" })
+          backgroundStyle: __assign3(__assign3({}, this.state.backgroundStyle), { cursor: "auto" })
         });
       };
       Resizable2.prototype.updateSize = function(size4) {
@@ -72168,12 +72226,12 @@ The screen with id ${screen.id} will not be added.`
           acc[key] = _this.props[key];
           return acc;
         }, {});
-        var style2 = __assign2(__assign2(__assign2({ position: "relative", userSelect: this.state.isResizing ? "none" : "auto" }, this.props.style), this.sizeStyle), { maxWidth: this.props.maxWidth, maxHeight: this.props.maxHeight, minWidth: this.props.minWidth, minHeight: this.props.minHeight, boxSizing: "border-box", flexShrink: 0 });
+        var style2 = __assign3(__assign3(__assign3({ position: "relative", userSelect: this.state.isResizing ? "none" : "auto" }, this.props.style), this.sizeStyle), { maxWidth: this.props.maxWidth, maxHeight: this.props.maxHeight, minWidth: this.props.minWidth, minHeight: this.props.minHeight, boxSizing: "border-box", flexShrink: 0 });
         if (this.state.flexBasis) {
           style2.flexBasis = this.state.flexBasis;
         }
         var Wrapper2 = this.props.as || "div";
-        return (0, import_jsx_runtime331.jsxs)(Wrapper2, __assign2({ style: style2, className: this.props.className }, extendsProps, {
+        return (0, import_jsx_runtime331.jsxs)(Wrapper2, __assign3({ style: style2, className: this.props.className }, extendsProps, {
           // `ref` is after `extendsProps` to ensure this one wins over a version
           // passed in
           ref: function(c3) {
