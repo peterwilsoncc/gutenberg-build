@@ -5061,12 +5061,6 @@ body:has(.edit-site-resizable-frame__inner.is-resizing) {
   background-color: var(--wp-admin-theme-color);
 }
 
-.edit-site-pagination .components-button.is-tertiary {
-  width: 32px;
-  height: 32px;
-  justify-content: center;
-}
-
 .edit-site-styles .global-styles-ui-screen-root {
   box-shadow: none;
 }
