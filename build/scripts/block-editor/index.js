@@ -107381,16 +107381,23 @@ If there's a particular need for this, please submit a feature request at https:
   var ListViewContext = (0, import_element358.createContext)({});
   ListViewContext.displayName = "ListViewContext";
   var useListViewContext = () => (0, import_element358.useContext)(ListViewContext);
-  var ListViewTreeStateContext = (0, import_element358.createContext)({});
+  var ListViewTreeStateContext = (0, import_element358.createContext)(
+    {}
+  );
   ListViewTreeStateContext.displayName = "ListViewTreeStateContext";
   var useListViewTreeState = () => (0, import_element358.useContext)(ListViewTreeStateContext);
-  var ListViewInsertedBlockContext = (0, import_element358.createContext)(null);
+  var ListViewInsertedBlockContext = (0, import_element358.createContext)(
+    null
+  );
   ListViewInsertedBlockContext.displayName = "ListViewInsertedBlockContext";
   var useInsertedBlockClientId = () => (0, import_element358.useContext)(ListViewInsertedBlockContext);
 
   // packages/block-editor/build-module/components/list-view/aria-referenced-text.mjs
   var import_react83 = __toESM(require_react(), 1);
-  function AriaReferencedText({ children, ...props }) {
+  function AriaReferencedText({
+    children,
+    ...props
+  }) {
     return /* @__PURE__ */ (0, import_react83.createElement)("div", { hidden: true, ...props, key: children }, children);
   }
 
@@ -107398,6 +107405,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime555 = __toESM(require_jsx_runtime(), 1);
   var Appender = (0, import_element359.forwardRef)(
     ({ nestingLevel, blockCount, clientId, ...props }, ref) => {
+      const AppenderInserter = inserter_default;
       const { setInsertedBlockClientId } = useListViewContext();
       const insertedBlockClientId = useInsertedBlockClientId();
       const instanceId = (0, import_compose116.useInstanceId)(Appender);
@@ -107443,13 +107451,14 @@ If there's a particular need for this, please submit a feature request at https:
       const description = (0, import_i18n176.sprintf)(
         /* translators: 1: The name of the block. 2: The numerical position of the block. 3: The level of nesting for the block. */
         (0, import_i18n176.__)("Append to %1$s block at position %2$d, Level %3$d"),
+        // `sprintf` formats any value for `%s`.
         blockTitle,
         blockCount + 1,
         nestingLevel
       );
       return /* @__PURE__ */ (0, import_jsx_runtime555.jsxs)("div", { className: "list-view-appender", children: [
         /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(
-          inserter_default,
+          AppenderInserter,
           {
             ref,
             rootClientId: clientId,
@@ -107506,6 +107515,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, ref) => {
       const animationRef = use_moving_animation_default({
         clientId: props["data-block"],
+        // @ts-expect-error The hook ignores `enableAnimation`.
         enableAnimation: true,
         triggerAnimationOnChange: path
       });
@@ -107602,6 +107612,7 @@ If there's a particular need for this, please submit a feature request at https:
           clientId
         };
       }
+      return void 0;
     },
     "core/cover": ({ clientId, attributes }) => {
       if (attributes.backgroundType === "image" && attributes.url) {
@@ -107611,6 +107622,7 @@ If there's a particular need for this, please submit a feature request at https:
           clientId
         };
       }
+      return void 0;
     },
     "core/media-text": ({ clientId, attributes }) => {
       if (attributes.mediaType === "image" && attributes.mediaUrl) {
@@ -107620,6 +107632,7 @@ If there's a particular need for this, please submit a feature request at https:
           clientId
         };
       }
+      return void 0;
     },
     "core/gallery": ({ innerBlocks }) => {
       const images = [];
@@ -107649,7 +107662,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return isExpanded ? [] : images;
   }
-  function useListViewImages({ clientId, isExpanded }) {
+  function useListViewImages({
+    clientId,
+    isExpanded
+  }) {
     const { block } = (0, import_data137.useSelect)(
       (select3) => {
         const { getBlockName: getBlockName2, getBlock: getBlock2 } = select3(store);
@@ -108244,9 +108260,15 @@ If there's a particular need for this, please submit a feature request at https:
         const { blocksToUpdate } = getBlocksToUpdate();
         if (blocksToUpdate.length > 1 && isGroupable2(blocksToUpdate)) {
           event.preventDefault();
-          const blocks2 = getBlocksByClientId2(blocksToUpdate);
+          const blocks2 = getBlocksByClientId2(
+            blocksToUpdate
+          );
           const groupingBlockName = getGroupingBlockName();
-          const newBlocks = groupBlocks(blocks2, groupingBlockName);
+          const newBlocks = groupBlocks(
+            blocks2,
+            // `isGroupable` requires a grouping block.
+            groupingBlockName
+          );
           replaceBlocks2(blocksToUpdate, newBlocks);
           (0, import_a11y19.speak)((0, import_i18n179.__)("Selected blocks are grouped."));
           const newlySelectedBlocks = getSelectedBlockClientIds2();
@@ -108405,6 +108427,7 @@ If there's a particular need for this, please submit a feature request at https:
       "is-dragging": isDragged,
       "has-single-cell": !showBlockActions,
       "is-synced": isSynced,
+      // @ts-expect-error Bug: `canMoveBlock` is the selector, so it is always truthy.
       "is-draggable": canMoveBlock2 && !isDisabled,
       "is-displacement-normal": displacement === "normal",
       "is-displacement-up": displacement === "up",
@@ -108483,7 +108506,11 @@ If there's a particular need for this, please submit a feature request at https:
               className: moverCellClassName,
               withoutGridItem: true,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_components173.__experimentalTreeGridItem, { children: ({ ref, tabIndex, onFocus }) => /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_components173.__experimentalTreeGridItem, { children: ({
+                  ref,
+                  tabIndex,
+                  onFocus
+                }) => /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(
                   BlockMoverUpButton,
                   {
                     orientation: "vertical",
@@ -108493,7 +108520,11 @@ If there's a particular need for this, please submit a feature request at https:
                     onFocus
                   }
                 ) }),
-                /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_components173.__experimentalTreeGridItem, { children: ({ ref, tabIndex, onFocus }) => /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_components173.__experimentalTreeGridItem, { children: ({
+                  ref,
+                  tabIndex,
+                  onFocus
+                }) => /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(
                   BlockMoverDownButton,
                   {
                     orientation: "vertical",
@@ -108763,7 +108794,9 @@ If there's a particular need for this, please submit a feature request at https:
     listViewRef,
     blockDropTarget
   }) {
-    const blockInformation = useBlockDisplayInformation(draggedBlockClientId);
+    const blockInformation = useBlockDisplayInformation(
+      draggedBlockClientId
+    );
     const blockTitle = useBlockDisplayTitle({
       clientId: draggedBlockClientId,
       context: "list-view"
@@ -108853,6 +108886,7 @@ If there's a particular need for this, please submit a feature request at https:
         return 1;
       }
       const _ariaLevel = parseInt(
+        // `parseInt` turns a missing attribute into `NaN`.
         rootBlockElement.getAttribute("aria-level"),
         10
       );
@@ -108883,7 +108917,10 @@ If there's a particular need for this, please submit a feature request at https:
           const windowScroll = scrollContainer === doc.body || scrollContainer === doc.documentElement;
           if (scrollContainer && !windowScroll) {
             const scrollContainerRect = scrollContainer.getBoundingClientRect();
-            const scrollbarWidth = rtl ? scrollContainer.offsetWidth - scrollContainer.clientWidth : 0;
+            const scrollbarWidth = rtl ? (
+              // Scroll containers are HTML elements.
+              scrollContainer.offsetWidth - scrollContainer.clientWidth
+            ) : 0;
             if (left < scrollContainerRect.left + scrollbarWidth) {
               left = scrollContainerRect.left + scrollbarWidth;
             }
@@ -109042,6 +109079,7 @@ If there's a particular need for this, please submit a feature request at https:
         let label;
         if (selectionDiff.length === 1) {
           const title = getBlockType34(
+            // A removed block has no name, so no block type either.
             getBlockName2(selectionDiff[0])
           )?.title;
           if (title) {
@@ -109055,6 +109093,7 @@ If there's a particular need for this, please submit a feature request at https:
           label = (0, import_i18n181.sprintf)(
             /* translators: %s: number of deselected blocks */
             (0, import_i18n181.__)("%s blocks deselected."),
+            // @ts-expect-error `%s` formats the number too.
             selectionDiff.length
           );
         }
@@ -109103,7 +109142,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/list-view/use-list-view-client-ids.mjs
   var import_data142 = __toESM(require_data(), 1);
-  function useListViewClientIds({ blocks: blocks2, rootClientId }) {
+  function useListViewClientIds({
+    blocks: blocks2,
+    rootClientId
+  }) {
     return (0, import_data142.useSelect)(
       (select3) => {
         const {
@@ -109124,7 +109166,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/list-view/use-list-view-collapse-items.mjs
   var import_element370 = __toESM(require_element(), 1);
   var import_data143 = __toESM(require_data(), 1);
-  function useListViewCollapseItems({ updateExpansion }) {
+  function useListViewCollapseItems({
+    updateExpansion
+  }) {
     const { expandedBlock: expandedBlock2, getBlockParents: getBlockParents2 } = (0, import_data143.useSelect)((select3) => {
       const { getBlockParents: _getBlockParents, getExpandedBlock: getExpandedBlock2 } = unlock(
         select3(store)
@@ -109166,7 +109210,10 @@ If there's a particular need for this, please submit a feature request at https:
     while (currentBlockData) {
       candidateBlockParents.push({ ...currentBlockData });
       currentBlockData = blocksData.find(
-        (blockData) => blockData.clientId === currentBlockData.rootClientId
+        (blockData) => (
+          // The loop condition checks the current block.
+          blockData.clientId === currentBlockData.rootClientId
+        )
       );
     }
     return candidateBlockParents;
@@ -109326,7 +109373,10 @@ If there's a particular need for this, please submit a feature request at https:
     } = (0, import_data144.useSelect)(store);
     const [target, setTarget] = (0, import_element371.useState)();
     const { rootClientId: targetRootClientId, blockIndex: targetBlockIndex } = target || {};
-    const onBlockDrop2 = useOnBlockDrop(targetRootClientId, targetBlockIndex);
+    const onBlockDrop2 = useOnBlockDrop(
+      targetRootClientId,
+      targetBlockIndex
+    );
     const rtl = (0, import_i18n182.isRTL)();
     const previousRootClientId = (0, import_compose119.usePrevious)(targetRootClientId);
     const maybeExpandBlock = (0, import_element371.useCallback)(
@@ -109363,13 +109413,16 @@ If there's a particular need for this, please submit a feature request at https:
           const position = { x: event.clientX, y: event.clientY };
           const isBlockDrag = !!draggedBlockClientIds?.length;
           const blockElements = Array.from(
-            currentTarget.querySelectorAll("[data-block]")
+            currentTarget.querySelectorAll(
+              "[data-block]"
+            )
           );
           const blocksData = blockElements.map((blockElement) => {
             const clientId = blockElement.dataset.block;
             const isExpanded = blockElement.dataset.expanded === "true";
             const isDraggedBlock = blockElement.classList.contains("is-dragging");
             const nestingLevel = parseInt(
+              // `parseInt` turns a missing attribute into `NaN`.
               blockElement.getAttribute("aria-level"),
               10
             );
@@ -109478,7 +109531,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/list-view/use-clipboard-handler.mjs
   var import_data146 = __toESM(require_data(), 1);
   var import_compose120 = __toESM(require_compose(), 1);
-  function useClipboardHandler2({ selectBlock: selectBlock2 }) {
+  function useClipboardHandler2({
+    selectBlock: selectBlock2
+  }) {
     const registry = (0, import_data146.useRegistry)();
     const {
       getBlockOrder: getBlockOrder2,
@@ -109516,7 +109571,9 @@ If there's a particular need for this, please submit a feature request at https:
         if (event.defaultPrevented) {
           return;
         }
-        if (!node.contains(event.target.ownerDocument.activeElement)) {
+        if (!node.contains(
+          event.target.ownerDocument.activeElement
+        )) {
           return;
         }
         const listViewRow = event.target.ownerDocument.activeElement?.closest(
@@ -109541,7 +109598,9 @@ If there's a particular need for this, please submit a feature request at https:
             flashBlock2(selectedBlockClientIds[0]);
           }
           notifyCopy(event.type, selectedBlockClientIds);
-          const blocks2 = getBlocksByClientId2(selectedBlockClientIds);
+          const blocks2 = getBlocksByClientId2(
+            selectedBlockClientIds
+          );
           setClipboardBlocks(event, blocks2, registry);
         }
         if (event.type === "cut") {
@@ -109562,7 +109621,9 @@ If there's a particular need for this, please submit a feature request at https:
             __experimentalCanUserUseUnfilteredHTML: canUserUseUnfilteredHTML
           } = getSettings9();
           const blocks2 = getPasteBlocks(
+            // Paste events carry clipboard data.
             event,
+            // The setting is a boolean.
             canUserUseUnfilteredHTML
           );
           if (selectedBlockClientIds.length === 1) {
@@ -109671,13 +109732,13 @@ If there's a particular need for this, please submit a feature request at https:
       updateExpansion
     });
     const selectEditorBlock = (0, import_element373.useCallback)(
-      /**
-       * @param {MouseEvent | KeyboardEvent | undefined} event
-       * @param {string}                                 blockClientId
-       * @param {null | undefined | -1 | 1}              focusPosition
-       */
       (event, blockClientId, focusPosition) => {
-        updateBlockSelection(event, blockClientId, null, focusPosition);
+        updateBlockSelection(
+          event,
+          blockClientId,
+          null,
+          focusPosition
+        );
         setSelectedTreeId(blockClientId);
         if (onSelect) {
           onSelect(getBlock2(blockClientId));
@@ -109689,7 +109750,7 @@ If there's a particular need for this, please submit a feature request at https:
       dropZoneElement,
       updateExpansion
     });
-    const elementRef = (0, import_element373.useRef)();
+    const elementRef = (0, import_element373.useRef)(null);
     const clipBoardRef = useClipboardHandler2({
       selectBlock: selectEditorBlock
     });
@@ -109699,8 +109760,11 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         const controller = new window.AbortController();
-        const focusRow2 = (clientId) => focusListItem(clientId, node, controller.signal).then(
-          () => controller.abort()
+        const focusRow2 = (clientId) => (
+          // A promise is returned for an existing element.
+          focusListItem(clientId, node, controller.signal).then(
+            () => controller.abort()
+          )
         );
         node.ownerDocument.addEventListener(
           "focusin",
@@ -109751,6 +109815,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (event.shiftKey) {
           updateBlockSelection(
             event,
+            // Tree grid rows carry `data-block`.
             startRow?.dataset?.block,
             endRow?.dataset?.block
           );
@@ -109761,7 +109826,8 @@ If there's a particular need for this, please submit a feature request at https:
     useListViewCollapseItems({ updateExpansion });
     const firstDraggedBlockClientId = draggedClientIds?.[0];
     const { blockDropTargetIndex, blockDropPosition, firstDraggedBlockIndex } = (0, import_element373.useMemo)(() => {
-      let _blockDropTargetIndex, _firstDraggedBlockIndex;
+      let _blockDropTargetIndex;
+      let _firstDraggedBlockIndex;
       if (blockDropTarget?.clientId) {
         const foundBlockIndex = blockIndexes[blockDropTarget.clientId];
         _blockDropTargetIndex = foundBlockIndex === void 0 || blockDropTarget?.dropPosition === "top" ? foundBlockIndex : foundBlockIndex + 1;
@@ -109858,9 +109924,12 @@ If there's a particular need for this, please submit a feature request at https:
           onFocusRow: focusRow,
           applicationAriaLabel: (0, import_i18n183.__)("Block navigation structure"),
           "aria-describedby": describedById,
-          style: {
-            "--wp-admin--list-view-dragged-items-height": draggedClientIds?.length ? `${BLOCK_LIST_ITEM_HEIGHT * (draggedClientIds.length - 1)}px` : null
-          },
+          style: (
+            // React styles take custom properties.
+            {
+              "--wp-admin--list-view-dragged-items-height": draggedClientIds?.length ? `${BLOCK_LIST_ITEM_HEIGHT * (draggedClientIds.length - 1)}px` : null
+            }
+          ),
           children: /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(ListViewContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
             ListViewInsertedBlockContext.Provider,
             {
@@ -137210,7 +137279,10 @@ If there's a particular need for this, please submit a feature request at https:
   function hasListViewSupport(nameOrType) {
     return (0, import_blocks131.hasBlockSupport)(nameOrType, LIST_VIEW_SUPPORT_KEY);
   }
-  function ListViewPanel({ clientId, name }) {
+  function ListViewPanel({
+    clientId,
+    name
+  }) {
     const { isSelectionWithinCurrentSection } = (0, import_element470.useContext)(PrivateBlockContext);
     const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
     const { openListViewContentPanel: openListViewContentPanel2 } = unlock(
