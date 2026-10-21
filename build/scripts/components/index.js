@@ -28987,7 +28987,10 @@ This message will only show in development mode. It won't appear in production. 
     contentRef
   }) {
     const instanceId = (0, import_compose18.useInstanceId)(AUTOCOMPLETE_HOOK_REFERENCE);
-    const [state, dispatch] = (0, import_element52.useReducer)(autocompleteReducer, initialState);
+    const [state, dispatch] = (0, import_element52.useReducer)(
+      autocompleteReducer,
+      initialState
+    );
     const { selectedIndex, filteredOptions, filterValue, autocompleter } = state;
     const backspacingRef = (0, import_element52.useRef)(false);
     const prevRecordTextRef = (0, import_element52.useRef)("");

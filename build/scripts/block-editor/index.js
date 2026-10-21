@@ -18407,12 +18407,18 @@ var wp;
   // packages/block-editor/build-module/components/autocomplete/index.mjs
   var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY3 = [];
-  function useCompleters({ completers = EMPTY_ARRAY3 }) {
+  function useCompleters({
+    completers = EMPTY_ARRAY3
+  }) {
     const { name } = useBlockEditContext();
     return (0, import_element13.useMemo)(() => {
       let filteredCompleters = [...completers];
       if (name === (0, import_blocks15.getDefaultBlockName)() || (0, import_blocks15.getBlockSupport)(name, "__experimentalSlashInserter", false)) {
-        filteredCompleters = [...filteredCompleters, block_default];
+        filteredCompleters = [
+          ...filteredCompleters,
+          // The JS completer is typed as a plain object.
+          block_default
+        ];
       }
       if ((0, import_hooks3.hasFilter)("editor.Autocomplete.completers")) {
         if (filteredCompleters === completers) {
@@ -70721,7 +70727,7 @@ var wp;
     });
     return null;
   }
-  function BlockShortcutsRegister({ shortcuts }) {
+  function BlockShortcutsRegister({ shortcuts: shortcuts2 }) {
     const { registerShortcut, unregisterShortcut } = (0, import_data37.useDispatch)(
       import_keyboard_shortcuts4.store
     );
@@ -70729,7 +70735,7 @@ var wp;
     (0, import_element179.useEffect)(() => {
       const registered = /* @__PURE__ */ new Map();
       const combinations = /* @__PURE__ */ new Map();
-      for (const shortcut of shortcuts) {
+      for (const shortcut of shortcuts2) {
         const config2 = {
           name: shortcut.name,
           category: "block",
@@ -70766,15 +70772,15 @@ var wp;
         }
       }
       registeredRef.current = registered;
-    }, [shortcuts, registerShortcut, unregisterShortcut]);
+    }, [shortcuts2, registerShortcut, unregisterShortcut]);
     return null;
   }
   function BlockKeyboardShortcuts() {
-    const shortcuts = useDeclaredBlockShortcuts();
+    const shortcuts2 = useDeclaredBlockShortcuts();
     const apply = useApplyBlockShortcut();
     return /* @__PURE__ */ (0, import_jsx_runtime343.jsxs)(import_jsx_runtime343.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(BlockShortcutsRegister, { shortcuts }),
-      shortcuts.map((entry, index3) => /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(BlockShortcutsRegister, { shortcuts: shortcuts2 }),
+      shortcuts2.map((entry, index3) => /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
         BlockShortcut,
         {
           entry,
@@ -73249,7 +73255,10 @@ var wp;
       isObjectActive ? `${name}-${value.start}` : name
     );
   }
-  function FormatEdit({ formatTypes, ...props }) {
+  function FormatEdit({
+    formatTypes,
+    ...props
+  }) {
     return formatTypes.map((settings3) => /* @__PURE__ */ (0, import_react62.createElement)(Edit2, { settings: settings3, ...props, key: settings3.name }));
   }
 
@@ -73407,7 +73416,8 @@ var wp;
           format7
         )
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(import_components29.Slot, { name: "RichText.ToolbarControls", children: (fills) => {
+      /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(import_components29.Slot, { name: "RichText.ToolbarControls", children: (slotFills) => {
+        const fills = slotFills;
         if (!fills.length) {
           return null;
         }
@@ -73430,9 +73440,14 @@ var wp;
                 "Displays more block tools"
               )
             },
-            controls: orderBy(
-              fills.map(([{ props }]) => props),
-              "title"
+            controls: (
+              // The toolbar buttons' props are dropdown options too.
+              orderBy(
+                fills.map(
+                  ([{ props }]) => props
+                ),
+                "title"
+              )
             ),
             popoverProps: POPOVER_PROPS4
           }
@@ -73640,7 +73655,9 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/format-toolbar-container.mjs
   var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
-  function InlineToolbar({ popoverAnchor }) {
+  function InlineToolbar({
+    popoverAnchor
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
       import_components31.Popover,
       {
@@ -73660,7 +73677,10 @@ var wp;
       }
     );
   }
-  var FormatToolbarContainer = ({ inline: inline4, editableContentElement }) => {
+  var FormatToolbarContainer = ({
+    inline: inline4,
+    editableContentElement
+  }) => {
     if (inline4) {
       return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(InlineToolbar, { popoverAnchor: editableContentElement });
     }
@@ -73690,7 +73710,10 @@ var wp;
   function isEmpty(value) {
     return !value || value.length === 0;
   }
-  function getAllowedFormats({ allowedFormats, disableFormats }) {
+  function getAllowedFormats({
+    allowedFormats,
+    disableFormats
+  }) {
     if (disableFormats) {
       return getAllowedFormats.EMPTY_ARRAY;
     }
@@ -73829,7 +73852,7 @@ var wp;
       const fields = clientIds.map(
         (clientId, i) => getFieldFormatSettings(clientId, keys[i])
       );
-      const lists = fields.map((field) => field?.allowedFormats).filter(Boolean);
+      const lists = fields.map((field) => field?.allowedFormats).filter((list) => !!list);
       return {
         allowedFormats: lists.length ? lists.reduce(
           (a, b) => a.filter((name) => b.includes(name))
@@ -104271,7 +104294,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data116.useSelect)(store);
     const { moveBlocksDown: moveBlocksDown2, moveBlocksUp: moveBlocksUp2 } = (0, import_data116.useDispatch)(store);
-    const shortcuts = (0, import_data116.useSelect)((select3) => {
+    const shortcuts2 = (0, import_data116.useSelect)((select3) => {
       const { getShortcutRepresentation } = select3(import_keyboard_shortcuts9.store);
       return {
         copy: getShortcutRepresentation("core/block-editor/copy"),
@@ -104399,7 +104422,7 @@ If there's a particular need for this, please submit a feature request at https:
                     {
                       clientIds,
                       onCopy,
-                      shortcut: shortcuts.copy
+                      shortcut: shortcuts2.copy
                     }
                   ),
                   canRemove && !isContentOnly && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
@@ -104408,7 +104431,7 @@ If there's a particular need for this, please submit a feature request at https:
                       clientIds,
                       label: (0, import_i18n158.__)("Cut"),
                       eventType: "cut",
-                      shortcut: shortcuts.cut,
+                      shortcut: shortcuts2.cut,
                       __experimentalUpdateSelection: !__experimentalSelectBlock
                     }
                   ),
@@ -104420,7 +104443,7 @@ If there's a particular need for this, please submit a feature request at https:
                         onDuplicate,
                         updateSelectionAfterDuplicate
                       ),
-                      shortcut: shortcuts.duplicate,
+                      shortcut: shortcuts2.duplicate,
                       children: (0, import_i18n158.__)("Duplicate")
                     }
                   ),
@@ -104432,7 +104455,7 @@ If there's a particular need for this, please submit a feature request at https:
                           onClose,
                           onInsertBefore
                         ),
-                        shortcut: shortcuts.insertBefore,
+                        shortcut: shortcuts2.insertBefore,
                         children: (0, import_i18n158.__)("Add before")
                       }
                     ),
@@ -104443,7 +104466,7 @@ If there's a particular need for this, please submit a feature request at https:
                           onClose,
                           onInsertAfter
                         ),
-                        shortcut: shortcuts.insertAfter,
+                        shortcut: shortcuts2.insertAfter,
                         children: (0, import_i18n158.__)("Add after")
                       }
                     )
@@ -104495,7 +104518,7 @@ If there's a particular need for this, please submit a feature request at https:
                       onRemove,
                       updateSelectionAfterRemove
                     ),
-                    shortcut: shortcuts.remove,
+                    shortcut: shortcuts2.remove,
                     children: (0, import_i18n158.__)("Delete")
                   }
                 ) })
@@ -118502,10 +118525,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return previous.text === next.text ? "discrete" : "typing";
   }
-  function useMarkPersistent({ html, value, onMarkPersistent }) {
+  function useMarkPersistent({
+    html,
+    value,
+    onMarkPersistent
+  }) {
     const { text } = value;
     const hasActiveFormats = !!value.activeFormats?.length;
-    const previousRef = (0, import_element404.useRef)();
+    const previousRef = (0, import_element404.useRef)(void 0);
     const markPersistent = (0, import_compose135.useEvent)(onMarkPersistent);
     const markPersistentDebounced = (0, import_compose135.useDebounce)(
       markPersistent,
@@ -118547,7 +118574,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_hooks7 = __toESM(require_hooks(), 1);
   var { subscribeOwnedListener } = unlock(import_rich_text9.privateApis);
   var wrapSelectionSettings = ["`", '"', "'", "\u201C\u201D", "\u2018\u2019"];
-  var before_input_rules_default = (props) => (element) => {
+  var beforeInputRules = (props) => (element) => {
     function onInput(event) {
       const { inputType, data } = event;
       const { value, onChange, registry } = props.current;
@@ -118584,7 +118611,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       init2.data = endChar;
       const { ownerDocument: ownerDocument2 } = element;
-      const { defaultView } = ownerDocument2;
+      const defaultView = ownerDocument2.defaultView;
       const newEvent = new defaultView.InputEvent("input", init2);
       window.queueMicrotask(() => {
         element.dispatchEvent(newEvent);
@@ -118593,6 +118620,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return subscribeOwnedListener(element, "beforeinput", onInput, true);
   };
+  var before_input_rules_default = beforeInputRules;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/input-rules.mjs
   var import_rich_text11 = __toESM(require_rich_text(), 1);
@@ -118633,7 +118661,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return [];
   }
-  var input_rules_default = (props) => (element) => {
+  var inputRules = (props) => (element) => {
     function inputRule() {
       const { getValue, onReplace, selectionChange: selectionChange2, registry } = props.current;
       if (!onReplace) {
@@ -118647,7 +118675,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const trimmedTextBefore = text.slice(0, start2).trim();
       const prefixTransforms = (0, import_blocks88.getBlockTransforms)("from").filter(
-        ({ type }) => type === "prefix"
+        (transform) => transform.type === "prefix"
       );
       const transformation = (0, import_blocks88.findTransform)(
         prefixTransforms,
@@ -118739,11 +118767,12 @@ If there's a particular need for this, please submit a feature request at https:
       unsubscribeCompositionEnd();
     };
   };
+  var input_rules_default = inputRules;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/insert-replacement-text.mjs
   var import_rich_text12 = __toESM(require_rich_text(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener3 } = unlock(import_rich_text12.privateApis);
-  var insert_replacement_text_default = (props) => (element) => {
+  var insertReplacementText = (props) => (element) => {
     function onInput(event) {
       if (event.inputType !== "insertReplacementText") {
         return;
@@ -118753,12 +118782,13 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return subscribeOwnedListener3(element, "beforeinput", onInput);
   };
+  var insert_replacement_text_default = insertReplacementText;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/remove-browser-shortcuts.mjs
   var import_keycodes25 = __toESM(require_keycodes(), 1);
   var import_rich_text13 = __toESM(require_rich_text(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener4 } = unlock(import_rich_text13.privateApis);
-  var remove_browser_shortcuts_default = () => (node) => {
+  var removeBrowserShortcuts = () => (node) => {
     function onKeydown(event) {
       if (import_keycodes25.isKeyboardEvent.primary(event, "z") || import_keycodes25.isKeyboardEvent.primary(event, "y") || import_keycodes25.isKeyboardEvent.primaryShift(event, "z")) {
         event.preventDefault();
@@ -118766,11 +118796,12 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return subscribeOwnedListener4(node, "keydown", onKeydown, true);
   };
+  var remove_browser_shortcuts_default = removeBrowserShortcuts;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/shortcuts.mjs
   var import_rich_text14 = __toESM(require_rich_text(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener5 } = unlock(import_rich_text14.privateApis);
-  var shortcuts_default = (props) => (element) => {
+  var shortcuts = (props) => (element) => {
     const { keyboardShortcuts } = props.current;
     function onKeyDown(event) {
       for (const keyboardShortcut of keyboardShortcuts) {
@@ -118779,11 +118810,12 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return subscribeOwnedListener5(element, "keydown", onKeyDown, true);
   };
+  var shortcuts_default = shortcuts;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/input-events.mjs
   var import_rich_text15 = __toESM(require_rich_text(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener6 } = unlock(import_rich_text15.privateApis);
-  var input_events_default = (props) => (element) => {
+  var inputEventsListener = (props) => (element) => {
     const { inputEvents } = props.current;
     function onInput(event) {
       for (const keyboardShortcut of inputEvents) {
@@ -118792,6 +118824,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return subscribeOwnedListener6(element, "input", onInput);
   };
+  var input_events_default = inputEventsListener;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/paste-handler.mjs
   var import_blocks89 = __toESM(require_blocks(), 1);
@@ -118802,7 +118835,11 @@ If there's a particular need for this, please submit a feature request at https:
   var { ownsSelection: ownsSelection3 } = unlock(import_rich_text16.privateApis);
   function createPasteListener(props, element) {
     return function _onPaste(event) {
-      const pasteProps = event.type === "drop" ? getDropPasteProps(props.current, element, event) : props.current;
+      const pasteProps = event.type === "drop" ? getDropPasteProps(
+        props.current,
+        element,
+        event
+      ) : props.current;
       if (!pasteProps) {
         return;
       }
@@ -118825,7 +118862,9 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const { clipboardData = event.dataTransfer } = event;
-      const pasteData = getPasteEventData({ clipboardData });
+      const pasteData = getPasteEventData({
+        clipboardData
+      });
       if (!pasteData) {
         return;
       }
@@ -118882,7 +118921,9 @@ If there's a particular need for this, please submit a feature request at https:
         HTML: html,
         plainText,
         mode: mode2,
+        // Fields render HTML tags.
         tagName,
+        // @ts-expect-error The paste handler ignores `preserveWhiteSpace`.
         preserveWhiteSpace
       });
       if (typeof content === "string") {
@@ -118899,7 +118940,7 @@ If there's a particular need for this, please submit a feature request at https:
       onReplace(content, content.length - 1, -1);
     };
   }
-  var paste_handler_default = (props) => (element) => {
+  var pasteHandlerListener = (props) => (element) => {
     const { defaultView } = element.ownerDocument;
     return subscribeDelegatedListener4(
       defaultView,
@@ -118907,11 +118948,13 @@ If there's a particular need for this, please submit a feature request at https:
       createPasteListener(props, element)
     );
   };
+  var paste_handler_default = pasteHandlerListener;
   var drop = (props) => (element) => {
     const { ownerDocument: ownerDocument2 } = element;
     const onPaste = createPasteListener(props, element);
     function onDragOver(event) {
-      if (element.isContentEditable && !(0, import_rich_text16.isEmpty)(props.current.getValue()) && isTextDrop(ownerDocument2, event.dataTransfer)) {
+      if (element.isContentEditable && !(0, import_rich_text16.isEmpty)(props.current.getValue()) && // Drag events carry a data transfer.
+      isTextDrop(ownerDocument2, event.dataTransfer)) {
         event.stopPropagation();
       }
     }
@@ -118932,7 +118975,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_keycodes26 = __toESM(require_keycodes(), 1);
   var import_rich_text17 = __toESM(require_rich_text(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener7 } = unlock(import_rich_text17.privateApis);
-  var delete_default = (props) => (element) => {
+  var deleteListener = (props) => (element) => {
     function onKeyDown(event) {
       const { keyCode } = event;
       if (event.defaultPrevented) {
@@ -118956,13 +118999,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return subscribeOwnedListener7(element, "keydown", onKeyDown);
   };
+  var delete_default = deleteListener;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/enter.mjs
   var import_rich_text18 = __toESM(require_rich_text(), 1);
   var import_compose137 = __toESM(require_compose(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener8, ownsSelection: ownsSelection4 } = unlock(import_rich_text18.privateApis);
   var { subscribeDelegatedListener: subscribeDelegatedListener5 } = unlock(import_compose137.privateApis);
-  var enter_default = (props) => (element) => {
+  var enter = (props) => (element) => {
     function onBeforeInput(event) {
       const { inputType } = event;
       if (inputType !== "insertParagraph" && inputType !== "insertLineBreak") {
@@ -119037,9 +119081,10 @@ If there's a particular need for this, please submit a feature request at https:
       unsubscribeBeforeInput();
     };
   };
+  var enter_default = enter;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/firefox-compat.mjs
-  var firefox_compat_default = (props) => (element) => {
+  var firefoxCompat = (props) => (element) => {
     function onFocus() {
       const { registry } = props.current;
       if (!registry.select(store).isMultiSelecting()) {
@@ -119057,6 +119102,7 @@ If there's a particular need for this, please submit a feature request at https:
       element.removeEventListener("focus", onFocus);
     };
   };
+  var firefox_compat_default = firefoxCompat;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/index.mjs
   var allEventListeners = [
@@ -119127,8 +119173,8 @@ If there's a particular need for this, please submit a feature request at https:
     format: format7,
     ...props
   }) {
-    value = /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(import_element406.RawHTML, { children: valueToHTMLString(value, multiline) });
-    return Tag ? /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(Tag, { ...props, children: value }) : value;
+    const content = /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(import_element406.RawHTML, { children: valueToHTMLString(value, multiline) });
+    return Tag ? /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(Tag, { ...props, children: content }) : content;
   }
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.mjs
@@ -119173,6 +119219,7 @@ If there's a particular need for this, please submit a feature request at https:
         registry.batch(() => {
           onChange(newValues);
           selectionChange2(
+            // Multiline fields are in blocks.
             clientId,
             `${identifier}-${index3 + 1}`,
             0,
@@ -119195,7 +119242,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = lineProps;
     const { clientId } = useBlockEditContext();
     const { selectionChange: selectionChange2 } = (0, import_data162.useDispatch)(store);
-    const latestRef = (0, import_element407.useRef)();
+    const latestRef = (0, import_element407.useRef)(void 0);
     (0, import_element407.useInsertionEffect)(() => {
       latestRef.current = { ...lineProps, clientId };
     });
@@ -119239,6 +119286,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
           onChange(newValues);
           selectionChange2(
+            // Multiline fields are in blocks.
             clientId,
             `${identifier}-${index3 - (forward ? 0 : 1)}`,
             offset4,
@@ -119311,10 +119359,14 @@ If there's a particular need for this, please submit a feature request at https:
           alternative: "value prop as string",
           link: "https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/introducing-attributes-and-editable-fields/"
         });
-        value = import_blocks91.children.toHTML(props.value);
-        onChange = (newValue) => props.onChange(
-          import_blocks91.children.fromDOM(
-            (0, import_rich_text20.__unstableCreateElement)(document, newValue).childNodes
+        value = import_blocks91.children.toHTML(value);
+        onChange = (newValue) => (
+          // A field always gets `onChange` with a value.
+          props.onChange(
+            import_blocks91.children.fromDOM(
+              // The value was converted to an HTML string above.
+              (0, import_rich_text20.__unstableCreateElement)(document, newValue).childNodes
+            )
           )
         );
       }
@@ -119400,10 +119452,13 @@ If there's a particular need for this, please submit a feature request at https:
   }, forwardedRef) {
     const { supportsSplitting } = (0, import_element409.useContext)(PrivateBlockContext);
     const instanceId = (0, import_compose140.useInstanceId)(RichTextWrapper);
-    const anchorRef = (0, import_element409.useRef)();
-    const [anchorElement, setAnchorElement] = (0, import_element409.useState)(null);
+    const anchorRef = (0, import_element409.useRef)(null);
+    const [anchorElement, setAnchorElement] = (0, import_element409.useState)(
+      null
+    );
     const context = useBlockEditContext();
-    const { clientId, isSelected: isBlockSelected2, name: blockName } = context;
+    const { isSelected: isBlockSelected2, name: blockName } = context;
+    const clientId = context.clientId;
     const isBlockMultiSelected2 = context[isMultiSelectedKey];
     const blockBindings = context[blockBindingsKey];
     const hasDefaultEditingMode = context[blockEditingModeKey] === "default";
@@ -119416,7 +119471,10 @@ If there's a particular need for this, please submit a feature request at https:
       const { getSelectionStart: getSelectionStart22, getSelectionEnd: getSelectionEnd22 } = select3(store);
       const selectionStart2 = getSelectionStart22();
       const selectionEnd2 = getSelectionEnd22();
-      const isInField = (end) => end.clientId === clientId && (identifier ? end.attributeKey === identifier : end[instanceIdKey] === instanceId);
+      const isInField = (end) => end.clientId === clientId && (identifier ? end.attributeKey === identifier : (
+        // The field's own selection carries its instance ID.
+        end[instanceIdKey] === instanceId
+      ));
       let isSelected22;
       if (originalIsSelected === void 0) {
         isSelected22 = isInField(selectionStart2) && selectionEnd2.clientId === clientId;
@@ -119495,11 +119553,13 @@ If there's a particular need for this, please submit a feature request at https:
         const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0, import_i18n237.sprintf)(
           /* translators: %s: connected field label or source label */
           (0, import_i18n237.__)("Add %s"),
+          // Registered sources have a label.
           bindingKey
         );
         const _bindingsLabel = _disableBoundBlock ? relatedBinding?.args?.key || blockBindingsSource?.label : (0, import_i18n237.sprintf)(
           /* translators: %s: source label or key */
           (0, import_i18n237.__)("Empty %s; start writing to edit its value"),
+          // Registered sources have a label.
           relatedBinding?.args?.key || blockBindingsSource?.label
         );
         return {
@@ -119568,7 +119628,10 @@ If there's a particular need for this, please submit a feature request at https:
           [identifier ? "attributeKey" : instanceIdKey]: identifier ? identifier : instanceId
         };
         if (typeof start2 === "number" || unset) {
-          if (end === void 0 && getBlockRootClientId2(clientId) !== getBlockRootClientId2(getSelectionEnd2().clientId)) {
+          if (end === void 0 && getBlockRootClientId2(clientId) !== // An unset end has no root.
+          getBlockRootClientId2(
+            getSelectionEnd2().clientId
+          )) {
             return;
           }
           selection2.start = {
@@ -119577,7 +119640,10 @@ If there's a particular need for this, please submit a feature request at https:
           };
         }
         if (typeof end === "number" || unset) {
-          if (start2 === void 0 && getBlockRootClientId2(clientId) !== getBlockRootClientId2(getSelectionStart2().clientId)) {
+          if (start2 === void 0 && getBlockRootClientId2(clientId) !== // An unset start has no root.
+          getBlockRootClientId2(
+            getSelectionStart2().clientId
+          )) {
             return;
           }
           selection2.end = {
@@ -119633,13 +119699,16 @@ If there's a particular need for this, please submit a feature request at https:
       const { ownerDocument: ownerDocument2 } = element;
       const focusedDocument = [
         ownerDocument2,
+        // The field's document has a window.
         ownerDocument2.defaultView.frameElement?.ownerDocument
       ].find((doc) => doc?.hasFocus());
       if (!focusedDocument) {
         return;
       }
       const { activeElement: activeElement2, body } = focusedDocument;
-      const canvas = element.parentElement?.closest("[contenteditable]");
+      const canvas = element.parentElement?.closest(
+        "[contenteditable]"
+      );
       const target = canvas?.isContentEditable ? canvas : element;
       if (activeElement2 === body || canvas?.contains(activeElement2)) {
         target.focus();
@@ -119667,6 +119736,7 @@ If there's a particular need for this, please submit a feature request at https:
           selection2.setBaseAndExtent(
             node,
             offset4,
+            // A selection with a range has a focus node.
             selection2.focusNode,
             selection2.focusOffset
           );
@@ -119679,6 +119749,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [crossBlockStart, crossBlockEnd, value, getDomPosition]);
     const autocompleteProps = useBlockEditorAutocompleteProps({
+      // @ts-expect-error TODO: `onReplace` may be missing, and patterns replace with a block array.
       onReplace,
       completers: autocompleters,
       record: value,
@@ -119733,8 +119804,12 @@ If there's a particular need for this, please submit a feature request at https:
       value,
       onMarkPersistent: __unstableMarkLastChangeAsPersistent2
     });
-    const [keyboardShortcuts] = (0, import_element409.useState)(() => /* @__PURE__ */ new Set());
-    const [inputEvents] = (0, import_element409.useState)(() => /* @__PURE__ */ new Set());
+    const [keyboardShortcuts] = (0, import_element409.useState)(
+      () => /* @__PURE__ */ new Set()
+    );
+    const [inputEvents] = (0, import_element409.useState)(
+      () => /* @__PURE__ */ new Set()
+    );
     function onFocus() {
       anchorRef.current?.focus();
     }
@@ -119791,6 +119866,7 @@ If there's a particular need for this, please submit a feature request at https:
               __unstableAllowPrefixTransformations,
               formatTypes,
               onReplace,
+              // The action also takes no arguments.
               selectionChange: selectionChange2,
               isSelected: isSelected2,
               disableFormats,
@@ -119878,9 +119954,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/editable-text/index.mjs
   var import_jsx_runtime628 = __toESM(require_jsx_runtime(), 1);
-  var EditableText = (0, import_element410.forwardRef)((props, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime628.jsx)(rich_text_default, { ref, ...props, __unstableDisableFormats: true });
-  });
+  var EditableText = (0, import_element410.forwardRef)(
+    (props, ref) => {
+      return /* @__PURE__ */ (0, import_jsx_runtime628.jsx)(rich_text_default, { ref, ...props, __unstableDisableFormats: true });
+    }
+  );
   EditableText.Content = function Content4({
     value = "",
     tagName: Tag = "div",
@@ -119892,21 +119970,29 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/plain-text/index.mjs
   var import_jsx_runtime629 = __toESM(require_jsx_runtime(), 1);
-  var PlainText = (0, import_element411.forwardRef)(({ __experimentalVersion, ...props }, ref) => {
-    if (__experimentalVersion === 2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(editable_text_default, { ref, ...props });
-    }
-    const { className, onChange, ...remainingProps } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(
-      "textarea",
-      {
-        ref,
-        className: clsx_default("block-editor-plain-text", className),
-        onChange: (event) => onChange(event.target.value),
-        ...remainingProps
+  var PlainText = (0, import_element411.forwardRef)(
+    ({ __experimentalVersion, ...props }, ref) => {
+      if (__experimentalVersion === 2) {
+        return /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(
+          editable_text_default,
+          {
+            ref,
+            ...props
+          }
+        );
       }
-    );
-  });
+      const { className, onChange, ...remainingProps } = props;
+      return /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(
+        "textarea",
+        {
+          ref,
+          className: clsx_default("block-editor-plain-text", className),
+          onChange: (event) => onChange(event.target.value),
+          ...remainingProps
+        }
+      );
+    }
+  );
   var plain_text_default = PlainText;
 
   // packages/block-editor/build-module/components/responsive-block-control/index.mjs
@@ -137734,21 +137820,22 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   function addValuesForElements(children, ...args) {
-    children = Array.isArray(children) ? children : [children];
-    for (let i = 0; i < children.length; i++) {
-      addValuesForElement(children[i], ...args);
+    const list = Array.isArray(children) ? children : [children];
+    for (let i = 0; i < list.length; i++) {
+      addValuesForElement(list[i], ...args);
     }
   }
   function addValuesForBlocks(values, blocks2) {
     for (let i = 0; i < blocks2.length; i++) {
       const { name, attributes, innerBlocks } = blocks2[i];
+      const InnerBlocksContent = inner_blocks_default.Content;
       const saveElement = (0, import_blocks134.getSaveElement)(
         name,
         attributes,
         // Instead of letting save elements use `useInnerBlocksProps.save`,
         // force them to use InnerBlocks.Content instead so we can intercept
         // a single component.
-        /* @__PURE__ */ (0, import_jsx_runtime715.jsx)(inner_blocks_default.Content, {})
+        /* @__PURE__ */ (0, import_jsx_runtime715.jsx)(InnerBlocksContent, {})
       );
       addValuesForElement(saveElement, values, innerBlocks);
     }
@@ -137759,7 +137846,10 @@ If there's a particular need for this, please submit a feature request at https:
     addValuesForBlocks(values, blocks2);
     import_blocks134.__unstableGetBlockProps.skipFilters = false;
     return values.map(
-      (value) => value instanceof import_rich_text24.RichTextData ? value : import_rich_text24.RichTextData.fromHTMLString(value)
+      (value) => value instanceof import_rich_text24.RichTextData ? value : (
+        // Other values are HTML strings.
+        import_rich_text24.RichTextData.fromHTMLString(value)
+      )
     );
   }
 
