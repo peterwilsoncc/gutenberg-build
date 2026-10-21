@@ -2224,6 +2224,12 @@ return array(
 				'__experimentalDefaultControls' => array(
 					'padding' => true
 				)
+			),
+			'__experimentalBorder' => array(
+				'radius' => true,
+				'color' => true,
+				'width' => true,
+				'style' => true
 			)
 		)
 	),

@@ -39151,6 +39151,12 @@ var wp;
         __experimentalDefaultControls: {
           padding: true
         }
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
       }
     }
   };
