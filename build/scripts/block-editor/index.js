@@ -18715,10 +18715,7 @@ var wp;
     if (presetValue === void 0) {
       return 0;
     }
-    const slug = (
-      // @ts-expect-error `parseFloat` ignores the radix it is passed.
-      parseFloat(presetValue, 10) === 0 ? "0" : getPresetSlug(presetValue, presetType)
-    );
+    const slug = parseFloat(presetValue) === 0 ? "0" : getPresetSlug(presetValue, presetType);
     const sliderValue = presets.findIndex((size4) => {
       return String(size4.slug) === slug;
     });
@@ -18728,10 +18725,7 @@ var wp;
     if (!isValuePreset(value, presetType)) {
       return value;
     }
-    const slug = (
-      // @ts-expect-error `parseFloat` ignores the radix it is passed.
-      parseFloat(value, 10) === 0 ? "0" : getPresetSlug(value, presetType)
-    );
+    const slug = parseFloat(value) === 0 ? "0" : getPresetSlug(value, presetType);
     const preset = presets.find((size4) => String(size4.slug) === slug);
     return preset?.size;
   }
