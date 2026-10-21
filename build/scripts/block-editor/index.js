@@ -64349,7 +64349,7 @@ var wp;
         {
           __next40pxDefaultSize: true,
           variant: "secondary",
-          tabIndex: "0",
+          tabIndex: 0,
           onClick: action,
           children: actionText
         }
@@ -101880,7 +101880,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const startScrolling = (0, import_element332.useCallback)((event) => {
       dragStartYRef.current = event.clientY;
-      scrollParentYRef.current = (0, import_dom67.getScrollContainer)(event.target);
+      scrollParentYRef.current = (0, import_dom67.getScrollContainer)(
+        event.target
+      );
       scrollEditorIntervalRef.current = setInterval(() => {
         if (scrollParentYRef.current && velocityYRef.current) {
           const newTop = scrollParentYRef.current.scrollTop + velocityYRef.current;
@@ -101895,7 +101897,10 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const scrollParentHeight = scrollParentYRef.current.offsetHeight;
-      const offsetDragStartPosition = dragStartYRef.current - scrollParentYRef.current.offsetTop;
+      const offsetDragStartPosition = (
+        // The drag start position is set while scrolling.
+        dragStartYRef.current - scrollParentYRef.current.offsetTop
+      );
       const offsetDragPosition = event.clientY - scrollParentYRef.current.offsetTop;
       if (event.clientY > offsetDragStartPosition) {
         const moveableDistance = Math.max(
@@ -101997,7 +102002,9 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const onDragOver = (event) => {
-        if (!event.target.closest("[data-block]")) {
+        if (!event.target.closest(
+          "[data-block]"
+        )) {
           return;
         }
         const draggedBlockNames = getBlockNamesByClientId2(clientIds);
@@ -102010,6 +102017,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (allowedBlocks?.length === 0) {
           const targetRootClientId = getBlockRootClientId2(targetClientId);
           const targetRootBlockName = getBlockNamesByClientId2([
+            // The target block is in the editor, so it has a root.
             targetRootClientId
           ])[0];
           const rootAllowedBlocks = getAllowedBlocks2(targetRootClientId);
@@ -103190,7 +103198,9 @@ If there's a particular need for this, please submit a feature request at https:
         }
         const groupingBlockName = getGroupingBlockName();
         const newBlocks = groupBlocks(
+          // The blocks to act on exist.
           getBlocksByClientId2(clientIds),
+          // Grouping is only offered when a grouping block is registered.
           groupingBlockName
         );
         if (!newBlocks) {
@@ -128435,7 +128445,11 @@ If there's a particular need for this, please submit a feature request at https:
     result[blockName].add(uniqueId2);
     return result;
   }
-  function RecursionProvider({ children, uniqueId: uniqueId2, blockName = "" }) {
+  function RecursionProvider({
+    children,
+    uniqueId: uniqueId2,
+    blockName = ""
+  }) {
     const previouslyRenderedBlocks = (0, import_element443.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
@@ -129701,13 +129715,16 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
   var import_jsx_runtime687 = __toESM(require_jsx_runtime(), 1);
-  function BlockAllowedBlocksControl({ clientId }) {
+  function BlockAllowedBlocksControl({
+    clientId
+  }) {
     const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element450.useState)(false);
     const { blockTypes, selectedBlockNames } = (0, import_data190.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
         return {
           blockTypes: select3(import_blocks113.store).getBlockTypes(),
+          // The attribute holds block names.
           selectedBlockNames: getBlockAttributes3(clientId)?.allowedBlocks
         };
       },
@@ -137291,7 +137308,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components296 = __toESM(require_components(), 1);
   var import_i18n297 = __toESM(require_i18n(), 1);
   var import_jsx_runtime717 = __toESM(require_jsx_runtime(), 1);
-  function BlockRemovalWarningModal({ rules }) {
+  function BlockRemovalWarningModal({
+    rules
+  }) {
     const [confirmed, setConfirmed] = (0, import_element475.useState)(false);
     const { clientIds, selectPrevious, message: message2 } = (0, import_data209.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()

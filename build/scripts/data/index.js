@@ -2542,7 +2542,13 @@ var wp;
             }
             return [
               propName,
-              (...args) => currentDispatchMapRef.current(registry.dispatch, registry)[propName](...args)
+              (...args) => (
+                // The arguments are passed through to the dispatcher.
+                currentDispatchMapRef.current(
+                  registry.dispatch,
+                  registry
+                )[propName](...args)
+              )
             ];
           }
         )
