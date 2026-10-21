@@ -135873,7 +135873,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (isDistractionFree || !gridElement) {
       return null;
     }
-    const isManualGrid = parentLayout?.isManualPlacement && window.__experimentalEnableGridInteractivity;
+    const isManualGrid = parentLayout?.isManualPlacement && // The experiment sets this global.
+    window.__experimentalEnableGridInteractivity;
     return /* @__PURE__ */ (0, import_jsx_runtime706.jsx)(
       GridVisualizerGrid,
       {
@@ -135886,7 +135887,12 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   var GridVisualizerGrid = (0, import_element464.forwardRef)(
-    ({ gridClientId, gridElement, isManualGrid, childGridClientId }, ref) => {
+    ({
+      gridClientId,
+      gridElement,
+      isManualGrid,
+      childGridClientId
+    }, ref) => {
       const [gridInfo, setGridInfo] = (0, import_element464.useState)(
         () => getGridInfo(gridElement)
       );
@@ -135960,7 +135966,10 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
   );
-  function AutoGridVisualizer({ gridInfo, childGridRect }) {
+  function AutoGridVisualizer({
+    gridInfo,
+    childGridRect
+  }) {
     return range(1, gridInfo.numRows).map(
       (row) => range(1, gridInfo.numColumns).map((column) => {
         let color = gridInfo.currentColor;
@@ -135977,8 +135986,14 @@ If there's a particular need for this, please submit a feature request at https:
       })
     );
   }
-  function ManualGridVisualizer({ gridClientId, gridInfo, childGridRect }) {
-    const [highlightedRect, setHighlightedRect] = (0, import_element464.useState)(null);
+  function ManualGridVisualizer({
+    gridClientId,
+    gridInfo,
+    childGridRect
+  }) {
+    const [highlightedRect, setHighlightedRect] = (0, import_element464.useState)(
+      null
+    );
     const gridItemStyles = (0, import_data199.useSelect)(
       (select3) => {
         const { getBlockOrder: getBlockOrder2, getBlockStyles: getBlockStyles2 } = unlock(
@@ -135997,6 +136012,7 @@ If there's a particular need for this, please submit a feature request at https:
           rowStart,
           columnSpan = 1,
           rowSpan = 1
+          // The style attribute is an object when set.
         } = style?.layout ?? {};
         if (!columnStart || !rowStart) {
           continue;
@@ -136053,7 +136069,11 @@ If there's a particular need for this, please submit a feature request at https:
       })
     );
   }
-  function GridVisualizerCell({ color, children, className }) {
+  function GridVisualizerCell({
+    color,
+    children,
+    className
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime706.jsx)(
       "div",
       {
@@ -136091,7 +136111,9 @@ If there's a particular need for this, please submit a feature request at https:
         if (!canInsertBlockType2(blockName, gridClientId)) {
           return false;
         }
-        const attributes = getBlockAttributes3(srcClientId);
+        const attributes = getBlockAttributes3(
+          srcClientId
+        );
         const rect = new GridRect({
           columnStart: column,
           rowStart: row,
@@ -136105,7 +136127,9 @@ If there's a particular need for this, please submit a feature request at https:
         return isInBounds;
       },
       onDragEnter(srcClientId) {
-        const attributes = getBlockAttributes3(srcClientId);
+        const attributes = getBlockAttributes3(
+          srcClientId
+        );
         setHighlightedRect(
           new GridRect({
             columnStart: column,
@@ -136122,7 +136146,9 @@ If there's a particular need for this, please submit a feature request at https:
       },
       onDrop(srcClientId) {
         setHighlightedRect(null);
-        const attributes = getBlockAttributes3(srcClientId);
+        const attributes = getBlockAttributes3(
+          srcClientId
+        );
         updateBlockAttributes2(srcClientId, {
           style: {
             ...attributes.style,
@@ -137654,6 +137680,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime713 = __toESM(require_jsx_runtime(), 1);
   function GridLayoutSync(props) {
     useGridLayoutSync(props);
+    return void 0;
   }
   function GridTools2({ clientId, layout }) {
     const { isVisible: isVisible2, blockVisibility: blockVisibility2, deviceType, viewportSettings } = (0, import_data207.useSelect)(
@@ -137716,17 +137743,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var addGridVisualizerToBlockEdit = (0, import_compose157.createHigherOrderComponent)(
     (BlockEdit2) => function AddGridVisualizerToBlockEdit(props) {
-      if (props.attributes.layout?.type !== "grid") {
+      const layout = props.attributes.layout;
+      if (layout?.type !== "grid") {
         return /* @__PURE__ */ (0, import_jsx_runtime713.jsx)(BlockEdit2, { ...props }, "edit");
       }
       return /* @__PURE__ */ (0, import_jsx_runtime713.jsxs)(import_jsx_runtime713.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime713.jsx)(
-          GridTools2,
-          {
-            clientId: props.clientId,
-            layout: props.attributes.layout
-          }
-        ),
+        /* @__PURE__ */ (0, import_jsx_runtime713.jsx)(GridTools2, { clientId: props.clientId, layout }),
         /* @__PURE__ */ (0, import_jsx_runtime713.jsx)(BlockEdit2, { ...props }, "edit")
       ] });
     },
