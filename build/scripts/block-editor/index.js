@@ -121419,7 +121419,10 @@ If there's a particular need for this, please submit a feature request at https:
       ] })
     ] }) });
   }
-  var LabeledColorIndicators = ({ indicators, label }) => /* @__PURE__ */ (0, import_jsx_runtime648.jsxs)(
+  var LabeledColorIndicators = ({
+    indicators,
+    label
+  }) => /* @__PURE__ */ (0, import_jsx_runtime648.jsxs)(
     Stack,
     {
       className: "block-editor-panel-color-gradient-settings__labeled-indicators",
@@ -122107,15 +122110,18 @@ If there's a particular need for this, please submit a feature request at https:
                 color: void 0
               }
             },
-            ...elements.reduce((acc, element) => {
-              return {
-                ...acc,
-                [element.name]: {
-                  ...previousValue?.elements?.[element.name],
-                  color: void 0
-                }
-              };
-            }, {})
+            ...elements.reduce(
+              (acc, element) => {
+                return {
+                  ...acc,
+                  [element.name]: {
+                    ...previousValue?.elements?.[element.name],
+                    color: void 0
+                  }
+                };
+              },
+              {}
+            )
           }
         };
       },
@@ -122170,6 +122176,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ]
       }
+      // Hidden items are dropped.
     ].filter(Boolean);
     elements.forEach(({ name, label: elementLabel, showPanel }) => {
       if (!showPanel) {
@@ -122307,6 +122314,7 @@ If there's a particular need for this, please submit a feature request at https:
             isGradient: true,
             isPlaceholder: isElementGradientPlaceholder
           }
+          // Hidden tabs are dropped.
         ].filter(Boolean)
       });
     });
@@ -122576,7 +122584,13 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     return (0, import_element423.useMemo)(
-      () => rawGlobalStylesData ? { styles: rawGlobalStylesData, _links: links ?? void 0 } : null,
+      () => rawGlobalStylesData ? (
+        // The settings hold the global styles data and their links.
+        {
+          styles: rawGlobalStylesData,
+          _links: links ?? void 0
+        }
+      ) : null,
       [rawGlobalStylesData, links]
     );
   }
@@ -122646,7 +122660,10 @@ If there's a particular need for this, please submit a feature request at https:
           return { variationName: null, headingLevel: void 0 };
         }
         const registeredStyles = select3(import_blocks96.store).getBlockStyles(blockName);
-        const { level } = select3(store).getBlockAttributes(clientId) || {};
+        const { level } = select3(store).getBlockAttributes(
+          // Global styles panels render inside the edited block.
+          clientId
+        ) || {};
         return {
           variationName: className ? getVariationNameFromClass(className, registeredStyles) : null,
           headingLevel: getHeadingLevel(
@@ -123213,6 +123230,7 @@ If there's a particular need for this, please submit a feature request at https:
     const attachmentValue = localAttachmentValue || inheritedAttachmentValue;
     let currentValueForToggle = !sizeValue && isUploadedImage ? defaultValues?.backgroundSize : sizeValue || "auto";
     currentValueForToggle = !["cover", "contain", "auto"].includes(
+      // Size values are keywords or lengths.
       currentValueForToggle
     ) ? "auto" : currentValueForToggle;
     const repeatCheckedValue = !(repeatValue === "no-repeat" || currentValueForToggle === "cover" && repeatValue === void 0);
@@ -123275,7 +123293,9 @@ If there's a particular need for this, please submit a feature request at https:
         {
           label: (0, import_i18n257.__)("Focal point"),
           url: imageValue,
-          value: backgroundPositionToCoords(backgroundPositionValue),
+          value: backgroundPositionToCoords(
+            backgroundPositionValue
+          ),
           onChange: updateBackgroundPosition
         }
       ),
@@ -123371,6 +123391,7 @@ If there's a particular need for this, please submit a feature request at https:
       const { getSettings: getSettings9 } = select3(store);
       const _settings = getSettings9();
       return {
+        // The settings hold the global styles data and their links.
         globalStyles: _settings[globalStylesDataKey],
         _links: _settings[globalStylesLinksDataKey]
       };
@@ -123409,7 +123430,7 @@ If there's a particular need for this, please submit a feature request at https:
     const imageValue = value?.background?.backgroundImage || inheritedValue?.background?.backgroundImage;
     const shouldShowBackgroundImageControls = hasImageValue && "none" !== imageValue && (settings3?.background?.backgroundSize || settings3?.background?.backgroundPosition || settings3?.background?.backgroundRepeat);
     const [isDropDownOpen, setIsDropDownOpen] = (0, import_element425.useState)(false);
-    const containerRef = (0, import_element425.useRef)();
+    const containerRef = (0, import_element425.useRef)(null);
     return /* @__PURE__ */ (0, import_jsx_runtime652.jsx)(
       "div",
       {
@@ -123517,8 +123538,9 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function hasBackgroundImageValue(style) {
-    return !!style?.background?.backgroundImage?.id || // Supports url() string values in theme.json.
-    "string" === typeof style?.background?.backgroundImage || !!style?.background?.backgroundImage?.url;
+    const backgroundImage = style?.background?.backgroundImage;
+    return !!backgroundImage?.id || // Supports url() string values in theme.json.
+    "string" === typeof style?.background?.backgroundImage || !!backgroundImage?.url;
   }
   function hasBackgroundGradientValue(style) {
     return "string" === typeof style?.background?.gradient && style?.background?.gradient !== "";
@@ -124887,6 +124909,7 @@ If there's a particular need for this, please submit a feature request at https:
     const nearestFontWeight = availableFontWeights?.reduce(
       (nearest, { value: fw }) => {
         const currentDiff = Math.abs(
+          // The weights and the new value are strings here.
           parseInt(fw) - parseInt(newFontWeightValue)
         );
         const nearestDiff = Math.abs(
@@ -131646,7 +131669,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element453 = __toESM(require_element(), 1);
   var import_jsx_runtime694 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY20 = [];
-  function ShadowPopoverContainer({ shadow, onShadowChange, settings: settings3 }) {
+  function ShadowPopoverContainer({
+    shadow,
+    onShadowChange,
+    settings: settings3
+  }) {
     const shadows = useShadowPresets(settings3);
     const presets = (0, import_element453.useMemo)(() => {
       if (!shadows.length) {
@@ -131680,7 +131707,11 @@ If there's a particular need for this, please submit a feature request at https:
       ) })
     ] }) });
   }
-  function ShadowPresets({ presets, activeShadow, onSelect }) {
+  function ShadowPresets({
+    presets,
+    activeShadow,
+    onSelect
+  }) {
     return !presets ? null : /* @__PURE__ */ (0, import_jsx_runtime694.jsx)(
       import_components278.Composite,
       {
@@ -131701,7 +131732,13 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function ShadowIndicator({ type, label, isActive, onSelect, shadow }) {
+  function ShadowIndicator({
+    type,
+    label,
+    isActive,
+    onSelect,
+    shadow
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime694.jsxs)(tooltip_exports.Root, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime694.jsx)(
         tooltip_exports.Trigger,
@@ -131776,7 +131813,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function renderShadowToggle(shadow, onShadowChange, resetConfig) {
     const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
-    return function ShadowToggle({ onToggle, isOpen }) {
+    return function ShadowToggle({
+      onToggle,
+      isOpen
+    }) {
       const shadowButtonRef = (0, import_element453.useRef)(void 0);
       const toggleProps = {
         onClick: onToggle,
@@ -132195,17 +132235,23 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element455 = __toESM(require_element(), 1);
   var import_jsx_runtime696 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY21 = [];
-  function useMultiOriginColorPresets(settings3, { presetSetting, defaultSetting }) {
+  function useMultiOriginColorPresets(settings3, {
+    presetSetting,
+    defaultSetting
+  }) {
     const disableDefault = !settings3?.color?.[defaultSetting];
     const userPresets = settings3?.color?.[presetSetting]?.custom || EMPTY_ARRAY21;
     const themePresets = settings3?.color?.[presetSetting]?.theme || EMPTY_ARRAY21;
     const defaultPresets = settings3?.color?.[presetSetting]?.default || EMPTY_ARRAY21;
     return (0, import_element455.useMemo)(
-      () => [
-        ...userPresets,
-        ...themePresets,
-        ...disableDefault ? EMPTY_ARRAY21 : defaultPresets
-      ],
+      () => (
+        // The presets of a setting are all of its kind.
+        [
+          ...userPresets,
+          ...themePresets,
+          ...disableDefault ? EMPTY_ARRAY21 : defaultPresets
+        ]
+      ),
       [disableDefault, userPresets, themePresets, defaultPresets]
     );
   }
@@ -132241,7 +132287,10 @@ If there's a particular need for this, please submit a feature request at https:
   var DEFAULT_CONTROLS8 = {
     duotone: true
   };
-  var LabeledColorIndicator2 = ({ indicator, label }) => /* @__PURE__ */ (0, import_jsx_runtime696.jsxs)(
+  var LabeledColorIndicator2 = ({
+    indicator,
+    label
+  }) => /* @__PURE__ */ (0, import_jsx_runtime696.jsxs)(
     Stack,
     {
       className: "block-editor-panel-duotone-settings__label-row",
@@ -132262,7 +132311,10 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     }
   );
-  var renderToggle2 = (duotone, resetConfig) => function Toggle2({ onToggle, isOpen }) {
+  var renderToggle2 = (duotone, resetConfig) => function Toggle2({
+    onToggle,
+    isOpen
+  }) {
     const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
     const duotoneButtonRef = (0, import_element455.useRef)(void 0);
     const toggleProps = {
@@ -132322,7 +132374,10 @@ If there's a particular need for this, please submit a feature request at https:
       className: "block-editor-duotone-control__popover",
       headerTitle: (0, import_i18n287.__)("Duotone")
     };
-    const decodeValue = (rawValue) => getValueFromVariable({ settings: settings3 }, "", rawValue);
+    const decodeValue = (rawValue) => (
+      // A color array is returned as is.
+      getValueFromVariable({ settings: settings3 }, "", rawValue)
+    );
     const inheritanceProps = (isInherited, hasLocalOverride, className) => getInheritanceProps(
       showInheritanceLabelIndicators && isInherited,
       showInheritanceLabelIndicators && hasLocalOverride,
@@ -132340,7 +132395,9 @@ If there's a particular need for this, please submit a feature request at https:
     const localDuotone = decodeValue(value?.filter?.duotone);
     const inheritedDuotone = decodeValue(inheritedValue?.filter?.duotone);
     const duotone = localDuotone ?? inheritedDuotone;
-    const localDuotoneSlug = getDuotoneSlugFromPreset(value?.filter?.duotone);
+    const localDuotoneSlug = getDuotoneSlugFromPreset(
+      value?.filter?.duotone
+    );
     const inheritedDuotoneSlug = getDuotoneSlugFromPreset(
       inheritedValue?.filter?.duotone
     );
@@ -132363,15 +132420,19 @@ If there's a particular need for this, please submit a feature request at https:
     const hasDuotone = () => !!value?.filter?.duotone;
     const resetDuotone = () => setDuotone(void 0);
     const hasDuotoneLocalOverride = showInheritanceLabelIndicators && hasDuotone() && inheritedDuotone !== void 0;
-    const resetAllFilter = (0, import_element455.useCallback)((previousValue) => {
-      return {
-        ...previousValue,
-        filter: {
-          ...previousValue.filter,
-          duotone: void 0
-        }
-      };
-    }, []);
+    const resetAllFilter = (0, import_element455.useCallback)(
+      (previousValue) => {
+        return {
+          ...previousValue,
+          filter: {
+            // Reset all passes the current styles.
+            ...previousValue.filter,
+            duotone: void 0
+          }
+        };
+      },
+      []
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime696.jsx)(
       Wrapper,
       {
