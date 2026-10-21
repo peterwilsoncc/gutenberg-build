@@ -64435,14 +64435,19 @@ var wp;
   // packages/block-editor/build-module/components/block-list/block-invalid-warning.mjs
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   var blockToBlocks = (block) => (0, import_blocks20.rawHandler)({
+    // Invalid blocks keep their original content.
     HTML: block.originalContent
   });
-  function BlockInvalidWarning({ clientId }) {
+  function BlockInvalidWarning({
+    clientId
+  }) {
     const { block, canInsertHTMLBlock } = (0, import_data19.useSelect)(
       (select3) => {
         const { canInsertBlockType: canInsertBlockType2, getBlock: getBlock2, getBlockRootClientId: getBlockRootClientId2 } = select3(store);
         const rootClientId = getBlockRootClientId2(clientId);
         return {
+          // The warning only renders for an existing invalid block, which
+          // keeps its original content.
           block: getBlock2(clientId),
           canInsertHTMLBlock: canInsertBlockType2(
             "core/html",
@@ -64482,17 +64487,20 @@ var wp;
       [block, replaceBlock2]
     );
     const secondaryActions = (0, import_element162.useMemo)(
-      () => [
-        {
-          // translators: Button to fix block content
-          title: (0, import_i18n35._x)("Resolve", "imperative verb"),
-          onClick: () => setCompare(true)
-        },
-        canInsertHTMLBlock && {
-          title: (0, import_i18n35.__)("Convert to HTML"),
-          onClick: convert.toHTML
-        }
-      ].filter(Boolean),
+      () => (
+        // `filter` drops the `false` entries.
+        [
+          {
+            // translators: Button to fix block content
+            title: (0, import_i18n35._x)("Resolve", "imperative verb"),
+            onClick: () => setCompare(true)
+          },
+          canInsertHTMLBlock && {
+            title: (0, import_i18n35.__)("Convert to HTML"),
+            onClick: convert.toHTML
+          }
+        ].filter(Boolean)
+      ),
       [canInsertHTMLBlock, convert]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsxs)(import_jsx_runtime332.Fragment, { children: [
@@ -64550,8 +64558,8 @@ var wp;
   // packages/block-editor/build-module/components/block-list/block-crash-boundary.mjs
   var import_element163 = __toESM(require_element(), 1);
   var BlockCrashBoundary = class extends import_element163.Component {
-    constructor() {
-      super(...arguments);
+    constructor(props) {
+      super(props);
       this.state = {
         hasError: false
       };
@@ -64606,6 +64614,7 @@ var wp;
     const [html, setHtml] = (0, import_element164.useState)("");
     const nativeUndoRef = useNativeUndo();
     const block = (0, import_data20.useSelect)(
+      // The HTML editor only renders for an existing block.
       (select3) => select3(store).getBlock(clientId),
       [clientId]
     );
@@ -67506,8 +67515,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-focus-first-element.mjs
-  function useFocusFirstElement({ clientId, initialPosition: initialPosition2 }) {
-    const ref = (0, import_element166.useRef)();
+  function useFocusFirstElement({
+    clientId,
+    initialPosition: initialPosition2
+  }) {
+    const ref = (0, import_element166.useRef)(null);
     const { isBlockSelected: isBlockSelected2, isMultiSelecting: isMultiSelecting3, isZoomOut: isZoomOut2, getSelectionStart: getSelectionStart2 } = unlock((0, import_data22.useSelect)(store));
     (0, import_element166.useEffect)(() => {
       if (!isBlockSelected2(clientId) || isMultiSelecting3() || isZoomOut2()) {
@@ -67541,7 +67553,7 @@ var wp;
           return;
         }
       }
-      const { activeElement: activeElement2 } = ownerDocument2;
+      const activeElement2 = ownerDocument2.activeElement;
       const selection2 = ownerDocument2.defaultView.getSelection();
       const { clientId: selectionClientId, offset: offset4 } = getSelectionStart2();
       const hasCaret = activeElement2?.isContentEditable && activeElement2.contains(target) && !!selection2.anchorNode && target.contains(selection2.anchorNode);
@@ -67556,7 +67568,9 @@ var wp;
   // packages/block-editor/build-module/components/block-list/use-block-props/use-is-hovered.mjs
   var import_compose25 = __toESM(require_compose(), 1);
   var { subscribeDelegatedListener } = unlock(import_compose25.privateApis);
-  function useIsHovered({ isEnabled = true } = {}) {
+  function useIsHovered({
+    isEnabled = true
+  } = {}) {
     return (0, import_compose25.useRefEffect)(
       (node) => {
         if (!isEnabled) {
@@ -67575,7 +67589,7 @@ var wp;
             node.classList.remove("is-hovered-draggable");
             return;
           }
-          const { target } = event;
+          const target = event.target;
           timeoutId = setTimeout(() => {
             node.classList.toggle(
               "is-hovered-draggable",
@@ -67620,8 +67634,9 @@ var wp;
     return (0, import_compose26.useRefEffect)(
       (node) => {
         function onFocus(event) {
+          const target = event.target;
           if (isBlockSelected2(clientId)) {
-            if (!event.target.isContentEditable) {
+            if (!target.isContentEditable) {
               selectionChange2(clientId);
             }
             return;
@@ -67632,10 +67647,10 @@ var wp;
           if (isBlockMultiSelected2(clientId) || isAncestorMultiSelected2(clientId)) {
             return;
           }
-          if (!isInsideRootBlock(node, event.target)) {
+          if (!isInsideRootBlock(node, target)) {
             return;
           }
-          if (event.target.isContentEditable) {
+          if (target.isContentEditable) {
             selectBlock2(clientId, null);
             return;
           }
@@ -67801,7 +67816,7 @@ var wp;
   function useRegisterBlockEventHandlers(clientId, wrapperProps) {
     const { eventHandlers } = (0, import_element168.useContext)(BlockRefs);
     const handlers = getEventHandlers(wrapperProps);
-    const handlersRef = (0, import_element168.useRef)();
+    const handlersRef = (0, import_element168.useRef)(void 0);
     (0, import_element168.useInsertionEffect)(() => {
       handlersRef.current = handlers;
     });
@@ -67809,8 +67824,11 @@ var wp;
     (0, import_element168.useEffect)(() => {
       if (hasHandlers) {
         eventHandlers.set(clientId, handlersRef);
-        return () => eventHandlers.delete(clientId);
+        return () => {
+          eventHandlers.delete(clientId);
+        };
       }
+      return void 0;
     }, [eventHandlers, clientId, hasHandlers]);
   }
 
@@ -67824,7 +67842,11 @@ var wp;
   function isColorTransparent(color) {
     return !color || color === "transparent" || color === "rgba(0, 0, 0, 0)";
   }
-  function useEventHandlers({ clientId, isSelected: isSelected2, isMultiSelected }) {
+  function useEventHandlers({
+    clientId,
+    isSelected: isSelected2,
+    isMultiSelected
+  }) {
     const {
       getBlockRootClientId: getBlockRootClientId2,
       getSelectedBlockClientIds: getSelectedBlockClientIds2,
@@ -67874,8 +67896,15 @@ var wp;
           const hadDraggable = node.getAttribute("draggable");
           node.setAttribute("draggable", "true");
           const editables = [
-            node.parentElement.closest('[contenteditable="true"]'),
-            event.target.closest('[contenteditable="true"]')
+            // A rendered block has a parent.
+            node.parentElement.closest(
+              '[contenteditable="true"]'
+            ),
+            // Mouse events target elements.
+            event.target.closest(
+              '[contenteditable="true"]'
+            )
+            // `Boolean` drops the missing editing hosts.
           ].filter(Boolean);
           for (const element of editables) {
             element.contentEditable = "false";
@@ -67932,6 +67961,7 @@ var wp;
             };
             const { style } = backNode;
             if (isColorTransparent(
+              // A rendered block's document has a window.
               ownerDocument2.defaultView.getComputedStyle(
                 backNode
               ).backgroundColor
@@ -67974,7 +68004,7 @@ var wp;
           };
         }
         function onDragStart(event) {
-          const { target } = event;
+          const target = event.target;
           const { activeElement: activeElement2 } = node.ownerDocument;
           const isDirectBlockDrag = !node.isContentEditable && activeElement2 === node && !hasMultiSelection2() && target.nodeType === target.ELEMENT_NODE && target.closest('[draggable="true"]') === node;
           const isMultiSelectionDrag = isMultiSelected && hasMultiSelection2() && __unstableIsFullySelected2() && canMoveBlocks2(getSelectedBlockClientIds2());
@@ -67990,11 +68020,12 @@ var wp;
             srcClientIds: clientIds,
             srcRootClientId: getBlockRootClientId2(clientIds[0])
           });
-          event.dataTransfer.effectAllowed = "move";
-          event.dataTransfer.clearData();
-          event.dataTransfer.setData("wp-blocks", data);
+          const dataTransfer = event.dataTransfer;
+          dataTransfer.effectAllowed = "move";
+          dataTransfer.clearData();
+          dataTransfer.setData("wp-blocks", data);
           const { ownerDocument: ownerDocument2 } = node;
-          const { defaultView } = ownerDocument2;
+          const defaultView = ownerDocument2.defaultView;
           const selection2 = defaultView.getSelection();
           selection2.removeAllRanges();
           const dragElement = ownerDocument2.createElement("div");
@@ -68003,7 +68034,7 @@ var wp;
           dragElement.style.position = "fixed";
           dragElement.style.visibility = "hidden";
           ownerDocument2.body.appendChild(dragElement);
-          event.dataTransfer.setDragImage(dragElement, 0, 0);
+          dataTransfer.setDragImage(dragElement, 0, 0);
           const rect = node.getBoundingClientRect();
           const id = node.id;
           const clone = node.cloneNode();
@@ -68034,6 +68065,7 @@ var wp;
             "pointerEvents",
             "opacity",
             "backgroundColor"
+            // The names are style properties.
           ]) {
             originalNodeProperties[property] = node.style[property];
           }
@@ -68192,6 +68224,7 @@ var wp;
             observer.unobserve(node);
           };
         }
+        return void 0;
       },
       [observer]
     );
@@ -68205,7 +68238,7 @@ var wp;
       (node) => {
         if (isSelected2) {
           const { ownerDocument: ownerDocument2 } = node;
-          const { defaultView } = ownerDocument2;
+          const defaultView = ownerDocument2.defaultView;
           if (!defaultView.IntersectionObserver) {
             return;
           }
@@ -68224,6 +68257,7 @@ var wp;
             observer.disconnect();
           };
         }
+        return void 0;
       },
       [isSelected2]
     );
@@ -68311,7 +68345,7 @@ var wp;
     }
   }
   function down(event) {
-    const { target } = event;
+    const target = event.target;
     const { ownerDocument: ownerDocument2, isContentEditable: isContentEditable3, tagName } = target;
     const isInputOrTextArea = ["INPUT", "TEXTAREA"].includes(tagName);
     const nodes = nodesByDocument.get(ownerDocument2);
@@ -68965,6 +68999,7 @@ var wp;
         function materialize() {
           remove6();
           insertBlocks2(
+            // The listeners are only added for a ghost block.
             [ghostBlock],
             void 0,
             rootClientId,
@@ -69014,17 +69049,23 @@ var wp;
       ariaLabel,
       ghostBlock,
       rootClientId
+      // A block list block provides the context, with its client ID.
     } = (0, import_element172.useContext)(PrivateBlockContext);
     const ghostRef = useGhostMaterialize(rootClientId, ghostBlock);
     useRegisterBlockEventHandlers(clientId, wrapperProps);
     const defaultViewRef = (0, import_compose34.useRefEffect)((element) => {
       if (element) {
         const { ownerDocument: ownerDocument2 } = element;
-        const { defaultView } = ownerDocument2;
+        const defaultView = ownerDocument2.defaultView;
         defaultViewRef.current = defaultView;
       }
     }, []);
-    const blockLabel = (0, import_i18n42.sprintf)((0, import_i18n42.__)("Block: %s"), blockTitle);
+    const blockLabel = (0, import_i18n42.sprintf)(
+      // translators: %s: Type of block (i.e. Text, Image etc)
+      (0, import_i18n42.__)("Block: %s"),
+      // Block types have a title.
+      blockTitle
+    );
     const htmlSuffix = mode2 === "html" && !__unstableIsHtml ? "-visual" : "";
     const ffDragRef = useFirefoxDraggableCompatibility();
     const isHoverEnabled = !isWithinSectionBlock;
@@ -69065,7 +69106,13 @@ var wp;
       );
     }
     let hasNegativeMargin = false;
-    if (wrapperProps?.style?.marginTop?.charAt(0) === "-" || wrapperProps?.style?.marginBottom?.charAt(0) === "-" || wrapperProps?.style?.marginLeft?.charAt(0) === "-" || wrapperProps?.style?.marginRight?.charAt(0) === "-") {
+    if (
+      // @ts-expect-error Bug: a numeric margin has no `charAt`, so this throws.
+      wrapperProps?.style?.marginTop?.charAt(0) === "-" || // @ts-expect-error Bug: a numeric margin has no `charAt`, so this throws.
+      wrapperProps?.style?.marginBottom?.charAt(0) === "-" || // @ts-expect-error Bug: a numeric margin has no `charAt`, so this throws.
+      wrapperProps?.style?.marginLeft?.charAt(0) === "-" || // @ts-expect-error Bug: a numeric margin has no `charAt`, so this throws.
+      wrapperProps?.style?.marginRight?.charAt(0) === "-"
+    ) {
       hasNegativeMargin = true;
     }
     return {
@@ -69193,7 +69240,11 @@ var wp;
     }
     return newProps;
   }
-  function Block({ children, isHtml, ...props }) {
+  function Block({
+    children,
+    isHtml,
+    ...props
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)("div", { ...useBlockProps(props, { __unstableIsHtml: isHtml }), children });
   }
   function BlockListBlock({
@@ -69285,7 +69336,10 @@ var wp;
     } else {
       block = /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(Block, { children: blockEdit });
     }
-    const { "data-align": dataAlign, ...restWrapperProps } = wrapperProps ?? {};
+    const {
+      "data-align": dataAlign,
+      ...restWrapperProps
+    } = wrapperProps ?? {};
     const updatedWrapperProps = {
       ...restWrapperProps,
       className: clsx_default(
@@ -69313,250 +69367,275 @@ var wp;
       }
     );
   }
-  var applyWithDispatch = (0, import_data32.withDispatch)((dispatch, ownProps, registry) => {
-    const {
-      updateBlockAttributes: updateBlockAttributes2,
-      insertBlocks: insertBlocks2,
-      mergeBlocks: mergeBlocks2,
-      replaceBlocks: replaceBlocks2,
-      toggleSelection: toggleSelection2,
-      __unstableMarkLastChangeAsPersistent: __unstableMarkLastChangeAsPersistent2,
-      moveBlocksToPosition: moveBlocksToPosition2,
-      removeBlock: removeBlock2,
-      selectBlock: selectBlock2
-    } = dispatch(store);
-    return {
-      setAttributes(nextAttributes) {
-        const { getMultiSelectedBlockClientIds: getMultiSelectedBlockClientIds2, getBlockAttributes: getBlockAttributes3 } = registry.select(store);
-        const multiSelectedBlockClientIds = getMultiSelectedBlockClientIds2();
-        const { clientId, attributes } = ownProps;
-        const newAttributes = typeof nextAttributes === "function" ? nextAttributes(attributes) : nextAttributes;
-        if (!multiSelectedBlockClientIds.length) {
-          updateBlockAttributes2(clientId, newAttributes);
-          return;
-        }
-        const changes = getAttributeChanges(
-          attributes ?? {},
-          newAttributes ?? {}
-        );
-        if (!changes) {
-          return;
-        }
-        const updatesByClientId = {};
-        for (const selectedClientId of multiSelectedBlockClientIds) {
-          updatesByClientId[selectedClientId] = applyAttributeChanges(
-            getBlockAttributes3(selectedClientId) ?? {},
-            changes
+  var applyWithDispatch = (0, import_data32.withDispatch)(
+    (dispatch, untypedOwnProps, registry) => {
+      const ownProps = untypedOwnProps;
+      const {
+        updateBlockAttributes: updateBlockAttributes2,
+        insertBlocks: insertBlocks2,
+        mergeBlocks: mergeBlocks2,
+        replaceBlocks: replaceBlocks2,
+        toggleSelection: toggleSelection2,
+        __unstableMarkLastChangeAsPersistent: __unstableMarkLastChangeAsPersistent2,
+        moveBlocksToPosition: moveBlocksToPosition2,
+        removeBlock: removeBlock2,
+        selectBlock: selectBlock2
+      } = dispatch(store);
+      return {
+        setAttributes(nextAttributes) {
+          const { getMultiSelectedBlockClientIds: getMultiSelectedBlockClientIds2, getBlockAttributes: getBlockAttributes3 } = registry.select(store);
+          const multiSelectedBlockClientIds = getMultiSelectedBlockClientIds2();
+          const { clientId, attributes } = ownProps;
+          const newAttributes = typeof nextAttributes === "function" ? nextAttributes(attributes) : nextAttributes;
+          if (!multiSelectedBlockClientIds.length) {
+            updateBlockAttributes2(clientId, newAttributes);
+            return;
+          }
+          const changes = getAttributeChanges(
+            attributes ?? {},
+            newAttributes ?? {}
           );
-        }
-        updateBlockAttributes2(
-          multiSelectedBlockClientIds,
-          updatesByClientId,
-          { uniqueByBlock: true }
-        );
-      },
-      onInsertBlocks(blocks2, index3) {
-        const { rootClientId } = ownProps;
-        insertBlocks2(blocks2, index3, rootClientId);
-      },
-      onInsertBlocksAfter(blocks2) {
-        const { clientId, rootClientId } = ownProps;
-        const { getBlockIndex: getBlockIndex2 } = registry.select(store);
-        const index3 = getBlockIndex2(clientId);
-        insertBlocks2(blocks2, index3 + 1, rootClientId);
-      },
-      onMerge(forward) {
-        const { clientId, rootClientId } = ownProps;
-        const {
-          getPreviousBlockClientId: getPreviousBlockClientId2,
-          getNextBlockClientId: getNextBlockClientId2,
-          getBlock: getBlock2,
-          getBlockAttributes: getBlockAttributes3,
-          getBlockName: getBlockName2,
-          getBlockOrder: getBlockOrder2,
-          getBlockIndex: getBlockIndex2,
-          getBlockRootClientId: getBlockRootClientId2,
-          canInsertBlockType: canInsertBlockType2
-        } = registry.select(store);
-        function switchToDefaultOrRemove() {
-          const block = getBlock2(clientId);
-          const defaultBlockName = (0, import_blocks25.getDefaultBlockName)();
-          const defaultBlockType = (0, import_blocks25.getBlockType)(defaultBlockName);
-          if (getBlockName2(clientId) !== defaultBlockName) {
-            const replacement = (0, import_blocks25.switchToBlockType)(
-              block,
-              defaultBlockName
-            );
-            if (replacement && replacement.length) {
-              replaceBlocks2(clientId, replacement);
-            }
-          } else if ((0, import_blocks25.isUnmodifiedDefaultBlock)(block)) {
-            const nextBlockClientId = getNextBlockClientId2(clientId);
-            if (nextBlockClientId) {
-              registry.batch(() => {
-                removeBlock2(clientId);
-                selectBlock2(nextBlockClientId);
-              });
-            }
-          } else if (defaultBlockType.merge) {
-            const attributes = defaultBlockType.merge(
-              {},
-              block.attributes
-            );
-            replaceBlocks2(
-              [clientId],
-              [(0, import_blocks25.createBlock)(defaultBlockName, attributes)]
+          if (!changes) {
+            return;
+          }
+          const updatesByClientId = {};
+          for (const selectedClientId of multiSelectedBlockClientIds) {
+            updatesByClientId[selectedClientId] = applyAttributeChanges(
+              getBlockAttributes3(selectedClientId) ?? {},
+              changes
             );
           }
-        }
-        function moveFirstItemUp(_clientId, changeSelection = true) {
-          const wrapperBlockName = getBlockName2(_clientId);
-          const wrapperBlockType = (0, import_blocks25.getBlockType)(wrapperBlockName);
-          const isTextualWrapper = wrapperBlockType.category === "text";
-          const targetRootClientId = getBlockRootClientId2(_clientId);
-          const blockOrder = getBlockOrder2(_clientId);
-          const [firstClientId] = blockOrder;
-          if (blockOrder.length === 1 && (0, import_blocks25.isUnmodifiedBlock)(getBlock2(firstClientId), "content")) {
-            removeBlock2(_clientId);
-          } else if (isTextualWrapper) {
-            registry.batch(() => {
-              if (canInsertBlockType2(
-                getBlockName2(firstClientId),
-                targetRootClientId
-              )) {
-                moveBlocksToPosition2(
-                  [firstClientId],
-                  _clientId,
-                  targetRootClientId,
-                  getBlockIndex2(_clientId)
-                );
-              } else {
-                const replacement = (0, import_blocks25.switchToBlockType)(
-                  getBlock2(firstClientId),
-                  (0, import_blocks25.getDefaultBlockName)()
-                );
-                if (replacement && replacement.length && replacement.every(
-                  (block) => canInsertBlockType2(
-                    block.name,
-                    targetRootClientId
-                  )
+          updateBlockAttributes2(
+            multiSelectedBlockClientIds,
+            updatesByClientId,
+            { uniqueByBlock: true }
+          );
+        },
+        onInsertBlocks(blocks2, index3) {
+          const { rootClientId } = ownProps;
+          insertBlocks2(blocks2, index3, rootClientId);
+        },
+        onInsertBlocksAfter(blocks2) {
+          const { clientId, rootClientId } = ownProps;
+          const { getBlockIndex: getBlockIndex2 } = registry.select(store);
+          const index3 = getBlockIndex2(clientId);
+          insertBlocks2(blocks2, index3 + 1, rootClientId);
+        },
+        onMerge(forward) {
+          const { clientId, rootClientId } = ownProps;
+          const {
+            getPreviousBlockClientId: getPreviousBlockClientId2,
+            getNextBlockClientId: getNextBlockClientId2,
+            getBlock: getBlock2,
+            getBlockAttributes: getBlockAttributes3,
+            getBlockName: getBlockName2,
+            getBlockOrder: getBlockOrder2,
+            getBlockIndex: getBlockIndex2,
+            getBlockRootClientId: getBlockRootClientId2,
+            canInsertBlockType: canInsertBlockType2
+          } = registry.select(store);
+          function switchToDefaultOrRemove() {
+            const block = getBlock2(clientId);
+            const defaultBlockName = (0, import_blocks25.getDefaultBlockName)();
+            const defaultBlockType = (0, import_blocks25.getBlockType)(defaultBlockName);
+            if (getBlockName2(clientId) !== defaultBlockName) {
+              const replacement = (0, import_blocks25.switchToBlockType)(
+                block,
+                defaultBlockName
+              );
+              if (replacement && replacement.length) {
+                replaceBlocks2(clientId, replacement);
+              }
+            } else if ((0, import_blocks25.isUnmodifiedDefaultBlock)(block)) {
+              const nextBlockClientId = getNextBlockClientId2(clientId);
+              if (nextBlockClientId) {
+                registry.batch(() => {
+                  removeBlock2(clientId);
+                  selectBlock2(nextBlockClientId);
+                });
+              }
+            } else if (defaultBlockType.merge) {
+              const attributes = defaultBlockType.merge(
+                {},
+                block.attributes
+              );
+              replaceBlocks2(
+                [clientId],
+                [(0, import_blocks25.createBlock)(defaultBlockName, attributes)]
+              );
+            }
+          }
+          function moveFirstItemUp(_clientId, changeSelection = true) {
+            const wrapperBlockName = getBlockName2(
+              _clientId
+            );
+            const wrapperBlockType = (0, import_blocks25.getBlockType)(wrapperBlockName);
+            const isTextualWrapper = wrapperBlockType.category === "text";
+            const targetRootClientId = getBlockRootClientId2(_clientId);
+            const blockOrder = getBlockOrder2(_clientId);
+            const [firstClientId] = blockOrder;
+            if (blockOrder.length === 1 && (0, import_blocks25.isUnmodifiedBlock)(
+              // The wrapper has this inner block.
+              getBlock2(firstClientId),
+              "content"
+            )) {
+              removeBlock2(_clientId);
+            } else if (isTextualWrapper) {
+              registry.batch(() => {
+                if (canInsertBlockType2(
+                  getBlockName2(firstClientId),
+                  targetRootClientId
                 )) {
-                  insertBlocks2(
-                    replacement,
-                    getBlockIndex2(_clientId),
+                  moveBlocksToPosition2(
+                    [firstClientId],
+                    _clientId,
                     targetRootClientId,
-                    changeSelection
+                    getBlockIndex2(_clientId)
                   );
-                  removeBlock2(firstClientId, false);
                 } else {
-                  switchToDefaultOrRemove();
+                  const replacement = (0, import_blocks25.switchToBlockType)(
+                    // The wrapper has this inner block.
+                    getBlock2(firstClientId),
+                    // A default block type is registered.
+                    (0, import_blocks25.getDefaultBlockName)()
+                  );
+                  if (replacement && replacement.length && replacement.every(
+                    (block) => canInsertBlockType2(
+                      block.name,
+                      targetRootClientId
+                    )
+                  )) {
+                    insertBlocks2(
+                      replacement,
+                      getBlockIndex2(_clientId),
+                      targetRootClientId,
+                      changeSelection
+                    );
+                    removeBlock2(firstClientId, false);
+                  } else {
+                    switchToDefaultOrRemove();
+                  }
+                }
+                const wrapper = getBlock2(_clientId);
+                if (wrapper && !getBlockOrder2(_clientId).length && (0, import_blocks25.isUnmodifiedBlock)(wrapper, "content")) {
+                  removeBlock2(_clientId, false);
+                }
+              });
+            } else {
+              switchToDefaultOrRemove();
+            }
+          }
+          if (forward) {
+            if (rootClientId) {
+              const nextRootClientId = getNextBlockClientId2(rootClientId);
+              if (nextRootClientId) {
+                if (getBlockName2(rootClientId) === getBlockName2(nextRootClientId)) {
+                  const rootAttributes = getBlockAttributes3(
+                    rootClientId
+                  );
+                  const previousRootAttributes = getBlockAttributes3(
+                    nextRootClientId
+                  );
+                  if (Object.keys(rootAttributes).every(
+                    (key) => rootAttributes[key] === previousRootAttributes[key]
+                  )) {
+                    registry.batch(() => {
+                      moveBlocksToPosition2(
+                        getBlockOrder2(nextRootClientId),
+                        nextRootClientId,
+                        rootClientId
+                      );
+                      removeBlock2(nextRootClientId, false);
+                    });
+                    return;
+                  }
+                } else {
+                  mergeBlocks2(rootClientId, nextRootClientId);
+                  return;
                 }
               }
-              const wrapper = getBlock2(_clientId);
-              if (wrapper && !getBlockOrder2(_clientId).length && (0, import_blocks25.isUnmodifiedBlock)(wrapper, "content")) {
-                removeBlock2(_clientId, false);
+            }
+            const nextBlockClientId = getNextBlockClientId2(clientId);
+            if (!nextBlockClientId) {
+              return;
+            }
+            if ((0, import_blocks25.isUnmodifiedDefaultBlock)(
+              getBlock2(clientId)
+            )) {
+              let firstLeafClientId = nextBlockClientId;
+              while (getBlockOrder2(firstLeafClientId).length) {
+                firstLeafClientId = getBlockOrder2(firstLeafClientId)[0];
               }
-            });
+              registry.batch(() => {
+                removeBlock2(clientId);
+                selectBlock2(firstLeafClientId);
+              });
+            } else if (getBlockOrder2(nextBlockClientId).length) {
+              moveFirstItemUp(nextBlockClientId, false);
+            } else {
+              mergeBlocks2(clientId, nextBlockClientId);
+            }
           } else {
-            switchToDefaultOrRemove();
-          }
-        }
-        if (forward) {
-          if (rootClientId) {
-            const nextRootClientId = getNextBlockClientId2(rootClientId);
-            if (nextRootClientId) {
-              if (getBlockName2(rootClientId) === getBlockName2(nextRootClientId)) {
-                const rootAttributes = getBlockAttributes3(rootClientId);
-                const previousRootAttributes = getBlockAttributes3(nextRootClientId);
+            const previousBlockClientId = getPreviousBlockClientId2(clientId);
+            if (previousBlockClientId) {
+              mergeBlocks2(previousBlockClientId, clientId);
+            } else if (rootClientId) {
+              const previousRootClientId = getPreviousBlockClientId2(rootClientId);
+              if (previousRootClientId && getBlockName2(rootClientId) === getBlockName2(previousRootClientId)) {
+                const rootAttributes = getBlockAttributes3(
+                  rootClientId
+                );
+                const previousRootAttributes = getBlockAttributes3(
+                  previousRootClientId
+                );
                 if (Object.keys(rootAttributes).every(
                   (key) => rootAttributes[key] === previousRootAttributes[key]
                 )) {
                   registry.batch(() => {
                     moveBlocksToPosition2(
-                      getBlockOrder2(nextRootClientId),
-                      nextRootClientId,
-                      rootClientId
+                      getBlockOrder2(rootClientId),
+                      rootClientId,
+                      previousRootClientId
                     );
-                    removeBlock2(nextRootClientId, false);
+                    removeBlock2(rootClientId, false);
                   });
                   return;
                 }
-              } else {
-                mergeBlocks2(rootClientId, nextRootClientId);
-                return;
               }
+              moveFirstItemUp(rootClientId);
+            } else {
+              switchToDefaultOrRemove();
             }
           }
-          const nextBlockClientId = getNextBlockClientId2(clientId);
-          if (!nextBlockClientId) {
-            return;
+        },
+        onReplace(blocks2, indexToSelect, initialPosition2) {
+          const blockList = blocks2;
+          if (blockList.length && !(0, import_blocks25.isUnmodifiedDefaultBlock)(
+            blockList[blockList.length - 1]
+          )) {
+            __unstableMarkLastChangeAsPersistent2();
           }
-          if ((0, import_blocks25.isUnmodifiedDefaultBlock)(getBlock2(clientId))) {
-            let firstLeafClientId = nextBlockClientId;
-            while (getBlockOrder2(firstLeafClientId).length) {
-              firstLeafClientId = getBlockOrder2(firstLeafClientId)[0];
-            }
-            registry.batch(() => {
-              removeBlock2(clientId);
-              selectBlock2(firstLeafClientId);
-            });
-          } else if (getBlockOrder2(nextBlockClientId).length) {
-            moveFirstItemUp(nextBlockClientId, false);
-          } else {
-            mergeBlocks2(clientId, nextBlockClientId);
-          }
-        } else {
-          const previousBlockClientId = getPreviousBlockClientId2(clientId);
-          if (previousBlockClientId) {
-            mergeBlocks2(previousBlockClientId, clientId);
-          } else if (rootClientId) {
-            const previousRootClientId = getPreviousBlockClientId2(rootClientId);
-            if (previousRootClientId && getBlockName2(rootClientId) === getBlockName2(previousRootClientId)) {
-              const rootAttributes = getBlockAttributes3(rootClientId);
-              const previousRootAttributes = getBlockAttributes3(previousRootClientId);
-              if (Object.keys(rootAttributes).every(
-                (key) => rootAttributes[key] === previousRootAttributes[key]
-              )) {
-                registry.batch(() => {
-                  moveBlocksToPosition2(
-                    getBlockOrder2(rootClientId),
-                    rootClientId,
-                    previousRootClientId
-                  );
-                  removeBlock2(rootClientId, false);
-                });
-                return;
-              }
-            }
-            moveFirstItemUp(rootClientId);
-          } else {
-            switchToDefaultOrRemove();
-          }
+          const replacementBlocks = blockList?.length === 1 && Array.isArray(blockList[0]) ? blockList[0] : blocks2;
+          replaceBlocks2(
+            [ownProps.clientId],
+            replacementBlocks,
+            indexToSelect,
+            initialPosition2
+          );
+        },
+        onRemove() {
+          removeBlock2(ownProps.clientId);
+        },
+        toggleSelection(selectionEnabled) {
+          toggleSelection2(selectionEnabled);
         }
-      },
-      onReplace(blocks2, indexToSelect, initialPosition2) {
-        if (blocks2.length && !(0, import_blocks25.isUnmodifiedDefaultBlock)(blocks2[blocks2.length - 1])) {
-          __unstableMarkLastChangeAsPersistent2();
-        }
-        const replacementBlocks = blocks2?.length === 1 && Array.isArray(blocks2[0]) ? blocks2[0] : blocks2;
-        replaceBlocks2(
-          [ownProps.clientId],
-          replacementBlocks,
-          indexToSelect,
-          initialPosition2
-        );
-      },
-      onRemove() {
-        removeBlock2(ownProps.clientId);
-      },
-      toggleSelection(selectionEnabled) {
-        toggleSelection2(selectionEnabled);
-      }
-    };
-  });
-  BlockListBlock = (0, import_compose35.compose)(
+      };
+    }
+  );
+  var FilteredBlockListBlock = (0, import_compose35.compose)(
     applyWithDispatch,
     (0, import_components23.withFilters)("editor.BlockListBlock")
+    // The dispatch props are added by the first HOC.
   )(BlockListBlock);
   function BlockListBlockProvider(props) {
     const { clientId, rootClientId, ghostBlock } = props;
@@ -69714,7 +69793,7 @@ var wp;
     const defaultViewRef = (0, import_compose35.useRefEffect)((element) => {
       if (element) {
         const { ownerDocument: ownerDocument2 } = element;
-        const { defaultView } = ownerDocument2;
+        const defaultView = ownerDocument2.defaultView;
         defaultViewRef.current = defaultView;
       }
     }, []);
@@ -69825,7 +69904,7 @@ var wp;
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(PrivateBlockContext.Provider, { value: privateContext, children: /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-      BlockListBlock,
+      FilteredBlockListBlock,
       {
         ...props,
         ...{
@@ -99229,26 +99308,28 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         function onMouseMove(event) {
+          const target = event.target;
           if (openRef === void 0 || openRef.current) {
             return;
           }
-          if (event.target.nodeType === event.target.TEXT_NODE) {
+          if (target.nodeType === target.TEXT_NODE) {
             return;
           }
           if (isMultiSelecting3()) {
             return;
           }
-          if (!event.target.classList.contains(
+          if (!target.classList.contains(
             "block-editor-block-list__layout"
           )) {
             hideInsertionPoint2();
             return;
           }
           let rootClientId;
-          if (!event.target.classList.contains("is-root-container")) {
-            const blockElement = !!event.target.getAttribute(
-              "data-block"
-            ) ? event.target : event.target.closest("[data-block]");
+          if (!target.classList.contains("is-root-container")) {
+            const blockElement = !!target.getAttribute("data-block") ? target : (
+              // A nested layout is inside a block.
+              target.closest("[data-block]")
+            );
             rootClientId = blockElement.getAttribute("data-block");
           }
           if (getTemplateLock2(rootClientId) || getBlockEditingMode2(rootClientId) === "disabled" || getBlockName2(rootClientId) === "core/block" || rootClientId && getBlockAttributes3(rootClientId).layout?.isManualPlacement) {
@@ -100585,7 +100666,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-list/index.mjs
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
-  var IntersectionObserver2 = (0, import_element322.createContext)();
+  var BlockListAppender2 = BlockListAppender;
+  var IntersectionObserver2 = (0, import_element322.createContext)(void 0);
   IntersectionObserver2.displayName = "IntersectionObserverContext";
   var pendingBlockVisibilityUpdatesPerRegistry = /* @__PURE__ */ new WeakMap();
   var delayedBlockVisibilityDebounceOptions = {
@@ -100644,7 +100726,9 @@ If there's a particular need for this, please submit a feature request at https:
           pendingBlockVisibilityUpdatesPerRegistry.set(registry, []);
         }
         for (const entry of entries) {
-          const clientId = entry.target.getAttribute("data-block");
+          const clientId = entry.target.getAttribute(
+            "data-block"
+          );
           pendingBlockVisibilityUpdatesPerRegistry.get(registry).push([clientId, entry.isIntersecting]);
         }
         delayedBlockVisibilityUpdates();
@@ -100674,7 +100758,9 @@ If there's a particular need for this, please submit a feature request at https:
       )
     ] });
   }
-  function StopEditingContentOnlySectionOnOutsideSelect({ clientId }) {
+  function StopEditingContentOnlySectionOnOutsideSelect({
+    clientId
+  }) {
     const { stopEditingContentOnlySection: stopEditingContentOnlySection2 } = unlock(
       (0, import_data91.useDispatch)(store)
     );
@@ -100823,7 +100909,7 @@ If there's a particular need for this, please submit a feature request at https:
       )),
       order.length < 1 && placeholder,
       shouldRenderAppender && !showGhost && /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
-        BlockListAppender,
+        BlockListAppender2,
         {
           tagName: __experimentalAppenderTagName,
           rootClientId,
