@@ -91330,7 +91330,7 @@ ${text}
   function SiteTitleEdit(props) {
     useDeprecatedTextAlign(props);
     const { attributes: attributes2, setAttributes } = props;
-    const { level, levelOptions, isLink, linkTarget } = attributes2;
+    const { level, levelOptions, isLink, linkTarget, fitText } = attributes2;
     const canUserEdit = (0, import_data141.useSelect)(
       (select10) => select10(import_core_data87.store).canUser("update", {
         kind: "root",
@@ -91360,7 +91360,10 @@ ${text}
         value: title,
         onChange: (newTitle) => setSiteTitle(newTitle.trim()),
         allowedFormats: [],
-        disableLineBreaks: true
+        disableLineBreaks: true,
+        style: {
+          whiteSpace: fitText ? "inherit" : "pre-wrap"
+        }
       }
     ) }) : /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(TagName2, { ...blockProps, children: isLink ? /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
       "a",
