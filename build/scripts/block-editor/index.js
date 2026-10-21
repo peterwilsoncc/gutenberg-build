@@ -75674,41 +75674,44 @@ var wp;
       });
     }
     const draggableBlocks = patternBlock ?? blocks2;
-    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-      import_components40.Draggable,
-      {
-        __experimentalTransferDataType: "wp-blocks",
-        transferData: { type: "inserter", blocks: draggableBlocks },
-        onDragStart: (event) => {
-          startDragging2();
-          const addedTypes = /* @__PURE__ */ new Set();
-          for (const block of draggableBlocks) {
-            const type = `wp-block:${block.name}`;
-            if (!addedTypes.has(type)) {
-              event.dataTransfer.items.add("", type);
-              addedTypes.add(type);
+    return (
+      // @ts-expect-error `Draggable` only reads `elementId` without a drag component.
+      /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+        import_components40.Draggable,
+        {
+          __experimentalTransferDataType: "wp-blocks",
+          transferData: { type: "inserter", blocks: draggableBlocks },
+          onDragStart: (event) => {
+            startDragging2();
+            const addedTypes = /* @__PURE__ */ new Set();
+            for (const block of draggableBlocks) {
+              const type = `wp-block:${block.name}`;
+              if (!addedTypes.has(type)) {
+                event.dataTransfer.items.add("", type);
+                addedTypes.add(type);
+              }
             }
+          },
+          onDragEnd: () => {
+            stopDragging2();
+          },
+          __experimentalDragComponent: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+            BlockDraggableChip,
+            {
+              count: blocks2.length,
+              icon: icon || blockTypeIcon,
+              isPattern
+            }
+          ),
+          children: ({ onDraggableStart, onDraggableEnd }) => {
+            return children({
+              draggable: true,
+              onDragStart: onDraggableStart,
+              onDragEnd: onDraggableEnd
+            });
           }
-        },
-        onDragEnd: () => {
-          stopDragging2();
-        },
-        __experimentalDragComponent: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-          BlockDraggableChip,
-          {
-            count: blocks2.length,
-            icon: icon || blockTypeIcon,
-            isPattern
-          }
-        ),
-        children: ({ onDraggableStart, onDraggableEnd }) => {
-          return children({
-            draggable: true,
-            onDragStart: onDraggableStart,
-            onDragEnd: onDraggableEnd
-          });
         }
-      }
+      )
     );
   }
 
@@ -75724,16 +75727,20 @@ var wp;
     ...props
   }) {
     const isDraggingRef = (0, import_element201.useRef)(false);
-    const itemIconStyle = item.icon ? {
-      backgroundColor: item.icon.background,
-      color: item.icon.foreground
+    const icon = item.icon;
+    const itemIconStyle = icon ? {
+      backgroundColor: icon.background,
+      color: icon.foreground
     } : {};
     const blocks2 = (0, import_element201.useMemo)(
       () => [
         (0, import_blocks37.createBlock)(
           item.name,
           item.initialAttributes,
-          (0, import_blocks37.createBlocksFromInnerBlocksTemplate)(item.innerBlocks),
+          (0, import_blocks37.createBlocksFromInnerBlocksTemplate)(
+            // Variations hold inner block templates.
+            item.innerBlocks
+          ),
           item.innerContent
         )
       ],
@@ -76270,10 +76277,9 @@ var wp;
       }
       return (blocks2 ?? []).map((block) => {
         const clonedBlock = (0, import_blocks39.cloneBlock)(block);
-        if (clonedBlock.attributes.metadata?.categories?.includes(
-          category
-        )) {
-          clonedBlock.attributes.metadata.categories = [category];
+        const metadata = clonedBlock.attributes.metadata;
+        if (metadata?.categories?.includes(category)) {
+          metadata.categories = [category];
         }
         return clonedBlock;
       });
@@ -76402,7 +76408,9 @@ var wp;
     pagingProps
   }, ref) {
     const [activeCompositeId, setActiveCompositeId] = (0, import_element203.useState)(void 0);
-    const [activePattern, setActivePattern] = (0, import_element203.useState)(null);
+    const [activePattern, setActivePattern] = (0, import_element203.useState)(
+      null
+    );
     (0, import_element203.useEffect)(() => {
       const firstCompositeItemId = blockPatterns[0]?.name;
       setActiveCompositeId(firstCompositeItemId);
@@ -98415,7 +98423,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/default-block-appender/index.mjs
   var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
   var ZWNBSP = "\uFEFF";
-  function DefaultBlockAppender({ rootClientId }) {
+  function DefaultBlockAppender({
+    rootClientId
+  }) {
+    const Inserter2 = inserter_default;
     const { showPrompt, isLocked, placeholder, isManualGrid } = (0, import_data77.useSelect)(
       (select3) => {
         const {
@@ -98430,7 +98441,11 @@ If there's a particular need for this, please submit a feature request at https:
           showPrompt: isEmpty5,
           isLocked: !!getTemplateLock2(rootClientId),
           placeholder: bodyPlaceholder,
-          isManualGrid: getBlockAttributes3(rootClientId)?.layout?.isManualPlacement
+          // The layout attribute is a layout object.
+          isManualGrid: getBlockAttributes3(
+            // The root list has no attributes, so this returns `null`.
+            rootClientId
+          )?.layout?.isManualPlacement
         };
       },
       [rootClientId]
@@ -98439,7 +98454,10 @@ If there's a particular need for this, please submit a feature request at https:
     if (isLocked || isManualGrid) {
       return null;
     }
-    const value = (0, import_html_entities.decodeEntities)(placeholder) || (0, import_i18n135.__)("Type / to choose a block");
+    const value = (
+      // `decodeEntities` returns a missing placeholder as is.
+      (0, import_html_entities.decodeEntities)(placeholder) || (0, import_i18n135.__)("Type / to choose a block")
+    );
     const onAppend = () => {
       insertDefaultBlock2(void 0, rootClientId);
       startTyping2();
@@ -98455,7 +98473,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
             "p",
             {
-              tabIndex: "0",
+              tabIndex: 0,
               role: "button",
               "aria-label": (0, import_i18n135.__)("Add default block"),
               className: "block-editor-default-block-appender__content",
@@ -98474,7 +98492,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
-            inserter_default,
+            Inserter2,
             {
               rootClientId,
               position: "bottom right",
@@ -98493,9 +98511,16 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n136 = __toESM(require_i18n(), 1);
   var import_deprecated10 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
-  function ButtonBlockAppender({ rootClientId, className, onFocus, tabIndex, onSelect }, ref) {
+  function ButtonBlockAppender({
+    rootClientId,
+    className,
+    onFocus,
+    tabIndex,
+    onSelect
+  }, ref) {
+    const Inserter2 = inserter_default;
     return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
-      inserter_default,
+      Inserter2,
       {
         position: "bottom center",
         rootClientId,
@@ -98569,7 +98594,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-list-appender/index.mjs
   var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
-  function DefaultAppender({ rootClientId }) {
+  function DefaultAppender({
+    rootClientId
+  }) {
     const canInsertDefaultBlock = (0, import_data78.useSelect)(
       (select3) => select3(store).canInsertBlockType(
         (0, import_blocks45.getDefaultBlockName)(),
@@ -99446,7 +99473,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inner-blocks/button-block-appender.mjs
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
-  var BaseButtonBlockAppender = button_block_appender_default;
   function ButtonBlockAppender2({
     showSeparator,
     isFloating,
@@ -99455,7 +99481,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { clientId } = useBlockEditContext();
     return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-      BaseButtonBlockAppender,
+      button_block_appender_default,
       {
         className: clsx_default({
           "block-list-appender__toggle": isToggle
@@ -100686,7 +100712,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-list/index.mjs
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
-  var BlockListAppender2 = BlockListAppender;
   var IntersectionObserver2 = (0, import_element322.createContext)(void 0);
   IntersectionObserver2.displayName = "IntersectionObserverContext";
   var pendingBlockVisibilityUpdatesPerRegistry = /* @__PURE__ */ new WeakMap();
@@ -100929,7 +100954,7 @@ If there's a particular need for this, please submit a feature request at https:
       )),
       order.length < 1 && placeholder,
       shouldRenderAppender && !showGhost && /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
-        BlockListAppender2,
+        BlockListAppender,
         {
           tagName: __experimentalAppenderTagName,
           rootClientId,
@@ -110507,7 +110532,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-pattern-setup/setup-toolbar.mjs
   var import_jsx_runtime569 = __toESM(require_jsx_runtime(), 1);
-  var Actions2 = ({ onBlockPatternSelect }) => /* @__PURE__ */ (0, import_jsx_runtime569.jsx)("div", { className: "block-editor-block-pattern-setup__actions", children: /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
+  var Actions2 = ({
+    onBlockPatternSelect
+  }) => /* @__PURE__ */ (0, import_jsx_runtime569.jsx)("div", { className: "block-editor-block-pattern-setup__actions", children: /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
     import_components182.Button,
     {
       __next40pxDefaultSize: true,
@@ -110695,7 +110722,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ) });
   }
-  function BlockPatternSlide({ active, className, pattern, minHeight }) {
+  function BlockPatternSlide({
+    active,
+    className,
+    pattern,
+    minHeight
+  }) {
     const { blocks: blocks2, title, description } = pattern;
     const descriptionId = (0, import_compose123.useInstanceId)(
       BlockPatternSlide,
