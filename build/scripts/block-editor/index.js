@@ -123965,7 +123965,8 @@ If there's a particular need for this, please submit a feature request at https:
     return !!support?.[feature];
   }
   function setBackgroundStyleDefaults2(backgroundStyle) {
-    if (!backgroundStyle || !backgroundStyle?.backgroundImage?.url) {
+    if (!backgroundStyle || // The string form has no URL property.
+    !backgroundStyle?.backgroundImage?.url) {
       return;
     }
     let backgroundStylesWithDefaults;
@@ -123981,7 +123982,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return backgroundStylesWithDefaults;
   }
-  function useBlockProps4({ name, style }) {
+  function useBlockProps4({
+    name,
+    style
+  }) {
     if (!hasBackgroundSupport(name) || !style?.background?.backgroundImage) {
       return;
     }
@@ -124016,6 +124020,7 @@ If there's a particular need for this, please submit a feature request at https:
       className: updatedClassName,
       backgroundColor: void 0,
       gradient: void 0,
+      // Cleaning leaves out only the empty values.
       style: cleanEmptyObject({
         ...attributes.style,
         background: panelResetAllFilter?.(attributes.style)?.background,
@@ -124027,7 +124032,10 @@ If there's a particular need for this, please submit a feature request at https:
       })
     };
   }
-  function BackgroundInspectorControl({ children, resetAllFilter }) {
+  function BackgroundInspectorControl({
+    children,
+    resetAllFilter
+  }) {
     const attributesResetAllFilter = (0, import_element427.useCallback)(
       (attributes) => backgroundResetAllFilter(attributes, resetAllFilter),
       [resetAllFilter]
@@ -124052,10 +124060,17 @@ If there's a particular need for this, please submit a feature request at https:
     asWrapper
   }) {
     const selectedState = useBlockStyleState();
-    const { style, className, backgroundColor, gradient } = (0, import_data174.useSelect)(
+    const {
+      style,
+      className,
+      backgroundColor,
+      gradient
+    } = (0, import_data174.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
-        const blockAttributes = getBlockAttributes3(clientId);
+        const blockAttributes = getBlockAttributes3(
+          clientId
+        );
         return {
           style: blockAttributes?.style,
           className: blockAttributes?.className,
@@ -124089,7 +124104,10 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     };
-    const value = isStateSelected ? getStyleForState2(style, selectedState) : styleValue;
+    const value = isStateSelected ? (
+      // The state styles have the shape of the block styles.
+      getStyleForState2(style, selectedState)
+    ) : styleValue;
     const enableContrastChecking = !value?.color?.gradient && !value?.background?.gradient && !!value?.color?.background && (settings3?.color?.text || settings3?.color?.link) && false !== (0, import_blocks98.getBlockSupport)(name, ["color", "enableContrastChecker"]);
     const contrastWarning = useBlockColorContrastWarning({
       clientId,
@@ -124136,6 +124154,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const isMigrating = backgroundGradientSupported && !!style?.color?.gradient;
       const newAttributes = {
+        // Cleaning leaves out only the empty values.
         style: cleanEmptyObject(cleanedStyle),
         backgroundColor: newBackgroundColorSlug,
         // The legacy `gradient` attribute is only used when the block does
@@ -124184,7 +124203,10 @@ If there's a particular need for this, please submit a feature request at https:
         settings: updatedSettings,
         onChange,
         defaultControls,
-        value: isStateSelected ? getStyleForState2(style, selectedState) : styleValue,
+        value: isStateSelected ? (
+          // The state styles have the shape of the block styles.
+          getStyleForState2(style, selectedState)
+        ) : styleValue,
         baseValue: isStateSelected ? styleValue : void 0,
         contrastWarning,
         inheritedValue
@@ -124198,25 +124220,26 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/hooks/color.mjs
+  var getColorSupport = (blockNameOrType) => (0, import_blocks99.getBlockSupport)(blockNameOrType, COLOR_SUPPORT_KEY2);
   var COLOR_SUPPORT_KEY2 = "color";
   var hasColorSupport = (blockNameOrType) => {
-    const colorSupport = (0, import_blocks99.getBlockSupport)(blockNameOrType, COLOR_SUPPORT_KEY2);
+    const colorSupport = getColorSupport(blockNameOrType);
     return colorSupport && (colorSupport.link === true || colorSupport.gradient === true || colorSupport.background !== false || colorSupport.text !== false);
   };
   var hasLinkColorSupport = (blockType) => {
-    const colorSupport = (0, import_blocks99.getBlockSupport)(blockType, COLOR_SUPPORT_KEY2);
+    const colorSupport = getColorSupport(blockType);
     return colorSupport !== null && typeof colorSupport === "object" && !!colorSupport.link;
   };
   var hasGradientSupport2 = (blockNameOrType) => {
-    const colorSupport = (0, import_blocks99.getBlockSupport)(blockNameOrType, COLOR_SUPPORT_KEY2);
+    const colorSupport = getColorSupport(blockNameOrType);
     return colorSupport !== null && typeof colorSupport === "object" && !!colorSupport.gradients;
   };
   var hasBackgroundColorSupport2 = (blockType) => {
-    const colorSupport = (0, import_blocks99.getBlockSupport)(blockType, COLOR_SUPPORT_KEY2);
+    const colorSupport = getColorSupport(blockType);
     return colorSupport && colorSupport.background !== false;
   };
   var hasTextColorSupport2 = (blockType) => {
-    const colorSupport = (0, import_blocks99.getBlockSupport)(blockType, COLOR_SUPPORT_KEY2);
+    const colorSupport = getColorSupport(blockType);
     return colorSupport && colorSupport.text !== false;
   };
   function addAttributes(settings3) {
@@ -124272,6 +124295,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasBackground = !clipsToText && (backgroundColor || style?.color?.background) || hasGradient && (gradient || style?.color?.gradient);
     const newClassName = clsx_default(props.className, textClass, gradientClass, {
       // Don't apply the background class if there's a custom gradient.
+      // An unset class is skipped, as `!! undefined` is false.
       [backgroundClass]: (!hasGradient || !style?.color?.gradient) && !!backgroundClass,
       "has-text-color": shouldSerialize("text") && (textColor || style?.color?.text),
       "has-background": serializeHasBackground && hasBackground,
@@ -124393,7 +124417,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/elements.mjs
   var import_jsx_runtime655 = __toESM(require_jsx_runtime(), 1);
-  function ElementsInspectorControl({ children, resetAllFilter }) {
+  function ElementsInspectorControl({
+    children,
+    resetAllFilter
+  }) {
     const attributesResetAllFilter = (0, import_element429.useCallback)(
       (attributes) => {
         const updatedStyle = resetAllFilter(attributes.style);
@@ -124429,7 +124456,9 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isEnabled) {
           return {};
         }
-        const attributes = select3(store).getBlockAttributes(clientId);
+        const attributes = select3(store).getBlockAttributes(
+          clientId
+        );
         return {
           style: attributes?.style,
           className: attributes?.className
@@ -124472,10 +124501,13 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isEnabled) {
       return null;
     }
-    defaultControls = defaultControls ? defaultControls : (0, import_blocks100.getBlockSupport)(name, [
-      COLOR_SUPPORT_KEY2,
-      "__experimentalDefaultControls"
-    ]);
+    defaultControls = defaultControls ? defaultControls : (
+      // The default controls map control names to whether they show.
+      (0, import_blocks100.getBlockSupport)(name, [
+        COLOR_SUPPORT_KEY2,
+        "__experimentalDefaultControls"
+      ])
+    );
     const Wrapper = asWrapper || ElementsInspectorControl;
     return /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
       ColorPanel,
@@ -126067,7 +126099,10 @@ If there's a particular need for this, please submit a feature request at https:
     props.className = newClassName ? newClassName : void 0;
     return props;
   }
-  function useBlockProps6({ name, fontFamily }) {
+  function useBlockProps6({
+    name,
+    fontFamily
+  }) {
     return addSaveProps2({}, name, { fontFamily });
   }
   var font_family_default = {
@@ -126120,7 +126155,11 @@ If there's a particular need for this, please submit a feature request at https:
     props.className = newClassName ? newClassName : void 0;
     return props;
   }
-  function useBlockProps7({ name, fontSize, style }) {
+  function useBlockProps7({
+    name,
+    fontSize,
+    style
+  }) {
     const [fontSizes, fluidTypographySettings, layoutSettings] = useSettings(
       "typography.fontSizes",
       "typography.fluid",
@@ -126134,6 +126173,7 @@ If there's a particular need for this, please submit a feature request at https:
       props = {
         style: {
           fontSize: getTypographyFontSizeValue(
+            // It reads only the preset size.
             { size: style.typography.fontSize },
             {
               typography: {
@@ -126297,6 +126337,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const validTextAlignments = getValidTextAlignments(
+      // The support is a boolean or a list of alignments.
       (0, import_blocks104.getBlockSupport)(blockName, TEXT_ALIGN_SUPPORT_KEY2)
     );
     if (!validTextAlignments.length) {
@@ -126340,11 +126381,15 @@ If there's a particular need for this, please submit a feature request at https:
       return (0, import_blocks104.hasBlockSupport)(name, TEXT_ALIGN_SUPPORT_KEY2, false);
     }
   };
-  function useBlockProps8({ name, style }) {
+  function useBlockProps8({
+    name,
+    style
+  }) {
     if (!style?.typography?.textAlign) {
       return null;
     }
     const validTextAlignments = getValidTextAlignments(
+      // The support is a boolean or a list of alignments.
       (0, import_blocks104.getBlockSupport)(name, TEXT_ALIGN_SUPPORT_KEY2)
     );
     if (!validTextAlignments.length) {
@@ -126364,7 +126409,10 @@ If there's a particular need for this, please submit a feature request at https:
       return props;
     }
     const { textAlign } = attributes.style.typography;
-    const blockTextAlign = (0, import_blocks104.getBlockSupport)(blockType, TEXT_ALIGN_SUPPORT_KEY2);
+    const blockTextAlign = (0, import_blocks104.getBlockSupport)(
+      blockType,
+      TEXT_ALIGN_SUPPORT_KEY2
+    );
     const isTextAlignValid = getValidTextAlignments(blockTextAlign).includes(textAlign);
     if (isTextAlignValid && !shouldSkipSerialization(
       blockType,
@@ -126785,9 +126833,9 @@ If there's a particular need for this, please submit a feature request at https:
     const textColorValue = style?.color?.text;
     const textShadowValue = style?.typography?.textShadow;
     const fontSizeSlug = typeof fontSizeValue === "string" && fontSizeValue?.startsWith("var:preset|font-size|") ? fontSizeValue.substring("var:preset|font-size|".length) : void 0;
-    const fontFamilySlug = fontFamilyValue?.startsWith(
-      "var:preset|font-family|"
-    ) ? fontFamilyValue.substring("var:preset|font-family|".length) : void 0;
+    const fontFamilySlug = fontFamilyValue?.startsWith("var:preset|font-family|") ? fontFamilyValue.substring(
+      "var:preset|font-family|".length
+    ) : void 0;
     const textColorSlug = extractPresetSlug(textColorValue, "color");
     const backgroundColorValue = style?.color?.background;
     const backgroundColorSlug = extractPresetSlug(
@@ -126796,7 +126844,10 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const textShadowSlug = typeof textShadowValue === "string" && textShadowValue?.startsWith("var:preset|text-shadow|") ? textShadowValue.substring("var:preset|text-shadow|".length) : void 0;
     updatedStyle.typography = {
-      ...omit3(updatedStyle.typography, ["fontFamily"]),
+      // The panel styles always hold typography.
+      ...omit3(updatedStyle.typography, [
+        "fontFamily"
+      ]),
       fontSize: fontSizeSlug ? void 0 : fontSizeValue,
       textShadow: textShadowSlug ? void 0 : textShadowValue
     };
@@ -126807,6 +126858,7 @@ If there's a particular need for this, please submit a feature request at https:
       background: backgroundColorSlug ? void 0 : backgroundColorValue
     };
     return {
+      // Cleaning leaves out only the empty values.
       style: cleanEmptyObject(updatedStyle),
       fontFamily: fontFamilySlug,
       fontSize: fontSizeSlug,
@@ -126836,7 +126888,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
   }
-  function TypographyInspectorControl({ children, resetAllFilter }) {
+  function TypographyInspectorControl({
+    children,
+    resetAllFilter
+  }) {
     const attributesResetAllFilter = (0, import_element436.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle(attributes);
@@ -126894,7 +126949,8 @@ If there's a particular need for this, please submit a feature request at https:
           className: _className,
           backgroundColor: _backgroundColor,
           gradient: _gradient
-        } = select3(store).getBlockAttributes(clientId) || {};
+        } = select3(store).getBlockAttributes(clientId) || // The block's attributes hold its typography.
+        {};
         return {
           style: _style,
           fontFamily: _fontFamily,
@@ -126936,7 +126992,10 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     const value = (0, import_element436.useMemo)(
-      () => isStateSelected ? getStyleForState2(style, selectedState) : baseValue,
+      () => isStateSelected ? (
+        // The state styles have the shape of the block styles.
+        getStyleForState2(style, selectedState)
+      ) : baseValue,
       [isStateSelected, selectedState, style, baseValue]
     );
     const onChange = isStateSelected ? (newStyle) => {
@@ -126958,6 +127017,7 @@ If there's a particular need for this, please submit a feature request at https:
             ...newAttributes.style?.color,
             gradient: style?.color?.gradient
           }
+          // Cleaning leaves out only the empty values.
         });
       } else if (setsTextGradient && gradient) {
         newAttributes.gradient = void 0;
@@ -127834,7 +127894,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var DEFAULT_STATE_VALUE4 = "default";
   var EMPTY_STATE_OPTIONS = [];
-  function BlockStatesControl({ name, value, onChange, children }) {
+  function BlockStatesControl({
+    name,
+    value,
+    onChange,
+    children
+  }) {
     const pseudoStateOptions = (0, import_element440.useMemo)(
       () => getPseudoStateOptions(name),
       [name]
@@ -127855,7 +127920,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function BlockStateBadges({ name, value, isResponsiveEditing: isResponsiveEditing3 }) {
+  function BlockStateBadges({
+    name,
+    value,
+    isResponsiveEditing: isResponsiveEditing3
+  }) {
     const pseudoStateOptions = (0, import_element440.useMemo)(
       () => getPseudoStateOptions(name),
       [name]
@@ -129932,7 +130001,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/allowed-blocks.mjs
   var import_jsx_runtime688 = __toESM(require_jsx_runtime(), 1);
-  function BlockEditAllowedBlocksControlPure({ clientId }) {
+  function BlockEditAllowedBlocksControlPure({
+    clientId
+  }) {
     const blockEditingMode = useBlockEditingMode();
     const isContentOnly = blockEditingMode === "contentOnly";
     if (isContentOnly) {
@@ -132730,7 +132801,11 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return matchedColor;
   };
-  var getMultiOriginColor = ({ colors: colors2, namedColor, customColor }) => {
+  var getMultiOriginColor = ({
+    colors: colors2,
+    namedColor,
+    customColor
+  }) => {
     if (namedColor) {
       const colorObject2 = getColorByProperty(colors2, "slug", namedColor);
       if (colorObject2) {
@@ -132765,6 +132840,7 @@ If there's a particular need for this, please submit a feature request at https:
       color: borderColorSlug ? void 0 : borderColorValue
     };
     return {
+      // Cleaning leaves out only the empty values.
       style: cleanEmptyObject(updatedStyle),
       borderColor: borderColorSlug
     };
@@ -132781,7 +132857,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
   }
-  function BordersInspectorControl({ label, children, resetAllFilter }) {
+  function BordersInspectorControl({
+    label,
+    children,
+    resetAllFilter
+  }) {
     const attributesResetAllFilter = (0, import_element457.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle2(attributes);
@@ -132803,7 +132883,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function BorderPanel2({ clientId, name, setAttributes, settings: settings3 }) {
+  function BorderPanel2({
+    clientId,
+    name,
+    setAttributes,
+    settings: settings3
+  }) {
     const selectedState = useBlockStyleState();
     const isEnabled = useHasBorderPanel(settings3);
     const { style, borderColor, className } = (0, import_data193.useSelect)(
@@ -132815,7 +132900,8 @@ If there's a particular need for this, please submit a feature request at https:
           style: _style,
           borderColor: _borderColor,
           className: _className
-        } = select3(store).getBlockAttributes(clientId) || {};
+        } = select3(store).getBlockAttributes(clientId) || // The block's attributes hold its border styles.
+        {};
         return {
           style: _style,
           borderColor: _borderColor,
@@ -132910,10 +132996,15 @@ If there's a particular need for this, please submit a feature request at https:
     const borderColorClass = getColorClassName("border-color", borderColor);
     return clsx_default({
       "has-border-color": borderColor || style?.border?.color,
+      // An unset class is skipped, as `!! undefined` is false.
       [borderColorClass]: !!borderColorClass
     });
   }
-  function useBlockProps11({ name, borderColor, style }) {
+  function useBlockProps11({
+    name,
+    borderColor,
+    style
+  }) {
     const { colors: colors2 } = useMultipleOriginColorsAndGradients();
     if (!hasBorderSupport2(name, "color") || shouldSkipSerialization(name, BORDER_SUPPORT_KEY2, "color")) {
       return {};
@@ -133110,7 +133201,10 @@ If there's a particular need for this, please submit a feature request at https:
     }, [property, showBlockInterface2, hideBlockInterface2]);
     return [property, setProperty];
   }
-  function DimensionsInspectorControl({ children, resetAllFilter }) {
+  function DimensionsInspectorControl({
+    children,
+    resetAllFilter
+  }) {
     const attributesResetAllFilter = (0, import_element459.useCallback)(
       (attributes) => {
         const existingStyle = attributes.style;
@@ -133131,7 +133225,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function DimensionsPanel2({ clientId, name, setAttributes, settings: settings3 }) {
+  function DimensionsPanel2({
+    clientId,
+    name,
+    setAttributes,
+    settings: settings3
+  }) {
     const selectedState = useBlockStyleState();
     const isStateSelected = !isDefaultBlockStyleState2(selectedState);
     const isEnabled = useHasDimensionsPanel(settings3, selectedState);
@@ -133140,7 +133239,10 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isEnabled) {
           return {};
         }
-        const attributes = select3(store).getBlockAttributes(clientId) || {};
+        const attributes = select3(store).getBlockAttributes(
+          clientId
+          // The block's attributes hold its styles and layout.
+        ) || {};
         return {
           style: attributes.style,
           className: attributes.className,
@@ -133155,7 +133257,10 @@ If there's a particular need for this, please submit a feature request at https:
       selectedState
     );
     const [visualizedProperty, setVisualizedProperty] = useVisualizer();
-    const value = isStateSelected ? getStyleForState2(style, selectedState) : style;
+    const value = isStateSelected ? (
+      // The state styles have the shape of the block styles.
+      getStyleForState2(style, selectedState)
+    ) : style;
     const onChange = isStateSelected ? (newStyle) => {
       setAttributes({
         style: setStyleForState(style, selectedState, newStyle)
@@ -133176,7 +133281,10 @@ If there's a particular need for this, please submit a feature request at https:
       SPACING_SUPPORT_KEY2,
       "__experimentalDefaultControls"
     ]);
-    const { default: defaultLayout2 } = (0, import_blocks120.getBlockSupport)(name, "layout") || {};
+    const { default: defaultLayout2 } = (
+      // The layout support may set a default layout.
+      (0, import_blocks120.getBlockSupport)(name, "layout") || {}
+    );
     const defaultControls = {
       // In the block inspector, minHeight and minWidth should not
       // be shown by default unless the block explicitly opts in.
@@ -133245,7 +133353,12 @@ If there's a particular need for this, please submit a feature request at https:
       return hasDimensionsSupport(name);
     }
   };
-  function useBlockProps12({ name, height, minHeight, style }) {
+  function useBlockProps12({
+    name,
+    height,
+    minHeight,
+    style
+  }) {
     if (!hasDimensionsSupport(name, "aspectRatio") || shouldSkipSerialization(name, DIMENSIONS_SUPPORT_KEY, "aspectRatio")) {
       return {};
     }
@@ -133349,7 +133462,10 @@ If there's a particular need for this, please submit a feature request at https:
     if (!key.startsWith("-") || key.startsWith("--")) {
       return key;
     }
-    const camelCased = key.slice(1).replace(/-([a-z])/g, (_, character) => character.toUpperCase());
+    const camelCased = key.slice(1).replace(
+      /-([a-z])/g,
+      (_, character) => character.toUpperCase()
+    );
     return key.startsWith("-ms-") ? camelCased : camelCased.replace(
       /^[a-z]/,
       (character) => character.toUpperCase()
@@ -133404,7 +133520,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function getValidStateClip(stateStyles) {
     const stateClip = stateStyles?.background?.backgroundClip;
-    return import_style_engine6.VALID_BACKGROUND_CLIP_VALUES.includes(stateClip) ? stateClip : void 0;
+    return import_style_engine6.VALID_BACKGROUND_CLIP_VALUES.includes(stateClip) ? (
+      // A listed clip value is a string.
+      stateClip
+    ) : void 0;
   }
   function getStateTextClipEscapeCSS(stateStyles, baseStyle, selector5) {
     if ("text" !== baseStyle?.background?.backgroundClip) {
@@ -133447,6 +133566,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }
+    return void 0;
   }
   function getStateTextAlignCSS(stateStyles, selector5) {
     const textAlign = stateStyles?.typography?.textAlign;
@@ -133461,10 +133581,15 @@ If there's a particular need for this, please submit a feature request at https:
   function getStateStylesCSS(stateStyles, selector5, baseStyle) {
     const fallbackDimensionStyles = getStateFallbackDimensionStyles(stateStyles);
     const stylesWithDimensionFallbacks = fallbackDimensionStyles ? mergeStyleObjects(stateStyles, fallbackDimensionStyles) : stateStyles;
-    const css = (0, import_style_engine6.compileCSS)(stylesWithDimensionFallbacks, { selector: selector5 });
+    const css = (0, import_style_engine6.compileCSS)(stylesWithDimensionFallbacks, {
+      selector: selector5
+    });
     const importantCSS = css ? css.replace(/;/g, " !important;") : void 0;
     const fallbackBorderStyles = getStateFallbackBorderStyles(stateStyles);
-    const fallbackCSS = fallbackBorderStyles ? (0, import_style_engine6.compileCSS)(fallbackBorderStyles, { selector: selector5 }) : void 0;
+    const fallbackCSS = fallbackBorderStyles ? (
+      // The fallback styles have the shape the style engine reads.
+      (0, import_style_engine6.compileCSS)(fallbackBorderStyles, { selector: selector5 })
+    ) : void 0;
     const textAlignCSS = getStateTextAlignCSS(stateStyles, selector5);
     const backgroundResetCSS = getStateBackgroundResetCSS(
       stateStyles,
@@ -133534,7 +133659,8 @@ If there's a particular need for this, please submit a feature request at https:
           if (Object.keys(remainingStyles).length) {
             addStyleGroup(
               groups3,
-              featureSelectors.root || blockSelectors.root,
+              featureSelectors.root || // The block's root selector is a string.
+              blockSelectors.root,
               {
                 [feature]: remainingStyles
               }
@@ -133557,6 +133683,7 @@ If there's a particular need for this, please submit a feature request at https:
     ]) ? options.baseStyle ?? {} : void 0;
     const rules = getStateStyleGroups(stateStyles, name).map(
       ({ selector: blockSelector, style }) => getStateStylesCSS(
+        // Grouping keeps the shape of the state styles.
         style,
         buildScopedBlockSelector(
           baseSelector,
@@ -133642,7 +133769,11 @@ If there's a particular need for this, please submit a feature request at https:
             viewportStyles,
             name,
             baseSelector,
-            mergeStyleObjects(defaultRootStyles, viewportRootStyles)
+            // Merging keeps the shape of the block styles.
+            mergeStyleObjects(
+              defaultRootStyles,
+              viewportRootStyles
+            )
           )
         );
         if (viewportCSSRules.length) {
@@ -133668,7 +133799,10 @@ If there's a particular need for this, please submit a feature request at https:
       defaultViewportState
     );
     if (defaultViewportStateValue && stateValue) {
-      return mergeGlobalStyles(defaultViewportStateValue, stateValue);
+      return mergeGlobalStyles(
+        defaultViewportStateValue,
+        stateValue
+      );
     }
     return stateValue || defaultViewportStateValue;
   }
@@ -133737,7 +133871,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
       if (path.length > 1) {
         const [firstSubpath, ...restPath] = path;
-        omitStyle(newStyle[firstSubpath], [restPath], true);
+        omitStyle(
+          newStyle[firstSubpath],
+          [restPath],
+          true
+        );
       } else if (path.length === 1) {
         delete newStyle[path[0]];
       }
@@ -133785,6 +133923,7 @@ If there's a particular need for this, please submit a feature request at https:
         } = unlock(blockEditorSelect);
         const editorSettings = blockEditorSelect.getSettings();
         return {
+          // The global styles data holds the styles of each block type.
           globalBlockStyles: editorSettings?.[globalStylesDataKey]?.blocks?.[name],
           selectedState: getSelectedBlockStyleState2(clientId),
           showStateOnCanvas: isSelectedBlockStyleStateShownOnCanvas2(clientId)
@@ -133901,9 +134040,11 @@ If there's a particular need for this, please submit a feature request at https:
         rules.push((0, import_style_engine6.compileCSS)(elementStyles, { selector: selector5 }));
         if (pseudo) {
           pseudo.forEach((pseudoSelector) => {
-            if (elementStyles[pseudoSelector]) {
+            const pseudoStyles = elementStyles[pseudoSelector];
+            if (pseudoStyles) {
               rules.push(
-                (0, import_style_engine6.compileCSS)(elementStyles[pseudoSelector], {
+                // The element styles have the shape the style engine reads.
+                (0, import_style_engine6.compileCSS)(pseudoStyles, {
                   selector: scopeSelector2(
                     baseSelector,
                     `${import_blocks122.__EXPERIMENTAL_ELEMENTS[elementType]}${pseudoSelector}`
@@ -133918,6 +134059,7 @@ If there's a particular need for this, please submit a feature request at https:
         elements.forEach((element) => {
           if (blockElementStyles[element]) {
             rules.push(
+              // The element styles have the shape the style engine reads.
               (0, import_style_engine6.compileCSS)(blockElementStyles[element], {
                 selector: scopeSelector2(
                   baseSelector,
@@ -133931,7 +134073,11 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return rules.length > 0 ? rules.join("") : void 0;
   }
-  function useBlockProps13({ clientId, name, style }) {
+  function useBlockProps13({
+    clientId,
+    name,
+    style
+  }) {
     const blockElementsContainerIdentifier = (0, import_compose148.useInstanceId)(
       STYLE_BLOCK_PROPS_REFERENCE,
       "wp-elements"
@@ -134400,7 +134546,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const blockType = (0, import_blocks126.getBlockType)(blockName);
     const isStateSelected = !isDefaultBlockStyleState2(selectedState);
-    const stateStyle = isStateSelected ? getStyleForState2(style, selectedState) || {} : style;
+    const stateStyle = isStateSelected ? (
+      // The state styles have the shape of the block styles.
+      getStyleForState2(style, selectedState) || {}
+    ) : style;
     function onChange(newStyle) {
       const css = newStyle?.css?.trim() ? newStyle.css : void 0;
       const cleanedStyle = cleanEmptyObject({ ...newStyle, css });
@@ -134413,6 +134562,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_i18n290.__)(
         "Add your own CSS to customize the appearance of the %s block. You do not need to include a CSS selector, just add the property and value, e.g. color: red;."
       ),
+      // An unknown block prints as `undefined`, as before.
       blockType?.title
     );
     const panel = /* @__PURE__ */ (0, import_jsx_runtime704.jsx)(
@@ -134429,12 +134579,17 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime704.jsx)(inspector_controls_default, { group: "advanced", children: panel });
   }
   var CUSTOM_CSS_WARNING_NOTICE_ID = "custom-css-edit-warning";
-  function CustomCSSEdit({ clientId, name, setAttributes }) {
+  function CustomCSSEdit({
+    clientId,
+    name,
+    setAttributes
+  }) {
     const { style, canEditCSS, selectedState } = (0, import_data197.useSelect)(
       (select3) => {
         const blockEditorSelect = select3(store);
         const { getSelectedBlockStyleState: getSelectedBlockStyleState2 } = unlock(blockEditorSelect);
         return {
+          // The style attribute holds the block styles.
           style: blockEditorSelect.getBlockAttributes(clientId)?.style || EMPTY_STYLE,
           canEditCSS: blockEditorSelect.getSettings().canEditCSS,
           selectedState: getSelectedBlockStyleState2(clientId)
@@ -134455,7 +134610,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function useBlockProps16({ style, clientId, name }) {
+  function useBlockProps16({
+    style,
+    clientId,
+    name
+  }) {
     const [viewportSettings] = useSettings("viewport");
     const customCSSStateEntries = (0, import_element462.useMemo)(
       () => getCustomCSSStateEntries(style, name, viewportSettings),
@@ -137344,6 +137503,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasGradient = gradientClass || style?.color?.gradient;
     const className = clsx_default(textClass, gradientClass, {
       // Don't apply the background class if there's a gradient.
+      // An unset class is skipped, as `!! undefined` is false.
       [backgroundClass]: !hasGradient && !!backgroundClass,
       "has-text-color": textColor || style?.color?.text,
       "has-background": backgroundColor || style?.color?.background || gradient || style?.color?.gradient,
@@ -137429,7 +137589,9 @@ If there's a particular need for this, please submit a feature request at https:
     typographyStyles = {
       ...typographyStyles,
       fontSize: getTypographyFontSizeValue(
+        // It reads only the preset size.
         { size: attributes?.style?.typography?.fontSize },
+        // It reads the settings optionally, so a boolean reads as none.
         settings3
       )
     };
