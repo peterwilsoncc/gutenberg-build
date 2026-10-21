@@ -18406,6 +18406,7 @@ var wp;
             name,
             initialAttributes,
             (0, import_blocks14.createBlocksFromInnerBlocksTemplate)(
+              // Variations hold inner block templates.
               innerBlocks
             ),
             innerContent
@@ -18428,7 +18429,7 @@ var wp;
       if (name === (0, import_blocks15.getDefaultBlockName)() || (0, import_blocks15.getBlockSupport)(name, "__experimentalSlashInserter", false)) {
         filteredCompleters = [
           ...filteredCompleters,
-          // The JS completer is typed as a plain object.
+          // It lists its items through `useItems`, so it has no `options`.
           block_default
         ];
       }
@@ -97508,6 +97509,7 @@ If there's a particular need for this, please submit a feature request at https:
       onSelectBlockType
     ] = use_block_types_state_default(destinationRootClientId, onInsertBlocks, isQuick);
     const [patterns2, , onClickPattern] = use_patterns_state_default(
+      // @ts-expect-error Bug: the pattern name is passed unwrapped, as the meta object, which the store ignores.
       onInsertBlocks,
       destinationRootClientId,
       void 0,
@@ -97767,11 +97769,13 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const [filterValue, setFilterValue, delayedFilterValue] = (0, import_compose92.useDebouncedInput)(__experimentalFilterValue);
-    const [hoveredItem, setHoveredItem] = (0, import_element307.useState)(null);
-    const [selectedPatternCategory, setSelectedPatternCategory] = (0, import_element307.useState)(
-      __experimentalInitialCategory
+    const [hoveredItem, setHoveredItem] = (0, import_element307.useState)(
+      null
     );
-    const [patternFilter, setPatternFilter] = (0, import_element307.useState)("all");
+    const [selectedPatternCategory, setSelectedPatternCategory] = (0, import_element307.useState)(__experimentalInitialCategory);
+    const [patternFilter, setPatternFilter] = (0, import_element307.useState)(
+      "all"
+    );
     const isLargeViewport = (0, import_compose92.useViewportMatch)("large");
     const isMobileViewport = (0, import_compose92.useViewportMatch)("medium", "<");
     const maybeCloseInserter = isMobileViewport ? onClose : NOOP2;
@@ -97795,7 +97799,7 @@ If there's a particular need for this, please submit a feature request at https:
       shouldFocusBlock
     });
     const { hideInsertionPoint: hideInsertionPoint2 } = (0, import_data74.useDispatch)(store);
-    const blockTypesTabRef = (0, import_element307.useRef)();
+    const blockTypesTabRef = (0, import_element307.useRef)(null);
     const onInsert = (0, import_element307.useCallback)(
       (blocks2, meta, shouldForceFocusBlock, _rootClientId) => {
         hideInsertionPoint2();
@@ -97809,6 +97813,7 @@ If there's a particular need for this, please submit a feature request at https:
         maybeCloseInserter();
         window.requestAnimationFrame(() => {
           if (!shouldFocusBlock && !blockTypesTabRef.current?.contains(
+            // @ts-expect-error Bug: a callback ref has no `current`.
             ref.current.ownerDocument.activeElement
           )) {
             blockTypesTabRef.current?.querySelector("button").focus();
@@ -97855,12 +97860,15 @@ If there's a particular need for this, please submit a feature request at https:
     const mediaPanelRef = (0, import_element307.useRef)(null);
     (0, import_element307.useEffect)(() => {
       const handleScroll = (event) => {
-        setIsScrolled(event.currentTarget.scrollTop > 0);
+        setIsScrolled(
+          event.currentTarget.scrollTop > 0
+        );
       };
       const panels = [
         blocksPanelRef.current,
         patternsPanelRef.current,
         mediaPanelRef.current
+        // The filter drops the panels that did not render.
       ].filter(Boolean);
       panels.forEach(
         (panel) => panel.addEventListener("scroll", handleScroll)
@@ -97992,13 +98000,15 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setSelectedTab(value);
     };
-    const tabsRef = (0, import_element307.useRef)();
+    const tabsRef = (0, import_element307.useRef)(null);
     (0, import_element307.useLayoutEffect)(() => {
       if (!tabsRef.current) {
         return;
       }
       const frame = window.requestAnimationFrame(() => {
-        tabsRef.current?.querySelector('[role="tab"][aria-selected="true"]')?.focus();
+        tabsRef.current?.querySelector(
+          '[role="tab"][aria-selected="true"]'
+        )?.focus();
       });
       return () => window.cancelAnimationFrame(frame);
     }, []);
@@ -98297,14 +98307,23 @@ If there's a particular need for this, please submit a feature request at https:
           getBlockListSettings: getBlockListSettings2
         } = select3(store);
         const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType210 } = select3(import_blocks44.store);
-        const _targetRootClientId = rootClientId || getBlockRootClientId22(clientId) || void 0;
+        const _targetRootClientId = rootClientId || // A missing client ID has no root.
+        getBlockRootClientId22(clientId) || void 0;
         const allowedBlocks = getAllowedBlocks2(_targetRootClientId);
         const directInsertBlock = shouldDirectInsert && getDirectInsertBlock2(_targetRootClientId);
         const { defaultBlock } = getBlockListSettings2(_targetRootClientId) ?? {};
-        const _hasSingleBlockType = allowedBlocks?.length === 1 && getBlockVariations2(allowedBlocks[0].name, "inserter")?.length === 0;
-        const _allowedBlockType = _hasSingleBlockType ? allowedBlocks[0] : null;
+        const _hasSingleBlockType = allowedBlocks?.length === 1 && getBlockVariations2(
+          // `core/block` is listed by name, so it has no variations to find.
+          allowedBlocks[0].name,
+          "inserter"
+        )?.length === 0;
+        const _allowedBlockType = _hasSingleBlockType ? (
+          // Only a block type has variations, see above.
+          allowedBlocks[0]
+        ) : null;
         let _blockToInsert = directInsertBlock || null;
-        if (!_blockToInsert && _hasSingleBlockType && defaultBlock?.name === _allowedBlockType.name) {
+        if (!_blockToInsert && _hasSingleBlockType && // Set with a single block type.
+        defaultBlock?.name === _allowedBlockType.name) {
           _blockToInsert = defaultBlock;
         }
         const defaultBlockType = directInsertBlock ? getBlockType210(directInsertBlock.name) : null;
@@ -98343,6 +98362,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (clientId) {
           const currentBlock = getBlock2(clientId);
           const previousBlock = getBlock2(
+            // A missing client ID has no block.
             getPreviousBlockClientId2(clientId)
           );
           if (currentBlock?.name === previousBlock?.name) {
@@ -98398,7 +98418,10 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_a11y15.speak)(message2);
       }
     }
-    function renderToggle3({ onToggle: dropdownOnToggle, isOpen }) {
+    function renderToggle3({
+      onToggle: dropdownOnToggle,
+      isOpen
+    }) {
       const toggleArgs = {
         onToggle: dropdownOnToggle,
         isOpen,
@@ -98475,7 +98498,6 @@ If there's a particular need for this, please submit a feature request at https:
   function DefaultBlockAppender({
     rootClientId
   }) {
-    const Inserter2 = inserter_default;
     const { showPrompt, isLocked, placeholder, isManualGrid } = (0, import_data77.useSelect)(
       (select3) => {
         const {
@@ -98541,7 +98563,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
-            Inserter2,
+            inserter_default,
             {
               rootClientId,
               position: "bottom right",
@@ -98567,9 +98589,8 @@ If there's a particular need for this, please submit a feature request at https:
     tabIndex,
     onSelect
   }, ref) {
-    const Inserter2 = inserter_default;
     return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
-      Inserter2,
+      inserter_default,
       {
         position: "bottom center",
         rootClientId,
@@ -99141,7 +99162,6 @@ If there's a particular need for this, please submit a feature request at https:
     operation = "insert",
     nearestSide = "right"
   }) {
-    const Inserter2 = inserter_default;
     const { selectBlock: selectBlock2, hideInsertionPoint: hideInsertionPoint2 } = (0, import_data81.useDispatch)(store);
     const openRef = (0, import_element314.useContext)(InsertionPointOpenRef);
     const ref = (0, import_element314.useRef)(null);
@@ -99295,7 +99315,7 @@ If there's a particular need for this, please submit a feature request at https:
                     "block-editor-block-list__insertion-point-inserter"
                   ),
                   children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
-                    Inserter2,
+                    inserter_default,
                     {
                       ref: maybeResetOpenRef,
                       position: "bottom center",
@@ -102019,7 +102039,6 @@ If there's a particular need for this, please submit a feature request at https:
     clientId,
     __unstableContentRef
   }) {
-    const Inserter2 = inserter_default;
     const { isInsertionPointVisible, lastClientId, rootClientId } = useSelectedBlockToolProps(clientId);
     const popoverProps = useBlockToolbarPopoverProps({
       contentElement: __unstableContentRef?.current,
@@ -102039,7 +102058,7 @@ If there's a particular need for this, please submit a feature request at https:
         __unstableContentRef,
         ...popoverProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)("div", { className: "block-editor-block-list__empty-block-inserter", children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
-          Inserter2,
+          inserter_default,
           {
             position: "bottom right",
             rootClientId,
@@ -102996,7 +103015,11 @@ If there's a particular need for this, please submit a feature request at https:
         const parentBlockType = (0, import_blocks56.getBlockType)(
           getBlockName2(_parentClientId)
         );
-        const isTextFlowWrapper = parentBlockType?.merge || (0, import_blocks56.hasBlockSupport)(parentBlockType, "__experimentalOnMerge");
+        const isTextFlowWrapper = parentBlockType?.merge || // A missing block type has no support.
+        (0, import_blocks56.hasBlockSupport)(
+          parentBlockType,
+          "__experimentalOnMerge"
+        );
         const allowedBlocks = getBlockListSettings2(_parentClientId)?.allowedBlocks ?? parentBlockType?.allowedBlocks;
         const allowsOnlyUnsplittable = Array.isArray(allowedBlocks) && allowedBlocks.every(
           (name) => !(0, import_blocks56.hasBlockSupport)(name, "splitting")
@@ -103016,7 +103039,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const blockInformation = useBlockDisplayInformation(parentClientId);
-    const nodeRef = (0, import_element336.useRef)();
+    const nodeRef = (0, import_element336.useRef)(null);
     const showHoveredOrFocusedGestures = useShowHoveredOrFocusedGestures({
       ref: nodeRef,
       highlightParent: true
@@ -103029,6 +103052,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: (0, import_i18n146.sprintf)(
           /* translators: %s: Name of the block's parent. */
           (0, import_i18n146.__)("Select parent block: %s"),
+          // The selector shows only for a parent, which has a title.
           blockInformation?.title
         ),
         showTooltip: true,
@@ -104809,12 +104833,13 @@ If there's a particular need for this, please submit a feature request at https:
           __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2
         } = select3(store);
         const attributes = getBlockAttributes3(clientId);
-        const _categories = attributes?.metadata?.categories || EMPTY_ARRAY14;
+        const metadata = attributes?.metadata;
+        const _categories = metadata?.categories || EMPTY_ARRAY14;
         const rootBlock = getBlockRootClientId2(clientId);
         const _patterns = _categories.length > 0 ? __experimentalGetAllowedPatterns2(rootBlock) : EMPTY_ARRAY14;
         return {
           categories: _categories,
-          currentPatternName: attributes?.metadata?.patternName,
+          currentPatternName: metadata?.patternName,
           patterns: _patterns
         };
       },
@@ -104847,6 +104872,7 @@ If there's a particular need for this, please submit a feature request at https:
         return (0, import_blocks70.cloneBlock)(block);
       });
       newBlocks[0].attributes.metadata = {
+        // The metadata attribute is an object when set.
         ...newBlocks[0].attributes.metadata,
         categories
       };
@@ -107608,7 +107634,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime555 = __toESM(require_jsx_runtime(), 1);
   var Appender = (0, import_element359.forwardRef)(
     ({ nestingLevel, blockCount, clientId, ...props }, ref) => {
-      const AppenderInserter = inserter_default;
       const { setInsertedBlockClientId } = useListViewContext();
       const insertedBlockClientId = useInsertedBlockClientId();
       const instanceId = (0, import_compose116.useInstanceId)(Appender);
@@ -107661,7 +107686,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
       return /* @__PURE__ */ (0, import_jsx_runtime555.jsxs)("div", { className: "list-view-appender", children: [
         /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(
-          AppenderInserter,
+          inserter_default,
           {
             ref,
             rootClientId: clientId,
@@ -128852,7 +128877,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { destinationRootClientId } = (0, import_data186.useSelect)(
       (select3) => {
         const { getBlockRootClientId: getBlockRootClientId2 } = select3(store);
-        const _rootClientId = rootClientId || getBlockRootClientId2(clientId) || void 0;
+        const _rootClientId = rootClientId || // A missing client ID has no root.
+        getBlockRootClientId2(clientId) || void 0;
         return {
           destinationRootClientId: _rootClientId
         };
