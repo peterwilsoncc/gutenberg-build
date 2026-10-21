@@ -118529,7 +118529,7 @@ ${content}
         }
       }
       const results = [];
-      const overlayRect = overlayElement?.getBoundingClientRect() ?? null;
+      const overlayRect = blocksToHighlight.length && overlayElement?.getBoundingClientRect() || null;
       const usersWithAvatar = /* @__PURE__ */ new Set();
       blocksToHighlight.forEach((block) => {
         const { color, blockId, userName, avatarUrl } = block;
@@ -118628,10 +118628,13 @@ ${content}
         setCursorPositions([]);
         return;
       }
-      const overlayRect = overlayElement.getBoundingClientRect();
-      const overlayContext = {
-        editorDocument: blockEditorDocument,
-        overlayRect
+      let overlayContext;
+      const getOverlayContext = () => {
+        overlayContext ??= {
+          editorDocument: blockEditorDocument,
+          overlayRect: overlayElement.getBoundingClientRect()
+        };
+        return overlayContext;
       };
       const results = [];
       const hasOtherCollaborators = sortedUsers.some(
@@ -118716,7 +118719,7 @@ ${content}
           selection,
           start,
           end,
-          overlayContext
+          getOverlayContext()
         );
         const hasCoords = Boolean(selectionVisual.coords);
         const hasRects = (selectionVisual.selectionRects?.length ?? 0) > 0;
