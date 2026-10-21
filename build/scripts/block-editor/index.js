@@ -121322,7 +121322,8 @@ If there's a particular need for this, please submit a feature request at https:
       return true;
     }
     return Object.entries(style ?? {}).some(
-      ([key, stateStyle]) => key.startsWith("@") && !!stateStyle?.position?.type
+      ([key, stateStyle]) => key.startsWith("@") && // Viewport states hold style objects.
+      !!stateStyle?.position?.type
     );
   };
   var PositionControlsPanel = () => {
@@ -121336,7 +121337,12 @@ If there's a particular need for this, please submit a feature request at https:
         selectedClientIds: selectedBlockClientIds,
         selectedBlocks: _selectedBlocks,
         hasPositionAttribute: _selectedBlocks?.some(
-          ({ attributes }) => hasAnyPositionValue(attributes?.style)
+          ({ attributes }) => (
+            // The style attribute is an object.
+            hasAnyPositionValue(
+              attributes?.style
+            )
+          )
         )
       };
     }, []);
@@ -121355,9 +121361,13 @@ If there's a particular need for this, please submit a feature request at https:
           const viewport = getPositionStateViewport(
             getSelectedBlockStyleState2(clientId)
           );
-          const style = { ...attributes?.style };
+          const style = {
+            // The style attribute is an object.
+            ...attributes?.style
+          };
           if (viewport) {
             style[viewport] = {
+              // Viewport states hold style objects.
               ...style[viewport],
               position: {
                 type: "",
@@ -127310,8 +127320,10 @@ If there's a particular need for this, please submit a feature request at https:
     contentClientIds
   }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime666.jsxs)(import_jsx_runtime666.Fragment, { children: [
-      hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(block_styles_default, { clientId }),
-      isSectionBlock2 && blockName !== "core/template-part" && /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(
+      hasBlockStyles && // Block styles are only passed for a single block.
+      /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(block_styles_default, { clientId }),
+      isSectionBlock2 && blockName !== "core/template-part" && // A section block is a single selection, so its props are set.
+      /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(
         SectionStyleControls,
         {
           blockName,
@@ -127768,7 +127780,9 @@ If there's a particular need for this, please submit a feature request at https:
           const { getSelectedBlockClientId: getSelectedBlockClientId2, getBlockParentsByBlockName: getBlockParentsByBlockName2 } = select3(store);
           const _selectedBlockClientId = getSelectedBlockClientId2();
           const animationParentBlockClientId = getBlockParentsByBlockName2(
+            // A block type is only passed for a selected block.
             _selectedBlockClientId,
+            // Without an animation parent, no parent matches.
             animationParent,
             true
           )[0];
@@ -128392,7 +128406,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var BlockInspectorSingleBlockWrapper = ({ animate, wrapper, children }) => {
+  var BlockInspectorSingleBlockWrapper = ({
+    animate,
+    wrapper,
+    children
+  }) => {
     return animate ? wrapper(children) : children;
   };
   var AnimatedContainer = ({
@@ -128536,7 +128554,8 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(BlockInspectorPreTabsSlot, {}),
-      isEditingStyleState && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+      isEditingStyleState && // @ts-expect-error Bug: without `blockName`, template parts get the section controls.
+      /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
         StyleStateInspectorSlots,
         {
           clientId: renderedBlockClientId,
@@ -134326,7 +134345,10 @@ If there's a particular need for this, please submit a feature request at https:
   var EMPTY_ARRAY22 = [];
   var isSafari2 = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
   D([e]);
-  function useMultiOriginPresets({ presetSetting, defaultSetting }) {
+  function useMultiOriginPresets({
+    presetSetting,
+    defaultSetting
+  }) {
     const [enableDefault, userPresets, themePresets, defaultPresets] = useSettings(
       defaultSetting,
       `${presetSetting}.custom`,
@@ -134362,12 +134384,20 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return preset ? `var:preset|duotone|${preset.slug}` : void 0;
   }
-  function DuotonePanelPure({ style, setAttributes, name, clientId }) {
+  function DuotonePanelPure({
+    style,
+    setAttributes,
+    name,
+    clientId
+  }) {
     const duotoneStyle = style?.color?.duotone;
     const settings3 = useBlockSettings(name);
     const blockEditingMode = useBlockEditingMode();
     const className = (0, import_data196.useSelect)(
-      (select3) => clientId ? select3(store).getBlockAttributes(clientId)?.className : void 0,
+      (select3) => clientId ? (
+        // The class name attribute is a string.
+        select3(store).getBlockAttributes(clientId)?.className
+      ) : void 0,
       [clientId]
     );
     const { value: inheritedValue } = useResolvedStyle(name, className);
@@ -134521,7 +134551,11 @@ If there's a particular need for this, please submit a feature request at https:
     }, [isValidFilter, blockElement, colors2]);
   }
   var DUOTONE_BLOCK_PROPS_REFERENCE = {};
-  function useBlockProps14({ clientId, name, style }) {
+  function useBlockProps14({
+    clientId,
+    name,
+    style
+  }) {
     const id = (0, import_compose149.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
     const selector5 = (0, import_element461.useMemo)(() => {
       const blockType = (0, import_blocks124.getBlockType)(name);
@@ -134547,6 +134581,7 @@ If there's a particular need for this, please submit a feature request at https:
           fallback: true
         });
       }
+      return void 0;
     }, [name]);
     const attribute = style?.color?.duotone;
     const filterClass = `wp-duotone-${id}`;
@@ -134554,6 +134589,7 @@ If there's a particular need for this, please submit a feature request at https:
     useDuotoneStyles({
       clientId,
       id: filterClass,
+      // Blocks with duotone support have a selector.
       selector: selector5,
       attribute
     });
@@ -137121,7 +137157,10 @@ If there's a particular need for this, please submit a feature request at https:
                     label: block.title,
                     onChange: () => {
                       if (!checked4) {
-                        const relativePosition = block.blockHooks[name];
+                        const relativePosition = (
+                          // @ts-expect-error Bug: a block hooked by a filter has no `blockHooks`.
+                          block.blockHooks[name]
+                        );
                         insertBlockIntoDesignatedLocation(
                           (0, import_blocks129.createBlock)(block.name),
                           relativePosition
