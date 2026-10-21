@@ -121702,6 +121702,7 @@ If there's a particular need for this, please submit a feature request at https:
           updatedSettings.spacing = {
             ...updatedSettings.spacing,
             [key]: {
+              // Spreading a `true` setting adds nothing.
               ...updatedSettings.spacing?.[key],
               sides: sides2
             }
@@ -125071,7 +125072,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function NoticeForControl({ label, isShownByDefault, children }) {
+  function NoticeForControl({
+    label,
+    isShownByDefault,
+    children
+  }) {
     const { menuItems } = (0, import_element432.useContext)(import_components252.__experimentalToolsPanelContext);
     const isShown = isShownByDefault || !!menuItems?.optional?.[label];
     return isShown ? children : null;
@@ -125314,7 +125319,10 @@ If there's a particular need for this, please submit a feature request at https:
     const fontWeight = decodeValue(value?.typography?.fontWeight) ?? inheritedFontWeight;
     const isFontAppearancePlaceholder = !hasValue(value?.typography?.fontStyle) && !hasValue(value?.typography?.fontWeight) && (hasValue(inheritedFontStyle) || hasValue(inheritedFontWeight));
     const setFontAppearance = (0, import_element432.useCallback)(
-      ({ fontStyle: newFontStyle, fontWeight: newFontWeight }) => {
+      ({
+        fontStyle: newFontStyle,
+        fontWeight: newFontWeight
+      }) => {
         if (newFontStyle !== fontStyle || newFontWeight !== fontWeight) {
           onChange({
             ...value,
@@ -125758,6 +125766,7 @@ If there's a particular need for this, please submit a feature request at https:
                   value: localLineHeight ?? inheritedLineHeight,
                   onChange: setLineHeight,
                   ...isLineHeightPlaceholder ? {
+                    // The input renders the number as is.
                     placeholder: getNumericPlaceholder(
                       inheritedLineHeight
                     )
@@ -125785,8 +125794,11 @@ If there's a particular need for this, please submit a feature request at https:
                   value: localLetterSpacing ?? inheritedLetterSpacing,
                   onChange: setLetterSpacing,
                   __unstableInputWidth: "auto",
-                  placeholder: isLetterSpacingPlaceholder ? getNumericPlaceholder(
-                    inheritedLetterSpacing
+                  placeholder: isLetterSpacingPlaceholder ? (
+                    // The input renders the number as is.
+                    getNumericPlaceholder(
+                      inheritedLetterSpacing
+                    )
                   ) : void 0
                 }
               )
@@ -125813,7 +125825,12 @@ If there's a particular need for this, please submit a feature request at https:
                     __unstableInputWidth: "auto",
                     withSlider: true,
                     hasBottomMargin: isGlobalStyles,
-                    placeholder: isTextIndentPlaceholder ? getNumericPlaceholder(inheritedTextIndent) : void 0
+                    placeholder: isTextIndentPlaceholder ? (
+                      // The input renders the number as is.
+                      getNumericPlaceholder(
+                        inheritedTextIndent
+                      )
+                    ) : void 0
                   }
                 ),
                 isGlobalStyles && /* @__PURE__ */ (0, import_jsx_runtime659.jsx)(
@@ -130916,7 +130933,9 @@ If there's a particular need for this, please submit a feature request at https:
       return void 0;
     }
     const sideKeys = ["top", "right", "bottom", "left"];
-    const values = sideKeys.map((k2) => sidesValue[k2]);
+    const values = sideKeys.map(
+      (k2) => sidesValue[k2]
+    );
     const allDefined = values.every(hasValue2);
     if (!allDefined) {
       return void 0;
@@ -130935,7 +130954,10 @@ If there's a particular need for this, please submit a feature request at https:
       return false;
     }
     return ["top", "right", "bottom", "left"].some(
-      (side) => hasValue2(sidesValue[side])
+      (side) => (
+        // An object holds a value per side.
+        hasValue2(sidesValue[side])
+      )
     );
   }
   function splitGapValue(value, isAxialGap) {
@@ -131007,16 +131029,24 @@ If there's a particular need for this, please submit a feature request at https:
     const { dimensions, spacing } = settings3;
     const decodeValue = (rawValue) => {
       if (rawValue && typeof rawValue === "object") {
-        return Object.keys(rawValue).reduce((acc, key) => {
-          acc[key] = getValueFromVariable(
-            { settings: { dimensions, spacing } },
-            "",
-            rawValue[key]
-          );
-          return acc;
-        }, {});
+        return Object.keys(rawValue).reduce(
+          (acc, key) => {
+            acc[key] = getValueFromVariable(
+              // Only the dimension and spacing presets are read.
+              {
+                settings: { dimensions, spacing }
+              },
+              "",
+              // An object holds a value per side.
+              rawValue[key]
+            );
+            return acc;
+          },
+          {}
+        );
       }
       return getValueFromVariable(
+        // Only the dimension and spacing presets are read.
         { settings: { dimensions, spacing } },
         "",
         rawValue
@@ -131039,36 +131069,39 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const minimumMargin = -Infinity;
     const [minMarginValue, setMinMarginValue] = (0, import_element452.useState)(minimumMargin);
-    const resetAllFilter = (0, import_element452.useCallback)((previousValue) => {
-      return {
-        ...previousValue,
-        layout: cleanEmptyObject({
-          ...previousValue?.layout,
-          contentSize: void 0,
-          wideSize: void 0,
-          selfStretch: void 0,
-          flexSize: void 0,
-          columnStart: void 0,
-          rowStart: void 0,
-          columnSpan: void 0,
-          rowSpan: void 0
-        }),
-        spacing: {
-          ...previousValue?.spacing,
-          padding: void 0,
-          margin: void 0,
-          blockGap: void 0
-        },
-        dimensions: {
-          ...previousValue?.dimensions,
-          height: void 0,
-          minHeight: void 0,
-          minWidth: void 0,
-          aspectRatio: void 0,
-          width: void 0
-        }
-      };
-    }, []);
+    const resetAllFilter = (0, import_element452.useCallback)(
+      (previousValue) => {
+        return {
+          ...previousValue,
+          layout: cleanEmptyObject({
+            ...previousValue?.layout,
+            contentSize: void 0,
+            wideSize: void 0,
+            selfStretch: void 0,
+            flexSize: void 0,
+            columnStart: void 0,
+            rowStart: void 0,
+            columnSpan: void 0,
+            rowSpan: void 0
+          }),
+          spacing: {
+            ...previousValue?.spacing,
+            padding: void 0,
+            margin: void 0,
+            blockGap: void 0
+          },
+          dimensions: {
+            ...previousValue?.dimensions,
+            height: void 0,
+            minHeight: void 0,
+            minWidth: void 0,
+            aspectRatio: void 0,
+            width: void 0
+          }
+        };
+      },
+      []
+    );
     const showContentSizeControl = hasContentSize(settings3) && includeLayoutControls;
     const localContentSizeValue = decodeValue(value?.layout?.contentSize);
     const inheritedContentSizeValue = decodeValue(
@@ -131117,13 +131150,17 @@ If there's a particular need for this, please submit a feature request at https:
     const isPaddingPlaceholder = !hasValue2(value?.spacing?.padding) && inheritedPaddingPlaceholder !== void 0;
     const hasInheritedPadding = hasAnySideValue(inheritedPaddingValues);
     const isPaddingInherited = !hasValue2(value?.spacing?.padding) && hasInheritedPadding;
-    const paddingSides = Array.isArray(settings3?.spacing?.padding) ? settings3?.spacing?.padding : settings3?.spacing?.padding?.sides;
+    const paddingSides = Array.isArray(settings3?.spacing?.padding) ? settings3?.spacing?.padding : (
+      // The setting is an array or an object with the sides.
+      settings3?.spacing?.padding?.sides
+    );
     const isAxialPadding = paddingSides && paddingSides.some((side) => AXIAL_SIDES.includes(side));
     const setPaddingValues = (newPaddingValues) => {
       const padding = filterValuesBySides(newPaddingValues, paddingSides);
       onChange(setImmutably2(value, ["spacing", "padding"], padding));
     };
-    const hasPaddingValue = () => hasValue2(value?.spacing?.padding) && Object.keys(value?.spacing?.padding).length;
+    const hasPaddingValue = () => hasValue2(value?.spacing?.padding) && // A set value is a string or an object.
+    Object.keys(value?.spacing?.padding).length;
     const resetPaddingValue = () => setPaddingValues(void 0);
     const onMouseOverPadding = () => onVisualize("padding");
     const showMarginControl = hasMargin(settings3);
@@ -131140,17 +131177,24 @@ If there's a particular need for this, please submit a feature request at https:
     const isMarginPlaceholder = !hasValue2(value?.spacing?.margin) && inheritedMarginPlaceholder !== void 0;
     const hasInheritedMargin = hasAnySideValue(inheritedMarginValues);
     const isMarginInherited = !hasValue2(value?.spacing?.margin) && hasInheritedMargin;
-    const marginSides = Array.isArray(settings3?.spacing?.margin) ? settings3?.spacing?.margin : settings3?.spacing?.margin?.sides;
+    const marginSides = Array.isArray(settings3?.spacing?.margin) ? settings3?.spacing?.margin : (
+      // The setting is an array or an object with the sides.
+      settings3?.spacing?.margin?.sides
+    );
     const isAxialMargin = marginSides && marginSides.some((side) => AXIAL_SIDES.includes(side));
     const setMarginValues = (newMarginValues) => {
       const margin = filterValuesBySides(newMarginValues, marginSides);
       onChange(setImmutably2(value, ["spacing", "margin"], margin));
     };
-    const hasMarginValue = () => hasValue2(value?.spacing?.margin) && Object.keys(value?.spacing?.margin).length;
+    const hasMarginValue = () => hasValue2(value?.spacing?.margin) && // A set value is a string or an object.
+    Object.keys(value?.spacing?.margin).length;
     const resetMarginValue = () => setMarginValues(void 0);
     const onMouseOverMargin = () => onVisualize("margin");
     const showGapControl = hasGap(settings3);
-    const gapSides = Array.isArray(settings3?.spacing?.blockGap) ? settings3?.spacing?.blockGap : settings3?.spacing?.blockGap?.sides;
+    const gapSides = Array.isArray(settings3?.spacing?.blockGap) ? settings3?.spacing?.blockGap : (
+      // The setting is an array or an object with the sides.
+      settings3?.spacing?.blockGap?.sides
+    );
     const isAxialGap = allowAxialBlockGap && gapSides && gapSides.some((side) => AXIAL_SIDES.includes(side));
     const localGapRaw = decodeValue(value?.spacing?.blockGap);
     const inheritedGapRaw = decodeValue(inheritedValue?.spacing?.blockGap);
@@ -131278,6 +131322,7 @@ If there's a particular need for this, please submit a feature request at https:
     const setChildLayout = (newChildLayout) => {
       onChange({
         ...value,
+        // A child layout holds style values.
         layout: {
           ...value?.layout,
           ...newChildLayout
@@ -131312,8 +131357,11 @@ If there's a particular need for this, please submit a feature request at https:
                   label: (0, import_i18n284.__)("Content width"),
                   labelPosition: "top",
                   value: localContentSizeValue ?? inheritedContentSizeValue,
-                  placeholder: isContentSizePlaceholder ? getNumericPlaceholder2(
-                    inheritedContentSizeValue
+                  placeholder: isContentSizePlaceholder ? (
+                    // The input renders the number as is.
+                    getNumericPlaceholder2(
+                      inheritedContentSizeValue
+                    )
                   ) : void 0,
                   onChange: (nextContentSize) => {
                     setContentSizeValue(nextContentSize);
@@ -131342,8 +131390,11 @@ If there's a particular need for this, please submit a feature request at https:
                   label: (0, import_i18n284.__)("Wide width"),
                   labelPosition: "top",
                   value: localWideSizeValue ?? inheritedWideSizeValue,
-                  placeholder: isWideSizePlaceholder ? getNumericPlaceholder2(
-                    inheritedWideSizeValue
+                  placeholder: isWideSizePlaceholder ? (
+                    // The input renders the number as is.
+                    getNumericPlaceholder2(
+                      inheritedWideSizeValue
+                    )
                   ) : void 0,
                   onChange: (nextWideSize) => {
                     setWideSizeValue(nextWideSize);
@@ -131387,6 +131438,7 @@ If there's a particular need for this, please submit a feature request at https:
                     inputProps: {
                       onMouseOver: onMouseOverPadding,
                       onMouseOut: onMouseLeaveControls,
+                      // The common side value is a CSS size.
                       placeholder: isPaddingPlaceholder ? inheritedPaddingPlaceholder : void 0
                     }
                   }
@@ -131442,6 +131494,7 @@ If there's a particular need for this, please submit a feature request at https:
                       },
                       onMouseOver: onMouseOverMargin,
                       onMouseOut: onMouseLeaveControls,
+                      // The common side value is a CSS size.
                       placeholder: isMarginPlaceholder ? inheritedMarginPlaceholder : void 0
                     },
                     label: (0, import_i18n284.__)("Margin"),
@@ -131557,8 +131610,11 @@ If there's a particular need for this, please submit a feature request at https:
                   label: (0, import_i18n284.__)("Minimum height"),
                   value: localMinHeightValue ?? inheritedMinHeightValue,
                   onChange: setMinHeightValue,
-                  placeholder: isMinHeightPlaceholder ? getNumericPlaceholder2(
-                    inheritedMinHeightValue
+                  placeholder: isMinHeightPlaceholder ? (
+                    // The input renders the number as is.
+                    getNumericPlaceholder2(
+                      inheritedMinHeightValue
+                    )
                   ) : void 0,
                   dimensionSizes: dimensions?.dimensionSizes
                 }
@@ -131583,8 +131639,11 @@ If there's a particular need for this, please submit a feature request at https:
                   label: (0, import_i18n284.__)("Minimum width"),
                   value: localMinWidthValue ?? inheritedMinWidthValue,
                   onChange: setMinWidthValue,
-                  placeholder: isMinWidthPlaceholder ? getNumericPlaceholder2(
-                    inheritedMinWidthValue
+                  placeholder: isMinWidthPlaceholder ? (
+                    // The input renders the number as is.
+                    getNumericPlaceholder2(
+                      inheritedMinWidthValue
+                    )
                   ) : void 0,
                   dimensionSizes: dimensions?.dimensionSizes
                 }
@@ -131990,12 +132049,14 @@ If there's a particular need for this, please submit a feature request at https:
         }
         if ((0, import_components279.__experimentalHasSplitBorders)(source)) {
           const out = { ...source };
-          ["top", "right", "bottom", "left"].forEach((side) => {
-            out[side] = {
-              ...out[side],
-              color: decodeValue(out[side]?.color)
-            };
-          });
+          ["top", "right", "bottom", "left"].forEach(
+            (side) => {
+              out[side] = {
+                ...out[side],
+                color: decodeValue(out[side]?.color)
+              };
+            }
+          );
           return out;
         }
         return {
@@ -132025,10 +132086,18 @@ If there's a particular need for this, please submit a feature request at https:
         return decodeValue(value?.border?.radius);
       }
       return {
-        topLeft: decodeValue(value?.border?.radius?.topLeft),
-        topRight: decodeValue(value?.border?.radius?.topRight),
-        bottomLeft: decodeValue(value?.border?.radius?.bottomLeft),
-        bottomRight: decodeValue(value?.border?.radius?.bottomRight)
+        topLeft: decodeValue(
+          value?.border?.radius?.topLeft
+        ),
+        topRight: decodeValue(
+          value?.border?.radius?.topRight
+        ),
+        bottomLeft: decodeValue(
+          value?.border?.radius?.bottomLeft
+        ),
+        bottomRight: decodeValue(
+          value?.border?.radius?.bottomRight
+        )
       };
     }, [value?.border?.radius, decodeValue]);
     const inheritedBorderRadius = (0, import_element454.useMemo)(() => {
@@ -132038,16 +132107,24 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return {
         topLeft: decodeValue(rawRadius?.topLeft),
-        topRight: decodeValue(rawRadius?.topRight),
-        bottomLeft: decodeValue(rawRadius?.bottomLeft),
-        bottomRight: decodeValue(rawRadius?.bottomRight)
+        topRight: decodeValue(
+          rawRadius?.topRight
+        ),
+        bottomLeft: decodeValue(
+          rawRadius?.bottomLeft
+        ),
+        bottomRight: decodeValue(
+          rawRadius?.bottomRight
+        )
       };
     }, [inheritedValue?.border?.radius, decodeValue]);
     const setBorderRadius = (newBorderRadius) => setBorder({ ...value?.border, radius: newBorderRadius });
     const hasBorderRadius = () => {
       const borderValues = value?.border?.radius;
       if (typeof borderValues === "object") {
-        return Object.entries(borderValues).some(([, v2]) => !!v2);
+        return Object.entries(borderValues).some(
+          ([, v2]) => !!v2
+        );
       }
       return !!borderValues;
     };
@@ -132107,14 +132184,18 @@ If there's a particular need for this, please submit a feature request at https:
     const onBorderChange = (newBorder) => {
       const updatedBorder = { ...newBorder };
       if ((0, import_components279.__experimentalHasSplitBorders)(updatedBorder)) {
-        ["top", "right", "bottom", "left"].forEach((side) => {
-          if (updatedBorder[side]) {
-            updatedBorder[side] = {
-              ...updatedBorder[side],
-              color: encodeColorValue(updatedBorder[side]?.color)
-            };
+        ["top", "right", "bottom", "left"].forEach(
+          (side) => {
+            if (updatedBorder[side]) {
+              updatedBorder[side] = {
+                ...updatedBorder[side],
+                color: encodeColorValue(
+                  updatedBorder[side]?.color
+                )
+              };
+            }
           }
-        });
+        );
       } else if (updatedBorder) {
         updatedBorder.color = encodeColorValue(updatedBorder.color);
       }
@@ -132123,13 +132204,16 @@ If there's a particular need for this, please submit a feature request at https:
         radius: value?.border?.radius
       });
     };
-    const resetAllFilter = (0, import_element454.useCallback)((previousValue) => {
-      return {
-        ...previousValue,
-        border: void 0,
-        shadow: void 0
-      };
-    }, []);
+    const resetAllFilter = (0, import_element454.useCallback)(
+      (previousValue) => {
+        return {
+          ...previousValue,
+          border: void 0,
+          shadow: void 0
+        };
+      },
+      []
+    );
     const showBorderByDefault = defaultControls?.color || defaultControls?.width;
     return /* @__PURE__ */ (0, import_jsx_runtime695.jsxs)(
       Wrapper,
@@ -132145,6 +132229,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               ...inheritanceProps(
                 isBorderPlaceholder,
+                // The stored border has the shape the control edits.
                 (0, import_components279.__experimentalIsDefinedBorder)(value?.border) && !!inheritedBorder && (0, import_components279.__experimentalIsDefinedBorder)(inheritedBorder)
               ),
               hasValue: () => (0, import_components279.__experimentalIsDefinedBorder)(value?.border),
