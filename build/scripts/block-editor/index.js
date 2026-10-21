@@ -121820,7 +121820,6 @@ If there's a particular need for this, please submit a feature request at https:
         resetAll,
         panelId,
         hasInnerWrapper: true,
-        headingLevel: 3,
         className: "color-block-support-panel",
         __experimentalFirstVisibleItemClass: "first",
         __experimentalLastVisibleItemClass: "last",
