@@ -18167,7 +18167,10 @@ var wp;
   var searchBlockItems = (items, categories, collections, searchInput) => {
     const fields = [
       { get: (item) => item.title },
-      { get: (item) => item.name, maxRank: SEARCH_RANK.WORD_STARTS_WITH },
+      {
+        get: (item) => item.name,
+        maxRank: SEARCH_RANK.WORD_STARTS_WITH
+      },
       {
         get: (item) => item.keywords,
         maxRank: SEARCH_RANK.WORD_STARTS_WITH
@@ -18203,10 +18206,13 @@ var wp;
       ),
       [rootClientId, options]
     );
-    const [categories, collections] = (0, import_data10.useSelect)((select3) => {
-      const { getCategories, getCollections } = select3(import_blocks13.store);
-      return [getCategories(), getCollections()];
-    }, []);
+    const [categories, collections] = (0, import_data10.useSelect)(
+      (select3) => {
+        const { getCategories, getCollections } = select3(import_blocks13.store);
+        return [getCategories(), getCollections()];
+      },
+      []
+    );
     const onSelectItem = (0, import_element10.useCallback)(
       ({
         name,
@@ -18216,12 +18222,18 @@ var wp;
         syncStatus,
         content
       }, shouldFocusBlock) => {
-        const insertedBlock = syncStatus === "unsynced" ? (0, import_blocks13.parse)(content, {
-          __unstableSkipMigrationLogs: true
-        }) : (0, import_blocks13.createBlock)(
+        const insertedBlock = syncStatus === "unsynced" ? (
+          // Unsynced patterns hold their content.
+          (0, import_blocks13.parse)(content, {
+            __unstableSkipMigrationLogs: true
+          })
+        ) : (0, import_blocks13.createBlock)(
           name,
           initialAttributes,
-          (0, import_blocks13.createBlocksFromInnerBlocksTemplate)(innerBlocks),
+          (0, import_blocks13.createBlocksFromInnerBlocksTemplate)(
+            // Variations hold inner block templates.
+            innerBlocks
+          ),
           innerContent
         );
         onInsert(insertedBlock, void 0, shouldFocusBlock);
@@ -75895,7 +75907,9 @@ var wp;
   // packages/block-editor/build-module/components/inserter/no-results.mjs
   var import_i18n57 = __toESM(require_i18n(), 1);
   var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
-  function InserterNoResults({ children = (0, import_i18n57.__)("No results found.") }) {
+  function InserterNoResults({
+    children = (0, import_i18n57.__)("No results found.")
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("div", { className: "block-editor-inserter__no-results", children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("p", { children }) });
   }
   var no_results_default = InserterNoResults;
@@ -76478,7 +76492,12 @@ var wp;
     }
     return registry.select(store).getBlockOrder(rootClientId).length;
   }
-  function getDestination(selectors7, { rootClientId, insertionIndex, clientId, isAppender }) {
+  function getDestination(selectors7, {
+    rootClientId,
+    insertionIndex,
+    clientId,
+    isAppender
+  }) {
     const {
       getSelectedBlockClientId: getSelectedBlockClientId2,
       getBlockRootClientId: getBlockRootClientId2,
@@ -76726,12 +76745,12 @@ var wp;
         onInsert(
           (patternBlocks ?? []).map((block) => {
             const clonedBlock = (0, import_blocks41.cloneBlock)(block);
-            if (clonedBlock.attributes.metadata?.categories?.includes(
+            const metadata = clonedBlock.attributes.metadata;
+            if (metadata?.categories?.includes(
+              // A missing category matches none of the categories.
               selectedCategory
             )) {
-              clonedBlock.attributes.metadata.categories = [
-                selectedCategory
-              ];
+              metadata.categories = [selectedCategory];
             }
             return clonedBlock;
           }),
@@ -76743,6 +76762,7 @@ var wp;
           (0, import_i18n63.sprintf)(
             /* translators: %s: block pattern title. */
             (0, import_i18n63.__)('Pattern "%s" inserted.'),
+            // Registered patterns have a title.
             pattern.title
           ),
           {
@@ -76787,6 +76807,7 @@ var wp;
     const numPages = Math.ceil(currentCategoryPatterns.length / PAGE_SIZE);
     const changePage = (page) => {
       const scrollContainer = (0, import_dom60.getScrollContainer)(
+        // `getScrollContainer` returns nothing for a missing element.
         scrollContainerRef?.current
       );
       scrollContainer?.scrollTo(0, 0);
@@ -76795,6 +76816,7 @@ var wp;
     (0, import_element206.useEffect)(
       function scrollToTopOnCategoryChange() {
         const scrollContainer = (0, import_dom60.getScrollContainer)(
+          // `getScrollContainer` returns nothing for a missing element.
           scrollContainerRef?.current
         );
         scrollContainer?.scrollTo(0, 0);
@@ -76819,13 +76841,14 @@ var wp;
     rootClientId,
     onModalClose
   }) {
-    const container = (0, import_element207.useRef)();
+    const container = (0, import_element207.useRef)(null);
     const debouncedSpeak = (0, import_compose61.useDebounce)(import_a11y8.speak, 500);
     const [destinationRootClientId, onInsertBlocks] = use_insertion_point_default({
       rootClientId,
       shouldFocusBlock: true
     });
     const [patterns2, , onClickPattern] = use_patterns_state_default(
+      // @ts-expect-error Bug: the pattern name is passed unwrapped, as the meta object, which the store ignores.
       onInsertBlocks,
       destinationRootClientId,
       selectedCategory
@@ -76849,7 +76872,10 @@ var wp;
         }
         if (selectedCategory === "uncategorized") {
           const hasKnownCategory = pattern.categories?.some(
-            (category) => registeredPatternCategories.includes(category)
+            (category) => (
+              // A category can also be a numeric user category.
+              registeredPatternCategories.includes(category)
+            )
           ) ?? false;
           return !pattern.categories?.length || !hasKnownCategory;
         }
@@ -76973,7 +76999,11 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/block-patterns-explorer/index.mjs
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
-  function PatternsExplorer({ initialCategory, rootClientId, onModalClose }) {
+  function PatternsExplorer({
+    initialCategory,
+    rootClientId,
+    onModalClose
+  }) {
     const [searchValue, setSearchValue] = (0, import_element209.useState)("");
     const [selectedCategory, setSelectedCategory] = (0, import_element209.useState)(
       initialCategory?.name
@@ -77018,7 +77048,10 @@ var wp;
       }
     );
   }
-  function PatternsExplorerModal({ onModalClose, ...restProps }) {
+  function PatternsExplorerModal({
+    onModalClose,
+    ...restProps
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
       import_components46.Modal,
       {
@@ -77260,13 +77293,16 @@ var wp;
               "Patterns are available from the <Link>WordPress.org Pattern Directory</Link>, bundled in the active theme, or created by users on this site. Only patterns created on this site can be synced."
             ),
             {
-              Link: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
-                import_components48.ExternalLink,
-                {
-                  href: (0, import_i18n68.__)(
-                    "https://wordpress.org/patterns/"
-                  )
-                }
+              Link: (
+                // @ts-expect-error `createInterpolateElement` fills in the children.
+                /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
+                  import_components48.ExternalLink,
+                  {
+                    href: (0, import_i18n68.__)(
+                      "https://wordpress.org/patterns/"
+                    )
+                  }
+                )
               )
             }
           ) })
@@ -77300,7 +77336,7 @@ var wp;
       rootClientId,
       patternSourceFilter
     );
-    const scrollContainerRef = (0, import_element211.useRef)();
+    const scrollContainerRef = (0, import_element211.useRef)(null);
     const currentCategoryPatterns = (0, import_element211.useMemo)(
       () => allPatterns.filter((pattern) => {
         if (isPatternFiltered(
@@ -77609,10 +77645,10 @@ var wp;
     const [resolvedSource, setResolvedSource] = (0, import_element214.useState)();
     const [totals, setTotals] = (0, import_element214.useState)({});
     const [isLoading, setIsLoading] = (0, import_element214.useState)(false);
-    const lastRequestRef = (0, import_element214.useRef)();
-    const lastQueryKeyRef = (0, import_element214.useRef)();
-    const lastFetchRef = (0, import_element214.useRef)();
-    const lastSourceRef = (0, import_element214.useRef)();
+    const lastRequestRef = (0, import_element214.useRef)(void 0);
+    const lastQueryKeyRef = (0, import_element214.useRef)(void 0);
+    const lastFetchRef = (0, import_element214.useRef)(void 0);
+    const lastSourceRef = (0, import_element214.useRef)(void 0);
     (0, import_element214.useEffect)(() => {
       (async () => {
         const key = JSON.stringify({
@@ -77634,6 +77670,7 @@ var wp;
         const { page, ...queryWithoutPage } = query;
         const fetchQuery = page > 1 ? query : queryWithoutPage;
         const { mediaItems, totalItems, totalPages } = normalizeFetchResult(
+          // Sources treat a missing query arg as unset.
           await category.fetch?.(fetchQuery)
         );
         if (request === lastRequestRef.current) {
@@ -77651,6 +77688,7 @@ var wp;
     ]);
     const isSwitchingSource = resolvedSource !== category.name;
     return {
+      // The list is set with the resolved source.
       mediaList: isSwitchingSource ? EMPTY_MEDIA_LIST : mediaList,
       isLoading,
       isSwitchingSource,
@@ -77661,7 +77699,6 @@ var wp;
   }
   function useMediaCategories(rootClientId) {
     const [categories, setCategories] = (0, import_element214.useState)(
-      /** @type {InserterMediaCategory[]} */
       []
     );
     const [hasResolved, setHasResolved] = (0, import_element214.useState)(false);
@@ -77698,20 +77735,25 @@ var wp;
         }
         const categoriesHaveMedia = new Map(
           await Promise.all(
-            inserterMediaCategories.map(async (category) => {
-              if (category.isExternalResource) {
-                return [category.name, true];
+            inserterMediaCategories.map(
+              async (category) => {
+                if (category.isExternalResource) {
+                  return [category.name, true];
+                }
+                let results = [];
+                try {
+                  const { mediaItems } = normalizeFetchResult(
+                    // Sources treat a missing search as none.
+                    await category.fetch({
+                      per_page: 1
+                    })
+                  );
+                  results = mediaItems;
+                } catch {
+                }
+                return [category.name, !!results.length];
               }
-              let results = [];
-              try {
-                const { mediaItems } = normalizeFetchResult(
-                  await category.fetch({ per_page: 1 })
-                );
-                results = mediaItems;
-              } catch {
-              }
-              return [category.name, !!results.length];
-            })
+            )
           )
         );
         const canInsertMediaType = {
@@ -77719,11 +77761,13 @@ var wp;
           video: canInsertVideo,
           audio: canInsertAudio
         };
-        inserterMediaCategories.forEach((category) => {
-          if (canInsertMediaType[category.mediaType] && (categoriesHaveMedia.get(category.name) || category.emptyMessage)) {
-            _categories.push(category);
+        inserterMediaCategories.forEach(
+          (category) => {
+            if (canInsertMediaType[category.mediaType] && (categoriesHaveMedia.get(category.name) || category.emptyMessage)) {
+              _categories.push(category);
+            }
           }
-        });
+        );
         if (!!_categories.length) {
           setCategories(_categories);
         }
@@ -77770,7 +77814,10 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/media-tab/utils.mjs
   var import_jsx_runtime382 = __toESM(require_jsx_runtime(), 1);
-  var mediaTypeTag = { image: "img", video: "video" };
+  var mediaTypeTag = {
+    image: "img",
+    video: "video"
+  };
   function getItemId(media) {
     return String(media.id ?? media.sourceId ?? media.url);
   }
@@ -77794,7 +77841,9 @@ var wp;
         src: media.previewUrl || mediaSrc,
         alt,
         inert: inertValue2(true),
-        onError: ({ currentTarget }) => {
+        onError: ({
+          currentTarget
+        }) => {
           if (currentTarget.src === media.previewUrl) {
             currentTarget.src = mediaSrc;
           }
@@ -97144,7 +97193,7 @@ If there's a particular need for this, please submit a feature request at https:
     sourceMenu,
     footer
   }) {
-    const panelRef = (0, import_element302.useRef)();
+    const panelRef = (0, import_element302.useRef)(null);
     const [page, setPage] = (0, import_element302.useState)(1);
     const [perPage, setPerPage] = (0, import_element302.useState)(getItemsPerPage);
     const previousCategory = (0, import_compose90.usePrevious)(category.name);
