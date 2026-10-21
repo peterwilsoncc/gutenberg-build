@@ -99057,7 +99057,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-tools/insertion-point.mjs
   var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
-  var InsertionPointOpenRef = (0, import_element314.createContext)();
+  var InsertionPointOpenRef = (0, import_element314.createContext)(void 0);
   InsertionPointOpenRef.displayName = "InsertionPointOpenRefContext";
   function InbetweenInsertionPointPopover({
     __unstablePopoverSlot,
@@ -99065,9 +99065,10 @@ If there's a particular need for this, please submit a feature request at https:
     operation = "insert",
     nearestSide = "right"
   }) {
+    const Inserter2 = inserter_default;
     const { selectBlock: selectBlock2, hideInsertionPoint: hideInsertionPoint2 } = (0, import_data81.useDispatch)(store);
     const openRef = (0, import_element314.useContext)(InsertionPointOpenRef);
-    const ref = (0, import_element314.useRef)();
+    const ref = (0, import_element314.useRef)(null);
     const {
       orientation,
       previousClientId,
@@ -99218,7 +99219,7 @@ If there's a particular need for this, please submit a feature request at https:
                     "block-editor-block-list__insertion-point-inserter"
                   ),
                   children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
-                    inserter_default,
+                    Inserter2,
                     {
                       ref: maybeResetOpenRef,
                       position: "bottom center",
@@ -99445,6 +99446,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inner-blocks/button-block-appender.mjs
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
+  var BaseButtonBlockAppender = button_block_appender_default;
   function ButtonBlockAppender2({
     showSeparator,
     isFloating,
@@ -99453,7 +99455,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { clientId } = useBlockEditContext();
     return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-      button_block_appender_default,
+      BaseButtonBlockAppender,
       {
         className: clsx_default({
           "block-list-appender__toggle": isToggle
@@ -99512,7 +99514,11 @@ If there's a particular need for this, please submit a feature request at https:
         newSettings.orientation = orientation;
       } else {
         const layoutType = getLayoutType(layout?.type);
-        newSettings.orientation = layoutType.getOrientation(layout);
+        newSettings.orientation = // @ts-expect-error Bug: an unknown layout type has no `getOrientation`, so this throws.
+        layoutType.getOrientation(
+          // Without a layout, the default layout type ignores it.
+          layout
+        );
       }
       if (__experimentalDefaultBlock !== void 0) {
         (0, import_deprecated11.default)("__experimentalDefaultBlock", {
@@ -99596,7 +99602,9 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     const registry = (0, import_data85.useRegistry)();
-    const existingTemplateRef = (0, import_element317.useRef)(null);
+    const existingTemplateRef = (0, import_element317.useRef)(
+      null
+    );
     (0, import_element317.useLayoutEffect)(() => {
       let isCancelled = false;
       const {
@@ -100364,9 +100372,15 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/inner-blocks/index.mjs
   var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT2 = {};
-  function BlockContext({ children, clientId }) {
+  function BlockContext({
+    children,
+    clientId
+  }) {
     const context = useBlockContext(clientId);
-    return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(BlockContextProvider, { value: context, children });
+    return (
+      // Rendered for blocks that provide context, which have one.
+      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(BlockContextProvider, { value: context, children })
+    );
   }
   var BlockListItemsMemo = (0, import_element320.memo)(BlockListItems);
   function UncontrolledInnerBlocks(props) {
@@ -100413,7 +100427,11 @@ If there's a particular need for this, please submit a feature request at https:
       templateLock,
       templateInsertUpdatesSelection
     );
-    const defaultLayoutBlockSupport = (0, import_blocks50.getBlockSupport)(name, "layout") || (0, import_blocks50.getBlockSupport)(name, "__experimentalLayout") || EMPTY_OBJECT2;
+    const defaultLayoutBlockSupport = (0, import_blocks50.getBlockSupport)(
+      // A block with inner blocks has a name.
+      name,
+      "layout"
+    ) || (0, import_blocks50.getBlockSupport)(name, "__experimentalLayout") || EMPTY_OBJECT2;
     const { allowSizingOnChildren = false } = defaultLayoutBlockSupport;
     const normalizedLayout = (0, import_element320.useMemo)(
       () => normalizeLegacyLayout(layout),
@@ -100451,10 +100469,12 @@ If there's a particular need for this, please submit a feature request at https:
     useBlockSync(props);
     return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(UncontrolledInnerBlocks, { ...props });
   }
-  var ForwardedInnerBlocks = (0, import_element320.forwardRef)((props, ref) => {
-    const innerBlocksProps = useInnerBlocksProps({ ref }, props);
-    return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { className: "block-editor-inner-blocks", children: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { ...innerBlocksProps }) });
-  });
+  var ForwardedInnerBlocks = (0, import_element320.forwardRef)(
+    (props, ref) => {
+      const innerBlocksProps = useInnerBlocksProps({ ref }, props);
+      return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { className: "block-editor-inner-blocks", children: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { ...innerBlocksProps }) });
+    }
+  );
   function useInnerBlocksProps(props = {}, options = {}) {
     const {
       __unstableDisableLayoutClassNames,
@@ -101767,6 +101787,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-tools/use-block-toolbar-popover-props.mjs
   var COMMON_PROPS2 = {
+    // Keeps the literal placement the popover expects.
     placement: "top-start"
   };
   var DEFAULT_PROPS2 = {
@@ -101808,6 +101829,7 @@ If there's a particular need for this, please submit a feature request at https:
         return {
           blockIndex: getBlockIndex2(clientId),
           isSticky: hasStickyOrFixedPositionValue(
+            // The function reads the position style, if any.
             getBlockAttributes3(clientId)
           )
         };
@@ -101902,7 +101924,8 @@ If there's a particular need for this, please submit a feature request at https:
         if (isBlockInsertionPointVisible2()) {
           const insertionPoint2 = getBlockInsertionPoint2();
           const order = getBlockOrder2(insertionPoint2.rootClientId);
-          isInsertionPointVisible = order[insertionPoint2.index] === clientId;
+          isInsertionPointVisible = // A visible insertion point has an index.
+          order[insertionPoint2.index] === clientId;
         }
         return {
           capturingClientId,
@@ -101922,6 +101945,7 @@ If there's a particular need for this, please submit a feature request at https:
     clientId,
     __unstableContentRef
   }) {
+    const Inserter2 = inserter_default;
     const { isInsertionPointVisible, lastClientId, rootClientId } = useSelectedBlockToolProps(clientId);
     const popoverProps = useBlockToolbarPopoverProps({
       contentElement: __unstableContentRef?.current,
@@ -101941,7 +101965,7 @@ If there's a particular need for this, please submit a feature request at https:
         __unstableContentRef,
         ...popoverProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)("div", { className: "block-editor-block-list__empty-block-inserter", children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
-          inserter_default,
+          Inserter2,
           {
             position: "bottom right",
             rootClientId,
@@ -106403,7 +106427,9 @@ If there's a particular need for this, please submit a feature request at https:
     __unstableContentRef
   }) {
     const { capturingClientId, isInsertionPointVisible, lastClientId } = useSelectedBlockToolProps(clientId);
-    const initialToolbarItemIndexRef = (0, import_element354.useRef)();
+    const initialToolbarItemIndexRef = (0, import_element354.useRef)(
+      void 0
+    );
     (0, import_element354.useEffect)(() => {
       initialToolbarItemIndexRef.current = void 0;
     }, [clientId]);
@@ -106455,7 +106481,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components167 = __toESM(require_components(), 1);
   var import_i18n172 = __toESM(require_i18n(), 1);
   var import_jsx_runtime549 = __toESM(require_jsx_runtime(), 1);
-  function ZoomOutModeInserterButton({ onClick }) {
+  function ZoomOutModeInserterButton({
+    onClick
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
       import_components167.Button,
       {
@@ -106720,9 +106748,14 @@ If there's a particular need for this, please submit a feature request at https:
           selectBlock2(clientIds[0]);
         }
       } else if (isMatch("core/block-editor/collapse-list-view", event)) {
-        if ((0, import_dom68.isTextField)(event.target) || (0, import_dom68.isTextField)(
-          event.target?.contentWindow?.document?.activeElement
-        )) {
+        if (
+          // Key events target elements.
+          (0, import_dom68.isTextField)(event.target) || (0, import_dom68.isTextField)(
+            // An iframe target has a window with a document, whose active
+            // element `isTextField` reads.
+            event.target?.contentWindow?.document?.activeElement
+          )
+        ) {
           return;
         }
         event.preventDefault();
@@ -106733,7 +106766,11 @@ If there's a particular need for this, please submit a feature request at https:
           event.preventDefault();
           const blocks2 = getBlocksByClientId2(clientIds);
           const groupingBlockName = getGroupingBlockName();
-          const newBlocks = groupBlocks(blocks2, groupingBlockName);
+          const newBlocks = groupBlocks(
+            blocks2,
+            // `isGroupable` requires a grouping block.
+            groupingBlockName
+          );
           replaceBlocks2(clientIds, newBlocks);
           (0, import_a11y17.speak)((0, import_i18n173.__)("Selected blocks are grouped."));
         }
@@ -107291,7 +107328,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isTabletViewport = (0, import_compose115.useViewportMatch)("medium", "<");
     const resetTypingRef = useMouseMoveTypingReset();
     const clearerRef = useBlockSelectionClearer();
-    const localRef = (0, import_element357.useRef)();
+    const localRef = (0, import_element357.useRef)(null);
     const contentRef = (0, import_compose115.useMergeRefs)([
       contentRefProp,
       clearerRef,
@@ -107313,7 +107350,10 @@ If there's a particular need for this, please submit a feature request at https:
           __unstableContentRef: localRef,
           style: { height, display: "flex" },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(BlockCanvasCover.Slot, { fillProps: { containerRef: localRef }, children: (covers) => covers.map((cover, index3) => /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(BlockCanvasCoverWrapper, { children: cover }, index3)) }),
+            /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(BlockCanvasCover.Slot, { fillProps: { containerRef: localRef }, children: (covers) => (
+              // A slot passes its fills as an array.
+              covers.map((cover, index3) => /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(BlockCanvasCoverWrapper, { children: cover }, index3))
+            ) }),
             /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(
               editor_styles_default,
               {
@@ -107357,7 +107397,10 @@ If there's a particular need for this, please submit a feature request at https:
             },
             name: "editor-canvas",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(BlockCanvasCover.Slot, { fillProps: { containerRef: localRef }, children: (covers) => covers.map((cover, index3) => /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(BlockCanvasCoverWrapper, { children: cover }, index3)) }),
+              /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(BlockCanvasCover.Slot, { fillProps: { containerRef: localRef }, children: (covers) => (
+                // A slot passes its fills as an array.
+                covers.map((cover, index3) => /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(BlockCanvasCoverWrapper, { children: cover }, index3))
+              ) }),
               /* @__PURE__ */ (0, import_jsx_runtime553.jsx)(editor_styles_default, { styles }),
               children
             ]
@@ -138793,13 +138836,15 @@ If there's a particular need for this, please submit a feature request at https:
         (item) => item === null ? `<${SLOT_TAG_NAME} data-slot-index="${slotIndex++}" style="display: contents"></${SLOT_TAG_NAME}>` : item
       ).join("");
     }, [innerContent]);
-    const containerRef = (0, import_element479.useRef)();
+    const containerRef = (0, import_element479.useRef)(null);
     const [slots, setSlots] = (0, import_element479.useState)([]);
     (0, import_element479.useLayoutEffect)(() => {
       const container = containerRef.current;
       container.innerHTML = (0, import_dom82.safeHTML)(html);
       setSlots(
-        Array.from(container.querySelectorAll(SLOT_TAG_NAME)).sort(
+        Array.from(
+          container.querySelectorAll(SLOT_TAG_NAME)
+        ).sort(
           (a, b) => Number(a.dataset.slotIndex) - Number(b.dataset.slotIndex)
         )
       );
