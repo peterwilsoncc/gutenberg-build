@@ -130269,7 +130269,10 @@ If there's a particular need for this, please submit a feature request at https:
       const targetIndex = (row - 1) * numColumns + column - 1;
       let count = 0;
       for (const clientId of getBlockOrder2(gridClientId)) {
-        const { columnStart, rowStart } = getBlockAttributes3(clientId).style?.layout ?? {};
+        const { columnStart, rowStart } = (
+          // The grid items exist.
+          getBlockAttributes3(clientId).style?.layout ?? {}
+        );
         const cellIndex = (rowStart - 1) * numColumns + columnStart - 1;
         if (cellIndex < targetIndex) {
           count++;
@@ -130370,6 +130373,7 @@ If there's a particular need for this, please submit a feature request at https:
     const flexResetLabel = orientation === "horizontal" ? (0, import_i18n282.__)("Width") : (0, import_i18n282.__)("Height");
     const [availableUnits] = useSettings("spacing.units");
     const units2 = (0, import_components276.__experimentalUseCustomUnits)({
+      // The setting lists unit names.
       availableUnits: availableUnits || [
         "%",
         "px",
@@ -130540,7 +130544,10 @@ If there's a particular need for this, please submit a feature request at https:
                 label: (0, import_i18n282.__)("Column span"),
                 type: "number",
                 onChange: (value) => {
-                  const newColumnSpan = value === "" ? 1 : parseInt(value, 10);
+                  const newColumnSpan = (
+                    // The number input passes a string.
+                    value === "" ? 1 : parseInt(value, 10)
+                  );
                   const constrainedValue = maxColumnSpan ? Math.min(newColumnSpan, maxColumnSpan) : newColumnSpan;
                   onChange({
                     columnStart,
@@ -130560,7 +130567,10 @@ If there's a particular need for this, please submit a feature request at https:
                 label: (0, import_i18n282.__)("Row span"),
                 type: "number",
                 onChange: (value) => {
-                  const newRowSpan = value === "" ? 1 : parseInt(value, 10);
+                  const newRowSpan = (
+                    // The number input passes a string.
+                    value === "" ? 1 : parseInt(value, 10)
+                  );
                   const constrainedValue = maxRowSpan ? Math.min(newRowSpan, maxRowSpan) : newRowSpan;
                   onChange({
                     columnStart,
@@ -130596,7 +130606,10 @@ If there's a particular need for this, please submit a feature request at https:
                 label: (0, import_i18n282.__)("Column"),
                 type: "number",
                 onChange: (value) => {
-                  const newColumnStart = value === "" ? 1 : parseInt(value, 10);
+                  const newColumnStart = (
+                    // The number input passes a string.
+                    value === "" ? 1 : parseInt(value, 10)
+                  );
                   onChange({
                     columnStart: newColumnStart,
                     rowStart,
@@ -130610,6 +130623,7 @@ If there's a particular need for this, please submit a feature request at https:
                     rootClientId,
                     getNumberOfBlocksBeforeCell(
                       newColumnStart,
+                      // Placing a block in a manual grid sets both.
                       rowStart
                     )
                   );
@@ -130625,7 +130639,10 @@ If there's a particular need for this, please submit a feature request at https:
                 label: (0, import_i18n282.__)("Row"),
                 type: "number",
                 onChange: (value) => {
-                  const newRowStart = value === "" ? 1 : parseInt(value, 10);
+                  const newRowStart = (
+                    // The number input passes a string.
+                    value === "" ? 1 : parseInt(value, 10)
+                  );
                   onChange({
                     columnStart,
                     rowStart: newRowStart,
@@ -130638,6 +130655,7 @@ If there's a particular need for this, please submit a feature request at https:
                     rootClientId,
                     rootClientId,
                     getNumberOfBlocksBeforeCell(
+                      // Placing a block in a manual grid sets both.
                       columnStart,
                       newRowStart
                     )
@@ -134392,7 +134410,10 @@ If there's a particular need for this, please submit a feature request at https:
   var { getResponsiveMediaQueries: getResponsiveMediaQueries5 } = unlock(privateApis);
   function getDefaultLayout(layoutBlockSupport = {}, blockVariation) {
     const defaultBlockLayout = layoutBlockSupport?.default;
-    return blockVariation?.attributes?.layout ?? defaultBlockLayout;
+    return (
+      // A variation sets the layout attribute.
+      blockVariation?.attributes?.layout ?? defaultBlockLayout
+    );
   }
   function getResetLayout(layoutBlockSupport = {}, blockVariation) {
     return cleanEmptyObject({
@@ -134404,6 +134425,7 @@ If there's a particular need for this, please submit a feature request at https:
     const childLayoutValues = Object.fromEntries(
       CHILD_LAYOUT_KEYS.filter(
         (key) => Object.hasOwn(existingLayout || {}, key)
+        // Only keys of the existing layout are kept.
       ).map((key) => [key, existingLayout[key]])
     );
     Object.entries(layout || {}).forEach(([key, value]) => {
@@ -134441,7 +134463,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useLayoutClasses(blockAttributes = {}, blockName = "") {
     const { layout } = blockAttributes;
-    const { default: defaultBlockLayout } = (0, import_blocks127.getBlockSupport)(blockName, layoutBlockSupportKey) || {};
+    const { default: defaultBlockLayout } = (
+      // The layout support is an object.
+      (0, import_blocks127.getBlockSupport)(blockName, layoutBlockSupportKey) || {}
+    );
     const usedLayout = normalizeLegacyLayout(layout) || defaultBlockLayout || {};
     const layoutClassnames = [];
     if (LAYOUT_DEFINITIONS2[usedLayout?.type || "default"]?.className) {
@@ -134507,6 +134532,7 @@ If there's a particular need for this, please submit a feature request at https:
         pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
       });
       const viewportLayout = getLayoutContainerValues(
+        // A style state holds the layout it overrides.
         viewportStyle?.layout
       );
       const hasViewportLayout = Object.keys(viewportLayout).length > 0;
@@ -134669,6 +134695,7 @@ If there's a particular need for this, please submit a feature request at https:
           layout: getLayoutStateOverrides(
             newLayout,
             baseLayout,
+            // A style state holds the layout it overrides.
             stateStyle?.layout
           )
         });
@@ -134830,7 +134857,10 @@ If there's a particular need for this, please submit a feature request at https:
     const { name, attributes } = props;
     const id = (0, import_compose151.useInstanceId)(BlockListBlock2);
     const { layout } = attributes;
-    const { default: defaultBlockLayout } = (0, import_blocks127.getBlockSupport)(name, layoutBlockSupportKey) || {};
+    const { default: defaultBlockLayout } = (
+      // The layout support is an object.
+      (0, import_blocks127.getBlockSupport)(name, layoutBlockSupportKey) || {}
+    );
     const usedLayout = normalizeLegacyLayout(layout) || defaultBlockLayout || {};
     const selectorPrefix = `wp-container-${kebabCase(name)}-is-layout-`;
     const selector5 = `.${selectorPrefix}${id}`;
@@ -135040,6 +135070,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function getGridItemRect(gridItemElement) {
     return getGridRect(
+      // A grid item is inside its grid.
       gridItemElement.parentElement,
       new window.DOMRect(
         gridItemElement.offsetLeft,
@@ -135517,7 +135548,9 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     isManualGrid
   }) {
-    const [resizeDirection, setResizeDirection] = (0, import_element465.useState)(null);
+    const [resizeDirection, setResizeDirection] = (0, import_element465.useState)(
+      null
+    );
     const [enableSide, setEnableSide] = (0, import_element465.useState)({
       top: false,
       bottom: false,
@@ -135662,6 +135695,7 @@ If there's a particular need for this, please submit a feature request at https:
     const rowCount = parentLayout?.rowCount;
     const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(
       gridClientId,
+      // Items move only within a grid with a column count.
       columnCount
     );
     return /* @__PURE__ */ (0, import_jsx_runtime708.jsx)(block_controls_default, { group: "parent", children: /* @__PURE__ */ (0, import_jsx_runtime708.jsxs)(import_components289.ToolbarGroup, { className: "block-editor-grid-item-mover__move-button-container", children: [
@@ -135801,15 +135835,19 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data201 = __toESM(require_data(), 1);
   var import_element466 = __toESM(require_element(), 1);
   var import_compose154 = __toESM(require_compose(), 1);
-  function useGridLayoutSync({ clientId: gridClientId }) {
+  function useGridLayoutSync({
+    clientId: gridClientId
+  }) {
     const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data201.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes22, getBlockOrder: getBlockOrder2 } = select3(store);
         const selectedBlock = select3(store).getSelectedBlock();
         return {
+          // The grid block exists, with its layout attribute.
           gridLayout: getBlockAttributes22(gridClientId).layout ?? {},
           blockOrder: getBlockOrder2(gridClientId),
-          selectedBlockLayout: selectedBlock?.attributes.style?.layout
+          // A selected grid item positions itself through its style.
+          selectedBlockLayout: selectedBlock?.attributes?.style?.layout
         };
       },
       [gridClientId]
@@ -135849,7 +135887,9 @@ If there's a particular need for this, please submit a feature request at https:
           );
         }
         for (const clientId of blockOrder) {
-          const attributes = getBlockAttributes3(clientId);
+          const attributes = getBlockAttributes3(
+            clientId
+          );
           const {
             columnStart,
             rowStart,
@@ -135861,6 +135901,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
           const [newColumnStart, newRowStart] = placeBlock(
             occupiedRects,
+            // A manual grid has a column count.
             gridLayout.columnCount,
             columnSpan,
             rowSpan,
@@ -135903,11 +135944,15 @@ If there's a particular need for this, please submit a feature request at https:
             if (rootClientId === null) {
               continue;
             }
-            const rootAttributes = getBlockAttributes3(rootClientId);
+            const rootAttributes = getBlockAttributes3(
+              rootClientId
+            );
             if (rootAttributes?.layout?.type === "grid") {
               continue;
             }
-            const attributes = getBlockAttributes3(clientId);
+            const attributes = getBlockAttributes3(
+              clientId
+            );
             const {
               columnStart,
               rowStart,
@@ -135928,7 +135973,9 @@ If there's a particular need for this, please submit a feature request at https:
       } else {
         if (previousIsManualPlacement === true) {
           for (const clientId of blockOrder) {
-            const attributes = getBlockAttributes3(clientId);
+            const attributes = getBlockAttributes3(
+              clientId
+            );
             const { columnStart, rowStart, ...layout } = attributes.style?.layout ?? {};
             if (columnStart || rowStart) {
               const hasEmptyLayoutAttribute = Object.keys(layout).length === 0;
@@ -136085,6 +136132,7 @@ If there's a particular need for this, please submit a feature request at https:
           parentColumnValue = 12;
         }
         let parentColumnUnit = minimumColumnWidth?.replace(
+          // `replace` converts the number to its string.
           parentColumnValue,
           ""
         );
@@ -136147,6 +136195,7 @@ If there's a particular need for this, please submit a feature request at https:
       const viewportLayout = getStyleForState2(style, {
         viewport,
         pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
+        // A style state holds the child layout it overrides.
       })?.layout;
       if (!viewportLayout || !Object.keys(viewportLayout).length) {
         return "";
@@ -136173,6 +136222,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }
     const layoutState = {
+      // A viewport state is selected here.
       viewport: selectedState.viewport,
       pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
     };
@@ -136185,12 +136235,15 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
   }
-  function useBlockPropsChildLayoutStyles({ style }) {
+  function useBlockPropsChildLayoutStyles({
+    style
+  }) {
     const { shouldRenderChildLayoutStyles, viewportSettings } = (0, import_data202.useSelect)(
       (select3) => {
         const settings3 = select3(store).getSettings();
         return {
           shouldRenderChildLayoutStyles: !settings3.disableLayoutStyles,
+          // The editor features hold the viewport settings.
           viewportSettings: settings3?.__experimentalFeatures?.viewport
         };
       }
@@ -136236,7 +136289,11 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return { className: `wp-container-content-${id}` };
   }
-  function ChildLayoutControlsPure({ clientId, style, setAttributes }) {
+  function ChildLayoutControlsPure({
+    clientId,
+    style,
+    setAttributes
+  }) {
     const parentLayout = useLayout() || {};
     const {
       type: parentLayoutType = "default",
