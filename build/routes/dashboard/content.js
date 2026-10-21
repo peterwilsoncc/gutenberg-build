@@ -79472,6 +79472,43 @@ function arrayMoveWithPinned(items, from, to, isPinned) {
   });
 }
 
+// packages/grid/build-module/shared/column-policy.mjs
+function normalizeCount(count) {
+  return typeof count === "number" && Number.isFinite(count) ? Math.max(1, Math.floor(count)) : void 0;
+}
+function resolveFloor({ minColumnWidth }) {
+  return typeof minColumnWidth === "number" && Number.isFinite(minColumnWidth) && minColumnWidth > 0 ? minColumnWidth : void 0;
+}
+function resolveColumnCap(policy, containerWidth) {
+  const { columns } = policy;
+  if (typeof columns !== "object" || columns === null) {
+    return normalizeCount(columns);
+  }
+  const hasFloor = resolveFloor(policy) !== void 0;
+  const widths = Object.keys(columns).map(Number).filter(Number.isFinite).filter((width) => {
+    const step2 = columns[width];
+    return step2 === "auto" ? hasFloor : normalizeCount(step2) !== void 0;
+  }).sort((a, b) => b - a);
+  if (widths.length === 0) {
+    return void 0;
+  }
+  const reached = widths.find((width) => containerWidth >= width);
+  const step = columns[reached ?? widths[widths.length - 1]];
+  return step === "auto" ? void 0 : normalizeCount(step);
+}
+function resolveColumnCount(policy, containerWidth, gapPx, defaultColumns) {
+  const cap = resolveColumnCap(policy, containerWidth);
+  const floor2 = resolveFloor(policy);
+  if (floor2 === void 0) {
+    return Math.max(1, cap ?? defaultColumns);
+  }
+  const maxFit = Math.max(
+    1,
+    Math.floor((containerWidth + gapPx) / (floor2 + gapPx))
+  );
+  return cap === void 0 ? maxFit : Math.max(1, Math.min(cap, maxFit));
+}
+
 // packages/grid/build-module/shared/grid-overlay.mjs
 var import_element277 = __toESM(require_element(), 1);
 var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
@@ -80420,17 +80457,15 @@ var DashboardGrid = (0, import_element281.forwardRef)(
         setGapPx(parsed);
       }
     }, [gridRoot]);
-    const effectiveColumns = (0, import_element281.useMemo)(() => {
-      if (!minColumnWidth) {
-        return columns ?? DEFAULT_COLUMNS;
-      }
-      const totalWidthPerColumn = minColumnWidth + gapPx;
-      const maxFit = Math.max(
-        1,
-        Math.floor((containerWidth + gapPx) / totalWidthPerColumn)
-      );
-      return columns !== void 0 ? Math.min(columns, maxFit) : maxFit;
-    }, [minColumnWidth, gapPx, containerWidth, columns]);
+    const effectiveColumns = (0, import_element281.useMemo)(
+      () => resolveColumnCount(
+        { columns, minColumnWidth },
+        containerWidth,
+        gapPx,
+        DEFAULT_COLUMNS
+      ),
+      [minColumnWidth, gapPx, containerWidth, columns]
+    );
     const columnWidth = (containerWidth - (effectiveColumns - 1) * gapPx) / effectiveColumns;
     const minResizeWidthPx = gridSpanToPixelSize(
       1,
@@ -81522,17 +81557,15 @@ var DashboardLanes = (0, import_element284.forwardRef)(
         setGapPx(parsed);
       }
     }, [container]);
-    const effectiveColumns = (0, import_element284.useMemo)(() => {
-      if (!minColumnWidth) {
-        return columns ?? DEFAULT_COLUMNS2;
-      }
-      const totalWidthPerColumn = minColumnWidth + gapPx;
-      const maxFit = Math.max(
-        1,
-        Math.floor((containerWidth + gapPx) / totalWidthPerColumn)
-      );
-      return columns !== void 0 ? Math.min(columns, maxFit) : maxFit;
-    }, [minColumnWidth, gapPx, containerWidth, columns]);
+    const effectiveColumns = (0, import_element284.useMemo)(
+      () => resolveColumnCount(
+        { columns, minColumnWidth },
+        containerWidth,
+        gapPx,
+        DEFAULT_COLUMNS2
+      ),
+      [minColumnWidth, gapPx, containerWidth, columns]
+    );
     const columnWidth = (containerWidth - (effectiveColumns - 1) * gapPx) / effectiveColumns;
     const minResizeWidthPx = gridSpanToPixelSize(
       1,
