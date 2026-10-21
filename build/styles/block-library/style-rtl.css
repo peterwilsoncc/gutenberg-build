@@ -4262,6 +4262,10 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
   justify-content: center;
 }
 
+.wp-block-query-pagination-numbers {
+  box-sizing: border-box;
+}
+
 .wp-block-query-title {
   box-sizing: border-box;
 }

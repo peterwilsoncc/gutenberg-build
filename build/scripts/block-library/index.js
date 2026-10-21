@@ -86529,9 +86529,28 @@ ${text}
       },
       interactivity: {
         clientNavigation: true
+      },
+      spacing: {
+        padding: true,
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
       }
     },
-    editorStyle: "wp-block-query-pagination-numbers-editor"
+    editorStyle: "wp-block-query-pagination-numbers-editor",
+    style: "wp-block-query-pagination-numbers"
   };
 
   // packages/block-library/build-module/query-pagination-numbers/edit.mjs
