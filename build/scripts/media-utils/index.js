@@ -58155,15 +58155,22 @@ If there's a particular need for this, please submit a feature request at https:
       left: element.offsetLeft
     };
   }
-  function useMovingAnimation(triggerAnimationOnChange) {
+  function useMovingAnimation(index2, itemsKey) {
     const ref = (0, import_element167.useRef)(null);
     const previousRef = (0, import_element167.useRef)(void 0);
+    const previousItemsKeyRef = (0, import_element167.useRef)(itemsKey);
     if (ref.current) {
       previousRef.current = getAbsolutePosition(ref.current);
     }
     (0, import_element167.useLayoutEffect)(() => {
+      const hasItemsChanged = previousItemsKeyRef.current !== itemsKey;
+      previousItemsKeyRef.current = itemsKey;
       const previous = previousRef.current;
       if (!previous || !ref.current) {
+        return;
+      }
+      if (hasItemsChanged) {
+        ref.current.style.transform = "";
         return;
       }
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -58193,7 +58200,7 @@ If there's a particular need for this, please submit a feature request at https:
         controller.stop();
         controller.set({ x: 0, y: 0 });
       };
-    }, [triggerAnimationOnChange]);
+    }, [index2, itemsKey]);
     return ref;
   }
 
@@ -58202,9 +58209,10 @@ If there's a particular need for this, please submit a feature request at https:
   function AnimatedMediaItem({
     children,
     index: index2,
+    itemsKey,
     className
   }) {
-    const ref = useMovingAnimation(index2);
+    const ref = useMovingAnimation(index2, itemsKey);
     return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { ref, className, children });
   }
   function normalizeValue2(value) {
@@ -58374,6 +58382,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(import_components54.Icon, { icon: file_default });
   }
+  function getItemsKey(items) {
+    return (items ?? []).map((item) => String(item.id)).sort().join(",");
+  }
   function ExpandedMediaEditAttachments({
     allItems,
     addButtonLabel,
@@ -58385,6 +58396,7 @@ If there's a particular need for this, please submit a feature request at https:
     isUploading,
     setTargetItemId
   }) {
+    const itemsKey = getItemsKey(allItems);
     return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
       "div",
       {
@@ -58402,6 +58414,7 @@ If there's a particular need for this, please submit a feature request at https:
               AnimatedMediaItem,
               {
                 index: index2,
+                itemsKey,
                 className: clsx_default("media-edit__expanded-item", {
                   "has-preview-image": hasPreviewImage
                 }),
@@ -58511,6 +58524,7 @@ If there's a particular need for this, please submit a feature request at https:
     isUploading,
     setTargetItemId
   }) {
+    const itemsKey = getItemsKey(allItems);
     return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(import_jsx_runtime255.Fragment, { children: [
       !!allItems?.length && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
         "div",
@@ -58526,6 +58540,7 @@ If there's a particular need for this, please submit a feature request at https:
               AnimatedMediaItem,
               {
                 index: index2,
+                itemsKey,
                 className: "media-edit__compact",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
