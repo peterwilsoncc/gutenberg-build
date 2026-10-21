@@ -119721,9 +119721,11 @@ If there's a particular need for this, please submit a feature request at https:
     getDomPositionKey,
     KeyboardShortcutContext: KeyboardShortcutContext2,
     InputEventContext: InputEventContext2,
-    RichTextShortcut,
-    RichTextInputEvent
+    RichTextShortcut: UntypedRichTextShortcut,
+    RichTextInputEvent: UntypedRichTextInputEvent
   } = unlock(import_rich_text21.privateApis);
+  var RichTextShortcut = UntypedRichTextShortcut;
+  var RichTextInputEvent = UntypedRichTextInputEvent;
   var instanceIdKey = /* @__PURE__ */ Symbol("instanceId");
   function RichTextWrapper({
     children,

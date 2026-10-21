@@ -1717,6 +1717,7 @@ function LeafMoreMenu({
   const removeLabel = (0, import_i18n4.sprintf)(
     /* translators: %s: block name */
     (0, import_i18n4.__)("Remove %s"),
+    // The menu is for an existing block, which has a title.
     (0, import_block_editor.BlockTitle)({ clientId, maximumLength: 25 })
   );
   const { rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, import_data.useSelect)(
@@ -1739,7 +1740,14 @@ function LeafMoreMenu({
       const directInsertBlock = _rootClientId ? getDirectInsertBlock(_rootClientId) : null;
       return {
         rootClientId: _rootClientId,
-        canDuplicate: (0, import_blocks.hasBlockSupport)(_blockName, "multiple", true) && canInsertBlockType(_blockName, _rootClientId),
+        canDuplicate: (
+          // The menu is for an existing block, which has a name.
+          (0, import_blocks.hasBlockSupport)(
+            _blockName,
+            "multiple",
+            true
+          ) && canInsertBlockType(_blockName, _rootClientId)
+        ),
         canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && canInsertBlockType(_blockName, _rootClientId),
         isFirst: getBlockIndex(clientId) === 0,
         isLast: getBlockIndex(clientId) === getBlockCount(_rootClientId) - 1

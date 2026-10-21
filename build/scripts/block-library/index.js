@@ -88294,7 +88294,11 @@ ${text}
             className: "block-editor-block-inspector-edit-contents__button",
             __next40pxDefaultSize: true,
             variant: "secondary",
-            onClick: () => onNavigateToEntityRecord({ postId, postType }),
+            onClick: () => onNavigateToEntityRecord({
+              // The button is disabled without an ID.
+              postId,
+              postType
+            }),
             accessibleWhenDisabled: true,
             disabled: !postId,
             children: (0, import_i18n224.__)("Edit original")

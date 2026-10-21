@@ -18007,6 +18007,7 @@ var wp;
         selectionChange({
           clientId: selectionStart.clientId,
           identifier: selectionStart.attributeKey,
+          // @ts-expect-error Bug: the action reads `attributeKey` and `startOffset`, not `identifier` and `start`.
           start: value.start + newText.length + 1
         });
         return;

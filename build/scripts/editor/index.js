@@ -91713,6 +91713,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: "global-styles-ui-typography-preview",
         style: {
+          // React skips a null style value.
           fontSize: computedFontSize,
           fontFamily: font2?.fontFamily ?? "serif"
         },
