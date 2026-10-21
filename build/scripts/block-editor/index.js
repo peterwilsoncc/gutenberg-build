@@ -75086,6 +75086,7 @@ var wp;
     const { styles } = (0, import_data58.useSelect)((select3) => {
       const settings3 = select3(store).getSettings();
       return {
+        // The settings hold the editor styles.
         styles: settings3.styles
       };
     }, []);
@@ -75115,7 +75116,10 @@ var wp;
           // in https://github.com/WordPress/gutenberg/issues/52027.
           // See https://github.com/WordPress/gutenberg/pull/52921 for more info.
           aspectRatio,
-          maxHeight: contentHeight > MAX_HEIGHT ? MAX_HEIGHT * scale : void 0,
+          maxHeight: (
+            // A `null` height compares as 0.
+            contentHeight > MAX_HEIGHT ? MAX_HEIGHT * scale : void 0
+          ),
           minHeight
         },
         children: /* @__PURE__ */ (0, import_jsx_runtime357.jsxs)(
@@ -75139,6 +75143,7 @@ var wp;
             style: {
               position: "absolute",
               width: viewportWidth,
+              // React sets no height for `null`.
               height: contentHeight,
               pointerEvents: "none",
               // This is a catch-all max-height for patterns.
@@ -75261,7 +75266,11 @@ var wp;
   var MemoizedBlockPreview = (0, import_element194.memo)(BlockPreview);
   MemoizedBlockPreview.Async = Async;
   var block_preview_default = MemoizedBlockPreview;
-  function useBlockPreview({ blocks: blocks2, props = {}, layout }) {
+  function useBlockPreview({
+    blocks: blocks2,
+    props = {},
+    layout
+  }) {
     const originalSettings = (0, import_data59.useSelect)(
       (select3) => select3(store).getSettings(),
       []
@@ -75276,7 +75285,10 @@ var wp;
       [originalSettings]
     );
     const disabledRef = (0, import_compose56.useDisabled)();
-    const ref = (0, import_compose56.useMergeRefs)([props.ref, disabledRef]);
+    const ref = (0, import_compose56.useMergeRefs)([
+      props.ref,
+      disabledRef
+    ]);
     const renderedBlocks = (0, import_element194.useMemo)(
       () => Array.isArray(blocks2) ? blocks2 : [blocks2],
       [blocks2]
@@ -102510,14 +102522,19 @@ If there's a particular need for this, please submit a feature request at https:
           (0, import_i18n144.__)("%1$s (%2$s)"),
           getBlockMoverDescription(
             blocksCount,
+            // A described block has a block type.
             blockType && blockType.title,
             firstIndex,
             isFirst,
             isLast,
             direction === "up" ? -1 : 1,
             orientation
+            // The mover is shown for positions it can describe.
           ),
-          import_keycodes14.shortcutAriaLabel.secondary(keyCharacter)
+          // The secondary modifier has a label.
+          import_keycodes14.shortcutAriaLabel.secondary(
+            keyCharacter
+          )
         ) })
       ] });
     }
@@ -102633,7 +102650,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { getSelectedBlockClientId: getSelectedBlockClientId2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data101.useSelect)(store);
     const { toggleBlockHighlight: toggleBlockHighlight2 } = (0, import_data101.useDispatch)(store);
-    const timeoutRef = (0, import_element335.useRef)();
+    const timeoutRef = (0, import_element335.useRef)(void 0);
     const isDistractionFree = (0, import_data101.useSelect)(
       (select3) => select3(store).getSettings().isDistractionFree,
       []
@@ -103799,7 +103816,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime526 = __toESM(require_jsx_runtime(), 1);
   var noop12 = () => {
   };
-  function BlockModeToggle({ clientId, onToggle = noop12 }) {
+  function BlockModeToggle({
+    clientId,
+    onToggle = noop12
+  }) {
     const { blockType, mode: mode2, enabled } = (0, import_data111.useSelect)(
       (select3) => {
         const { getBlock: getBlock2, getBlockMode: getBlockMode2, getSettings: getSettings9 } = select3(store);
@@ -103850,13 +103870,17 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-rename/modal.mjs
   var import_jsx_runtime527 = __toESM(require_jsx_runtime(), 1);
-  function BlockRenameModal({ clientId, onClose }) {
+  function BlockRenameModal({
+    clientId,
+    onClose
+  }) {
     const [editedBlockName, setEditedBlockName] = (0, import_element341.useState)();
     const blockInformation = useBlockDisplayInformation(clientId);
     const { metadata } = (0, import_data112.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
         return {
+          // The metadata attribute holds the block name and bindings.
           metadata: getBlockAttributes3(clientId)?.metadata
         };
       },
@@ -103878,10 +103902,12 @@ If there's a particular need for this, please submit a feature request at https:
       const message2 = nameIsOriginal || nameIsEmpty ? (0, import_i18n155.sprintf)(
         /* translators: %s: new name/label for the block */
         (0, import_i18n155.__)('Block name reset to: "%s".'),
+        // A valid name is changed or the original one.
         editedBlockName
       ) : (0, import_i18n155.sprintf)(
         /* translators: %s: new name/label for the block */
         (0, import_i18n155.__)('Block name changed to: "%s".'),
+        // A valid name is changed or the original one.
         editedBlockName
       );
       (0, import_a11y16.speak)(message2, "assertive");
@@ -103956,7 +103982,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-rename/rename-control.mjs
   var import_jsx_runtime528 = __toESM(require_jsx_runtime(), 1);
-  function BlockRenameControl({ clientId }) {
+  function BlockRenameControl({
+    clientId
+  }) {
     const [renamingBlock, setRenamingBlock] = (0, import_element342.useState)(false);
     const shortcut = (0, import_data113.useSelect)(
       (select3) => select3(import_keyboard_shortcuts8.store).getShortcutRepresentation(
@@ -103991,6 +104019,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks66 = __toESM(require_blocks(), 1);
   function useBlockRename(name) {
     return {
+      // The renaming support is a boolean.
       canRename: !!name && (0, import_blocks66.getBlockSupport)(name, "renaming", true)
     };
   }
@@ -103998,7 +104027,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-settings-menu-controls/index.mjs
   var import_jsx_runtime529 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill2, Slot: Slot8 } = (0, import_components147.createSlotFill)("BlockSettingsMenuControls");
-  var BlockSettingsMenuControlsSlot = ({ fillProps, clientIds = null }) => {
+  var BlockSettingsMenuControlsSlot = ({
+    fillProps,
+    clientIds = null
+  }) => {
     const {
       selectedBlocks,
       selectedClientIds,
@@ -104019,9 +104051,8 @@ If there's a particular need for this, please submit a feature request at https:
           selectedBlocks: getBlockNamesByClientId2(ids),
           selectedClientIds: ids,
           isContentOnly: getBlockEditingMode2(ids[0]) === "contentOnly",
-          canToggleSelectedBlocksVisibility: getBlocksByClientId2(
-            ids
-          ).every(
+          // The selected blocks exist.
+          canToggleSelectedBlocksVisibility: getBlocksByClientId2(ids).every(
             (block) => (0, import_blocks67.hasBlockSupport)(block.name, "visibility", true)
           ),
           canEdit: canEditBlock2(ids[0])
@@ -104047,7 +104078,10 @@ If there's a particular need for this, please submit a feature request at https:
           selectedClientIds
         },
         children: (fills) => {
-          if (!fills?.length > 0 && !showConvertToGroupButton && !showLockButton) {
+          if (
+            // @ts-expect-error Compares the negated fill count with 0, true without fills.
+            !fills?.length > 0 && !showConvertToGroupButton && !showLockButton
+          ) {
             return null;
           }
           return /* @__PURE__ */ (0, import_jsx_runtime529.jsxs)(import_components147.MenuGroup, { children: [
@@ -104089,8 +104123,15 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  function BlockSettingsMenuControls({ ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(import_components147.__experimentalStyleProvider, { document, children: /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(Fill2, { ...props }) });
+  function BlockSettingsMenuControls({
+    ...props
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(import_components147.__experimentalStyleProvider, { document, children: /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
+      Fill2,
+      {
+        ...props
+      }
+    ) });
   }
   BlockSettingsMenuControls.Slot = BlockSettingsMenuControlsSlot;
   var block_settings_menu_controls_default = BlockSettingsMenuControls;
@@ -104108,7 +104149,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const isSmallViewport = (0, import_compose109.useViewportMatch)("medium", "<");
     const { selectBlock: selectBlock2 } = (0, import_data115.useDispatch)(store);
-    const menuItemRef = (0, import_element343.useRef)();
+    const menuItemRef = (0, import_element343.useRef)(null);
     const gesturesProps = useShowHoveredOrFocusedGestures({
       ref: menuItemRef,
       highlightParent: true
@@ -104150,6 +104191,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { removeBlocks: removeBlocks2 } = (0, import_data116.useDispatch)(store);
     const notifyCopy = useNotifyCopy();
     const ref = (0, import_compose110.useCopyToClipboard)(
+      // The copied blocks exist.
       () => (0, import_blocks68.serialize)(getBlocksByClientId2(clientIds)),
       () => {
         switch (eventType) {
@@ -104439,8 +104481,11 @@ If there's a particular need for this, please submit a feature request at https:
                     clientIds
                   }
                 ),
-                typeof children === "function" ? children({ onClose }) : import_element344.Children.map(
-                  (child) => (0, import_element344.cloneElement)(child, { onClose })
+                typeof children === "function" ? children({ onClose }) : (
+                  // @ts-expect-error Passes the callback as the children, so no child is cloned.
+                  import_element344.Children.map(
+                    (child) => (0, import_element344.cloneElement)(child, { onClose })
+                  )
                 ),
                 canRemove && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components149.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
                   import_components149.MenuItem,
@@ -104472,7 +104517,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-settings-menu/index.mjs
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
-  function BlockSettingsMenu({ clientIds, ...props }) {
+  function BlockSettingsMenu({
+    clientIds,
+    ...props
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime532.jsxs)(import_components151.ToolbarGroup, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(note_icon_toolbar_slot_default.Slot, { fillProps: { clientIds } }),
       /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(import_components151.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(
@@ -104526,7 +104574,8 @@ If there's a particular need for this, please submit a feature request at https:
     const enabled = (0, import_data118.useSelect)((select3) => {
       const { getBlockEditingMode: getBlockEditingMode2, getBlockName: getBlockName2, getBlockSelectionStart: getBlockSelectionStart2 } = select3(store);
       const selectedBlockClientId = getBlockSelectionStart2();
-      const blockType = selectedBlockClientId && (0, import_blocks69.getBlockType)(getBlockName2(selectedBlockClientId));
+      const blockType = selectedBlockClientId && // The selected block has a name.
+      (0, import_blocks69.getBlockType)(getBlockName2(selectedBlockClientId));
       return blockType && (0, import_blocks69.hasBlockSupport)(blockType, "__experimentalToolbar", true) && getBlockEditingMode2(selectedBlockClientId) !== "disabled";
     }, []);
     return enabled;
@@ -104699,7 +104748,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [block, type?.example, type?.name]);
   }
-  function useStylesForBlocks({ clientId, onSwitch }) {
+  function useStylesForBlocks({
+    clientId,
+    onSwitch
+  }) {
     const selector5 = (select3) => {
       const { getBlock: getBlock2 } = select3(store);
       const block2 = getBlock2(clientId);
@@ -104720,7 +104772,10 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data120.useDispatch)(store);
     const stylesToRender = getRenderedStyles(styles);
-    const activeStyle = getActiveStyle(stylesToRender, className);
+    const activeStyle = getActiveStyle(
+      stylesToRender,
+      className
+    );
     const genericPreviewBlock = useGenericPreviewBlock(block, blockType);
     const onSelect = (style) => {
       const styleClassName = replaceActiveStyle(
@@ -104897,7 +104952,8 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId]
     );
-    if (!clientId || !isSectionBlock2 && !isEditingContentOnlySection || (0, import_blocks72.isReusableBlock)(blockType) || (0, import_blocks72.isTemplatePart)(blockType)) {
+    if (!clientId || !isSectionBlock2 && !isEditingContentOnlySection || // Only the block name is read.
+    (0, import_blocks72.isReusableBlock)(blockType) || (0, import_blocks72.isTemplatePart)(blockType)) {
       return null;
     }
     const isEditing = isEditingContentOnlySection;
@@ -104970,7 +105026,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element347 = __toESM(require_element(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT3 = {};
-  function useBlockVariationTransforms({ clientIds, blocks: blocks2 }) {
+  function useBlockVariationTransforms({
+    clientIds,
+    blocks: blocks2
+  }) {
     const { activeBlockVariation, blockVariationTransformations } = (0, import_data124.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3, canRemoveBlocks: canRemoveBlocks2 } = select3(store);
@@ -104987,6 +105046,7 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           activeBlockVariation: getActiveBlockVariation(
             firstBlock.name,
+            // The selected block exists.
             getBlockAttributes3(firstBlock.clientId)
           )
         };
@@ -105012,6 +105072,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           blocks: (0, import_blocks73.cloneBlock)(
             blocks2[0],
+            // The hovered variation is one of the transformations.
             transformations.find(
               ({ name }) => name === hoveredTransformItemName
             ).attributes
@@ -105238,9 +105299,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-switcher/block-styles-menu.mjs
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
-  function BlockStylesMenu({ hoveredBlock, onSwitch }) {
+  function BlockStylesMenu({
+    hoveredBlock,
+    onSwitch
+  }) {
     const { clientId } = hoveredBlock;
-    const [hoveredStyle, setHoveredStyle] = (0, import_element349.useState)(null);
+    const [hoveredStyle, setHoveredStyle] = (0, import_element349.useState)(
+      null
+    );
     const {
       onSelect,
       stylesToRender,
@@ -105330,12 +105396,15 @@ If there's a particular need for this, please submit a feature request at https:
     if (!contentAttributes?.length) {
       return attributes;
     }
-    return contentAttributes.reduce((_accumulator, attribute) => {
-      if (attributes[attribute]) {
-        _accumulator[attribute] = attributes[attribute];
-      }
-      return _accumulator;
-    }, {});
+    return contentAttributes.reduce(
+      (_accumulator, attribute) => {
+        if (attributes[attribute]) {
+          _accumulator[attribute] = attributes[attribute];
+        }
+        return _accumulator;
+      },
+      {}
+    );
   };
 
   // packages/block-editor/build-module/components/block-switcher/use-transformed-patterns.mjs
@@ -105378,19 +105447,23 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useTransformedPatterns = (patterns2, selectedBlocks) => {
     return (0, import_element350.useMemo)(
-      () => patterns2.reduce((accumulator, _pattern) => {
-        const transformedBlocks = getPatternTransformedBlocks(
-          selectedBlocks,
-          _pattern.blocks
-        );
-        if (transformedBlocks) {
-          accumulator.push({
-            ..._pattern,
-            transformedBlocks
-          });
-        }
-        return accumulator;
-      }, []),
+      () => patterns2.reduce(
+        (accumulator, _pattern) => {
+          const transformedBlocks = getPatternTransformedBlocks(
+            selectedBlocks,
+            // The patterns from state are parsed into blocks.
+            _pattern.blocks
+          );
+          if (transformedBlocks) {
+            accumulator.push({
+              ..._pattern,
+              transformedBlocks
+            });
+          }
+          return accumulator;
+        },
+        []
+      ),
       [patterns2, selectedBlocks]
     );
   };
@@ -105429,7 +105502,10 @@ If there's a particular need for this, please submit a feature request at https:
       )
     ] });
   }
-  function PreviewPatternsPopover({ patterns: patterns2, onSelect }) {
+  function PreviewPatternsPopover({
+    patterns: patterns2,
+    onSelect
+  }) {
     const isMobile = (0, import_compose112.useViewportMatch)("medium", "<");
     return /* @__PURE__ */ (0, import_jsx_runtime542.jsx)("div", { className: "block-editor-block-switcher__popover-preview-container", children: /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(
       import_components161.Popover,
@@ -105504,7 +105580,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-switcher/index.mjs
   var import_jsx_runtime543 = __toESM(require_jsx_runtime(), 1);
-  function BlockSwitcherDropdownMenuContents({ onClose, clientIds }) {
+  function BlockSwitcherDropdownMenuContents({
+    onClose,
+    clientIds
+  }) {
     const { replaceBlocks: replaceBlocks2, multiSelect: multiSelect2, updateBlockAttributes: updateBlockAttributes2 } = (0, import_data125.useDispatch)(store);
     const {
       possibleBlockTransformations,
@@ -105529,7 +105608,8 @@ If there's a particular need for this, please submit a feature request at https:
         const _blocks = getBlocksByClientId2(clientIds);
         const _isSingleBlock = clientIds.length === 1;
         const _blockName = _isSingleBlock && getBlockName2(clientIds[0]);
-        const _hasBlockStyles = _isSingleBlock && !!getBlockStyles2(_blockName)?.length;
+        const _hasBlockStyles = _isSingleBlock && // Only read for a single block, which exists.
+        !!getBlockStyles2(_blockName)?.length;
         return {
           blocks: _blocks,
           possibleBlockTransformations: getBlockTransformItems2(
@@ -105568,6 +105648,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     function onBlockVariationTransform(name) {
       updateBlockAttributes2(blocks2[0].clientId, {
+        // The selected variation is one of the transformations.
         ...blockVariationTransformations.find(
           ({ name: variationName }) => variationName === name
         ).attributes
@@ -105633,7 +105714,12 @@ If there's a particular need for this, please submit a feature request at https:
       isUsingBindings && /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(import_components162.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(Text, { className: "block-editor-block-switcher__binding-indicator", children: connectedBlockDescription }) })
     ] });
   }
-  var BlockSwitcher = ({ children, clientIds, label, text }) => {
+  var BlockSwitcher = ({
+    children,
+    clientIds,
+    label,
+    text
+  }) => {
     const isSingleBlock = clientIds.length === 1;
     const blockSwitcherDescription = isSingleBlock ? (0, import_i18n167.__)("Change block type or style") : (0, import_i18n167.sprintf)(
       /* translators: %d: number of blocks. */
@@ -105717,7 +105803,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element352 = __toESM(require_element(), 1);
   var import_data126 = __toESM(require_data(), 1);
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
-  function PatternOverridesPopoverContent({ clientIds, blockTitle }) {
+  function PatternOverridesPopoverContent({
+    clientIds,
+    blockTitle
+  }) {
     const blockMetaName = (0, import_data126.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
@@ -105746,7 +105835,7 @@ If there's a particular need for this, please submit a feature request at https:
     label
   }) {
     const [isOpen, setIsOpen] = (0, import_element352.useState)(false);
-    const anchorRef = (0, import_element352.useRef)();
+    const anchorRef = (0, import_element352.useRef)(null);
     return /* @__PURE__ */ (0, import_jsx_runtime545.jsxs)(import_jsx_runtime545.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(
         import_components164.ToolbarButton,
@@ -105781,7 +105870,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-toolbar/block-toolbar-icon.mjs
   var import_jsx_runtime546 = __toESM(require_jsx_runtime(), 1);
-  function getBlockIconVariant({ select: select3, clientIds }) {
+  function getBlockIconVariant({
+    select: select3,
+    clientIds
+  }) {
     if (!clientIds.length) {
       return "default";
     }
@@ -105801,7 +105893,8 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const isSingleBlock = clientIds.length === 1;
     const blockName = isSingleBlock && getBlockName2(clientIds[0]);
-    const hasBlockStyles = isSingleBlock && !!getBlockStyles2(blockName)?.length;
+    const hasBlockStyles = isSingleBlock && // Only read for a single block, which exists.
+    !!getBlockStyles2(blockName)?.length;
     const hasPatternNameInSelection = clientIds.some(
       (id) => !!getBlockAttributes3(id)?.metadata?.patternName && isSectionBlock2(id)
     );
@@ -105830,9 +105923,15 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return "default";
   }
-  function getBlockIcon({ select: select3, clientIds }) {
+  function getBlockIcon({
+    select: select3,
+    clientIds
+  }) {
     if (!clientIds.length) {
-      return (0, import_blocks78.getBlockType)((0, import_blocks78.getDefaultBlockName)())?.icon ?? block_default_default;
+      return (0, import_blocks78.getBlockType)(
+        // `getBlockType` returns nothing without a default block.
+        (0, import_blocks78.getDefaultBlockName)()
+      )?.icon ?? block_default_default;
     }
     const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, getBlock: getBlock2, isSectionBlock: isSectionBlock2 } = unlock(select3(store));
     const _isSingleBlock = clientIds.length === 1;
@@ -105857,7 +105956,10 @@ If there's a particular need for this, please submit a feature request at https:
     const isSelectionOfSameType = new Set(blockNames).size === 1;
     return isSelectionOfSameType ? blockType?.icon : copy_default;
   }
-  function BlockToolbarIcon({ clientIds, isSynced }) {
+  function BlockToolbarIcon({
+    clientIds,
+    isSynced
+  }) {
     const { icon, showIconLabels, variant } = (0, import_data127.useSelect)(
       (select3) => {
         return {
@@ -105882,7 +105984,10 @@ If there's a particular need for this, please submit a feature request at https:
     const showBlockTitle = isSingleBlock && isSynced && !showIconLabels;
     let label = isSingleBlock ? blockTitle : (0, import_i18n170.__)("Multiple blocks selected");
     if (!clientIds.length) {
-      label = (0, import_blocks78.getBlockType)((0, import_blocks78.getDefaultBlockName)())?.title ?? (0, import_i18n170.__)("Block");
+      label = (0, import_blocks78.getBlockType)(
+        // `getBlockType` returns nothing without a default block.
+        (0, import_blocks78.getDefaultBlockName)()
+      )?.title ?? (0, import_i18n170.__)("Block");
     }
     const text = showBlockTitle && blockTitle ? blockTitle : void 0;
     const BlockIconElement = /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(
@@ -106048,7 +106153,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const toolbarWrapperRef = (0, import_element353.useRef)(null);
-    const nodeRef = (0, import_element353.useRef)();
+    const nodeRef = (0, import_element353.useRef)(null);
     const showHoveredOrFocusedGestures = useShowHoveredOrFocusedGestures({
       ref: nodeRef
     });
@@ -109849,7 +109954,11 @@ If there's a particular need for this, please submit a feature request at https:
   var noop15 = () => {
   };
   var getCompositeItemId = (instanceId, style) => `${instanceId}-${style.name}`;
-  function BlockStyles({ clientId, onSwitch = noop15, onHoverClassName = noop15 }) {
+  function BlockStyles({
+    clientId,
+    onSwitch = noop15,
+    onHoverClassName = noop15
+  }) {
     const canEdit = (0, import_data149.useSelect)(
       (select3) => select3(store).canEditBlock(clientId),
       [clientId]
@@ -109864,7 +109973,9 @@ If there's a particular need for this, please submit a feature request at https:
       clientId,
       onSwitch
     });
-    const [hoveredStyle, setHoveredStyle] = (0, import_element375.useState)(null);
+    const [hoveredStyle, setHoveredStyle] = (0, import_element375.useState)(
+      null
+    );
     const [blockStylesAnchor, setBlockStylesAnchor] = (0, import_element375.useState)(null);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const instanceId = (0, import_compose122.useInstanceId)(
@@ -109900,7 +110011,11 @@ If there's a particular need for this, please submit a feature request at https:
     if (!canEdit || !stylesToRender || stylesToRender.length === 0) {
       return null;
     }
-    const debouncedSetHoveredStyle = (0, import_compose122.debounce)(setHoveredStyle, 250);
+    const debouncedSetHoveredStyle = (0, import_compose122.debounce)(
+      // `debounce` takes callbacks with unknown arguments.
+      setHoveredStyle,
+      250
+    );
     const onSelectStylePreview = (style) => {
       onSelect(style);
       onHoverClassName(null);
