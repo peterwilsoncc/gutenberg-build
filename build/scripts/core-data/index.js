@@ -20275,6 +20275,7 @@ ${err.toString()}`);
         [branchName]: {
           locks: [],
           children: {},
+          // The branch does not exist until a lock is first taken on it.
           ...currentNode.children[branchName]
         }
       };
