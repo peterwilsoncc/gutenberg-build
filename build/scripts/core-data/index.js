@@ -524,19 +524,23 @@ var wp;
       return object;
     }
     const normalizedPath = Array.isArray(path) ? path : path.split(".");
-    normalizedPath.reduce((acc, key, idx) => {
-      if (acc[key] === void 0) {
-        if (Number.isInteger(normalizedPath[idx + 1])) {
-          acc[key] = [];
-        } else {
-          acc[key] = {};
+    normalizedPath.reduce(
+      (acc, key, idx) => {
+        if (acc[key] === void 0) {
+          if (Number.isInteger(normalizedPath[idx + 1])) {
+            acc[key] = [];
+          } else {
+            acc[key] = {};
+          }
         }
-      }
-      if (idx === normalizedPath.length - 1) {
-        acc[key] = value;
-      }
-      return acc[key];
-    }, object);
+        if (idx === normalizedPath.length - 1) {
+          acc[key] = value;
+        }
+        return acc[key];
+      },
+      // Checked above to be an object.
+      object
+    );
     return object;
   }
 
@@ -578,7 +582,9 @@ var wp;
   var if_matching_action_default = ifMatchingAction;
 
   // packages/core-data/build-module/utils/forward-resolver.mjs
-  var forwardResolver = (resolverName) => (...args2) => async ({ resolveSelect: resolveSelect3 }) => {
+  var forwardResolver = (resolverName) => (...args2) => async ({
+    resolveSelect: resolveSelect3
+  }) => {
     await resolveSelect3[resolverName](...args2);
   };
   var forward_resolver_default = forwardResolver;
@@ -21447,7 +21453,8 @@ ${err.toString()}`);
     }
     const { templateTypes, templateAreas, template } = params2;
     const { description, slug, title, area } = template;
-    const { title: defaultTitle, description: defaultDescription } = Object.values(templateTypes).find((type) => type.slug === slug) ?? EMPTY_OBJECT4;
+    const { title: defaultTitle, description: defaultDescription } = Object.values(templateTypes).find((type) => type.slug === slug) ?? // An unknown slug has no default title or description.
+    EMPTY_OBJECT4;
     const templateTitle = typeof title === "string" ? title : title?.rendered;
     const templateDescription = typeof description === "string" ? description : description?.raw;
     const templateAreasWithIcon = templateAreas?.map((item) => ({
