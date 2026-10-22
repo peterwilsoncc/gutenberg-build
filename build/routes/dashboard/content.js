@@ -96,11 +96,11 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState112({
+        cachedValue = useState111({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-        useLayoutEffect13(
+        useLayoutEffect12(
           function() {
             inst.value = value;
             inst.getSnapshot = getSnapshot;
@@ -134,7 +134,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React302 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState112 = React302.useState, useEffect88 = React302.useEffect, useLayoutEffect13 = React302.useLayoutEffect, useDebugValue2 = React302.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React302 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState111 = React302.useState, useEffect88 = React302.useEffect, useLayoutEffect12 = React302.useLayoutEffect, useDebugValue2 = React302.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React302.useSyncExternalStore ? React302.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -162,14 +162,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React302 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef155 = React302.useRef, useEffect88 = React302.useEffect, useMemo128 = React302.useMemo, useDebugValue2 = React302.useDebugValue;
+      var React302 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef155 = React302.useRef, useEffect88 = React302.useEffect, useMemo127 = React302.useMemo, useDebugValue2 = React302.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef155(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo128(
+        instRef = useMemo127(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -52729,7 +52729,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
-var import_element294 = __toESM(require_element());
+var import_element293 = __toESM(require_element());
 var import_i18n88 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
@@ -52763,6 +52763,11 @@ function canonicalizeLayout(layout) {
 
 // packages/widget-dashboard/build-module/types.mjs
 var WIDGET_DASHBOARD_COLUMN_COUNT = 4;
+var WIDGET_DASHBOARD_COLUMN_STEPS = {
+  0: 1,
+  600: 2,
+  960: WIDGET_DASHBOARD_COLUMN_COUNT
+};
 
 // packages/widget-dashboard/build-module/utils/row-height-presets/row-height-presets.mjs
 var ROW_HEIGHT_PRESETS = {
@@ -52771,30 +52776,11 @@ var ROW_HEIGHT_PRESETS = {
   large: 400
 };
 var DEFAULT_ROW_HEIGHT = ROW_HEIGHT_PRESETS.medium;
-var PRESET_ENTRIES = Object.entries(ROW_HEIGHT_PRESETS);
-function rowHeightToPreset(rowHeight) {
-  let closest2 = "medium";
-  let minDistance = Infinity;
-  for (const [preset, value] of PRESET_ENTRIES) {
-    const distance = Math.abs(rowHeight - value);
-    if (distance < minDistance) {
-      minDistance = distance;
-      closest2 = preset;
-    }
-  }
-  return closest2;
-}
-function presetToRowHeight(preset) {
-  return ROW_HEIGHT_PRESETS[preset];
-}
-function snapRowHeight(rowHeight) {
-  return presetToRowHeight(rowHeightToPreset(rowHeight));
-}
 
 // packages/widget-dashboard/build-module/utils/default-grid/default-grid.mjs
 var DEFAULT_GRID = {
   model: "grid",
-  columns: WIDGET_DASHBOARD_COLUMN_COUNT,
+  columns: WIDGET_DASHBOARD_COLUMN_STEPS,
   rowHeight: DEFAULT_ROW_HEIGHT
 };
 
@@ -52906,8 +52892,8 @@ function normalizeGridSettings(settings, defaultRowHeight) {
     return settings;
   }
   const gridSettings = settings;
-  const rowHeight = gridSettings.rowHeight;
-  const resolved = typeof rowHeight === "number" ? snapRowHeight(rowHeight) : defaultRowHeight;
+  const { rowHeight } = gridSettings;
+  const resolved = typeof rowHeight === "number" && Number.isFinite(rowHeight) && rowHeight > 0 ? rowHeight : defaultRowHeight;
   if (rowHeight === resolved) {
     return settings;
   }
@@ -52918,25 +52904,38 @@ function normalizeGridSettings(settings, defaultRowHeight) {
 }
 
 // packages/widget-dashboard/build-module/utils/resolve-dashboard-column-count/resolve-dashboard-column-count.mjs
-var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN = 600;
-var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_TWO_COLUMNS = 960;
-function resolveDashboardColumnCap(columns) {
-  if (typeof columns !== "number" || !Number.isFinite(columns)) {
-    return WIDGET_DASHBOARD_COLUMN_COUNT;
+function resolveDashboardColumns(columns, minColumnWidth) {
+  if (typeof columns === "number") {
+    return Number.isFinite(columns) ? Math.max(1, Math.floor(columns)) : void 0;
   }
-  return Math.max(1, Math.floor(columns));
+  if (typeof columns !== "object" || columns === null) {
+    return void 0;
+  }
+  const hasFloor = resolveDashboardMinColumnWidth(minColumnWidth) !== void 0;
+  const steps = {};
+  for (const [width, count] of Object.entries(columns)) {
+    const from = Number(width);
+    if (!Number.isFinite(from) || from < 0) {
+      continue;
+    }
+    if (count === "auto") {
+      if (hasFloor) {
+        steps[from] = "auto";
+      }
+      continue;
+    }
+    if (typeof count !== "number" || !Number.isFinite(count)) {
+      continue;
+    }
+    steps[from] = Math.max(1, Math.floor(count));
+  }
+  return Object.keys(steps).length > 0 ? steps : void 0;
 }
-function resolveDashboardColumnCount(containerWidth, maxColumns = WIDGET_DASHBOARD_COLUMN_COUNT) {
-  if (containerWidth <= 0) {
-    return maxColumns;
+function resolveDashboardMinColumnWidth(minColumnWidth) {
+  if (typeof minColumnWidth !== "number" || !Number.isFinite(minColumnWidth) || minColumnWidth <= 0) {
+    return void 0;
   }
-  if (containerWidth < WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN) {
-    return 1;
-  }
-  if (containerWidth < WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_TWO_COLUMNS) {
-    return Math.min(2, maxColumns);
-  }
-  return maxColumns;
+  return minColumnWidth;
 }
 
 // packages/widget-dashboard/build-module/utils/pending-actions-map.mjs
@@ -53006,9 +53005,17 @@ function useDashboardPolicy() {
 var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
 function resolveGridSettings(settings) {
   const normalized = normalizeGridSettings(settings, DEFAULT_ROW_HEIGHT);
+  const minColumnWidth = resolveDashboardMinColumnWidth(
+    normalized.minColumnWidth
+  );
+  const columns = resolveDashboardColumns(
+    normalized.columns,
+    minColumnWidth
+  );
   return {
     ...normalized,
-    columns: resolveDashboardColumnCap(normalized.columns)
+    columns: columns === void 0 && minColumnWidth === void 0 ? WIDGET_DASHBOARD_COLUMN_STEPS : columns,
+    minColumnWidth
   };
 }
 var DEFAULT_RESOLVE_WIDGET_MODULE = (moduleId) => import(
@@ -63194,11 +63201,11 @@ function useStoreProps(store, props, key2, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React298.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState112 = React298.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState111 = React298.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React298.useMemo(() => ({
     ...store,
-    useState: useState112
-  }), [store, useState112]), useEvent4(() => {
+    useState: useState111
+  }), [store, useState111]), useEvent4(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -74650,7 +74657,7 @@ function WidgetSettingsTrigger({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_element290 = __toESM(require_element(), 1);
+var import_element289 = __toESM(require_element(), 1);
 
 // node_modules/.store/@dnd-kit/core@6.3.1-nfz0NdyM1TOwo0kLimB1OQ/node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react84 = __toESM(require_react());
@@ -81932,38 +81939,6 @@ var DashboardLanes = (0, import_element284.forwardRef)(
   }
 );
 
-// packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
-var import_compose58 = __toESM(require_compose(), 1);
-var import_element285 = __toESM(require_element(), 1);
-function useDashboardContainerColumnCount(forwardedRef, maxColumns) {
-  const [container, setContainer] = (0, import_element285.useState)(
-    null
-  );
-  const [containerWidth, setContainerWidth] = (0, import_element285.useState)(0);
-  const resizeObserverRef = (0, import_compose58.useResizeObserver)(([{ contentRect }]) => {
-    setContainerWidth(contentRect.width);
-  });
-  const containerRef = (0, import_compose58.useMergeRefs)([
-    setContainer,
-    resizeObserverRef,
-    forwardedRef ?? null
-  ]);
-  (0, import_element285.useLayoutEffect)(() => {
-    if (!container) {
-      return;
-    }
-    const { width } = container.getBoundingClientRect();
-    if (width > 0) {
-      setContainerWidth(width);
-    }
-  }, [container]);
-  const columnCount = (0, import_element285.useMemo)(
-    () => resolveDashboardColumnCount(containerWidth, maxColumns),
-    [containerWidth, maxColumns]
-  );
-  return { containerRef, columnCount };
-}
-
 // packages/widget-dashboard/build-module/components/widget-layout-controls/widget-layout-controls.mjs
 var import_i18n84 = __toESM(require_i18n(), 1);
 var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
@@ -82148,7 +82123,7 @@ function WidgetToolbar({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element286 = __toESM(require_element(), 1);
+var import_element285 = __toESM(require_element(), 1);
 var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE121 = "data-wp-hash";
 function getRuntime121() {
@@ -82234,7 +82209,7 @@ if (typeof process === "undefined" || true) {
   registerStyle121("415a4244a3", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._000e7ddc64fb1ac6__handle-corner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._000e7ddc64fb1ac6__handle-corner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._000e7ddc64fb1ac6__handle-corner:after{transform-origin:0 100%}._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}.f227b7c826e4b495__handle-horizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._000e7ddc64fb1ac6__handle-corner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}.f227b7c826e4b495__handle-horizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}.f227b7c826e4b495__handle-horizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:Highlight}}');
 }
 var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handle-corner": "_000e7ddc64fb1ac6__handle-corner", "handle-horizontal": "f227b7c826e4b495__handle-horizontal" };
-var WidgetResizeHandle = (0, import_element286.forwardRef)(function UnforwardedWidgetResizeHandle({ listeners: listeners2, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element285.forwardRef)(function UnforwardedWidgetResizeHandle({ listeners: listeners2, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
     return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
       "div",
@@ -82415,10 +82390,10 @@ function WidgetActions({
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/widget-attributes.mjs
-var import_element289 = __toESM(require_element(), 1);
+var import_element288 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-attributes/attributes-dropdown.mjs
-var import_element287 = __toESM(require_element(), 1);
+var import_element286 = __toESM(require_element(), 1);
 var import_i18n86 = __toESM(require_i18n(), 1);
 var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE123 = "data-wp-hash";
@@ -82511,7 +82486,7 @@ function AttributesDropdown({
   onChange,
   onOpenChange
 }) {
-  const form = (0, import_element287.useMemo)(
+  const form = (0, import_element286.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: fields2.map((field) => field.id)
@@ -82558,17 +82533,17 @@ function AttributesDropdown({
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/use-inline-fit.mjs
-var import_compose59 = __toESM(require_compose(), 1);
-var import_element288 = __toESM(require_element(), 1);
+var import_compose58 = __toESM(require_compose(), 1);
+var import_element287 = __toESM(require_element(), 1);
 function useInlineFit(options = {}) {
   const { locked = false } = options;
   const availableSize = useWidgetHeaderAvailableSize();
-  const [naturalSize, setNaturalSize] = (0, import_element288.useState)(0);
-  const measureRef = (0, import_compose59.useResizeObserver)(
+  const [naturalSize, setNaturalSize] = (0, import_element287.useState)(0);
+  const measureRef = (0, import_compose58.useResizeObserver)(
     ([entry]) => setNaturalSize(entry.contentRect.width)
   );
   const computed = availableSize !== null && naturalSize > 0 && naturalSize > availableSize;
-  const [held, setHeld] = (0, import_element288.useState)(computed);
+  const [held, setHeld] = (0, import_element287.useState)(computed);
   if (!locked && held !== computed) {
     setHeld(computed);
   }
@@ -82670,26 +82645,26 @@ function WidgetAttributes({
     (attribute) => attribute.relevance !== "high"
   );
   const settingsReserveRef = useReserveHeaderSpace("settings");
-  const [dropdownOpen, setDropdownOpen] = (0, import_element289.useState)(false);
-  const [inlineHasFocus, setInlineHasFocus] = (0, import_element289.useState)(false);
-  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element289.useState)(false);
+  const [dropdownOpen, setDropdownOpen] = (0, import_element288.useState)(false);
+  const [inlineHasFocus, setInlineHasFocus] = (0, import_element288.useState)(false);
+  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element288.useState)(false);
   const { measureRef, collapsed } = useInlineFit({
     locked: dropdownOpen || inlineHasFocus || dropdownTriggerHasFocus
   });
-  (0, import_element289.useEffect)(() => {
+  (0, import_element288.useEffect)(() => {
     if (collapsed) {
       setInlineHasFocus(false);
     } else {
       setDropdownTriggerHasFocus(false);
     }
   }, [collapsed]);
-  const fields2 = (0, import_element289.useMemo)(
+  const fields2 = (0, import_element288.useMemo)(
     () => (widgetType.attributes ?? []).filter(
       (attribute) => attribute.relevance === "high"
     ),
     [widgetType.attributes]
   );
-  const form = (0, import_element289.useMemo)(
+  const form = (0, import_element288.useMemo)(
     () => ({
       layout: { type: "row", alignment: "center" },
       fields: fields2.map((field) => ({
@@ -82699,7 +82674,7 @@ function WidgetAttributes({
     }),
     [fields2]
   );
-  const handleChange = (0, import_element289.useCallback)(
+  const handleChange = (0, import_element288.useCallback)(
     (edits) => {
       onLayoutChange(
         layout.map(
@@ -82891,7 +82866,7 @@ function registerStyle125(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle125("a52fa1ece1", "._942bbd7b48da810c__grid{--wp-grid-placeholder-radius:var(--wpds-border-radius-lg,8px);--wp-grid-drag-preview-radius:var(--wpds-border-radius-lg,8px);--wp-widget-dashboard-tile-focus-offset:2px;--wp-widget-dashboard-focus-ring-reserve:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) + var(--wp-widget-dashboard-tile-focus-offset));container-name:widget-dashboard;container-type:inline-size;padding-block-start:var(--wp-widget-dashboard-focus-ring-reserve);width:100%}.a87790b3d11e7d7d__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}.b97c9541af3255f3__tile-edit-mode{--_wp-widget-dashboard-elevation-xs:0 1px 1px rgba(0,0,0,.03),0 1px 2px rgba(0,0,0,.02),0 3px 3px rgba(0,0,0,.02),0 4px 4px rgba(0,0,0,.01);box-shadow:var(--_wp-widget-dashboard-elevation-xs)}.b97c9541af3255f3__tile-edit-mode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wp-widget-dashboard-tile-focus-offset,2px)}._1b97ff991d2fb77e__drag-preview{height:100%}._1b97ff991d2fb77e__drag-preview .a87790b3d11e7d7d__tile{box-shadow:none}");
+  registerStyle125("555ab73936", "._942bbd7b48da810c__grid{--wp-grid-placeholder-radius:var(--wpds-border-radius-lg,8px);--wp-grid-drag-preview-radius:var(--wpds-border-radius-lg,8px);--wp-widget-dashboard-tile-focus-offset:2px;--wp-widget-dashboard-focus-ring-reserve:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) + var(--wp-widget-dashboard-tile-focus-offset));padding-block-start:var(--wp-widget-dashboard-focus-ring-reserve);width:100%}.a87790b3d11e7d7d__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}.b97c9541af3255f3__tile-edit-mode{--_wp-widget-dashboard-elevation-xs:0 1px 1px rgba(0,0,0,.03),0 1px 2px rgba(0,0,0,.02),0 3px 3px rgba(0,0,0,.02),0 4px 4px rgba(0,0,0,.01);box-shadow:var(--_wp-widget-dashboard-elevation-xs)}.b97c9541af3255f3__tile-edit-mode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wp-widget-dashboard-tile-focus-offset,2px)}._1b97ff991d2fb77e__drag-preview{height:100%}._1b97ff991d2fb77e__drag-preview .a87790b3d11e7d7d__tile{box-shadow:none}");
 }
 var widgets_default = { "grid": "_942bbd7b48da810c__grid", "tile": "a87790b3d11e7d7d__tile", "tile-edit-mode": "b97c9541af3255f3__tile-edit-mode", "drag-preview": "_1b97ff991d2fb77e__drag-preview" };
 function toGridLayout(widgets, permissionsFor) {
@@ -82950,7 +82925,7 @@ function applyMasonryChange(widgets, masonryLayout) {
     }
   );
 }
-var Widgets = (0, import_element290.forwardRef)(
+var Widgets = (0, import_element289.forwardRef)(
   function UnforwardedWidgets({ className }, ref) {
     const {
       layout,
@@ -82960,12 +82935,8 @@ var Widgets = (0, import_element290.forwardRef)(
       widgetTypes,
       canPerform
     } = useDashboardInternalContext();
-    const { containerRef, columnCount } = useDashboardContainerColumnCount(
-      ref,
-      gridSettings.columns
-    );
     const isMasonry = gridSettings.model === "masonry";
-    const permissionsFor = (0, import_element290.useCallback)(
+    const permissionsFor = (0, import_element289.useCallback)(
       (widget) => {
         const widgetType = widgetTypes.find(
           (type) => type.name === widget.type
@@ -82980,17 +82951,17 @@ var Widgets = (0, import_element290.forwardRef)(
       },
       [widgetTypes, canPerform]
     );
-    const gridLayout = (0, import_element290.useMemo)(
+    const gridLayout = (0, import_element289.useMemo)(
       () => isMasonry ? toMasonryLayout(layout, permissionsFor) : toGridLayout(layout, permissionsFor),
       [layout, isMasonry, permissionsFor]
     );
-    const handleGridChange = (0, import_element290.useCallback)(
+    const handleGridChange = (0, import_element289.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element290.useCallback)(
+    const handleMasonryChange = (0, import_element289.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -83047,7 +83018,7 @@ var Widgets = (0, import_element290.forwardRef)(
         widget.uuid
       );
     });
-    const renderDragPreview = (0, import_element290.useCallback)(
+    const renderDragPreview = (0, import_element289.useCallback)(
       ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime402.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
       []
     );
@@ -83060,7 +83031,8 @@ var Widgets = (0, import_element290.forwardRef)(
       DashboardLanes,
       {
         layout: gridLayout,
-        columns: columnCount,
+        columns: gridSettings.columns,
+        minColumnWidth: gridSettings.minColumnWidth,
         flowTolerance: gridSettings.flowTolerance,
         onChangeLayout: handleMasonryChange,
         ...sharedRenderProps,
@@ -83070,21 +83042,15 @@ var Widgets = (0, import_element290.forwardRef)(
       DashboardGrid,
       {
         layout: gridLayout,
-        columns: columnCount,
+        columns: gridSettings.columns,
+        minColumnWidth: gridSettings.minColumnWidth,
         rowHeight: gridSettings.rowHeight,
         onChangeLayout: handleGridChange,
         ...sharedRenderProps,
         children
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
-      "div",
-      {
-        ref: containerRef,
-        className: clsx_default(widgets_default.grid, className),
-        children: surface
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: surface });
   }
 );
 
@@ -83148,10 +83114,10 @@ import {
 import { registerFieldType } from "@wordpress/widget-primitives";
 
 // routes/dashboard/field-types/location-control/location-control.tsx
-var import_element292 = __toESM(require_element());
+var import_element291 = __toESM(require_element());
 
 // routes/dashboard/field-types/location-picker/location-picker.tsx
-var import_element291 = __toESM(require_element());
+var import_element290 = __toESM(require_element());
 var import_i18n87 = __toESM(require_i18n());
 
 // packages/style-runtime/src/index.ts
@@ -83254,11 +83220,11 @@ function LocationPicker({
   selectButton = true,
   onChange
 }) {
-  const locationInputId = (0, import_element291.useId)();
-  const [locationInput, setLocationInput] = (0, import_element291.useState)(seedInput);
-  const [locationOptions, setLocationOptions] = (0, import_element291.useState)([]);
-  const [isLocatingCity, setIsLocatingCity] = (0, import_element291.useState)(false);
-  (0, import_element291.useEffect)(() => {
+  const locationInputId = (0, import_element290.useId)();
+  const [locationInput, setLocationInput] = (0, import_element290.useState)(seedInput);
+  const [locationOptions, setLocationOptions] = (0, import_element290.useState)([]);
+  const [isLocatingCity, setIsLocatingCity] = (0, import_element290.useState)(false);
+  (0, import_element290.useEffect)(() => {
     if (!selectButton || seedInput) {
       setLocationInput(seedInput);
     }
@@ -83294,7 +83260,7 @@ function LocationPicker({
       setIsLocatingCity(false);
     }
   };
-  (0, import_element291.useEffect)(() => {
+  (0, import_element290.useEffect)(() => {
     const query = locationInput.trim();
     if (query.length < 2) {
       setLocationOptions([]);
@@ -83442,7 +83408,7 @@ function LocationControl({
   hideLabelFromVision
 }) {
   const value = field.getValue({ item: data });
-  const onLocationChange = (0, import_element292.useCallback)(
+  const onLocationChange = (0, import_element291.useCallback)(
     (location) => {
       onChange(
         field.setValue({
@@ -83506,23 +83472,36 @@ var import_data8 = __toESM(require_data());
 var import_preferences2 = __toESM(require_preferences());
 var SCOPE2 = "core/dashboard";
 var KEY2 = "dashboardGridSettings";
+var COLUMN_POLICY = {
+  columns: { 0: 1, 600: 2, 960: 4 },
+  minColumnWidth: void 0
+};
+function snapRowHeight(rowHeight) {
+  return Object.values(ROW_HEIGHT_PRESETS).reduce(
+    (closest2, preset) => Math.abs(preset - rowHeight) < Math.abs(closest2 - rowHeight) ? preset : closest2
+  );
+}
 function useDashboardGridSettings() {
   return (0, import_data8.useSelect)((select) => {
     const stored = select(import_preferences2.store).get(SCOPE2, KEY2);
-    return {
+    const settings = {
       ...normalizeGridSettings(
         stored ?? DEFAULT_GRID,
         DEFAULT_ROW_HEIGHT
       ),
-      // The removed Columns control persisted other counts into this
-      // preference; pinning on read keeps those stale values inert.
-      columns: WIDGET_DASHBOARD_COLUMN_COUNT
+      ...COLUMN_POLICY
+    };
+    return settings.model === "masonry" ? settings : {
+      ...settings,
+      rowHeight: snapRowHeight(
+        settings.rowHeight ?? DEFAULT_ROW_HEIGHT
+      )
     };
   }, []);
 }
 
 // routes/dashboard/widget-host/dashboard-widget-host-provider.tsx
-var import_element293 = __toESM(require_element());
+var import_element292 = __toESM(require_element());
 import { Link as Link2 } from "@wordpress/route";
 import { WidgetHostProvider as WidgetHostProvider2 } from "@wordpress/widget-primitives";
 
@@ -83592,13 +83571,13 @@ function toRouteTarget(path) {
     )
   };
 }
-var DashboardRouteLink = (0, import_element293.forwardRef)(function UnforwardedDashboardRouteLink({ path, ...props }, ref) {
+var DashboardRouteLink = (0, import_element292.forwardRef)(function UnforwardedDashboardRouteLink({ path, ...props }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(Link2, { ref, ...toRouteTarget(path), ...props });
 });
 function DashboardWidgetHostProvider({
   children
 }) {
-  const host = (0, import_element293.useMemo)(
+  const host = (0, import_element292.useMemo)(
     () => ({
       links: {
         match: matchDashboardHref,
@@ -83623,7 +83602,7 @@ function Dashboard() {
     []
   );
   const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
-  const [editMode, setEditMode] = (0, import_element294.useState)(false);
+  const [editMode, setEditMode] = (0, import_element293.useState)(false);
   const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
