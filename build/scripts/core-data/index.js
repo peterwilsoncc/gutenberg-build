@@ -15541,9 +15541,17 @@ ${err.toString()}`);
   var POST_RAW_ATTRIBUTES = ["title", "excerpt", "content"];
   var blocksTransientEdits = {
     blocks: {
-      read: (record) => (0, import_blocks4.parse)(record.content?.raw ?? ""),
+      read: (record) => (
+        // Post content is fetched in the edit context, with its `raw` value.
+        (0, import_blocks4.parse)(
+          record.content?.raw ?? ""
+        )
+      ),
       write: (record) => ({
-        content: (0, import_blocks4.__unstableSerializeAndClean)(record.blocks)
+        // The blocks are the record's parsed content.
+        content: (0, import_blocks4.__unstableSerializeAndClean)(
+          record.blocks
+        )
       })
     }
   };
@@ -15797,8 +15805,14 @@ ${err.toString()}`);
     return newEdits;
   };
   async function loadPostTypeEntities() {
-    const postTypesPromise = (0, import_api_fetch2.default)({ path: "/wp/v2/types?context=view" });
-    const taxonomiesPromise = window.__experimentalEnableRealTimeCollaboration ? (0, import_api_fetch2.default)({ path: "/wp/v2/taxonomies?context=view" }) : Promise.resolve({});
+    const postTypesPromise = (0, import_api_fetch2.default)(
+      {
+        path: "/wp/v2/types?context=view"
+      }
+    );
+    const taxonomiesPromise = window.__experimentalEnableRealTimeCollaboration ? (0, import_api_fetch2.default)({
+      path: "/wp/v2/taxonomies?context=view"
+    }) : Promise.resolve({});
     const [postTypes, taxonomies] = await Promise.all([
       postTypesPromise,
       taxonomiesPromise
@@ -15838,7 +15852,10 @@ ${err.toString()}`);
         },
         mergedEdits: { meta: true },
         rawAttributes: POST_RAW_ATTRIBUTES,
-        getTitle: (record) => record?.title?.rendered || record?.title || (isTemplate ? capitalCase(record.slug ?? "") : String(record.id)),
+        getTitle: (record) => (
+          // A fetched title is an object, an edited one a string.
+          record?.title?.rendered || record?.title || (isTemplate ? capitalCase(record.slug ?? "") : String(record.id))
+        ),
         __unstablePrePersist: (persistedRecord, edits) => prePersistPostType(persistedRecord, edits, name, isTemplate),
         __unstable_rest_base: postType.rest_base,
         // The templates controller returns the whole collection and never
@@ -15857,17 +15874,16 @@ ${err.toString()}`);
          * Apply changes from the local editor to the local CRDT document so
          * that those changes can be synced to other peers (via the provider).
          *
-         * @param {import('@wordpress/sync').CRDTDoc}               crdtDoc
-         * @param {Partial< import('@wordpress/sync').ObjectData >} changes
-         * @return {void}
+         * @param crdtDoc
+         * @param changes
          */
         applyChangesToCRDTDoc: (crdtDoc, changes) => applyPostChangesToCRDTDoc(crdtDoc, changes, syncedProperties),
         /**
          * Create the awareness instance for the entity's CRDT document.
          *
-         * @param {import('@wordpress/sync').CRDTDoc}  ydoc
-         * @param {import('@wordpress/sync').ObjectID} objectId
-         * @return {import('@wordpress/sync').Awareness} Awareness instance
+         * @param ydoc
+         * @param objectId
+         * @return Awareness instance
          */
         createAwareness: (ydoc, objectId) => {
           const kind = "postType";
@@ -15878,12 +15894,13 @@ ${err.toString()}`);
          * Extract changes from a CRDT document that can be used to update the
          * local editor state.
          *
-         * @param {import('@wordpress/sync').CRDTDoc}    crdtDoc
-         * @param {import('@wordpress/sync').ObjectData} editedRecord
-         * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
+         * @param crdtDoc
+         * @param editedRecord
+         * @return Changes to record
          */
         getChangesFromCRDTDoc: (crdtDoc, editedRecord) => getPostChangesFromCRDTDoc(
           crdtDoc,
+          // The records of post type entities are posts.
           editedRecord,
           syncedProperties
         ),
@@ -15891,11 +15908,14 @@ ${err.toString()}`);
          * Extract changes from a CRDT document that can be used to update the
          * local editor state.
          *
-         * @param {import('@wordpress/sync').ObjectData} record
-         * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
+         * @param record
+         * @return Changes to record
          */
         getPersistedCRDTDoc: (record) => {
-          return record?.meta?.[POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE] || null;
+          return (
+            // Post meta holds the persisted document as a string.
+            record?.meta?.[POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE] || null
+          );
         },
         shouldSync: () => !(Array.isArray(window._wpCollaborationDisabledPostTypes) && window._wpCollaborationDisabledPostTypes.includes(name))
       };
@@ -15903,9 +15923,11 @@ ${err.toString()}`);
     });
   }
   async function loadTaxonomyEntities() {
-    const taxonomies = await (0, import_api_fetch2.default)({
-      path: "/wp/v2/taxonomies?context=view"
-    });
+    const taxonomies = await (0, import_api_fetch2.default)(
+      {
+        path: "/wp/v2/taxonomies?context=view"
+      }
+    );
     return Object.entries(taxonomies ?? {}).map(([name, taxonomy]) => {
       const namespace = taxonomy?.rest_namespace ?? "wp/v2";
       const entity2 = {
@@ -16756,7 +16778,8 @@ ${err.toString()}`);
     if (action.type === "UNDO" || action.type === "REDO") {
       const { record } = action;
       let newState = state;
-      record.forEach(({ id: { kind, name, recordId }, changes }) => {
+      record.forEach(({ id: id2, changes }) => {
+        const { kind, name, recordId } = id2;
         const persistedRecord = state?.queriedData?.items?.default?.[recordId];
         const edits = Object.fromEntries(
           Object.entries(changes).map(([key, value]) => [
@@ -16811,28 +16834,26 @@ ${err.toString()}`);
                 if (!edits) {
                   continue;
                 }
-                const nextEdits2 = Object.keys(edits).reduce(
-                  (acc, key) => {
-                    if (
-                      // Edits are the "raw" attribute values, but records may have
-                      // objects with more properties, so we use `get` here for the
-                      // comparison.
-                      !(0, import_es68.default)(
-                        edits[key],
-                        record[key]?.raw ?? record[key]
-                      ) && // Sometimes the server alters the sent value which means
-                      // we need to also remove the edits before the api request.
-                      (!action.persistedEdits || !(0, import_es68.default)(
-                        edits[key],
-                        action.persistedEdits[key]
-                      ))
-                    ) {
-                      acc[key] = edits[key];
-                    }
-                    return acc;
-                  },
-                  {}
-                );
+                const nextEdits2 = Object.keys(edits).reduce((acc, key) => {
+                  if (
+                    // Edits are the "raw" attribute values, but records may have
+                    // objects with more properties, so we use `get` here for the
+                    // comparison.
+                    !(0, import_es68.default)(
+                      edits[key],
+                      // A raw attribute holds its value under `raw`.
+                      record[key]?.raw ?? record[key]
+                    ) && // Sometimes the server alters the sent value which means
+                    // we need to also remove the edits before the api request.
+                    (!action.persistedEdits || !(0, import_es68.default)(
+                      edits[key],
+                      action.persistedEdits[key]
+                    ))
+                  ) {
+                    acc[key] = edits[key];
+                  }
+                  return acc;
+                }, {});
                 if (Object.keys(nextEdits2).length) {
                   nextState[recordId] = nextEdits2;
                 } else {
@@ -16842,6 +16863,7 @@ ${err.toString()}`);
               return nextState;
             case "EDIT_ENTITY_RECORD":
               const nextEdits = {
+                // A keyless entity keeps its edits under the `undefined` key.
                 ...state[action.recordId],
                 ...action.edits
               };
@@ -16852,6 +16874,7 @@ ${err.toString()}`);
               });
               return {
                 ...state,
+                // A keyless entity keeps its edits under the `undefined` key.
                 [action.recordId]: nextEdits
               };
           }
@@ -16863,6 +16886,7 @@ ${err.toString()}`);
             case "SAVE_ENTITY_RECORD_FINISH":
               return {
                 ...state,
+                // A new record saves under the `undefined` key.
                 [action.recordId]: {
                   pending: action.type === "SAVE_ENTITY_RECORD_START",
                   error: action.error,
@@ -17113,7 +17137,8 @@ ${err.toString()}`);
       case "SET_COLLABORATION_SUPPORTED":
         return action.supported;
       case "SET_SYNC_CONNECTION_STATUS":
-        if (ConnectionErrorCode.DOCUMENT_SIZE_LIMIT_EXCEEDED === action.status?.error?.code) {
+        if (ConnectionErrorCode.DOCUMENT_SIZE_LIMIT_EXCEEDED === // Only a disconnected status has an error.
+        action.status?.error?.code) {
           return false;
         }
         return state;
