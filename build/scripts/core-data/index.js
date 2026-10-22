@@ -16367,7 +16367,10 @@ ${err.toString()}`);
           break;
         default:
           if (key === "_fields") {
-            parts.fields = get_normalized_comma_separable_default(value) ?? [];
+            parts.fields = get_normalized_comma_separable_default(
+              // The REST API takes `_fields` as a string or an array of names.
+              value
+            ) ?? [];
             value = parts.fields.join();
           }
           if (key === "include") {
@@ -16479,7 +16482,11 @@ ${err.toString()}`);
     const queryParts = get_query_parts_default(query);
     return queryParts.context;
   }
-  function getMergedItemIds(itemIds = [], nextItemIds, { page = 1, offset, perPage = 10 } = {}) {
+  function getMergedItemIds(itemIds = [], nextItemIds, {
+    page = 1,
+    offset,
+    perPage = 10
+  } = {}) {
     if (perPage === -1) {
       return nextItemIds;
     }
@@ -16526,6 +16533,7 @@ ${err.toString()}`);
               itemsList.map((item) => [
                 item?.[key],
                 conservativeMapItem(
+                  // Items are keyed by their ID, a string or a number.
                   state?.[context]?.[item?.[key]],
                   item
                 )
@@ -16556,11 +16564,14 @@ ${err.toString()}`);
           ...state,
           [context]: {
             ...state[context],
-            ...itemsList.reduce((result, item) => {
-              const itemId = item?.[key];
-              result[itemId] = state?.[context]?.[itemId] || isCompleteQuery;
-              return result;
-            }, {})
+            ...itemsList.reduce(
+              (result, item) => {
+                const itemId = item?.[key];
+                result[itemId] = state?.[context]?.[itemId] || isCompleteQuery;
+                return result;
+              },
+              {}
+            )
           }
         };
       }
@@ -16592,29 +16603,33 @@ ${err.toString()}`);
     // Queries shape is shared, but keyed by query `stableKey` part. Original
     // reducer tracks only a single query object.
     (0, import_data7.keyedReducer)("stableKey")
-  ])((state = {}, action) => {
-    if (action.type !== "RECEIVE_ITEMS") {
-      return state;
+  ])(
+    (state = {}, action) => {
+      if (action.type !== "RECEIVE_ITEMS") {
+        return state;
+      }
+      if (!Array.isArray(action.items)) {
+        return state;
+      }
+      const key = action.key ?? DEFAULT_ENTITY_KEY;
+      return {
+        itemIds: getMergedItemIds(
+          state.itemIds,
+          // Item keys are IDs, and `filter( Boolean )` drops the missing ones.
+          action.items.map((item) => item?.[key]).filter(Boolean),
+          {
+            page: action.page,
+            offset: action.offset,
+            perPage: action.perPage
+          }
+        ),
+        meta: action.meta
+      };
     }
-    if (!Array.isArray(action.items)) {
-      return state;
-    }
-    const key = action.key ?? DEFAULT_ENTITY_KEY;
-    return {
-      itemIds: getMergedItemIds(
-        state.itemIds,
-        action.items.map((item) => item?.[key]).filter(Boolean),
-        {
-          page: action.page,
-          offset: action.offset,
-          perPage: action.perPage
-        }
-      ),
-      meta: action.meta
-    };
-  });
+  );
   function removeQueryItems(queryItems, removedItems) {
     const itemIds = queryItems.itemIds.filter(
+      // Holes in the list keep their place: they match no removed item.
       (itemId) => !removedItems[itemId]
     );
     const removedCount = queryItems.itemIds.length - itemIds.length;
@@ -16627,6 +16642,7 @@ ${err.toString()}`);
         ...queryItems.meta,
         totalItems: Math.max(
           0,
+          // `isFinite` above is true only for a number.
           queryItems.meta.totalItems - removedCount
         ),
         totalPages: null
