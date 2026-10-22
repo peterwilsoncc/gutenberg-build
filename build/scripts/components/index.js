@@ -56272,6 +56272,14 @@ This message will only show in development mode. It won't appear in production. 
       (value) => !!value && /\d/.test(value)
     ).length > 0;
   }
+  function getSelectedUnits(values) {
+    return {
+      top: parseQuantityAndUnitFromRawValue(values?.top)[1],
+      right: parseQuantityAndUnitFromRawValue(values?.right)[1],
+      bottom: parseQuantityAndUnitFromRawValue(values?.bottom)[1],
+      left: parseQuantityAndUnitFromRawValue(values?.left)[1]
+    };
+  }
   function normalizeSides(sides3) {
     const filteredSides = [];
     if (!sides3?.length) {
@@ -56624,6 +56632,7 @@ This message will only show in development mode. It won't appear in production. 
     values,
     selectedUnits,
     setSelectedUnits,
+    units,
     sides: sides3,
     side,
     min: min2 = 0,
@@ -56678,13 +56687,14 @@ This message will only show in development mode. It won't appear in production. 
     const hasValues = isValuesDefined(values);
     const isMixed = hasValues && defaultValuesToModify.length > 1 && isValueMixed(values, defaultValuesToModify);
     const [parsedQuantity, parsedUnit] = parseQuantityAndUnitFromRawValue(mergedValue);
-    const computedUnit = hasValues ? parsedUnit : selectedUnits[defaultValuesToModify[0]];
+    const resolvedUnit = parsedUnit ?? selectedUnits[defaultValuesToModify[0]];
+    const computedUnit = resolvedUnit ?? units?.[0]?.value ?? "px";
     const generatedId = (0, import_compose38.useInstanceId)(BoxInputControl, "box-control-input");
     const inputId = [generatedId, side].join("-");
     const isMixedUnit = defaultValuesToModify.length > 1 && mergedValue === void 0 && defaultValuesToModify.some(
-      (s2) => selectedUnits[s2] !== computedUnit
+      (s2) => selectedUnits[s2] !== resolvedUnit
     );
-    const usedValue = mergedValue === void 0 && computedUnit ? computedUnit : mergedValue;
+    const usedValue = mergedValue ?? computedUnit;
     const mixedPlaceholder = isMixed || isMixedUnit ? (0, import_i18n36.__)("Mixed") : void 0;
     const hasPresets = presets && presets.length > 0 && presetKey;
     const hasPresetValue = hasPresets && mergedValue !== void 0 && !isMixed && isValuePreset(mergedValue, presetKey);
@@ -56724,6 +56734,7 @@ This message will only show in development mode. It won't appear in production. 
               {
                 ...props,
                 min: min2,
+                units,
                 className: clsx_default(
                   style_module_default39["unit-control"],
                   "component-box-control__unit-control"
@@ -56753,8 +56764,8 @@ This message will only show in development mode. It won't appear in production. 
                   );
                 },
                 min: isFinite(min2) ? min2 : 0,
-                max: CUSTOM_VALUE_SETTINGS[computedUnit ?? "px"]?.max ?? 10,
-                step: CUSTOM_VALUE_SETTINGS[computedUnit ?? "px"]?.step ?? 0.1,
+                max: CUSTOM_VALUE_SETTINGS[computedUnit]?.max ?? 10,
+                step: CUSTOM_VALUE_SETTINGS[computedUnit]?.step ?? 0.1,
                 value: parsedQuantity ?? 0,
                 withInputField: false
               }
@@ -56948,12 +56959,9 @@ This message will only show in development mode. It won't appear in production. 
     const [isLinked, setIsLinked] = (0, import_element136.useState)(
       !hasInitialValue || !isValueMixed(inputValues) || hasOneSide
     );
-    const [selectedUnits, setSelectedUnits] = (0, import_element136.useState)({
-      top: parseQuantityAndUnitFromRawValue(valuesProp?.top)[1],
-      right: parseQuantityAndUnitFromRawValue(valuesProp?.right)[1],
-      bottom: parseQuantityAndUnitFromRawValue(valuesProp?.bottom)[1],
-      left: parseQuantityAndUnitFromRawValue(valuesProp?.left)[1]
-    });
+    const [selectedUnits, setSelectedUnits] = (0, import_element136.useState)(
+      getSelectedUnits(valuesProp)
+    );
     const id3 = useUniqueId3(idProp);
     const headingId = `${id3}-heading`;
     const toggleLinked = () => {
@@ -56967,7 +56975,7 @@ This message will only show in development mode. It won't appear in production. 
     const handleOnReset = () => {
       onChange(resetValues);
       setValues(resetValues);
-      setSelectedUnits(resetValues);
+      setSelectedUnits(getSelectedUnits(resetValues));
       setIsDirty(false);
     };
     const inputControlProps = {
