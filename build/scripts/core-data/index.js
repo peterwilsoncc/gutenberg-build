@@ -21094,8 +21094,14 @@ ${err.toString()}`);
         if (!id2) {
           return {};
         }
-        const { getEditedEntityRecord: getEditedEntityRecord3 } = select6(STORE_NAME);
-        const editedRecord = getEditedEntityRecord3(kind, name, id2);
+        const { getEditedEntityRecord: getEditedEntityRecord3 } = select6(
+          STORE_NAME
+        );
+        const editedRecord = getEditedEntityRecord3(
+          kind,
+          name,
+          id2
+        );
         return {
           editedBlocks: editedRecord.blocks,
           content: editedRecord.content,
@@ -21104,7 +21110,10 @@ ${err.toString()}`);
       },
       [kind, name, id2]
     );
-    const { __unstableCreateUndoLevel: __unstableCreateUndoLevel2, editEntityRecord: editEntityRecord2 } = (0, import_data15.useDispatch)(STORE_NAME);
+    const { __unstableCreateUndoLevel: __unstableCreateUndoLevel2, editEntityRecord: editEntityRecord2 } = (
+      // The store is selected by name, which carries no store types.
+      (0, import_data15.useDispatch)(STORE_NAME)
+    );
     const blocks = (0, import_element6.useMemo)(() => {
       if (!id2) {
         return void 0;
@@ -21126,12 +21135,19 @@ ${err.toString()}`);
       (newBlocks, options) => {
         const noChange = blocks === newBlocks;
         if (noChange) {
-          return __unstableCreateUndoLevel2(kind, name, id2);
+          return __unstableCreateUndoLevel2(
+            // @ts-expect-error Bug: the action takes no arguments, so the entity is ignored.
+            kind,
+            name,
+            id2
+          );
         }
         const { selection, ...rest } = options;
         const edits = {
           selection,
-          content: ({ blocks: blocksForSerialization = [] }) => (0, import_blocks6.__unstableSerializeAndClean)(blocksForSerialization),
+          content: ({
+            blocks: blocksForSerialization = []
+          }) => (0, import_blocks6.__unstableSerializeAndClean)(blocksForSerialization),
           ...updateFootnotesFromMeta(newBlocks, meta)
         };
         editEntityRecord2(kind, name, id2, edits, {
@@ -21178,16 +21194,24 @@ ${err.toString()}`);
     const id2 = _id ?? providerId;
     const context = (0, import_element7.useContext)(EntityContext);
     const providedRevision = String(id2) === String(providerId) ? context?.revision?.[kind]?.[name] : void 0;
-    const revisionRecord = typeof providedRevision === "object" ? providedRevision : void 0;
+    const revisionRecord = (
+      // A provided revision record is an object, a revision ID is not.
+      typeof providedRevision === "object" ? providedRevision : void 0
+    );
     const revisionId = revisionRecord ? void 0 : providedRevision;
     const isRevision = !!(revisionRecord || revisionId);
     const { value, fullValue } = (0, import_data16.useSelect)(
       (select6) => {
         if (revisionRecord ? prop in revisionRecord : revisionId) {
-          const revision = revisionRecord ?? select6(STORE_NAME).getRevision(
+          const revision = revisionRecord ?? // The store is selected by name, which carries no store types.
+          select6(
+            STORE_NAME
+          ).getRevision(
             kind,
             name,
+            // Without an entity ID, this reads the record under `undefined`.
             id2,
+            // Set, as the condition above checks.
             revisionId,
             REVISION_QUERY
           );
@@ -21201,17 +21225,24 @@ ${err.toString()}`);
             fullValue: propValue
           };
         }
-        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select6(STORE_NAME);
+        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = (
+          // The store is selected by name, which carries no store types.
+          select6(STORE_NAME)
+        );
         const record = getEntityRecord3(kind, name, id2);
         const editedRecord = getEditedEntityRecord3(kind, name, id2);
         return record && editedRecord ? {
+          // Fields are read by their name.
           value: editedRecord[prop],
+          // Fields are read by their name.
           fullValue: record[prop]
         } : {};
       },
       [kind, name, id2, prop, revisionId, revisionRecord]
     );
-    const { editEntityRecord: editEntityRecord2 } = (0, import_data16.useDispatch)(STORE_NAME);
+    const { editEntityRecord: editEntityRecord2 } = (0, import_data16.useDispatch)(
+      STORE_NAME
+    );
     const setValue = (0, import_element7.useCallback)(
       (newValue) => {
         if (isRevision) {
@@ -21223,7 +21254,11 @@ ${err.toString()}`);
       },
       [editEntityRecord2, kind, name, id2, prop, isRevision]
     );
-    return [value, setValue, fullValue];
+    return [
+      value,
+      setValue,
+      fullValue
+    ];
   }
 
   // packages/core-data/build-module/hooks/use-post-editor-awareness-state.mjs
