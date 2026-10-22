@@ -18131,12 +18131,12 @@ ${err.toString()}`);
        * - The thunk returns a promise and that promise resolves, or;
        * - The thunk returns a non-promise.
        *
-       * @param {any|Function} inputOrThunk Input to add or thunk to execute.
+       * @param inputOrThunk Input to add or thunk to execute.
        *
-       * @return {Promise|any} If given an input, returns a promise that
-       *                       is resolved or rejected when the batch is
-       *                       processed. If given a thunk, returns the return
-       *                       value of that thunk.
+       * @return If given an input, returns a promise that
+       *         is resolved or rejected when the batch is
+       *         processed. If given a thunk, returns the return
+       *         value of that thunk.
        */
       add(inputOrThunk) {
         const id2 = ++lastId;
@@ -18150,7 +18150,9 @@ ${err.toString()}`);
           pending.delete(id2);
         });
         if (typeof inputOrThunk === "function") {
-          return Promise.resolve(inputOrThunk(add)).finally(() => {
+          return Promise.resolve(
+            inputOrThunk(add)
+          ).finally(() => {
             pending.delete(id2);
           });
         }
@@ -18160,8 +18162,8 @@ ${err.toString()}`);
        * Runs the batch. This calls `batchProcessor` and resolves or rejects
        * all promises returned by `add()`.
        *
-       * @return {Promise<boolean>} A promise that resolves to a boolean that is true
-       *                   if the processor returned no errors.
+       * @return A promise that resolves to a boolean that is true
+       *         if the processor returned no errors.
        */
       async run() {
         if (pending.size) {
@@ -18206,6 +18208,8 @@ ${err.toString()}`);
     };
   }
   var ObservableSet = class {
+    set;
+    subscribers;
     constructor(...args2) {
       this.set = new Set(...args2);
       this.subscribers = /* @__PURE__ */ new Set();
