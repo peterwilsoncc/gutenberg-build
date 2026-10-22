@@ -32218,15 +32218,22 @@ function getAbsolutePosition(element) {
     left: element.offsetLeft
   };
 }
-function useMovingAnimation(triggerAnimationOnChange) {
+function useMovingAnimation(index2, itemsKey) {
   const ref = (0, import_element103.useRef)(null);
   const previousRef = (0, import_element103.useRef)(void 0);
+  const previousItemsKeyRef = (0, import_element103.useRef)(itemsKey);
   if (ref.current) {
     previousRef.current = getAbsolutePosition(ref.current);
   }
   (0, import_element103.useLayoutEffect)(() => {
+    const hasItemsChanged = previousItemsKeyRef.current !== itemsKey;
+    previousItemsKeyRef.current = itemsKey;
     const previous = previousRef.current;
     if (!previous || !ref.current) {
+      return;
+    }
+    if (hasItemsChanged) {
+      ref.current.style.transform = "";
       return;
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -32256,7 +32263,7 @@ function useMovingAnimation(triggerAnimationOnChange) {
       controller.stop();
       controller.set({ x: 0, y: 0 });
     };
-  }, [triggerAnimationOnChange]);
+  }, [index2, itemsKey]);
   return ref;
 }
 
@@ -32266,9 +32273,10 @@ var { MediaUploadModal } = unlock3(import_media_utils.privateApis);
 function AnimatedMediaItem({
   children,
   index: index2,
+  itemsKey,
   className
 }) {
-  const ref = useMovingAnimation(index2);
+  const ref = useMovingAnimation(index2, itemsKey);
   return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { ref, className, children });
 }
 function normalizeValue(value) {
@@ -32438,6 +32446,9 @@ function MediaPreview({ attachment }) {
   }
   return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components29.Icon, { icon: file_default });
 }
+function getItemsKey(items) {
+  return (items ?? []).map((item) => String(item.id)).sort().join(",");
+}
 function ExpandedMediaEditAttachments({
   allItems,
   addButtonLabel,
@@ -32449,6 +32460,7 @@ function ExpandedMediaEditAttachments({
   isUploading,
   setTargetItemId
 }) {
+  const itemsKey = getItemsKey(allItems);
   return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
     "div",
     {
@@ -32466,6 +32478,7 @@ function ExpandedMediaEditAttachments({
             AnimatedMediaItem,
             {
               index: index2,
+              itemsKey,
               className: clsx_default("fields__media-edit-expanded-item", {
                 "has-preview-image": hasPreviewImage
               }),
@@ -32575,6 +32588,7 @@ function CompactMediaEditAttachments({
   isUploading,
   setTargetItemId
 }) {
+  const itemsKey = getItemsKey(allItems);
   return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
     !!allItems?.length && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
       "div",
@@ -32590,6 +32604,7 @@ function CompactMediaEditAttachments({
             AnimatedMediaItem,
             {
               index: index2,
+              itemsKey,
               className: "fields__media-edit-compact",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
