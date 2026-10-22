@@ -19570,10 +19570,17 @@ ${err.toString()}`);
     dispatch4.receiveUserQuery(path, users2);
   };
   var getCurrentUser2 = () => async ({ dispatch: dispatch4 }) => {
-    const currentUser2 = await (0, import_api_fetch10.default)({ path: "/wp/v2/users/me" });
+    const currentUser2 = await (0, import_api_fetch10.default)({
+      path: "/wp/v2/users/me"
+    });
     dispatch4.receiveCurrentUser(currentUser2);
   };
-  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select6, dispatch: dispatch4, registry, resolveSelect: resolveSelect3 }) => {
+  var getEntityRecord2 = (kind, name, key = "", query) => async ({
+    select: select6,
+    dispatch: dispatch4,
+    registry,
+    resolveSelect: resolveSelect3
+  }) => {
     const configs = await resolveSelect3.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -19634,14 +19641,20 @@ ${err.toString()}`);
         Object.entries(entityConfig.transientEdits ?? {}).filter(
           ([propName, transientConfig]) => void 0 === recordWithTransients[propName] && transientConfig && "object" === typeof transientConfig && "read" in transientConfig && "function" === typeof transientConfig.read
         ).forEach(([propName, transientConfig]) => {
-          recordWithTransients[propName] = transientConfig.read(recordWithTransients);
+          recordWithTransients[propName] = // The filter above keeps the configs that read the record.
+          transientConfig.read(
+            recordWithTransients
+          );
         });
-        if (recordWithTransients.blocks && typeof recordWithTransients.content?.raw === "string") {
+        if (recordWithTransients.blocks && // Post content is fetched in the edit context, with its `raw` value.
+        typeof recordWithTransients.content?.raw === "string") {
           setCachedBlocks(
             kind,
             name,
             key,
+            // Checked above to be a string.
             recordWithTransients.content.raw,
+            // The blocks transient edit parses the content into blocks.
             recordWithTransients.blocks
           );
         }
@@ -19664,10 +19677,13 @@ ${err.toString()}`);
             });
           },
           // Get the current entity record (with edits)
-          getEditedRecord: async () => await resolveSelect3.getEditedEntityRecord(
-            kind,
-            name,
-            key
+          getEditedRecord: async () => (
+            // The synced record is received below, so it has an edited record.
+            await resolveSelect3.getEditedEntityRecord(
+              kind,
+              name,
+              key
+            )
           ),
           // Refetch the current entity record from the database.
           refetchRecord: async () => {
@@ -19746,7 +19762,8 @@ ${err.toString()}`);
         const response = await (0, import_api_fetch10.default)({ path, parse: false });
         records = Object.values(await response.json());
         meta = getPaginationMeta(response.headers);
-      } else if (query.per_page === -1 && query[RECEIVE_INTERMEDIATE_RESULTS] === true) {
+      } else if (query.per_page === -1 && // The private option is a symbol key of the query.
+      query[RECEIVE_INTERMEDIATE_RESULTS] === true) {
         let page = 1;
         let totalPages;
         do {
@@ -19754,7 +19771,9 @@ ${err.toString()}`);
             path: (0, import_url6.addQueryArgs)(path, { page, per_page: 100 }),
             parse: false
           });
-          const pageRecords = Object.values(await response.json());
+          const pageRecords = Object.values(
+            await response.json()
+          );
           const pageMeta = getPaginationMeta(response.headers);
           totalPages = pageMeta.totalPages ?? 1;
           if (!meta) {
@@ -19782,7 +19801,9 @@ ${err.toString()}`);
           page++;
         } while (page <= totalPages);
       } else {
-        records = Object.values(await (0, import_api_fetch10.default)({ path }));
+        records = Object.values(
+          await (0, import_api_fetch10.default)({ path })
+        );
         meta = {
           totalItems: records.length,
           totalPages: 1
@@ -19823,8 +19844,10 @@ ${err.toString()}`);
         const targetHints = records.filter(
           (record) => !!record?.[key] && !!record?._links?.self?.[0]?.targetHints?.allow
         ).map((record) => ({
+          // Records are keyed by their ID.
           id: record[key],
           permissions: getUserPermissionsFromAllowHeader(
+            // Filtered above to records with an allow hint.
             record._links.self[0].targetHints.allow
           )
         }));
@@ -19923,7 +19946,10 @@ ${err.toString()}`);
     }
     dispatch4.receiveUserPermissions(receiveUserPermissionArgs);
   };
-  canUser2.getResolutionArgs = (action, resource, id2) => [resource, id2];
+  canUser2.getResolutionArgs = (action, resource, id2) => [
+    resource,
+    id2
+  ];
   var canUserEditEntityRecord2 = (kind, name, recordId) => async ({ resolveSelect: resolveSelect3 }) => {
     await resolveSelect3.canUser("update", { kind, name, id: recordId });
   };
@@ -19932,6 +19958,7 @@ ${err.toString()}`);
       rest_base: restBase,
       rest_namespace: restNamespace = "wp/v2",
       supports
+      // Autosaves are requested for posts of an existing post type.
     } = await resolveSelect3.getPostType(postType);
     if (!supports?.autosave) {
       return;
@@ -19952,7 +19979,10 @@ ${err.toString()}`);
       "theme",
       { status: "active" }
     );
-    const globalStylesURL = activeThemes?.[0]?._links?.["wp:user-global-styles"]?.[0]?.href;
+    const globalStylesURL = (
+      // Themes are fetched with their links.
+      activeThemes?.[0]?._links?.["wp:user-global-styles"]?.[0]?.href
+    );
     if (!globalStylesURL) {
       return;
     }
@@ -19989,7 +20019,10 @@ ${err.toString()}`);
       "globalStyles",
       globalStylesId
     ) : void 0;
-    const revisionsURL = record?._links?.["version-history"]?.[0]?.href;
+    const revisionsURL = (
+      // Global styles are fetched with their links.
+      record?._links?.["version-history"]?.[0]?.href
+    );
     if (revisionsURL) {
       const resetRevisions = await (0, import_api_fetch10.default)({
         url: revisionsURL
@@ -20003,6 +20036,7 @@ ${err.toString()}`);
         )
       );
       dispatch4.receiveThemeGlobalStyleRevisions(
+        // Set, as the record it names has revisions.
         globalStylesId,
         revisions
       );
@@ -20031,11 +20065,14 @@ ${err.toString()}`);
         context: "view"
       }
     );
-    const mappedPatternCategories = patternCategories?.map((userCategory) => ({
-      ...userCategory,
-      label: (0, import_html_entities3.decodeEntities)(userCategory.name),
-      name: userCategory.slug
-    })) || [];
+    const mappedPatternCategories = (
+      // Requested with these fields.
+      patternCategories?.map((userCategory) => ({
+        ...userCategory,
+        label: (0, import_html_entities3.decodeEntities)(userCategory.name),
+        name: userCategory.slug
+      })) || []
+    );
     dispatch4({
       type: "RECEIVE_USER_PATTERN_CATEGORIES",
       patternCategories: mappedPatternCategories
@@ -20123,6 +20160,7 @@ ${err.toString()}`);
         };
       }
       const path = (0, import_url6.addQueryArgs)(
+        // Entities with revisions have a revisions URL.
         entityConfig.getRevisionsUrl(recordKey),
         query
       );
@@ -20136,8 +20174,11 @@ ${err.toString()}`);
       }
       if (response) {
         if (isPaginated) {
-          records = Object.values(await response.json());
+          records = Object.values(
+            await response.json()
+          );
           meta.totalItems = getPaginationMeta(
+            // Fetched unparsed when paginated.
             response.headers
           ).totalItems;
         } else {
@@ -20215,6 +20256,7 @@ ${err.toString()}`);
         return;
       }
       const path = (0, import_url6.addQueryArgs)(
+        // Entities with revisions have a revisions URL.
         entityConfig.getRevisionsUrl(recordKey, revisionKey),
         query
       );
