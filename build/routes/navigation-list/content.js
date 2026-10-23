@@ -53827,19 +53827,10 @@ function NavigationListView({
     postType: NAVIGATION_POST_TYPE2,
     context: "list"
   });
-  const actions = (0, import_element161.useMemo)(() => {
-    return [
-      editAction,
-      ...postTypeActions?.flatMap((action) => {
-        switch (action.id) {
-          // Skip revisions as Gutenberg does not support it in this context
-          case "view-post-revisions":
-            return [];
-        }
-        return [action];
-      }) ?? []
-    ];
-  }, [editAction, postTypeActions]);
+  const actions = (0, import_element161.useMemo)(
+    () => [editAction, ...postTypeActions],
+    [editAction, postTypeActions]
+  );
   const selection = (searchParams.ids ?? []).map((id) => id.toString()) ?? [];
   const firstNavigationId = (0, import_element161.useMemo)(() => {
     if (navigationMenus && navigationMenus.length > 0) {

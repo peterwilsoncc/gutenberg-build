@@ -54294,7 +54294,7 @@ function PatternListView({
     },
     [invalidate, searchParams, navigate]
   );
-  const postTypeActions = usePostActions({
+  const actions = usePostActions({
     postType: PATTERN_POST_TYPE,
     context: "list",
     onActionPerformed: (actionId, items) => {
@@ -54303,16 +54303,6 @@ function PatternListView({
       }
     }
   });
-  const actions = (0, import_element163.useMemo)(() => {
-    return [
-      ...postTypeActions?.flatMap((action) => {
-        if (action.id === "view-post-revisions") {
-          return [];
-        }
-        return [action];
-      })
-    ];
-  }, [postTypeActions]);
   const handleTabChange = (0, import_element163.useCallback)(
     (typeSlug) => {
       navigate({

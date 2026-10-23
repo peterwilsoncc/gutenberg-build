@@ -55183,19 +55183,11 @@ function TemplateListView({
     },
     [cleanupDeletedPostIdsFromUrl]
   );
-  const postTypeActions = usePostActions({
+  const actions = usePostActions({
     postType: TEMPLATE_POST_TYPE3,
     context: "list",
     onActionPerformed
   });
-  const actions = (0, import_element164.useMemo)(() => {
-    return postTypeActions?.flatMap((action) => {
-      if (action.id === "view-post-revisions") {
-        return [];
-      }
-      return [action];
-    });
-  }, [postTypeActions]);
   const handleTabChange = (0, import_element164.useCallback)(
     (viewSlug) => {
       navigate({

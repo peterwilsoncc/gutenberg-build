@@ -53871,7 +53871,7 @@ function TemplatePartListView({
     },
     [invalidate, searchParams, navigate]
   );
-  const postTypeActions = usePostActions({
+  const actions = usePostActions({
     postType: TEMPLATE_PART_POST_TYPE,
     context: "list",
     onActionPerformed: (actionId, items) => {
@@ -53880,18 +53880,6 @@ function TemplatePartListView({
       }
     }
   });
-  const actions = (0, import_element160.useMemo)(() => {
-    return [
-      ...postTypeActions?.flatMap(
-        (action) => {
-          if (action.id === "view-post-revisions") {
-            return [];
-          }
-          return [action];
-        }
-      )
-    ];
-  }, [postTypeActions]);
   const handleTabChange = (0, import_element160.useCallback)(
     (viewSlug) => {
       navigate({
