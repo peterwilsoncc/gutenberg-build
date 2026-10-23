@@ -30049,7 +30049,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle20("94533a674c", "._1dec843460a3c9d5__label{display:inline-flex;max-width:100%;min-width:0;position:relative}._50ddec5669c9d4a6__label-block{flex:1}._1563c8aa5e21d063__button{fill:currentColor;align-items:center;appearance:none;background:transparent;border:none;border-radius:var(--wpds-border-radius-xs,1px);color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:var(--wpds-cursor-control,pointer);display:flex;font-family:inherit;height:100%;justify-content:center;line-height:1;outline:none;padding:0 12px;position:relative;text-align:center}@media not (prefers-reduced-motion){._1563c8aa5e21d063__button{transition:color .16s linear,font-weight 60ms linear}}._1563c8aa5e21d063__button{user-select:none;width:100%;z-index:2}._1563c8aa5e21d063__button::-moz-focus-inner{border:0}._1563c8aa5e21d063__button[aria-disabled=true],._1563c8aa5e21d063__button[disabled]{cursor:default;opacity:.4}._1563c8aa5e21d063__button:hover:not([disabled]):not([aria-disabled=true]){color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.e1b6a1f76b7eb2bb__is-deselectable:focus{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.e1b6a1f76b7eb2bb__is-deselectable:focus[aria-pressed=false]{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));box-shadow:0 0 0 2px var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff))}._407216dd3e301287__is-icon{aspect-ratio:1;height:38px;padding:0}._617c0f0a1c161590__is-pressed{color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-weight:var(--wpds-typography-font-weight-emphasis,600)}._2850882d974e5419__button-content{display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:1}");
+    registerStyle20("377412b511", '._1dec843460a3c9d5__label{display:inline-flex;max-width:100%;min-width:0;position:relative}._50ddec5669c9d4a6__label-block{flex:1}._1563c8aa5e21d063__button{fill:currentColor;align-items:center;appearance:none;background:transparent;border:none;border-radius:var(--wpds-border-radius-xs,1px);color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:var(--wpds-cursor-control,pointer);display:flex;font-family:inherit;height:100%;justify-content:center;line-height:1;outline:none;padding:0 12px;position:relative;text-align:center}@media not (prefers-reduced-motion){._1563c8aa5e21d063__button{transition:color .16s linear,font-weight 60ms linear}}._1563c8aa5e21d063__button{user-select:none;width:100%;z-index:2}._1563c8aa5e21d063__button::-moz-focus-inner{border:0}._1563c8aa5e21d063__button[aria-disabled=true],._1563c8aa5e21d063__button[disabled]{cursor:default;opacity:.4}._1563c8aa5e21d063__button:hover:not([disabled]):not([aria-disabled=true]){color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.e1b6a1f76b7eb2bb__is-deselectable:focus{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.e1b6a1f76b7eb2bb__is-deselectable:focus[aria-pressed=false]{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));box-shadow:0 0 0 2px var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff))}._407216dd3e301287__is-icon{aspect-ratio:1;height:38px;padding:0}._617c0f0a1c161590__is-pressed{color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-weight:var(--wpds-typography-font-weight-emphasis,600)}._2850882d974e5419__button-content{display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:1}._2850882d974e5419__button-content[data-label]{align-items:center;flex-direction:column}._2850882d974e5419__button-content[data-label]:after{content:attr(data-label)/"";font-weight:var(--wpds-typography-font-weight-emphasis,600);height:0;overflow:hidden;visibility:hidden}');
   }
   var style_module_default20 = { "label": "_1dec843460a3c9d5__label", "label-block": "_50ddec5669c9d4a6__label-block", "button": "_1563c8aa5e21d063__button", "is-deselectable": "e1b6a1f76b7eb2bb__is-deselectable", "is-icon": "_407216dd3e301287__is-icon", "is-pressed": "_617c0f0a1c161590__is-pressed", "button-content": "_2850882d974e5419__button-content" };
   var WithToolTip = ({ showTooltip, text, children }) => {
@@ -30108,6 +30108,10 @@ This message will only show in development mode. It won't appear in production. 
       "data-value": value,
       ref: forwardedRef
     };
+    const buttonContentProps = {
+      className: style_module_default20["button-content"],
+      "data-label": typeof children === "string" ? children : void 0
+    };
     const labelRef = (0, import_element61.useRef)(null);
     (0, import_element61.useLayoutEffect)(() => {
       if (isPressed && labelRef.current) {
@@ -30127,7 +30131,7 @@ This message will only show in development mode. It won't appear in production. 
             "aria-pressed": isPressed,
             type: "button",
             onClick: buttonOnClick,
-            children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("div", { className: style_module_default20["button-content"], children })
+            children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("div", { ...buttonContentProps, children })
           }
         ) : /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
           Radio,
@@ -30141,7 +30145,7 @@ This message will only show in development mode. It won't appear in production. 
             },
             render: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("button", { type: "button", ...commonProps }),
             value,
-            children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("div", { className: style_module_default20["button-content"], children })
+            children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("div", { ...buttonContentProps, children })
           }
         )
       }
