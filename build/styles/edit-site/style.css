@@ -3686,12 +3686,16 @@ button.font-library__upload-area {
 }
 
 .global-styles-ui-block-types-filter {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   padding: 0 16px;
 }
 
 .global-styles-ui-block-types-search {
   flex-grow: 1;
+}
+
+.global-styles-ui-block-types-item-list {
+  margin-inline: 4px;
 }
 
 .global-styles-ui-block-types-item-list .global-styles-ui-block-types-item__icon {
@@ -3703,11 +3707,15 @@ button.font-library__upload-area {
 }
 
 .global-styles-ui-block-types-group + .global-styles-ui-block-types-group {
-  margin-top: 16px;
+  margin-top: 12px;
+}
+
+.global-styles-ui-block-types-group:last-child {
+  padding-bottom: 12px;
 }
 
 .global-styles-ui-block-types-group__title {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   padding: 0 16px;
 }
 
