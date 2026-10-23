@@ -53650,6 +53650,7 @@ var AddNavigationModal = ({
         );
         navigate({
           to: `/navigation/edit/${encodeURIComponent(
+            // Saved navigation menus have a numeric ID.
             savedRecord.id
           )}`
         });

@@ -18384,9 +18384,22 @@ ${err.toString()}`);
     }
     let action;
     if (query) {
-      action = receiveQueriedItems(records, query, edits, meta);
+      action = receiveQueriedItems(
+        // Records are read by their fields' names.
+        records,
+        query,
+        // Edits are read by their fields' names.
+        edits,
+        meta
+      );
     } else {
-      action = receiveItems(records, edits, meta);
+      action = receiveItems(
+        // Records are read by their fields' names.
+        records,
+        // Edits are read by their fields' names.
+        edits,
+        meta
+      );
     }
     return {
       ...action,
@@ -18450,7 +18463,10 @@ ${err.toString()}`);
       preview
     };
   }
-  var deleteEntityRecord = (kind, name, recordId, query, { __unstableFetch = import_api_fetch5.default, throwOnError = false } = {}) => async ({ dispatch: dispatch4, resolveSelect: resolveSelect3 }) => {
+  var deleteEntityRecord = (kind, name, recordId, query, {
+    __unstableFetch = import_api_fetch5.default,
+    throwOnError = false
+  } = {}) => async ({ dispatch: dispatch4, resolveSelect: resolveSelect3 }) => {
     logEntityDeprecation(kind, name, "deleteEntityRecord");
     const configs = await resolveSelect3.getEntitiesConfig(kind);
     const entityConfig = configs.find(
@@ -18505,8 +18521,9 @@ ${err.toString()}`);
       dispatch4.__unstableReleaseStoreLock(lock2);
     }
   };
-  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select: select6, dispatch: dispatch4 }) => {
+  var editEntityRecord = (kind, name, recordId, edits, { undoIgnore, isCached } = {}) => ({ select: select6, dispatch: dispatch4 }) => {
     logEntityDeprecation(kind, name, "editEntityRecord");
+    const fieldEdits = edits;
     const entityConfig = select6.getEntityConfig(kind, name);
     if (!entityConfig) {
       throw new Error(
@@ -18520,8 +18537,12 @@ ${err.toString()}`);
       name,
       recordId
     );
-    const editsWithMerges = Object.keys(edits).reduce((acc, key) => {
-      acc[key] = mergedEdits[key] ? { ...editedRecord[key], ...edits[key] } : edits[key];
+    const editsWithMerges = Object.keys(fieldEdits).reduce((acc, key) => {
+      acc[key] = mergedEdits[key] ? {
+        // Merged fields are objects, such as post meta.
+        ...editedRecord[key],
+        ...fieldEdits[key]
+      } : fieldEdits[key];
       return acc;
     }, {});
     const edit = {
@@ -18533,27 +18554,39 @@ ${err.toString()}`);
       edits: clearUnchangedEdits(editsWithMerges, record)
     };
     const syncManager2 = getEntitySyncManager();
-    syncManager2?.update(kind, name, recordId, editsWithMerges, {
-      isCached: Boolean(options.isCached),
-      undoIgnore: Boolean(options.undoIgnore)
-    });
-    if (!options.undoIgnore && !syncManager2?.isLoaded?.(kind, name, recordId)) {
+    syncManager2?.update(
+      kind,
+      name,
+      // @ts-expect-error Bug: a keyless entity passes an `undefined` ID, which the sync manager's type excludes.
+      recordId,
+      editsWithMerges,
+      {
+        isCached: Boolean(isCached),
+        undoIgnore: Boolean(undoIgnore)
+      }
+    );
+    if (!undoIgnore && !syncManager2?.isLoaded?.(
+      kind,
+      name,
+      // @ts-expect-error Bug: a keyless entity passes an `undefined` ID, which the sync manager's type excludes.
+      recordId
+    )) {
       recordEntityEdit(
         select6.getUndoManager(),
         syncManager2,
         [
           {
             id: { kind, name, recordId },
-            changes: Object.keys(edits).reduce((acc, key) => {
+            changes: Object.keys(fieldEdits).reduce((acc, key) => {
               acc[key] = {
                 from: editedRecord[key],
-                to: edits[key]
+                to: fieldEdits[key]
               };
               return acc;
             }, {})
           }
         ],
-        options.isCached
+        isCached
       );
     }
     dispatch4({
@@ -18577,13 +18610,10 @@ ${err.toString()}`);
     if (!currentEdits) {
       return;
     }
-    const clearedEdits = Object.keys(currentEdits).reduce(
-      (acc, key) => {
-        acc[key] = void 0;
-        return acc;
-      },
-      {}
-    );
+    const clearedEdits = Object.keys(currentEdits).reduce((acc, key) => {
+      acc[key] = void 0;
+      return acc;
+    }, {});
     dispatch4({
       type: "EDIT_ENTITY_RECORD",
       kind,
@@ -18623,12 +18653,11 @@ ${err.toString()}`);
   var __unstableCreateUndoLevel = () => ({ select: select6 }) => {
     recordEntityEdit(select6.getUndoManager(), getEntitySyncManager());
   };
-  var saveEntityRecord = (kind, name, record, options = {}) => async ({ select: select6, resolveSelect: resolveSelect3, dispatch: dispatch4 }) => {
-    const {
-      isAutosave = false,
-      __unstableFetch = import_api_fetch5.default,
-      throwOnError = false
-    } = options;
+  var saveEntityRecord = (kind, name, record, {
+    isAutosave = false,
+    __unstableFetch = import_api_fetch5.default,
+    throwOnError = false
+  } = {}) => async ({ select: select6, resolveSelect: resolveSelect3, dispatch: dispatch4 }) => {
     logEntityDeprecation(kind, name, "saveEntityRecord");
     const configs = await resolveSelect3.getEntitiesConfig(kind);
     const entityConfig = configs.find(
@@ -18681,7 +18710,9 @@ ${err.toString()}`);
         const syncEdits = isNewRecord ? void 0 : await syncManager2?.beforeSave?.(
           kind,
           name,
+          // @ts-expect-error Bug: a keyless entity passes an `undefined` ID, which the sync manager's type excludes.
           recordId,
+          // Fields are read by their name.
           record,
           { persistedRecord, isAutosave }
         );
@@ -18718,24 +18749,23 @@ ${err.toString()}`);
               ...data,
               ...updatedRecord
             };
-            newRecord = Object.keys(newRecord).reduce(
-              (acc, key) => {
-                if ([
-                  "title",
-                  "excerpt",
-                  "content",
-                  "meta"
-                ].includes(key)) {
-                  acc[key] = newRecord[key];
-                } else if (key === "status") {
-                  acc[key] = persistedRecord.status === "auto-draft" && newRecord.status === "draft" ? newRecord.status : persistedRecord.status;
-                } else {
-                  acc[key] = persistedRecord[key];
-                }
-                return acc;
-              },
-              {}
-            );
+            newRecord = Object.keys(
+              newRecord
+            ).reduce((acc, key) => {
+              if ([
+                "title",
+                "excerpt",
+                "content",
+                "meta"
+              ].includes(key)) {
+                acc[key] = newRecord[key];
+              } else if (key === "status") {
+                acc[key] = persistedRecord.status === "auto-draft" && newRecord.status === "draft" ? newRecord.status : persistedRecord.status;
+              } else {
+                acc[key] = persistedRecord[key];
+              }
+              return acc;
+            }, {});
             dispatch4.receiveEntityRecords(
               kind,
               name,
@@ -18745,6 +18775,7 @@ ${err.toString()}`);
             );
           } else {
             dispatch4.receiveAutosaves(
+              // Posts have numeric IDs.
               persistedRecord.id,
               updatedRecord
             );
@@ -18771,11 +18802,13 @@ ${err.toString()}`);
             updatedRecord,
             void 0,
             true,
+            // The saved edits are cleared by their fields' names.
             record
           );
           syncManager2?.afterSave?.(kind, name, recordId, {
             savedRecord: updatedRecord,
             persistedRecord: isNewRecord ? void 0 : persistedRecord,
+            // Fields are read by their name.
             edits: record
           });
         }
@@ -18799,7 +18832,9 @@ ${err.toString()}`);
       dispatch4.__unstableReleaseStoreLock(lock2);
     }
   };
-  var __experimentalBatch = (requests) => async ({ dispatch: dispatch4 }) => {
+  var __experimentalBatch = ((requests) => async ({
+    dispatch: dispatch4
+  }) => {
     const batch = createBatch();
     const api = {
       saveEntityRecord(kind, name, record, options) {
@@ -18833,7 +18868,7 @@ ${err.toString()}`);
       ...resultPromises
     ]);
     return results;
-  };
+  });
   var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select: select6, dispatch: dispatch4, resolveSelect: resolveSelect3 }) => {
     logEntityDeprecation(kind, name, "saveEditedEntityRecord");
     if (!select6.hasEditsForEntityRecord(kind, name, recordId)) {
@@ -18938,6 +18973,7 @@ ${err.toString()}`);
     dispatch4({
       type: "RECEIVE_ITEM_REVISIONS",
       key,
+      // Records are read by their fields' names.
       items: records,
       recordKey,
       meta,
@@ -22218,7 +22254,9 @@ ${err.toString()}`);
   // packages/core-data/build-module/index.mjs
   var entitiesConfig2 = [
     ...rootEntitiesConfig,
-    ...additionalEntityConfigLoaders.filter((config) => !!config.name)
+    ...additionalEntityConfigLoaders.filter(
+      (config) => !!config.name
+    )
   ];
   var entitySelectors = entitiesConfig2.reduce((result, entity2) => {
     const { kind, name, plural } = entity2;

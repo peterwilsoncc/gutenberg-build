@@ -54854,6 +54854,7 @@ function NewTemplateModal({ onClose }) {
       );
       navigate({
         to: `/types/wp_template/edit/${encodeURIComponent(
+          // A registered post type saved with `throwOnError` returns the record.
           String(newTemplate.id)
         )}`
       });
@@ -54862,7 +54863,10 @@ function NewTemplateModal({ onClose }) {
         (0, import_i18n62.sprintf)(
           // translators: %s: Title of the created post or template, e.g: "Hello world".
           (0, import_i18n62.__)('"%s" successfully created.'),
-          (0, import_html_entities3.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n62.__)("(no title)")
+          (0, import_html_entities3.decodeEntities)(
+            // A registered post type saved with `throwOnError` returns the record.
+            newTemplate.title?.rendered || title
+          ) || (0, import_i18n62.__)("(no title)")
         ),
         {
           type: "snackbar"
