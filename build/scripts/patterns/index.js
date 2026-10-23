@@ -246,6 +246,7 @@ var wp;
           delete metadata.bindings;
           if (existingOverrides?.[metadata.name]) {
             for (const [attributeName, value] of Object.entries(
+              // Checked above, under the same possibly `undefined` key.
               existingOverrides[metadata.name]
             )) {
               if (!(0, import_blocks.getBlockType)(block.name)?.attributes[attributeName]) {
