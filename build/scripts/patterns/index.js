@@ -1921,6 +1921,7 @@ var wp;
         const isSyncedPattern = blocks.length === 1 && blocks[0] && (0, import_blocks3.isReusableBlock)(blocks[0]) && !!select(import_core_data8.store).getEntityRecord(
           "postType",
           "wp_block",
+          // A pattern block's `ref` is its `wp_block` post ID.
           blocks[0].attributes.ref
         );
         const isUnsyncedPattern = blocks.length === 1 && blocks?.[0]?.attributes?.metadata?.patternName;
@@ -1947,6 +1948,7 @@ var wp;
     );
     const { getBlocksByClientId } = (0, import_data10.useSelect)(import_block_editor3.store);
     const getContent = (0, import_element9.useCallback)(
+      // Only reachable once `canConvert` found every block.
       () => (0, import_blocks3.serialize)(getBlocksByClientId(clientIds)),
       [getBlocksByClientId, clientIds]
     );
@@ -2029,7 +2031,10 @@ var wp;
   var import_url = __toESM(require_url(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  function PatternsManageButton({ clientId, onClose }) {
+  function PatternsManageButton({
+    clientId,
+    onClose
+  }) {
     const [showConfirmDialog, setShowConfirmDialog] = (0, import_element10.useState)(false);
     const {
       attributes,
@@ -2048,9 +2053,11 @@ var wp;
         const _isSyncedPattern = !!block && (0, import_blocks4.isReusableBlock)(block) && !!canUser("read", {
           kind: "postType",
           name: "wp_block",
+          // A pattern block's `ref` is its `wp_block` post ID.
           id: block.attributes.ref
         });
         return {
+          // The menu only renders for a block that is in the editor.
           attributes: block.attributes,
           canEdit: canEditBlock(clientId),
           // For unsynced patterns, detaching is simply removing the `patternName` attribute.
@@ -2123,7 +2130,9 @@ var wp;
 
   // packages/patterns/build-module/components/index.mjs
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  function PatternsMenuItems({ rootClientId }) {
+  function PatternsMenuItems({
+    rootClientId
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_block_editor5.BlockSettingsMenuControls, { children: ({ selectedClientIds, onClose }) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
         PatternConvertButton,
