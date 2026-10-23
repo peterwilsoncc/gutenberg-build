@@ -21858,7 +21858,11 @@ ${err.toString()}`);
   var import_data17 = __toESM(require_data(), 1);
   var import_html_entities4 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-  function EntityRecordItem({ record, checked, onChange }) {
+  function EntityRecordItem({
+    record,
+    checked,
+    onChange
+  }) {
     const { name, kind, title, key } = record;
     const { entityRecordTitle } = (0, import_data17.useSelect)(
       (select6) => {
@@ -21867,14 +21871,21 @@ ${err.toString()}`);
             entityRecordTitle: title
           };
         }
-        const template = select6(STORE_NAME).getEditedEntityRecord(
-          kind,
-          name,
-          key
+        const template = (
+          // The store is selected by name, which carries no store types.
+          select6(
+            STORE_NAME
+          ).getEditedEntityRecord(kind, name, key)
         );
-        const { default_template_types: templateTypes = [] } = select6(STORE_NAME).getCurrentTheme() ?? {};
+        const { default_template_types: templateTypes = [] } = (
+          // The store is selected by name, which carries no store types.
+          select6(
+            STORE_NAME
+          ).getCurrentTheme() ?? {}
+        );
         return {
           entityRecordTitle: getTemplateInfo({
+            // The early return leaves only templates.
             template,
             templateTypes
           }).title
@@ -21885,7 +21896,10 @@ ${err.toString()}`);
     return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_jsx_runtime8.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_components.PanelRow, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
       import_components.CheckboxControl,
       {
-        label: (0, import_html_entities4.decodeEntities)(entityRecordTitle) || (0, import_i18n5.__)("Untitled"),
+        label: (
+          // `decodeEntities` returns a missing title as is.
+          (0, import_html_entities4.decodeEntities)(entityRecordTitle) || (0, import_i18n5.__)("Untitled")
+        ),
         checked,
         onChange,
         className: "entities-saved-states__change-control"
@@ -21908,10 +21922,15 @@ ${err.toString()}`);
         return (0, import_i18n6.__)("The following has been modified.");
     }
   }
-  function GlobalStylesDescription({ record }) {
+  function GlobalStylesDescription({
+    record
+  }) {
     const { editedRecord, savedRecord } = (0, import_data18.useSelect)(
       (select6) => {
-        const { getEditedEntityRecord: getEditedEntityRecord3, getEntityRecord: getEntityRecord3 } = select6(STORE_NAME);
+        const { getEditedEntityRecord: getEditedEntityRecord3, getEntityRecord: getEntityRecord3 } = (
+          // The store is selected by name, which carries no store types.
+          select6(STORE_NAME)
+        );
         return {
           editedRecord: getEditedEntityRecord3(
             record.kind,
@@ -21936,7 +21955,10 @@ ${err.toString()}`);
     );
     return globalStylesChanges.length ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("ul", { className: "entities-saved-states__changes", children: globalStylesChanges.map((change) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("li", { children: change }, change)) }) : null;
   }
-  function EntityDescription({ record, count }) {
+  function EntityDescription({
+    record,
+    count
+  }) {
     if ("globalStyles" === record?.name) {
       return null;
     }
@@ -21951,9 +21973,12 @@ ${err.toString()}`);
     const count = list.length;
     const firstRecord = list[0];
     const entityConfig = (0, import_data18.useSelect)(
-      (select6) => select6(STORE_NAME).getEntityConfig(
-        firstRecord.kind,
-        firstRecord.name
+      (select6) => (
+        // The store is selected by name, which carries no store types.
+        select6(STORE_NAME).getEntityConfig(
+          firstRecord.kind,
+          firstRecord.name
+        )
       ),
       [firstRecord.kind, firstRecord.name]
     );
@@ -21998,6 +22023,7 @@ ${err.toString()}`);
           __experimentalGetDirtyEntityRecords: __experimentalGetDirtyEntityRecords2,
           getEntityRecordEdits: getEntityRecordEdits2,
           getEntityConfig: getEntityConfig2
+          // The store is selected by name, which carries no store types.
         } = select6(STORE_NAME);
         return {
           editedEntities: __experimentalGetDirtyEntityRecords2(),
@@ -22025,6 +22051,7 @@ ${err.toString()}`);
         siteLogoEdit !== void 0 && "site_logo",
         siteIconEdit !== void 0 && "site_icon",
         ...Object.keys(otherSiteEdits)
+        // `Boolean` drops the properties without an edit.
       ].filter(Boolean);
       const editedSiteEntities = orderedSiteProperties.map(
         (property) => ({
@@ -22092,8 +22119,11 @@ ${err.toString()}`);
     variant = "default",
     successNoticeContent
   }) {
-    const saveButtonRef = (0, import_element10.useRef)();
-    const { saveDirtyEntities: saveDirtyEntities2 } = unlock((0, import_data20.useDispatch)(STORE_NAME));
+    const saveButtonRef = (0, import_element10.useRef)(void 0);
+    const { saveDirtyEntities: saveDirtyEntities2 } = unlock(
+      // The store is selected by name, which carries no store types.
+      (0, import_data20.useDispatch)(STORE_NAME)
+    );
     const partitionedSavables = dirtyEntityRecords.reduce((acc, record) => {
       const { name } = record;
       if (!acc[name]) {
