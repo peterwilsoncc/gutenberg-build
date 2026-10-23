@@ -1399,7 +1399,10 @@ var wp;
       (category) => pattern.wp_pattern_category?.includes(category.id)
     ).map((category) => category.label);
   }
-  function useDuplicatePatternProps({ pattern, onSuccess }) {
+  function useDuplicatePatternProps({
+    pattern,
+    onSuccess
+  }) {
     const { createSuccessNotice } = (0, import_data6.useDispatch)(import_notices2.store);
     const categories = (0, import_data6.useSelect)((select) => {
       const { getUserPatternCategories, getBlockPatternCategories } = select(import_core_data4.store);
@@ -1819,7 +1822,8 @@ var wp;
         });
       } catch (error) {
         onError?.();
-        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n6.__)("An error occurred while renaming the pattern.");
+        const restError = error;
+        const errorMessage = restError.message && restError.code !== "unknown_error" ? restError.message : (0, import_i18n6.__)("An error occurred while renaming the pattern.");
         createErrorNotice(errorMessage, {
           type: "snackbar",
           id: "pattern-update"
@@ -2158,7 +2162,7 @@ var wp;
     ...props
   }) {
     const id = (0, import_element11.useId)();
-    const textControlRef = (0, import_element11.useRef)();
+    const textControlRef = (0, import_element11.useRef)(void 0);
     const [name, setName] = (0, import_element11.useState)((0, import_html_entities3.decodeEntities)(category.name));
     const [isSaving, setIsSaving] = (0, import_element11.useState)(false);
     const [validationMessage, setValidationMessage] = (0, import_element11.useState)(false);
@@ -2376,7 +2380,10 @@ var wp;
       }
     );
   }
-  function DisallowOverridesModal({ onClose, onSave }) {
+  function DisallowOverridesModal({
+    onClose,
+    onSave
+  }) {
     const descriptionId = (0, import_element12.useId)();
     return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       import_components9.Modal,
