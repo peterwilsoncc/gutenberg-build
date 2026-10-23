@@ -19011,7 +19011,10 @@ ${err.toString()}`);
       registeredPostMeta: registeredPostMeta2
     };
   }
-  var editMediaEntity = (recordId, edits = {}, { __unstableFetch = import_api_fetch6.default, throwOnError = false } = {}) => async ({ dispatch: dispatch4, resolveSelect: resolveSelect3 }) => {
+  var editMediaEntity = (recordId, edits = {}, {
+    __unstableFetch = import_api_fetch6.default,
+    throwOnError = false
+  } = {}) => async ({ dispatch: dispatch4, resolveSelect: resolveSelect3 }) => {
     if (!recordId) {
       return;
     }
