@@ -315,6 +315,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.keyboardShortcuts && wp.keyboardShortcuts.__esModule) { wp.keyboardShortcuts = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.keyboardShortcuts); }
 (window.wp ||= {}).keyboardShortcuts = wp.keyboardShortcuts;
 })();
 //# sourceMappingURL=index.js.map

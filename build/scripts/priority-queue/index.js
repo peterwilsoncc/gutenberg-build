@@ -293,6 +293,7 @@ var wp;
   };
   return __toCommonJS(index_exports);
 })();
+if (wp.priorityQueue && wp.priorityQueue.__esModule) { wp.priorityQueue = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.priorityQueue); }
 (window.wp ||= {}).priorityQueue = wp.priorityQueue;
 })();
 //# sourceMappingURL=index.js.map

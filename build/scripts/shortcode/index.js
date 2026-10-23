@@ -294,6 +294,7 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.shortcode === 'object' && wp.shortcode.default) { wp.shortcode = wp.shortcode.default; }
+if (wp.shortcode && wp.shortcode.__esModule) { wp.shortcode = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.shortcode); }
 (window.wp ||= {}).shortcode = wp.shortcode;
 })();
 //# sourceMappingURL=index.js.map

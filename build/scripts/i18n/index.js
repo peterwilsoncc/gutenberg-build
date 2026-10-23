@@ -556,6 +556,7 @@ var wp;
   var hasTranslation = i18n.hasTranslation.bind(i18n);
   return __toCommonJS(index_exports);
 })();
+if (wp.i18n && wp.i18n.__esModule) { wp.i18n = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.i18n); }
 (window.wp ||= {}).i18n = wp.i18n;
 })();
 //# sourceMappingURL=index.js.map

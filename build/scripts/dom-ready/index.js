@@ -38,6 +38,7 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.domReady === 'object' && wp.domReady.default) { wp.domReady = wp.domReady.default; }
+if (wp.domReady && wp.domReady.__esModule) { wp.domReady = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.domReady); }
 (window.wp ||= {}).domReady = wp.domReady;
 })();
 //# sourceMappingURL=index.js.map

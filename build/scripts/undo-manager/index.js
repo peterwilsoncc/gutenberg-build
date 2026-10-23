@@ -156,6 +156,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.undoManager && wp.undoManager.__esModule) { wp.undoManager = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.undoManager); }
 (window.wp ||= {}).undoManager = wp.undoManager;
 })();
 //# sourceMappingURL=index.js.map

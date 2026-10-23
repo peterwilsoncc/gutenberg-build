@@ -1530,6 +1530,7 @@ var wp;
   });
   return require_parser();
 })();
+if (wp.blockSerializationSpecParser && wp.blockSerializationSpecParser.__esModule) { wp.blockSerializationSpecParser = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.blockSerializationSpecParser); }
 (window.wp ||= {}).blockSerializationSpecParser = wp.blockSerializationSpecParser;
 })();
 //# sourceMappingURL=index.js.map

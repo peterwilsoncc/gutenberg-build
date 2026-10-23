@@ -751,6 +751,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.styleEngine && wp.styleEngine.__esModule) { wp.styleEngine = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.styleEngine); }
 (window.wp ||= {}).styleEngine = wp.styleEngine;
 })();
 //# sourceMappingURL=index.js.map

@@ -87,6 +87,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.isShallowEqual && wp.isShallowEqual.__esModule) { wp.isShallowEqual = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.isShallowEqual); }
 (window.wp ||= {}).isShallowEqual = wp.isShallowEqual;
 })();
 //# sourceMappingURL=index.js.map

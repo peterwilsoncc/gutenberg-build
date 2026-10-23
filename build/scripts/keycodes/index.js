@@ -280,6 +280,7 @@ var wp;
   });
   return __toCommonJS(index_exports);
 })();
+if (wp.keycodes && wp.keycodes.__esModule) { wp.keycodes = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.keycodes); }
 (window.wp ||= {}).keycodes = wp.keycodes;
 })();
 //# sourceMappingURL=index.js.map

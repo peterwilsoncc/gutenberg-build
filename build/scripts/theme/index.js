@@ -5377,6 +5377,7 @@ var wp;
   });
   return __toCommonJS(index_exports);
 })();
+if (wp.theme && wp.theme.__esModule) { wp.theme = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.theme); }
 (window.wp ||= {}).theme = wp.theme;
 })();
 //# sourceMappingURL=index.js.map

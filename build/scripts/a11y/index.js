@@ -155,6 +155,7 @@ var wp;
   (0, import_dom_ready.default)(setup);
   return __toCommonJS(index_exports);
 })();
+if (wp.a11y && wp.a11y.__esModule) { wp.a11y = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.a11y); }
 (window.wp ||= {}).a11y = wp.a11y;
 })();
 //# sourceMappingURL=index.js.map

@@ -128663,6 +128663,7 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
+if (wp.editor && wp.editor.__esModule) { wp.editor = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.editor); }
 (window.wp ||= {}).editor = wp.editor;
 })();
 //# sourceMappingURL=index.js.map

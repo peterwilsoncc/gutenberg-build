@@ -1121,6 +1121,7 @@ var wp;
   var focus = { focusable: focusable_exports, tabbable: tabbable_exports };
   return __toCommonJS(index_exports);
 })();
+if (wp.dom && wp.dom.__esModule) { wp.dom = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.dom); }
 (window.wp ||= {}).dom = wp.dom;
 })();
 //# sourceMappingURL=index.js.map

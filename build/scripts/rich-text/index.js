@@ -3350,6 +3350,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.richText && wp.richText.__esModule) { wp.richText = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.richText); }
 (window.wp ||= {}).richText = wp.richText;
 })();
 //# sourceMappingURL=index.js.map

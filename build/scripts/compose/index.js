@@ -2526,6 +2526,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.compose && wp.compose.__esModule) { wp.compose = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.compose); }
 (window.wp ||= {}).compose = wp.compose;
 })();
 //# sourceMappingURL=index.js.map

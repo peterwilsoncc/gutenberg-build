@@ -71,6 +71,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.blob && wp.blob.__esModule) { wp.blob = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.blob); }
 (window.wp ||= {}).blob = wp.blob;
 })();
 //# sourceMappingURL=index.js.map

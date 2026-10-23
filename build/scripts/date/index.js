@@ -2055,6 +2055,7 @@ moment-timezone/moment-timezone-utils.js:
   (*! license : MIT *)
   (*! github.com/moment/moment-timezone *)
 */
+if (wp.date && wp.date.__esModule) { wp.date = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.date); }
 (window.wp ||= {}).date = wp.date;
 })();
 //# sourceMappingURL=index.js.map

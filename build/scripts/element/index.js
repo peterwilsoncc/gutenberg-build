@@ -974,6 +974,7 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
+if (wp.element && wp.element.__esModule) { wp.element = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.element); }
 (window.wp ||= {}).element = wp.element;
 })();
 //# sourceMappingURL=index.js.map

@@ -212,6 +212,7 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.tokenList === 'object' && wp.tokenList.default) { wp.tokenList = wp.tokenList.default; }
+if (wp.tokenList && wp.tokenList.__esModule) { wp.tokenList = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.tokenList); }
 (window.wp ||= {}).tokenList = wp.tokenList;
 })();
 //# sourceMappingURL=index.js.map

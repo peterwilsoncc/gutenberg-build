@@ -15828,6 +15828,7 @@ use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.developme
    * LICENSE file in the root directory of this source tree.
    *)
 */
+if (wp.widgets && wp.widgets.__esModule) { wp.widgets = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.widgets); }
 (window.wp ||= {}).widgets = wp.widgets;
 })();
 //# sourceMappingURL=index.js.map

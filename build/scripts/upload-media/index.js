@@ -3843,6 +3843,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.uploadMedia && wp.uploadMedia.__esModule) { wp.uploadMedia = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.uploadMedia); }
 (window.wp ||= {}).uploadMedia = wp.uploadMedia;
 })();
 //# sourceMappingURL=index.js.map

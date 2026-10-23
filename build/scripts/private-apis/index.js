@@ -123,6 +123,7 @@ var wp;
   var __private = /* @__PURE__ */ Symbol("Private API ID");
   return __toCommonJS(index_exports);
 })();
+if (wp.privateApis && wp.privateApis.__esModule) { wp.privateApis = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.privateApis); }
 (window.wp ||= {}).privateApis = wp.privateApis;
 })();
 //# sourceMappingURL=index.js.map

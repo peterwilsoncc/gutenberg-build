@@ -22377,6 +22377,7 @@ ${err.toString()}`);
   (0, import_data21.register)(store);
   return __toCommonJS(index_exports);
 })();
+if (wp.coreData && wp.coreData.__esModule) { wp.coreData = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.coreData); }
 (window.wp ||= {}).coreData = wp.coreData;
 })();
 //# sourceMappingURL=index.js.map

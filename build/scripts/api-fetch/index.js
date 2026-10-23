@@ -613,6 +613,7 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.apiFetch === 'object' && wp.apiFetch.default) { wp.apiFetch = wp.apiFetch.default; }
+if (wp.apiFetch && wp.apiFetch.__esModule) { wp.apiFetch = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.apiFetch); }
 (window.wp ||= {}).apiFetch = wp.apiFetch;
 })();
 //# sourceMappingURL=index.js.map

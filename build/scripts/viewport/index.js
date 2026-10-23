@@ -217,6 +217,7 @@ var wp;
   listener_default(BREAKPOINTS, OPERATORS);
   return __toCommonJS(index_exports);
 })();
+if (wp.viewport && wp.viewport.__esModule) { wp.viewport = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.viewport); }
 (window.wp ||= {}).viewport = wp.viewport;
 })();
 //# sourceMappingURL=index.js.map

@@ -64,6 +64,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.escapeHtml && wp.escapeHtml.__esModule) { wp.escapeHtml = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.escapeHtml); }
 (window.wp ||= {}).escapeHtml = wp.escapeHtml;
 })();
 //# sourceMappingURL=index.js.map

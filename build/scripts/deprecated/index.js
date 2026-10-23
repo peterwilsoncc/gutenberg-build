@@ -67,6 +67,7 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.deprecated === 'object' && wp.deprecated.default) { wp.deprecated = wp.deprecated.default; }
+if (wp.deprecated && wp.deprecated.__esModule) { wp.deprecated = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.deprecated); }
 (window.wp ||= {}).deprecated = wp.deprecated;
 })();
 //# sourceMappingURL=index.js.map

@@ -374,6 +374,7 @@ var wp;
   } = defaultHooks;
   return __toCommonJS(index_exports);
 })();
+if (wp.hooks && wp.hooks.__esModule) { wp.hooks = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.hooks); }
 (window.wp ||= {}).hooks = wp.hooks;
 })();
 //# sourceMappingURL=index.js.map

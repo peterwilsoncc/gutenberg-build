@@ -95,6 +95,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.reactI18n && wp.reactI18n.__esModule) { wp.reactI18n = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.reactI18n); }
 (window.wp ||= {}).reactI18n = wp.reactI18n;
 })();
 //# sourceMappingURL=index.js.map

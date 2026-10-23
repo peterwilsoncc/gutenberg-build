@@ -482,6 +482,7 @@ react-is/cjs/react-is.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
+if (wp.plugins && wp.plugins.__esModule) { wp.plugins = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.plugins); }
 (window.wp ||= {}).plugins = wp.plugins;
 })();
 //# sourceMappingURL=index.js.map

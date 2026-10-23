@@ -50,6 +50,7 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.warning === 'object' && wp.warning.default) { wp.warning = wp.warning.default; }
+if (wp.warning && wp.warning.__esModule) { wp.warning = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.warning); }
 (window.wp ||= {}).warning = wp.warning;
 })();
 //# sourceMappingURL=index.js.map

@@ -146,6 +146,7 @@ var wp;
   });
   return __toCommonJS(index_exports);
 })();
+if (wp.nux && wp.nux.__esModule) { wp.nux = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.nux); }
 (window.wp ||= {}).nux = wp.nux;
 })();
 //# sourceMappingURL=index.js.map

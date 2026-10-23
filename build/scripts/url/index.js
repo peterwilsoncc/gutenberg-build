@@ -800,6 +800,7 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if (wp.url && wp.url.__esModule) { wp.url = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.url); }
 (window.wp ||= {}).url = wp.url;
 })();
 //# sourceMappingURL=index.js.map

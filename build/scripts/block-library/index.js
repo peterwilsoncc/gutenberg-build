@@ -103592,6 +103592,7 @@ use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.developme
 fast-average-color/dist/index.esm.js:
   (*! Fast Average Color | © 2022 Denis Seleznev | MIT License | https://github.com/fast-average-color/fast-average-color *)
 */
+if (wp.blockLibrary && wp.blockLibrary.__esModule) { wp.blockLibrary = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.blockLibrary); }
 (window.wp ||= {}).blockLibrary = wp.blockLibrary;
 })();
 //# sourceMappingURL=index.js.map

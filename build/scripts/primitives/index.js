@@ -125,6 +125,7 @@ var wp;
   var View = "div";
   return __toCommonJS(index_exports);
 })();
+if (wp.primitives && wp.primitives.__esModule) { wp.primitives = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.primitives); }
 (window.wp ||= {}).primitives = wp.primitives;
 })();
 //# sourceMappingURL=index.js.map
