@@ -5290,6 +5290,7 @@ return array(
 			'submenuVisibility'
 		),
 		'supports' => array(
+			'contentRole' => true,
 			'anchor' => true,
 			'reusable' => false,
 			'html' => false,

@@ -72119,6 +72119,7 @@ ${text}
       "submenuVisibility"
     ],
     supports: {
+      contentRole: true,
       anchor: true,
       reusable: false,
       html: false,
