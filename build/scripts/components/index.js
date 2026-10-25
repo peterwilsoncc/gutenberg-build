@@ -49561,6 +49561,18 @@ This message will only show in development mode. It won't appear in production. 
     ] });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
+  function getValidity(customValidity, validityTarget) {
+    if (customValidity?.type === "validating") {
+      return customValidity;
+    }
+    if (validityTarget?.validationMessage) {
+      return { type: "invalid", message: validityTarget.validationMessage };
+    }
+    return customValidity?.type === "valid" ? customValidity : void 0;
+  }
+  function isSameValidity(a2, b2) {
+    return a2?.type === b2?.type && a2?.message === b2?.message;
+  }
   var ControlWithError = (0, import_element106.forwardRef)(function UnforwardedControlWithError({
     required,
     markWhenOptional,
@@ -49570,8 +49582,7 @@ This message will only show in development mode. It won't appear in production. 
     render = DEFAULT_RENDER,
     ...restProps
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element106.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element106.useState)();
+    const [validity, setValidity] = (0, import_element106.useState)();
     const [showMessage, setShowMessage] = (0, import_element106.useState)(false);
     const [isTouched, setIsTouched] = (0, import_element106.useState)(false);
     const wrapperRef = (0, import_element106.useRef)(null);
@@ -49579,14 +49590,14 @@ This message will only show in development mode. It won't appear in production. 
       const validityTarget = getValidityTarget();
       const handler = () => {
         if (customValidity?.type !== "validating") {
-          setErrorMessage(validityTarget?.validationMessage);
+          setValidity(getValidity(customValidity, validityTarget));
         }
         setShowMessage(true);
         validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       };
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
-    }, [customValidity?.type, getValidityTarget]);
+    }, [customValidity, getValidityTarget]);
     (0, import_element106.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
@@ -49623,41 +49634,14 @@ This message will only show in development mode. It won't appear in production. 
     }, [getValidityTarget]);
     (0, import_element106.useEffect)(() => {
       const validityTarget = getValidityTarget();
-      if (!customValidity?.type) {
-        validityTarget?.setCustomValidity("");
-        setErrorMessage(validityTarget?.validationMessage);
-        setStatusMessage(void 0);
-        return;
+      validityTarget?.setCustomValidity(
+        customValidity?.type === "invalid" ? customValidity.message ?? "" : ""
+      );
+      const nextValidity = getValidity(customValidity, validityTarget);
+      if (!isSameValidity(nextValidity, validity)) {
+        setValidity(nextValidity);
       }
-      switch (customValidity.type) {
-        case "validating": {
-          validityTarget?.setCustomValidity("");
-          setErrorMessage(void 0);
-          setStatusMessage({
-            type: "validating",
-            message: customValidity.message
-          });
-          break;
-        }
-        case "valid": {
-          validityTarget?.setCustomValidity("");
-          setErrorMessage(validityTarget?.validationMessage);
-          setStatusMessage({
-            type: "valid",
-            message: customValidity.message
-          });
-          break;
-        }
-        case "invalid": {
-          validityTarget?.setCustomValidity(
-            customValidity.message ?? ""
-          );
-          setErrorMessage(validityTarget?.validationMessage);
-          setStatusMessage(void 0);
-          break;
-        }
-      }
-    }, [customValidity, getValidityTarget]);
+    });
     (0, import_element106.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
@@ -49682,34 +49666,19 @@ This message will only show in development mode. It won't appear in production. 
       const isValidating = customValidity?.type === "validating";
       window.queueMicrotask(() => {
         if (!isValidating) {
-          setErrorMessage(validityTarget?.validationMessage);
+          setValidity(getValidity(customValidity, validityTarget));
         }
       });
     };
     const messageId = (0, import_element106.useId)();
-    const message = (() => {
-      if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
-          ValidityIndicator,
-          {
-            id: messageId,
-            type: "invalid",
-            message: errorMessage
-          }
-        );
+    const message = validity ? /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+      ValidityIndicator,
+      {
+        id: messageId,
+        type: validity.type,
+        message: validity.message
       }
-      if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
-          ValidityIndicator,
-          {
-            id: messageId,
-            type: statusMessage.type,
-            message: statusMessage.message
-          }
-        );
-      }
-      return null;
-    })();
+    ) : null;
     const visibleMessage = showMessage ? message : null;
     (0, import_element106.useEffect)(() => {
       const target = getValidityTarget();

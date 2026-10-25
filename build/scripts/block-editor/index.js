@@ -59163,6 +59163,18 @@ var wp;
     ] });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
+  function getValidity(customValidity, validityTarget) {
+    if (customValidity?.type === "validating") {
+      return customValidity;
+    }
+    if (validityTarget?.validationMessage) {
+      return { type: "invalid", message: validityTarget.validationMessage };
+    }
+    return customValidity?.type === "valid" ? customValidity : void 0;
+  }
+  function isSameValidity(a, b) {
+    return a?.type === b?.type && a?.message === b?.message;
+  }
   var ControlWithError = (0, import_element102.forwardRef)(function UnforwardedControlWithError({
     required,
     markWhenOptional,
@@ -59172,8 +59184,7 @@ var wp;
     render: render4 = DEFAULT_RENDER,
     ...restProps
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element102.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element102.useState)();
+    const [validity, setValidity] = (0, import_element102.useState)();
     const [showMessage, setShowMessage] = (0, import_element102.useState)(false);
     const [isTouched, setIsTouched] = (0, import_element102.useState)(false);
     const wrapperRef = (0, import_element102.useRef)(null);
@@ -59181,14 +59192,14 @@ var wp;
       const validityTarget = getValidityTarget();
       const handler = () => {
         if (customValidity?.type !== "validating") {
-          setErrorMessage(validityTarget?.validationMessage);
+          setValidity(getValidity(customValidity, validityTarget));
         }
         setShowMessage(true);
         validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       };
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
-    }, [customValidity?.type, getValidityTarget]);
+    }, [customValidity, getValidityTarget]);
     (0, import_element102.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
@@ -59225,41 +59236,14 @@ var wp;
     }, [getValidityTarget]);
     (0, import_element102.useEffect)(() => {
       const validityTarget = getValidityTarget();
-      if (!customValidity?.type) {
-        validityTarget?.setCustomValidity("");
-        setErrorMessage(validityTarget?.validationMessage);
-        setStatusMessage(void 0);
-        return;
+      validityTarget?.setCustomValidity(
+        customValidity?.type === "invalid" ? customValidity.message ?? "" : ""
+      );
+      const nextValidity = getValidity(customValidity, validityTarget);
+      if (!isSameValidity(nextValidity, validity)) {
+        setValidity(nextValidity);
       }
-      switch (customValidity.type) {
-        case "validating": {
-          validityTarget?.setCustomValidity("");
-          setErrorMessage(void 0);
-          setStatusMessage({
-            type: "validating",
-            message: customValidity.message
-          });
-          break;
-        }
-        case "valid": {
-          validityTarget?.setCustomValidity("");
-          setErrorMessage(validityTarget?.validationMessage);
-          setStatusMessage({
-            type: "valid",
-            message: customValidity.message
-          });
-          break;
-        }
-        case "invalid": {
-          validityTarget?.setCustomValidity(
-            customValidity.message ?? ""
-          );
-          setErrorMessage(validityTarget?.validationMessage);
-          setStatusMessage(void 0);
-          break;
-        }
-      }
-    }, [customValidity, getValidityTarget]);
+    });
     (0, import_element102.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
@@ -59284,34 +59268,19 @@ var wp;
       const isValidating = customValidity?.type === "validating";
       window.queueMicrotask(() => {
         if (!isValidating) {
-          setErrorMessage(validityTarget?.validationMessage);
+          setValidity(getValidity(customValidity, validityTarget));
         }
       });
     };
     const messageId = (0, import_element102.useId)();
-    const message2 = (() => {
-      if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-          ValidityIndicator,
-          {
-            id: messageId,
-            type: "invalid",
-            message: errorMessage
-          }
-        );
+    const message2 = validity ? /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
+      ValidityIndicator,
+      {
+        id: messageId,
+        type: validity.type,
+        message: validity.message
       }
-      if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-          ValidityIndicator,
-          {
-            id: messageId,
-            type: statusMessage.type,
-            message: statusMessage.message
-          }
-        );
-      }
-      return null;
-    })();
+    ) : null;
     const visibleMessage = showMessage ? message2 : null;
     (0, import_element102.useEffect)(() => {
       const target = getValidityTarget();
