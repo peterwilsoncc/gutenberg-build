@@ -1,7 +1,7 @@
 (function(exports, _wordpress_hooks) {
 
 "use strict";
-// node_modules/.store/@tannin/sprintf@1.3.2-Cmr2Bq6cYom5t58CNvMjRw/node_modules/@tannin/sprintf/src/index.js
+// node_modules/.store/@tannin/sprintf@1.3.4-2GEZGjRHdxj5NkDkKY-CZA/node_modules/@tannin/sprintf/src/index.js
 /**
 	* Regular expression matching format placeholder syntax.
 	*
@@ -52,7 +52,7 @@
 	* @template {string} T
 	* @overload
 	* @param {T} string - string printf format string
-	* @param {...import('../types').SprintfArgs<T>} args - arguments to interpolate
+	* @param {...import('../types/index.d.ts').SprintfArgs<T>} args - arguments to interpolate
 	*
 	* @return {string} Formatted string.
 	*/
@@ -74,7 +74,7 @@
 	* @template {string} T
 	* @overload
 	* @param {T} string - string printf format string
-	* @param {import('../types').SprintfArgs<T>} args - arguments to interpolate
+	* @param {import('../types/index.d.ts').SprintfArgs<T>} args - arguments to interpolate
 	*
 	* @return {string} Formatted string.
 	*/
@@ -95,7 +95,7 @@
 	* ```
 	* @template {string} T
 	* @param {T} string - string printf format string
-	* @param {...import('../types').SprintfArgs<T>} args - arguments to interpolate
+	* @param {...import('../types/index.d.ts').SprintfArgs<T>} args - arguments to interpolate
 	*
 	* @return {string} Formatted string.
 	*/
