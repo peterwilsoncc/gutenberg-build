@@ -68947,9 +68947,21 @@ Icon: ButtonIcon });
 		const tableSelectionRef = (0, _wordpress_element.useRef)(null);
 		const bulkSelectionRef = (0, _wordpress_element.useRef)(null);
 		const bulkActionsRef = (0, _wordpress_element.useRef)(null);
+		const syncBulkActionsPosition = () => {
+			const header = tableHeaderRef.current;
+			const overlay = bulkActionsRef.current;
+			const win = header?.ownerDocument.defaultView;
+			if (header && overlay && win) {
+				overlay.style.setProperty("--wp-dataviews-table-header-height", `${header.getBoundingClientRect().height}px`);
+				overlay.style.insetBlockStart = win.getComputedStyle(header).insetBlockStart;
+			}
+		};
+		const resizeHeaderRef = (0, _wordpress_compose.useResizeObserver)(syncBulkActionsPosition);
+		const tableHeaderRefs = (0, _wordpress_compose.useMergeRefs)([tableHeaderRef, resizeHeaderRef]);
 		const [isActionInProgress, setIsActionInProgress] = (0, _wordpress_element.useState)(false);
 		const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
 		const showBulkActions = hasBulkActions && selection.length > 0 || isActionInProgress;
+		(0, _wordpress_element.useLayoutEffect)(syncBulkActionsPosition, [showBulkActions]);
 		const hadSelectionRef = (0, _wordpress_element.useRef)(false);
 		(0, _wordpress_element.useEffect)(() => {
 			const tableHead = tableHeaderRef.current;
@@ -69016,192 +69028,190 @@ Icon: ButtonIcon });
 			id: tableNoticeId,
 			children: empty
 		});
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("table", {
-			className: clsx("dataviews-view-table", className, {
-				[`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(view.layout.density),
-				"has-bulk-actions": hasBulkActions,
-				"is-refreshing": !isInfiniteScroll && isDelayedLoading,
-				"has-media-aspect-ratio": !!mediaAspectRatio
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
+			(hasBulkActions || isActionInProgress) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: clsx("dataviews-view-table__bulk-actions-overlay", { "is-refreshing": !isInfiniteScroll && isDelayedLoading }),
+				ref: bulkActionsRef,
+				hidden: !showBulkActions,
+				inert: inertValue(!!isLoading),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BulkActionToolbar, {
+					onActionInProgressChange: setIsActionInProgress,
+					selectionCheckboxRef: bulkSelectionRef
+				})
 			}),
-			style: tableStyle,
-			"aria-busy": isLoading,
-			"aria-describedby": tableNoticeId,
-			role: isInfiniteScroll ? "feed" : void 0,
-			inert: inertValue(!isInfiniteScroll && isLoading),
-			children: [
-				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("colgroup", { children: [
-					hasBulkActions && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
-					hasPrimaryColumn && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
-					columns.map((column, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: clsx(`dataviews-view-table__col-${column}`, { "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1 }) }, `col-${column}`)),
-					!!actions?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-actions" })
-				] }),
-				contextMenuAnchor && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Popover, {
-					anchor: contextMenuAnchor,
-					onClose: () => setContextMenuAnchor(null),
-					placement: "bottom-start",
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PropertiesSection, { showLabel: false })
+			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("table", {
+				className: clsx("dataviews-view-table", className, {
+					[`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(view.layout.density),
+					"has-bulk-actions": hasBulkActions,
+					"is-refreshing": !isInfiniteScroll && isDelayedLoading,
+					"has-media-aspect-ratio": !!mediaAspectRatio
 				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("thead", {
-					ref: tableHeaderRef,
-					className: clsx({ "dataviews-view-table__thead--stuck": isVerticallyScrolled }),
-					onContextMenu: handleHeaderContextMenu,
-					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", {
-						className: "dataviews-view-table__row",
-						children: [
-							hasBulkActions && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
-								className: "dataviews-view-table__checkbox-column",
-								scope: "col",
-								onContextMenu: handleHeaderContextMenu,
-								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-									inert: inertValue(disableHeaderControls),
-									"aria-hidden": disableHeaderControls || void 0,
-									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BulkSelectionCheckbox$1, {
-										checkboxRef: tableSelectionRef,
-										selection,
-										onChangeSelection,
-										data,
-										actions,
-										getItemId
-									})
-								})
-							}),
-							hasPrimaryColumn && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
-								scope: "col",
-								"aria-sort": view.sort?.field === titleField?.id && view.sort ? sortValues[view.sort.direction] : void 0,
-								children: titleField && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColumnHeaderMenu, {
-									ref: headerMenuRef(titleField.id, 0),
-									fieldId: titleField.id,
-									isCovered: disableHeaderControls,
-									view,
-									fields,
-									onChangeView,
-									onHide,
-									setOpenedFilter,
-									canMove: false,
-									canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
-									canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
-								})
-							}),
-							columns.map((column, index) => {
-								const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
-								const effectiveAlign = getEffectiveAlign(align, fields.find((f) => f.id === column)?.type);
-								const canInsertOrMove = view.layout?.enableMoving ?? true;
-								return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
-									style: {
-										width,
-										maxWidth,
-										minWidth,
-										textAlign: effectiveAlign
-									},
-									"aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
+				style: tableStyle,
+				"aria-busy": isLoading,
+				"aria-describedby": tableNoticeId,
+				role: isInfiniteScroll ? "feed" : void 0,
+				inert: inertValue(!isInfiniteScroll && isLoading),
+				children: [
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("colgroup", { children: [
+						hasBulkActions && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
+						hasPrimaryColumn && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
+						columns.map((column, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: clsx(`dataviews-view-table__col-${column}`, { "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1 }) }, `col-${column}`)),
+						!!actions?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-actions" })
+					] }),
+					contextMenuAnchor && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Popover, {
+						anchor: contextMenuAnchor,
+						onClose: () => setContextMenuAnchor(null),
+						placement: "bottom-start",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PropertiesSection, { showLabel: false })
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("thead", {
+						ref: tableHeaderRefs,
+						className: clsx({ "dataviews-view-table__thead--stuck": isVerticallyScrolled }),
+						onContextMenu: handleHeaderContextMenu,
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", {
+							className: "dataviews-view-table__row",
+							children: [
+								hasBulkActions && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
+									className: "dataviews-view-table__checkbox-column",
 									scope: "col",
-									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColumnHeaderMenu, {
-										ref: headerMenuRef(column, index),
-										fieldId: column,
+									onContextMenu: handleHeaderContextMenu,
+									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+										inert: inertValue(disableHeaderControls),
+										"aria-hidden": disableHeaderControls || void 0,
+										children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BulkSelectionCheckbox$1, {
+											checkboxRef: tableSelectionRef,
+											selection,
+											onChangeSelection,
+											data,
+											actions,
+											getItemId
+										})
+									})
+								}),
+								hasPrimaryColumn && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
+									scope: "col",
+									"aria-sort": view.sort?.field === titleField?.id && view.sort ? sortValues[view.sort.direction] : void 0,
+									children: titleField && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColumnHeaderMenu, {
+										ref: headerMenuRef(titleField.id, 0),
+										fieldId: titleField.id,
 										isCovered: disableHeaderControls,
 										view,
 										fields,
 										onChangeView,
 										onHide,
 										setOpenedFilter,
-										canMove: canInsertOrMove,
-										canInsertLeft: canInsertOrMove,
-										canInsertRight: canInsertOrMove
+										canMove: false,
+										canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
+										canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
 									})
-								}, column);
-							}),
-							!!actions?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
-								className: clsx("dataviews-view-table__actions-column", {
-									"dataviews-view-table__actions-column--sticky": true,
-									"dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
 								}),
-								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-									className: "dataviews-view-table-header",
-									children: (0, _wordpress_i18n.__)("Actions")
+								columns.map((column, index) => {
+									const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+									const effectiveAlign = getEffectiveAlign(align, fields.find((f) => f.id === column)?.type);
+									const canInsertOrMove = view.layout?.enableMoving ?? true;
+									return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
+										style: {
+											width,
+											maxWidth,
+											minWidth,
+											textAlign: effectiveAlign
+										},
+										"aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
+										scope: "col",
+										children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColumnHeaderMenu, {
+											ref: headerMenuRef(column, index),
+											fieldId: column,
+											isCovered: disableHeaderControls,
+											view,
+											fields,
+											onChangeView,
+											onHide,
+											setOpenedFilter,
+											canMove: canInsertOrMove,
+											canInsertLeft: canInsertOrMove,
+											canInsertRight: canInsertOrMove
+										})
+									}, column);
+								}),
+								!!actions?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
+									className: clsx("dataviews-view-table__actions-column", {
+										"dataviews-view-table__actions-column--sticky": true,
+										"dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
+									}),
+									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+										className: "dataviews-view-table-header",
+										children: (0, _wordpress_i18n.__)("Actions")
+									})
 								})
-							})
-						]
-					}), (hasBulkActions || isActionInProgress) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("tr", {
-						className: "dataviews-view-table__bulk-actions-row",
-						hidden: !showBulkActions,
+							]
+						})
+					}),
+					hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(([groupName, groupItems]) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tbody", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("tr", {
+						className: "dataviews-view-table__group-header-row",
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
 							colSpan: columnCount,
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-								className: "dataviews-view-table__bulk-actions-overlay",
-								ref: bulkActionsRef,
-								inert: inertValue(!!isLoading),
-								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BulkActionToolbar, {
-									onActionInProgressChange: setIsActionInProgress,
-									selectionCheckboxRef: bulkSelectionRef
-								})
-							})
+							className: "dataviews-view-table__group-header-cell",
+							children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
 						})
-					})]
-				}),
-				hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(([groupName, groupItems]) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tbody", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("tr", {
-					className: "dataviews-view-table__group-header-row",
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
-						colSpan: columnCount,
-						className: "dataviews-view-table__group-header-cell",
-						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
-					})
-				}), groupItems.map((item, index) => {
-					const id = getItemId(item) || index.toString();
-					return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TableRow$1, {
-						item,
-						level: view.showLevels && typeof getItemLevel === "function" ? getItemLevel(item) : void 0,
-						hasBulkActions,
-						actions,
-						fields,
-						id,
-						view,
-						titleField,
-						mediaField,
-						mediaAspectRatio,
-						descriptionField,
-						selection,
-						getItemId,
-						onChangeSelection,
-						...getSelectionProps(id),
-						onClickItem,
-						renderItemLink,
-						isItemClickable,
-						isActionsColumnSticky: !isHorizontalScrollEnd
-					}, getItemId(item));
-				})] }, `group-${groupName}`)) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("tbody", { children: hasData && data.map((item, index) => {
-					const id = getItemId(item) || index.toString();
-					return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TableRow$1, {
-						item,
-						level: view.showLevels && typeof getItemLevel === "function" ? getItemLevel(item) : void 0,
-						hasBulkActions,
-						actions,
-						fields,
-						id,
-						view,
-						titleField,
-						mediaField,
-						mediaAspectRatio,
-						descriptionField,
-						selection,
-						getItemId,
-						onChangeSelection,
-						...getSelectionProps(id),
-						onClickItem,
-						renderItemLink,
-						isItemClickable,
-						isActionsColumnSticky: !isHorizontalScrollEnd,
-						posinset: isInfiniteScroll ? index + 1 : void 0
-					}, getItemId(item));
-				}) })
-			]
-		}), isInfiniteScroll && isLoading && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			className: "dataviews-loading",
-			id: tableNoticeId,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
-				className: "dataviews-loading-more",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
+					}), groupItems.map((item, index) => {
+						const id = getItemId(item) || index.toString();
+						return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TableRow$1, {
+							item,
+							level: view.showLevels && typeof getItemLevel === "function" ? getItemLevel(item) : void 0,
+							hasBulkActions,
+							actions,
+							fields,
+							id,
+							view,
+							titleField,
+							mediaField,
+							mediaAspectRatio,
+							descriptionField,
+							selection,
+							getItemId,
+							onChangeSelection,
+							...getSelectionProps(id),
+							onClickItem,
+							renderItemLink,
+							isItemClickable,
+							isActionsColumnSticky: !isHorizontalScrollEnd
+						}, getItemId(item));
+					})] }, `group-${groupName}`)) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("tbody", { children: hasData && data.map((item, index) => {
+						const id = getItemId(item) || index.toString();
+						return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TableRow$1, {
+							item,
+							level: view.showLevels && typeof getItemLevel === "function" ? getItemLevel(item) : void 0,
+							hasBulkActions,
+							actions,
+							fields,
+							id,
+							view,
+							titleField,
+							mediaField,
+							mediaAspectRatio,
+							descriptionField,
+							selection,
+							getItemId,
+							onChangeSelection,
+							...getSelectionProps(id),
+							onClickItem,
+							renderItemLink,
+							isItemClickable,
+							isActionsColumnSticky: !isHorizontalScrollEnd,
+							posinset: isInfiniteScroll ? index + 1 : void 0
+						}, getItemId(item));
+					}) })
+				]
+			}),
+			isInfiniteScroll && isLoading && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: "dataviews-loading",
+				id: tableNoticeId,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+					className: "dataviews-loading-more",
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
+				})
 			})
-		})] });
+		] });
 	}
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
