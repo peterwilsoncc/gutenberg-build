@@ -1,8 +1,12 @@
 (function() {
-var wp;
-(wp ||= {}).baseStyles = (() => {
-})();
-if (wp.baseStyles && wp.baseStyles.__esModule) { wp.baseStyles = (function (namespace) { var exports = Object.defineProperty({}, '__esModule', { value: true }); for (var key of Object.keys(namespace)) { Object.defineProperty(exports, key, { value: namespace[key], enumerable: true }); } return exports; })(wp.baseStyles); }
-(window.wp ||= {}).baseStyles = wp.baseStyles;
+
+"use strict";
+// packages/base-styles/index.js
+/**
+	* This file is intentionally left blank and acts as
+	* a resolvable JavaScript entry point for this package.
+	*/
+
+(window.wp ||= {}).baseStyles = undefined;
 })();
 //# sourceMappingURL=index.js.map
