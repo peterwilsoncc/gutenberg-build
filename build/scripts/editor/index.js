@@ -99988,6 +99988,7 @@ ${content}
       loading && /* @__PURE__ */ (0, import_jsx_runtime544.jsx)(
         Stack,
         {
+          align: "center",
           justify: "center",
           style: {
             // Match SearchControl height to prevent layout shift.
