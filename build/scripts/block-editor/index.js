@@ -72095,7 +72095,11 @@ var wp;
       return focusNode;
     }
     if (focusOffset === 0 && (0, import_dom53.isSelectionForward)(selection2) && isTripleClick) {
-      return focusNode.previousSibling ?? focusNode.parentElement;
+      let node = focusNode;
+      while (!node.previousSibling && node.parentNode) {
+        node = node.parentNode;
+      }
+      return node.previousSibling ?? node;
     }
     return focusNode.childNodes[focusOffset];
   }
