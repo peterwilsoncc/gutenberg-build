@@ -44757,7 +44757,6 @@ var import_components32 = __toESM(require_components(), 1);
 var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
-var import_i18n37 = __toESM(require_i18n(), 1);
 var MIN_ZOOM = 1;
 var ABSOLUTE_MIN_ZOOM = 0.1;
 var MAX_ZOOM = 10;
@@ -44796,17 +44795,6 @@ var DEFAULT_STATE2 = {
   cropRect: { ...DEFAULT_CROP_RECT }
 };
 var ORIGINAL_ASPECT_RATIO = -1;
-var DEFAULT_ASPECT_RATIOS = [
-  { label: (0, import_i18n37.__)("Free"), value: 0 },
-  { label: (0, import_i18n37.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
-  { label: (0, import_i18n37.__)("Square (1:1)"), value: 1 },
-  { label: (0, import_i18n37.__)("Landscape (16:9)"), value: 16 / 9 },
-  { label: (0, import_i18n37.__)("Portrait (9:16)"), value: 9 / 16 },
-  { label: (0, import_i18n37.__)("Classic (4:3)"), value: 4 / 3 },
-  { label: (0, import_i18n37.__)("Classic portrait (3:4)"), value: 3 / 4 },
-  { label: (0, import_i18n37.__)("Photo (3:2)"), value: 3 / 2 },
-  { label: (0, import_i18n37.__)("Photo portrait (2:3)"), value: 2 / 3 }
-];
 
 // node_modules/.store/gl-matrix@3.4.4-1XVyx70pzRCYPPp9mdmgdA/node_modules/gl-matrix/esm/common.js
 var EPSILON = 1e-6;
@@ -46191,7 +46179,7 @@ function buildCropperSetters(dispatchCropperAction, getCropperState) {
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
 var import_element154 = __toESM(require_element(), 1);
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
 function computeInscribedRect(aspectRatio, visualSize) {
@@ -47237,7 +47225,7 @@ function useTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
 var import_element149 = __toESM(require_element(), 1);
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 import { speak as speak6 } from "@wordpress/a11y";
 
 // packages/media-editor/build-module/image-editor/core/source-region.mjs
@@ -47404,15 +47392,15 @@ function getFlipAnnouncement(state, previousState) {
   }
   const { horizontal, vertical } = state.flip;
   if (horizontal && vertical) {
-    return (0, import_i18n38.__)("Flipped horizontally and vertically");
+    return (0, import_i18n37.__)("Flipped horizontally and vertically");
   }
   if (horizontal) {
-    return (0, import_i18n38.__)("Flipped horizontally");
+    return (0, import_i18n37.__)("Flipped horizontally");
   }
   if (vertical) {
-    return (0, import_i18n38.__)("Flipped vertically");
+    return (0, import_i18n37.__)("Flipped vertically");
   }
-  return (0, import_i18n38.__)("Flip removed");
+  return (0, import_i18n37.__)("Flip removed");
 }
 function getRotationAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.rotation) === Math.round(state.rotation)) {
@@ -47428,18 +47416,18 @@ function getRotationAnnouncement(state, previousState) {
     visualRotation += 360;
   }
   if (visualRotation === 0) {
-    return previousState ? (0, import_i18n38.__)("Rotation 0 degrees") : void 0;
+    return previousState ? (0, import_i18n37.__)("Rotation 0 degrees") : void 0;
   }
   if (visualRotation > 0) {
-    return (0, import_i18n38.sprintf)(
+    return (0, import_i18n37.sprintf)(
       /* translators: %d: rotation angle in degrees. */
-      (0, import_i18n38.__)("Rotated %d degrees clockwise"),
+      (0, import_i18n37.__)("Rotated %d degrees clockwise"),
       visualRotation
     );
   }
-  return (0, import_i18n38.sprintf)(
+  return (0, import_i18n37.sprintf)(
     /* translators: %d: rotation angle in degrees. */
-    (0, import_i18n38.__)("Rotated %d degrees counterclockwise"),
+    (0, import_i18n37.__)("Rotated %d degrees counterclockwise"),
     Math.abs(visualRotation)
   );
 }
@@ -47461,9 +47449,9 @@ function getCropAnnouncement(state, previousState) {
       return void 0;
     }
   }
-  return (0, import_i18n38.sprintf)(
+  return (0, import_i18n37.sprintf)(
     /* translators: 1: crop width in pixels, 2: crop height in pixels. */
-    (0, import_i18n38.__)("Crop %1$d by %2$d pixels"),
+    (0, import_i18n37.__)("Crop %1$d by %2$d pixels"),
     Math.round(region.width),
     Math.round(region.height)
   );
@@ -47472,9 +47460,9 @@ function getZoomAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.zoom * 100) === Math.round(state.zoom * 100)) {
     return void 0;
   }
-  return (0, import_i18n38.sprintf)(
+  return (0, import_i18n37.sprintf)(
     /* translators: %d: zoom level as a percentage. */
-    (0, import_i18n38.__)("Zoom %d%%"),
+    (0, import_i18n37.__)("Zoom %d%%"),
     Math.round(state.zoom * 100)
   );
 }
@@ -47526,7 +47514,7 @@ function useAriaAnnouncer(state) {
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
 var import_element150 = __toESM(require_element(), 1);
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/react/visually-hidden-style.mjs
 var VISUALLY_HIDDEN_STYLE = {
@@ -47557,21 +47545,21 @@ var ALL_POSITIONS = [
 function getHandleLabel(pos) {
   switch (pos) {
     case "n":
-      return (0, import_i18n39.__)("Resize from top edge");
+      return (0, import_i18n38.__)("Resize from top edge");
     case "s":
-      return (0, import_i18n39.__)("Resize from bottom edge");
+      return (0, import_i18n38.__)("Resize from bottom edge");
     case "e":
-      return (0, import_i18n39.__)("Resize from right edge");
+      return (0, import_i18n38.__)("Resize from right edge");
     case "w":
-      return (0, import_i18n39.__)("Resize from left edge");
+      return (0, import_i18n38.__)("Resize from left edge");
     case "nw":
-      return (0, import_i18n39.__)("Resize from top-left corner");
+      return (0, import_i18n38.__)("Resize from top-left corner");
     case "ne":
-      return (0, import_i18n39.__)("Resize from top-right corner");
+      return (0, import_i18n38.__)("Resize from top-right corner");
     case "sw":
-      return (0, import_i18n39.__)("Resize from bottom-left corner");
+      return (0, import_i18n38.__)("Resize from bottom-left corner");
     case "se":
-      return (0, import_i18n39.__)("Resize from bottom-right corner");
+      return (0, import_i18n38.__)("Resize from bottom-right corner");
   }
 }
 var KEYBOARD_SETTLE_DELAY = 500;
@@ -47894,7 +47882,7 @@ function RectangleStencil({
           {
             id: resizeHandleDescriptionId,
             style: VISUALLY_HIDDEN_STYLE,
-            children: (0, import_i18n39.__)(
+            children: (0, import_i18n38.__)(
               "Use arrow keys to resize the crop area. Hold Shift for larger steps."
             )
           }
@@ -48807,7 +48795,7 @@ function CropperInner({
           ),
           tabIndex: 0,
           role: "group",
-          "aria-label": (0, import_i18n40.__)("Crop area"),
+          "aria-label": (0, import_i18n39.__)("Crop area"),
           "aria-describedby": isCropAreaFocused ? cropAreaDescriptionId : void 0,
           onFocus: handleCropAreaFocus,
           onBlur: handleCropAreaBlur,
@@ -48818,7 +48806,7 @@ function CropperInner({
               {
                 id: cropAreaDescriptionId,
                 style: VISUALLY_HIDDEN_STYLE,
-                children: (0, import_i18n40.__)(
+                children: (0, import_i18n39.__)(
                   "When this area is focused, use arrow keys to move the image and plus or minus to zoom. Tab to resize handles and controls."
                 )
               }
@@ -49291,6 +49279,20 @@ function useMediaEditor() {
   }
   return context;
 }
+
+// packages/media-editor/build-module/state/aspect-ratio-presets.mjs
+var import_i18n40 = __toESM(require_i18n(), 1);
+var DEFAULT_ASPECT_RATIOS = [
+  { label: (0, import_i18n40.__)("Free"), value: 0 },
+  { label: (0, import_i18n40.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
+  { label: (0, import_i18n40.__)("Square (1:1)"), value: 1 },
+  { label: (0, import_i18n40.__)("Landscape (16:9)"), value: 16 / 9 },
+  { label: (0, import_i18n40.__)("Portrait (9:16)"), value: 9 / 16 },
+  { label: (0, import_i18n40.__)("Classic (4:3)"), value: 4 / 3 },
+  { label: (0, import_i18n40.__)("Classic portrait (3:4)"), value: 3 / 4 },
+  { label: (0, import_i18n40.__)("Photo (3:2)"), value: 3 / 2 },
+  { label: (0, import_i18n40.__)("Photo portrait (2:3)"), value: 2 / 3 }
+];
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
 var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
