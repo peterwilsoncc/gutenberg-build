@@ -66306,9 +66306,15 @@ This message will only show in development mode. It won't appear in production. 
   var menu_default2 = NavigableMenu;
 
   // packages/components/build-module/navigable-container/tabbable.mjs
+  var import_deprecated18 = __toESM(require_deprecated(), 1);
   var import_element173 = __toESM(require_element(), 1);
   var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTabbableContainer({ eventToOffset, ...props }, ref) {
+    (0, import_deprecated18.default)("wp.components.TabbableContainer", {
+      since: "7.3",
+      version: "7.5",
+      hint: "For focus trapping, consider the useConstrainedTabbing hook from @wordpress/compose."
+    });
     const innerEventToOffset = (evt) => {
       const { code, shiftKey } = evt;
       if ("Tab" === code) {
@@ -66499,9 +66505,9 @@ This message will only show in development mode. It won't appear in production. 
   var dropdown_menu_default = DropdownMenu;
 
   // packages/components/build-module/elevation/deprecated.mjs
-  var import_deprecated18 = __toESM(require_deprecated(), 1);
+  var import_deprecated19 = __toESM(require_deprecated(), 1);
   function UnconnectedDeprecatedElevation(props, forwardedRef) {
-    (0, import_deprecated18.default)("wp.components.__experimentalElevation", {
+    (0, import_deprecated19.default)("wp.components.__experimentalElevation", {
       since: "7.2",
       version: "7.4"
     });
@@ -67450,14 +67456,14 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/focusable-iframe/index.mjs
   var import_compose58 = __toESM(require_compose(), 1);
-  var import_deprecated19 = __toESM(require_deprecated(), 1);
+  var import_deprecated20 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
   function FocusableIframe({
     iframeRef,
     ...props
   }) {
     const ref = (0, import_compose58.useMergeRefs)([iframeRef, (0, import_compose58.useFocusableIframe)()]);
-    (0, import_deprecated19.default)("wp.components.FocusableIframe", {
+    (0, import_deprecated20.default)("wp.components.FocusableIframe", {
       since: "5.9",
       alternative: "wp.compose.useFocusableIframe"
     });
@@ -68096,7 +68102,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose61 = __toESM(require_compose(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
-  var import_deprecated20 = __toESM(require_deprecated(), 1);
+  var import_deprecated21 = __toESM(require_deprecated(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/form-token-field/token.mjs
@@ -68297,7 +68303,7 @@ This message will only show in development mode. It won't appear in production. 
     const defaultHelp = tokenizeOnSpace ? (0, import_i18n67.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n67.__)("Separate with commas or the Enter key.");
     let computedHelp = help !== void 0 ? help : defaultHelp;
     if (typeof __experimentalShowHowTo === "boolean") {
-      (0, import_deprecated20.default)(
+      (0, import_deprecated21.default)(
         "`__experimentalShowHowTo` prop in wp.components.FormTokenField",
         {
           since: "7.1",
@@ -68868,7 +68874,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/index.mjs
   var import_element181 = __toESM(require_element(), 1);
-  var import_deprecated21 = __toESM(require_deprecated(), 1);
+  var import_deprecated22 = __toESM(require_deprecated(), 1);
   var import_i18n69 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/guide/page-control.mjs
@@ -68939,7 +68945,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [currentPage]);
     (0, import_element181.useEffect)(() => {
       if (import_element181.Children.count(children)) {
-        (0, import_deprecated21.default)("Passing children to <Guide>", {
+        (0, import_deprecated22.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
@@ -69035,11 +69041,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/page.mjs
   var import_element182 = __toESM(require_element(), 1);
-  var import_deprecated22 = __toESM(require_deprecated(), 1);
+  var import_deprecated23 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
   function GuidePage(props) {
     (0, import_element182.useEffect)(() => {
-      (0, import_deprecated22.default)("<GuidePage>", {
+      (0, import_deprecated23.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
       });
@@ -69048,7 +69054,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/button/deprecated.mjs
-  var import_deprecated23 = __toESM(require_deprecated(), 1);
+  var import_deprecated24 = __toESM(require_deprecated(), 1);
   var import_element183 = __toESM(require_element(), 1);
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedIconButton({
@@ -69058,7 +69064,7 @@ This message will only show in development mode. It won't appear in production. 
     tooltip,
     ...props
   }, ref) {
-    (0, import_deprecated23.default)("wp.components.IconButton", {
+    (0, import_deprecated24.default)("wp.components.IconButton", {
       since: "5.4",
       alternative: "wp.components.Button",
       version: "6.2"
@@ -69257,7 +69263,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_items_choice_default = MenuItemsChoice;
 
   // packages/components/build-module/navigator/navigator/component.mjs
-  var import_deprecated24 = __toESM(require_deprecated(), 1);
+  var import_deprecated25 = __toESM(require_deprecated(), 1);
   var import_element188 = __toESM(require_element(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_warning8 = __toESM(require_warning(), 1);
@@ -69863,7 +69869,7 @@ The screen with id ${screen.id} will not be added.`
         goBack: (options2) => dispatch({ type: "gotoparent", options: options2 }),
         goTo: (path, options2) => dispatch({ type: "goto", path, options: options2 }),
         goToParent: (options2) => {
-          (0, import_deprecated24.default)(`wp.components.useNavigator().goToParent`, {
+          (0, import_deprecated25.default)(`wp.components.useNavigator().goToParent`, {
             since: "6.7",
             alternative: "wp.components.useNavigator().goBack"
           });
@@ -70361,10 +70367,10 @@ The screen with id ${screen.id} will not be added.`
   );
 
   // packages/components/build-module/navigator/navigator-to-parent-button/component.mjs
-  var import_deprecated25 = __toESM(require_deprecated(), 1);
+  var import_deprecated26 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
-    (0, import_deprecated25.default)("wp.components.NavigatorToParentButton", {
+    (0, import_deprecated26.default)("wp.components.NavigatorToParentButton", {
       since: "6.7",
       alternative: "wp.components.Navigator.BackButton"
     });
@@ -71292,7 +71298,7 @@ The screen with id ${screen.id} will not be added.`
   var radio_default = Radio22;
 
   // packages/components/build-module/radio-group/index.mjs
-  var import_deprecated26 = __toESM(require_deprecated(), 1);
+  var import_deprecated27 = __toESM(require_deprecated(), 1);
   var import_element204 = __toESM(require_element(), 1);
   var import_i18n74 = __toESM(require_i18n(), 1);
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
@@ -71320,7 +71326,7 @@ The screen with id ${screen.id} will not be added.`
       }),
       [radioStore, disabled2]
     );
-    (0, import_deprecated26.default)("wp.components.__experimentalRadioGroup", {
+    (0, import_deprecated27.default)("wp.components.__experimentalRadioGroup", {
       alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
@@ -72779,7 +72785,7 @@ The screen with id ${screen.id} will not be added.`
   var resizable_box_default = ResizableBox;
 
   // packages/components/build-module/responsive-wrapper/index.mjs
-  var import_deprecated27 = __toESM(require_deprecated(), 1);
+  var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_element209 = __toESM(require_element(), 1);
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveWrapper({
@@ -72788,7 +72794,7 @@ The screen with id ${screen.id} will not be added.`
     children,
     isInline = false
   }) {
-    (0, import_deprecated27.default)("wp.components.ResponsiveWrapper", {
+    (0, import_deprecated28.default)("wp.components.ResponsiveWrapper", {
       since: "7.2",
       version: "7.4",
       alternative: "the CSS aspect-ratio property"
@@ -73177,7 +73183,7 @@ The screen with id ${screen.id} will not be added.`
   var import_compose71 = __toESM(require_compose(), 1);
   var import_i18n76 = __toESM(require_i18n(), 1);
   var import_element211 = __toESM(require_element(), 1);
-  var import_deprecated28 = __toESM(require_deprecated(), 1);
+  var import_deprecated29 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE120 = "data-wp-hash";
   function getRuntime120() {
@@ -73265,7 +73271,7 @@ The screen with id ${screen.id} will not be added.`
   var style_module_default87 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
   function SuffixItem({ searchRef, onChange, onClose }) {
     if (onClose) {
-      (0, import_deprecated28.default)("`onClose` prop in wp.components.SearchControl", {
+      (0, import_deprecated29.default)("`onClose` prop in wp.components.SearchControl", {
         since: "6.8"
       });
     }
@@ -73577,9 +73583,9 @@ The screen with id ${screen.id} will not be added.`
   var list_default2 = SnackbarList;
 
   // packages/components/build-module/scrollable/deprecated.mjs
-  var import_deprecated29 = __toESM(require_deprecated(), 1);
+  var import_deprecated30 = __toESM(require_deprecated(), 1);
   function UnconnectedDeprecatedScrollable(props, forwardedRef) {
-    (0, import_deprecated29.default)("wp.components.__experimentalScrollable", {
+    (0, import_deprecated30.default)("wp.components.__experimentalScrollable", {
       since: "7.2",
       version: "7.4"
     });
@@ -73952,11 +73958,11 @@ The screen with id ${screen.id} will not be added.`
   var text_highlight_default = TextHighlight;
 
   // packages/components/build-module/tip/index.mjs
-  var import_deprecated30 = __toESM(require_deprecated(), 1);
+  var import_deprecated31 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
   function Tip(props) {
     const { children } = props;
-    (0, import_deprecated30.default)("wp.components.Tip", {
+    (0, import_deprecated31.default)("wp.components.Tip", {
       since: "7.2",
       version: "7.4",
       alternative: "Notice from @wordpress/ui"
@@ -74041,7 +74047,7 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/toolbar/toolbar/index.mjs
   var import_element225 = __toESM(require_element(), 1);
-  var import_deprecated31 = __toESM(require_deprecated(), 1);
+  var import_deprecated32 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/toolbar/toolbar-group/index.mjs
   var import_element223 = __toESM(require_element(), 1);
@@ -74325,7 +74331,7 @@ The screen with id ${screen.id} will not be added.`
       };
     }, [isVariantDefined]);
     if (!label) {
-      (0, import_deprecated31.default)("Using Toolbar without label prop", {
+      (0, import_deprecated32.default)("Using Toolbar without label prop", {
         since: "5.6",
         alternative: "ToolbarGroup component",
         link: "https://developer.wordpress.org/block-editor/components/toolbar/"
@@ -75799,14 +75805,14 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/isolated-event-container/index.mjs
   var import_element238 = __toESM(require_element(), 1);
-  var import_deprecated32 = __toESM(require_deprecated(), 1);
+  var import_deprecated33 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
   var IsolatedEventContainer = (0, import_element238.forwardRef)(
     (props, ref) => {
-      (0, import_deprecated32.default)("wp.components.IsolatedEventContainer", {
+      (0, import_deprecated33.default)("wp.components.IsolatedEventContainer", {
         since: "5.7"
       });
       return /* @__PURE__ */ (0, import_jsx_runtime364.jsx)("div", { ...props, ref, onMouseDown: stopPropagation });
@@ -75815,7 +75821,7 @@ The screen with id ${screen.id} will not be added.`
   var isolated_event_container_default = IsolatedEventContainer;
 
   // packages/components/build-module/z-stack/component.mjs
-  var import_deprecated33 = __toESM(require_deprecated(), 1);
+  var import_deprecated34 = __toESM(require_deprecated(), 1);
   var import_element239 = __toESM(require_element(), 1);
   var import_jsx_runtime365 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE126 = "data-wp-hash";
@@ -75903,7 +75909,7 @@ The screen with id ${screen.id} will not be added.`
   }
   var style_module_default93 = { "z-stack": "_5b8fef2247903a5f__z-stack", "child": "_585cd0b86fd70a54__child", "layered": "_93dbda3c809633d5__layered" };
   function UnconnectedZStack(props, forwardedRef) {
-    (0, import_deprecated33.default)("wp.components.__experimentalZStack", {
+    (0, import_deprecated34.default)("wp.components.__experimentalZStack", {
       since: "7.2",
       version: "7.4",
       alternative: "your own CSS"
@@ -76150,7 +76156,7 @@ The screen with id ${screen.id} will not be added.`
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
   var import_element243 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
-  var import_deprecated34 = __toESM(require_deprecated(), 1);
+  var import_deprecated35 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element243.Component || typeof object === "function";
@@ -76174,7 +76180,7 @@ The screen with id ${screen.id} will not be added.`
     "withFocusReturn"
   );
   var Provider3 = ({ children }) => {
-    (0, import_deprecated34.default)("wp.components.FocusReturnProvider component", {
+    (0, import_deprecated35.default)("wp.components.FocusReturnProvider component", {
       since: "5.7",
       hint: "This provider is not used anymore. You can just remove it from your codebase"
     });
@@ -76298,7 +76304,7 @@ The screen with id ${screen.id} will not be added.`
   );
 
   // packages/components/build-module/private-apis.mjs
-  var import_deprecated38 = __toESM(require_deprecated(), 1);
+  var import_deprecated39 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/menu/index.mjs
   var import_element258 = __toESM(require_element(), 1);
@@ -78286,7 +78292,7 @@ The screen with id ${screen.id} will not be added.`
   );
 
   // packages/components/build-module/badge/index.mjs
-  var import_deprecated35 = __toESM(require_deprecated(), 1);
+  var import_deprecated36 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime389 = __toESM(require_jsx_runtime(), 1);
   function contextBasedIcon(intent = "default") {
     switch (intent) {
@@ -78308,7 +78314,7 @@ The screen with id ${screen.id} will not be added.`
     children,
     ...props
   }) {
-    (0, import_deprecated35.default)("wp.components.privateApis.Badge", {
+    (0, import_deprecated36.default)("wp.components.privateApis.Badge", {
       since: "7.2",
       alternative: "Badge from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -78343,7 +78349,7 @@ The screen with id ${screen.id} will not be added.`
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
   var import_element265 = __toESM(require_element(), 1);
   var import_compose90 = __toESM(require_compose(), 1);
-  var import_deprecated36 = __toESM(require_deprecated(), 1);
+  var import_deprecated37 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
@@ -78351,7 +78357,7 @@ The screen with id ${screen.id} will not be added.`
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated36.default)("wp.components.privateApis.ValidatedInputControl", {
+    (0, import_deprecated37.default)("wp.components.privateApis.ValidatedInputControl", {
       since: "7.2",
       alternative: "ValidatedInputControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -78579,7 +78585,7 @@ The screen with id ${screen.id} will not be added.`
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element268 = __toESM(require_element(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
-  var import_deprecated37 = __toESM(require_deprecated(), 1);
+  var import_deprecated38 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
@@ -78587,7 +78593,7 @@ The screen with id ${screen.id} will not be added.`
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated37.default)("wp.components.privateApis.ValidatedTextareaControl", {
+    (0, import_deprecated38.default)("wp.components.privateApis.ValidatedTextareaControl", {
       since: "7.2",
       alternative: "ValidatedTextareaControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -78620,7 +78626,7 @@ The screen with id ${screen.id} will not be added.`
     Tabs,
     // Retained for older bundled consumers. Check compatibility before removal.
     get Menu() {
-      (0, import_deprecated38.default)("`privateApis.Menu` from `@wordpress/components`", {
+      (0, import_deprecated39.default)("`privateApis.Menu` from `@wordpress/components`", {
         since: "7.2",
         version: "7.3",
         alternative: "`DropdownMenu` from `@wordpress/components`",
