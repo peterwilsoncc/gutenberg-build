@@ -64595,7 +64595,11 @@ Icon: ButtonIcon });
 		const { focusNode, focusOffset } = selection;
 		if (focusNode.nodeType === focusNode.TEXT_NODE) return focusNode;
 		if (focusOffset === focusNode.childNodes.length) return focusNode;
-		if (focusOffset === 0 && (0, _wordpress_dom.isSelectionForward)(selection) && isTripleClick) return focusNode.previousSibling ?? focusNode.parentElement;
+		if (focusOffset === 0 && (0, _wordpress_dom.isSelectionForward)(selection) && isTripleClick) {
+			let node = focusNode;
+			while (!node.previousSibling && node.parentNode) node = node.parentNode;
+			return node.previousSibling ?? node;
+		}
 		return focusNode.childNodes[focusOffset];
 	}
 	function findDepth(a, b) {
