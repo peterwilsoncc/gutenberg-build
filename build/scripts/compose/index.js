@@ -699,20 +699,24 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* @template T
 	* @param    text      The text to copy. Use a function if not
 	*                     already available and expensive to compute.
-	* @param    onSuccess Called when to text is copied.
+	* @param    onSuccess Called when the text is copied. Runs even after
+	*                     the element unmounts, so other UI can update.
+	* @param    onError   Called when copying fails. Runs even after the
+	*                     element unmounts, so other UI can update.
 	*
 	* @return   A ref to assign to the target element.
 	*/
-	function useCopyToClipboard(text, onSuccess) {
+	function useCopyToClipboard(text, onSuccess, onError) {
 		const textRef = useUpdatedRef(text);
 		const onSuccessRef = useUpdatedRef(onSuccess);
+		const onErrorRef = useUpdatedRef(onError);
 		return useRefEffect((node) => {
 			let isActive = true;
 			const handleClick = async () => {
 				if (await copyToClipboard(typeof textRef.current === "function" ? textRef.current() : textRef.current || "", node)) {
 					if (isActive) restoreFocus(node);
 					if (onSuccessRef.current) onSuccessRef.current();
-				}
+				} else if (onErrorRef.current) onErrorRef.current();
 			};
 			node.addEventListener("click", handleClick);
 			return () => {
