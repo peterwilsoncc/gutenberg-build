@@ -100,7 +100,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-        useLayoutEffect13(
+        useLayoutEffect14(
           function() {
             inst.value = value;
             inst.getSnapshot = getSnapshot;
@@ -134,7 +134,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React295 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState110 = React295.useState, useEffect88 = React295.useEffect, useLayoutEffect13 = React295.useLayoutEffect, useDebugValue2 = React295.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React295 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState110 = React295.useState, useEffect88 = React295.useEffect, useLayoutEffect14 = React295.useLayoutEffect, useDebugValue2 = React295.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React295.useSyncExternalStore ? React295.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -54136,6 +54136,7 @@ var import_i18n49 = __toESM(require_i18n(), 1);
 // packages/dataviews/build-module/components/dataviews-layouts/table/index.mjs
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_components7 = __toESM(require_components(), 1);
+var import_compose30 = __toESM(require_compose(), 1);
 var import_element196 = __toESM(require_element(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 
@@ -55829,9 +55830,26 @@ function ViewTable({
   const tableSelectionRef = (0, import_element196.useRef)(null);
   const bulkSelectionRef = (0, import_element196.useRef)(null);
   const bulkActionsRef = (0, import_element196.useRef)(null);
+  const syncBulkActionsPosition = () => {
+    const header = tableHeaderRef.current;
+    const overlay = bulkActionsRef.current;
+    const win = header?.ownerDocument.defaultView;
+    if (header && overlay && win) {
+      overlay.style.setProperty(
+        "--wp-dataviews-table-header-height",
+        `${header.getBoundingClientRect().height}px`
+      );
+      overlay.style.insetBlockStart = win.getComputedStyle(header).insetBlockStart;
+    }
+  };
+  const resizeHeaderRef = (0, import_compose30.useResizeObserver)(
+    syncBulkActionsPosition
+  );
+  const tableHeaderRefs = (0, import_compose30.useMergeRefs)([tableHeaderRef, resizeHeaderRef]);
   const [isActionInProgress, setIsActionInProgress] = (0, import_element196.useState)(false);
   const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
   const showBulkActions = hasBulkActions && selection.length > 0 || isActionInProgress;
+  (0, import_element196.useLayoutEffect)(syncBulkActionsPosition, [showBulkActions]);
   const hadSelectionRef = (0, import_element196.useRef)(false);
   (0, import_element196.useEffect)(() => {
     const tableHead = tableHeaderRef.current;
@@ -55922,6 +55940,27 @@ function ViewTable({
     );
   }
   return /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(import_jsx_runtime290.Fragment, { children: [
+    (hasBulkActions || isActionInProgress) && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+      "div",
+      {
+        className: clsx_default(
+          "dataviews-view-table__bulk-actions-overlay",
+          {
+            "is-refreshing": !isInfiniteScroll && isDelayedLoading
+          }
+        ),
+        ref: bulkActionsRef,
+        hidden: !showBulkActions,
+        inert: inertValue2(!!isLoading),
+        children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+          BulkActionToolbar,
+          {
+            onActionInProgressChange: setIsActionInProgress,
+            selectionCheckboxRef: bulkSelectionRef
+          }
+        )
+      }
+    ),
     /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(
       "table",
       {
@@ -55965,148 +56004,124 @@ function ViewTable({
               children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(PropertiesSection, { showLabel: false })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
             "thead",
             {
-              ref: tableHeaderRef,
+              ref: tableHeaderRefs,
               className: clsx_default({
                 "dataviews-view-table__thead--stuck": isVerticallyScrolled
               }),
               onContextMenu: handleHeaderContextMenu,
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)("tr", { className: "dataviews-view-table__row", children: [
-                  hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)("tr", { className: "dataviews-view-table__row", children: [
+                hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+                  "th",
+                  {
+                    className: "dataviews-view-table__checkbox-column",
+                    scope: "col",
+                    onContextMenu: handleHeaderContextMenu,
+                    children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+                      "div",
+                      {
+                        inert: inertValue2(
+                          disableHeaderControls
+                        ),
+                        "aria-hidden": disableHeaderControls || void 0,
+                        children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+                          BulkSelectionCheckbox,
+                          {
+                            checkboxRef: tableSelectionRef,
+                            selection,
+                            onChangeSelection,
+                            data,
+                            actions,
+                            getItemId: getItemId2
+                          }
+                        )
+                      }
+                    )
+                  }
+                ),
+                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+                  "th",
+                  {
+                    scope: "col",
+                    "aria-sort": view.sort?.field === titleField?.id && view.sort ? sortValues[view.sort.direction] : void 0,
+                    children: titleField && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+                      column_header_menu_default,
+                      {
+                        ref: headerMenuRef(
+                          titleField.id,
+                          0
+                        ),
+                        fieldId: titleField.id,
+                        isCovered: disableHeaderControls,
+                        view,
+                        fields: fields2,
+                        onChangeView,
+                        onHide,
+                        setOpenedFilter,
+                        canMove: false,
+                        canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
+                        canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
+                      }
+                    )
+                  }
+                ),
+                columns.map((column, index2) => {
+                  const { width, maxWidth, minWidth, align: align2 } = view.layout?.styles?.[column] ?? {};
+                  const field = fields2.find(
+                    (f) => f.id === column
+                  );
+                  const effectiveAlign = getEffectiveAlign(
+                    align2,
+                    field?.type
+                  );
+                  const canInsertOrMove = view.layout?.enableMoving ?? true;
+                  return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
                     "th",
                     {
-                      className: "dataviews-view-table__checkbox-column",
+                      style: {
+                        width,
+                        maxWidth,
+                        minWidth,
+                        textAlign: effectiveAlign
+                      },
+                      "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
                       scope: "col",
-                      onContextMenu: handleHeaderContextMenu,
                       children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                        "div",
-                        {
-                          inert: inertValue2(
-                            disableHeaderControls
-                          ),
-                          "aria-hidden": disableHeaderControls || void 0,
-                          children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                            BulkSelectionCheckbox,
-                            {
-                              checkboxRef: tableSelectionRef,
-                              selection,
-                              onChangeSelection,
-                              data,
-                              actions,
-                              getItemId: getItemId2
-                            }
-                          )
-                        }
-                      )
-                    }
-                  ),
-                  hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                    "th",
-                    {
-                      scope: "col",
-                      "aria-sort": view.sort?.field === titleField?.id && view.sort ? sortValues[view.sort.direction] : void 0,
-                      children: titleField && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
                         column_header_menu_default,
                         {
-                          ref: headerMenuRef(
-                            titleField.id,
-                            0
-                          ),
-                          fieldId: titleField.id,
+                          ref: headerMenuRef(column, index2),
+                          fieldId: column,
                           isCovered: disableHeaderControls,
                           view,
                           fields: fields2,
                           onChangeView,
                           onHide,
                           setOpenedFilter,
-                          canMove: false,
-                          canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
-                          canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
+                          canMove: canInsertOrMove,
+                          canInsertLeft: canInsertOrMove,
+                          canInsertRight: canInsertOrMove
                         }
                       )
-                    }
-                  ),
-                  columns.map((column, index2) => {
-                    const { width, maxWidth, minWidth, align: align2 } = view.layout?.styles?.[column] ?? {};
-                    const field = fields2.find(
-                      (f) => f.id === column
-                    );
-                    const effectiveAlign = getEffectiveAlign(
-                      align2,
-                      field?.type
-                    );
-                    const canInsertOrMove = view.layout?.enableMoving ?? true;
-                    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                      "th",
-                      {
-                        style: {
-                          width,
-                          maxWidth,
-                          minWidth,
-                          textAlign: effectiveAlign
-                        },
-                        "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
-                        scope: "col",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                          column_header_menu_default,
-                          {
-                            ref: headerMenuRef(column, index2),
-                            fieldId: column,
-                            isCovered: disableHeaderControls,
-                            view,
-                            fields: fields2,
-                            onChangeView,
-                            onHide,
-                            setOpenedFilter,
-                            canMove: canInsertOrMove,
-                            canInsertLeft: canInsertOrMove,
-                            canInsertRight: canInsertOrMove
-                          }
-                        )
-                      },
-                      column
-                    );
-                  }),
-                  !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                    "th",
-                    {
-                      className: clsx_default(
-                        "dataviews-view-table__actions-column",
-                        {
-                          "dataviews-view-table__actions-column--sticky": true,
-                          "dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
-                        }
-                      ),
-                      children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)("span", { className: "dataviews-view-table-header", children: (0, import_i18n35.__)("Actions") })
-                    }
-                  )
-                ] }),
-                (hasBulkActions || isActionInProgress) && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                  "tr",
+                    },
+                    column
+                  );
+                }),
+                !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+                  "th",
                   {
-                    className: "dataviews-view-table__bulk-actions-row",
-                    hidden: !showBulkActions,
-                    children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)("td", { colSpan: columnCount, children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                      "div",
+                    className: clsx_default(
+                      "dataviews-view-table__actions-column",
                       {
-                        className: "dataviews-view-table__bulk-actions-overlay",
-                        ref: bulkActionsRef,
-                        inert: inertValue2(!!isLoading),
-                        children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                          BulkActionToolbar,
-                          {
-                            onActionInProgressChange: setIsActionInProgress,
-                            selectionCheckboxRef: bulkSelectionRef
-                          }
-                        )
+                        "dataviews-view-table__actions-column--sticky": true,
+                        "dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
                       }
-                    ) })
+                    ),
+                    children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)("span", { className: "dataviews-view-table-header", children: (0, import_i18n35.__)("Actions") })
                   }
                 )
-              ]
+              ] })
             }
           ),
           hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(
@@ -56198,7 +56213,7 @@ var import_i18n38 = __toESM(require_i18n(), 1);
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
 var import_components9 = __toESM(require_components(), 1);
 var import_i18n37 = __toESM(require_i18n(), 1);
-var import_compose30 = __toESM(require_compose(), 1);
+var import_compose31 = __toESM(require_compose(), 1);
 var import_element200 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
@@ -56340,7 +56355,7 @@ var GridItem = (0, import_element200.forwardRef)(
       [forwardedRef]
     );
     useIntersectionObserver(elementRef, posinset);
-    const instanceId = (0, import_compose30.useInstanceId)(UnforwardedGridItem);
+    const instanceId = (0, import_compose31.useInstanceId)(UnforwardedGridItem);
     const isSelected2 = selection.includes(id);
     const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
     const rendersMediaField = showMedia && mediaField?.render;
@@ -56915,7 +56930,7 @@ function ViewGrid({
 var grid_default = ViewGrid;
 
 // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
-var import_compose31 = __toESM(require_compose(), 1);
+var import_compose32 = __toESM(require_compose(), 1);
 var import_components11 = __toESM(require_components(), 1);
 var import_element202 = __toESM(require_element(), 1);
 var import_i18n39 = __toESM(require_i18n(), 1);
@@ -57252,7 +57267,7 @@ function ViewList(props) {
     className,
     empty
   } = props;
-  const baseId = (0, import_compose31.useInstanceId)(ViewList, "view-list");
+  const baseId = (0, import_compose32.useInstanceId)(ViewList, "view-list");
   const isDelayedLoading = useDelayedLoading(!!isLoading);
   const { paginationInfo } = (0, import_element202.useContext)(dataviews_context_default);
   const selectedItem = data?.findLast(
@@ -57299,7 +57314,7 @@ function ViewList(props) {
   const activeItemIndex = data.findIndex(
     (item) => isActiveCompositeItem(item, activeCompositeId ?? "")
   );
-  const previousActiveItemIndex = (0, import_compose31.usePrevious)(activeItemIndex);
+  const previousActiveItemIndex = (0, import_compose32.usePrevious)(activeItemIndex);
   const isActiveIdInList = activeItemIndex !== -1;
   const selectCompositeItem = (0, import_element202.useCallback)(
     (targetIndex, generateCompositeId) => {
@@ -57513,7 +57528,7 @@ function ActivityGroup({
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
 var import_element204 = __toESM(require_element(), 1);
 var import_data5 = __toESM(require_data(), 1);
-var import_compose32 = __toESM(require_compose(), 1);
+var import_compose33 = __toESM(require_compose(), 1);
 var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
 function ActivityItem(props) {
   const {
@@ -57550,7 +57565,7 @@ function ActivityItem(props) {
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
-  const isMobileViewport = (0, import_compose32.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose33.useViewportMatch)("medium", "<");
   const density = view.layout?.density ?? "balanced";
   const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
     mediaField.render,
@@ -57783,7 +57798,7 @@ function ViewActivity(props) {
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_components15 = __toESM(require_components(), 1);
 var import_i18n43 = __toESM(require_i18n(), 1);
-var import_compose33 = __toESM(require_compose(), 1);
+var import_compose34 = __toESM(require_compose(), 1);
 var import_element207 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
@@ -58331,7 +58346,7 @@ function GridGroup({
   showLabel = true,
   children
 }) {
-  const headerId = (0, import_compose33.useInstanceId)(
+  const headerId = (0, import_compose34.useInstanceId)(
     GridGroup,
     "dataviews-view-picker-grid-group__header"
   );
@@ -59013,7 +59028,7 @@ var picker_table_default = ViewPickerTable;
 // packages/dataviews/build-module/components/dataviews-layouts/picker-activity/index.mjs
 var import_components17 = __toESM(require_components(), 1);
 var import_element209 = __toESM(require_element(), 1);
-var import_compose34 = __toESM(require_compose(), 1);
+var import_compose35 = __toESM(require_compose(), 1);
 var import_i18n45 = __toESM(require_i18n(), 1);
 var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
 function isDefined4(item) {
@@ -59141,7 +59156,7 @@ function PickerActivityGroup({
   showLabel = true,
   children
 }) {
-  const headerId = (0, import_compose34.useInstanceId)(
+  const headerId = (0, import_compose35.useInstanceId)(
     PickerActivityGroup,
     "dataviews-view-picker-activity-group__header"
   );
@@ -60166,7 +60181,7 @@ function useTransactionState(callback) {
   }, [state, callback]);
   return [state, setState];
 }
-function useMergeRefs16(...refs) {
+function useMergeRefs17(...refs) {
   return (0, import_react65.useMemo)(() => {
     if (!refs.some(Boolean)) return;
     return (value) => {
@@ -60315,7 +60330,7 @@ function memo8(Component2, propsAreEqual) {
 }
 function createElement3(Type, props) {
   const { wrapElement, render: render4, ...rest } = props;
-  const mergedRef = useMergeRefs16(props.ref, getRefProperty(render4));
+  const mergedRef = useMergeRefs17(props.ref, getRefProperty(render4));
   let element;
   if (React290.isValidElement(render4)) {
     const renderProps = {
@@ -60633,7 +60648,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     "aria-disabled": disabled3 || void 0,
     ...props,
     ...metadataProps,
-    ref: useMergeRefs16(ref, autoFocusRef, props.ref),
+    ref: useMergeRefs17(ref, autoFocusRef, props.ref),
     style,
     tabIndex: getTabIndex4({
       focusable: focusable2,
@@ -60760,7 +60775,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
     type: isNativeButton ? "button" : void 0,
     ...metadataProps,
     ...props,
-    ref: useMergeRefs16(ref, props.ref),
+    ref: useMergeRefs17(ref, props.ref),
     onKeyDown,
     onKeyUp,
     onBlur
@@ -60807,7 +60822,7 @@ var useCollectionItem = createHook(function useCollectionItem2({ store, shouldRe
   ]);
   props = {
     ...props,
-    ref: useMergeRefs16(ref, props.ref)
+    ref: useMergeRefs17(ref, props.ref)
   };
   return props;
 });
@@ -62503,7 +62518,7 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
     "data-active-item": isActiveItem || void 0,
     ...props,
     id,
-    ref: useMergeRefs16(ref, markUnmountingRef, props.ref),
+    ref: useMergeRefs17(ref, markUnmountingRef, props.ref),
     tabIndex: isTabbable2 ? props.tabIndex : -1,
     onFocus,
     onBlurCapture,
@@ -62885,7 +62900,7 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
       return getEnabledItem(store, activeId)?.id;
     }),
     ...props,
-    ref: useMergeRefs16(ref, setCompositeElement, props.ref),
+    ref: useMergeRefs17(ref, setCompositeElement, props.ref),
     onKeyDownCapture,
     onKeyUpCapture,
     onFocusCapture,
@@ -63063,7 +63078,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     hidden,
     ...props,
     id,
-    ref: useMergeRefs16(id ? store.setContentElement : null, ref, props.ref),
+    ref: useMergeRefs17(id ? store.setContentElement : null, ref, props.ref),
     style
   };
   return removeUndefinedValues(props);
@@ -63356,7 +63371,7 @@ var useCompositeHover = createHook(function useCompositeHover2({ store, focusOnH
   }, []);
   props = {
     ...props,
-    ref: useMergeRefs16(ref, props.ref),
+    ref: useMergeRefs17(ref, props.ref),
     onMouseMove,
     onMouseLeave
   };
@@ -63840,7 +63855,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     name: multiSelectable ? void 0 : name,
     form,
     disabled: disabled3,
-    ref: useMergeRefs16(ref, store.setInputElement, composite ? void 0 : setCompositeElement, props.ref),
+    ref: useMergeRefs17(ref, store.setInputElement, composite ? void 0 : setCompositeElement, props.ref),
     onChange,
     onCompositionStart,
     onCompositionEnd,
@@ -64161,7 +64176,7 @@ var useComboboxLabel = createHook(function useComboboxLabel2({ store, ...props }
     htmlFor: comboboxId,
     ...props,
     id,
-    ref: useMergeRefs16(store.setLabelElement, props.ref)
+    ref: useMergeRefs17(store.setLabelElement, props.ref)
   };
   return props;
 });
@@ -64267,7 +64282,7 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
     ...props,
     id,
     onFocus,
-    ref: useMergeRefs16(setContentElement, ref, props.ref),
+    ref: useMergeRefs17(setContentElement, ref, props.ref),
     style,
     tabIndex: -1
   };
@@ -64544,7 +64559,7 @@ function ComboboxProvider(props = {}) {
 
 // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
 var import_remove_accents = __toESM(require_remove_accents(), 1);
-var import_compose35 = __toESM(require_compose(), 1);
+var import_compose36 = __toESM(require_compose(), 1);
 var import_i18n50 = __toESM(require_i18n(), 1);
 var import_element214 = __toESM(require_element(), 1);
 var import_components21 = __toESM(require_components(), 1);
@@ -64646,7 +64661,7 @@ var SingleSelectionOption = ({ selected }) => {
   );
 };
 function ListBox({ view, filter, onChangeView }) {
-  const baseId = (0, import_compose35.useInstanceId)(ListBox, "dataviews-filter-list-box");
+  const baseId = (0, import_compose36.useInstanceId)(ListBox, "dataviews-filter-list-box");
   const [activeCompositeId, setActiveCompositeId] = (0, import_element214.useState)(
     // When there are one or less operators, the first item is set as active
     // (by setting the initial `activeId` to `undefined`).
@@ -64904,7 +64919,7 @@ function SearchWidget(props) {
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
 var import_es63 = __toESM(require_es6(), 1);
-var import_compose36 = __toESM(require_compose(), 1);
+var import_compose37 = __toESM(require_compose(), 1);
 var import_element215 = __toESM(require_element(), 1);
 var import_components22 = __toESM(require_components(), 1);
 var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
@@ -64947,7 +64962,7 @@ function InputWidget({
       {}
     );
   }, [view.filters]);
-  const handleChange = (0, import_compose36.useEvent)((updatedData) => {
+  const handleChange = (0, import_compose37.useEvent)((updatedData) => {
     if (!field || !currentFilter) {
       return;
     }
@@ -66296,11 +66311,11 @@ function DataViewsLayout({ className }) {
 var import_i18n57 = __toESM(require_i18n(), 1);
 var import_element224 = __toESM(require_element(), 1);
 var import_components28 = __toESM(require_components(), 1);
-var import_compose37 = __toESM(require_compose(), 1);
+var import_compose38 = __toESM(require_compose(), 1);
 var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
 var DataViewsSearch = (0, import_element224.memo)(function Search({ label }) {
   const { view, onChangeView } = (0, import_element224.useContext)(dataviews_context_default);
-  const [search, setSearch, debouncedSearch] = (0, import_compose37.useDebouncedInput)(
+  const [search, setSearch, debouncedSearch] = (0, import_compose38.useDebouncedInput)(
     view.search
   );
   (0, import_element224.useEffect)(() => {
@@ -66344,7 +66359,7 @@ var import_components29 = __toESM(require_components(), 1);
 var import_i18n58 = __toESM(require_i18n(), 1);
 var import_element225 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
-var import_compose38 = __toESM(require_compose(), 1);
+var import_compose39 = __toESM(require_compose(), 1);
 var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
 var DATAVIEWS_CONFIG_POPOVER_PROPS = {
   className: "dataviews-config__popover",
@@ -66559,7 +66574,7 @@ function ResetViewButton() {
 }
 function DataviewsViewConfigDropdown() {
   const { view, onReset } = (0, import_element225.useContext)(dataviews_context_default);
-  const popoverId = (0, import_compose38.useInstanceId)(
+  const popoverId = (0, import_compose39.useInstanceId)(
     _DataViewsViewConfig,
     "dataviews-view-config-dropdown"
   );
@@ -66665,7 +66680,7 @@ var import_element234 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/checkbox-control.mjs
 var import_element226 = __toESM(require_element(), 1);
-var import_compose39 = __toESM(require_compose(), 1);
+var import_compose40 = __toESM(require_compose(), 1);
 var import_components30 = __toESM(require_components(), 1);
 var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedCheckboxControl = ({
@@ -66675,7 +66690,7 @@ var UnforwardedValidatedCheckboxControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element226.useRef)(null);
-  const mergedRefs = (0, import_compose39.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose40.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
     ControlWithError,
     {
@@ -66701,7 +66716,7 @@ ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/combobox-control.mjs
 var import_element227 = __toESM(require_element(), 1);
-var import_compose40 = __toESM(require_compose(), 1);
+var import_compose41 = __toESM(require_compose(), 1);
 var import_components31 = __toESM(require_components(), 1);
 var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedComboboxControl = ({
@@ -66711,7 +66726,7 @@ var UnforwardedValidatedComboboxControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element227.useRef)(null);
-  const mergedRefs = (0, import_compose40.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose41.useMergeRefs)([forwardedRef, validityTargetRef]);
   (0, import_element227.useEffect)(() => {
     const input = validityTargetRef.current?.querySelector(
       'input[role="combobox"]'
@@ -66796,7 +66811,7 @@ ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
 // packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
 var import_element229 = __toESM(require_element(), 1);
-var import_compose41 = __toESM(require_compose(), 1);
+var import_compose42 = __toESM(require_compose(), 1);
 var import_components33 = __toESM(require_components(), 1);
 var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedNumberControl = ({
@@ -66806,7 +66821,7 @@ var UnforwardedValidatedNumberControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element229.useRef)(null);
-  const mergedRefs = (0, import_compose41.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose42.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
     ControlWithError,
     {
@@ -66824,7 +66839,7 @@ ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/radio-control.mjs
 var import_element230 = __toESM(require_element(), 1);
-var import_compose42 = __toESM(require_compose(), 1);
+var import_compose43 = __toESM(require_compose(), 1);
 var import_components34 = __toESM(require_components(), 1);
 var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedRadioControl = ({
@@ -66834,7 +66849,7 @@ var UnforwardedValidatedRadioControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element230.useRef)(null);
-  const mergedRefs = (0, import_compose42.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose43.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
     ControlWithError,
     {
@@ -66855,7 +66870,7 @@ ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
 var import_element231 = __toESM(require_element(), 1);
-var import_compose43 = __toESM(require_compose(), 1);
+var import_compose44 = __toESM(require_compose(), 1);
 var import_components35 = __toESM(require_components(), 1);
 var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedSelectControl = ({
@@ -66865,7 +66880,7 @@ var UnforwardedValidatedSelectControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element231.useRef)(null);
-  const mergedRefs = (0, import_compose43.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose44.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
     ControlWithError,
     {
@@ -66891,7 +66906,7 @@ ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/toggle-control.mjs
 var import_element232 = __toESM(require_element(), 1);
-var import_compose44 = __toESM(require_compose(), 1);
+var import_compose45 = __toESM(require_compose(), 1);
 var import_components36 = __toESM(require_components(), 1);
 var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedToggleControl = ({
@@ -66901,7 +66916,7 @@ var UnforwardedValidatedToggleControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element232.useRef)(null);
-  const mergedRefs = (0, import_compose44.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose45.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
     ControlWithError,
     {
@@ -70410,7 +70425,7 @@ function normalizeFields(fields2) {
 
 // packages/dataviews/build-module/hooks/use-container-width.mjs
 var import_element252 = __toESM(require_element(), 1);
-var import_compose45 = __toESM(require_compose(), 1);
+var import_compose46 = __toESM(require_compose(), 1);
 function useContainerWidth() {
   const [width, setWidth] = (0, import_element252.useState)(0);
   const measureRef = (0, import_element252.useCallback)((element) => {
@@ -70418,7 +70433,7 @@ function useContainerWidth() {
       setWidth(element.offsetWidth);
     }
   }, []);
-  const observerRef = (0, import_compose45.useResizeObserver)(
+  const observerRef = (0, import_compose46.useResizeObserver)(
     (entries) => {
       setWidth(
         Math.floor(entries[0].borderBoxSize[0].inlineSize)
@@ -70426,7 +70441,7 @@ function useContainerWidth() {
     },
     { box: "border-box" }
   );
-  return [width, (0, import_compose45.useMergeRefs)([measureRef, observerRef])];
+  return [width, (0, import_compose46.useMergeRefs)([measureRef, observerRef])];
 }
 
 // packages/dataviews/build-module/hooks/use-data.mjs
@@ -70588,7 +70603,7 @@ function useData({
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
 var import_element254 = __toESM(require_element(), 1);
-var import_compose46 = __toESM(require_compose(), 1);
+var import_compose47 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -70715,7 +70730,7 @@ function useInfiniteScroll({
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose46.throttle)((event) => {
+    const handleScroll = (0, import_compose47.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -70769,7 +70784,7 @@ function useInfiniteScroll({
 
 // packages/dataviews/build-module/hooks/use-page-clamp.mjs
 var import_element255 = __toESM(require_element(), 1);
-var import_compose47 = __toESM(require_compose(), 1);
+var import_compose48 = __toESM(require_compose(), 1);
 function usePageClamp({
   view,
   onChangeView,
@@ -70778,7 +70793,7 @@ function usePageClamp({
 }) {
   const lastPage = typeof totalPages === "number" && Number.isFinite(totalPages) ? Math.max(totalPages, 1) : null;
   const page = view.page;
-  const goToLastPage = (0, import_compose47.useEvent)(() => {
+  const goToLastPage = (0, import_compose48.useEvent)(() => {
     if (lastPage !== null) {
       onChangeView({ ...view, page: lastPage });
     }
@@ -71244,12 +71259,12 @@ function FormRegularField({
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components53 = __toESM(require_components(), 1);
 var import_element262 = __toESM(require_element(), 1);
-var import_compose49 = __toESM(require_compose(), 1);
+var import_compose50 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components52 = __toESM(require_components(), 1);
 var import_i18n74 = __toESM(require_i18n(), 1);
-var import_compose48 = __toESM(require_compose(), 1);
+var import_compose49 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -71351,7 +71366,7 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose48.useInstanceId)(
+  const controlId = (0, import_compose49.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
@@ -72075,9 +72090,9 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose49.useFocusOnMount)("firstInputElement");
+  const focusOnMountRef = (0, import_compose50.useFocusOnMount)("firstInputElement");
   const contentRef = (0, import_element262.useRef)(null);
-  const mergedRef = (0, import_compose49.useMergeRefs)([focusOnMountRef, contentRef]);
+  const mergedRef = (0, import_compose50.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime368.jsxs)(
     import_components53.Modal,
@@ -72193,7 +72208,7 @@ var modal_default = PanelModal;
 var import_components54 = __toESM(require_components(), 1);
 var import_i18n76 = __toESM(require_i18n(), 1);
 var import_element263 = __toESM(require_element(), 1);
-var import_compose50 = __toESM(require_compose(), 1);
+var import_compose51 = __toESM(require_compose(), 1);
 var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
@@ -72250,7 +72265,7 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose50.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose51.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
   const form = (0, import_element263.useMemo)(
@@ -72377,7 +72392,7 @@ function FormPanelField({
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
 var import_element264 = __toESM(require_element(), 1);
-var import_compose51 = __toESM(require_compose(), 1);
+var import_compose52 = __toESM(require_compose(), 1);
 import { speak as speak6 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
@@ -72588,7 +72603,7 @@ function FormCardField({
       speak6(message2, "polite");
     }
   }, [isCollapsible, isOpen, revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose51.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose52.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -72744,7 +72759,7 @@ function FormRowField({
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element265 = __toESM(require_element(), 1);
 var import_i18n78 = __toESM(require_i18n(), 1);
-var import_compose52 = __toESM(require_compose(), 1);
+var import_compose53 = __toESM(require_compose(), 1);
 import { speak as speak7 } from "@wordpress/a11y";
 var import_jsx_runtime374 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
@@ -72801,7 +72816,7 @@ function FormDetailsField({
       speak7(message2, "polite");
     }
   }, [revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose52.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose53.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -75695,7 +75710,7 @@ function useMutationObserver(_ref) {
   }, [mutationObserver]);
   return mutationObserver;
 }
-function useResizeObserver5(_ref) {
+function useResizeObserver6(_ref) {
   let {
     callback,
     disabled: disabled3
@@ -75760,7 +75775,7 @@ function useRect(element, measure2, fallbackRect) {
       }
     }
   });
-  const resizeObserver = useResizeObserver5({
+  const resizeObserver = useResizeObserver6({
     callback: measureRect
   });
   useIsomorphicLayoutEffect4(() => {
@@ -75934,7 +75949,7 @@ function useRects(elements, measure2) {
       return elements.map((element) => isDocumentScrollingElement(element) ? windowRect : new Rect(measure2(element), element));
     });
   }
-  const resizeObserver = useResizeObserver5({
+  const resizeObserver = useResizeObserver6({
     callback: measureRects
   });
   useIsomorphicLayoutEffect4(() => {
@@ -75976,7 +75991,7 @@ function useDragOverlayMeasuring(_ref) {
       }
     }
   }, [measure2]);
-  const resizeObserver = useResizeObserver5({
+  const resizeObserver = useResizeObserver6({
     callback: handleResize
   });
   const handleNodeChange = (0, import_react84.useCallback)((element) => {
@@ -76965,7 +76980,7 @@ function useDroppable(_ref) {
     //eslint-disable-next-line react-hooks/exhaustive-deps
     [resizeObserverTimeout]
   );
-  const resizeObserver = useResizeObserver5({
+  const resizeObserver = useResizeObserver6({
     callback: handleResize,
     disabled: resizeObserverDisabled || !active
   });
@@ -77907,19 +77922,19 @@ function isAfter2(a, b) {
 }
 
 // packages/grid/build-module/dashboard-grid/index.mjs
-var import_compose55 = __toESM(require_compose(), 1);
+var import_compose56 = __toESM(require_compose(), 1);
 var import_element279 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
 var import_element274 = __toESM(require_element(), 1);
-var import_compose54 = __toESM(require_compose(), 1);
+var import_compose55 = __toESM(require_compose(), 1);
 
 // packages/grid/build-module/shared/grid-item-key.mjs
 var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 
 // packages/grid/build-module/shared/resize-handle.mjs
 var import_element273 = __toESM(require_element(), 1);
-var import_compose53 = __toESM(require_compose(), 1);
+var import_compose54 = __toESM(require_compose(), 1);
 var import_jsx_runtime383 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE112 = "data-wp-hash";
 function getRuntime112() {
@@ -78026,7 +78041,7 @@ function ResizeHandle({
   const setOwnerDocumentRef = (0, import_element273.useCallback)((node) => {
     ownerDocumentRef.current = node?.ownerDocument ?? null;
   }, []);
-  const mergedRef = (0, import_compose53.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
+  const mergedRef = (0, import_compose54.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
   (0, import_element273.useEffect)(() => {
     if (!isDragging) {
       return;
@@ -78066,7 +78081,7 @@ function ResizeHandle({
 }
 function ResizeHandleWrapper(props) {
   const throttleDelay = 16;
-  const throttledResize = (0, import_compose53.useThrottle)((delta) => {
+  const throttledResize = (0, import_compose54.useThrottle)((delta) => {
     if (props.onResize) {
       props.onResize(delta);
     }
@@ -78333,8 +78348,8 @@ function GridItem3({
     id: item.key,
     disabled: dragDisabled
   });
-  const mergedRef = (0, import_compose54.useMergeRefs)([itemRef, setNodeRef]);
-  const contentMergedRef = (0, import_compose54.useMergeRefs)([contentRef]);
+  const mergedRef = (0, import_compose55.useMergeRefs)([itemRef, setNodeRef]);
+  const contentMergedRef = (0, import_compose55.useMergeRefs)([contentRef]);
   const style = {
     gridColumnEnd: `span ${item.width === "full" ? maxColumns : Math.min(
       typeof item.width === "number" ? item.width : 1,
@@ -79402,13 +79417,13 @@ var DashboardGrid = (0, import_element279.forwardRef)(
     const [containerWidth, setContainerWidth] = (0, import_element279.useState)(0);
     const [containerHeight, setContainerHeight] = (0, import_element279.useState)(0);
     const [gapPx, setGapPx] = (0, import_element279.useState)(FALLBACK_GAP_PX);
-    const resizeObserverRef = (0, import_compose55.useResizeObserver)(
+    const resizeObserverRef = (0, import_compose56.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
         setContainerHeight(contentRect.height);
       }
     );
-    const mergedGridRef = (0, import_compose55.useMergeRefs)([
+    const mergedGridRef = (0, import_compose56.useMergeRefs)([
       setGridRoot,
       resizeObserverRef,
       ref
@@ -79573,11 +79588,11 @@ var DashboardGrid = (0, import_element279.forwardRef)(
         coordinateGetter: sortableKeyboardCoordinates
       })
     );
-    const handleDragStart = (0, import_compose55.useEvent)((event) => {
+    const handleDragStart = (0, import_compose56.useEvent)((event) => {
       setActiveId(String(event.active.id));
       lastReorderCursorRef.current = null;
     });
-    const handleDragCancel = (0, import_compose55.useEvent)(() => {
+    const handleDragCancel = (0, import_compose56.useEvent)(() => {
       setActiveId(null);
       latestLayoutRef.current = void 0;
       lastReorderCursorRef.current = null;
@@ -79586,7 +79601,7 @@ var DashboardGrid = (0, import_element279.forwardRef)(
       setResizeSnapPreview(null);
       setTemporaryLayout(void 0);
     });
-    const handleDragMove = (0, import_compose55.useEvent)((event) => {
+    const handleDragMove = (0, import_compose56.useEvent)((event) => {
       const { active, over } = event;
       if (!over || active.id === over.id) {
         return;
@@ -79643,7 +79658,7 @@ var DashboardGrid = (0, import_element279.forwardRef)(
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
-    const persistTemporaryLayout = (0, import_compose55.useEvent)(() => {
+    const persistTemporaryLayout = (0, import_compose56.useEvent)(() => {
       const latest = latestLayoutRef.current;
       latestLayoutRef.current = void 0;
       resizeBaselineRef.current = null;
@@ -79656,7 +79671,7 @@ var DashboardGrid = (0, import_element279.forwardRef)(
       onChangeLayout(latest);
       setTemporaryLayout(void 0);
     });
-    const handleResize = (0, import_compose55.useEvent)((id, delta) => {
+    const handleResize = (0, import_compose56.useEvent)((id, delta) => {
       if (!editMode) {
         return;
       }
@@ -79860,12 +79875,12 @@ var DashboardGrid = (0, import_element279.forwardRef)(
 );
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
-var import_compose57 = __toESM(require_compose(), 1);
+var import_compose58 = __toESM(require_compose(), 1);
 var import_element282 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
 var import_element280 = __toESM(require_element(), 1);
-var import_compose56 = __toESM(require_compose(), 1);
+var import_compose57 = __toESM(require_compose(), 1);
 var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE117 = "data-wp-hash";
 function getRuntime117() {
@@ -79999,8 +80014,8 @@ function LanesItem({
     id: itemKey,
     disabled: dragDisabled
   });
-  const mergedRef = (0, import_compose56.useMergeRefs)([itemRef, setNodeRef]);
-  const contentMergedRef = (0, import_compose56.useMergeRefs)([contentRef]);
+  const mergedRef = (0, import_compose57.useMergeRefs)([itemRef, setNodeRef]);
+  const contentMergedRef = (0, import_compose57.useMergeRefs)([contentRef]);
   const style = {
     ...placementStyle,
     alignSelf: "start"
@@ -80508,12 +80523,12 @@ var DashboardLanes = (0, import_element282.forwardRef)(
     );
     const [containerWidth, setContainerWidth] = (0, import_element282.useState)(0);
     const [gapPx, setGapPx] = (0, import_element282.useState)(FALLBACK_GAP_PX2);
-    const resizeObserverRef = (0, import_compose57.useResizeObserver)(
+    const resizeObserverRef = (0, import_compose58.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
       }
     );
-    const mergedRootRef = (0, import_compose57.useMergeRefs)([
+    const mergedRootRef = (0, import_compose58.useMergeRefs)([
       setContainer,
       resizeObserverRef,
       ref
@@ -80653,11 +80668,11 @@ var DashboardLanes = (0, import_element282.forwardRef)(
         coordinateGetter: sortableKeyboardCoordinates
       })
     );
-    const handleDragStart = (0, import_compose57.useEvent)((event) => {
+    const handleDragStart = (0, import_compose58.useEvent)((event) => {
       setActiveId(String(event.active.id));
       lastReorderCursorRef.current = null;
     });
-    const handleDragCancel = (0, import_compose57.useEvent)(() => {
+    const handleDragCancel = (0, import_compose58.useEvent)(() => {
       setActiveId(null);
       latestLayoutRef.current = void 0;
       lastReorderCursorRef.current = null;
@@ -80666,7 +80681,7 @@ var DashboardLanes = (0, import_element282.forwardRef)(
       setResizeSnapPreview(null);
       setTemporaryLayout(void 0);
     });
-    const handleDragMove = (0, import_compose57.useEvent)((event) => {
+    const handleDragMove = (0, import_compose58.useEvent)((event) => {
       const { active, over } = event;
       if (!over || active.id === over.id) {
         return;
@@ -80725,7 +80740,7 @@ var DashboardLanes = (0, import_element282.forwardRef)(
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
-    const persistTemporaryLayout = (0, import_compose57.useEvent)(() => {
+    const persistTemporaryLayout = (0, import_compose58.useEvent)(() => {
       const latest = latestLayoutRef.current;
       latestLayoutRef.current = void 0;
       resizeBaselineRef.current = null;
@@ -80738,7 +80753,7 @@ var DashboardLanes = (0, import_element282.forwardRef)(
       onChangeLayout(latest);
       setTemporaryLayout(void 0);
     });
-    const handleResize = (0, import_compose57.useEvent)((id, delta) => {
+    const handleResize = (0, import_compose58.useEvent)((id, delta) => {
       if (!editMode) {
         return;
       }
@@ -80911,17 +80926,17 @@ var DashboardLanes = (0, import_element282.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
-var import_compose58 = __toESM(require_compose(), 1);
+var import_compose59 = __toESM(require_compose(), 1);
 var import_element283 = __toESM(require_element(), 1);
 function useDashboardContainerColumnCount(forwardedRef, maxColumns) {
   const [container, setContainer] = (0, import_element283.useState)(
     null
   );
   const [containerWidth, setContainerWidth] = (0, import_element283.useState)(0);
-  const resizeObserverRef = (0, import_compose58.useResizeObserver)(([{ contentRect }]) => {
+  const resizeObserverRef = (0, import_compose59.useResizeObserver)(([{ contentRect }]) => {
     setContainerWidth(contentRect.width);
   });
-  const containerRef = (0, import_compose58.useMergeRefs)([
+  const containerRef = (0, import_compose59.useMergeRefs)([
     setContainer,
     resizeObserverRef,
     forwardedRef ?? null
@@ -81536,13 +81551,13 @@ function AttributesDropdown({
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/use-inline-fit.mjs
-var import_compose59 = __toESM(require_compose(), 1);
+var import_compose60 = __toESM(require_compose(), 1);
 var import_element286 = __toESM(require_element(), 1);
 function useInlineFit(options = {}) {
   const { locked = false } = options;
   const availableSize = useWidgetHeaderAvailableSize();
   const [naturalSize, setNaturalSize] = (0, import_element286.useState)(0);
-  const measureRef = (0, import_compose59.useResizeObserver)(
+  const measureRef = (0, import_compose60.useResizeObserver)(
     ([entry]) => setNaturalSize(entry.contentRect.width)
   );
   const computed = availableSize !== null && naturalSize > 0 && naturalSize > availableSize;
