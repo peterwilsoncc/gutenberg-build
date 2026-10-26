@@ -65161,7 +65161,7 @@ Icon: ButtonIcon });
 	}
 	function useClipboardHandler$1() {
 		const registry = (0, _wordpress_data.useRegistry)();
-		const { getBlocksByClientId, getSelectedBlockClientIds, hasMultiSelection, getSettings, getBlockName, __unstableIsFullySelected, __unstableIsSelectionCollapsed, __unstableIsSelectionMergeable, __unstableGetSelectedBlocksWithPartialSelection, canInsertBlockType, getBlockRootClientId } = (0, _wordpress_data.useSelect)(store);
+		const { getBlocksByClientId, getSelectedBlockClientIds, hasMultiSelection, getSettings, getBlockName, __unstableIsFullySelected, __unstableIsSelectionCollapsed, __unstableIsSelectionMergeable, __unstableGetSelectedBlocksWithPartialSelection, canInsertBlockType, getBlockRootClientId, getBlockAttributes, getSelectionStart } = (0, _wordpress_data.useSelect)(store);
 		const { flashBlock, removeBlocks, replaceBlocks, __unstableDeleteSelection, __unstableExpandSelection, __unstableSplitSelection, selectionChange } = (0, _wordpress_data.useDispatch)(store);
 		const notifyCopy = useNotifyCopy();
 		return (0, _wordpress_compose.useRefEffect)((node) => {
@@ -65177,12 +65177,17 @@ Icon: ButtonIcon });
 				selectionChange(getBlockClientId(element), element.dataset.wpBlockAttributeKey, offset, offset);
 				return true;
 			}
+			function isSelectedFieldBound() {
+				const { clientId, attributeKey } = getSelectionStart();
+				const bindings = clientId ? getBlockAttributes(clientId)?.metadata?.bindings : void 0;
+				return !!(attributeKey && bindings?.[attributeKey] || bindings?.__default);
+			}
 			function handler(event) {
 				if (event.defaultPrevented) return;
 				if (event.type === "drop" && !moveSelectionToDropPoint(event)) return;
 				const selectedBlockClientIds = getSelectedBlockClientIds();
 				if (selectedBlockClientIds.length === 0) return;
-				const isWholeSingleBlockCopy = event.type === "copy" && !hasMultiSelection() && isBlockEntirelySelected(event.target.ownerDocument, selectedBlockClientIds[0]);
+				const isWholeSingleBlockCopy = event.type === "copy" && !hasMultiSelection() && !isSelectedFieldBound() && isBlockEntirelySelected(event.target.ownerDocument, selectedBlockClientIds[0]);
 				if (!hasMultiSelection()) {
 					const { ownerDocument } = event.target;
 					if ((event.type === "copy" || event.type === "cut" ? (0, _wordpress_dom.documentHasUncollapsedSelection)(ownerDocument) : (0, _wordpress_dom.documentHasSelection)(ownerDocument) && !ownerDocument.activeElement.isContentEditable) && !isWholeSingleBlockCopy) return;
