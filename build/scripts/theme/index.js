@@ -5902,6 +5902,19 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			foreground: "foreground.interactive.neutral-strong-active"
 		}
 	];
+	const SEMANTIC_FOCUS_CONTRAST_PAIRS = [
+		"background.surface.neutral",
+		"background.surface.neutral-strong",
+		"background.surface.neutral-weak",
+		"background.surface.brand"
+	].flatMap((background) => [
+		"stroke.focus",
+		"background.interactive.brand-strong",
+		"background.interactive.brand-strong-active"
+	].map((foreground) => ({
+		background,
+		foreground
+	})));
 	function getSemanticColorCustomProperty(token) {
 		return `--wpds-color-${token.replaceAll(".", "-")}`;
 	}
@@ -5914,18 +5927,24 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			ramp: rampName,
 			step
 		});
-		for (const { background: backgroundToken, foreground: foregroundToken } of SEMANTIC_COLOR_CONTRAST_PAIRS) {
+		for (const { background: backgroundToken, foreground: foregroundToken, requiredContrast } of [...SEMANTIC_COLOR_CONTRAST_PAIRS.map((pair) => ({
+			...pair,
+			requiredContrast: MINIMUM_TEXT_CONTRAST
+		})), ...SEMANTIC_FOCUS_CONTRAST_PAIRS.map((pair) => ({
+			...pair,
+			requiredContrast: 3
+		}))]) {
 			const backgroundColor = colorValues.get(getSemanticColorCustomProperty(backgroundToken));
 			const foregroundColor = colorValues.get(getSemanticColorCustomProperty(foregroundToken));
 			if (backgroundColor === void 0 || foregroundColor === void 0) continue;
 			const achievedContrast = getContrast(backgroundColor, foregroundColor);
-			if (achievedContrast < 4.5) warnings.push({
+			if (achievedContrast < requiredContrast) warnings.push({
 				type: "contrast",
 				backgroundToken,
 				backgroundColor,
 				foregroundToken,
 				foregroundColor,
-				requiredContrast: MINIMUM_TEXT_CONTRAST,
+				requiredContrast,
 				achievedContrast
 			});
 		}
