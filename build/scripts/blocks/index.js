@@ -7446,8 +7446,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 
 // packages/blocks/build-module/api/raw-handling/shortcode-converter.mjs
 	const castArray = (maybeArray) => Array.isArray(maybeArray) ? maybeArray : [maybeArray];
-	const beforeLineRegexp = /(\n|<p>|<br\s*\/?>)\s*$/;
-	const afterLineRegexp = /^\s*(\n|<\/p>|<br\s*\/?>)/;
+	const beforeLineRegexp = /(^|\n|<p>|<br\s*\/?>)\s*$/;
+	const afterLineRegexp = /^\s*($|\n|<\/p>|<br\s*\/?>)/;
 	function segmentHTMLToShortcodeBlock(HTML, lastIndex = 0, excludedBlockNames = []) {
 		const transformsFrom = getBlockTransforms("from").filter((transform) => transform.type === "shortcode");
 		const transformation = findTransform(transformsFrom, (transform) => excludedBlockNames.indexOf(transform.blockName) === -1 && castArray(transform.tag).some((tag) => (0, _wordpress_shortcode.regexp)(tag).test(HTML)));
@@ -7459,7 +7459,9 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		lastIndex = match.index + match.content.length;
 		const beforeHTML = HTML.substr(0, match.index);
 		const afterHTML = HTML.substr(lastIndex);
-		if (!match.shortcode.content?.includes("<") && !(beforeLineRegexp.test(beforeHTML) && afterLineRegexp.test(afterHTML))) return segmentHTMLToShortcodeBlock(HTML, lastIndex);
+		const isLineStart = beforeLineRegexp.test(beforeHTML);
+		const isLineEnd = afterLineRegexp.test(afterHTML);
+		if (!isLineStart && !isLineEnd) return segmentHTMLToShortcodeBlock(HTML, lastIndex);
 		if (transformation.isMatch && !transformation.isMatch(match.shortcode.attrs)) return segmentHTMLToShortcodeBlock(HTML, previousIndex, [...excludedBlockNames, transformation.blockName]);
 		let blocks = [];
 		if (typeof transformation.transform === "function") {
@@ -7482,8 +7484,26 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			block = applyBuiltInValidationFixes(block, transformationBlockType);
 			blocks = [block];
 		}
-		return [
+		if (isLineStart && isLineEnd) return [
 			...segmentHTMLToShortcodeBlock(beforeHTML.replace(beforeLineRegexp, "")),
+			...blocks,
+			...segmentHTMLToShortcodeBlock(afterHTML.replace(afterLineRegexp, ""))
+		];
+		if (!blocks.every((block) => [
+			"left",
+			"center",
+			"right"
+		].includes(block.attributes.align))) return segmentHTMLToShortcodeBlock(HTML, lastIndex);
+		if (isLineStart) {
+			const lineStart = beforeHTML.search(beforeLineRegexp);
+			return [
+				...segmentHTMLToShortcodeBlock(beforeHTML.slice(0, lineStart)),
+				...blocks,
+				...segmentHTMLToShortcodeBlock(beforeHTML.slice(lineStart) + afterHTML)
+			];
+		}
+		return [
+			...segmentHTMLToShortcodeBlock(beforeHTML),
 			...blocks,
 			...segmentHTMLToShortcodeBlock(afterHTML.replace(afterLineRegexp, ""))
 		];
