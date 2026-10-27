@@ -50942,7 +50942,6 @@ VisualLabel });
 		const safeColordColor = (0, _wordpress_element.useMemo)(() => {
 			return A$1(color || "");
 		}, [color]);
-		const debouncedSetColor = (0, _wordpress_compose.useDebounce)(setColor);
 		const [internalHSLA, setInternalHSLA] = (0, _wordpress_element.useState)(() => ({ ...safeColordColor.toHsl() }));
 		const lastProducedHexRef = (0, _wordpress_element.useRef)(safeColordColor.toHex());
 		const isPickerInteractingRef = (0, _wordpress_element.useRef)(false);
@@ -50967,8 +50966,8 @@ VisualLabel });
 			setInternalHSLA((prev) => mergeHSLA(nextHSLA, prev));
 			const nextHex = nextValue.toHex();
 			lastProducedHexRef.current = nextHex;
-			debouncedSetColor(nextHex);
-		}, [debouncedSetColor]);
+			setColor(nextHex);
+		}, [setColor]);
 		const [colorType, setColorType] = (0, _wordpress_element.useState)(copyFormat || "hex");
 		const maybeHandlePaste = (0, _wordpress_element.useCallback)((event) => {
 			const pastedText = event.clipboardData?.getData("text")?.trim();
