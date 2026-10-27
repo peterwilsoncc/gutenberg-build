@@ -830,6 +830,10 @@ body.admin-color-fresh {
   font-weight: inherit;
 }
 
+.dataviews-pagination__page-input {
+  width: calc((var(--dataviews-pagination-page-input-digits, 3) + 1) * 1ch + 2 * var(--wpds-dimension-padding-sm, 8px));
+}
+
 .dataviews-action-modal {
   z-index: 1000001;
 }

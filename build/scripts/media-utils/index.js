@@ -35361,15 +35361,51 @@ Icon: ButtonIcon });
 	}
 
 // packages/dataviews/build-module/components/dataviews-pagination/index.mjs
+/**
+	* Above this many pages the page select gives way to a number input. A list
+	* of hundreds of pages is slower to scan than typing the page number, and
+	* rendering one option per page freezes the browser once a dataset runs to
+	* tens of thousands of pages.
+	*/
+	const MAX_PAGE_SELECT_PAGES = 100;
 	function hasPaginationControls(view, paginationInfo) {
 		return !view.infiniteScrollEnabled && paginationInfo.totalItems > 0 && paginationInfo.totalPages > 1;
+	}
+	function PageNumberInput({ currentPage, totalPages, onChangePage }) {
+		const [draft, setDraft] = (0, _wordpress_element.useState)(null);
+		const commit = () => {
+			setDraft(null);
+			const page = Number.parseInt(draft ?? "", 10);
+			if (Number.isNaN(page)) return;
+			const nextPage = Math.min(Math.max(page, 1), totalPages);
+			if (nextPage !== currentPage) onChangePage(nextPage);
+		};
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Input, {
+			className: "dataviews-pagination__page-input",
+			type: "number",
+			size: "compact",
+			min: 1,
+			max: totalPages,
+			value: draft ?? currentPage.toString(),
+			onValueChange: setDraft,
+			onBlur: commit,
+			onKeyDown: (event) => {
+				if (event.key === "Enter") {
+					event.preventDefault();
+					commit();
+				}
+			},
+			"aria-label": (0, _wordpress_i18n.__)("Current page"),
+			style: { "--dataviews-pagination-page-input-digits": totalPages.toString().length }
+		});
 	}
 	function DataViewsPageSelect({ className }) {
 		const { view, onChangeView, paginationInfo } = (0, _wordpress_element.useContext)(DataViewsContext);
 		if (!hasPaginationControls(view, paginationInfo)) return null;
 		const { totalPages } = paginationInfo;
 		const currentPage = view.page ?? 1;
-		const pageSelectOptions = Array.from(Array(totalPages)).map((_, i) => {
+		const hasPageInput = totalPages > MAX_PAGE_SELECT_PAGES;
+		const pageSelectOptions = hasPageInput ? [] : Array.from(Array(totalPages)).map((_, i) => {
 			const page = i + 1;
 			return {
 				value: page.toString(),
@@ -35385,7 +35421,14 @@ Icon: ButtonIcon });
 			className: clsx("dataviews-pagination__page-select", className),
 			children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"), "<CurrentPage />", totalPages), {
 				div: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { "aria-hidden": true }),
-				CurrentPage: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root, {
+				CurrentPage: hasPageInput ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PageNumberInput, {
+					currentPage,
+					totalPages,
+					onChangePage: (page) => onChangeView({
+						...view,
+						page
+					})
+				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root, {
 					value: currentPage.toString(),
 					onValueChange: (newValue) => {
 						if (newValue === null) return;
