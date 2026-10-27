@@ -1,1 +1,0 @@
-<?php return array('dependencies' => array('react-jsx-runtime', 'wp-blob', 'wp-compose', 'wp-data', 'wp-element', 'wp-i18n', 'wp-private-apis'), 'module_dependencies' => array(array('id' => '@wordpress/video-conversion/worker', 'import' => 'dynamic'), array('id' => '@wordpress/vips/worker', 'import' => 'dynamic')), 'version' => '652a4c8f4d2a22ab8273');
