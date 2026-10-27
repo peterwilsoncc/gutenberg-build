@@ -61391,7 +61391,8 @@ VisualLabel });
 		"marquee",
 		"timer"
 	]);
-	const hiddenElementsByDepth = [];
+	const modalElements = [];
+	const hiddenElements = /* @__PURE__ */ new Set();
 	/**
 	* Hides all elements in the body element from screen-readers except
 	* the provided element and elements that should not be hidden from
@@ -61405,15 +61406,11 @@ VisualLabel });
 	* @param modalElement The element that should not be hidden.
 	*/
 	function modalize(modalElement) {
-		const elements = Array.from(document.body.children);
-		const hiddenElements = [];
-		hiddenElementsByDepth.push(hiddenElements);
-		for (const element of elements) {
-			if (element === modalElement) continue;
-			if (elementShouldBeHidden(element)) {
-				element.setAttribute("aria-hidden", "true");
-				hiddenElements.push(element);
-			}
+		modalElements.push(modalElement);
+		if (hiddenElements.delete(modalElement)) modalElement.removeAttribute("aria-hidden");
+		for (const element of Array.from(document.body.children)) if (element !== modalElement && elementShouldBeHidden(element)) {
+			element.setAttribute("aria-hidden", "true");
+			hiddenElements.add(element);
 		}
 	}
 	/**
@@ -61428,12 +61425,18 @@ VisualLabel });
 		return !(element.tagName === "SCRIPT" || element.hasAttribute("hidden") || element.hasAttribute("aria-hidden") || element.hasAttribute("aria-live") || role && LIVE_REGION_ARIA_ROLES.has(role));
 	}
 	/**
-	* Accessibly reveals the elements hidden by the latest modal.
+	* Accessibly reveals the topmost remaining modal, or all hidden elements once
+	* the last modal closes.
+	*
+	* @param modalElement The element of the closing modal.
 	*/
-	function unmodalize() {
-		const hiddenElements = hiddenElementsByDepth.pop();
-		if (!hiddenElements) return;
-		for (const element of hiddenElements) element.removeAttribute("aria-hidden");
+	function unmodalize(modalElement) {
+		modalElements.splice(modalElements.indexOf(modalElement), 1);
+		const topModalElement = modalElements[modalElements.length - 1];
+		for (const element of hiddenElements) if (!topModalElement || element === topModalElement) {
+			element.removeAttribute("aria-hidden");
+			hiddenElements.delete(element);
+		}
 	}
 
 // packages/components/build-module/modal/use-modal-exit-animation.mjs
@@ -61519,8 +61522,9 @@ VisualLabel });
 			else setHasScrollableContent(false);
 		}, [contentRef]);
 		(0, _wordpress_element.useEffect)(() => {
-			modalize(ref.current);
-			return () => unmodalize();
+			const modalElement = ref.current;
+			modalize(modalElement);
+			return () => unmodalize(modalElement);
 		}, []);
 		const onRequestCloseRef = (0, _wordpress_element.useRef)(void 0);
 		(0, _wordpress_element.useEffect)(() => {
