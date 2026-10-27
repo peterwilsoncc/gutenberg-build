@@ -1135,40 +1135,14 @@ _wordpress_token_list = __toESM(_wordpress_token_list, 1);
 		})
 	});
 
-// packages/icons/build-module/library/lock-outline.mjs
-	var lock_outline_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+// packages/icons/build-module/library/lock.mjs
+	var lock_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
 		viewBox: "0 0 24 24",
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
 		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M9.25 10.75H7.75C7.47386 10.75 7.25 10.9739 7.25 11.25V17.25C7.25 17.5261 7.47386 17.75 7.75 17.75H16.25C16.5261 17.75 16.75 17.5261 16.75 17.25V11.25C16.75 10.9739 16.5261 10.75 16.25 10.75H14.75M9.25 10.75V7.5C9.25 5.98122 10.4812 4.75 12 4.75C13.5188 4.75 14.75 5.98122 14.75 7.5V10.75M9.25 10.75H14.75" })
-	});
-
-// packages/icons/build-module/library/lock-small.mjs
-	var lock_small_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
-		xmlns: "http://www.w3.org/2000/svg",
-		viewBox: "0 0 24 24",
-		fill: "currentColor",
-		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			fillRule: "evenodd",
-			clipRule: "evenodd",
-			d: "M15 11h-.2V9c0-1.5-1.2-2.8-2.8-2.8S9.2 7.5 9.2 9v2H9c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1zm-1.8 0h-2.5V9c0-.7.6-1.2 1.2-1.2s1.2.6 1.2 1.2v2z"
-		})
-	});
-
-// packages/icons/build-module/library/lock.mjs
-	var lock_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
-		xmlns: "http://www.w3.org/2000/svg",
-		viewBox: "0 0 24 24",
-		style: { fill: "none" },
-		stroke: "currentColor",
-		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M9.25 11.1H7.75C7.47386 11.1 7.25 11.3239 7.25 11.6V17.6C7.25 17.8761 7.47386 18.1 7.75 18.1H16.25C16.5261 18.1 16.75 17.8761 16.75 17.6V11.6C16.75 11.3239 16.5261 11.1 16.25 11.1H14.75M9.25 11.1V7.85C9.25 6.33122 10.4812 5.1 12 5.1C13.5188 5.1 14.75 6.33122 14.75 7.85V11.1M9.25 11.1H14.75" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			d: "M16.25 18.1H7.75C7.47386 18.1 7.25 17.8761 7.25 17.6V11.6C7.25 11.3239 7.47386 11.1 7.75 11.1H16.25C16.5261 11.1 16.75 11.3239 16.75 11.6V17.6C16.75 17.8761 16.5261 18.1 16.25 18.1Z",
-			fill: "currentColor",
-			stroke: "none"
-		})]
 	});
 
 // packages/icons/build-module/library/media.mjs
@@ -93765,7 +93739,7 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!canLock) return null;
 		const label = isLocked ? (0, _wordpress_i18n.__)("Unlock") : (0, _wordpress_i18n.__)("Lock");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
-			icon: isLocked ? unlock_default : lock_outline_default,
+			icon: isLocked ? unlock_default : lock_default,
 			onClick: toggleModal,
 			"aria-expanded": isModalOpen,
 			"aria-haspopup": "dialog",
@@ -96482,7 +96456,7 @@ If there's a particular need for this, please submit a feature request at https:
 						}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: visibilityLabel })] }),
 						shouldShowLockIcon && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 							className: "block-editor-list-view-block-select-button__lock",
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default, { icon: lock_small_default })
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default, { icon: lock_default })
 						})
 					]
 				})

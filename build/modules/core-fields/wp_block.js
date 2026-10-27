@@ -6958,17 +6958,15 @@ var icon_default = (0, import_element.forwardRef)(({ icon, size = 24, style, ...
 	});
 });
 
-// packages/icons/build-module/library/lock-small.mjs
+// packages/icons/build-module/library/lock.mjs
 var import_primitives = require_primitives();
-var lock_small_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+var lock_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
 	xmlns: "http://www.w3.org/2000/svg",
 	viewBox: "0 0 24 24",
-	fill: "currentColor",
-	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, {
-		fillRule: "evenodd",
-		clipRule: "evenodd",
-		d: "M15 11h-.2V9c0-1.5-1.2-2.8-2.8-2.8S9.2 7.5 9.2 9v2H9c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1zm-1.8 0h-2.5V9c0-.7.6-1.2 1.2-1.2s1.2.6 1.2 1.2v2z"
-	})
+	style: { fill: "none" },
+	stroke: "currentColor",
+	strokeWidth: "1.5",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M9.25 10.75H7.75C7.47386 10.75 7.25 10.9739 7.25 11.25V17.25C7.25 17.5261 7.47386 17.75 7.75 17.75H16.25C16.5261 17.75 16.75 17.5261 16.75 17.25V11.25C16.75 10.9739 16.5261 10.75 16.25 10.75H14.75M9.25 10.75V7.5C9.25 5.98122 10.4812 4.75 12 4.75C13.5188 4.75 14.75 5.98122 14.75 7.5V10.75M9.25 10.75H14.75" })
 });
 
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
@@ -8192,7 +8190,7 @@ function PatternTitleView({ item }) {
 		item,
 		className: clsx("fields-field__pattern-title", style_module_default["pattern-title"]),
 		children: item.type === "pattern" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, { children: lockMessage }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(icon_default, {
-			icon: lock_small_default,
+			icon: lock_default,
 			size: 24
 		}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup, { children: lockMessage })] })] })
 	});
