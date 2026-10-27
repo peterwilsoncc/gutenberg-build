@@ -49012,9 +49012,18 @@ function kebabCase(str) {
 	] });
 }
 
+// packages/dataviews/build-module/utils/get-action-label.mjs
+const TRAILING_ELLIPSIS = /(?:\s*(?:[…⋯]|[.。．]{3,}(?![.。．])))+\s*$/u;
+function getActionLabel(action, items, context = "button") {
+	const label = typeof action.label === "string" ? action.label : action.label(items);
+	if (context === "button") return label.replace(TRAILING_ELLIPSIS, "");
+	if (!("RenderModal" in action) || TRAILING_ELLIPSIS.test(label)) return label;
+	return (0, import_i18n.sprintf)((0, import_i18n._x)("%s…", "menu item requiring further input"), label);
+}
+
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
 function ButtonTrigger({ action, onClick, items, variant }) {
-	const label = typeof action.label === "string" ? action.label : action.label(items);
+	const label = getActionLabel(action, items);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 		disabled: !!action.disabled,
 		accessibleWhenDisabled: true,
@@ -49025,7 +49034,7 @@ function ButtonTrigger({ action, onClick, items, variant }) {
 	});
 }
 function MenuItemTrigger({ action, onClick, items }) {
-	const label = typeof action.label === "string" ? action.label : action.label(items);
+	const label = getActionLabel(action, items, "menu");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 		disabled: action.disabled,
 		onClick,
@@ -49207,7 +49216,7 @@ function BulkSelectionCheckbox$1({ selection, onChangeSelection, data, actions, 
 	});
 }
 function ActionTrigger({ action, onClick, isBusy, items }) {
-	const label = typeof action.label === "string" ? action.label : action.label(items);
+	const label = getActionLabel(action, items);
 	const isMobile = (0, import_compose.useViewportMatch)("medium", "<");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 		variant: "secondary",
@@ -49232,7 +49241,7 @@ function ActionButton({ action, selectedItems, actionInProgress, onAction, isMen
 	if (isMenuItem) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 		onClick,
 		disabled: !!action.disabled || isBusy,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: typeof action.label === "string" ? action.label : action.label(selectedEligibleItems) })
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: getActionLabel(action, selectedEligibleItems, "menu") })
 	});
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionTrigger, {
 		action,
@@ -50829,7 +50838,7 @@ function PrimaryActionGridCell({ idPrefix, primaryAction, item }) {
 	const registry = (0, import_data.useRegistry)();
 	const [isModalOpen, setIsModalOpen] = (0, import_element.useState)(false);
 	const compositeItemId = generatePrimaryActionCompositeId(idPrefix, primaryAction.id);
-	const label = typeof primaryAction.label === "string" ? primaryAction.label : primaryAction.label([item]);
+	const label = getActionLabel(primaryAction, [item]);
 	return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		role: "gridcell",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Composite.Item, {
@@ -51549,9 +51558,9 @@ function ActionButtons({ actions, items, selection }) {
 		gap: "xs",
 		children: actions.map((action) => {
 			if (!("callback" in action)) return null;
-			const { id, label, icon, isPrimary, isEligible, callback } = action;
+			const { id, icon, isPrimary, isEligible, callback } = action;
 			const eligibleItems = isEligible ? items.filter((item) => isEligible(item)) : items;
-			const _label = typeof label === "string" ? label : label(items);
+			const label = getActionLabel(action, items);
 			const variant = isPrimary ? "primary" : "tertiary";
 			const isInProgress = id === actionInProgress;
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
@@ -51566,7 +51575,7 @@ function ActionButtons({ actions, items, selection }) {
 				},
 				size: "compact",
 				variant,
-				children: _label
+				children: label
 			}, id);
 		})
 	});

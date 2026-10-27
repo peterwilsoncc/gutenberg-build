@@ -72798,9 +72798,18 @@ Icon: ButtonIcon });
 		] });
 	}
 
+// packages/dataviews/build-module/utils/get-action-label.mjs
+	const TRAILING_ELLIPSIS = /(?:\s*(?:[…⋯]|[.。．]{3,}(?![.。．])))+\s*$/u;
+	function getActionLabel(action, items, context = "button") {
+		const label = typeof action.label === "string" ? action.label : action.label(items);
+		if (context === "button") return label.replace(TRAILING_ELLIPSIS, "");
+		if (!("RenderModal" in action) || TRAILING_ELLIPSIS.test(label)) return label;
+		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s…", "menu item requiring further input"), label);
+	}
+
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
 	function ButtonTrigger({ action, onClick, items, variant }) {
-		const label = typeof action.label === "string" ? action.label : action.label(items);
+		const label = getActionLabel(action, items);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 			disabled: !!action.disabled,
 			accessibleWhenDisabled: true,
@@ -72811,7 +72820,7 @@ Icon: ButtonIcon });
 		});
 	}
 	function MenuItemTrigger({ action, onClick, items }) {
-		const label = typeof action.label === "string" ? action.label : action.label(items);
+		const label = getActionLabel(action, items, "menu");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Item$3, {
 			disabled: action.disabled,
 			onClick,
@@ -72993,7 +73002,7 @@ Icon: ButtonIcon });
 		});
 	}
 	function ActionTrigger({ action, onClick, isBusy, items }) {
-		const label = typeof action.label === "string" ? action.label : action.label(items);
+		const label = getActionLabel(action, items);
 		const isMobile = (0, _wordpress_compose.useViewportMatch)("medium", "<");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 			variant: "secondary",
@@ -73018,7 +73027,7 @@ Icon: ButtonIcon });
 		if (isMenuItem) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Item$3, {
 			onClick,
 			disabled: !!action.disabled || isBusy,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: typeof action.label === "string" ? action.label : action.label(selectedEligibleItems) })
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: getActionLabel(action, selectedEligibleItems, "menu") })
 		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionTrigger, {
 			action,
@@ -74614,7 +74623,7 @@ Icon: ButtonIcon });
 		const registry = (0, _wordpress_data.useRegistry)();
 		const [isModalOpen, setIsModalOpen] = (0, _wordpress_element.useState)(false);
 		const compositeItemId = generatePrimaryActionCompositeId(idPrefix, primaryAction.id);
-		const label = typeof primaryAction.label === "string" ? primaryAction.label : primaryAction.label([item]);
+		const label = getActionLabel(primaryAction, [item]);
 		return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			role: "gridcell",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Composite.Item, {
