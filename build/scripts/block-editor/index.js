@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_element, _wordpress_data, _wordpress_compose, _wordpress_hooks, _wordpress_i18n, _wordpress_components, _wordpress_primitives, react_jsx_runtime, _wordpress_deprecated, _wordpress_private_apis, _wordpress_rich_text, _wordpress_block_serialization_default_parser, _wordpress_style_engine, _wordpress_a11y, _wordpress_notices, _wordpress_url, react, react_dom, _wordpress_warning, _wordpress_theme, _wordpress_keycodes, _wordpress_dom, _wordpress_keyboard_shortcuts, _wordpress_html_entities, _wordpress_upload_media, _wordpress_priority_queue, _wordpress_date, _wordpress_blob, _wordpress_is_shallow_equal, _wordpress_token_list, _wordpress_preferences, _wordpress_commands) {
+(function(exports, _wordpress_blocks, _wordpress_element, _wordpress_data, _wordpress_compose, _wordpress_hooks, _wordpress_i18n, _wordpress_components, _wordpress_primitives, react_jsx_runtime, _wordpress_deprecated, _wordpress_is_shallow_equal, _wordpress_private_apis, _wordpress_rich_text, _wordpress_block_serialization_default_parser, _wordpress_style_engine, _wordpress_a11y, _wordpress_notices, _wordpress_url, react, react_dom, _wordpress_warning, _wordpress_theme, _wordpress_keycodes, _wordpress_dom, _wordpress_keyboard_shortcuts, _wordpress_html_entities, _wordpress_upload_media, _wordpress_priority_queue, _wordpress_date, _wordpress_blob, _wordpress_token_list, _wordpress_preferences, _wordpress_commands) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -3192,18 +3192,11 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	function updateBlockTreeForBlocks(state, blocks) {
 		const treeToUpdate = state.tree;
 		const stack = [...blocks];
-		const flattenedBlocks = [...blocks];
 		while (stack.length) {
 			const block = stack.shift();
 			stack.push(...block.innerBlocks);
-			flattenedBlocks.push(...block.innerBlocks);
+			treeToUpdate.set(block.clientId, block);
 		}
-		for (const block of flattenedBlocks) treeToUpdate.set(block.clientId, {});
-		for (const block of flattenedBlocks) treeToUpdate.set(block.clientId, Object.assign(treeToUpdate.get(block.clientId), {
-			...state.byClientId.get(block.clientId),
-			attributes: state.attributes.get(block.clientId),
-			innerBlocks: block.innerBlocks.map((subBlock) => treeToUpdate.get(subBlock.clientId))
-		}));
 	}
 	function updateParentInnerBlocksInTree(state, updatedClientIds, updateChildrenOfUpdatedClientIds = false) {
 		const treeToUpdate = state.tree;
@@ -3408,6 +3401,41 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		return reducer(state, action);
 	};
 	/**
+	* Returns `oldMap` when `newMap` holds the same values for the same keys.
+	*
+	* @param oldMap Previous map.
+	* @param newMap New map.
+	*
+	* @return The map to keep.
+	*/
+	function keepMapIfSame(oldMap, newMap) {
+		if (oldMap.size !== newMap.size) return newMap;
+		for (const [key, value] of newMap) if (oldMap.get(key) !== value) return newMap;
+		return oldMap;
+	}
+	/**
+	* After a reset, keeps the previous entries of blocks that the reset handed
+	* back unchanged. Undo and redo hand back the previous tree nodes themselves,
+	* so a block is unchanged when its node is the same object.
+	*
+	* @param state    Previous blocks state.
+	* @param newState Blocks state rebuilt from the reset blocks.
+	*
+	* @return The blocks state to keep.
+	*/
+	function keepUnchangedBlocks(state, newState) {
+		for (const [clientId, node] of newState.tree) if (node === state.tree.get(clientId) && state.byClientId.has(clientId)) newState.byClientId.set(clientId, state.byClientId.get(clientId));
+		for (const [clientId, order] of newState.order) {
+			const oldOrder = state.order.get(clientId);
+			if (oldOrder && (0, _wordpress_is_shallow_equal.isShallowEqual)(oldOrder, order)) newState.order.set(clientId, oldOrder);
+		}
+		newState.byClientId = keepMapIfSame(state.byClientId, newState.byClientId);
+		newState.attributes = keepMapIfSame(state.attributes, newState.attributes);
+		newState.order = keepMapIfSame(state.order, newState.order);
+		newState.parents = keepMapIfSame(state.parents, newState.parents);
+		return newState;
+	}
+	/**
 	* Higher-order reducer which targets the combined blocks reducer and handles
 	* the `RESET_BLOCKS` action. When dispatched, this action will replace all
 	* blocks that exist in the post, leaving blocks that exist only in state (e.g.
@@ -3453,12 +3481,19 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				};
 				oldOrder.forEach((id) => preserveBlock(id, clientId));
 			}
+			const fixedClientIds = [];
 			for (const clientId of newState.controlledInnerBlocks) {
 				const controlledOrder = newState.order.get(clientId);
 				if (!controlledOrder?.length) continue;
 				const innerBlocks = controlledOrder.map((id) => state.tree.get(id));
 				const existingEntry = newState.tree.get(clientId);
-				if (existingEntry) existingEntry.innerBlocks = innerBlocks;
+				if (existingEntry) {
+					newState.tree.set(clientId, {
+						...existingEntry,
+						innerBlocks
+					});
+					fixedClientIds.push(clientId);
+				}
 				newState.tree.set("controlled||" + clientId, { innerBlocks });
 				const preserveTreeEntry = (blockId) => {
 					const treeEntry = state.tree.get(blockId);
@@ -3468,12 +3503,13 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				};
 				controlledOrder.forEach(preserveTreeEntry);
 			}
+			updateParentInnerBlocksInTree(newState, fixedClientIds, false);
 			const preservedBlockEditingModes = state?.blockEditingModes ?? /* @__PURE__ */ new Map();
 			for (const [clientId, mode] of preservedBlockEditingModes) {
 				if (!newState.tree.has(clientId)) continue;
 				newState.blockEditingModes.set(clientId, mode);
 			}
-			return newState;
+			return state ? keepUnchangedBlocks(state, newState) : newState;
 		}
 		return reducer(state, action);
 	};
@@ -121100,5 +121136,5 @@ exports.withFontSizes = with_font_sizes_default;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).blockEditor = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.element, window.wp.data, window.wp.compose, window.wp.hooks, window.wp.i18n, window.wp.components, window.wp.primitives, window.ReactJSXRuntime, window.wp.deprecated, window.wp.privateApis, window.wp.richText, window.wp.blockSerializationDefaultParser, window.wp.styleEngine, window.wp.a11y, window.wp.notices, window.wp.url, window.React, window.ReactDOM, window.wp.warning, window.wp.theme, window.wp.keycodes, window.wp.dom, window.wp.keyboardShortcuts, window.wp.htmlEntities, window.wp.uploadMedia, window.wp.priorityQueue, window.wp.date, window.wp.blob, window.wp.isShallowEqual, window.wp.tokenList, window.wp.preferences, window.wp.commands);
+})({}, window.wp.blocks, window.wp.element, window.wp.data, window.wp.compose, window.wp.hooks, window.wp.i18n, window.wp.components, window.wp.primitives, window.ReactJSXRuntime, window.wp.deprecated, window.wp.isShallowEqual, window.wp.privateApis, window.wp.richText, window.wp.blockSerializationDefaultParser, window.wp.styleEngine, window.wp.a11y, window.wp.notices, window.wp.url, window.React, window.ReactDOM, window.wp.warning, window.wp.theme, window.wp.keycodes, window.wp.dom, window.wp.keyboardShortcuts, window.wp.htmlEntities, window.wp.uploadMedia, window.wp.priorityQueue, window.wp.date, window.wp.blob, window.wp.tokenList, window.wp.preferences, window.wp.commands);
 //# sourceMappingURL=index.js.map
