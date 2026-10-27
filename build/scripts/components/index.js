@@ -69175,6 +69175,11 @@ The screen with id ${screen.id} will not be added.`);
 		"progress-element": "_4c47edc54d8dcb46__progress-element"
 	};
 	function UnforwardedProgressBar(props, ref) {
+		(0, _wordpress_deprecated.default)("wp.components.ProgressBar", {
+			since: "7.3",
+			version: "7.5",
+			alternative: "Progress from @wordpress/ui"
+		});
 		const { className, value, ...progressProps } = props;
 		const isIndeterminate = !Number.isFinite(value);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
@@ -69198,6 +69203,8 @@ The screen with id ${screen.id} will not be added.`);
 	* Supports two modes: determinate and indeterminate. A progress bar is determinate
 	* when a specific progress value has been specified (from 0 to 100), and indeterminate
 	* when a value hasn't been specified.
+	*
+	* @deprecated Use `Progress` from `@wordpress/ui` instead.
 	*
 	* ```jsx
 	* import { ProgressBar } from '@wordpress/components';
