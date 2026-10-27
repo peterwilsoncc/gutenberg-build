@@ -113567,7 +113567,7 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
 	function WelcomeGuideStyles() {
-		const { toggle } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
+		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const { isActive, isStylesOpen } = (0, _wordpress_data.useSelect)((select) => {
 			const sidebar = select(store$183).getActiveComplementaryArea("core");
 			return {
@@ -113581,7 +113581,7 @@ If there's a particular need for this, please submit a feature request at https:
 			className: "editor-welcome-guide guide-styles",
 			contentLabel: welcomeLabel,
 			finishButtonText: (0, _wordpress_i18n.__)("Get started"),
-			onFinish: () => toggle("core/edit-site", "welcomeGuideStyles"),
+			onFinish: () => setPreference("core/edit-site", "welcomeGuideStyles", false),
 			pages: [
 				{
 					image: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WelcomeGuideImage, {

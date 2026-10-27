@@ -7387,7 +7387,7 @@ Icon: ButtonIcon });
 // packages/edit-widgets/build-module/components/welcome-guide/index.mjs
 	function WelcomeGuide() {
 		const isActive = (0, _wordpress_data.useSelect)((select) => !!select(_wordpress_preferences.store).get("core/edit-widgets", "welcomeGuide"), []);
-		const { toggle } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
+		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const widgetAreas = (0, _wordpress_data.useSelect)((select) => select(store).getWidgetAreas({ per_page: -1 }), []);
 		if (!isActive) return null;
 		const isEntirelyBlockWidgets = widgetAreas?.every((widgetArea) => widgetArea.id === "wp_inactive_widgets" || widgetArea.widgets.every((widgetId) => widgetId.startsWith("block-")));
@@ -7396,7 +7396,7 @@ Icon: ButtonIcon });
 			className: "edit-widgets-welcome-guide",
 			contentLabel: (0, _wordpress_i18n.__)("Welcome to block Widgets"),
 			finishButtonText: (0, _wordpress_i18n.__)("Get started"),
-			onFinish: () => toggle("core/edit-widgets", "welcomeGuide"),
+			onFinish: () => setPreference("core/edit-widgets", "welcomeGuide", false),
 			pages: [
 				{
 					image: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WelcomeGuideImage, {

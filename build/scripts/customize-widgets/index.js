@@ -5331,7 +5331,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 
 // packages/customize-widgets/build-module/components/welcome-guide/index.mjs
 	function WelcomeGuide({ sidebar }) {
-		const { toggle } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
+		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const isEntirelyBlockWidgets = sidebar.getWidgets().every((widget) => widget.id.startsWith("block-"));
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "customize-widgets-welcome-guide",
@@ -5360,7 +5360,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 					size: "compact",
 					variant: "primary",
-					onClick: () => toggle("core/customize-widgets", "welcomeGuide"),
+					onClick: () => setPreference("core/customize-widgets", "welcomeGuide", false),
 					children: (0, _wordpress_i18n.__)("Got it")
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("hr", { className: "customize-widgets-welcome-guide__separator" }),

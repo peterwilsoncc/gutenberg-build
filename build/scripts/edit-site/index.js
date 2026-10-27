@@ -40811,7 +40811,7 @@ Icon: ButtonIcon });
 
 // packages/edit-site/build-module/components/welcome-guide/editor.mjs
 	function WelcomeGuideEditor() {
-		const { toggle } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
+		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const { isActive, isBlockBasedTheme } = (0, _wordpress_data.useSelect)((select) => {
 			return {
 				isActive: !!select(_wordpress_preferences.store).get("core/edit-site", "welcomeGuide"),
@@ -40823,7 +40823,7 @@ Icon: ButtonIcon });
 			className: "edit-site-welcome-guide guide-editor",
 			contentLabel: (0, _wordpress_i18n.__)("Welcome to the site editor"),
 			finishButtonText: (0, _wordpress_i18n.__)("Get started"),
-			onFinish: () => toggle("core/edit-site", "welcomeGuide"),
+			onFinish: () => setPreference("core/edit-site", "welcomeGuide", false),
 			pages: [{
 				image: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WelcomeGuideImage, {
 					nonAnimatedSrc: "https://s.w.org/images/block-editor/edit-your-site.svg?1",
@@ -40852,7 +40852,7 @@ Icon: ButtonIcon });
 
 // packages/edit-site/build-module/components/welcome-guide/page.mjs
 	function WelcomeGuidePage() {
-		const { toggle } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
+		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		if (!(0, _wordpress_data.useSelect)((select) => {
 			const isPageActive = !!select(_wordpress_preferences.store).get("core/edit-site", "welcomeGuidePage");
 			const isEditorActive = !!select(_wordpress_preferences.store).get("core/edit-site", "welcomeGuide");
@@ -40863,7 +40863,7 @@ Icon: ButtonIcon });
 			className: "edit-site-welcome-guide guide-page",
 			contentLabel: heading,
 			finishButtonText: (0, _wordpress_i18n.__)("Continue"),
-			onFinish: () => toggle("core/edit-site", "welcomeGuidePage"),
+			onFinish: () => setPreference("core/edit-site", "welcomeGuidePage", false),
 			pages: [{
 				image: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("video", {
 					className: "edit-site-welcome-guide__video",
@@ -40890,7 +40890,7 @@ Icon: ButtonIcon });
 
 // packages/edit-site/build-module/components/welcome-guide/template.mjs
 	function WelcomeGuideTemplate() {
-		const { toggle } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
+		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const { isActive, hasPreviousEntity } = (0, _wordpress_data.useSelect)((select) => {
 			const { getEditorSettings } = select(_wordpress_editor.store);
 			const { get } = select(_wordpress_preferences.store);
@@ -40905,7 +40905,7 @@ Icon: ButtonIcon });
 			className: "edit-site-welcome-guide guide-template",
 			contentLabel: heading,
 			finishButtonText: (0, _wordpress_i18n.__)("Continue"),
-			onFinish: () => toggle("core/edit-site", "welcomeGuideTemplate"),
+			onFinish: () => setPreference("core/edit-site", "welcomeGuideTemplate", false),
 			pages: [{
 				image: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("video", {
 					className: "edit-site-welcome-guide__video",

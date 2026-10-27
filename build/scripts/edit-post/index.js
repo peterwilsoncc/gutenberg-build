@@ -9703,12 +9703,12 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 
 // packages/edit-post/build-module/components/welcome-guide/template.mjs
 	function WelcomeGuideTemplate() {
-		const { toggleFeature } = (0, _wordpress_data.useDispatch)(store);
+		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Guide, {
 			className: "edit-template-welcome-guide",
 			contentLabel: (0, _wordpress_i18n.__)("Welcome to the template editor"),
 			finishButtonText: (0, _wordpress_i18n.__)("Get started"),
-			onFinish: () => toggleFeature("welcomeGuideTemplate"),
+			onFinish: () => setPreference("core/edit-post", "welcomeGuideTemplate", false),
 			pages: [{
 				image: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WelcomeGuideImage, {
 					nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-template-editor.svg",
