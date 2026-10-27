@@ -91227,6 +91227,7 @@ If there's a particular need for this, please submit a feature request at https:
 					onChange: setFilterValue
 				}),
 				loading && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
+					align: "center",
 					justify: "center",
 					style: { height: "40px" },
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$25, {})
