@@ -61582,7 +61582,7 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/paragraph/edit.mjs
 	function ParagraphRTLControl({ direction, setDirection }) {
-		return (0, _wordpress_i18n.isRTL)() && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
 			icon: format_ltr_default,
 			title: (0, _wordpress_i18n._x)("Left to right", "editor button"),
 			isActive: direction === "ltr",
@@ -61642,7 +61642,7 @@ Icon: ButtonIcon });
 		});
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
-			blockEditingMode === "default" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
+			blockEditingMode === "default" && (0, _wordpress_i18n.isRTL)() && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
 				group: "block",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ParagraphRTLControl, {
 					direction,
