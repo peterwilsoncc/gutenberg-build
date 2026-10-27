@@ -1195,6 +1195,13 @@ input.components-combobox-control__input[type=text]:focus {
   text-align: right;
   padding-right: 8px;
   padding-left: 8px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.components-dropdown-menu__menu .components-menu-item__button.has-icon,
+.components-dropdown-menu__menu .components-menu-item__button.components-button.has-icon {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .components-duotone-picker__color-indicator::before {
