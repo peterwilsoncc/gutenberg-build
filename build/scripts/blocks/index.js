@@ -6916,8 +6916,24 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		return parseWithAttributeSchema(`<div ${dataAttribute}>${innerHTML}</div>`, attributeSchema);
 	}
 	/**
-	* Given a parsed set of block attributes, if the block supports the specified attribute
-	* and the attribute is found in the HTML, the attribute is assigned to the block attributes.
+	* Whether any element in the markup carries the attribute with this value.
+	*
+	* @param innerHTML     Original block markup.
+	* @param attributeName Attribute to look for.
+	* @param value         Value the block attributes hold.
+	*
+	* @return Whether the markup still carries the value.
+	*/
+	function hasHTMLAttributeValue(innerHTML, attributeName, value) {
+		if (!attributeName || typeof value !== "string" || !value) return false;
+		const doc = document.implementation.createHTMLDocument("");
+		doc.body.innerHTML = innerHTML;
+		return Array.from(doc.body.querySelectorAll(`[${attributeName}]`)).some((element) => element.getAttribute(attributeName) === value);
+	}
+	/**
+	* Given a parsed set of block attributes, if the block supports the specified attribute,
+	* the attribute is synced with the block's markup: assigned when the markup carries it,
+	* and removed when the markup does not.
 	*
 	* @param blockAttributes Original block attributes.
 	* @param blockType       Block type settings.
@@ -6933,6 +6949,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		const modifiedBlockAttributes = { ...blockAttributes };
 		const attributeValue = getHTMLRootElement(innerHTML, dataAttribute, attributeSchema);
 		if (attributeValue) modifiedBlockAttributes[supportKey] = attributeValue;
+		else if (innerHTML.trim() && !hasHTMLAttributeValue(innerHTML, attributeSchema.attribute, modifiedBlockAttributes[supportKey])) delete modifiedBlockAttributes[supportKey];
 		return modifiedBlockAttributes;
 	}
 
@@ -7218,12 +7235,17 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			const rawTransform = findTransform(transforms, (transform) => transform.isMatch(node));
 			if (!rawTransform) return createBlock("core/html", {}, [], [node.outerHTML]);
 			const { transform, blockName } = rawTransform;
+			let block;
 			if (transform) {
-				const block = transform(node, handler);
-				if (node.hasAttribute("class")) block.attributes.className = node.getAttribute("class");
-				return block;
-			}
-			return createBlock(blockName, getBlockAttributes(blockName, node.outerHTML));
+				const transformed = transform(node, handler);
+				if (Array.isArray(transformed)) return transformed;
+				block = transformed;
+			} else block = createBlock(blockName, getBlockAttributes(blockName, node.outerHTML));
+			const { originalContent, ...fixedBlock } = applyBuiltInValidationFixes({
+				...block,
+				originalContent: node.outerHTML
+			}, getBlockType(block.name));
+			return fixedBlock;
 		});
 	}
 
@@ -10025,7 +10047,8 @@ Please report this to https://github.com/markedjs/marked.`, e) {
 	lock(privateApis, {
 		isContentBlock,
 		editableRootKey,
-		parseRawBlock
+		parseRawBlock,
+		applyBuiltInValidationFixes
 	});
 
 // packages/blocks/build-module/deprecated.mjs
