@@ -3793,9 +3793,8 @@ Icon: ButtonIcon });
 	};
 	/**
 	* A notice component that communicates system status and provides actions.
-	* It does not announce its content to assistive technology. Consumers are
-	* responsible for announcing dynamic updates, for example with `speak()` from
-	* `@wordpress/a11y`.
+	* Render inside `Notice.List` to announce added or changed messages. Outside
+	* a list, it does not announce its content to assistive technology.
 	*
 	* ```jsx
 	* import { Notice } from '@wordpress/ui';
@@ -3814,20 +3813,22 @@ Icon: ButtonIcon });
 	* }
 	* ```
 	*/
-	const Root = (0, _wordpress_element.forwardRef)(function Notice({ intent = "neutral", children, icon, render, ...restProps }, ref) {
+	const Root = (0, _wordpress_element.forwardRef)(function Notice({ intent = "neutral", children, icon, render, politeness = "polite", spokenMessage, ...restProps }, ref) {
 		const iconElement = icon === null ? null : icon ?? icons[intent];
-		const mergedClassName = clsx(style_module_default$4.notice, style_module_default$4[`is-${intent}`], resets_module_default["box-sizing"]);
+		const defaultProps = {
+			className: clsx(style_module_default$4.notice, style_module_default$4[`is-${intent}`], resets_module_default["box-sizing"]),
+			"data-wp-ui-notice-politeness": politeness,
+			"data-wp-ui-notice-spoken-message": spokenMessage,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [children, iconElement && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon, {
+				className: style_module_default$4.icon,
+				icon: iconElement
+			})] })
+		};
 		return useRender({
 			defaultTagName: "div",
 			render,
 			ref,
-			props: mergeProps({
-				className: mergedClassName,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [children, iconElement && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon, {
-					className: style_module_default$4.icon,
-					icon: iconElement
-				})] })
-			}, restProps)
+			props: mergeProps(defaultProps, restProps)
 		});
 	});
 
