@@ -7126,6 +7126,26 @@ var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_p
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M10 6.5L15 12L10 17.5" })
 });
 
+// packages/icons/build-module/library/copy.mjs
+var copy_default = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_primitives.SVG, {
+	xmlns: "http://www.w3.org/2000/svg",
+	viewBox: "0 0 24 24",
+	style: { fill: "none" },
+	stroke: "currentColor",
+	strokeWidth: "1.5",
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M20.25 6.75V19C20.25 19.6904 19.6904 20.25 19 20.25H6.75" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M3.75 5C3.75 4.30964 4.30964 3.75 5 3.75H16C16.6904 3.75 17.25 4.30964 17.25 5V16C17.25 16.6904 16.6904 17.25 16 17.25H5C4.30964 17.25 3.75 16.6904 3.75 16V5Z" })]
+});
+
+// packages/icons/build-module/library/error.mjs
+var error_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+	xmlns: "http://www.w3.org/2000/svg",
+	viewBox: "0 0 24 24",
+	style: { fill: "none" },
+	stroke: "currentColor",
+	strokeWidth: "1.5",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M12 9L12 14M12 15.5V17M11.1284 5.04947L3.83827 18.0097C3.46331 18.6763 3.94502 19.5 4.70985 19.5H19.2902C20.055 19.5 20.5367 18.6763 20.1617 18.0097L12.8716 5.04947C12.4893 4.36982 11.5107 4.36982 11.1284 5.04947Z" })
+});
+
 // packages/icons/build-module/library/menu.mjs
 var menu_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
 	xmlns: "http://www.w3.org/2000/svg",
@@ -11537,12 +11557,38 @@ function registerStyle$3(hash, css) {
 }
 registerStyle$3("4780fe0b1b", "._4d71ad18128c9cb8__error-boundary{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:16px}");
 var style_module_default$3 = { "error-boundary": "_4d71ad18128c9cb8__error-boundary" };
+const COPY_FEEDBACK_TIMEOUT = 2e3;
+const RESULT_ICON = {
+	idle: copy_default,
+	copied: check_default,
+	error: error_default
+};
 function CopyErrorButton({ error }) {
-	const ref = (0, import_compose.useCopyToClipboard)(() => error.stack ?? String(error));
+	const [feedback, setFeedback] = (0, import_element.useState)({
+		result: "idle",
+		id: 0
+	});
+	(0, import_element.useEffect)(() => {
+		if (feedback.result === "idle") return;
+		const timeoutId = setTimeout(() => setFeedback({
+			result: "idle",
+			id: 0
+		}), COPY_FEEDBACK_TIMEOUT);
+		return () => clearTimeout(timeoutId);
+	}, [feedback]);
+	function report(result, message) {
+		setFeedback((current) => ({
+			result,
+			id: current.id + 1
+		}));
+		speak(message);
+	}
+	const ref = (0, import_compose.useCopyToClipboard)(() => error.stack ?? String(error), () => report("copied", (0, import_i18n.__)("Copied to clipboard")), () => report("error", (0, import_i18n.__)("Couldn't copy to clipboard.")));
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 		__next40pxDefaultSize: true,
 		variant: "secondary",
 		ref,
+		icon: RESULT_ICON[feedback.result],
 		children: (0, import_i18n.__)("Copy error")
 	});
 }
