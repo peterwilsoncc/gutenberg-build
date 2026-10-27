@@ -1497,7 +1497,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* Props holding `undefined` are dropped, so passing one behaves the same as
 	* omitting it and the component keeps the value it computes for itself.
 	*/
-	function forwardRef$118(render) {
+	function forwardRef$119(render) {
 		const Role = react$1.forwardRef((props, ref) => render(removeUndefinedValues({
 			...props,
 			ref
@@ -1893,7 +1893,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* <Focusable>Focusable</Focusable>
 	* ```
 	*/
-	const Focusable = forwardRef$118(function Focusable(props) {
+	const Focusable = forwardRef$119(function Focusable(props) {
 		const htmlProps = useFocusable(props);
 		return createElement$5(TagName$56, htmlProps);
 	});
@@ -2033,7 +2033,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* <Command>Button</Command>
 	* ```
 	*/
-	const Command = forwardRef$118(function Command(props) {
+	const Command = forwardRef$119(function Command(props) {
 		const htmlProps = useCommand(withDefaultButtonType(props));
 		return createElement$5(TagName$55, htmlProps);
 	});
@@ -2116,7 +2116,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* <CollectionItem store={store}>Item 3</CollectionItem>
 	* ```
 	*/
-	const CollectionItem = forwardRef$118(function CollectionItem(props) {
+	const CollectionItem = forwardRef$119(function CollectionItem(props) {
 		const htmlProps = useCollectionItem(props);
 		return createElement$5(TagName$54, htmlProps);
 	});
@@ -4061,7 +4061,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </CompositeProvider>
 	* ```
 	*/
-	const CompositeItem$3 = memo$4(forwardRef$118(function CompositeItem(props) {
+	const CompositeItem$3 = memo$4(forwardRef$119(function CompositeItem(props) {
 		const htmlProps = useCompositeItem$1(withDefaultButtonType(props));
 		return createElement$5(TagName$53, htmlProps);
 	}));
@@ -4195,7 +4195,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </TabProvider>
 	* ```
 	*/
-	const Tab$1 = memo$4(forwardRef$118(function Tab(props) {
+	const Tab$1 = memo$4(forwardRef$119(function Tab(props) {
 		const htmlProps = useTab(withDefaultButtonType(props));
 		return createElement$5(TagName$52, htmlProps);
 	}));
@@ -4631,7 +4631,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </Composite>
 	* ```
 	*/
-	const Composite$1 = forwardRef$118(function Composite(props) {
+	const Composite$1 = forwardRef$119(function Composite(props) {
 		const htmlProps = useComposite(props);
 		return createElement$5(TagName$51, htmlProps);
 	});
@@ -4693,7 +4693,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </TabProvider>
 	* ```
 	*/
-	const TabList$1 = forwardRef$118(function TabList(props) {
+	const TabList$1 = forwardRef$119(function TabList(props) {
 		const htmlProps = useTabList(props);
 		return createElement$5(TagName$50, htmlProps);
 	});
@@ -4894,7 +4894,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		return removeUndefinedValues(props);
 	});
-	const DisclosureContentImpl = forwardRef$118(function DisclosureContentImpl(props) {
+	const DisclosureContentImpl = forwardRef$119(function DisclosureContentImpl(props) {
 		const htmlProps = useDisclosureContent(props);
 		return createElement$5(TagName$49, htmlProps);
 	});
@@ -4910,7 +4910,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </DisclosureProvider>
 	* ```
 	*/
-	const DisclosureContent$1 = forwardRef$118(function DisclosureContent({ unmountOnHide, ...props }) {
+	const DisclosureContent$1 = forwardRef$119(function DisclosureContent({ unmountOnHide, ...props }) {
 		const context = useDisclosureProviderContext();
 		const store = props.store || context;
 		if (useStoreState(store, ["mounted"], (state) => !unmountOnHide || state?.mounted) === false) return null;
@@ -5197,7 +5197,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </TabProvider>
 	* ```
 	*/
-	const TabPanel$1 = forwardRef$118(function TabPanel(props) {
+	const TabPanel$1 = forwardRef$119(function TabPanel(props) {
 		const htmlProps = useTabPanel(props);
 		return createElement$5(TagName$48, htmlProps);
 	});
@@ -5629,7 +5629,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </Toolbar>
 	* ```
 	*/
-	const Toolbar$1 = forwardRef$118(function Toolbar(props) {
+	const Toolbar$1 = forwardRef$119(function Toolbar(props) {
 		const htmlProps = useToolbar(props);
 		return createElement$5(TagName$47, htmlProps);
 	});
@@ -5668,7 +5668,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </Toolbar>
 	* ```
 	*/
-	const ToolbarItem$1 = memo$4(forwardRef$118(function ToolbarItem(props) {
+	const ToolbarItem$1 = memo$4(forwardRef$119(function ToolbarItem(props) {
 		const htmlProps = useToolbarItem(withDefaultButtonType(props));
 		return createElement$5(TagName$46, htmlProps);
 	}));
@@ -5700,7 +5700,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* <Separator orientation="horizontal" />
 	* ```
 	*/
-	const Separator$1 = forwardRef$118(function Separator(props) {
+	const Separator$1 = forwardRef$119(function Separator(props) {
 		const htmlProps = useSeparator(props);
 		return createElement$5(TagName$45, htmlProps);
 	});
@@ -5747,7 +5747,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </CompositeProvider>
 	* ```
 	*/
-	const CompositeSeparator = forwardRef$118(function CompositeSeparator(props) {
+	const CompositeSeparator = forwardRef$119(function CompositeSeparator(props) {
 		const htmlProps = useCompositeSeparator(props);
 		return createElement$5(TagName$44, htmlProps);
 	});
@@ -5782,7 +5782,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </FocusableContainer>
 	* ```
 	*/
-	const FocusableContainer = forwardRef$118(function FocusableContainer(props) {
+	const FocusableContainer = forwardRef$119(function FocusableContainer(props) {
 		const htmlProps = useFocusableContainer(props);
 		return createElement$5(TagName$43, htmlProps);
 	});
@@ -5867,7 +5867,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </a>
 	* ```
 	*/
-	const VisuallyHidden$2 = forwardRef$118(function VisuallyHidden(props) {
+	const VisuallyHidden$2 = forwardRef$119(function VisuallyHidden(props) {
 		const htmlProps = useVisuallyHidden(props);
 		return createElement$5(TagName$42, htmlProps);
 	});
@@ -5907,7 +5907,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* <FocusTrap onFocus={focusSomethingElse} />
 	* ```
 	*/
-	const FocusTrap = forwardRef$118(function FocusTrap(props) {
+	const FocusTrap = forwardRef$119(function FocusTrap(props) {
 		const htmlProps = useFocusTrap(props);
 		return createElement$5(TagName$41, htmlProps);
 	});
@@ -6182,7 +6182,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* <Portal>Content</Portal>
 	* ```
 	*/
-	const Portal$2 = forwardRef$118(function Portal(props) {
+	const Portal$2 = forwardRef$119(function Portal(props) {
 		const htmlProps = usePortal(props);
 		return createElement$5(TagName$40, htmlProps);
 	});
@@ -6651,11 +6651,11 @@ If there's a particular need for this, please submit a feature request at https:
 	* <Role render={<div />} />
 	* ```
 	*/
-	const Role = forwardRef$118(function Role(props) {
+	const Role = forwardRef$119(function Role(props) {
 		return createElement$5(TagName$39, props);
 	});
 	Object.assign(Role, elements.reduce((acc, element) => {
-		acc[element] = forwardRef$118(function Role(props) {
+		acc[element] = forwardRef$119(function Role(props) {
 			return createElement$5(element, props);
 		});
 		return acc;
@@ -8013,18 +8013,18 @@ If there's a particular need for this, please submit a feature request at https:
 		return props;
 	});
 	function createDialogComponent(Component, useProviderContext = useDialogProviderContext) {
-		return forwardRef$118(function DialogComponent(props) {
+		return forwardRef$119(function DialogComponent(props) {
 			const context = useProviderContext();
 			const store = props.store || context;
 			if (!useStoreState(store, ["mounted"], (state) => !props.unmountOnHide || state?.mounted || !!props.open)) return null;
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Component, { ...props });
 		});
 	}
-	const DialogWithStore = createDialogComponent(forwardRef$118(function DialogImpl(props) {
+	const DialogWithStore = createDialogComponent(forwardRef$119(function DialogImpl(props) {
 		const htmlProps = useDialog(props);
 		return createElement$5(TagName$38, htmlProps);
 	}), useDialogProviderContext);
-	const DialogWithInternalStore = forwardRef$118(function DialogWithInternalStore(props) {
+	const DialogWithInternalStore = forwardRef$119(function DialogWithInternalStore(props) {
 		const store = useDialogStore({ open: props.open });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DialogWithStore, {
 			...props,
@@ -8051,7 +8051,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </Dialog>
 	* ```
 	*/
-	const Dialog = forwardRef$118(function Dialog(props) {
+	const Dialog = forwardRef$119(function Dialog(props) {
 		const context = useDialogProviderContext();
 		if (props.store || context || !props.unmountOnHide) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DialogWithStore, { ...props });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DialogWithInternalStore, { ...props });
@@ -9686,7 +9686,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </PopoverProvider>
 	* ```
 	*/
-	const Popover$2 = createDialogComponent(forwardRef$118(function Popover(props) {
+	const Popover$2 = createDialogComponent(forwardRef$119(function Popover(props) {
 		const htmlProps = usePopover(props);
 		return createElement$5(TagName$37, htmlProps);
 	}), usePopoverProviderContext);
@@ -10053,7 +10053,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </HovercardProvider>
 	* ```
 	*/
-	const Hovercard = createDialogComponent(forwardRef$118(function Hovercard(props) {
+	const Hovercard = createDialogComponent(forwardRef$119(function Hovercard(props) {
 		const htmlProps = useHovercard(props);
 		return createElement$5(TagName$36, htmlProps);
 	}), useHovercardProviderContext);
@@ -10145,7 +10145,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </TooltipProvider>
 	* ```
 	*/
-	const Tooltip$1 = createDialogComponent(forwardRef$118(function Tooltip(props) {
+	const Tooltip$1 = createDialogComponent(forwardRef$119(function Tooltip(props) {
 		const htmlProps = useTooltip(props);
 		return createElement$5(TagName$35, htmlProps);
 	}), useTooltipProviderContext);
@@ -10266,7 +10266,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </HovercardProvider>
 	* ```
 	*/
-	const HovercardAnchor = forwardRef$118(function HovercardAnchor(props) {
+	const HovercardAnchor = forwardRef$119(function HovercardAnchor(props) {
 		const htmlProps = useHovercardAnchor(props);
 		return createElement$5(TagName$34, htmlProps);
 	});
@@ -10418,7 +10418,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </TooltipProvider>
 	* ```
 	*/
-	const TooltipAnchor = forwardRef$118(function TooltipAnchor(props) {
+	const TooltipAnchor = forwardRef$119(function TooltipAnchor(props) {
 		const htmlProps = useTooltipAnchor(props);
 		return createElement$5(TagName$33, htmlProps);
 	});
@@ -10624,7 +10624,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* <Button>Button</Button>
 	* ```
 	*/
-	const Button$1 = forwardRef$118(function Button(props) {
+	const Button$1 = forwardRef$119(function Button(props) {
 		const htmlProps = useButton$1(withDefaultButtonType(props));
 		return createElement$5(TagName$32, htmlProps);
 	});
@@ -10708,7 +10708,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </DisclosureProvider>
 	* ```
 	*/
-	const Disclosure = forwardRef$118(function Disclosure(props) {
+	const Disclosure = forwardRef$119(function Disclosure(props) {
 		const htmlProps = useDisclosure(withDefaultButtonType(props));
 		return createElement$5(TagName$31, htmlProps);
 	});
@@ -10753,7 +10753,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </DialogProvider>
 	* ```
 	*/
-	const DialogDisclosure = forwardRef$118(function DialogDisclosure(props) {
+	const DialogDisclosure = forwardRef$119(function DialogDisclosure(props) {
 		const htmlProps = useDialogDisclosure(withDefaultButtonType(props));
 		return createElement$5(TagName$30, htmlProps);
 	});
@@ -10797,7 +10797,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </PopoverProvider>
 	* ```
 	*/
-	const PopoverDisclosure = forwardRef$118(function PopoverDisclosure(props) {
+	const PopoverDisclosure = forwardRef$119(function PopoverDisclosure(props) {
 		const htmlProps = usePopoverDisclosure(withDefaultButtonType(props));
 		return createElement$5(TagName$29, htmlProps);
 	});
@@ -10871,7 +10871,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </PopoverProvider>
 	* ```
 	*/
-	const PopoverDisclosureArrow = forwardRef$118(function PopoverDisclosureArrow(props) {
+	const PopoverDisclosureArrow = forwardRef$119(function PopoverDisclosureArrow(props) {
 		const htmlProps = usePopoverDisclosureArrow(props);
 		return createElement$5(TagName$28, htmlProps);
 	});
@@ -11031,7 +11031,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </RadioProvider>
 	* ```
 	*/
-	const Radio$1 = memo$4(forwardRef$118(function Radio(props) {
+	const Radio$1 = memo$4(forwardRef$119(function Radio(props) {
 		const htmlProps = useRadio(props);
 		return createElement$5(TagName$27, htmlProps);
 	}));
@@ -11111,7 +11111,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </RadioProvider>
 	* ```
 	*/
-	const RadioGroup$1 = forwardRef$118(function RadioGroup(props) {
+	const RadioGroup$1 = forwardRef$119(function RadioGroup(props) {
 		const htmlProps = useRadioGroup(props);
 		return createElement$5(TagName$26, htmlProps);
 	});
@@ -11282,7 +11282,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </CompositeProvider>
 	* ```
 	*/
-	const CompositeTypeahead$1 = forwardRef$118(function CompositeTypeahead(props) {
+	const CompositeTypeahead$1 = forwardRef$119(function CompositeTypeahead(props) {
 		const htmlProps = useCompositeTypeahead(props);
 		return createElement$5(TagName$25, htmlProps);
 	});
@@ -11338,7 +11338,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </SelectProvider>
 	* ```
 	*/
-	const SelectArrow = forwardRef$118(function SelectArrow(props) {
+	const SelectArrow = forwardRef$119(function SelectArrow(props) {
 		const htmlProps = useSelectArrow(props);
 		return createElement$5(TagName$24, htmlProps);
 	});
@@ -11530,7 +11530,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </SelectProvider>
 	* ```
 	*/
-	const Select = forwardRef$118(function Select(props) {
+	const Select = forwardRef$119(function Select(props) {
 		const htmlProps = useSelect(withDefaultButtonType(props));
 		return createElement$5(TagName$23, htmlProps);
 	});
@@ -11572,7 +11572,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* <Group>Group</Group>
 	* ```
 	*/
-	const Group$1 = forwardRef$118(function Group(props) {
+	const Group$1 = forwardRef$119(function Group(props) {
 		const htmlProps = useGroup(props);
 		return createElement$5(TagName$22, htmlProps);
 	});
@@ -11618,7 +11618,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </CompositeProvider>
 	* ```
 	*/
-	const CompositeGroup$2 = forwardRef$118(function CompositeGroup(props) {
+	const CompositeGroup$2 = forwardRef$119(function CompositeGroup(props) {
 		const htmlProps = useCompositeGroup(props);
 		return createElement$5(TagName$21, htmlProps);
 	});
@@ -11663,7 +11663,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </Group>
 	* ```
 	*/
-	const GroupLabel$1 = forwardRef$118(function GroupLabel(props) {
+	const GroupLabel$1 = forwardRef$119(function GroupLabel(props) {
 		const htmlProps = useGroupLabel(props);
 		return createElement$5(TagName$20, htmlProps);
 	});
@@ -11704,7 +11704,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </CompositeProvider>
 	* ```
 	*/
-	const CompositeGroupLabel$1 = forwardRef$118(function CompositeGroupLabel(props) {
+	const CompositeGroupLabel$1 = forwardRef$119(function CompositeGroupLabel(props) {
 		const htmlProps = useCompositeGroupLabel(props);
 		return createElement$5(TagName$19, htmlProps);
 	});
@@ -11807,7 +11807,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </CompositeProvider>
 	* ```
 	*/
-	const CompositeHover$1 = memo$4(forwardRef$118(function CompositeHover(props) {
+	const CompositeHover$1 = memo$4(forwardRef$119(function CompositeHover(props) {
 		const htmlProps = useCompositeHover(props);
 		return createElement$5(TagName$18, htmlProps);
 	}));
@@ -11947,7 +11947,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </SelectProvider>
 	* ```
 	*/
-	const SelectItem$1 = memo$4(forwardRef$118(function SelectItem(props) {
+	const SelectItem$1 = memo$4(forwardRef$119(function SelectItem(props) {
 		const htmlProps = useSelectItem(props);
 		return createElement$5(TagName$17, htmlProps);
 	}));
@@ -12018,7 +12018,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* <CheckboxCheck checked />
 	* ```
 	*/
-	const CheckboxCheck = forwardRef$118(function CheckboxCheck(props) {
+	const CheckboxCheck = forwardRef$119(function CheckboxCheck(props) {
 		const htmlProps = useCheckboxCheck(props);
 		return createElement$5(TagName$16, htmlProps);
 	});
@@ -12076,7 +12076,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </SelectProvider>
 	* ```
 	*/
-	const SelectItemCheck = forwardRef$118(function SelectItemCheck(props) {
+	const SelectItemCheck = forwardRef$119(function SelectItemCheck(props) {
 		const htmlProps = useSelectItemCheck(props);
 		return createElement$5(TagName$15, htmlProps);
 	});
@@ -12144,7 +12144,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </SelectProvider>
 	* ```
 	*/
-	const SelectLabel = memo$4(forwardRef$118(function SelectLabel(props) {
+	const SelectLabel = memo$4(forwardRef$119(function SelectLabel(props) {
 		const htmlProps = useSelectLabel(props);
 		return createElement$5(TagName$14, htmlProps);
 	}));
@@ -12278,7 +12278,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </SelectProvider>
 	* ```
 	*/
-	const SelectList$1 = forwardRef$118(function SelectList(props) {
+	const SelectList$1 = forwardRef$119(function SelectList(props) {
 		const htmlProps = useSelectList(props);
 		return createElement$5(TagName$13, htmlProps);
 	});
@@ -12333,7 +12333,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </SelectProvider>
 	* ```
 	*/
-	const SelectPopover = createDialogComponent(forwardRef$118(function SelectPopover(props) {
+	const SelectPopover = createDialogComponent(forwardRef$119(function SelectPopover(props) {
 		const htmlProps = useSelectPopover(props);
 		return createElement$5(TagName$12, htmlProps);
 	}), useSelectProviderContext);
@@ -12528,7 +12528,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </CompositeProvider>
 	* ```
 	*/
-	const CompositeRow$1 = forwardRef$118(function CompositeRow(props) {
+	const CompositeRow$1 = forwardRef$119(function CompositeRow(props) {
 		const htmlProps = useCompositeRow(props);
 		return createElement$5(TagName$11, htmlProps);
 	});
@@ -12709,7 +12709,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* <Checkbox render={<div />}>Accessible checkbox</Checkbox>
 	* ```
 	*/
-	const Checkbox = forwardRef$118(function Checkbox(props) {
+	const Checkbox = forwardRef$119(function Checkbox(props) {
 		const htmlProps = useCheckbox(props);
 		return createElement$5(TagName$10, htmlProps);
 	});
@@ -12906,7 +12906,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuList = forwardRef$118(function MenuList(props) {
+	const MenuList = forwardRef$119(function MenuList(props) {
 		const htmlProps = useMenuList(props);
 		return createElement$5(TagName$9, htmlProps);
 	});
@@ -13112,7 +13112,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const Menu$1 = createDialogComponent(forwardRef$118(function Menu(props) {
+	const Menu$1 = createDialogComponent(forwardRef$119(function Menu(props) {
 		const htmlProps = useMenu(props);
 		return createElement$5(TagName$8, htmlProps);
 	}), useMenuProviderContext);
@@ -13285,7 +13285,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuButton = forwardRef$118(function MenuButton(props) {
+	const MenuButton = forwardRef$119(function MenuButton(props) {
 		const htmlProps = useMenuButton(props);
 		return createElement$5(TagName$7, withDefaultButtonType(htmlProps));
 	});
@@ -13333,7 +13333,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuGroup$1 = forwardRef$118(function MenuGroup(props) {
+	const MenuGroup$1 = forwardRef$119(function MenuGroup(props) {
 		const htmlProps = useMenuGroup(props);
 		return createElement$5(TagName$6, htmlProps);
 	});
@@ -13375,7 +13375,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuGroupLabel = forwardRef$118(function MenuGroupLabel(props) {
+	const MenuGroupLabel = forwardRef$119(function MenuGroupLabel(props) {
 		const htmlProps = useMenuGroupLabel(props);
 		return createElement$5(TagName$5, htmlProps);
 	});
@@ -13489,7 +13489,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuItem$2 = memo$4(forwardRef$118(function MenuItem(props) {
+	const MenuItem$2 = memo$4(forwardRef$119(function MenuItem(props) {
 		const htmlProps = useMenuItem$1(props);
 		return createElement$5(TagName$4, htmlProps);
 	}));
@@ -13542,7 +13542,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuItemCheck = forwardRef$118(function MenuItemCheck(props) {
+	const MenuItemCheck = forwardRef$119(function MenuItemCheck(props) {
 		const htmlProps = useMenuItemCheck(props);
 		return createElement$5(TagName$3, htmlProps);
 	});
@@ -13678,7 +13678,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuItemCheckbox = memo$4(forwardRef$118(function MenuItemCheckbox(props) {
+	const MenuItemCheckbox = memo$4(forwardRef$119(function MenuItemCheckbox(props) {
 		const htmlProps = useMenuItemCheckbox(props);
 		return createElement$5(TagName$2, htmlProps);
 	}));
@@ -13788,7 +13788,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuItemRadio = memo$4(forwardRef$118(function MenuItemRadio(props) {
+	const MenuItemRadio = memo$4(forwardRef$119(function MenuItemRadio(props) {
 		const htmlProps = useMenuItemRadio(props);
 		return createElement$5(TagName$1, htmlProps);
 	}));
@@ -13937,7 +13937,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* </MenuProvider>
 	* ```
 	*/
-	const MenuSeparator = forwardRef$118(function MenuSeparator(props) {
+	const MenuSeparator = forwardRef$119(function MenuSeparator(props) {
 		const htmlProps = useMenuSeparator(props);
 		return createElement$5(TagName, htmlProps);
 	});
@@ -73348,6 +73348,26 @@ The screen with id ${screen.id} will not be added.`);
 	};
 	const ToolsPanelItem = contextConnect(UnconnectedToolsPanelItem, "ToolsPanelItem");
 
+// packages/components/build-module/tooltip/deprecated.mjs
+	function UnforwardedDeprecatedTooltip(props, ref) {
+		(0, _wordpress_deprecated.default)("wp.components.Tooltip", {
+			since: "7.3",
+			version: "7.5",
+			alternative: "Tooltip from @wordpress/ui"
+		});
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tooltip, {
+			...props,
+			ref
+		});
+	}
+	/**
+	* Renders floating text when its anchor receives focus or is hovered.
+	*
+	* @deprecated Use `Tooltip` from `@wordpress/ui` instead.
+	*/
+	const DeprecatedTooltip = (0, _wordpress_element.forwardRef)(UnforwardedDeprecatedTooltip);
+	DeprecatedTooltip.displayName = "Tooltip";
+
 // packages/components/build-module/tree-grid/roving-tab-index-context.mjs
 	const RovingTabIndexContext = (0, _wordpress_element.createContext)(void 0);
 	RovingTabIndexContext.displayName = "RovingTabIndexContext";
@@ -76950,7 +76970,7 @@ exports.ToolbarButton = ToolbarButton;
 exports.ToolbarDropdownMenu = ToolbarDropdownMenu;
 exports.ToolbarGroup = ToolbarGroup;
 exports.ToolbarItem = ToolbarItem;
-exports.Tooltip = Tooltip;
+exports.Tooltip = DeprecatedTooltip;
 exports.TreeSelect = TreeSelect;
 exports.VisuallyHidden = VisuallyHidden;
 exports.__experimentalAlignmentMatrixControl = AlignmentMatrixControl;
