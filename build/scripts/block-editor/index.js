@@ -109984,39 +109984,46 @@ If there's a particular need for this, please submit a feature request at https:
                         import_components178.Composite.Row,
                         {
                           className: "block-editor-block-styles__row",
-                          children: row.map((style) => /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
-                            import_components178.Composite.Item,
-                            {
-                              id: getCompositeItemId(
-                                instanceId,
-                                style
-                              ),
-                              render: /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
-                                Button5,
-                                {
-                                  className: "block-editor-block-styles__item",
-                                  tone: "neutral",
-                                  variant: activeStyle.name === style.name ? "solid" : "outline"
-                                }
-                              ),
-                              role: "radio",
-                              "aria-checked": activeStyle.name === style.name,
-                              onMouseEnter: () => styleItemHandler(style),
-                              onFocus: () => styleItemHandler(style),
-                              onMouseLeave: () => styleItemHandler(null),
-                              onBlur: () => styleItemHandler(null),
-                              onClick: () => onSelectStylePreview(style),
-                              children: /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
-                                import_components178.__experimentalTruncate,
-                                {
-                                  numberOfLines: 3,
-                                  className: "block-editor-block-styles__item-text",
-                                  children: style.label || style.name
-                                }
-                              )
-                            },
-                            style.name
-                          ))
+                          children: row.map((style) => /* @__PURE__ */ (0, import_jsx_runtime565.jsxs)(tooltip_exports.Root, { children: [
+                            /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
+                              import_components178.Composite.Item,
+                              {
+                                id: getCompositeItemId(
+                                  instanceId,
+                                  style
+                                ),
+                                render: /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
+                                  tooltip_exports.Trigger,
+                                  {
+                                    render: /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
+                                      Button5,
+                                      {
+                                        className: "block-editor-block-styles__item",
+                                        tone: "neutral",
+                                        variant: activeStyle.name === style.name ? "solid" : "outline"
+                                      }
+                                    )
+                                  }
+                                ),
+                                role: "radio",
+                                "aria-checked": activeStyle.name === style.name,
+                                onMouseEnter: () => styleItemHandler(style),
+                                onFocus: () => styleItemHandler(style),
+                                onMouseLeave: () => styleItemHandler(null),
+                                onBlur: () => styleItemHandler(null),
+                                onClick: () => onSelectStylePreview(style),
+                                children: /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
+                                  import_components178.__experimentalTruncate,
+                                  {
+                                    numberOfLines: 2,
+                                    className: "block-editor-block-styles__item-text",
+                                    children: style.label || style.name
+                                  }
+                                )
+                              }
+                            ),
+                            /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(tooltip_exports.Popup, { children: style.label || style.name })
+                          ] }, style.name))
                         },
                         rowIndex
                       ))
