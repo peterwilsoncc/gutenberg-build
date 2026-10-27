@@ -109917,7 +109917,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"gradient"
 		]]
 	};
-	function addTransforms$4(result, source, index, results) {
+	function addTransforms$5(result, source, index, results) {
 		const destinationBlockType = result.name;
 		const activeSupports = {
 			linkColor: hasLinkColorSupport(destinationBlockType),
@@ -109928,7 +109928,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return transformStyles$1(activeSupports, MIGRATION_PATHS$1, result, source, index, results);
 	}
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/color/addAttribute", addAttributes$5);
-	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/color/addTransforms", addTransforms$4);
+	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/color/addTransforms", addTransforms$5);
 
 // packages/block-editor/build-module/hooks/elements.mjs
 	function ElementsInspectorControl({ children, resetAllFilter }) {
@@ -111489,13 +111489,13 @@ If there's a particular need for this, please submit a feature request at https:
 		"typography",
 		"fontSize"
 	]] };
-	function addTransforms$3(result, source, index, results) {
+	function addTransforms$4(result, source, index, results) {
 		const destinationBlockType = result.name;
 		const activeSupports = { fontSize: (0, _wordpress_blocks.hasBlockSupport)(destinationBlockType, FONT_SIZE_SUPPORT_KEY) };
 		return transformStyles$1(activeSupports, MIGRATION_PATHS, result, source, index, results);
 	}
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/font/addAttribute", addAttributes$3);
-	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/font-size/addTransforms", addTransforms$3);
+	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/font-size/addTransforms", addTransforms$4);
 
 // packages/block-editor/build-module/components/block-editing-mode/index.mjs
 /**
@@ -114311,7 +114311,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param results All blocks that resulted from the transformation.
 	* @return Modified transformed block.
 	*/
-	function addTransforms$2(result, source, index, results) {
+	function addTransforms$3(result, source, index, results) {
 		if (!(0, _wordpress_blocks.hasBlockSupport)(result.name, "allowedBlocks")) return result;
 		if (source.length !== 1 && results.length === 1 && result.innerBlocks.length === source.length) return result;
 		if (results.length === 1 && source.length > 1 || results.length > 1 && source.length === 1) return result;
@@ -114336,7 +114336,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		};
 	}
-	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/allowedBlocks/addTransforms", addTransforms$2);
+	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/allowedBlocks/addTransforms", addTransforms$3);
 
 // packages/block-editor/build-module/hooks/anchor.mjs
 /**
@@ -114504,7 +114504,7 @@ If there's a particular need for this, please submit a feature request at https:
 		if ((0, _wordpress_blocks.hasBlockSupport)(blockType, "customClassName", true) && attributes.className) extraProps.className = clsx(extraProps.className, attributes.className);
 		return extraProps;
 	}
-	function addTransforms$1(result, source, index, results) {
+	function addTransforms$2(result, source, index, results) {
 		if (!(0, _wordpress_blocks.hasBlockSupport)(result.name, "customClassName", true)) return result;
 		if (results.length === 1 && result.innerBlocks.length === source.length) return result;
 		if (results.length === 1 && source.length > 1 || results.length > 1 && source.length === 1) return result;
@@ -114521,7 +114521,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return result;
 	}
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/editor/custom-class-name/attribute", addAttribute$3);
-	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/customClassName/addTransforms", addTransforms$1);
+	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/customClassName/addTransforms", addTransforms$2);
 
 // packages/block-editor/build-module/hooks/generated-class-name.mjs
 /**
@@ -119279,6 +119279,53 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		] });
 	}
+	/**
+	* Returns the child layout of a block style: the default layout and the
+	* layout of each viewport state, keyed by their path in the style object.
+	*
+	* @param {Object|undefined} style Block style attributes.
+	* @return {Array} Pairs of style object path and child layout.
+	*/
+	function getChildLayoutEntries(style) {
+		if (!isPlainObject(style)) return [];
+		const entries = [];
+		if (isPlainObject(style.layout)) entries.push([["layout"], style.layout]);
+		Object.entries(style).forEach(([key, stateStyle]) => {
+			if (key.startsWith("@") && isPlainObject(stateStyle) && isPlainObject(stateStyle.layout)) entries.push([[key, "layout"], stateStyle.layout]);
+		});
+		return entries;
+	}
+	/**
+	* Keeps the child layout (such as a grid item's position and span) of a block
+	* when it is switched to another block type. The child layout describes the
+	* block's place in its parent, not the block itself, but transforms usually
+	* build new attributes and drop it.
+	*
+	* @param {Object}       result  The transformed block.
+	* @param {Array|Object} source  Original blocks transformed.
+	* @param {number}       index   Index of the transformed block.
+	* @param {Array}        results All blocks that resulted from the transformation.
+	* @return {Object} Modified transformed block.
+	*/
+	function addTransforms$1(result, source, index, results) {
+		const sourceBlocks = Array.isArray(source) ? source : [source];
+		if (results.length === 1 && result.innerBlocks.length === sourceBlocks.length) return result;
+		if (results.length !== sourceBlocks.length) return result;
+		let style = result.attributes?.style;
+		getChildLayoutEntries(sourceBlocks[index]?.attributes?.style).forEach(([path, layout]) => {
+			const styleObject = isPlainObject(style) ? style : void 0;
+			if (getValueFromObjectPath(styleObject, path) === void 0) style = setImmutably(styleObject, path, layout);
+		});
+		if (style === result.attributes?.style) return result;
+		return {
+			...result,
+			attributes: {
+				...result.attributes,
+				style
+			}
+		};
+	}
+	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/layout-child/addTransforms", addTransforms$1);
 	var layout_child_default = {
 		useBlockProps: useBlockPropsChildLayoutStyles,
 		edit: ChildLayoutControlsPure,
