@@ -66839,10 +66839,10 @@ Icon: ButtonIcon });
 		module.exports.createColors = create;
 	}));
 
-// (ignored) node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/terminal-highlight
+// (ignored) node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/terminal-highlight
 	var require_terminal_highlight = /* @__PURE__ */ __commonJSMin((() => {}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/css-syntax-error.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/css-syntax-error.js
 	var require_css_syntax_error = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let pico = require_picocolors_browser();
 		let terminalHighlight = require_terminal_highlight();
@@ -66919,7 +66919,7 @@ Icon: ButtonIcon });
 		CssSyntaxError.default = CssSyntaxError;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/stringifier.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/stringifier.js
 	var require_stringifier = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		const AT_NAME_END = /[\t\n\f\r "#'()/;[\\\]{}]/;
 		const DEFAULT_RAW = {
@@ -67234,7 +67234,7 @@ Icon: ButtonIcon });
 		Stringifier.default = Stringifier;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/stringify.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/stringify.js
 	var require_stringify$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Stringifier = require_stringifier();
 		const STYLE_TAG = /(<)(\/?style\b)/gi;
@@ -67243,8 +67243,26 @@ Icon: ButtonIcon });
 			if (!str.includes("<")) return str;
 			return str.replace(STYLE_TAG, "\\3c $2").replace(COMMENT_OPEN, "\\3c $2");
 		}
+		function cutEscaped(chunks, css, escaped) {
+			let parts = [];
+			let at = 0;
+			let into = 0;
+			for (let i = 0; i < chunks.length; i += 3) {
+				let from = into;
+				let end = at + chunks[i].length;
+				while (at < end) if (css[at] === escaped[into]) {
+					at += 1;
+					into += 1;
+				} else {
+					at += 1;
+					into += 4;
+				}
+				parts.push(escaped.slice(from, into));
+			}
+			return parts;
+		}
 		var SafeStringifier = class extends Stringifier {
-			escapeHTML(node, print) {
+			escapeHTML(print) {
 				let builder = this.builder;
 				let chunks, css;
 				this.builder = (str, child, type) => {
@@ -67265,31 +67283,34 @@ Icon: ButtonIcon });
 				if (!chunks) return;
 				let escaped = escapeHTMLInCSS(css);
 				if (escaped === css) for (let i = 0; i < chunks.length; i += 3) builder(chunks[i], chunks[i + 1], chunks[i + 2]);
-				else builder(escaped, node);
+				else {
+					let parts = cutEscaped(chunks, css, escaped);
+					for (let i = 0; i < chunks.length; i += 3) builder(parts[i / 3], chunks[i + 1], chunks[i + 2]);
+				}
 			}
 			root(node) {
 				if (node.parent && node.parent.type === "document") {
-					this.escapeHTML(node, () => this.body(node));
+					this.escapeHTML(() => this.body(node));
 					if (node.raws.after) this.builder(node.raws.after);
-				} else this.escapeHTML(node, () => super.root(node));
+				} else this.escapeHTML(() => super.root(node));
 			}
 		};
 		function stringify(node, builder) {
 			let str = new SafeStringifier(builder);
 			if (node.type === "root" || node.type === "document") str.stringify(node);
-			else str.escapeHTML(node, () => str.stringify(node));
+			else str.escapeHTML(() => str.stringify(node));
 		}
 		module.exports = stringify;
 		stringify.default = stringify;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/symbols.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/symbols.js
 	var require_symbols = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		module.exports.isClean = Symbol("isClean");
 		module.exports.my = Symbol("my");
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/node.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/node.js
 	var require_node = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let CssSyntaxError = require_css_syntax_error();
 		let Stringifier = require_stringifier();
@@ -67651,7 +67672,7 @@ Icon: ButtonIcon });
 		Node.default = Node;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/comment.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/comment.js
 	var require_comment = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Node = require_node();
 		var Comment = class extends Node {
@@ -67664,7 +67685,7 @@ Icon: ButtonIcon });
 		Comment.default = Comment;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/declaration.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/declaration.js
 	var require_declaration = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Node = require_node();
 		var Declaration = class extends Node {
@@ -67684,7 +67705,7 @@ Icon: ButtonIcon });
 		Declaration.default = Declaration;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/container.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/container.js
 	var require_container = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Comment = require_comment();
 		let Declaration = require_declaration();
@@ -68020,7 +68041,7 @@ Icon: ButtonIcon });
 	}));
 	/* c8 ignore stop */
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/document.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/document.js
 	var require_document = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Container = require_container();
 		let LazyResult;
@@ -68047,7 +68068,7 @@ Icon: ButtonIcon });
 		Document.default = Document;
 	}));
 
-// (ignored) node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib
+// (ignored) node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib
 	var require_lib$1 = /* @__PURE__ */ __commonJSMin((() => {}));
 
 // node_modules/.store/nanoid@3.3.20-_aoX9Kd-GoypVSNO-zW6GQ/node_modules/nanoid/non-secure/index.cjs
@@ -68073,7 +68094,7 @@ Icon: ButtonIcon });
 		};
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/previous-map.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/previous-map.js
 	var require_previous_map = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let { existsSync, readFileSync, realpathSync } = require_lib$1();
 		let { dirname, isAbsolute, join, relative, sep } = require_lib$1();
@@ -68186,7 +68207,7 @@ Icon: ButtonIcon });
 		PreviousMap.default = PreviousMap;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/input.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/input.js
 	var require_input = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let { nanoid } = require_non_secure();
 		let { isAbsolute, resolve } = require_lib$1();
@@ -68385,7 +68406,7 @@ Icon: ButtonIcon });
 		if (terminalHighlight && terminalHighlight.registerInput) terminalHighlight.registerInput(Input);
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/map-generator.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/map-generator.js
 	var require_map_generator = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let { dirname, relative, resolve, sep } = require_lib$1();
 		let { SourceMapConsumer, SourceMapGenerator } = require_lib$1();
@@ -68660,7 +68681,7 @@ Icon: ButtonIcon });
 		module.exports = MapGenerator;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/at-rule.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/at-rule.js
 	var require_at_rule = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Container = require_container();
 		var AtRule = class extends Container {
@@ -68682,7 +68703,7 @@ Icon: ButtonIcon });
 		Container.registerAtRule(AtRule);
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/root.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/root.js
 	var require_root = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Container = require_container();
 		let LazyResult;
@@ -68727,7 +68748,7 @@ Icon: ButtonIcon });
 		Container.registerRoot(Root);
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/list.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/list.js
 	var require_list = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let list = {
 			comma(string) {
@@ -68795,7 +68816,7 @@ Icon: ButtonIcon });
 		list.default = list;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/rule.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/rule.js
 	var require_rule = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Container = require_container();
 		let list = require_list();
@@ -68819,7 +68840,7 @@ Icon: ButtonIcon });
 		Container.registerRule(Rule);
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/tokenize.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/tokenize.js
 	var require_tokenize = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		const SINGLE_QUOTE = "'".charCodeAt(0);
 		const DOUBLE_QUOTE = "\"".charCodeAt(0);
@@ -69056,7 +69077,7 @@ Icon: ButtonIcon });
 		};
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/parser.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/parser.js
 	var require_parser = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let AtRule = require_at_rule();
 		let Comment = require_comment();
@@ -69525,7 +69546,7 @@ Icon: ButtonIcon });
 		module.exports = Parser;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/parse.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/parse.js
 	var require_parse$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Container = require_container();
 		let Input = require_input();
@@ -69550,7 +69571,7 @@ Icon: ButtonIcon });
 		Container.registerParse(parse);
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/warning.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/warning.js
 	var require_warning = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Container = require_container();
 		let { my } = require_symbols();
@@ -69582,7 +69603,7 @@ Icon: ButtonIcon });
 		Warning.default = Warning;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/result.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/result.js
 	var require_result = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Warning = require_warning();
 		var Result = class {
@@ -69616,7 +69637,7 @@ Icon: ButtonIcon });
 		Result.default = Result;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/warn-once.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/warn-once.js
 	var require_warn_once = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let printed = {};
 		module.exports = function warnOnce(message) {
@@ -69626,7 +69647,7 @@ Icon: ButtonIcon });
 		};
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/lazy-result.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/lazy-result.js
 	var require_lazy_result = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Container = require_container();
 		let Document = require_document();
@@ -70093,7 +70114,7 @@ Icon: ButtonIcon });
 		Document.registerLazyResult(LazyResult);
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/no-work-result.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/no-work-result.js
 	var require_no_work_result = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let MapGenerator = require_map_generator();
 		let parse = require_parse$1();
@@ -70190,7 +70211,7 @@ Icon: ButtonIcon });
 		NoWorkResult.default = NoWorkResult;
 	}));
 
-// node_modules/.store/postcss@8.5.29-Z8k0s_O_q4PKpJa0B4FKNQ/node_modules/postcss/lib/processor.js
+// node_modules/.store/postcss@8.5.31-jE3iihL91EM06As5OnywwQ/node_modules/postcss/lib/processor.js
 	var require_processor = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let Document = require_document();
 		let LazyResult = require_lazy_result();
@@ -70198,7 +70219,7 @@ Icon: ButtonIcon });
 		let Root = require_root();
 		var Processor = class {
 			constructor(plugins = []) {
-				this.version = "8.5.29";
+				this.version = "8.5.31";
 				this.plugins = this.normalize(plugins);
 			}
 			normalize(plugins) {
@@ -70229,7 +70250,7 @@ Icon: ButtonIcon });
 		Document.registerProcessor(Processor);
 	}));
 
-// node_modules/.store/postcss-prefix-selector@1.16.1-Q6C0Q1lE41AuBakt6TCFPQ/node_modules/postcss-prefix-selector/index.js
+// node_modules/.store/postcss-prefix-selector@1.16.1-176iH6ZD9SUsWiHfnQhUag/node_modules/postcss-prefix-selector/index.js
 	var require_postcss_prefix_selector = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		module.exports = function postcssPrefixSelector(options) {
 			const prefix = options.prefix;
@@ -70638,7 +70659,7 @@ Icon: ButtonIcon });
 		module.exports = ValueParser;
 	}));
 
-// node_modules/.store/postcss-urlrebase@1.4.0-EWLXmgQSMRus-HCasjY2NA/node_modules/postcss-urlrebase/index.js
+// node_modules/.store/postcss-urlrebase@1.4.0-o4txMJq3z38YQEKD7Qpz2Q/node_modules/postcss-urlrebase/index.js
 	var require_postcss_urlrebase = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		const CSSValueParser = require_lib();
 		/**
