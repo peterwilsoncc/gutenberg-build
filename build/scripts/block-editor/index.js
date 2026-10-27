@@ -98071,13 +98071,13 @@ If there's a particular need for this, please submit a feature request at https:
 						focusShift: true,
 						children: styleRows.map((row, rowIndex) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Composite.Row, {
 							className: "block-editor-block-styles__row",
-							children: row.map((style) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Composite.Item, {
+							children: row.map((style) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Composite.Item, {
 								id: getCompositeItemId(instanceId, style),
-								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$68, {
+								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$68, {
 									className: "block-editor-block-styles__item",
 									tone: "neutral",
 									variant: activeStyle.name === style.name ? "solid" : "outline"
-								}),
+								}) }),
 								role: "radio",
 								"aria-checked": activeStyle.name === style.name,
 								onMouseEnter: () => styleItemHandler(style),
@@ -98086,11 +98086,11 @@ If there's a particular need for this, please submit a feature request at https:
 								onBlur: () => styleItemHandler(null),
 								onClick: () => onSelectStylePreview(style),
 								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalTruncate, {
-									numberOfLines: 3,
+									numberOfLines: 2,
 									className: "block-editor-block-styles__item-text",
 									children: style.label || style.name
 								})
-							}, style.name))
+							}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: style.label || style.name })] }, style.name))
 						}, rowIndex))
 					}), previewBlocks && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PreviewBlockPopover, {
 						blocks: previewBlocks,
