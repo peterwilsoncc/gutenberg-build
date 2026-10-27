@@ -72967,7 +72967,9 @@ var wp;
       __unstableIsSelectionMergeable: __unstableIsSelectionMergeable2,
       __unstableGetSelectedBlocksWithPartialSelection: __unstableGetSelectedBlocksWithPartialSelection2,
       canInsertBlockType: canInsertBlockType2,
-      getBlockRootClientId: getBlockRootClientId2
+      getBlockRootClientId: getBlockRootClientId2,
+      getBlockAttributes: getBlockAttributes3,
+      getSelectionStart: getSelectionStart2
     } = (0, import_data52.useSelect)(store);
     const {
       flashBlock: flashBlock2,
@@ -73001,6 +73003,11 @@ var wp;
         );
         return true;
       }
+      function isSelectedFieldBound() {
+        const { clientId, attributeKey } = getSelectionStart2();
+        const bindings = clientId ? getBlockAttributes3(clientId)?.metadata?.bindings : void 0;
+        return !!(attributeKey && bindings?.[attributeKey] || bindings?.__default);
+      }
       function handler(event) {
         if (event.defaultPrevented) {
           return;
@@ -73012,7 +73019,7 @@ var wp;
         if (selectedBlockClientIds.length === 0) {
           return;
         }
-        const isWholeSingleBlockCopy = event.type === "copy" && !hasMultiSelection2() && isBlockEntirelySelected(
+        const isWholeSingleBlockCopy = event.type === "copy" && !hasMultiSelection2() && !isSelectedFieldBound() && isBlockEntirelySelected(
           event.target.ownerDocument,
           selectedBlockClientIds[0]
         );
