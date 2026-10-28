@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_compose, _wordpress_data, _wordpress_block_editor, _wordpress_server_side_render, _wordpress_i18n, _wordpress_dom, react_jsx_runtime, _wordpress_element, _wordpress_primitives, _wordpress_components, _wordpress_blob, _wordpress_core_data, react, react_dom, _wordpress_warning, _wordpress_a11y, _wordpress_theme, _wordpress_private_apis, _wordpress_url, _wordpress_html_entities, _wordpress_notices, _wordpress_keycodes, _wordpress_deprecated, _wordpress_rich_text, _wordpress_date, _wordpress_api_fetch, _wordpress_hooks, _wordpress_style_engine, _wordpress_upload_media, _wordpress_escape_html, _wordpress_wordcount, _wordpress_patterns, _wordpress_autop, _wordpress_shortcode) {
+(function(exports, _wordpress_blocks, _wordpress_compose, _wordpress_data, _wordpress_block_editor, _wordpress_server_side_render, _wordpress_i18n, _wordpress_dom, react_jsx_runtime, _wordpress_element, _wordpress_primitives, _wordpress_components, _wordpress_blob, _wordpress_core_data, react, react_dom, _wordpress_warning, _wordpress_a11y, _wordpress_theme, _wordpress_private_apis, _wordpress_url, _wordpress_html_entities, _wordpress_notices, _wordpress_keycodes, _wordpress_deprecated, _wordpress_rich_text, _wordpress_date, _wordpress_hooks, _wordpress_style_engine, _wordpress_upload_media, _wordpress_escape_html, _wordpress_wordcount, _wordpress_patterns, _wordpress_autop, _wordpress_shortcode) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -46,7 +46,6 @@ react_dom = __toESM(react_dom, 1);
 _wordpress_warning = __toESM(_wordpress_warning, 1);
 _wordpress_theme = __toESM(_wordpress_theme, 1);
 _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
-_wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 
 // node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
 	function r$1(e) {
@@ -4484,6 +4483,20 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 			name,
 			recordId
 		]);
+	}
+	/**
+	* Returns the comments query of a post: `totalItems` is its comment count once
+	* known, and stays null when the request fails.
+	*
+	* @param {number} postId Post ID. Nothing is fetched without one.
+	*/
+	function usePostCommentsCount(postId) {
+		return (0, _wordpress_core_data.useEntityRecords)("root", "comment", {
+			post: postId,
+			per_page: 1,
+			_fields: "id",
+			context: "view"
+		}, { enabled: !!postId });
 	}
 	/**
 	* Handles uploading a media file from a blob URL on mount.
@@ -34721,7 +34734,7 @@ Icon: ButtonIcon });
 	/**
 	* Return the index of the default page, depending on whether `defaultPage` is
 	* `newest` or `oldest`. In the first case, the only way to know the page's
-	* index is by using the `X-WP-TotalPages` header, which forces to make an
+	* index is by using the `X-WP-Total` header, which forces to make an
 	* additional request.
 	*
 	* @param {Object} props             Hook props.
@@ -34733,39 +34746,16 @@ Icon: ButtonIcon });
 	* @return {number} Index of the default comments page.
 	*/
 	const useDefaultPageIndex = ({ defaultPage, postId, perPage, queryArgs }) => {
-		const [defaultPages, setDefaultPages] = (0, _wordpress_element.useState)({});
-		const key = `${postId}_${perPage}`;
-		const page = defaultPages[key] || 0;
-		(0, _wordpress_element.useEffect)(() => {
-			if (page || defaultPage !== "newest") return;
-			(0, _wordpress_api_fetch.default)({
-				path: (0, _wordpress_url.addQueryArgs)("/wp/v2/comments", {
-					...queryArgs,
-					post: postId,
-					per_page: perPage,
-					_fields: "id"
-				}),
-				method: "HEAD",
-				parse: false
-			}).then((res) => {
-				const pages = parseInt(res.headers.get("X-WP-TotalPages"));
-				setDefaultPages({
-					...defaultPages,
-					[key]: pages <= 1 ? 1 : pages
-				});
-			}).catch(() => {
-				setDefaultPages({
-					...defaultPages,
-					[key]: 1
-				});
-			});
-		}, [
-			defaultPage,
-			postId,
-			perPage,
-			setDefaultPages
-		]);
-		return defaultPage === "newest" ? page : 1;
+		const isNewest = defaultPage === "newest";
+		const { totalItems, hasResolved } = (0, _wordpress_core_data.useEntityRecords)("root", "comment", {
+			...queryArgs,
+			post: postId,
+			per_page: 1,
+			_fields: "id"
+		}, { enabled: isNewest });
+		if (!isNewest) return 1;
+		if (totalItems === null && !hasResolved) return 0;
+		return Math.max(Math.ceil((totalItems ?? 0) / perPage), 1);
 	};
 	/**
 	* Generate a tree structure of comment IDs from a list of comment entities. The
@@ -35508,7 +35498,6 @@ Icon: ButtonIcon });
 		const { showPostTitle, showCommentsCount, level = 2, levelOptions } = attributes;
 		const { postId, postType } = context;
 		const TagName = "h" + level;
-		const [commentsCount, setCommentsCount] = (0, _wordpress_element.useState)();
 		const [rawTitle] = (0, _wordpress_core_data.useEntityProp)("postType", postType, "title", postId);
 		const isSiteEditor = typeof postId === "undefined";
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)();
@@ -35517,27 +35506,13 @@ Icon: ButtonIcon });
 			return getSettings().__experimentalDiscussionSettings ?? {};
 		}, []);
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-		(0, _wordpress_element.useEffect)(() => {
-			if (isSiteEditor) {
-				const nestedCommentsNumber = threadComments ? Math.min(threadCommentsDepth, 3) - 1 : 0;
-				const commentsNumber = parseInt(nestedCommentsNumber) + parseInt(pageComments ? commentsPerPage : 3);
-				setCommentsCount(Math.min(commentsNumber, 3));
-				return;
-			}
-			const currentPostId = postId;
-			(0, _wordpress_api_fetch.default)({
-				path: (0, _wordpress_url.addQueryArgs)("/wp/v2/comments", {
-					post: postId,
-					_fields: "id"
-				}),
-				method: "HEAD",
-				parse: false
-			}).then((res) => {
-				if (currentPostId === postId) setCommentsCount(parseInt(res.headers.get("X-WP-Total")));
-			}).catch(() => {
-				setCommentsCount(0);
-			});
-		}, [postId]);
+		const { totalItems, hasResolved } = usePostCommentsCount(postId);
+		let commentsCount;
+		if (isSiteEditor) {
+			const nestedCommentsNumber = threadComments ? Math.min(threadCommentsDepth, 3) - 1 : 0;
+			const commentsNumber = parseInt(nestedCommentsNumber) + parseInt(pageComments ? commentsPerPage : 3);
+			commentsCount = Math.min(commentsNumber, 3);
+		} else commentsCount = totalItems ?? (hasResolved ? 0 : void 0);
 		const blockControls = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
 			group: "block",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.HeadingLevelDropdown, {
@@ -65753,19 +65728,9 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/post-comments-count/edit.mjs
 	function PostCommentsCountEdit({ context }) {
 		const { postId } = context;
-		const [commentsCount, setCommentsCount] = (0, _wordpress_element.useState)();
+		const { totalItems: commentsCount } = usePostCommentsCount(postId);
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)();
-		(0, _wordpress_element.useEffect)(() => {
-			if (!postId) return;
-			const currentPostId = postId;
-			(0, _wordpress_api_fetch.default)({
-				path: (0, _wordpress_url.addQueryArgs)("/wp/v2/comments", { post: postId }),
-				parse: false
-			}).then((res) => {
-				if (currentPostId === postId) setCommentsCount(res.headers.get("X-WP-Total"));
-			});
-		}, [postId]);
-		const hasPostAndComments = postId && commentsCount !== void 0;
+		const hasPostAndComments = postId && commentsCount !== null;
 		const blockStyles = {
 			...blockProps.style,
 			textDecoration: hasPostAndComments ? blockProps.style?.textDecoration : void 0
@@ -66069,21 +66034,11 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/post-comments-link/edit.mjs
 	function PostCommentsLinkEdit({ context }) {
 		const { postType, postId } = context;
-		const [commentsCount, setCommentsCount] = (0, _wordpress_element.useState)();
+		const { totalItems: commentsCount } = usePostCommentsCount(postId);
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)();
-		(0, _wordpress_element.useEffect)(() => {
-			if (!postId) return;
-			const currentPostId = postId;
-			(0, _wordpress_api_fetch.default)({
-				path: (0, _wordpress_url.addQueryArgs)("/wp/v2/comments", { post: postId }),
-				parse: false
-			}).then((res) => {
-				if (currentPostId === postId) setCommentsCount(res.headers.get("X-WP-Total"));
-			});
-		}, [postId]);
 		const post = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).getEditedEntityRecord("postType", postType, postId), [postType, postId]);
 		let commentsText;
-		if (commentsCount !== void 0) {
+		if (commentsCount !== null) {
 			const commentsNumber = parseInt(commentsCount);
 			if (commentsNumber === 0) commentsText = (0, _wordpress_i18n.__)("No comments");
 			else commentsText = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s comment", "%s comments", commentsNumber), commentsNumber.toLocaleString());
@@ -86094,5 +86049,5 @@ exports.registerCoreBlocks = registerCoreBlocks;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).blockLibrary = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.compose, window.wp.data, window.wp.blockEditor, window.wp.serverSideRender, window.wp.i18n, window.wp.dom, window.ReactJSXRuntime, window.wp.element, window.wp.primitives, window.wp.components, window.wp.blob, window.wp.coreData, window.React, window.ReactDOM, window.wp.warning, window.wp.a11y, window.wp.theme, window.wp.privateApis, window.wp.url, window.wp.htmlEntities, window.wp.notices, window.wp.keycodes, window.wp.deprecated, window.wp.richText, window.wp.date, window.wp.apiFetch, window.wp.hooks, window.wp.styleEngine, window.wp.uploadMedia, window.wp.escapeHtml, window.wp.wordcount, window.wp.patterns, window.wp.autop, window.wp.shortcode);
+})({}, window.wp.blocks, window.wp.compose, window.wp.data, window.wp.blockEditor, window.wp.serverSideRender, window.wp.i18n, window.wp.dom, window.ReactJSXRuntime, window.wp.element, window.wp.primitives, window.wp.components, window.wp.blob, window.wp.coreData, window.React, window.ReactDOM, window.wp.warning, window.wp.a11y, window.wp.theme, window.wp.privateApis, window.wp.url, window.wp.htmlEntities, window.wp.notices, window.wp.keycodes, window.wp.deprecated, window.wp.richText, window.wp.date, window.wp.hooks, window.wp.styleEngine, window.wp.uploadMedia, window.wp.escapeHtml, window.wp.wordcount, window.wp.patterns, window.wp.autop, window.wp.shortcode);
 //# sourceMappingURL=index.js.map
