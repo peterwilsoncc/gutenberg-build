@@ -32060,7 +32060,7 @@ VisualLabel });
 	});
 
 // packages/components/build-module/autocomplete/autocompleter-ui.mjs
-	function ListBox({ items, onSelect, selectedIndex, instanceId, listBoxId, className, Component = "div" }) {
+	function ListBox({ items, onSelect, onHover, selectedIndex, instanceId, listBoxId, className, Component = "div" }) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Component, {
 			id: listBoxId,
 			role: "listbox",
@@ -32075,11 +32075,14 @@ VisualLabel });
 				className: clsx("components-autocomplete__result", className, { "is-selected": index === selectedIndex }),
 				variant: index === selectedIndex ? "primary" : void 0,
 				onClick: () => onSelect(option),
+				onMouseMove: () => {
+					if (index !== selectedIndex) onHover(index);
+				},
 				children: option.label
 			}, option.key))
 		});
 	}
-	function AutocompleterUI({ autocompleter, filterValue, instanceId, listBoxId, className, selectedIndex, onChangeOptions, onSelect, reset, contentRef }) {
+	function AutocompleterUI({ autocompleter, filterValue, instanceId, listBoxId, className, selectedIndex, onChangeOptions, onSelect, onHover, reset, contentRef }) {
 		const [items] = (autocompleter.useItems ?? getDefaultUseItems(autocompleter))(filterValue);
 		const popoverAnchor = (0, _wordpress_rich_text.useAnchor)({ editableContentElement: contentRef.current });
 		const [needsA11yCompat, setNeedsA11yCompat] = (0, _wordpress_element.useState)(false);
@@ -32112,6 +32115,7 @@ VisualLabel });
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ListBox, {
 				items,
 				onSelect,
+				onHover,
 				selectedIndex,
 				instanceId,
 				listBoxId,
@@ -32120,6 +32124,7 @@ VisualLabel });
 		}), contentRef.current && needsA11yCompat && (0, react_dom.createPortal)(/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ListBox, {
 			items,
 			onSelect,
+			onHover,
 			selectedIndex,
 			instanceId,
 			listBoxId,
@@ -32360,6 +32365,10 @@ VisualLabel });
 				selectedIndex,
 				onChangeOptions,
 				onSelect: select,
+				onHover: (index) => dispatch({
+					type: "SELECT",
+					index
+				}),
 				contentRef,
 				reset: () => dispatch({ type: "RESET" })
 			}, autocompleter.name + autocompleter.triggerPrefix)
@@ -64677,6 +64686,7 @@ VisualLabel });
 						}),
 						icon: control.icon,
 						label: control.label,
+						onMouseMove: (event) => event.currentTarget.focus({ preventScroll: true }),
 						"aria-checked": control.role === "menuitemcheckbox" || control.role === "menuitemradio" ? control.isActive : void 0,
 						role: control.role === "menuitemcheckbox" || control.role === "menuitemradio" ? control.role : "menuitem",
 						accessibleWhenDisabled: true,
@@ -67322,7 +67332,7 @@ VisualLabel });
 
 // packages/components/build-module/menu-item/index.mjs
 	function UnforwardedMenuItem(props, ref) {
-		let { children, info, className, icon, iconPosition = "right", shortcut, isSelected, role = "menuitem", suffix, ...buttonProps } = props;
+		let { children, info, className, icon, iconPosition = "right", shortcut, isSelected, onMouseMove, role = "menuitem", suffix, ...buttonProps } = props;
 		className = clsx("components-menu-item__button", className);
 		if (info) children = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
 			className: "components-menu-item__info-wrapper",
@@ -67344,6 +67354,11 @@ VisualLabel });
 			className,
 			accessibleWhenDisabled: true,
 			...buttonProps,
+			onMouseMove: (event) => {
+				onMouseMove?.(event);
+				const menu = event.currentTarget.closest("[role=\"menu\"]");
+				if (!event.defaultPrevented && role.startsWith("menuitem") && menu?.contains(event.currentTarget.ownerDocument.activeElement)) event.currentTarget.focus({ preventScroll: true });
+			},
 			children: [
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: "components-menu-item__item",
