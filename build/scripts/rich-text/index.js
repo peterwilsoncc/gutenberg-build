@@ -2241,7 +2241,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	}
 
 // packages/rich-text/build-module/hook/event-listeners/copy-handler.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$5 } = unlock(_wordpress_compose.privateApis);
+	const { subscribeDelegatedListener: subscribeDelegatedListener$4 } = unlock(_wordpress_compose.privateApis);
 	const copyHandler = (props) => (element) => {
 		function onCopy(event) {
 			const { record, handleChange } = props.current;
@@ -2257,8 +2257,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			if (event.type === "cut") handleChange(remove(record.current));
 		}
 		const { defaultView } = element.ownerDocument;
-		const unsubscribeCopy = subscribeDelegatedListener$5(defaultView, "copy", onCopy);
-		const unsubscribeCut = subscribeDelegatedListener$5(defaultView, "cut", onCopy);
+		const unsubscribeCopy = subscribeDelegatedListener$4(defaultView, "copy", onCopy);
+		const unsubscribeCut = subscribeDelegatedListener$4(defaultView, "cut", onCopy);
 		return () => {
 			unsubscribeCopy();
 			unsubscribeCut();
@@ -2266,7 +2266,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	};
 
 // packages/rich-text/build-module/hook/event-listeners/select-object.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$4 } = unlock(_wordpress_compose.privateApis);
+	const { subscribeDelegatedListener: subscribeDelegatedListener$3 } = unlock(_wordpress_compose.privateApis);
 	const selectObject = () => (element) => {
 		function onClick(event) {
 			const target = event.target;
@@ -2285,8 +2285,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		function onFocusIn(event) {
 			if (event.relatedTarget && !element.contains(event.relatedTarget)) onClick(event);
 		}
-		const unsubscribeClick = subscribeDelegatedListener$4(element, "click", onClick);
-		const unsubscribeFocusIn = subscribeDelegatedListener$4(element, "focusin", onFocusIn);
+		const unsubscribeClick = subscribeDelegatedListener$3(element, "click", onClick);
+		const unsubscribeFocusIn = subscribeDelegatedListener$3(element, "focusin", onFocusIn);
 		return () => {
 			unsubscribeClick();
 			unsubscribeFocusIn();
@@ -2294,7 +2294,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	};
 
 // packages/rich-text/build-module/subscribe-owned-listener.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$3 } = unlock(_wordpress_compose.privateApis);
+	const { subscribeDelegatedListener: subscribeDelegatedListener$2 } = unlock(_wordpress_compose.privateApis);
 	const registries = /* @__PURE__ */ new WeakMap();
 	/**
 	* Listens for events on the element. Unlike an element listener, it also
@@ -2319,7 +2319,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const elements = byEvent.get(key) ?? /* @__PURE__ */ new WeakMap();
 		if (!byEvent.has(key)) {
 			byEvent.set(key, elements);
-			subscribeDelegatedListener$3(ownerDocument, eventType, (event) => {
+			subscribeDelegatedListener$2(ownerDocument, eventType, (event) => {
 				const { defaultView, activeElement } = ownerDocument;
 				const anchorNode = defaultView?.getSelection()?.anchorNode;
 				for (let node = anchorNode ?? activeElement; node; node = node.parentNode) {
@@ -2430,7 +2430,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	}
 
 // packages/rich-text/build-module/hook/event-listeners/input-and-selection.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$2 } = unlock(_wordpress_compose.privateApis);
+	const { subscribeDelegatedListener: subscribeDelegatedListener$1 } = unlock(_wordpress_compose.privateApis);
 	/**
 	* All inserting input types that would insert HTML into the DOM.
 	*
@@ -2561,10 +2561,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const unsubscribeInput = subscribeOwnedListener(element, "input", onInput, true);
 		const unsubscribeCompositionStart = subscribeOwnedListener(element, "compositionstart", onCompositionStart);
 		const unsubscribeCompositionEnd = subscribeOwnedListener(element, "compositionend", onCompositionEnd, true);
-		const unsubscribeFocus = subscribeDelegatedListener$2(element, "focusin", onFocus);
-		const unsubscribePointerDown = subscribeDelegatedListener$2(element, "pointerdown", onPointerDown);
-		const unsubscribePointerUp = subscribeDelegatedListener$2(defaultView, "pointerup", onPointerUp);
-		const unsubscribePointerCancel = subscribeDelegatedListener$2(defaultView, "pointercancel", onPointerUp);
+		const unsubscribeFocus = subscribeDelegatedListener$1(element, "focusin", onFocus);
+		const unsubscribePointerDown = subscribeDelegatedListener$1(element, "pointerdown", onPointerDown);
+		const unsubscribePointerUp = subscribeDelegatedListener$1(defaultView, "pointerup", onPointerUp);
+		const unsubscribePointerCancel = subscribeDelegatedListener$1(defaultView, "pointercancel", onPointerUp);
 		const unsubscribeSelectionChange = subscribeOwnedListener(element, "selectionchange", handleSelectionChange);
 		const unsubscribeEnsureSelectionSync = [
 			"keydown",
@@ -2587,7 +2587,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	};
 
 // packages/rich-text/build-module/hook/event-listeners/selection-change-compat.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$1 } = unlock(_wordpress_compose.privateApis);
+	const { subscribeDelegatedListener } = unlock(_wordpress_compose.privateApis);
 	/**
 	* Sometimes some browsers are not firing a `selectionchange` event when
 	* changing the selection by mouse or keyboard. This hook makes sure that, if we
@@ -2619,55 +2619,13 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			ownerDocument.addEventListener("input", onCancel);
 			range = getRange();
 		}
-		const unsubscribePointerDown = subscribeDelegatedListener$1(element, "pointerdown", onDown);
-		const unsubscribeKeyDown = subscribeDelegatedListener$1(element, "keydown", onDown);
+		const unsubscribePointerDown = subscribeDelegatedListener(element, "pointerdown", onDown);
+		const unsubscribeKeyDown = subscribeDelegatedListener(element, "keydown", onDown);
 		return () => {
 			unsubscribePointerDown();
 			unsubscribeKeyDown();
 		};
 	};
-
-// packages/rich-text/build-module/hook/event-listeners/prevent-focus-capture.mjs
-	const { subscribeDelegatedListener } = unlock(_wordpress_compose.privateApis);
-	/**
-	* Prevents focus from being captured by the element when clicking _outside_
-	* around the element. This may happen when the parent element is flex.
-	* @see https://github.com/WordPress/gutenberg/pull/65857
-	* @see https://github.com/WordPress/gutenberg/pull/66402
-	*/
-	function preventFocusCapture() {
-		return (element) => {
-			const { ownerDocument } = element;
-			const { defaultView } = ownerDocument;
-			let value = null;
-			function onPointerDown(event) {
-				const target = event.target;
-				if (event.defaultPrevented) return;
-				if (target === element) return;
-				if (!target.contains(element)) return;
-				if (!target.closest("[data-block]")) return;
-				value = element.getAttribute("contenteditable");
-				defaultView.getSelection().removeAllRanges();
-				element.setAttribute("contenteditable", "false");
-			}
-			function onPointerUp() {
-				if (value !== null) {
-					element.setAttribute("contenteditable", value);
-					value = null;
-					const selection = defaultView.getSelection();
-					if (selection.isCollapsed && element.contains(selection.anchorNode)) selection.removeAllRanges();
-				}
-			}
-			const unsubscribePointerDown = subscribeDelegatedListener(defaultView, "pointerdown", onPointerDown);
-			const unsubscribePointerUp = subscribeDelegatedListener(defaultView, "pointerup", onPointerUp);
-			const unsubscribePointerCancel = subscribeDelegatedListener(defaultView, "pointercancel", onPointerUp);
-			return () => {
-				unsubscribePointerDown();
-				unsubscribePointerUp();
-				unsubscribePointerCancel();
-			};
-		};
-	}
 
 // packages/rich-text/build-module/hook/event-listeners/index.mjs
 	const allEventListeners = [
@@ -2676,8 +2634,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		selectObject,
 		formatBoundaries,
 		deleteHandler,
-		selectionChangeCompat,
-		preventFocusCapture
+		selectionChangeCompat
 	];
 	function useEventListeners(props) {
 		const propsRef = (0, _wordpress_element.useRef)(props);
