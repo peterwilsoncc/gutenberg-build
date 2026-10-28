@@ -162,9 +162,10 @@
 			], false, false), peg$c25 = peg$otherExpectation("JSON-encoded attributes embedded in a block's opening comment"), peg$c26 = "{", peg$c27 = peg$literalExpectation("{", false), peg$c28 = "}", peg$c29 = peg$literalExpectation("}", false), peg$c30 = "", peg$c31 = function(attrs) {
 				/** <?php return json_decode( $attrs, true ); ?> **/
 				return maybeJSON(attrs);
-			}, peg$c32 = /^[ \t\r\n]/, peg$c33 = peg$classExpectation([
+			}, peg$c32 = /^[ \t\f\r\n]/, peg$c33 = peg$classExpectation([
 				" ",
 				"	",
+				"\f",
 				"\r",
 				"\n"
 			], false, false), peg$currPos = 0, peg$posDetailsCache = [{
