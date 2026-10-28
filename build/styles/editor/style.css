@@ -4807,6 +4807,11 @@ div.dataviews-view-list {
   pointer-events: none;
 }
 
+@media (forced-colors: active) {
+  .rotation-ruler__pointer {
+    background: CanvasText;
+  }
+}
 .rotation-ruler__strip {
   position: absolute;
   inset: 0;
