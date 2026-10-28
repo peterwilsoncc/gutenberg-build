@@ -16886,6 +16886,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				onChange((0, _wordpress_rich_text.insert)(value, NBSP));
 			}
 			const range = getNonBreakingSpaceRange(value);
+			const nonBreakingSpaceCount = (range ? value.text.slice(range[0], range[1]) : "").split(NBSP).length - 1;
 			function replaceNonBreakingSpaces() {
 				if (!range) return;
 				const [from, to] = range;
@@ -16906,7 +16907,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				range && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
 					name: "non-breaking-space",
 					icon,
-					title: (0, _wordpress_i18n.__)("Replace non-breaking spaces"),
+					title: nonBreakingSpaceCount === 1 ? (0, _wordpress_i18n.__)("Replace non-breaking space") : (0, _wordpress_i18n.__)("Replace non-breaking spaces"),
 					onClick: replaceNonBreakingSpaces,
 					isActive: true
 				}),
