@@ -9161,12 +9161,12 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	*
 	* @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/data/README.md#createReduxStore
 	*/
-	const store$183 = (0, _wordpress_data.createReduxStore)(STORE_NAME$1, {
+	const store$184 = (0, _wordpress_data.createReduxStore)(STORE_NAME$1, {
 		reducer: reducer_default,
 		actions: actions_exports$1,
 		selectors: selectors_exports$1
 	});
-	(0, _wordpress_data.register)(store$183);
+	(0, _wordpress_data.register)(store$184);
 
 // node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
 	function r$1(e) {
@@ -9207,8 +9207,8 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		const context = (0, _wordpress_plugins.usePluginContext)();
 		const icon = iconProp || context.icon;
 		const identifier = identifierProp || `${context.name}/${name}`;
-		const isSelected = (0, _wordpress_data.useSelect)((select) => select(store$183).getActiveComplementaryArea(scope) === identifier, [identifier, scope]);
-		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const isSelected = (0, _wordpress_data.useSelect)((select) => select(store$184).getActiveComplementaryArea(scope) === identifier, [identifier, scope]);
+		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComponentToUse, {
 			icon: selectedIcon && isSelected ? selectedIcon : icon,
 			"aria-controls": identifier.replace("/", ":"),
@@ -9393,7 +9393,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
 		const previousIsSmallRef = (0, _wordpress_element.useRef)(false);
 		const shouldOpenWhenNotSmallRef = (0, _wordpress_element.useRef)(false);
-		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		(0, _wordpress_element.useEffect)(() => {
 			if (isActive && isSmall && !previousIsSmallRef.current) {
 				disableComplementaryArea(scope);
@@ -9419,7 +9419,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		const identifier = identifierProp || `${context.name}/${name}`;
 		const [isReady, setIsReady] = (0, _wordpress_element.useState)(false);
 		const { isLoading, isActive, isPinned, activeArea, isSmall, isLarge, showIconLabels } = (0, _wordpress_data.useSelect)((select) => {
-			const { getActiveComplementaryArea, isComplementaryAreaLoading, isItemPinned } = select(store$183);
+			const { getActiveComplementaryArea, isComplementaryAreaLoading, isItemPinned } = select(store$184);
 			const { get } = select(_wordpress_preferences.store);
 			const _activeArea = getActiveComplementaryArea(scope);
 			return {
@@ -9435,7 +9435,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		const hasMenuItem = useHasComplementaryAreaMenuItem(scope, name);
 		const isMobileViewport = (0, _wordpress_compose.useViewportMatch)("medium", "<");
 		useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall);
-		const { enableComplementaryArea, disableComplementaryArea, pinItem, unpinItem } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea, disableComplementaryArea, pinItem, unpinItem } = (0, _wordpress_data.useDispatch)(store$184);
 		(0, _wordpress_element.useEffect)(() => {
 			if (isActiveByDefault && activeArea === void 0 && !isSmall) enableComplementaryArea(scope, identifier);
 			else if (activeArea === void 0 && isSmall) disableComplementaryArea(scope);
@@ -53171,7 +53171,7 @@ Icon: ButtonIcon });
 		FullscreenMode: () => FullscreenMode,
 		InterfaceSkeleton: () => interface_skeleton_default,
 		PinnedItems: () => PinnedItems,
-		store: () => store$183
+		store: () => store$184
 	}, 1);
 
 // packages/editor/build-module/components/global-keyboard-shortcuts/index.mjs
@@ -53189,8 +53189,8 @@ Icon: ButtonIcon });
 			return !richEditingEnabled || !codeEditingEnabled;
 		}, []);
 		const { getBlockSelectionStart } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
-		const { getActiveComplementaryArea } = (0, _wordpress_data.useSelect)(store$183);
-		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { getActiveComplementaryArea } = (0, _wordpress_data.useSelect)(store$184);
+		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		const { redo, undo, savePost, setIsListViewOpened, switchEditorMode, toggleDistractionFree } = (0, _wordpress_data.useDispatch)(store);
 		const { isEditedPostDirty, isPostSavingLocked, isListViewOpened, getEditorMode, isSavingNonPostEntityChanges } = (0, _wordpress_data.useSelect)(store);
 		(0, _wordpress_keyboard_shortcuts.useShortcut)("core/editor/toggle-mode", () => {
@@ -94636,12 +94636,12 @@ If there's a particular need for this, please submit a feature request at https:
 	const STORE_NAME = "core/media-editor";
 
 // packages/media-editor/build-module/store/index.mjs
-	const store$103 = (0, _wordpress_data.createReduxStore)(STORE_NAME, {
+	const store$104 = (0, _wordpress_data.createReduxStore)(STORE_NAME, {
 		reducer,
 		actions: actions_exports,
 		selectors: selectors_exports
 	});
-	(0, _wordpress_data.register)(store$103);
+	(0, _wordpress_data.register)(store$104);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
 /**
@@ -100528,7 +100528,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	function MediaEditorModal$1({ fields = [], form, aspectRatioPresets }) {
 		const { isModalOpen, id, onUpdate, onUndo, onClose } = (0, _wordpress_data.useSelect)((select) => {
-			const { isOpen, getId, getOnUpdate, getOnUndo, getOnClose } = select(store$103);
+			const { isOpen, getId, getOnUpdate, getOnUndo, getOnClose } = select(store$104);
 			return {
 				isModalOpen: isOpen(),
 				id: getId(),
@@ -100537,7 +100537,7 @@ If there's a particular need for this, please submit a feature request at https:
 				onClose: getOnClose()
 			};
 		}, []);
-		const { closeMediaEditorModal } = (0, _wordpress_data.useDispatch)(store$103);
+		const { closeMediaEditorModal } = (0, _wordpress_data.useDispatch)(store$104);
 		const { createSuccessNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		if (!isModalOpen || !id) return null;
 		const portalElement = typeof document === "undefined" ? null : document.body;
@@ -100601,7 +100601,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/media-editor/build-module/private-apis.mjs
 	const privateApis$45 = {};
 	lock$1(privateApis$45, {
-		store: store$103,
+		store: store$104,
 		MediaEditor,
 		MediaEditorModal: MediaEditorModal$1
 	});
@@ -101770,7 +101770,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const { RenamePatternModal } = unlock$5(_wordpress_patterns.privateApis);
 	const modalName$1 = "editor/pattern-rename";
 	function PatternRenameModal() {
-		const isActive = (0, _wordpress_data.useSelect)((select) => select(store$183).isModalActive(modalName$1));
+		const isActive = (0, _wordpress_data.useSelect)((select) => select(store$184).isModalActive(modalName$1));
 		const { record, postType } = (0, _wordpress_data.useSelect)((select) => {
 			if (!isActive) return {};
 			const { getCurrentPostType, getCurrentPostId } = select(store);
@@ -101781,7 +101781,7 @@ If there's a particular need for this, please submit a feature request at https:
 				postType: _postType
 			};
 		}, [isActive]);
-		const { closeModal } = (0, _wordpress_data.useDispatch)(store$183);
+		const { closeModal } = (0, _wordpress_data.useDispatch)(store$184);
 		if (!isActive || postType !== "wp_block") return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RenamePatternModal, {
 			onClose: closeModal,
@@ -101793,7 +101793,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const { DuplicatePatternModal } = unlock$5(_wordpress_patterns.privateApis);
 	const modalName = "editor/pattern-duplicate";
 	function PatternDuplicateModal() {
-		const isActive = (0, _wordpress_data.useSelect)((select) => select(store$183).isModalActive(modalName));
+		const isActive = (0, _wordpress_data.useSelect)((select) => select(store$184).isModalActive(modalName));
 		const { record, postType } = (0, _wordpress_data.useSelect)((select) => {
 			if (!isActive) return {};
 			const { getCurrentPostType, getCurrentPostId } = select(store);
@@ -101804,7 +101804,7 @@ If there's a particular need for this, please submit a feature request at https:
 				postType: _postType
 			};
 		}, [isActive]);
-		const { closeModal } = (0, _wordpress_data.useDispatch)(store$183);
+		const { closeModal } = (0, _wordpress_data.useDispatch)(store$184);
 		if (!isActive || postType !== "wp_block") return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DuplicatePatternModal, {
 			onClose: closeModal,
@@ -101870,12 +101870,12 @@ If there's a particular need for this, please submit a feature request at https:
 				disableContentOnlyForTemplateParts: !!getEditorSettings().disableContentOnlyForTemplateParts
 			};
 		}, []);
-		const { getActiveComplementaryArea } = (0, _wordpress_data.useSelect)(store$183);
+		const { getActiveComplementaryArea } = (0, _wordpress_data.useSelect)(store$184);
 		const { toggle } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const { createInfoNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const { __unstableSaveForPreview, setIsListViewOpened, switchEditorMode, toggleDistractionFree, toggleSpotlightMode, toggleTopToolbar, updateEditorSettings } = (0, _wordpress_data.useDispatch)(store);
 		const { stopEditingContentOnlySection } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
-		const { openModal, enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { openModal, enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		const { getCurrentPostId } = (0, _wordpress_data.useSelect)(store);
 		const allowSwitchEditorMode = isCodeEditingEnabled && isRichEditingEnabled;
 		if (isPreviewMode) return {
@@ -102072,7 +102072,7 @@ If there's a particular need for this, please submit a feature request at https:
 			const { getCurrentPostType } = select(store);
 			return { postType: getCurrentPostType() };
 		}, []);
-		const { openModal } = (0, _wordpress_data.useDispatch)(store$183);
+		const { openModal } = (0, _wordpress_data.useDispatch)(store$184);
 		const commands = [];
 		if (postType === "wp_block") {
 			commands.push({
@@ -102453,7 +102453,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const [isOpen, setIsOpen] = (0, _wordpress_element.useState)(false);
 		const { isEditedPostEmpty } = (0, _wordpress_data.useSelect)(store);
 		const { getEntityRecordNonTransientEdits } = (0, _wordpress_data.useSelect)(_wordpress_core_data.store);
-		const { isModalActive } = (0, _wordpress_data.useSelect)(store$183);
+		const { isModalActive } = (0, _wordpress_data.useSelect)(store$184);
 		const { enabled, postType, postId } = (0, _wordpress_data.useSelect)((select) => {
 			const { getCurrentPostId, getCurrentPostType } = select(store);
 			const choosePatternModalEnabled = select(_wordpress_preferences.store).get("core", "enableChoosePatternModal");
@@ -102640,8 +102640,8 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	};
 	function KeyboardShortcutHelpModal() {
-		const isModalActive = (0, _wordpress_data.useSelect)((select) => select(store$183).isModalActive(KEYBOARD_SHORTCUT_HELP_MODAL_NAME), []);
-		const { openModal, closeModal } = (0, _wordpress_data.useDispatch)(store$183);
+		const isModalActive = (0, _wordpress_data.useSelect)((select) => select(store$184).isModalActive(KEYBOARD_SHORTCUT_HELP_MODAL_NAME), []);
+		const { openModal, closeModal } = (0, _wordpress_data.useDispatch)(store$184);
 		const toggleModal = () => {
 			if (isModalActive) closeModal();
 			else openModal(KEYBOARD_SHORTCUT_HELP_MODAL_NAME);
@@ -103917,7 +103917,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const registry = (0, _wordpress_data.useRegistry)();
 		const { selectBlock, flashBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { requestInspectorTab } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
-		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		const { hasNavigationBlocks, firstNavigationBlockId, isNavigationEditable } = (0, _wordpress_data.useSelect)((select) => {
 			const { getClientIdsOfDescendants, getBlockName, getBlockEditingMode } = select(_wordpress_block_editor.store);
 			const navigationBlocksInTemplatePart = getClientIdsOfDescendants(clientId).filter((blockId) => getBlockName(blockId) === NAVIGATION_BLOCK_NAME);
@@ -105178,7 +105178,7 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/editor/build-module/components/more-menu/index.mjs
 	function MoreMenu({ isRevisionMode = false }) {
-		const { openModal } = (0, _wordpress_data.useDispatch)(store$183);
+		const { openModal } = (0, _wordpress_data.useDispatch)(store$184);
 		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const { toggleDistractionFree } = (0, _wordpress_data.useDispatch)(store);
 		const showIconLabels = (0, _wordpress_data.useSelect)((select) => select(_wordpress_preferences.store).get("core", "showIconLabels"), []);
@@ -105401,12 +105401,12 @@ If there's a particular need for this, please submit a feature request at https:
 				isResponsiveEditing: _isResponsiveEditing(),
 				isResponsiveEditingEnabled: getEditorSettings().responsiveEditingEnabled,
 				hasBlockSelection: !!getBlockSelectionStart(),
-				activeComplementaryArea: select(store$183).getActiveComplementaryArea("core")
+				activeComplementaryArea: select(store$184).getActiveComplementaryArea("core")
 			};
 		}, []);
 		const { setDeviceType, setRenderingMode, setDefaultRenderingMode } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		const { resetZoomLevel, setStyleStateViewport, setResponsiveEditing } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
-		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		const handleDevicePreviewChange = (newDeviceType) => {
 			setDeviceType(newDeviceType);
 			resetZoomLevel();
@@ -107456,6 +107456,47 @@ If there's a particular need for this, please submit a feature request at https:
 		return blockEditorDocument.querySelector(`[data-block="${blockId}"]`);
 	};
 
+// packages/editor/build-module/components/collaborators-overlay/use-recently-typed.mjs
+/**
+	* Tracks whether a key was pressed in the given document within the last
+	* `delayMs`.
+	*
+	* The block editor's `isTyping` state turns on at the first keystroke and
+	* stays on until the pointer moves, so on its own it cannot tell a pause in
+	* typing apart from someone who simply has not touched the mouse. Pairing it
+	* with this hook gives the overlay a signal that lapses on its own, so
+	* anything hidden while typing comes back for keyboard-only users too.
+	*
+	* @param ownerDocument - Document to listen to, usually the editor canvas.
+	* @param delayMs       - How long after the last keystroke to stay `true`.
+	* @return Whether a keystroke landed within the last `delayMs`.
+	*/
+	function useRecentlyTyped(ownerDocument, delayMs) {
+		const [recentlyTyped, setRecentlyTyped] = (0, _wordpress_element.useState)(false);
+		(0, _wordpress_element.useEffect)(() => {
+			if (!ownerDocument) return;
+			let timeoutId;
+			function handleKeyDown(event) {
+				if ([
+					"Shift",
+					"Control",
+					"Alt",
+					"Meta"
+				].includes(event.key)) return;
+				setRecentlyTyped(true);
+				clearTimeout(timeoutId);
+				timeoutId = setTimeout(() => setRecentlyTyped(false), delayMs);
+			}
+			ownerDocument.addEventListener("keydown", handleKeyDown, true);
+			return () => {
+				ownerDocument.removeEventListener("keydown", handleKeyDown, true);
+				clearTimeout(timeoutId);
+				setRecentlyTyped(false);
+			};
+		}, [ownerDocument, delayMs]);
+		return recentlyTyped;
+	}
+
 // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
 	const { useActiveCollaborators: useActiveCollaborators$1, useResolvedSelection } = unlock$5(_wordpress_core_data.privateApis);
 	const { SelectionType } = unlock$5(_wordpress_core_data.privateApis);
@@ -107555,6 +107596,7 @@ If there's a particular need for this, please submit a feature request at https:
 						color,
 						avatarUrl,
 						isMe: user.isMe,
+						blockClientId: start.localClientId ?? void 0,
 						...selectionVisual.coords ?? {}
 					};
 					if (selectionVisual.selectionRects) cursorData.selectionRects = selectionVisual.selectionRects;
@@ -107581,6 +107623,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
 	const RERENDER_DELAY_MS = 500;
 	const CURSOR_REDRAW_INTERVAL_MS = 1e4;
+	const TYPING_PAUSE_MS = 1e3;
 	/**
 	* This component is responsible for rendering the overlay components within the editor iframe.
 	*
@@ -107593,6 +107636,15 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	function Overlay({ blockEditorDocument, postId, postType, cursorRegistry }) {
 		const [overlayElement, setOverlayElement] = (0, _wordpress_element.useState)(null);
+		const { isTyping, selectedBlockClientId } = (0, _wordpress_data.useSelect)((select) => {
+			const { isTyping: _isTyping, getSelectedBlockClientId } = select(_wordpress_block_editor.store);
+			return {
+				isTyping: _isTyping(),
+				selectedBlockClientId: getSelectedBlockClientId()
+			};
+		}, []);
+		const recentlyTyped = useRecentlyTyped(blockEditorDocument ?? null, TYPING_PAUSE_MS);
+		const blockClientIdBeingWritten = isTyping && recentlyTyped ? selectedBlockClientId : null;
 		const { cursors, rerenderCursorsAfterDelay, rerenderCursorsOnResize } = useRenderCursors(overlayElement, blockEditorDocument ?? null, postId ?? null, postType ?? null, RERENDER_DELAY_MS);
 		const { highlights, rerenderHighlightsAfterDelay, rerenderHighlightsOnResize } = useBlockHighlighting(overlayElement, blockEditorDocument ?? null, postId ?? null, postType ?? null, RERENDER_DELAY_MS);
 		const onResize = (0, _wordpress_element.useCallback)(() => {
@@ -107660,7 +107712,7 @@ If there's a particular need for this, please submit a feature request at https:
 							backgroundColor: cursor.color,
 							height: `${cursor.height}px`
 						}
-					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Avatar, {
+					}), cursor.blockClientId !== blockClientIdBeingWritten && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Avatar, {
 						className: "collaborators-overlay-user-label",
 						variant: "badge",
 						size: "small",
@@ -107842,7 +107894,7 @@ If there's a particular need for this, please submit a feature request at https:
 			const { getInserterSidebarToggleRef, getInserter, isPublishSidebarOpened } = unlock$5(select(store));
 			const { getBlockRootClientId, isZoomOut, getSectionRootClientId } = unlock$5(select(_wordpress_block_editor.store));
 			const { get } = select(_wordpress_preferences.store);
-			const { getActiveComplementaryArea } = select(store$183);
+			const { getActiveComplementaryArea } = select(store$184);
 			const getBlockSectionRootClientId = () => {
 				if (isZoomOut()) {
 					const sectionRootClientId = getSectionRootClientId();
@@ -107859,7 +107911,7 @@ If there's a particular need for this, please submit a feature request at https:
 			};
 		}, []);
 		const { setIsInserterOpened } = (0, _wordpress_data.useDispatch)(store);
-		const { disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		const isMobileViewport = (0, _wordpress_compose.useViewportMatch)("medium", "<");
 		const libraryRef = (0, _wordpress_element.useRef)();
 		const closeInserterSidebar = (0, _wordpress_element.useCallback)(() => {
@@ -108120,11 +108172,11 @@ If there's a particular need for this, please submit a feature request at https:
 				currentRevisionId: editor.getCurrentRevisionId(),
 				isViewingBrowserBackup: editor.isViewingBrowserBackup(),
 				browserBackupDate: editor.getBrowserBackup()?.date,
-				sidebarIsOpened: !!select(store$183).getActiveComplementaryArea("core")
+				sidebarIsOpened: !!select(store$184).getActiveComplementaryArea("core")
 			};
 		}, []);
 		const { setCurrentRevisionId, restoreRevision, restoreBrowserBackup } = unlock$5((0, _wordpress_data.useDispatch)(store));
-		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		const canRestore = !!currentRevisionId || isViewingBrowserBackup;
 		const handleRestore = () => {
 			if (isViewingBrowserBackup) restoreBrowserBackup();
@@ -111030,7 +111082,7 @@ If there's a particular need for this, please submit a feature request at https:
 			const { getPostBlocksByName } = unlock$5(select(store));
 			return getPostBlocksByName("wp_template" === postType ? TEMPLATE_PART_BLOCK : postContentBlockTypes);
 		}, [postType, postContentBlockTypes]);
-		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		if (clientIds.length === 0) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.PanelBody, {
 			title: (0, _wordpress_i18n.__)("Content"),
@@ -111112,8 +111164,8 @@ If there's a particular need for this, please submit a feature request at https:
 		const { hasBlockSelection } = (0, _wordpress_data.useSelect)((select) => {
 			return { hasBlockSelection: !!select(_wordpress_block_editor.store).getBlockSelectionStart() };
 		}, []);
-		const { getActiveComplementaryArea } = (0, _wordpress_data.useSelect)(store$183);
-		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { getActiveComplementaryArea } = (0, _wordpress_data.useSelect)(store$184);
+		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		const { get: getPreference } = (0, _wordpress_data.useSelect)(_wordpress_preferences.store);
 		(0, _wordpress_element.useEffect)(() => {
 			const activeGeneralSidebar = getActiveComplementaryArea("core");
@@ -111136,7 +111188,7 @@ If there's a particular need for this, please submit a feature request at https:
 		useAutoSwitchEditorSidebars();
 		const { tabName, keyboardShortcut, isRevisionsMode } = (0, _wordpress_data.useSelect)((select) => {
 			const shortcut = select(_wordpress_keyboard_shortcuts.store).getShortcutRepresentation("core/editor/toggle-sidebar");
-			const sidebar = select(store$183).getActiveComplementaryArea("core");
+			const sidebar = select(store$184).getActiveComplementaryArea("core");
 			const _isEditorSidebarOpened = [sidebars.block, sidebars.document].includes(sidebar);
 			let _tabName = sidebar;
 			if (!_isEditorSidebarOpened) _tabName = select(_wordpress_block_editor.store).getBlockSelectionStart() ? sidebars.block : sidebars.document;
@@ -111146,7 +111198,7 @@ If there's a particular need for this, please submit a feature request at https:
 				isRevisionsMode: unlock$5(select(store)).isRevisionsMode()
 			};
 		}, []);
-		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		function onTabSelect(newSelectedTabId) {
 			enableComplementaryArea("core", newSelectedTabId);
 		}
@@ -113222,11 +113274,11 @@ If there's a particular need for this, please submit a feature request at https:
 			const mode = select(_wordpress_preferences.store).get("core", "notesDisplayMode");
 			return {
 				displayMode: DISPLAY_MODES.includes(mode) ? mode : "full",
-				isAllNotesOpen: select(store$183).getActiveComplementaryArea("core") === ALL_NOTES_SIDEBAR
+				isAllNotesOpen: select(store$184).getActiveComplementaryArea("core") === ALL_NOTES_SIDEBAR
 			};
 		}, []);
 		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
-		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea, disableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		if (!isLargeViewport && !hasAllNotes) return null;
 		function setDisplayMode(mode) {
 			setPreference("core", "notesDisplayMode", mode);
@@ -113424,10 +113476,10 @@ If there's a particular need for this, please submit a feature request at https:
 			return {
 				notesDisplayMode: get("core", "notesDisplayMode"),
 				selectedNoteId: unlock$5(select(store)).getSelectedNote(),
-				isAllNotesSidebarOpen: select(store$183).getActiveComplementaryArea("core") === ALL_NOTES_SIDEBAR
+				isAllNotesSidebarOpen: select(store$184).getActiveComplementaryArea("core") === ALL_NOTES_SIDEBAR
 			};
 		}, []);
-		const { getActiveComplementaryArea } = (0, _wordpress_data.useSelect)(store$183);
+		const { getActiveComplementaryArea } = (0, _wordpress_data.useSelect)(store$184);
 		const { notes, unresolvedNotes } = useNoteThreads(postId);
 		const { onStart, onDiscard } = useNoteActions();
 		useNoteSelection({
@@ -113435,7 +113487,7 @@ If there's a particular need for this, please submit a feature request at https:
 			drafts,
 			onDiscard
 		});
-		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$183);
+		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$184);
 		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const pickNote = usePickNote({
 			drafts,
@@ -113612,7 +113664,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function WelcomeGuideStyles() {
 		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const { isActive, isStylesOpen } = (0, _wordpress_data.useSelect)((select) => {
-			const sidebar = select(store$183).getActiveComplementaryArea("core");
+			const sidebar = select(store$184).getActiveComplementaryArea("core");
 			return {
 				isActive: !!select(_wordpress_preferences.store).get("core/edit-site", "welcomeGuideStyles"),
 				isStylesOpen: sidebar === "edit-site/global-styles"
@@ -113693,7 +113745,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function GlobalStylesSidebar() {
 		const { shouldResetNavigation, stylesPath, showStylebook, showListViewByDefault, hasRevisions, activeComplementaryArea, editorSettings, styleStateViewport, isDistractionFree } = (0, _wordpress_data.useSelect)((select) => {
 			const { get } = select(_wordpress_preferences.store);
-			const { getActiveComplementaryArea } = select(store$183);
+			const { getActiveComplementaryArea } = select(store$184);
 			const { getStylesPath, getShowStylebook, getEditorMode, getEditorSettings } = unlock$5(select(store));
 			const _isVisualEditorMode = "visual" === getEditorMode();
 			const _showListViewByDefault = get("core", "showListViewByDefault");
@@ -113929,9 +113981,9 @@ If there's a particular need for this, please submit a feature request at https:
 	const { PreferencesModal, PreferencesModalTabs, PreferencesModalSection, PreferenceToggleControl } = unlock$5(_wordpress_preferences.privateApis);
 	function EditorPreferencesModal({ extraSections = {} }) {
 		const isActive = (0, _wordpress_data.useSelect)((select) => {
-			return select(store$183).isModalActive("editor/preferences");
+			return select(store$184).isModalActive("editor/preferences");
 		}, []);
-		const { closeModal } = (0, _wordpress_data.useDispatch)(store$183);
+		const { closeModal } = (0, _wordpress_data.useDispatch)(store$184);
 		if (!isActive) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PreferencesModal, {
 			closeModal,
