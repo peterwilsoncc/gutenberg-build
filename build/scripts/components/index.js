@@ -28614,6 +28614,7 @@ This message will only show in development mode. It won't appear in production. 
   function ListBox({
     items,
     onSelect,
+    onHover,
     selectedIndex,
     instanceId,
     listBoxId,
@@ -28645,6 +28646,11 @@ This message will only show in development mode. It won't appear in production. 
             ),
             variant: index2 === selectedIndex ? "primary" : void 0,
             onClick: () => onSelect(option),
+            onMouseMove: () => {
+              if (index2 !== selectedIndex) {
+                onHover(index2);
+              }
+            },
             children: option.label
           },
           option.key
@@ -28661,6 +28667,7 @@ This message will only show in development mode. It won't appear in production. 
     selectedIndex,
     onChangeOptions,
     onSelect,
+    onHover,
     reset,
     contentRef
   }) {
@@ -28745,6 +28752,7 @@ This message will only show in development mode. It won't appear in production. 
             {
               items,
               onSelect,
+              onHover,
               selectedIndex,
               instanceId,
               listBoxId,
@@ -28759,6 +28767,7 @@ This message will only show in development mode. It won't appear in production. 
           {
             items,
             onSelect,
+            onHover,
             selectedIndex,
             instanceId,
             listBoxId,
@@ -29083,6 +29092,7 @@ This message will only show in development mode. It won't appear in production. 
           selectedIndex,
           onChangeOptions,
           onSelect: select,
+          onHover: (index2) => dispatch({ type: "SELECT", index: index2 }),
           contentRef,
           reset: () => dispatch({ type: "RESET" })
         },
@@ -66465,6 +66475,9 @@ This message will only show in development mode. It won't appear in production. 
                       ),
                       icon: control.icon,
                       label: control.label,
+                      onMouseMove: (event) => event.currentTarget.focus({
+                        preventScroll: true
+                      }),
                       "aria-checked": control.role === "menuitemcheckbox" || control.role === "menuitemradio" ? control.isActive : void 0,
                       role: control.role === "menuitemcheckbox" || control.role === "menuitemradio" ? control.role : "menuitem",
                       accessibleWhenDisabled: true,
@@ -69165,6 +69178,7 @@ This message will only show in development mode. It won't appear in production. 
       iconPosition = "right",
       shortcut,
       isSelected: isSelected2,
+      onMouseMove,
       role = "menuitem",
       suffix,
       ...buttonProps
@@ -69194,6 +69208,15 @@ This message will only show in development mode. It won't appear in production. 
         className,
         accessibleWhenDisabled: true,
         ...buttonProps,
+        onMouseMove: (event) => {
+          onMouseMove?.(event);
+          const menu2 = event.currentTarget.closest('[role="menu"]');
+          if (!event.defaultPrevented && role.startsWith("menuitem") && menu2?.contains(
+            event.currentTarget.ownerDocument.activeElement
+          )) {
+            event.currentTarget.focus({ preventScroll: true });
+          }
+        },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("span", { className: "components-menu-item__item", children }),
           !suffix && /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
