@@ -94717,6 +94717,7 @@ If there's a particular need for this, please submit a feature request at https:
 				onMouseLeave: () => onHoverStyle(null),
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, {
 					as: "span",
+					color: "inherit",
 					limit: 18,
 					ellipsizeMode: "tail",
 					truncate: true,
@@ -104686,6 +104687,7 @@ If there's a particular need for this, please submit a feature request at https:
 			isLoading,
 			renderSuggestions,
 			selectedSuggestion,
+			onSuggestionHover: setSelectedSuggestion,
 			suggestionNodesRef,
 			suggestionOptionIdPrefix,
 			suggestions,
@@ -104709,7 +104711,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}), isLoading && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})]
 		});
 	}
-	function Suggestions({ autocompleteRef, className, handleSuggestionClick, isLoading, renderSuggestions, selectedSuggestion, suggestionNodesRef, suggestionOptionIdPrefix, suggestions, suggestionsListboxId, suggestionsValue }) {
+	function Suggestions({ autocompleteRef, className, handleSuggestionClick, isLoading, renderSuggestions, selectedSuggestion, onSuggestionHover, suggestionNodesRef, suggestionOptionIdPrefix, suggestions, suggestionsListboxId, suggestionsValue }) {
 		const suggestionsListProps = {
 			id: suggestionsListboxId,
 			ref: autocompleteRef,
@@ -104723,7 +104725,10 @@ If there's a particular need for this, please submit a feature request at https:
 				ref: (node) => {
 					suggestionNodesRef.current[index] = node;
 				},
-				"aria-selected": index === selectedSuggestion ? true : void 0
+				"aria-selected": index === selectedSuggestion ? true : void 0,
+				onMouseMove: () => {
+					if (!isLoading) onSuggestionHover(index);
+				}
 			};
 		};
 		if (isFunction(renderSuggestions)) return renderSuggestions({
