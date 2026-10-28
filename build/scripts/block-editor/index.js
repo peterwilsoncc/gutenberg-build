@@ -11012,16 +11012,16 @@ var wp;
           selector: " > .alignleft",
           rules: {
             float: "left",
-            "margin-inline-start": "0",
-            "margin-inline-end": "2em"
+            "margin-left": "0",
+            "margin-right": "2em"
           }
         },
         {
           selector: " > .alignright",
           rules: {
             float: "right",
-            "margin-inline-start": "2em",
-            "margin-inline-end": "0"
+            "margin-left": "2em",
+            "margin-right": "0"
           }
         },
         {
@@ -11063,16 +11063,16 @@ var wp;
           selector: " > .alignleft",
           rules: {
             float: "left",
-            "margin-inline-start": "0",
-            "margin-inline-end": "2em"
+            "margin-left": "0",
+            "margin-right": "2em"
           }
         },
         {
           selector: " > .alignright",
           rules: {
             float: "right",
-            "margin-inline-start": "2em",
-            "margin-inline-end": "0"
+            "margin-left": "2em",
+            "margin-right": "0"
           }
         },
         {
@@ -18468,16 +18468,16 @@ var wp;
           selector: " > .alignleft",
           rules: {
             float: "left",
-            "margin-inline-start": "0",
-            "margin-inline-end": "2em"
+            "margin-left": "0",
+            "margin-right": "2em"
           }
         },
         {
           selector: " > .alignright",
           rules: {
             float: "right",
-            "margin-inline-start": "2em",
-            "margin-inline-end": "0"
+            "margin-left": "2em",
+            "margin-right": "0"
           }
         },
         {
@@ -18519,16 +18519,16 @@ var wp;
           selector: " > .alignleft",
           rules: {
             float: "left",
-            "margin-inline-start": "0",
-            "margin-inline-end": "2em"
+            "margin-left": "0",
+            "margin-right": "2em"
           }
         },
         {
           selector: " > .alignright",
           rules: {
             float: "right",
-            "margin-inline-start": "2em",
-            "margin-inline-end": "0"
+            "margin-left": "2em",
+            "margin-right": "0"
           }
         },
         {
