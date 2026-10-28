@@ -12287,14 +12287,15 @@ var import_jsx_runtime42 = __toESM(require_jsx_runtime());
 var { store: connectorsStore } = unlock2(connectorsPrivateApis);
 function getConnectorScriptModuleData() {
   try {
-    return JSON.parse(
-      document.getElementById(
-        "wp-script-module-data-options-connectors-wp-admin"
-      )?.textContent ?? "{}"
+    const script = document.querySelector(
+      'script[id="wp-script-module-data-options-connectors-wp-admin"]'
     );
+    if (script instanceof HTMLScriptElement) {
+      return JSON.parse(script.text);
+    }
   } catch {
-    return {};
   }
+  return {};
 }
 function getConnectorData() {
   return getConnectorScriptModuleData().connectors ?? {};
