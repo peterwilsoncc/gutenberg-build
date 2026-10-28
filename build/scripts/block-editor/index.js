@@ -105228,6 +105228,7 @@ If there's a particular need for this, please submit a feature request at https:
             import_components159.__experimentalText,
             {
               as: "span",
+              color: "inherit",
               limit: 18,
               ellipsizeMode: "tail",
               truncate: true,
@@ -117628,6 +117629,7 @@ If there's a particular need for this, please submit a feature request at https:
           isLoading,
           renderSuggestions,
           selectedSuggestion,
+          onSuggestionHover: setSelectedSuggestion,
           suggestionNodesRef,
           suggestionOptionIdPrefix,
           suggestions,
@@ -117681,6 +117683,7 @@ If there's a particular need for this, please submit a feature request at https:
     isLoading,
     renderSuggestions,
     selectedSuggestion,
+    onSuggestionHover,
     suggestionNodesRef,
     suggestionOptionIdPrefix,
     suggestions,
@@ -117701,7 +117704,12 @@ If there's a particular need for this, please submit a feature request at https:
         ref: (node) => {
           suggestionNodesRef.current[index3] = node;
         },
-        "aria-selected": index3 === selectedSuggestion ? true : void 0
+        "aria-selected": index3 === selectedSuggestion ? true : void 0,
+        onMouseMove: () => {
+          if (!isLoading) {
+            onSuggestionHover(index3);
+          }
+        }
       };
     };
     if (isFunction(renderSuggestions)) {
