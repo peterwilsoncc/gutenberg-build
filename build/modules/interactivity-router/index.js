@@ -832,20 +832,45 @@ const rootFragmentsByParent = /* @__PURE__ */ new WeakMap();
 */
 const initialRegionsToAttach = /* @__PURE__ */ new Set();
 /**
+* Checks whether a fetched response can be processed as a page.
+*
+* Only a successful, same-origin response that the browser would display as
+* an HTML page is accepted. Any other response, such as an uploaded file
+* served with a non-HTML content type, is rejected so that none of its content
+* is processed.
+*
+* @param response The fetched response.
+* @return Whether the response can be processed as a page.
+*/
+const isValidPageResponse = (response) => {
+	if (response.status !== 200) return false;
+	try {
+		if (new URL(response.url).origin !== window.location.origin) return false;
+	} catch {
+		return false;
+	}
+	const contentType = response.headers.get("content-type") ?? "";
+	if (contentType.includes(",") || contentType.split(";")[0].trim().toLowerCase() !== "text/html") return false;
+	return true;
+};
+/**
 * Fetches and prepares a page from a given URL.
 *
-* @param url          The URL of the page to fetch.
+* @param url          The path and query of the page to fetch.
 * @param options      Options for the fetch operation.
 * @param options.html Optional HTML content. If provided, the function will use
 *                     this instead of fetching from the URL.
 * @return             A Promise that resolves to the prepared page, or false if
-*                     there was an error during fetching or preparation.
+*                     there was an error during fetching or preparation, or if
+*                     the fetched response is not a valid page.
 */
 const fetchPage = async (url, { html }) => {
 	try {
 		if (!html) {
-			const res = await window.fetch(url);
-			if (res.status !== 200) return false;
+			const requestUrl = new URL(url, window.location.href);
+			if (requestUrl.origin !== window.location.origin) return false;
+			const res = await window.fetch(requestUrl.href);
+			if (!isValidPageResponse(res)) return false;
 			html = await res.text();
 		}
 		const dom = new window.DOMParser().parseFromString(html, "text/html");
@@ -905,7 +930,7 @@ const preparePage = async (url, dom, { vdom } = {}) => {
 */
 const renderPage = (page) => {
 	applyStyles(page.styles);
-	const regionsToAttach = { ...page.regionsToAttach };
+	const regionsToAttach = Object.assign(Object.create(null), page.regionsToAttach);
 	batch(() => {
 		populateServerData(page.initialData);
 		navigationSignal.value += 1;
@@ -1087,6 +1112,7 @@ const { state, actions } = store("core/router", {
 		* @return  Promise that resolves once the navigation is completed or aborted.
 		*/
 		*navigate(href, options = {}) {
+			options = Object.assign(Object.create(null), options);
 			const { clientNavigationDisabled } = getConfig();
 			if (clientNavigationDisabled) yield forcePageReload(href);
 			const initiator = resolveInitiator(options.initiator);
@@ -1154,6 +1180,7 @@ const { state, actions } = store("core/router", {
 		* @return  Promise that resolves once the page has been fetched.
 		*/
 		*prefetch(url, options = {}) {
+			options = Object.assign(Object.create(null), options);
 			const { clientNavigationDisabled } = getConfig();
 			if (clientNavigationDisabled) return;
 			const pagePath = getPagePath(url);
@@ -1174,9 +1201,9 @@ state.url = state.url || window.location.href;
 function a11ySpeak(messageKey) {
 	if (!hasLoadedNavigationTextsData) {
 		hasLoadedNavigationTextsData = true;
-		const content = document.getElementById("wp-script-module-data-@wordpress/interactivity-router")?.textContent;
-		if (content) try {
-			const parsed = JSON.parse(content);
+		const script = document.querySelector("script[id=\"wp-script-module-data-@wordpress/interactivity-router\"]");
+		if (script instanceof HTMLScriptElement) try {
+			const parsed = JSON.parse(script.text);
 			if (typeof parsed?.i18n?.loading === "string") navigationTexts.loading = parsed.i18n.loading;
 			if (typeof parsed?.i18n?.loaded === "string") navigationTexts.loaded = parsed.i18n.loaded;
 		} catch {}

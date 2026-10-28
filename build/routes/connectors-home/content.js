@@ -2341,10 +2341,10 @@ const GeminiLogo = () => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
 const { store: connectorsStore } = unlock(privateApis);
 function getConnectorScriptModuleData() {
 	try {
-		return JSON.parse(document.getElementById("wp-script-module-data-options-connectors-wp-admin")?.textContent ?? "{}");
-	} catch {
-		return {};
-	}
+		const script = document.querySelector("script[id=\"wp-script-module-data-options-connectors-wp-admin\"]");
+		if (script instanceof HTMLScriptElement) return JSON.parse(script.text);
+	} catch {}
+	return {};
 }
 /**
 * Reads connector data passed from PHP via the script module data mechanism.

@@ -154,6 +154,18 @@ function getImageSrc({ uploadedSrc }) {
 function getImageSrcset({ lightboxSrcset }) {
 	return lightboxSrcset || "";
 }
+/**
+* Returns the metadata of the image with the passed ID. The ID comes from the
+* context, so only own properties of `state.metadata` are returned, never an
+* inherited one.
+*
+* @param {string} imageId Image ID.
+* @return {Object|undefined} The image metadata, if it exists.
+*/
+function getImageMetadata(imageId) {
+	const metadata = state.metadata[imageId];
+	return Object.hasOwn(state.metadata, imageId) ? metadata : void 0;
+}
 const { state, actions, callbacks } = store("core/image", {
 	state: {
 		selectedImageId: null,
@@ -170,7 +182,7 @@ const { state, actions, callbacks } = store("core/image", {
 			return state.galleryImages.findIndex((id) => id === state.selectedImageId);
 		},
 		get selectedImage() {
-			return state.metadata[state.selectedImageId];
+			return getImageMetadata(state.selectedImageId);
 		},
 		get hasNavigationIcon() {
 			const { navigationButtonType } = state.selectedImage;
@@ -182,7 +194,7 @@ const { state, actions, callbacks } = store("core/image", {
 		},
 		get thisImage() {
 			const { imageId } = getContext();
-			return state.metadata[imageId];
+			return getImageMetadata(imageId);
 		},
 		get hasNavigation() {
 			return state.galleryImages.length > 1;
@@ -238,7 +250,7 @@ const { state, actions, callbacks } = store("core/image", {
 	actions: {
 		showLightbox() {
 			const { imageId } = getContext();
-			if (!state.metadata[imageId].imageRef?.complete) return;
+			if (!getImageMetadata(imageId)?.imageRef?.complete) return;
 			state.scrollTopReset = document.documentElement.scrollTop;
 			state.scrollLeftReset = document.documentElement.scrollLeft;
 			state.selectedImageId = imageId;
@@ -390,7 +402,8 @@ const { state, actions, callbacks } = store("core/image", {
 		preloadImage() {
 			const { imageId } = getContext();
 			if (state.preloadedImageIds.has(imageId)) return;
-			const imageMetadata = state.metadata[imageId];
+			const imageMetadata = getImageMetadata(imageId);
+			if (!imageMetadata) return;
 			const imageLink = document.createElement("link");
 			imageLink.rel = "preload";
 			imageLink.as = "image";
@@ -493,8 +506,10 @@ const { state, actions, callbacks } = store("core/image", {
 			const { ref } = getElement();
 			if (!ref) return;
 			const { imageId } = getContext();
-			state.metadata[imageId].imageRef = ref;
-			state.metadata[imageId].currentSrc = ref.currentSrc;
+			const imageMetadata = getImageMetadata(imageId);
+			if (!imageMetadata) return;
+			imageMetadata.imageRef = ref;
+			imageMetadata.currentSrc = ref.currentSrc;
 			const { naturalWidth, naturalHeight, offsetWidth, offsetHeight } = ref;
 			if (naturalWidth === 0 || naturalHeight === 0) return;
 			const container = ref.closest(".wp-lightbox-container");
@@ -510,7 +525,7 @@ const { state, actions, callbacks } = store("core/image", {
 			const buttonOffsetRight = containerWidth - offsetWidth;
 			let buttonTop = buttonOffsetTop + 16;
 			let buttonRight = buttonOffsetRight + 16;
-			if (state.metadata[imageId].scaleAttr === "contain") {
+			if (imageMetadata.scaleAttr === "contain") {
 				const naturalRatio = naturalWidth / naturalHeight;
 				if (naturalRatio >= offsetWidth / offsetHeight) {
 					buttonTop = (offsetHeight - offsetWidth / naturalRatio) / 2 + buttonOffsetTop + 16;
@@ -521,8 +536,8 @@ const { state, actions, callbacks } = store("core/image", {
 					buttonRight = (offsetWidth - referenceWidth) / 2 + buttonOffsetRight + 16;
 				}
 			}
-			state.metadata[imageId].buttonTop = buttonTop;
-			state.metadata[imageId].buttonRight = buttonRight;
+			imageMetadata.buttonTop = buttonTop;
+			imageMetadata.buttonRight = buttonRight;
 		},
 		setOverlayFocus() {
 			if (state.overlayEnabled) {
@@ -549,7 +564,8 @@ const { state, actions, callbacks } = store("core/image", {
 		initTriggerButton() {
 			const { imageId } = getContext();
 			const { ref } = getElement();
-			state.metadata[imageId].buttonRef = ref;
+			const imageMetadata = getImageMetadata(imageId);
+			if (imageMetadata) imageMetadata.buttonRef = ref;
 		}
 	}
 }, { lock: true });
