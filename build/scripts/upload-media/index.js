@@ -2446,8 +2446,8 @@ var wp;
     cachedResult = null;
   }
   var BYTES_PER_PIXEL = 4;
-  var INTERLACED_MEMORY_BUDGET = 0.5 * 1024 * 1024 * 1024;
-  var BASELINE_MEMORY_BUDGET = 0.9 * 1024 * 1024 * 1024;
+  var INTERLACED_MEMORY_BUDGET = 0.75 * 1024 * 1024 * 1024;
+  var BASELINE_MEMORY_BUDGET = 1.5 * 1024 * 1024 * 1024;
   function exceedsClientProcessingMemory(dimensions) {
     const { width, height, interlaced } = dimensions;
     const estimatedBytes = width * height * BYTES_PER_PIXEL;
