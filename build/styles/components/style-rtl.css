@@ -1870,7 +1870,7 @@ input.components-combobox-control__input[type=text]:focus {
 .components-menu-item__button[role=menuitemradio] .components-menu-item__item:only-child, .components-menu-item__button[role=menuitemcheckbox] .components-menu-item__item:only-child,
 .components-menu-item__button.components-button[role=menuitemradio] .components-menu-item__item:only-child,
 .components-menu-item__button.components-button[role=menuitemcheckbox] .components-menu-item__item:only-child {
-  padding-left: 48px;
+  padding-left: 46px;
   box-sizing: initial;
 }
 .components-menu-item__button .components-menu-items__item-icon,
