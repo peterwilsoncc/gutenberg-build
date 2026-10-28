@@ -112615,6 +112615,60 @@ If there's a particular need for this, please submit a feature request at https:
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: count.toLocaleString() })]
 		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: label })] });
 	}
+	function ReactionPicker({ reactions, onToggle }) {
+		const [isOpen, setIsOpen] = (0, _wordpress_element.useState)(false);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(MenuRoot, {
+			orientation: "horizontal",
+			highlightItemOnHover: false,
+			open: isOpen,
+			onOpenChange: setIsOpen,
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuTrigger, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
+				size: "small",
+				variant: "minimal",
+				tone: "neutral",
+				className: "editor-collab-sidebar-panel__add-reaction-button",
+				icon: reaction_default,
+				label: (0, _wordpress_i18n.__)("Add reaction")
+			}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuPortal, {
+				container: getWpCompatOverlaySlot(),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuPositioner, {
+					side: "bottom",
+					align: "end",
+					sideOffset: 8,
+					collisionPadding: 12,
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuPopup, {
+						"aria-label": (0, _wordpress_i18n.__)("Add reaction"),
+						className: "editor-collab-sidebar-panel__reaction-picker",
+						onKeyDownCapture: (event) => {
+							if (event.key === "Escape") {
+								event.stopPropagation();
+								setIsOpen(false);
+							}
+						},
+						children: REACTION_EMOJIS.map(({ emoji, hexKey, label }) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$11, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$5, {
+							render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuCheckboxItem, {
+								nativeButton: true,
+								checked: !!reactions?.[hexKey]?.current_user_reaction,
+								onCheckedChange: () => onToggle(hexKey),
+								closeOnClick: true,
+								label,
+								"aria-label": label,
+								className: "editor-collab-sidebar-panel__reaction-option",
+								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
+									variant: "minimal",
+									tone: "neutral"
+								})
+							}),
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+								className: "editor-collab-sidebar-panel__reaction-option-emoji",
+								children: emoji
+							})
+						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: label })] }, hexKey))
+					})
+				})
+			})]
+		});
+	}
 	/**
 	* A note's reaction pills, followed by the add-reaction picker.
 	*
@@ -112644,30 +112698,10 @@ If there's a particular need for this, please submit a feature request at https:
 					isActive: entry.current_user_reaction > 0,
 					disabled,
 					onToggle: toggleReaction
-				}, hexKey)), canReact && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$6, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
-					size: "small",
-					variant: "minimal",
-					tone: "neutral",
-					className: "editor-collab-sidebar-panel__add-reaction-button",
-					icon: reaction_default,
-					label: (0, _wordpress_i18n.__)("Add reaction")
-				}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$3, {
-					"aria-label": (0, _wordpress_i18n.__)("Add reaction"),
-					positioner: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner$3, {
-						side: "bottom",
-						align: "end"
-					}),
-					children: REACTION_EMOJIS.map(({ emoji, hexKey, label }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CheckboxItem, {
-						checked: !!reactions?.[hexKey]?.current_user_reaction,
-						onCheckedChange: () => toggleReaction(hexKey),
-						closeOnClick: true,
-						prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-							className: "editor-collab-sidebar-panel__reaction-option-emoji",
-							children: emoji
-						}),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: label })
-					}, hexKey))
-				})] })]
+				}, hexKey)), canReact && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ReactionPicker, {
+					reactions,
+					onToggle: toggleReaction
+				})]
 			})
 		});
 	}
