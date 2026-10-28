@@ -100,7 +100,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState104({
+          cachedValue = useState105({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -112,7 +112,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect95(
+          useEffect96(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -138,7 +138,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React152 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState104 = React152.useState, useEffect95 = React152.useEffect, useLayoutEffect23 = React152.useLayoutEffect, useDebugValue2 = React152.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React152 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState105 = React152.useState, useEffect96 = React152.useEffect, useLayoutEffect23 = React152.useLayoutEffect, useDebugValue2 = React152.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React152.useSyncExternalStore ? React152.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -1033,7 +1033,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React152 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef145 = React152.useRef, useEffect95 = React152.useEffect, useMemo93 = React152.useMemo, useDebugValue2 = React152.useDebugValue;
+        var React152 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef145 = React152.useRef, useEffect96 = React152.useEffect, useMemo93 = React152.useMemo, useDebugValue2 = React152.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual2) {
           var instRef = useRef145(null);
           if (null === instRef.current) {
@@ -1076,7 +1076,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector2, isEqual2]
           );
           var value = useSyncExternalStore5(subscribe2, instRef[0], instRef[1]);
-          useEffect95(
+          useEffect96(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -4210,11 +4210,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React2.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState104 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+    const useState105 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
     return [React2.useMemo(() => ({
       ...store,
-      useState: useState104
-    }), [store, useState104]), useEvent(() => {
+      useState: useState105
+    }), [store, useState105]), useEvent(() => {
       setStore((store2) => createStore2({
         ...props,
         ...store2.getState()
@@ -66117,6 +66117,9 @@ This message will only show in development mode. It won't appear in production. 
     return children;
   }
 
+  // packages/components/build-module/dropdown-menu/index.mjs
+  var import_element174 = __toESM(require_element(), 1);
+
   // packages/components/build-module/navigable-container/menu.mjs
   var import_element172 = __toESM(require_element(), 1);
 
@@ -66141,7 +66144,7 @@ This message will only show in development mode. It won't appear in production. 
     const finder = tabbableOnly ? import_dom33.focus.tabbable : import_dom33.focus.focusable;
     const focusables = finder.find(container);
     const index2 = focusables.indexOf(target);
-    if (index2 > -1) {
+    if (index2 > -1 || !tabbableOnly && target === container) {
       return { index: index2, target, focusables };
     }
     return null;
@@ -66171,7 +66174,7 @@ This message will only show in development mode. It won't appear in production. 
           event.stopImmediatePropagation();
           const targetRole = event.target?.getAttribute("role");
           const targetHasMenuItemRole = !!targetRole && MENU_ITEM_ROLES.includes(targetRole);
-          if (targetHasMenuItemRole) {
+          if (targetHasMenuItemRole || !onlyBrowserTabstops && event.target === container) {
             event.preventDefault();
           }
         }
@@ -66191,7 +66194,12 @@ This message will only show in development mode. It won't appear in production. 
           return;
         }
         const { index: index2, focusables } = context;
-        const nextIndex = cycle ? cycleValue(index2, focusables.length, offset4) : index2 + offset4;
+        let nextIndex = index2 + offset4;
+        if (index2 === -1) {
+          nextIndex = offset4 > 0 ? 0 : focusables.length - 1;
+        } else if (cycle) {
+          nextIndex = cycleValue(index2, focusables.length, offset4);
+        }
         if (nextIndex >= 0 && nextIndex < focusables.length) {
           focusables[nextIndex].focus();
           onNavigate(nextIndex, focusables[nextIndex]);
@@ -66328,6 +66336,12 @@ This message will only show in development mode. It won't appear in production. 
       dropdownMenuProps,
       "DropdownMenu"
     );
+    const [focusFirstItem, setFocusFirstItem] = (0, import_element174.useState)(true);
+    (0, import_element174.useEffect)(() => {
+      if (open2 === false) {
+        setFocusFirstItem(true);
+      }
+    }, [open2]);
     if (!controls?.length && !isFunction2(children)) {
       return null;
     }
@@ -66345,11 +66359,21 @@ This message will only show in development mode. It won't appear in production. 
       },
       popoverProps
     );
+    const onPopoverFocusCapture = (event) => {
+      popoverProps?.onFocusCapture?.(event);
+      if (!focusFirstItem && popoverProps?.focusOnMount === void 0 && event.target === event.currentTarget && event.currentTarget.ownerDocument.activeElement === event.currentTarget) {
+        event.currentTarget.querySelector('[role="menu"]')?.focus({ preventScroll: true });
+      }
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
       dropdown_default,
       {
         className,
-        popoverProps: mergedPopoverProps,
+        popoverProps: {
+          ...mergedPopoverProps,
+          focusOnMount: popoverProps?.focusOnMount ?? (focusFirstItem ? "firstElement" : true),
+          onFocusCapture: onPopoverFocusCapture
+        },
         renderToggle: ({ isOpen, onToggle }) => {
           const openOnArrowDown = (event) => {
             if (disableOpenOnArrowDown || toggleProps?.disabled) {
@@ -66357,6 +66381,7 @@ This message will only show in development mode. It won't appear in production. 
             }
             if (!isOpen && event.code === "ArrowDown") {
               event.preventDefault();
+              setFocusFirstItem(true);
               onToggle();
             }
           };
@@ -66375,6 +66400,12 @@ This message will only show in development mode. It won't appear in production. 
               ...mergedToggleProps,
               icon,
               onClick: ((event) => {
+                if (!isOpen) {
+                  const nativeEvent = event.nativeEvent;
+                  setFocusFirstItem(
+                    event.detail === 0 || "pointerType" in nativeEvent && nativeEvent.pointerType === ""
+                  );
+                }
                 onToggle();
                 if (mergedToggleProps.onClick) {
                   mergedToggleProps.onClick(event);
@@ -66405,43 +66436,51 @@ This message will only show in development mode. It won't appear in production. 
             },
             menuProps
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(menu_default2, { ...mergedMenuProps, role: "menu", children: [
-            isFunction2(children) ? children(props) : null,
-            controlSets?.flatMap(
-              (controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                button_default,
-                {
-                  size: "compact",
-                  onClick: (event) => {
-                    event.stopPropagation();
-                    props.onClose();
-                    if (control.onClick) {
-                      control.onClick();
-                    }
-                  },
-                  className: clsx_default(
-                    "components-dropdown-menu__menu-item",
+          return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(
+            menu_default2,
+            {
+              ...mergedMenuProps,
+              role: "menu",
+              tabIndex: mergedMenuProps.tabIndex ?? -1,
+              children: [
+                isFunction2(children) ? children(props) : null,
+                controlSets?.flatMap(
+                  (controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+                    button_default,
                     {
-                      "has-separator": indexOfSet > 0 && indexOfControl === 0,
-                      "is-active": control.isActive,
-                      "is-icon-only": !control.title
-                    }
-                  ),
-                  icon: control.icon,
-                  label: control.label,
-                  "aria-checked": control.role === "menuitemcheckbox" || control.role === "menuitemradio" ? control.isActive : void 0,
-                  role: control.role === "menuitemcheckbox" || control.role === "menuitemradio" ? control.role : "menuitem",
-                  accessibleWhenDisabled: true,
-                  disabled: control.isDisabled,
-                  children: control.title
-                },
-                [
-                  indexOfSet,
-                  indexOfControl
-                ].join()
-              ))
-            )
-          ] });
+                      size: "compact",
+                      onClick: (event) => {
+                        event.stopPropagation();
+                        props.onClose();
+                        if (control.onClick) {
+                          control.onClick();
+                        }
+                      },
+                      className: clsx_default(
+                        "components-dropdown-menu__menu-item",
+                        {
+                          "has-separator": indexOfSet > 0 && indexOfControl === 0,
+                          "is-active": control.isActive,
+                          "is-icon-only": !control.title
+                        }
+                      ),
+                      icon: control.icon,
+                      label: control.label,
+                      "aria-checked": control.role === "menuitemcheckbox" || control.role === "menuitemradio" ? control.isActive : void 0,
+                      role: control.role === "menuitemcheckbox" || control.role === "menuitemradio" ? control.role : "menuitem",
+                      accessibleWhenDisabled: true,
+                      disabled: control.isDisabled,
+                      children: control.title
+                    },
+                    [
+                      indexOfSet,
+                      indexOfControl
+                    ].join()
+                  ))
+                )
+              ]
+            }
+          );
         },
         open: open2,
         defaultOpen,
@@ -66472,7 +66511,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/external-link/index.mjs
   var import_i18n59 = __toESM(require_i18n(), 1);
-  var import_element174 = __toESM(require_element(), 1);
+  var import_element175 = __toESM(require_element(), 1);
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedExternalLink(props, ref) {
     const { href, children, className, ...additionalProps } = props;
@@ -66519,13 +66558,13 @@ This message will only show in development mode. It won't appear in production. 
       )
     );
   }
-  var ExternalLink = (0, import_element174.forwardRef)(UnforwardedExternalLink);
+  var ExternalLink = (0, import_element175.forwardRef)(UnforwardedExternalLink);
   ExternalLink.displayName = "ExternalLink";
   var external_link_default = ExternalLink;
 
   // packages/components/build-module/focal-point-picker/index.mjs
   var import_i18n61 = __toESM(require_i18n(), 1);
-  var import_element175 = __toESM(require_element(), 1);
+  var import_element176 = __toESM(require_element(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/focal-point-picker/controls.mjs
@@ -67227,8 +67266,8 @@ This message will only show in development mode. It won't appear in production. 
     },
     ...restProps
   }) {
-    const [point, setPoint] = (0, import_element175.useState)(valueProp);
-    const [showGridOverlay, setShowGridOverlay] = (0, import_element175.useState)(false);
+    const [point, setPoint] = (0, import_element176.useState)(valueProp);
+    const [showGridOverlay, setShowGridOverlay] = (0, import_element176.useState)(false);
     const { startDrag, endDrag, isDragging: isDragging2 } = (0, import_compose57.__experimentalUseDragging)({
       onDragStart: (event) => {
         dragAreaRef.current?.focus();
@@ -67254,9 +67293,9 @@ This message will only show in development mode. It won't appear in production. 
       }
     });
     const { x: x2, y: y3 } = isDragging2 ? point : valueProp;
-    const dragAreaRef = (0, import_element175.useRef)(null);
-    const [bounds, setBounds] = (0, import_element175.useState)(INITIAL_BOUNDS);
-    const refUpdateBounds = (0, import_element175.useRef)(() => {
+    const dragAreaRef = (0, import_element176.useRef)(null);
+    const [bounds, setBounds] = (0, import_element176.useState)(INITIAL_BOUNDS);
+    const refUpdateBounds = (0, import_element176.useRef)(() => {
       if (!dragAreaRef.current) {
         return;
       }
@@ -67265,7 +67304,7 @@ This message will only show in development mode. It won't appear in production. 
         width > 0 && height > 0 ? { width, height } : { ...INITIAL_BOUNDS }
       );
     });
-    (0, import_element175.useEffect)(() => {
+    (0, import_element176.useEffect)(() => {
       const updateBounds = refUpdateBounds.current;
       if (!dragAreaRef.current) {
         return;
@@ -67423,12 +67462,12 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/font-size-picker/index.mjs
   var import_i18n65 = __toESM(require_i18n(), 1);
-  var import_element177 = __toESM(require_element(), 1);
+  var import_element178 = __toESM(require_element(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
   var import_i18n62 = __toESM(require_i18n(), 1);
-  var import_element176 = __toESM(require_element(), 1);
+  var import_element177 = __toESM(require_element(), 1);
 
   // packages/components/build-module/font-size-picker/utils.mjs
   function isSimpleCssValue(value) {
@@ -67550,7 +67589,7 @@ This message will only show in development mode. It won't appear in production. 
         };
       })
     ];
-    const selectedOption = (0, import_element176.useMemo)(() => {
+    const selectedOption = (0, import_element177.useMemo)(() => {
       if (value === void 0) {
         return DEFAULT_OPTION;
       }
@@ -67795,7 +67834,7 @@ This message will only show in development mode. It won't appear in production. 
       return fontSizes.find((fontSize) => fontSize.size === value);
     })();
     const isCustomValue2 = !!value && !selectedFontSize;
-    const [userRequestedCustom, setUserRequestedCustom] = (0, import_element177.useState)(isCustomValue2);
+    const [userRequestedCustom, setUserRequestedCustom] = (0, import_element178.useState)(isCustomValue2);
     const resolvedValueForControls = valueMode === "slug" ? selectedFontSize?.size : value;
     let currentPickerType;
     if (!disableCustomFontSizes && userRequestedCustom) {
@@ -67960,12 +67999,12 @@ This message will only show in development mode. It won't appear in production. 
       }
     );
   };
-  var FontSizePicker = (0, import_element177.forwardRef)(UnforwardedFontSizePicker);
+  var FontSizePicker = (0, import_element178.forwardRef)(UnforwardedFontSizePicker);
   FontSizePicker.displayName = "FontSizePicker";
   var font_size_picker_default = FontSizePicker;
 
   // packages/components/build-module/form-file-upload/index.mjs
-  var import_element178 = __toESM(require_element(), 1);
+  var import_element179 = __toESM(require_element(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   function FormFileUpload({
     accept,
@@ -67977,7 +68016,7 @@ This message will only show in development mode. It won't appear in production. 
     __next40pxDefaultSize: _next40pxDefaultSize,
     ...props
   }) {
-    const ref = (0, import_element178.useRef)(null);
+    const ref = (0, import_element179.useRef)(null);
     const openFileDialog = () => {
       ref.current?.click();
     };
@@ -68003,7 +68042,7 @@ This message will only show in development mode. It won't appear in production. 
   var form_file_upload_default = FormFileUpload;
 
   // packages/components/build-module/form-toggle/index.mjs
-  var import_element179 = __toESM(require_element(), 1);
+  var import_element180 = __toESM(require_element(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   var noop17 = () => {
   };
@@ -68043,12 +68082,12 @@ This message will only show in development mode. It won't appear in production. 
       /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("span", { className: "components-form-toggle__thumb" })
     ] });
   }
-  var FormToggle = (0, import_element179.forwardRef)(UnforwardedFormToggle);
+  var FormToggle = (0, import_element180.forwardRef)(UnforwardedFormToggle);
   FormToggle.displayName = "FormToggle";
   var form_toggle_default = FormToggle;
 
   // packages/components/build-module/form-token-field/index.mjs
-  var import_element180 = __toESM(require_element(), 1);
+  var import_element181 = __toESM(require_element(), 1);
   var import_i18n67 = __toESM(require_i18n(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
@@ -68267,23 +68306,23 @@ This message will only show in development mode. It won't appear in production. 
       }
     }
     const instanceId = (0, import_compose61.useInstanceId)(FormTokenField);
-    const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element180.useState)("");
-    const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element180.useState)(0);
-    const [isActive, setIsActive] = (0, import_element180.useState)(false);
-    const [isExpanded, setIsExpanded] = (0, import_element180.useState)(false);
-    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element180.useState)(-1);
-    const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element180.useState)(false);
+    const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element181.useState)("");
+    const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element181.useState)(0);
+    const [isActive, setIsActive] = (0, import_element181.useState)(false);
+    const [isExpanded, setIsExpanded] = (0, import_element181.useState)(false);
+    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element181.useState)(-1);
+    const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element181.useState)(false);
     const prevSuggestions = (0, import_compose61.usePrevious)(suggestions);
     const prevValue = (0, import_compose61.usePrevious)(value);
-    const input = (0, import_element180.useRef)(null);
-    const tokensAndInput = (0, import_element180.useRef)(null);
+    const input = (0, import_element181.useRef)(null);
+    const tokensAndInput = (0, import_element181.useRef)(null);
     const debouncedSpeak = (0, import_compose61.useDebounce)(import_a11y6.speak, 500);
-    (0, import_element180.useEffect)(() => {
+    (0, import_element181.useEffect)(() => {
       if (isActive && !hasFocus2()) {
         focus5();
       }
     }, [isActive]);
-    (0, import_element180.useEffect)(() => {
+    (0, import_element181.useEffect)(() => {
       const suggestionsDidUpdate = !(0, import_is_shallow_equal2.isShallowEqual)(
         suggestions,
         prevSuggestions || []
@@ -68292,10 +68331,10 @@ This message will only show in development mode. It won't appear in production. 
         updateSuggestions(suggestionsDidUpdate);
       }
     }, [suggestions, prevSuggestions, value, prevValue]);
-    (0, import_element180.useEffect)(() => {
+    (0, import_element181.useEffect)(() => {
       updateSuggestions();
     }, [incompleteTokenValue]);
-    (0, import_element180.useEffect)(() => {
+    (0, import_element181.useEffect)(() => {
       updateSuggestions();
     }, [__experimentalAutoSelectFirstMatch]);
     if (disabled2 && isActive) {
@@ -68824,7 +68863,7 @@ This message will only show in development mode. It won't appear in production. 
   var form_token_field_default = FormTokenField;
 
   // packages/components/build-module/guide/index.mjs
-  var import_element181 = __toESM(require_element(), 1);
+  var import_element182 = __toESM(require_element(), 1);
   var import_deprecated21 = __toESM(require_deprecated(), 1);
   var import_i18n69 = __toESM(require_i18n(), 1);
 
@@ -68886,24 +68925,24 @@ This message will only show in development mode. It won't appear in production. 
     onFinish,
     pages = []
   }) {
-    const ref = (0, import_element181.useRef)(null);
-    const [currentPage, setCurrentPage] = (0, import_element181.useState)(0);
-    (0, import_element181.useEffect)(() => {
+    const ref = (0, import_element182.useRef)(null);
+    const [currentPage, setCurrentPage] = (0, import_element182.useState)(0);
+    (0, import_element182.useEffect)(() => {
       const frame2 = ref.current?.querySelector(".components-guide");
       if (frame2 instanceof HTMLElement) {
         frame2.focus();
       }
     }, [currentPage]);
-    (0, import_element181.useEffect)(() => {
-      if (import_element181.Children.count(children)) {
+    (0, import_element182.useEffect)(() => {
+      if (import_element182.Children.count(children)) {
         (0, import_deprecated21.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
       }
     }, [children]);
-    if (import_element181.Children.count(children)) {
-      pages = import_element181.Children.map(children, (child) => ({
+    if (import_element182.Children.count(children)) {
+      pages = import_element182.Children.map(children, (child) => ({
         content: child
       })) ?? [];
     }
@@ -68991,11 +69030,11 @@ This message will only show in development mode. It won't appear in production. 
   var guide_default = Guide;
 
   // packages/components/build-module/guide/page.mjs
-  var import_element182 = __toESM(require_element(), 1);
+  var import_element183 = __toESM(require_element(), 1);
   var import_deprecated22 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
   function GuidePage(props) {
-    (0, import_element182.useEffect)(() => {
+    (0, import_element183.useEffect)(() => {
       (0, import_deprecated22.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
@@ -69006,7 +69045,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/button/deprecated.mjs
   var import_deprecated23 = __toESM(require_deprecated(), 1);
-  var import_element183 = __toESM(require_element(), 1);
+  var import_element184 = __toESM(require_element(), 1);
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedIconButton({
     label,
@@ -69036,10 +69075,10 @@ This message will only show in development mode. It won't appear in production. 
       )
     );
   }
-  var deprecated_default3 = (0, import_element183.forwardRef)(UnforwardedIconButton);
+  var deprecated_default3 = (0, import_element184.forwardRef)(UnforwardedIconButton);
 
   // packages/components/build-module/keyboard-shortcuts/index.mjs
-  var import_element184 = __toESM(require_element(), 1);
+  var import_element185 = __toESM(require_element(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
   var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
   function KeyboardShortcut({
@@ -69062,7 +69101,7 @@ This message will only show in development mode. It won't appear in production. 
     bindGlobal,
     eventName
   }) {
-    const target = (0, import_element184.useRef)(null);
+    const target = (0, import_element185.useRef)(null);
     const element = Object.entries(shortcuts ?? {}).map(
       ([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
         KeyboardShortcut,
@@ -69076,7 +69115,7 @@ This message will only show in development mode. It won't appear in production. 
         shortcut
       )
     );
-    if (!import_element184.Children.count(children)) {
+    if (!import_element185.Children.count(children)) {
       return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(import_jsx_runtime306.Fragment, { children: element });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)("div", { ref: target, children: [
@@ -69087,13 +69126,13 @@ This message will only show in development mode. It won't appear in production. 
   var keyboard_shortcuts_default = KeyboardShortcuts;
 
   // packages/components/build-module/menu-group/index.mjs
-  var import_element185 = __toESM(require_element(), 1);
+  var import_element186 = __toESM(require_element(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
   var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   function MenuGroup6(props) {
     const { children, className = "", label, hideSeparator } = props;
     const instanceId = (0, import_compose63.useInstanceId)(MenuGroup6);
-    if (!import_element185.Children.count(children)) {
+    if (!import_element186.Children.count(children)) {
       return null;
     }
     const labelId = `components-menu-group-label-${instanceId}`;
@@ -69116,7 +69155,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_group_default = MenuGroup6;
 
   // packages/components/build-module/menu-item/index.mjs
-  var import_element186 = __toESM(require_element(), 1);
+  var import_element187 = __toESM(require_element(), 1);
   var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedMenuItem(props, ref) {
     let {
@@ -69139,7 +69178,7 @@ This message will only show in development mode. It won't appear in production. 
       ] });
     }
     if (icon && typeof icon !== "string") {
-      icon = (0, import_element186.cloneElement)(icon, {
+      icon = (0, import_element187.cloneElement)(icon, {
         className: clsx_default("components-menu-items__item-icon", {
           "has-icon-right": iconPosition === "right"
         })
@@ -69171,7 +69210,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     );
   }
-  var MenuItem6 = (0, import_element186.forwardRef)(UnforwardedMenuItem);
+  var MenuItem6 = (0, import_element187.forwardRef)(UnforwardedMenuItem);
   MenuItem6.displayName = "MenuItem";
   var menu_item_default = MenuItem6;
 
@@ -69215,7 +69254,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigator/navigator/component.mjs
   var import_deprecated24 = __toESM(require_deprecated(), 1);
-  var import_element188 = __toESM(require_element(), 1);
+  var import_element189 = __toESM(require_element(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_warning8 = __toESM(require_warning(), 1);
 
@@ -69569,7 +69608,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/navigator/context.mjs
-  var import_element187 = __toESM(require_element(), 1);
+  var import_element188 = __toESM(require_element(), 1);
   var initialContextValue = {
     location: {},
     goTo: () => {
@@ -69584,7 +69623,7 @@ This message will only show in development mode. It won't appear in production. 
     },
     params: {}
   };
-  var NavigatorContext = (0, import_element187.createContext)(initialContextValue);
+  var NavigatorContext = (0, import_element188.createContext)(initialContextValue);
   NavigatorContext.displayName = "NavigatorContext";
 
   // packages/components/build-module/navigator/navigator/component.mjs
@@ -69801,7 +69840,7 @@ The screen with id ${screen.id} will not be added.`
       className,
       ...otherProps
     } = useContextSystem(props, "Navigator");
-    const [routerState, dispatch] = (0, import_element188.useReducer)(
+    const [routerState, dispatch] = (0, import_element189.useReducer)(
       routerReducer,
       initialPathProp,
       (path) => ({
@@ -69812,7 +69851,7 @@ The screen with id ${screen.id} will not be added.`
         initialPath: initialPathProp
       })
     );
-    const methods = (0, import_element188.useMemo)(
+    const methods = (0, import_element189.useMemo)(
       () => ({
         // Note: calling goBack calls `goToParent` internally, as it was established
         // that `goBack` should behave like `goToParent`, and `goToParent` should
@@ -69832,7 +69871,7 @@ The screen with id ${screen.id} will not be added.`
       []
     );
     const { currentLocation, matchedPath } = routerState;
-    const navigatorContextValue = (0, import_element188.useMemo)(
+    const navigatorContextValue = (0, import_element189.useMemo)(
       () => ({
         location: currentLocation,
         params: matchedPath?.params ?? {},
@@ -69848,13 +69887,13 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
   var import_dom34 = __toESM(require_dom(), 1);
-  var import_element190 = __toESM(require_element(), 1);
+  var import_element191 = __toESM(require_element(), 1);
   var import_compose65 = __toESM(require_compose(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_warning9 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.mjs
-  var import_element189 = __toESM(require_element(), 1);
+  var import_element190 = __toESM(require_element(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
   var import_i18n70 = __toESM(require_i18n(), 1);
 
@@ -69970,10 +70009,10 @@ The screen with id ${screen.id} will not be added.`
   }) {
     const isRTL23 = (0, import_i18n70.isRTL)();
     const prefersReducedMotion2 = (0, import_compose64.useReducedMotion)();
-    const [animationStatus, setAnimationStatus] = (0, import_element189.useState)("INITIAL");
+    const [animationStatus, setAnimationStatus] = (0, import_element190.useState)("INITIAL");
     const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
     const becameUnselected = animationStatus !== "ANIMATING_OUT" && animationStatus !== "OUT" && !isMatch;
-    (0, import_element189.useLayoutEffect)(() => {
+    (0, import_element190.useLayoutEffect)(() => {
       if (becameSelected) {
         setAnimationStatus(
           skipAnimation || prefersReducedMotion2 ? "IN" : "ANIMATING_IN"
@@ -69998,7 +70037,7 @@ The screen with id ${screen.id} will not be added.`
     } else if (isAnimatingOut) {
       animationType = "out";
     }
-    const onScreenAnimationEnd = (0, import_element189.useCallback)(
+    const onScreenAnimationEnd = (0, import_element190.useCallback)(
       (e3) => {
         onAnimationEnd?.(e3);
         if (isExitAnimation(
@@ -70017,7 +70056,7 @@ The screen with id ${screen.id} will not be added.`
       },
       [onAnimationEnd, animationStatus, animationDirection]
     );
-    (0, import_element189.useEffect)(() => {
+    (0, import_element190.useEffect)(() => {
       let animationTimeout;
       if (isAnimatingOut) {
         animationTimeout = window.setTimeout(() => {
@@ -70142,7 +70181,7 @@ The screen with id ${screen.id} will not be added.`
         "wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character."
       );
     }
-    const screenId = (0, import_element190.useId)();
+    const screenId = (0, import_element191.useId)();
     const {
       children,
       className,
@@ -70150,12 +70189,12 @@ The screen with id ${screen.id} will not be added.`
       onAnimationEnd: onAnimationEndProp,
       ...otherProps
     } = useContextSystem(props, "Navigator.Screen");
-    const { location, match: match2, addScreen: addScreen2, removeScreen: removeScreen2 } = (0, import_element190.useContext)(NavigatorContext);
+    const { location, match: match2, addScreen: addScreen2, removeScreen: removeScreen2 } = (0, import_element191.useContext)(NavigatorContext);
     const { isInitial, isBack, focusTargetSelector, skipFocus } = location;
     const isMatch = match2 === screenId;
-    const wrapperRef = (0, import_element190.useRef)(null);
+    const wrapperRef = (0, import_element191.useRef)(null);
     const skipAnimationAndFocusRestoration = !!isInitial && !isBack;
-    (0, import_element190.useEffect)(() => {
+    (0, import_element191.useEffect)(() => {
       const screen = {
         id: screenId,
         path: (0, import_escape_html.escapeAttribute)(path)
@@ -70174,11 +70213,11 @@ The screen with id ${screen.id} will not be added.`
       style_module_default83["screen-animation"],
       className
     );
-    const locationRef = (0, import_element190.useRef)(location);
-    (0, import_element190.useEffect)(() => {
+    const locationRef = (0, import_element191.useRef)(location);
+    (0, import_element191.useEffect)(() => {
       locationRef.current = location;
     }, [location]);
-    (0, import_element190.useEffect)(() => {
+    (0, import_element191.useEffect)(() => {
       const wrapperEl = wrapperRef.current;
       if (skipAnimationAndFocusRestoration || !isMatch || !wrapperEl || locationRef.current.hasRestoredFocus || skipFocus) {
         return;
@@ -70222,13 +70261,13 @@ The screen with id ${screen.id} will not be added.`
   );
 
   // packages/components/build-module/navigator/navigator-button/hook.mjs
-  var import_element192 = __toESM(require_element(), 1);
+  var import_element193 = __toESM(require_element(), 1);
   var import_escape_html2 = __toESM(require_escape_html(), 1);
 
   // packages/components/build-module/navigator/use-navigator.mjs
-  var import_element191 = __toESM(require_element(), 1);
+  var import_element192 = __toESM(require_element(), 1);
   function useNavigator() {
-    const { location, params, goTo: goTo2, goBack, goToParent: goToParent2 } = (0, import_element191.useContext)(NavigatorContext);
+    const { location, params, goTo: goTo2, goBack, goToParent: goToParent2 } = (0, import_element192.useContext)(NavigatorContext);
     return {
       location,
       goTo: goTo2,
@@ -70250,7 +70289,7 @@ The screen with id ${screen.id} will not be added.`
     } = useContextSystem(props, "Navigator.Button");
     const escapedPath = (0, import_escape_html2.escapeAttribute)(path);
     const { goTo: goTo2 } = useNavigator();
-    const handleClick = (0, import_element192.useCallback)(
+    const handleClick = (0, import_element193.useCallback)(
       (e3) => {
         e3.preventDefault();
         goTo2(escapedPath, {
@@ -70283,7 +70322,7 @@ The screen with id ${screen.id} will not be added.`
   );
 
   // packages/components/build-module/navigator/navigator-back-button/hook.mjs
-  var import_element193 = __toESM(require_element(), 1);
+  var import_element194 = __toESM(require_element(), 1);
   function useNavigatorBackButton(props) {
     const {
       onClick,
@@ -70291,7 +70330,7 @@ The screen with id ${screen.id} will not be added.`
       ...otherProps
     } = useContextSystem(props, "Navigator.BackButton");
     const { goBack } = useNavigator();
-    const handleClick = (0, import_element193.useCallback)(
+    const handleClick = (0, import_element194.useCallback)(
       (e3) => {
         e3.preventDefault();
         goBack();
@@ -70451,14 +70490,14 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/notice/index.mjs
   var import_i18n71 = __toESM(require_i18n(), 1);
-  var import_element194 = __toESM(require_element(), 1);
+  var import_element195 = __toESM(require_element(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   var noop20 = () => {
   };
   function useSpokenMessage(message, politeness) {
-    const spokenMessage = typeof message === "string" ? message : (0, import_element194.renderToString)(message);
-    (0, import_element194.useEffect)(() => {
+    const spokenMessage = typeof message === "string" ? message : (0, import_element195.renderToString)(message);
+    (0, import_element195.useEffect)(() => {
       if (spokenMessage) {
         (0, import_a11y7.speak)(spokenMessage, politeness);
       }
@@ -70506,7 +70545,7 @@ The screen with id ${screen.id} will not be added.`
     useSpokenMessage(spokenMessage, politeness);
     const classes = clsx_default(className, "components-notice", "is-" + status);
     if (__unstableHTML && typeof children === "string") {
-      children = /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_element194.RawHTML, { children });
+      children = /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_element195.RawHTML, { children });
     }
     const onDismissNotice = () => {
       onDismiss();
@@ -70598,7 +70637,7 @@ The screen with id ${screen.id} will not be added.`
   var list_default = NoticeList;
 
   // packages/components/build-module/panel/index.mjs
-  var import_element195 = __toESM(require_element(), 1);
+  var import_element196 = __toESM(require_element(), 1);
 
   // packages/components/build-module/panel/header.mjs
   var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
@@ -70619,13 +70658,13 @@ The screen with id ${screen.id} will not be added.`
       children
     ] });
   }
-  var Panel = (0, import_element195.forwardRef)(UnforwardedPanel);
+  var Panel = (0, import_element196.forwardRef)(UnforwardedPanel);
   Panel.displayName = "Panel";
   var panel_default = Panel;
 
   // packages/components/build-module/panel/body.mjs
   var import_compose66 = __toESM(require_compose(), 1);
-  var import_element196 = __toESM(require_element(), 1);
+  var import_element197 = __toESM(require_element(), 1);
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var noop22 = () => {
   };
@@ -70648,7 +70687,7 @@ The screen with id ${screen.id} will not be added.`
         fallback: false
       }
     );
-    const nodeRef = (0, import_element196.useRef)(null);
+    const nodeRef = (0, import_element197.useRef)(null);
     const scrollBehavior = (0, import_compose66.useReducedMotion)() ? "auto" : "smooth";
     const handleOnToggle = (event) => {
       event.preventDefault();
@@ -70656,7 +70695,7 @@ The screen with id ${screen.id} will not be added.`
       setIsOpened(next);
       onToggle(next);
     };
-    const scrollAfterOpenRef = (0, import_element196.useRef)(void 0);
+    const scrollAfterOpenRef = (0, import_element197.useRef)(void 0);
     scrollAfterOpenRef.current = scrollAfterOpen;
     use_update_effect_default(() => {
       if (isOpened && scrollAfterOpenRef.current && nodeRef.current?.scrollIntoView) {
@@ -70684,7 +70723,7 @@ The screen with id ${screen.id} will not be added.`
       typeof children === "function" ? children({ opened: Boolean(isOpened) }) : isOpened && children
     ] });
   }
-  var PanelBodyTitle = (0, import_element196.forwardRef)(
+  var PanelBodyTitle = (0, import_element197.forwardRef)(
     ({
       isOpened,
       icon,
@@ -70724,12 +70763,12 @@ The screen with id ${screen.id} will not be added.`
       ) });
     }
   );
-  var PanelBody = (0, import_element196.forwardRef)(UnforwardedPanelBody);
+  var PanelBody = (0, import_element197.forwardRef)(UnforwardedPanelBody);
   PanelBody.displayName = "PanelBody";
   var body_default = PanelBody;
 
   // packages/components/build-module/panel/row.mjs
-  var import_element197 = __toESM(require_element(), 1);
+  var import_element198 = __toESM(require_element(), 1);
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedPanelRow({ className, children }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
@@ -70741,14 +70780,14 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var PanelRow = (0, import_element197.forwardRef)(UnforwardedPanelRow);
+  var PanelRow = (0, import_element198.forwardRef)(UnforwardedPanelRow);
   PanelRow.displayName = "PanelRow";
   var row_default = PanelRow;
 
   // packages/components/build-module/placeholder/index.mjs
   var import_compose67 = __toESM(require_compose(), 1);
   var import_primitives34 = __toESM(require_primitives(), 1);
-  var import_element198 = __toESM(require_element(), 1);
+  var import_element199 = __toESM(require_element(), 1);
   var import_a11y8 = __toESM(require_a11y(), 1);
   var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
@@ -70793,7 +70832,7 @@ The screen with id ${screen.id} will not be added.`
     const fieldsetClasses = clsx_default("components-placeholder__fieldset", {
       "is-column-layout": isColumnLayout
     });
-    (0, import_element198.useEffect)(() => {
+    (0, import_element199.useEffect)(() => {
       if (instructions) {
         (0, import_a11y8.speak)(instructions);
       }
@@ -70815,7 +70854,7 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/progress-bar/index.mjs
   var import_i18n72 = __toESM(require_i18n(), 1);
-  var import_element199 = __toESM(require_element(), 1);
+  var import_element200 = __toESM(require_element(), 1);
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE117 = "data-wp-hash";
   function getRuntime117() {
@@ -70929,7 +70968,7 @@ The screen with id ${screen.id} will not be added.`
       )
     ] });
   }
-  var ProgressBar = (0, import_element199.forwardRef)(UnforwardedProgressBar);
+  var ProgressBar = (0, import_element200.forwardRef)(UnforwardedProgressBar);
   ProgressBar.displayName = "ProgressBar";
   var progress_bar_default = ProgressBar;
 
@@ -70974,7 +71013,7 @@ The screen with id ${screen.id} will not be added.`
   }
 
   // packages/components/build-module/tree-select/index.mjs
-  var import_element200 = __toESM(require_element(), 1);
+  var import_element201 = __toESM(require_element(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
   var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   function getSelectOptions(tree, level = 0) {
@@ -70998,7 +71037,7 @@ The screen with id ${screen.id} will not be added.`
       tree = [],
       ...restProps
     } = props;
-    const options2 = (0, import_element200.useMemo)(() => {
+    const options2 = (0, import_element201.useMemo)(() => {
       return [
         noOptionLabel && { value: "", label: noOptionLabel },
         ...getSelectOptions(tree)
@@ -71043,7 +71082,7 @@ The screen with id ${screen.id} will not be added.`
   }
 
   // packages/components/build-module/query-controls/category-select.mjs
-  var import_element201 = __toESM(require_element(), 1);
+  var import_element202 = __toESM(require_element(), 1);
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
   function CategorySelect({
     label,
@@ -71053,7 +71092,7 @@ The screen with id ${screen.id} will not be added.`
     onChange: onChangeProp,
     ...props
   }) {
-    const termsTree = (0, import_element201.useMemo)(() => {
+    const termsTree = (0, import_element202.useMemo)(() => {
       return buildTermsTree(categoriesList);
     }, [categoriesList]);
     return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
@@ -71204,11 +71243,11 @@ The screen with id ${screen.id} will not be added.`
   var query_controls_default = QueryControls;
 
   // packages/components/build-module/radio-group/radio.mjs
-  var import_element203 = __toESM(require_element(), 1);
+  var import_element204 = __toESM(require_element(), 1);
 
   // packages/components/build-module/radio-group/context.mjs
-  var import_element202 = __toESM(require_element(), 1);
-  var RadioGroupContext = (0, import_element202.createContext)({
+  var import_element203 = __toESM(require_element(), 1);
+  var RadioGroupContext = (0, import_element203.createContext)({
     store: void 0,
     disabled: void 0
   });
@@ -71222,7 +71261,7 @@ The screen with id ${screen.id} will not be added.`
     __next40pxDefaultSize: _next40pxDefaultSize,
     ...props
   }, ref) {
-    const { store, disabled: disabled2 } = (0, import_element203.useContext)(RadioGroupContext);
+    const { store, disabled: disabled2 } = (0, import_element204.useContext)(RadioGroupContext);
     const selectedValue = useStoreState(store, "value");
     const isChecked = selectedValue !== void 0 && selectedValue === value;
     return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
@@ -71244,13 +71283,13 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var Radio22 = (0, import_element203.forwardRef)(UnforwardedRadio);
+  var Radio22 = (0, import_element204.forwardRef)(UnforwardedRadio);
   Radio22.displayName = "Radio";
   var radio_default = Radio22;
 
   // packages/components/build-module/radio-group/index.mjs
   var import_deprecated26 = __toESM(require_deprecated(), 1);
-  var import_element204 = __toESM(require_element(), 1);
+  var import_element205 = __toESM(require_element(), 1);
   var import_i18n74 = __toESM(require_i18n(), 1);
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedRadioGroup({
@@ -71270,7 +71309,7 @@ The screen with id ${screen.id} will not be added.`
       },
       rtl: (0, import_i18n74.isRTL)()
     });
-    const contextValue = (0, import_element204.useMemo)(
+    const contextValue = (0, import_element205.useMemo)(
       () => ({
         store: radioStore,
         disabled: disabled2
@@ -71292,7 +71331,7 @@ The screen with id ${screen.id} will not be added.`
       }
     ) });
   }
-  var RadioGroup22 = (0, import_element204.forwardRef)(UnforwardedRadioGroup);
+  var RadioGroup22 = (0, import_element205.forwardRef)(UnforwardedRadioGroup);
   RadioGroup22.displayName = "RadioGroup";
   var radio_group_default = RadioGroup22;
 
@@ -71409,7 +71448,7 @@ The screen with id ${screen.id} will not be added.`
   var radio_control_default = RadioControl;
 
   // packages/components/build-module/resizable-box/index.mjs
-  var import_element208 = __toESM(require_element(), 1);
+  var import_element209 = __toESM(require_element(), 1);
 
   // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/index.js
   var import_jsx_runtime331 = __toESM(require_jsx_runtime());
@@ -72217,14 +72256,14 @@ The screen with id ${screen.id} will not be added.`
   );
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-  var import_element207 = __toESM(require_element(), 1);
+  var import_element208 = __toESM(require_element(), 1);
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
-  var import_element206 = __toESM(require_element(), 1);
+  var import_element207 = __toESM(require_element(), 1);
   var import_i18n75 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/resizable-box/resize-tooltip/utils.mjs
-  var import_element205 = __toESM(require_element(), 1);
+  var import_element206 = __toESM(require_element(), 1);
   var import_compose69 = __toESM(require_compose(), 1);
   var noop23 = () => {
   };
@@ -72241,13 +72280,13 @@ The screen with id ${screen.id} will not be added.`
   }) {
     const [resizeListener, sizes] = (0, import_compose69.useResizeObserver)();
     const isAxisControlled = !!axis;
-    const [moveX, setMoveX] = (0, import_element205.useState)(false);
-    const [moveY, setMoveY] = (0, import_element205.useState)(false);
+    const [moveX, setMoveX] = (0, import_element206.useState)(false);
+    const [moveY, setMoveY] = (0, import_element206.useState)(false);
     const { width, height } = sizes;
-    const heightRef = (0, import_element205.useRef)(height);
-    const widthRef = (0, import_element205.useRef)(width);
-    const moveTimeoutRef = (0, import_element205.useRef)(void 0);
-    const debounceUnsetMoveXY = (0, import_element205.useCallback)(() => {
+    const heightRef = (0, import_element206.useRef)(height);
+    const widthRef = (0, import_element206.useRef)(width);
+    const moveTimeoutRef = (0, import_element206.useRef)(void 0);
+    const debounceUnsetMoveXY = (0, import_element206.useCallback)(() => {
       const unsetMoveXY = () => {
         if (isAxisControlled) {
           return;
@@ -72260,7 +72299,7 @@ The screen with id ${screen.id} will not be added.`
       }
       moveTimeoutRef.current = window.setTimeout(unsetMoveXY, fadeTimeout);
     }, [fadeTimeout, isAxisControlled]);
-    (0, import_element205.useEffect)(() => {
+    (0, import_element206.useEffect)(() => {
       const isRendered = width !== null || height !== null;
       if (!isRendered) {
         return;
@@ -72482,7 +72521,7 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var ForwardedComponent3 = (0, import_element206.forwardRef)(Label2);
+  var ForwardedComponent3 = (0, import_element207.forwardRef)(Label2);
   var label_default = ForwardedComponent3;
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
@@ -72621,7 +72660,7 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var ForwardedComponent4 = (0, import_element207.forwardRef)(ResizeTooltip);
+  var ForwardedComponent4 = (0, import_element208.forwardRef)(ResizeTooltip);
   var resize_tooltip_default = ForwardedComponent4;
 
   // packages/components/build-module/resizable-box/index.mjs
@@ -72726,13 +72765,13 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var ResizableBox = (0, import_element208.forwardRef)(UnforwardedResizableBox);
+  var ResizableBox = (0, import_element209.forwardRef)(UnforwardedResizableBox);
   ResizableBox.displayName = "ResizableBox";
   var resizable_box_default = ResizableBox;
 
   // packages/components/build-module/responsive-wrapper/index.mjs
   var import_deprecated27 = __toESM(require_deprecated(), 1);
-  var import_element209 = __toESM(require_element(), 1);
+  var import_element210 = __toESM(require_element(), 1);
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveWrapper({
     naturalWidth,
@@ -72745,7 +72784,7 @@ The screen with id ${screen.id} will not be added.`
       version: "7.4",
       alternative: "the CSS aspect-ratio property"
     });
-    if (import_element209.Children.count(children) !== 1) {
+    if (import_element210.Children.count(children) !== 1) {
       return null;
     }
     const TagName58 = isInline ? "span" : "div";
@@ -72754,7 +72793,7 @@ The screen with id ${screen.id} will not be added.`
       aspectRatio2 = `${naturalWidth} / ${naturalHeight}`;
     }
     const ch = children;
-    return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(TagName58, { className: "components-responsive-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)("div", { children: (0, import_element209.cloneElement)(ch, {
+    return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(TagName58, { className: "components-responsive-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)("div", { children: (0, import_element210.cloneElement)(ch, {
       className: clsx_default(
         "components-responsive-wrapper__content",
         ch.props.className
@@ -72768,7 +72807,7 @@ The screen with id ${screen.id} will not be added.`
   var responsive_wrapper_default = ResponsiveWrapper;
 
   // packages/components/build-module/sandbox/index.mjs
-  var import_element210 = __toESM(require_element(), 1);
+  var import_element211 = __toESM(require_element(), 1);
   var import_compose70 = __toESM(require_compose(), 1);
   var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
   var observeAndResizeJS = function() {
@@ -72907,7 +72946,7 @@ The screen with id ${screen.id} will not be added.`
         }
       )
     ] });
-    return "<!DOCTYPE html>" + (0, import_element210.renderToString)(htmlDoc);
+    return "<!DOCTYPE html>" + (0, import_element211.renderToString)(htmlDoc);
   }
   function IsolatedSandBox({
     html = "",
@@ -72920,14 +72959,14 @@ The screen with id ${screen.id} will not be added.`
     allowPopups = false,
     allowForms = false
   }) {
-    const ref = (0, import_element210.useRef)(null);
-    const [width, setWidth] = (0, import_element210.useState)(0);
-    const [height, setHeight] = (0, import_element210.useState)(0);
+    const ref = (0, import_element211.useRef)(null);
+    const [width, setWidth] = (0, import_element211.useState)(0);
+    const [height, setHeight] = (0, import_element211.useState)(0);
     const sandbox = clsx_default("allow-scripts", "allow-presentation", {
       "allow-popups": allowPopups,
       "allow-forms": allowForms
     });
-    const srcDoc = (0, import_element210.useMemo)(
+    const srcDoc = (0, import_element211.useMemo)(
       () => buildSandBoxDocument({
         html,
         title,
@@ -72941,7 +72980,7 @@ The screen with id ${screen.id} will not be added.`
       }),
       [html, title, type, styles2, scripts]
     );
-    (0, import_element210.useEffect)(() => {
+    (0, import_element211.useEffect)(() => {
       const iframe = ref.current;
       if (!iframe) {
         return;
@@ -73012,9 +73051,9 @@ The screen with id ${screen.id} will not be added.`
     allowPopups = false,
     allowForms = false
   }) {
-    const ref = (0, import_element210.useRef)(null);
-    const [width, setWidth] = (0, import_element210.useState)(0);
-    const [height, setHeight] = (0, import_element210.useState)(0);
+    const ref = (0, import_element211.useRef)(null);
+    const [width, setWidth] = (0, import_element211.useState)(0);
+    const [height, setHeight] = (0, import_element211.useState)(0);
     const sandbox = clsx_default(
       "allow-scripts",
       "allow-same-origin",
@@ -73062,7 +73101,7 @@ The screen with id ${screen.id} will not be added.`
       );
       contentDocument.close();
     }
-    (0, import_element210.useEffect)(() => {
+    (0, import_element211.useEffect)(() => {
       trySandBox();
       function tryNoForceSandBox() {
         trySandBox(false);
@@ -73097,10 +73136,10 @@ The screen with id ${screen.id} will not be added.`
         );
       };
     }, []);
-    (0, import_element210.useEffect)(() => {
+    (0, import_element211.useEffect)(() => {
       trySandBox();
     }, [title, styles2, scripts]);
-    (0, import_element210.useEffect)(() => {
+    (0, import_element211.useEffect)(() => {
       trySandBox(true);
     }, [html, type]);
     return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
@@ -73128,7 +73167,7 @@ The screen with id ${screen.id} will not be added.`
   // packages/components/build-module/search-control/index.mjs
   var import_compose71 = __toESM(require_compose(), 1);
   var import_i18n76 = __toESM(require_i18n(), 1);
-  var import_element211 = __toESM(require_element(), 1);
+  var import_element212 = __toESM(require_element(), 1);
   var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE120 = "data-wp-hash";
@@ -73250,7 +73289,7 @@ The screen with id ${screen.id} will not be added.`
     ...restProps
   }, forwardedRef) {
     const { disabled: disabled2, ...filteredRestProps } = restProps;
-    const searchRef = (0, import_element211.useRef)(null);
+    const searchRef = (0, import_element212.useRef)(null);
     const instanceId = (0, import_compose71.useInstanceId)(
       SearchControl,
       "components-search-control"
@@ -73294,22 +73333,22 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var SearchControl = (0, import_element211.forwardRef)(UnforwardedSearchControl);
+  var SearchControl = (0, import_element212.forwardRef)(UnforwardedSearchControl);
   SearchControl.displayName = "SearchControl";
   var search_control_default = SearchControl;
 
   // packages/components/build-module/snackbar/index.mjs
   var import_a11y9 = __toESM(require_a11y(), 1);
   var import_compose72 = __toESM(require_compose(), 1);
-  var import_element212 = __toESM(require_element(), 1);
+  var import_element213 = __toESM(require_element(), 1);
   var import_i18n77 = __toESM(require_i18n(), 1);
   var import_warning10 = __toESM(require_warning(), 1);
   var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_TIMEOUT = 6e3;
   var NOTICE_TIMEOUT_WITH_ACTIONS = 1e4;
   function useSpokenMessage2(message, politeness) {
-    const spokenMessage = typeof message === "string" ? message : (0, import_element212.renderToString)(message);
-    (0, import_element212.useEffect)(() => {
+    const spokenMessage = typeof message === "string" ? message : (0, import_element213.renderToString)(message);
+    (0, import_element213.useEffect)(() => {
       if (spokenMessage) {
         (0, import_a11y9.speak)(spokenMessage, politeness);
       }
@@ -73331,9 +73370,9 @@ The screen with id ${screen.id} will not be added.`
     listRef
   }, ref) {
     const isPresent2 = useIsPresent();
-    const snackbarRef = (0, import_element212.useRef)(null);
+    const snackbarRef = (0, import_element213.useRef)(null);
     const mergedRef = (0, import_compose72.useMergeRefs)([snackbarRef, ref]);
-    const focusReturnRef = (0, import_element212.useRef)(null);
+    const focusReturnRef = (0, import_element213.useRef)(null);
     function onFocus(event) {
       if (!event.currentTarget.contains(event.relatedTarget)) {
         focusReturnRef.current = event.relatedTarget;
@@ -73363,12 +73402,12 @@ The screen with id ${screen.id} will not be added.`
       }
     }
     useSpokenMessage2(spokenMessage, politeness);
-    const callbacksRef = (0, import_element212.useRef)({ onDismiss, onRemove });
-    (0, import_element212.useLayoutEffect)(() => {
+    const callbacksRef = (0, import_element213.useRef)({ onDismiss, onRemove });
+    (0, import_element213.useLayoutEffect)(() => {
       callbacksRef.current = { onDismiss, onRemove };
     });
     const timeout = actions.length > 0 ? NOTICE_TIMEOUT_WITH_ACTIONS : NOTICE_TIMEOUT;
-    (0, import_element212.useEffect)(() => {
+    (0, import_element213.useEffect)(() => {
       if (explicitDismiss || !isPresent2) {
         return;
       }
@@ -73444,13 +73483,13 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var Snackbar = (0, import_element212.forwardRef)(UnforwardedSnackbar);
+  var Snackbar = (0, import_element213.forwardRef)(UnforwardedSnackbar);
   Snackbar.displayName = "Snackbar";
   var snackbar_default = Snackbar;
 
   // packages/components/build-module/snackbar/list.mjs
   var import_compose73 = __toESM(require_compose(), 1);
-  var import_element213 = __toESM(require_element(), 1);
+  var import_element214 = __toESM(require_element(), 1);
   var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
   var SNACKBAR_VARIANTS = {
     init: {
@@ -73485,7 +73524,7 @@ The screen with id ${screen.id} will not be added.`
     children,
     onRemove
   }) {
-    const listRef = (0, import_element213.useRef)(null);
+    const listRef = (0, import_element214.useRef)(null);
     const isReducedMotion = (0, import_compose73.useReducedMotion)();
     className = clsx_default("components-snackbar-list", className);
     const removeNotice = (notice) => () => onRemove?.(notice.id);
@@ -73544,7 +73583,7 @@ The screen with id ${screen.id} will not be added.`
   var deprecated_default4 = DeprecatedScrollable;
 
   // packages/components/build-module/tab-panel/index.mjs
-  var import_element214 = __toESM(require_element(), 1);
+  var import_element215 = __toESM(require_element(), 1);
   var import_compose74 = __toESM(require_compose(), 1);
   var import_i18n78 = __toESM(require_i18n(), 1);
   var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
@@ -73565,7 +73604,7 @@ The screen with id ${screen.id} will not be added.`
     onSelect
   }, ref) => {
     const instanceId = (0, import_compose74.useInstanceId)(TabPanel22, "tab-panel");
-    const prependInstanceId = (0, import_element214.useCallback)(
+    const prependInstanceId = (0, import_element215.useCallback)(
       (tabName) => {
         if (typeof tabName === "undefined") {
           return;
@@ -73599,7 +73638,7 @@ The screen with id ${screen.id} will not be added.`
     const selectedTabName = extractTabName(
       useStoreState(tabStore, "selectedId")
     );
-    const setTabStoreSelectedId = (0, import_element214.useCallback)(
+    const setTabStoreSelectedId = (0, import_element215.useCallback)(
       (tabName) => {
         tabStore.setState("selectedId", prependInstanceId(tabName));
       },
@@ -73607,12 +73646,12 @@ The screen with id ${screen.id} will not be added.`
     );
     const selectedTab = tabs.find(({ name }) => name === selectedTabName);
     const previousSelectedTabName = (0, import_compose74.usePrevious)(selectedTabName);
-    (0, import_element214.useEffect)(() => {
+    (0, import_element215.useEffect)(() => {
       if (previousSelectedTabName !== selectedTabName && selectedTabName === initialTabName && !!selectedTabName) {
         onSelect?.(selectedTabName);
       }
     }, [selectedTabName, initialTabName, onSelect, previousSelectedTabName]);
-    (0, import_element214.useLayoutEffect)(() => {
+    (0, import_element215.useLayoutEffect)(() => {
       if (selectedTab) {
         return;
       }
@@ -73635,7 +73674,7 @@ The screen with id ${screen.id} will not be added.`
       instanceId,
       setTabStoreSelectedId
     ]);
-    (0, import_element214.useEffect)(() => {
+    (0, import_element215.useEffect)(() => {
       if (!selectedTab?.disabled) {
         return;
       }
@@ -73694,13 +73733,13 @@ The screen with id ${screen.id} will not be added.`
       )
     ] });
   };
-  var TabPanel22 = (0, import_element214.forwardRef)(UnforwardedTabPanel);
+  var TabPanel22 = (0, import_element215.forwardRef)(UnforwardedTabPanel);
   TabPanel22.displayName = "TabPanel";
   var tab_panel_default = TabPanel22;
 
   // packages/components/build-module/text-control/index.mjs
   var import_compose75 = __toESM(require_compose(), 1);
-  var import_element215 = __toESM(require_element(), 1);
+  var import_element216 = __toESM(require_element(), 1);
   var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTextControl(props, ref) {
     const {
@@ -73743,13 +73782,13 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var TextControl = (0, import_element215.forwardRef)(UnforwardedTextControl);
+  var TextControl = (0, import_element216.forwardRef)(UnforwardedTextControl);
   TextControl.displayName = "TextControl";
   var text_control_default = TextControl;
 
   // packages/components/build-module/textarea-control/index.mjs
   var import_compose76 = __toESM(require_compose(), 1);
-  var import_element216 = __toESM(require_element(), 1);
+  var import_element217 = __toESM(require_element(), 1);
   var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE121 = "data-wp-hash";
   function getRuntime121() {
@@ -73879,12 +73918,12 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var TextareaControl = (0, import_element216.forwardRef)(UnforwardedTextareaControl);
+  var TextareaControl = (0, import_element217.forwardRef)(UnforwardedTextareaControl);
   TextareaControl.displayName = "TextareaControl";
   var textarea_control_default = TextareaControl;
 
   // packages/components/build-module/text-highlight/index.mjs
-  var import_element217 = __toESM(require_element(), 1);
+  var import_element218 = __toESM(require_element(), 1);
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
   var TextHighlight = (props) => {
     const { text = "", highlight = "" } = props;
@@ -73896,7 +73935,7 @@ The screen with id ${screen.id} will not be added.`
       `(${escapeRegExp(trimmedHighlightText)})`,
       "gi"
     );
-    return (0, import_element217.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
+    return (0, import_element218.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
       mark: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)("mark", {})
     });
   };
@@ -73921,7 +73960,7 @@ The screen with id ${screen.id} will not be added.`
   var tip_default2 = Tip;
 
   // packages/components/build-module/toggle-control/index.mjs
-  var import_element218 = __toESM(require_element(), 1);
+  var import_element219 = __toESM(require_element(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
   var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToggleControl({
@@ -73987,27 +74026,27 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var ToggleControl = (0, import_element218.forwardRef)(UnforwardedToggleControl);
+  var ToggleControl = (0, import_element219.forwardRef)(UnforwardedToggleControl);
   ToggleControl.displayName = "ToggleControl";
   var toggle_control_default = ToggleControl;
 
   // packages/components/build-module/toolbar/toolbar/index.mjs
-  var import_element225 = __toESM(require_element(), 1);
+  var import_element226 = __toESM(require_element(), 1);
   var import_deprecated31 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/toolbar/toolbar-group/index.mjs
-  var import_element223 = __toESM(require_element(), 1);
+  var import_element224 = __toESM(require_element(), 1);
 
   // packages/components/build-module/toolbar/toolbar-button/index.mjs
-  var import_element221 = __toESM(require_element(), 1);
+  var import_element222 = __toESM(require_element(), 1);
 
   // packages/components/build-module/toolbar/toolbar-item/index.mjs
-  var import_element220 = __toESM(require_element(), 1);
+  var import_element221 = __toESM(require_element(), 1);
   var import_warning11 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/toolbar/toolbar-context/index.mjs
-  var import_element219 = __toESM(require_element(), 1);
-  var ToolbarContext = (0, import_element219.createContext)(
+  var import_element220 = __toESM(require_element(), 1);
+  var ToolbarContext = (0, import_element220.createContext)(
     void 0
   );
   ToolbarContext.displayName = "ToolbarContext";
@@ -74016,7 +74055,7 @@ The screen with id ${screen.id} will not be added.`
   // packages/components/build-module/toolbar/toolbar-item/index.mjs
   var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarItem({ children, as: Component7, ...props }, ref) {
-    const accessibleToolbarStore = (0, import_element220.useContext)(toolbar_context_default);
+    const accessibleToolbarStore = (0, import_element221.useContext)(toolbar_context_default);
     const isRenderProp = typeof children === "function";
     if (!isRenderProp && !Component7) {
       (0, import_warning11.default)(
@@ -74045,7 +74084,7 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var ToolbarItem22 = (0, import_element220.forwardRef)(UnforwardedToolbarItem);
+  var ToolbarItem22 = (0, import_element221.forwardRef)(UnforwardedToolbarItem);
   ToolbarItem22.displayName = "ToolbarItem";
   var toolbar_item_default = ToolbarItem22;
 
@@ -74078,7 +74117,7 @@ The screen with id ${screen.id} will not be added.`
       title,
       ...restProps
     } = useDeprecatedProps6(props);
-    const accessibleToolbarState = (0, import_element221.useContext)(toolbar_context_default);
+    const accessibleToolbarState = (0, import_element222.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
       return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(toolbar_button_container_default, { className: containerClassName, children: /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
         button_default,
@@ -74128,7 +74167,7 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var ToolbarButton = (0, import_element221.forwardRef)(UnforwardedToolbarButton);
+  var ToolbarButton = (0, import_element222.forwardRef)(UnforwardedToolbarButton);
   ToolbarButton.displayName = "ToolbarButton";
   var toolbar_button_default = ToolbarButton;
 
@@ -74142,14 +74181,14 @@ The screen with id ${screen.id} will not be added.`
   var toolbar_group_container_default = ToolbarGroupContainer;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.mjs
-  var import_element222 = __toESM(require_element(), 1);
+  var import_element223 = __toESM(require_element(), 1);
   var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
   function ToolbarGroupCollapsed({
     controls = [],
     toggleProps,
     ...props
   }) {
-    const accessibleToolbarState = (0, import_element222.useContext)(toolbar_context_default);
+    const accessibleToolbarState = (0, import_element223.useContext)(toolbar_context_default);
     const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
       dropdown_menu_default,
       {
@@ -74181,7 +74220,7 @@ The screen with id ${screen.id} will not be added.`
     title,
     ...props
   }) {
-    const accessibleToolbarState = (0, import_element223.useContext)(toolbar_context_default);
+    const accessibleToolbarState = (0, import_element224.useContext)(toolbar_context_default);
     if ((!controls || !controls.length) && !children) {
       return null;
     }
@@ -74226,7 +74265,7 @@ The screen with id ${screen.id} will not be added.`
   var toolbar_group_default = ToolbarGroup;
 
   // packages/components/build-module/toolbar/toolbar/toolbar-container.mjs
-  var import_element224 = __toESM(require_element(), 1);
+  var import_element225 = __toESM(require_element(), 1);
   var import_i18n79 = __toESM(require_i18n(), 1);
   var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarContainer({ label, ...props }, ref) {
@@ -74247,7 +74286,7 @@ The screen with id ${screen.id} will not be added.`
       ) })
     );
   }
-  var ToolbarContainer2 = (0, import_element224.forwardRef)(UnforwardedToolbarContainer);
+  var ToolbarContainer2 = (0, import_element225.forwardRef)(UnforwardedToolbarContainer);
   ToolbarContainer2.displayName = "ToolbarContainer";
   var toolbar_container_default = ToolbarContainer2;
 
@@ -74260,7 +74299,7 @@ The screen with id ${screen.id} will not be added.`
     ...props
   }, ref) {
     const isVariantDefined = variant !== void 0;
-    const contextSystemValue = (0, import_element225.useMemo)(() => {
+    const contextSystemValue = (0, import_element226.useMemo)(() => {
       if (isVariantDefined) {
         return {};
       }
@@ -74307,15 +74346,15 @@ The screen with id ${screen.id} will not be added.`
       }
     ) });
   }
-  var Toolbar3 = (0, import_element225.forwardRef)(UnforwardedToolbar);
+  var Toolbar3 = (0, import_element226.forwardRef)(UnforwardedToolbar);
   Toolbar3.displayName = "Toolbar";
   var toolbar_default = Toolbar3;
 
   // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.mjs
-  var import_element226 = __toESM(require_element(), 1);
+  var import_element227 = __toESM(require_element(), 1);
   var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarDropdownMenu(props, ref) {
-    const accessibleToolbarState = (0, import_element226.useContext)(toolbar_context_default);
+    const accessibleToolbarState = (0, import_element227.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
       return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(dropdown_menu_default, { ...props });
     }
@@ -74330,7 +74369,7 @@ The screen with id ${screen.id} will not be added.`
       }
     ) });
   }
-  var ToolbarDropdownMenu = (0, import_element226.forwardRef)(UnforwardedToolbarDropdownMenu);
+  var ToolbarDropdownMenu = (0, import_element227.forwardRef)(UnforwardedToolbarDropdownMenu);
   ToolbarDropdownMenu.displayName = "ToolbarDropdownMenu";
   var toolbar_dropdown_menu_default = ToolbarDropdownMenu;
 
@@ -74339,9 +74378,9 @@ The screen with id ${screen.id} will not be added.`
   var import_i18n80 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/tools-panel/context.mjs
-  var import_element227 = __toESM(require_element(), 1);
+  var import_element228 = __toESM(require_element(), 1);
   var noop25 = () => void 0;
-  var ToolsPanelContext = (0, import_element227.createContext)({
+  var ToolsPanelContext = (0, import_element228.createContext)({
     menuItems: { default: {}, optional: {} },
     hasMenuItems: false,
     isResetting: false,
@@ -74354,7 +74393,7 @@ The screen with id ${screen.id} will not be added.`
     areAllOptionalControlsHidden: true
   });
   ToolsPanelContext.displayName = "ToolsPanelContext";
-  var useToolsPanelContext = () => (0, import_element227.useContext)(ToolsPanelContext);
+  var useToolsPanelContext = () => (0, import_element228.useContext)(ToolsPanelContext);
 
   // packages/components/build-module/tools-panel/tools-panel-header/hook.mjs
   var STYLE_HASH_ATTRIBUTE122 = "data-wp-hash";
@@ -74741,7 +74780,7 @@ The screen with id ${screen.id} will not be added.`
   var component_default38 = ConnectedToolsPanelHeader;
 
   // packages/components/build-module/tools-panel/tools-panel/hook.mjs
-  var import_element228 = __toESM(require_element(), 1);
+  var import_element229 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE124 = "data-wp-hash";
   function getRuntime124() {
     const globalScope = globalThis;
@@ -74952,45 +74991,45 @@ The screen with id ${screen.id} will not be added.`
       __experimentalLastVisibleItemClass,
       ...otherProps
     } = useContextSystem(props, "ToolsPanel");
-    const [isResetting, setIsResetting] = (0, import_element228.useState)(false);
-    (0, import_element228.useEffect)(() => {
+    const [isResetting, setIsResetting] = (0, import_element229.useState)(false);
+    (0, import_element229.useEffect)(() => {
       if (isResetting) {
         setIsResetting(false);
       }
     }, [isResetting]);
-    const [{ panelItems, menuItemOrder, menuItemValues }, panelDispatch] = (0, import_element228.useReducer)(panelReducer, void 0, emptyState);
-    const [externalResetAllFilters, dispatchResetAllFilters] = (0, import_element228.useReducer)(
+    const [{ panelItems, menuItemOrder, menuItemValues }, panelDispatch] = (0, import_element229.useReducer)(panelReducer, void 0, emptyState);
+    const [externalResetAllFilters, dispatchResetAllFilters] = (0, import_element229.useReducer)(
       resetAllFiltersReducer,
       []
     );
-    const registerPanelItem = (0, import_element228.useCallback)(
+    const registerPanelItem = (0, import_element229.useCallback)(
       (item) => {
         panelDispatch({ type: "REGISTER_PANEL", item });
       },
       []
     );
-    const deregisterPanelItem = (0, import_element228.useCallback)(
+    const deregisterPanelItem = (0, import_element229.useCallback)(
       (label, item) => {
         panelDispatch({ type: "UNREGISTER_PANEL", label, item });
       },
       []
     );
-    const registerResetAllFilter = (0, import_element228.useCallback)((filter2) => {
+    const registerResetAllFilter = (0, import_element229.useCallback)((filter2) => {
       dispatchResetAllFilters({ type: "REGISTER", filter: filter2 });
     }, []);
-    const deregisterResetAllFilter = (0, import_element228.useCallback)(
+    const deregisterResetAllFilter = (0, import_element229.useCallback)(
       (filter2) => {
         dispatchResetAllFilters({ type: "UNREGISTER", filter: filter2 });
       },
       []
     );
-    const flagItemCustomization = (0, import_element228.useCallback)(
+    const flagItemCustomization = (0, import_element229.useCallback)(
       (value, label) => {
         panelDispatch({ type: "UPDATE_VALUE", label, value });
       },
       []
     );
-    const menuItems = (0, import_element228.useMemo)(() => {
+    const menuItems = (0, import_element229.useMemo)(() => {
       const result = { default: {}, optional: {} };
       const byLabel = new Map(
         panelItems.map((item) => [item.label, item])
@@ -75004,7 +75043,7 @@ The screen with id ${screen.id} will not be added.`
       });
       return result;
     }, [panelItems, menuItemOrder, menuItemValues]);
-    const areAllOptionalControlsHidden = (0, import_element228.useMemo)(() => {
+    const areAllOptionalControlsHidden = (0, import_element229.useMemo)(() => {
       return isMenuItemTypeEmpty(menuItems.default) && !isMenuItemTypeEmpty(menuItems.optional) && Object.values(menuItems.optional).every(
         (isSelected2) => !isSelected2
       );
@@ -75015,7 +75054,7 @@ The screen with id ${screen.id} will not be added.`
       areAllOptionalControlsHidden && style_module_default91["tools-panel-hidden-inner-wrapper"],
       className
     );
-    const toggleItem = (0, import_element228.useCallback)(
+    const toggleItem = (0, import_element229.useCallback)(
       (label) => {
         const currentItem = panelItems.find(
           (item) => item.label === label
@@ -75031,11 +75070,11 @@ The screen with id ${screen.id} will not be added.`
       },
       [menuItems, panelItems]
     );
-    const resetAllFilters = (0, import_element228.useMemo)(() => {
+    const resetAllFilters = (0, import_element229.useMemo)(() => {
       const itemFilters = panelItems.map((item) => item.resetAllFilter).filter((filter2) => !!filter2);
       return [...itemFilters, ...externalResetAllFilters];
     }, [panelItems, externalResetAllFilters]);
-    const resetAllItems = (0, import_element228.useCallback)(() => {
+    const resetAllItems = (0, import_element229.useCallback)(() => {
       if (typeof resetAll === "function") {
         setIsResetting(true);
         resetAll(resetAllFilters);
@@ -75054,7 +75093,7 @@ The screen with id ${screen.id} will not be added.`
       [...panelItems].reverse()
     );
     const hasMenuItems = panelItems.length > 0;
-    const panelContext = (0, import_element228.useMemo)(
+    const panelContext = (0, import_element229.useMemo)(
       () => ({
         areAllOptionalControlsHidden,
         deregisterPanelItem,
@@ -75144,7 +75183,7 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/tools-panel/tools-panel-item/hook.mjs
   var import_compose78 = __toESM(require_compose(), 1);
-  var import_element229 = __toESM(require_element(), 1);
+  var import_element230 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE125 = "data-wp-hash";
   function getRuntime125() {
     const globalScope = globalThis;
@@ -75258,15 +75297,15 @@ The screen with id ${screen.id} will not be added.`
       __experimentalFirstVisibleItemClass,
       __experimentalLastVisibleItemClass
     } = useToolsPanelContext();
-    const hasValueCallback = (0, import_element229.useCallback)(hasValue, [panelId]);
+    const hasValueCallback = (0, import_element230.useCallback)(hasValue, [panelId]);
     const resetAllFilterCallback = (0, import_compose78.useEvent)(resetAllFilter);
-    const defaultShownRef = (0, import_element229.useRef)(defaultShown);
-    (0, import_element229.useLayoutEffect)(() => {
+    const defaultShownRef = (0, import_element230.useRef)(defaultShown);
+    (0, import_element230.useLayoutEffect)(() => {
       defaultShownRef.current = defaultShown;
     });
     const onShownChangeCallback = (0, import_compose78.useEvent)(onShownChange);
     const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
-    (0, import_element229.useLayoutEffect)(() => {
+    (0, import_element230.useLayoutEffect)(() => {
       if (!hasMatchingPanel) {
         return;
       }
@@ -75297,9 +75336,9 @@ The screen with id ${screen.id} will not be added.`
     const menuGroup = isShownByDefault ? "default" : "optional";
     const isMenuItemChecked = menuItems?.[menuGroup]?.[label];
     const isRegistered = isMenuItemChecked !== void 0;
-    const wasMenuItemCheckedRef = (0, import_element229.useRef)(void 0);
+    const wasMenuItemCheckedRef = (0, import_element230.useRef)(void 0);
     const isValueSet = hasValue();
-    (0, import_element229.useLayoutEffect)(() => {
+    (0, import_element230.useLayoutEffect)(() => {
       if (!hasMatchingPanel || !isShownByDefault && !isValueSet) {
         return;
       }
@@ -75311,7 +75350,7 @@ The screen with id ${screen.id} will not be added.`
       flagItemCustomization,
       isShownByDefault
     ]);
-    (0, import_element229.useEffect)(() => {
+    (0, import_element230.useEffect)(() => {
       const wasMenuItemChecked = wasMenuItemCheckedRef.current;
       wasMenuItemCheckedRef.current = isMenuItemChecked;
       const wasRegistered = wasMenuItemChecked !== void 0;
@@ -75372,17 +75411,17 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/tree-grid/index.mjs
   var import_dom35 = __toESM(require_dom(), 1);
-  var import_element237 = __toESM(require_element(), 1);
+  var import_element238 = __toESM(require_element(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
-  var import_element231 = __toESM(require_element(), 1);
+  var import_element232 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index-context.mjs
-  var import_element230 = __toESM(require_element(), 1);
-  var RovingTabIndexContext = (0, import_element230.createContext)(void 0);
+  var import_element231 = __toESM(require_element(), 1);
+  var RovingTabIndexContext = (0, import_element231.createContext)(void 0);
   RovingTabIndexContext.displayName = "RovingTabIndexContext";
-  var useRovingTabIndexContext = () => (0, import_element230.useContext)(RovingTabIndexContext);
+  var useRovingTabIndexContext = () => (0, import_element231.useContext)(RovingTabIndexContext);
   var RovingTabIndexProvider = RovingTabIndexContext.Provider;
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
@@ -75390,8 +75429,8 @@ The screen with id ${screen.id} will not be added.`
   function RovingTabIndex({
     children
   }) {
-    const [lastFocusedElement, setLastFocusedElement] = (0, import_element231.useState)();
-    const providerValue = (0, import_element231.useMemo)(
+    const [lastFocusedElement, setLastFocusedElement] = (0, import_element232.useState)();
+    const providerValue = (0, import_element232.useMemo)(
       () => ({ lastFocusedElement, setLastFocusedElement }),
       [lastFocusedElement]
     );
@@ -75400,10 +75439,10 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/tree-grid/row.mjs
   var import_compose79 = __toESM(require_compose(), 1);
-  var import_element233 = __toESM(require_element(), 1);
+  var import_element234 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/use-validate-tree-grid-structure.mjs
-  var import_element232 = __toESM(require_element(), 1);
+  var import_element233 = __toESM(require_element(), 1);
   var ROW_SELECTOR = 'tr:not([role]), [role="row"]';
   var TREE_GRID_SELECTOR = '[role="treegrid"]';
   function getAriaOwners(element) {
@@ -75448,7 +75487,7 @@ The screen with id ${screen.id} will not be added.`
     return element.parentElement ? isOwnedByRowInTreeGrid(element.parentElement, visited) : false;
   }
   function useValidateTreeGridStructure(componentName, elementRef) {
-    (0, import_element232.useEffect)(() => {
+    (0, import_element233.useEffect)(() => {
       const element = elementRef.current;
       if (!element) {
         return;
@@ -75473,7 +75512,7 @@ The screen with id ${screen.id} will not be added.`
     isExpanded,
     ...props
   }, ref) {
-    const rowRef = (0, import_element233.useRef)(null);
+    const rowRef = (0, import_element234.useRef)(null);
     const refs = (0, import_compose79.useMergeRefs)([rowRef, ref]);
     useValidateTreeGridStructure("TreeGridRow", rowRef);
     return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
@@ -75490,22 +75529,22 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   }
-  var TreeGridRow = (0, import_element233.forwardRef)(UnforwardedTreeGridRow);
+  var TreeGridRow = (0, import_element234.forwardRef)(UnforwardedTreeGridRow);
   TreeGridRow.displayName = "TreeGridRow";
   var row_default2 = TreeGridRow;
 
   // packages/components/build-module/tree-grid/cell.mjs
-  var import_element236 = __toESM(require_element(), 1);
+  var import_element237 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/item.mjs
-  var import_element235 = __toESM(require_element(), 1);
+  var import_element236 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index-item.mjs
-  var import_element234 = __toESM(require_element(), 1);
+  var import_element235 = __toESM(require_element(), 1);
   var import_jsx_runtime360 = __toESM(require_jsx_runtime(), 1);
-  var RovingTabIndexItem = (0, import_element234.forwardRef)(
+  var RovingTabIndexItem = (0, import_element235.forwardRef)(
     function UnforwardedRovingTabIndexItem({ children, as: Component7, ...props }, forwardedRef) {
-      const localRef = (0, import_element234.useRef)(null);
+      const localRef = (0, import_element235.useRef)(null);
       const ref = forwardedRef || localRef;
       const context = useRovingTabIndexContext();
       if (!context) {
@@ -75541,7 +75580,7 @@ The screen with id ${screen.id} will not be added.`
   function UnforwardedTreeGridItem({ children, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(roving_tab_index_item_default, { ref, ...props, children });
   }
-  var TreeGridItem = (0, import_element235.forwardRef)(UnforwardedTreeGridItem);
+  var TreeGridItem = (0, import_element236.forwardRef)(UnforwardedTreeGridItem);
   TreeGridItem.displayName = "TreeGridItem";
   var item_default2 = TreeGridItem;
 
@@ -75552,11 +75591,11 @@ The screen with id ${screen.id} will not be added.`
     withoutGridItem = false,
     ...props
   }, ref) {
-    const cellRef = (0, import_element236.useRef)(null);
+    const cellRef = (0, import_element237.useRef)(null);
     useValidateTreeGridStructure("TreeGridCell", cellRef);
     return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)("td", { ref: cellRef, ...props, role: "gridcell", children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_jsx_runtime362.Fragment, { children: typeof children === "function" ? children({ ...props, ref }) : children }) : /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(item_default2, { ref, children }) });
   }
-  var TreeGridCell = (0, import_element236.forwardRef)(UnforwardedTreeGridCell);
+  var TreeGridCell = (0, import_element237.forwardRef)(UnforwardedTreeGridCell);
   TreeGridCell.displayName = "TreeGridCell";
   var cell_default = TreeGridCell;
 
@@ -75581,7 +75620,7 @@ The screen with id ${screen.id} will not be added.`
     applicationAriaLabel,
     ...props
   }, ref) {
-    const onKeyDown = (0, import_element237.useCallback)(
+    const onKeyDown = (0, import_element238.useCallback)(
       (event) => {
         const { keyCode, metaKey, ctrlKey, altKey } = event;
         const hasModifierKeyPressed = metaKey || ctrlKey || altKey;
@@ -75745,18 +75784,18 @@ The screen with id ${screen.id} will not be added.`
       }
     ) }) });
   }
-  var TreeGrid = (0, import_element237.forwardRef)(UnforwardedTreeGrid);
+  var TreeGrid = (0, import_element238.forwardRef)(UnforwardedTreeGrid);
   TreeGrid.displayName = "TreeGrid";
   var tree_grid_default = TreeGrid;
 
   // packages/components/build-module/isolated-event-container/index.mjs
-  var import_element238 = __toESM(require_element(), 1);
+  var import_element239 = __toESM(require_element(), 1);
   var import_deprecated32 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
-  var IsolatedEventContainer = (0, import_element238.forwardRef)(
+  var IsolatedEventContainer = (0, import_element239.forwardRef)(
     (props, ref) => {
       (0, import_deprecated32.default)("wp.components.IsolatedEventContainer", {
         since: "5.7"
@@ -75768,7 +75807,7 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/z-stack/component.mjs
   var import_deprecated33 = __toESM(require_deprecated(), 1);
-  var import_element239 = __toESM(require_element(), 1);
+  var import_element240 = __toESM(require_element(), 1);
   var import_jsx_runtime365 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE126 = "data-wp-hash";
   function getRuntime126() {
@@ -75873,7 +75912,7 @@ The screen with id ${screen.id} will not be added.`
     const clonedChildren = validChildren.map((child, index2) => {
       const zIndex = isReversed ? childrenLastIndex - index2 : index2;
       const offsetAmount = isLayered ? offset4 * index2 : offset4;
-      const key = (0, import_element239.isValidElement)(child) ? child.key : index2;
+      const key = (0, import_element240.isValidElement)(child) ? child.key : index2;
       return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
         "div",
         {
@@ -75905,7 +75944,7 @@ The screen with id ${screen.id} will not be added.`
   var component_default41 = ZStack;
 
   // packages/components/build-module/higher-order/navigate-regions/index.mjs
-  var import_element240 = __toESM(require_element(), 1);
+  var import_element241 = __toESM(require_element(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime366 = __toESM(require_jsx_runtime(), 1);
@@ -75936,8 +75975,8 @@ The screen with id ${screen.id} will not be added.`
     ]
   };
   function useNavigateRegions(shortcuts = defaultShortcuts) {
-    const ref = (0, import_element240.useRef)(null);
-    const [isFocusingRegions, setIsFocusingRegions] = (0, import_element240.useState)(false);
+    const ref = (0, import_element241.useRef)(null);
+    const [isFocusingRegions, setIsFocusingRegions] = (0, import_element241.useState)(false);
     function focusRegion(offset4) {
       const regions = Array.from(
         ref.current?.querySelectorAll(
@@ -76010,13 +76049,13 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/higher-order/with-fallback-styles/index.mjs
   var import_es63 = __toESM(require_es6(), 1);
-  var import_element241 = __toESM(require_element(), 1);
+  var import_element242 = __toESM(require_element(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
   var import_jsx_runtime368 = __toESM(require_jsx_runtime(), 1);
   var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose82.createHigherOrderComponent)((WrappedComponent) => {
     return function WithFallbackStyles(props) {
-      const [fallbackStyles, setFallbackStyles] = (0, import_element241.useState)(void 0);
-      const nodeRef = (0, import_element241.useRef)(null);
+      const [fallbackStyles, setFallbackStyles] = (0, import_element242.useState)(void 0);
+      const nodeRef = (0, import_element242.useRef)(null);
       (0, import_compose82.useIsomorphicLayoutEffect)(() => {
         const node = props.node ?? nodeRef.current;
         const grabStylesCompleted = !!fallbackStyles && Object.values(fallbackStyles).every(Boolean);
@@ -76037,7 +76076,7 @@ The screen with id ${screen.id} will not be added.`
   }, "withFallbackStyles");
 
   // packages/components/build-module/higher-order/with-filters/index.mjs
-  var import_element242 = __toESM(require_element(), 1);
+  var import_element243 = __toESM(require_element(), 1);
   var import_hooks9 = __toESM(require_hooks(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
@@ -76054,7 +76093,7 @@ The screen with id ${screen.id} will not be added.`
           );
         }
       }
-      class FilteredComponentRenderer extends import_element242.Component {
+      class FilteredComponentRenderer extends import_element243.Component {
         static instances;
         constructor(props) {
           super(props);
@@ -76100,12 +76139,12 @@ The screen with id ${screen.id} will not be added.`
   }
 
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
-  var import_element243 = __toESM(require_element(), 1);
+  var import_element244 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
   var import_deprecated34 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
-    return object instanceof import_element243.Component || typeof object === "function";
+    return object instanceof import_element244.Component || typeof object === "function";
   }
   var with_focus_return_default = (0, import_compose84.createHigherOrderComponent)(
     // @ts-expect-error TODO: Reconcile with intended `createHigherOrderComponent` types
@@ -76178,13 +76217,13 @@ The screen with id ${screen.id} will not be added.`
   var v4_default = v4;
 
   // packages/components/build-module/higher-order/with-notices/index.mjs
-  var import_element244 = __toESM(require_element(), 1);
+  var import_element245 = __toESM(require_element(), 1);
   var import_compose85 = __toESM(require_compose(), 1);
   var import_jsx_runtime371 = __toESM(require_jsx_runtime(), 1);
   var with_notices_default = (0, import_compose85.createHigherOrderComponent)((OriginalComponent) => {
     function Component7(props, ref) {
-      const [noticeList, setNoticeList] = (0, import_element244.useState)([]);
-      const noticeOperations = (0, import_element244.useMemo)(() => {
+      const [noticeList, setNoticeList] = (0, import_element245.useState)([]);
+      const noticeOperations = (0, import_element245.useMemo)(() => {
         const createNotice = (notice) => {
           const noticeToAdd = notice.id ? notice : { ...notice, id: v4_default() };
           setNoticeList((current) => [...current, noticeToAdd]);
@@ -76226,7 +76265,7 @@ The screen with id ${screen.id} will not be added.`
     const { render } = OriginalComponent;
     if (typeof render === "function") {
       isForwardRef = true;
-      return (0, import_element244.forwardRef)(Component7);
+      return (0, import_element245.forwardRef)(Component7);
     }
     return Component7;
   }, "withNotices");
@@ -76253,19 +76292,19 @@ The screen with id ${screen.id} will not be added.`
   var import_deprecated38 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/menu/index.mjs
-  var import_element258 = __toESM(require_element(), 1);
+  var import_element259 = __toESM(require_element(), 1);
   var import_i18n82 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/menu/context.mjs
-  var import_element245 = __toESM(require_element(), 1);
-  var Context2 = (0, import_element245.createContext)(void 0);
+  var import_element246 = __toESM(require_element(), 1);
+  var Context2 = (0, import_element246.createContext)(void 0);
   Context2.displayName = "MenuContext";
 
   // packages/components/build-module/menu/item.mjs
-  var import_element247 = __toESM(require_element(), 1);
+  var import_element248 = __toESM(require_element(), 1);
 
   // packages/components/build-module/menu/use-menu-item-hide-on-click.mjs
-  var import_element246 = __toESM(require_element(), 1);
+  var import_element247 = __toESM(require_element(), 1);
   function focusDisclosureElement(disclosureElement) {
     disclosureElement.focus();
     if (disclosureElement.ownerDocument.activeElement === disclosureElement) {
@@ -76280,7 +76319,7 @@ The screen with id ${screen.id} will not be added.`
     );
   }
   function useMenuItemHideOnClick(store, hideOnClick) {
-    return (0, import_element246.useCallback)(
+    return (0, import_element247.useCallback)(
       (event) => {
         const shouldHide = typeof hideOnClick === "function" ? hideOnClick(event) : hideOnClick;
         if (!shouldHide) {
@@ -76393,7 +76432,7 @@ The screen with id ${screen.id} will not be added.`
     registerStyle126("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default94 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Item4 = (0, import_element247.forwardRef)(function UnforwardedItem2({
+  var Item4 = (0, import_element248.forwardRef)(function UnforwardedItem2({
     className,
     prefix,
     suffix,
@@ -76403,7 +76442,7 @@ The screen with id ${screen.id} will not be added.`
     store,
     ...props
   }, ref) {
-    const menuContext = (0, import_element247.useContext)(Context2);
+    const menuContext = (0, import_element248.useContext)(Context2);
     const computedStore = store ?? menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(
       computedStore,
@@ -76436,7 +76475,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/checkbox-item.mjs
-  var import_element248 = __toESM(require_element(), 1);
+  var import_element249 = __toESM(require_element(), 1);
   var import_jsx_runtime374 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE128 = "data-wp-hash";
   function getRuntime128() {
@@ -76522,7 +76561,7 @@ The screen with id ${screen.id} will not be added.`
     registerStyle127("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default95 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var CheckboxItem2 = (0, import_element248.forwardRef)(function UnforwardedCheckboxItem({
+  var CheckboxItem2 = (0, import_element249.forwardRef)(function UnforwardedCheckboxItem({
     className,
     suffix,
     children,
@@ -76530,7 +76569,7 @@ The screen with id ${screen.id} will not be added.`
     hideOnClick = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element248.useContext)(Context2);
+    const menuContext = (0, import_element249.useContext)(Context2);
     const store = menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
     if (!store) {
@@ -76572,7 +76611,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/radio-item.mjs
-  var import_element249 = __toESM(require_element(), 1);
+  var import_element250 = __toESM(require_element(), 1);
   var import_primitives35 = __toESM(require_primitives(), 1);
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE129 = "data-wp-hash";
@@ -76660,7 +76699,7 @@ The screen with id ${screen.id} will not be added.`
   }
   var style_module_default96 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
   var radioCheck2 = /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_primitives35.Circle, { cx: 12, cy: 12, r: 3 }) });
-  var RadioItem2 = (0, import_element249.forwardRef)(function UnforwardedRadioItem({
+  var RadioItem2 = (0, import_element250.forwardRef)(function UnforwardedRadioItem({
     className,
     suffix,
     children,
@@ -76668,7 +76707,7 @@ The screen with id ${screen.id} will not be added.`
     hideOnClick = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element249.useContext)(Context2);
+    const menuContext = (0, import_element250.useContext)(Context2);
     const store = menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
     if (!store) {
@@ -76706,7 +76745,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/group.mjs
-  var import_element250 = __toESM(require_element(), 1);
+  var import_element251 = __toESM(require_element(), 1);
   var import_jsx_runtime376 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE130 = "data-wp-hash";
   function getRuntime130() {
@@ -76792,8 +76831,8 @@ The screen with id ${screen.id} will not be added.`
     registerStyle129("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default97 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Group5 = (0, import_element250.forwardRef)(function UnforwardedGroup2({ className, ...props }, ref) {
-    const menuContext = (0, import_element250.useContext)(Context2);
+  var Group5 = (0, import_element251.forwardRef)(function UnforwardedGroup2({ className, ...props }, ref) {
+    const menuContext = (0, import_element251.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
         "Menu.Group can only be rendered inside a Menu component"
@@ -76811,7 +76850,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/group-label.mjs
-  var import_element251 = __toESM(require_element(), 1);
+  var import_element252 = __toESM(require_element(), 1);
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE131 = "data-wp-hash";
   function getRuntime131() {
@@ -76897,8 +76936,8 @@ The screen with id ${screen.id} will not be added.`
     registerStyle130("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default98 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var GroupLabel5 = (0, import_element251.forwardRef)(function Group6({ className, ...props }, ref) {
-    const menuContext = (0, import_element251.useContext)(Context2);
+  var GroupLabel5 = (0, import_element252.forwardRef)(function Group6({ className, ...props }, ref) {
+    const menuContext = (0, import_element252.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
         "Menu.GroupLabel can only be rendered inside a Menu component"
@@ -76929,7 +76968,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/separator.mjs
-  var import_element252 = __toESM(require_element(), 1);
+  var import_element253 = __toESM(require_element(), 1);
   var import_jsx_runtime378 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE132 = "data-wp-hash";
   function getRuntime132() {
@@ -77015,8 +77054,8 @@ The screen with id ${screen.id} will not be added.`
     registerStyle131("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default99 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Separator6 = (0, import_element252.forwardRef)(function UnforwardedSeparator({ className, ...props }, ref) {
-    const menuContext = (0, import_element252.useContext)(Context2);
+  var Separator6 = (0, import_element253.forwardRef)(function UnforwardedSeparator({ className, ...props }, ref) {
+    const menuContext = (0, import_element253.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
         "Menu.Separator can only be rendered inside a Menu component"
@@ -77036,7 +77075,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/item-label.mjs
-  var import_element253 = __toESM(require_element(), 1);
+  var import_element254 = __toESM(require_element(), 1);
   var import_jsx_runtime379 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE133 = "data-wp-hash";
   function getRuntime133() {
@@ -77122,8 +77161,8 @@ The screen with id ${screen.id} will not be added.`
     registerStyle132("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default100 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var ItemLabel3 = (0, import_element253.forwardRef)(function UnforwardedItemLabel2({ className, ...props }, ref) {
-    const menuContext = (0, import_element253.useContext)(Context2);
+  var ItemLabel3 = (0, import_element254.forwardRef)(function UnforwardedItemLabel2({ className, ...props }, ref) {
+    const menuContext = (0, import_element254.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
         "Menu.ItemLabel can only be rendered inside a Menu component"
@@ -77141,7 +77180,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/item-help-text.mjs
-  var import_element254 = __toESM(require_element(), 1);
+  var import_element255 = __toESM(require_element(), 1);
   var import_jsx_runtime380 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE134 = "data-wp-hash";
   function getRuntime134() {
@@ -77227,8 +77266,8 @@ The screen with id ${screen.id} will not be added.`
     registerStyle133("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default101 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var ItemHelpText = (0, import_element254.forwardRef)(function UnforwardedItemHelpText({ className, ...props }, ref) {
-    const menuContext = (0, import_element254.useContext)(Context2);
+  var ItemHelpText = (0, import_element255.forwardRef)(function UnforwardedItemHelpText({ className, ...props }, ref) {
+    const menuContext = (0, import_element255.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
         "Menu.ItemHelpText can only be rendered inside a Menu component"
@@ -77246,10 +77285,10 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/trigger-button.mjs
-  var import_element255 = __toESM(require_element(), 1);
+  var import_element256 = __toESM(require_element(), 1);
   var import_jsx_runtime381 = __toESM(require_jsx_runtime(), 1);
-  var TriggerButton = (0, import_element255.forwardRef)(function UnforwardedTriggerButton({ children, disabled: disabled2 = false, ...props }, ref) {
-    const menuContext = (0, import_element255.useContext)(Context2);
+  var TriggerButton = (0, import_element256.forwardRef)(function UnforwardedTriggerButton({ children, disabled: disabled2 = false, ...props }, ref) {
+    const menuContext = (0, import_element256.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error(
         "Menu.TriggerButton can only be rendered inside a Menu component"
@@ -77273,7 +77312,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/submenu-trigger-item.mjs
-  var import_element256 = __toESM(require_element(), 1);
+  var import_element257 = __toESM(require_element(), 1);
   var import_i18n81 = __toESM(require_i18n(), 1);
   var import_jsx_runtime382 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE135 = "data-wp-hash";
@@ -77360,8 +77399,8 @@ The screen with id ${screen.id} will not be added.`
     registerStyle134("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default102 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var SubmenuTriggerItem = (0, import_element256.forwardRef)(function UnforwardedSubmenuTriggerItem({ suffix, ...otherProps }, ref) {
-    const menuContext = (0, import_element256.useContext)(Context2);
+  var SubmenuTriggerItem = (0, import_element257.forwardRef)(function UnforwardedSubmenuTriggerItem({ suffix, ...otherProps }, ref) {
+    const menuContext = (0, import_element257.useContext)(Context2);
     if (!menuContext?.store.parent) {
       throw new Error(
         "Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component"
@@ -77401,7 +77440,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/menu/popover.mjs
-  var import_element257 = __toESM(require_element(), 1);
+  var import_element258 = __toESM(require_element(), 1);
   var import_jsx_runtime383 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE136 = "data-wp-hash";
   function getRuntime136() {
@@ -77487,13 +77526,13 @@ The screen with id ${screen.id} will not be added.`
     registerStyle135("fbef06cd62", "._131511141326b11b__menu{outline:2px solid transparent!important;position:relative;z-index:1000000}.b6b687129dd092d1__menu-surface{background-color:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border-radius:4px;box-shadow:0 0 0 1px var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb)),0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,max-content) 1fr;grid-template-rows:auto;max-height:var(--popover-available-height);max-width:320px;min-width:160px;overflow:auto;overscroll-behavior:contain;padding:4px}.b6b687129dd092d1__menu-surface:where(._59078aa9632a9595__is-toolbar){box-shadow:0 0 0 1px var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}@media not (prefers-reduced-motion){._0965e4c0ecda2cad__menu-motion-root{transition-duration:var(--wpds-motion-duration-md,.2s),var(--wpds-motion-duration-sm,.1s);transition-property:transform,opacity;transition-timing-function:var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)),linear;will-change:transform,opacity}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])){opacity:0}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter]){opacity:1}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=bottom]){transform:translateY(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=top]){transform:translateY(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=left]){transform:translateX(4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-side=right]){transform:translateX(-4px)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=bottom]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=top]){transform:translateY(0)}._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=left]),._0965e4c0ecda2cad__menu-motion-root:not(:has(>.b6b687129dd092d1__menu-surface[data-submenu])):has(>.b6b687129dd092d1__menu-surface[data-enter][data-side=right]){transform:translateX(0)}}.a8d8dc9b4f86d131__item{all:unset;align-items:center;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);display:grid;grid-column:1/-1;grid-template-columns:minmax(0,max-content) 1fr;min-height:32px;position:relative}@supports (grid-template-columns:subgrid){.a8d8dc9b4f86d131__item{grid-template-columns:subgrid}}.a8d8dc9b4f86d131__item{border-radius:2px;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:inherit;font-size:13px;font-weight:400;line-height:20px;outline:none;padding-block:4px;padding-inline:12px;scroll-margin:4px;user-select:none}.a8d8dc9b4f86d131__item[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.a8d8dc9b4f86d131__item[data-active-item]:not([data-focus-visible]):not([aria-disabled=true]){background-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));color:var(--wp-components-color-accent-inverted,var(--wpds-color-foreground-interactive-brand-strong,#fff))}.a8d8dc9b4f86d131__item[data-focus-visible]{box-shadow:0 0 0 1.5px var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent}._131511141326b11b__menu:not(:focus) .a8d8dc9b4f86d131__item:not(:focus)[aria-expanded=true]{background-color:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}.a8d8dc9b4f86d131__item svg{fill:currentColor}._8b22cbfeb79a4270__item-prefix-wrapper{grid-column:1}.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{min-width:24px}._8b22cbfeb79a4270__item-prefix-wrapper:not(:empty),.a63fce487b470227__checkbox-item>._8b22cbfeb79a4270__item-prefix-wrapper,.cc6238e7feede9fd__radio-item>._8b22cbfeb79a4270__item-prefix-wrapper{margin-inline-end:8px}._8b22cbfeb79a4270__item-prefix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;justify-content:center}[aria-disabled=true]>._8b22cbfeb79a4270__item-prefix-wrapper,[data-active-item]:not([data-focus-visible])>._8b22cbfeb79a4270__item-prefix-wrapper{color:inherit}.b39622f9287a1a2f__item-content-wrapper{align-items:center;display:flex;gap:12px;grid-column:2;justify-content:space-between;pointer-events:none}._56ca6ca0990c2a9b__item-children-wrapper{display:inline-flex;flex:1;flex-direction:column;gap:4px}._97a83b395215bdd3__item-suffix-wrapper{align-items:center;color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));display:flex;flex:0 1 fit-content;gap:12px;justify-content:center;min-width:0;width:fit-content}[aria-disabled=true] :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._97a83b395215bdd3__item-suffix-wrapper{color:inherit}._68234318b0701028__group{display:contents}._3ca33d86e18b686c__group-label{grid-column:1/-1;padding-block-end:8px;padding-block-start:12px;padding-inline:12px}.c6a6663859a16bc1__separator{background-color:var(--wp-components-color-gray-200,var(--wpds-color-stroke-surface-neutral,#dbdbdb));border:none;grid-column:1/-1;height:1px;margin-block:8px;margin-inline:12px;outline:2px solid transparent}.c6a6663859a16bc1__separator:where(._59078aa9632a9595__is-toolbar){background-color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e))}._477317536d60b275__submenu-chevron-icon{transform:scaleX(1);width:6px}._477317536d60b275__submenu-chevron-icon:where(._402d50ebfd3f1b45__is-rtl){transform:scaleX(-1)}.b7d17e75a44b0b82__item-label{color:inherit;font-size:13px;line-height:20px}._1c05bcee36309dc5__item-help-text{color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));font-size:12px;line-height:16px;overflow-wrap:anywhere}[aria-disabled=true] :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text,[data-active-item]:not([data-focus-visible]) :not(._131511141326b11b__menu) ._1c05bcee36309dc5__item-help-text{color:inherit}");
   }
   var style_module_default103 = { "menu": "_131511141326b11b__menu", "menu-surface": "b6b687129dd092d1__menu-surface", "is-toolbar": "_59078aa9632a9595__is-toolbar", "menu-motion-root": "_0965e4c0ecda2cad__menu-motion-root", "item": "a8d8dc9b4f86d131__item", "item-prefix-wrapper": "_8b22cbfeb79a4270__item-prefix-wrapper", "checkbox-item": "a63fce487b470227__checkbox-item", "radio-item": "cc6238e7feede9fd__radio-item", "item-content-wrapper": "b39622f9287a1a2f__item-content-wrapper", "item-children-wrapper": "_56ca6ca0990c2a9b__item-children-wrapper", "item-suffix-wrapper": "_97a83b395215bdd3__item-suffix-wrapper", "group": "_68234318b0701028__group", "group-label": "_3ca33d86e18b686c__group-label", "separator": "c6a6663859a16bc1__separator", "submenu-chevron-icon": "_477317536d60b275__submenu-chevron-icon", "is-rtl": "_402d50ebfd3f1b45__is-rtl", "item-label": "b7d17e75a44b0b82__item-label", "item-help-text": "_1c05bcee36309dc5__item-help-text" };
-  var Popover4 = (0, import_element257.forwardRef)(function UnforwardedPopover2({ gutter, shift: shift4, modal = true, ...otherProps }, ref) {
-    const menuContext = (0, import_element257.useContext)(Context2);
+  var Popover4 = (0, import_element258.forwardRef)(function UnforwardedPopover2({ gutter, shift: shift4, modal = true, ...otherProps }, ref) {
+    const menuContext = (0, import_element258.useContext)(Context2);
     const appliedPlacementSide = useStoreState(
       menuContext?.store,
       "currentPlacement"
     )?.split("-")[0];
-    const hideOnEscape = (0, import_element257.useCallback)(
+    const hideOnEscape = (0, import_element258.useCallback)(
       (event) => {
         event.preventDefault();
         return true;
@@ -77501,7 +77540,7 @@ The screen with id ${screen.id} will not be added.`
       []
     );
     const computedDirection = useStoreState(menuContext?.store, "rtl") ? "rtl" : "ltr";
-    const wrapperProps = (0, import_element257.useMemo)(
+    const wrapperProps = (0, import_element258.useMemo)(
       () => ({
         dir: computedDirection,
         style: {
@@ -77515,7 +77554,7 @@ The screen with id ${screen.id} will not be added.`
         "Menu.Popover can only be rendered inside a Menu component"
       );
     }
-    const renderMenu = (0, import_element257.useCallback)(
+    const renderMenu = (0, import_element258.useCallback)(
       (htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime383.jsx)("div", { className: style_module_default103["menu-motion-root"], children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
         "div",
         {
@@ -77564,7 +77603,7 @@ The screen with id ${screen.id} will not be added.`
       // From internal components context
       variant
     } = useContextSystem(props, "Menu");
-    const parentContext = (0, import_element258.useContext)(Context2);
+    const parentContext = (0, import_element259.useContext)(Context2);
     const rtl = (0, import_i18n82.isRTL)();
     let computedPlacement = placement ?? (parentContext?.store ? "right-start" : "bottom-start");
     if (rtl) {
@@ -77591,7 +77630,7 @@ The screen with id ${screen.id} will not be added.`
       },
       rtl
     });
-    const contextValue = (0, import_element258.useMemo)(
+    const contextValue = (0, import_element259.useMemo)(
       () => ({ store: menuStore, variant }),
       [menuStore, variant]
     );
@@ -77703,17 +77742,17 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/tabs/index.mjs
   var import_compose89 = __toESM(require_compose(), 1);
-  var import_element264 = __toESM(require_element(), 1);
+  var import_element265 = __toESM(require_element(), 1);
   var import_i18n83 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/tabs/context.mjs
-  var import_element259 = __toESM(require_element(), 1);
-  var TabsContext = (0, import_element259.createContext)(void 0);
+  var import_element260 = __toESM(require_element(), 1);
+  var TabsContext = (0, import_element260.createContext)(void 0);
   TabsContext.displayName = "TabsContext";
-  var useTabsContext = () => (0, import_element259.useContext)(TabsContext);
+  var useTabsContext = () => (0, import_element260.useContext)(TabsContext);
 
   // packages/components/build-module/tabs/tab.mjs
-  var import_element260 = __toESM(require_element(), 1);
+  var import_element261 = __toESM(require_element(), 1);
   var import_warning12 = __toESM(require_warning(), 1);
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE137 = "data-wp-hash";
@@ -77800,7 +77839,7 @@ The screen with id ${screen.id} will not be added.`
     registerStyle136("e0ab14044f", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus);z-index:1}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab:after{content:"";inset:0;outline-offset:calc(var(--wp-admin-border-width-focus)*-1)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{justify-content:start}._7fe2d5911cf2dc60__tab-panel:focus{outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));outline-offset:0}');
   }
   var style_module_default104 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
-  var Tab3 = (0, import_element260.forwardRef)(function UnforwardedTab({ children, tabId, disabled: disabled2, render, className, ...otherProps }, ref) {
+  var Tab3 = (0, import_element261.forwardRef)(function UnforwardedTab({ children, tabId, disabled: disabled2, render, className, ...otherProps }, ref) {
     const { store, instanceId } = useTabsContext() ?? {};
     if (!store) {
       (0, import_warning12.default)("`Tabs.Tab` must be wrapped in a `Tabs` component.");
@@ -77824,16 +77863,16 @@ The screen with id ${screen.id} will not be added.`
 
   // packages/components/build-module/tabs/tablist.mjs
   var import_warning13 = __toESM(require_warning(), 1);
-  var import_element262 = __toESM(require_element(), 1);
+  var import_element263 = __toESM(require_element(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/tabs/use-track-overflow.mjs
-  var import_element261 = __toESM(require_element(), 1);
+  var import_element262 = __toESM(require_element(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
   function useTrackOverflow(parent, children) {
-    const [first, setFirst] = (0, import_element261.useState)(false);
-    const [last, setLast] = (0, import_element261.useState)(false);
-    const [observer, setObserver] = (0, import_element261.useState)();
+    const [first, setFirst] = (0, import_element262.useState)(false);
+    const [last, setLast] = (0, import_element262.useState)(false);
+    const [observer, setObserver] = (0, import_element262.useState)();
     const callback = (0, import_compose87.useEvent)((entries) => {
       for (const entry of entries) {
         if (entry.target === children.first) {
@@ -77844,7 +77883,7 @@ The screen with id ${screen.id} will not be added.`
         }
       }
     });
-    (0, import_element261.useEffect)(() => {
+    (0, import_element262.useEffect)(() => {
       if (!parent || !window.IntersectionObserver) {
         return;
       }
@@ -77855,7 +77894,7 @@ The screen with id ${screen.id} will not be added.`
       setObserver(newObserver);
       return () => newObserver.disconnect();
     }, [callback, parent]);
-    (0, import_element261.useEffect)(() => {
+    (0, import_element262.useEffect)(() => {
       if (!observer) {
         return;
       }
@@ -77965,7 +78004,7 @@ The screen with id ${screen.id} will not be added.`
   var style_module_default105 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
   var DEFAULT_SCROLL_MARGIN = 24;
   function useScrollRectIntoView(parent, rect, { margin = DEFAULT_SCROLL_MARGIN } = {}) {
-    (0, import_element262.useLayoutEffect)(() => {
+    (0, import_element263.useLayoutEffect)(() => {
       if (!parent || !rect) {
         return;
       }
@@ -77987,12 +78026,12 @@ The screen with id ${screen.id} will not be added.`
       }
     }, [margin, parent, rect]);
   }
-  var TabList3 = (0, import_element262.forwardRef)(function UnforwardedTabList({ children, ...otherProps }, ref) {
+  var TabList3 = (0, import_element263.forwardRef)(function UnforwardedTabList({ children, ...otherProps }, ref) {
     const { store } = useTabsContext() ?? {};
     const selectedId = useStoreState(store, "selectedId");
     const selectOnMove = useStoreState(store, "selectOnMove");
     const items = useStoreState(store, "items");
-    const [parent, setParent] = (0, import_element262.useState)();
+    const [parent, setParent] = (0, import_element263.useState)();
     const refs = (0, import_compose88.useMergeRefs)([ref, setParent]);
     const selectedItem = store?.item(selectedId);
     const renderedItems = useStoreState(store, "renderedItems");
@@ -78041,7 +78080,7 @@ The screen with id ${screen.id} will not be added.`
   });
 
   // packages/components/build-module/tabs/tabpanel.mjs
-  var import_element263 = __toESM(require_element(), 1);
+  var import_element264 = __toESM(require_element(), 1);
   var import_warning14 = __toESM(require_warning(), 1);
   var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE139 = "data-wp-hash";
@@ -78128,7 +78167,7 @@ The screen with id ${screen.id} will not be added.`
     registerStyle138("e0ab14044f", '.b3602b32106ed133__tab-list{align-items:stretch;display:flex;overflow-x:auto}.b3602b32106ed133__tab-list[aria-orientation=vertical]{flex-direction:column}.b3602b32106ed133__tab-list:where([aria-orientation=horizontal]){width:fit-content}.b3602b32106ed133__tab-list{--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var(--selected-left,0)}.b3602b32106ed133__tab-list:dir(rtl){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var(--selected-right,0)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform;transition-timing-function:ease-out}}.b3602b32106ed133__tab-list{position:relative}.b3602b32106ed133__tab-list:before{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);content:"";outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;transform-origin:var(--direction-start) top}.b3602b32106ed133__tab-list{--antialiasing-factor:100}.b3602b32106ed133__tab-list[aria-orientation=horizontal]{--fade-width:64px;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}.b3602b32106ed133__tab-list[aria-orientation=horizontal].is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}.b3602b32106ed133__tab-list[aria-orientation=horizontal]:before{border-bottom:var(--wp-admin-border-width-focus) solid;bottom:0;height:0;transform:translateX(calc(var(--selected-start)*var(--direction-factor)*1px)) scaleX(calc(var(--selected-width, 0)/var(--antialiasing-factor)));width:calc(var(--antialiasing-factor)*1px)}.b3602b32106ed133__tab-list:has([aria-selected=true]:not([aria-disabled=true])[data-focus-visible]):before{color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}@media not (prefers-reduced-motion){.b3602b32106ed133__tab-list[aria-orientation=vertical][data-indicator-animated]:before{transition-property:transform,height}}.b3602b32106ed133__tab-list[aria-orientation=vertical]:before{background-color:currentColor;height:max(0px,var(--selected-height,0) * 1px - 2 * var(--wpds-dimension-padding-md,12px));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);transform:translateY(calc(var(--selected-top, 0)*1px));width:var(--wp-admin-border-width-focus);z-index:1}._95e73d4984592955__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:pointer;display:flex;flex:1 0 auto;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;font-weight:400;line-height:1.2;white-space:nowrap}._95e73d4984592955__tab:is([aria-selected=true],[aria-disabled=true]){cursor:default}._95e73d4984592955__tab[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._95e73d4984592955__tab:not([aria-disabled=true]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,[data-focus-visible]):after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}._95e73d4984592955__tab:focus:not(:disabled){box-shadow:none;outline:none}._95e73d4984592955__tab{isolation:isolate;position:relative}._95e73d4984592955__tab:after{border-radius:2px;opacity:0;outline:var(--wp-admin-border-width-focus) solid transparent;pointer-events:none;position:absolute;z-index:-1}@media not (prefers-reduced-motion){._95e73d4984592955__tab:after{transition:opacity .1s linear}}._95e73d4984592955__tab[data-focus-visible]:after{opacity:1;outline-color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}[aria-orientation=horizontal] ._95e73d4984592955__tab{height:48px;padding-inline:16px;scroll-margin:24px}[aria-orientation=horizontal] ._95e73d4984592955__tab:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px)}[aria-orientation=vertical] ._95e73d4984592955__tab:after{content:"";inset:0;outline-offset:calc(var(--wp-admin-border-width-focus)*-1)}._8273dc452cca5a1c__tab-children{align-items:center;display:flex;flex-grow:1}[aria-orientation=horizontal] ._8273dc452cca5a1c__tab-children{justify-content:center}[aria-orientation=vertical] ._8273dc452cca5a1c__tab-children{justify-content:start}._7fe2d5911cf2dc60__tab-panel:focus{outline:none}._7fe2d5911cf2dc60__tab-panel[data-focus-visible]{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));outline-offset:0}');
   }
   var style_module_default106 = { "tab-list": "b3602b32106ed133__tab-list", "tab": "_95e73d4984592955__tab", "tab-children": "_8273dc452cca5a1c__tab-children", "tab-panel": "_7fe2d5911cf2dc60__tab-panel" };
-  var TabPanel3 = (0, import_element263.forwardRef)(function UnforwardedTabPanel2({ children, tabId, focusable: focusable2 = true, className, ...otherProps }, ref) {
+  var TabPanel3 = (0, import_element264.forwardRef)(function UnforwardedTabPanel2({ children, tabId, focusable: focusable2 = true, className, ...otherProps }, ref) {
     const context = useTabsContext();
     const selectedId = useStoreState(context?.store, "selectedId");
     if (!context) {
@@ -78198,7 +78237,7 @@ The screen with id ${screen.id} will not be added.`
         activeId: externalToInternalTabId(activeTabId, instanceId),
         rtl: (0, import_i18n83.isRTL)()
       });
-      const contextValue = (0, import_element264.useMemo)(
+      const contextValue = (0, import_element265.useMemo)(
         () => ({
           store,
           instanceId
@@ -78293,7 +78332,7 @@ The screen with id ${screen.id} will not be added.`
   var badge_default = Badge;
 
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
-  var import_element265 = __toESM(require_element(), 1);
+  var import_element266 = __toESM(require_element(), 1);
   var import_compose90 = __toESM(require_compose(), 1);
   var import_deprecated36 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
@@ -78308,7 +78347,7 @@ The screen with id ${screen.id} will not be added.`
       alternative: "ValidatedInputControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
     });
-    const validityTargetRef = (0, import_element265.useRef)(null);
+    const validityTargetRef = (0, import_element266.useRef)(null);
     const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
       ControlWithError,
@@ -78322,17 +78361,17 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   };
-  var ValidatedInputControl = (0, import_element265.forwardRef)(
+  var ValidatedInputControl = (0, import_element266.forwardRef)(
     UnforwardedValidatedInputControl
   );
   ValidatedInputControl.displayName = "ValidatedInputControl";
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_element267 = __toESM(require_element(), 1);
+  var import_element268 = __toESM(require_element(), 1);
 
   // packages/components/build-module/content-editable-control/index.mjs
   var import_compose91 = __toESM(require_compose(), 1);
-  var import_element266 = __toESM(require_element(), 1);
+  var import_element267 = __toESM(require_element(), 1);
   var import_jsx_runtime391 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE140 = "data-wp-hash";
   function getRuntime140() {
@@ -78435,7 +78474,7 @@ The screen with id ${screen.id} will not be added.`
       help
     });
     const labelId = `${controlProps.id}__label`;
-    const editableRef = (0, import_element266.useRef)(null);
+    const editableRef = (0, import_element267.useRef)(null);
     const mergedRefs = (0, import_compose91.useMergeRefs)([editableRef, forwardedRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime391.jsxs)(base_control_default, { ...baseControlProps, children: [
       hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(component_default2, { id: labelId, children: label }) : /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
@@ -78466,7 +78505,7 @@ The screen with id ${screen.id} will not be added.`
       )
     ] });
   }
-  var ContentEditableControl = (0, import_element266.forwardRef)(
+  var ContentEditableControl = (0, import_element267.forwardRef)(
     UnforwardedContentEditableControl
   );
   var content_editable_control_default = ContentEditableControl;
@@ -78481,7 +78520,7 @@ The screen with id ${screen.id} will not be added.`
     className,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element267.useRef)(null);
+    const validityTargetRef = (0, import_element268.useRef)(null);
     return /* @__PURE__ */ (0, import_jsx_runtime392.jsxs)("div", { className: "components-validated-control__wrapper-with-error-delegate", children: [
       /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
         ControlWithError,
@@ -78523,13 +78562,13 @@ The screen with id ${screen.id} will not be added.`
       )
     ] });
   };
-  var ValidatedContentEditableControl = (0, import_element267.forwardRef)(
+  var ValidatedContentEditableControl = (0, import_element268.forwardRef)(
     UnforwardedValidatedContentEditableControl
   );
   ValidatedContentEditableControl.displayName = "ValidatedContentEditableControl";
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
-  var import_element268 = __toESM(require_element(), 1);
+  var import_element269 = __toESM(require_element(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
   var import_deprecated37 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
@@ -78544,7 +78583,7 @@ The screen with id ${screen.id} will not be added.`
       alternative: "ValidatedTextareaControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
     });
-    const validityTargetRef = (0, import_element268.useRef)(null);
+    const validityTargetRef = (0, import_element269.useRef)(null);
     const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
       ControlWithError,
@@ -78558,7 +78597,7 @@ The screen with id ${screen.id} will not be added.`
       }
     );
   };
-  var ValidatedTextareaControl = (0, import_element268.forwardRef)(
+  var ValidatedTextareaControl = (0, import_element269.forwardRef)(
     UnforwardedValidatedTextareaControl
   );
   ValidatedTextareaControl.displayName = "ValidatedTextareaControl";
