@@ -103835,27 +103835,23 @@ If there's a particular need for this, please submit a feature request at https:
 	*
 	* @return {Component} Wrapped component.
 	*/
-	const withPatternOverrideControls = (0, _wordpress_compose.createHigherOrderComponent)((BlockEdit) => (props) => {
-		const isSupportedBlock = (0, _wordpress_data.useSelect)((select) => {
-			const { __experimentalBlockBindingsSupportedAttributes } = select(_wordpress_block_editor.store).getSettings();
-			return !!__experimentalBlockBindingsSupportedAttributes?.[props.name];
-		}, [props.name]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockEdit, { ...props }, "edit"), props.isSelected && isSupportedBlock && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ControlsWithStoreSubscription, { ...props })] });
-	}, "withPatternOverrideControls");
+	const withPatternOverrideControls = (0, _wordpress_compose.createHigherOrderComponent)((BlockEdit) => (props) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockEdit, { ...props }, "edit"), props.isSelected && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ControlsWithStoreSubscription, { ...props })] }), "withPatternOverrideControls");
 	function ControlsWithStoreSubscription(props) {
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
-		const { hasPatternOverridesSource, isEditingSyncedPattern } = (0, _wordpress_data.useSelect)((select) => {
+		const { isSupportedBlock, hasPatternOverridesSource, isEditingSyncedPattern } = (0, _wordpress_data.useSelect)((select) => {
 			const { getCurrentPostType, getEditedPostAttribute } = select(store);
+			const { __experimentalBlockBindingsSupportedAttributes } = select(_wordpress_block_editor.store).getSettings();
 			return {
+				isSupportedBlock: !!__experimentalBlockBindingsSupportedAttributes?.[props.name],
 				hasPatternOverridesSource: !!(0, _wordpress_blocks.getBlockBindingsSource)("core/pattern-overrides"),
 				isEditingSyncedPattern: getCurrentPostType() === PATTERN_TYPES$1.user && getEditedPostAttribute("meta")?.wp_pattern_sync_status !== PATTERN_SYNC_TYPES.unsynced && getEditedPostAttribute("wp_pattern_sync_status") !== PATTERN_SYNC_TYPES.unsynced
 			};
-		}, []);
+		}, [props.name]);
 		const bindings = props.attributes.metadata?.bindings;
 		const hasPatternBindings = !!bindings && Object.values(bindings).some((binding) => binding.source === "core/pattern-overrides");
 		const shouldShowPatternOverridesControls = isEditingSyncedPattern && blockEditingMode === "default";
 		const shouldShowResetOverridesControl = !isEditingSyncedPattern && !!props.attributes.metadata?.name && blockEditingMode !== "disabled" && hasPatternBindings;
-		if (!hasPatternOverridesSource) return null;
+		if (!isSupportedBlock || !hasPatternOverridesSource) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [shouldShowPatternOverridesControls && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PatternOverridesControls, { ...props }), shouldShowResetOverridesControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ResetOverridesControl, { ...props })] });
 	}
 	(0, _wordpress_hooks.addFilter)("editor.BlockEdit", "core/editor/with-pattern-override-controls", withPatternOverrideControls);

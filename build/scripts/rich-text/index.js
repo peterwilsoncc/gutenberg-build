@@ -2694,10 +2694,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	}
 
 // packages/rich-text/build-module/hook/use-format-types.mjs
-	function formatTypesSelector(select) {
-		return select(store).getFormatTypes();
-	}
-	/**
+/**
 	* Set of all interactive content tags.
 	*
 	* @see https://html.spec.whatwg.org/multipage/dom.html#interactive-content
@@ -2715,6 +2712,12 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		"textarea",
 		"video"
 	]);
+	const FORMAT_TYPES_KEY = "formatTypes";
+	function isFormatTypeAllowed({ name, interactive, tagName }, allowedFormats, withoutInteractiveFormatting) {
+		if (allowedFormats && !allowedFormats.includes(name)) return false;
+		if (withoutInteractiveFormatting && (interactive || interactiveContentTags.has(tagName))) return false;
+		return true;
+	}
 	function prefixSelectKeys(selected, prefix) {
 		if (typeof selected !== "object" || selected === null) return { [prefix]: selected };
 		return Object.fromEntries(Object.entries(selected).map(([key, value]) => [`${prefix}.${key}`, value]));
@@ -2736,25 +2739,21 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* @param {Object}  options.__unstableFormatTypeHandlerContext Context object passed to experimental format type methods.
 	*/
 	function useFormatTypes({ allowedFormats, withoutInteractiveFormatting, __unstableFormatTypeHandlerContext }) {
-		const allFormatTypes = (0, _wordpress_data.useSelect)(formatTypesSelector, []);
-		const formatTypes = (0, _wordpress_element.useMemo)(() => {
-			return allFormatTypes.filter(({ name, interactive, tagName }) => {
-				if (allowedFormats && !allowedFormats.includes(name)) return false;
-				if (withoutInteractiveFormatting && (interactive || interactiveContentTags.has(tagName))) return false;
-				return true;
-			});
+		const { [FORMAT_TYPES_KEY]: allFormatTypes, ...keyedSelected } = (0, _wordpress_data.useSelect)((select) => {
+			const selected = { [FORMAT_TYPES_KEY]: select(store).getFormatTypes() };
+			if (!__unstableFormatTypeHandlerContext) return selected;
+			for (const type of selected[FORMAT_TYPES_KEY]) if (type.__experimentalGetPropsForEditableTreePreparation && isFormatTypeAllowed(type, allowedFormats, withoutInteractiveFormatting)) Object.assign(selected, prefixSelectKeys(type.__experimentalGetPropsForEditableTreePreparation(select, __unstableFormatTypeHandlerContext), type.name));
+			return selected;
 		}, [
+			allowedFormats,
+			withoutInteractiveFormatting,
+			__unstableFormatTypeHandlerContext
+		]);
+		const formatTypes = (0, _wordpress_element.useMemo)(() => allFormatTypes.filter((type) => isFormatTypeAllowed(type, allowedFormats, withoutInteractiveFormatting)), [
 			allFormatTypes,
 			allowedFormats,
 			withoutInteractiveFormatting
 		]);
-		const keyedSelected = (0, _wordpress_data.useSelect)((select) => formatTypes.reduce((accumulator, type) => {
-			if (!type.__experimentalGetPropsForEditableTreePreparation || !__unstableFormatTypeHandlerContext) return accumulator;
-			return {
-				...accumulator,
-				...prefixSelectKeys(type.__experimentalGetPropsForEditableTreePreparation(select, __unstableFormatTypeHandlerContext), type.name)
-			};
-		}, {}), [formatTypes, __unstableFormatTypeHandlerContext]);
 		const dispatch = (0, _wordpress_data.useDispatch)();
 		const prepareHandlers = [];
 		const valueHandlers = [];

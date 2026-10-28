@@ -14752,13 +14752,13 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Component, { ...props });
 	};
 	const EditWithFilters = (0, _wordpress_components.withFilters)("editor.BlockEdit")(Edit$1);
+	const NO_SOURCES = {};
 	const EditWithGeneratedProps = (props) => {
 		const { name, clientId, attributes, setAttributes } = props;
 		const registry = (0, _wordpress_data.useRegistry)();
 		const blockType = (0, _wordpress_blocks.getBlockType)(name);
 		const blockContext = (0, _wordpress_element.useContext)(Context);
-		const registeredSources = (0, _wordpress_data.useSelect)((select) => unlock$2(select(_wordpress_blocks.store)).getAllBlockBindingsSources(), []);
-		const { bindableAttributes } = (0, _wordpress_element.useContext)(PrivateBlockContext);
+		const { bindableAttributes, blockBindingsSources: registeredSources = NO_SOURCES } = (0, _wordpress_element.useContext)(PrivateBlockContext);
 		const { blockBindings, context, hasPatternOverrides } = (0, _wordpress_element.useMemo)(() => {
 			return {
 				blockBindings: replacePatternOverridesDefaultBinding(attributes?.metadata?.bindings, bindableAttributes),
@@ -61602,14 +61602,13 @@ Icon: ButtonIcon });
 
 // packages/block-editor/build-module/components/block-list/use-block-props/use-scroll-into-view.mjs
 	function useScrollIntoView({ isSelected }) {
-		const prefersReducedMotion = (0, _wordpress_compose.useReducedMotion)();
 		return (0, _wordpress_compose.useRefEffect)((node) => {
 			if (isSelected) {
 				const { ownerDocument } = node;
 				const defaultView = ownerDocument.defaultView;
 				if (!defaultView.IntersectionObserver) return;
 				const observer = new defaultView.IntersectionObserver((entries) => {
-					if (!entries[0].isIntersecting) node.scrollIntoView({ behavior: prefersReducedMotion ? "instant" : "smooth" });
+					if (!entries[0].isIntersecting) node.scrollIntoView({ behavior: defaultView.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
 					observer.disconnect();
 				});
 				observer.observe(node);
@@ -62599,7 +62598,7 @@ Icon: ButtonIcon });
 			const { isBlockSelected, getBlockMode, isSelectionEnabled, getTemplateLock, isSectionBlock: _isSectionBlock, getParentSectionBlock, getBlockWithoutAttributes, getBlockAttributes, canRemoveBlock, canMoveBlock, getSettings, getEditedContentOnlySection, getBlockEditingMode, getBlockName, isFirstMultiSelectedBlock, getMultiSelectedBlockClientIds, hasSelectedInnerBlock, getBlocksByName, getBlockIndex, isBlockMultiSelected, isBlockSubtreeDisabled, isBlockHighlighted, __unstableIsFullySelected, __unstableSelectionHasUnmergeableBlock, isBlockBeingDragged, isDragging, __unstableHasActiveBlockOverlayActive, getSelectedBlocksInitialCaretPosition } = unlock$2(select(store));
 			const blockWithoutAttributes = getBlockWithoutAttributes(clientId) ?? (clientId === ghostBlockWithoutAttributes?.clientId ? ghostBlockWithoutAttributes : void 0);
 			if (!blockWithoutAttributes) return;
-			const { hasBlockSupport: _hasBlockSupport, getActiveBlockVariation } = select(_wordpress_blocks.store);
+			const { hasBlockSupport: _hasBlockSupport, getActiveBlockVariation, getAllBlockBindingsSources } = unlock$2(select(_wordpress_blocks.store));
 			const attributes = getBlockAttributes(clientId) ?? ghostBlock?.attributes;
 			const { name: blockName, isValid } = blockWithoutAttributes;
 			const blockType = (0, _wordpress_blocks.getBlockType)(blockName);
@@ -62625,6 +62624,7 @@ Icon: ButtonIcon });
 				defaultClassName: hasLightBlockWrapper ? (0, _wordpress_blocks.getBlockDefaultClassName)(blockName) : void 0,
 				blockTitle: blockType?.title,
 				bindableAttributes,
+				blockBindingsSources: getAllBlockBindingsSources(),
 				blockVisibility,
 				deviceType,
 				viewportSettings,
@@ -62702,7 +62702,7 @@ Icon: ButtonIcon });
 			attributes: selectedProps?.attributes
 		}), [selectedProps?.blockWithoutAttributes, selectedProps?.attributes]);
 		if (!selectedProps) return null;
-		const { isPreviewMode, mode = "visual", isSelectionEnabled = false, isLocked = false, canRemove = false, canMove = false, name, attributes, isValid, isSelected = false, themeSupportsLayout, isEditingContentOnlySection, blockEditingMode, mayDisplayControls, mayDisplayParentControls, index, blockApiVersion, blockType, blockTitle, isSubtreeDisabled, hasOverlay, initialPosition, isHighlighted, isMultiSelected, isPartiallySelected, isReusable, isDragging, hasChildSelected, isSectionBlock, isWithinSectionBlock, isSelectionWithinCurrentSection, isEditingDisabled, hasEditableOutline, className, defaultClassName, originalBlockClientId, bindableAttributes, blockVisibility, deviceType, viewportSettings, supportsSplitting } = selectedProps;
+		const { isPreviewMode, mode = "visual", isSelectionEnabled = false, isLocked = false, canRemove = false, canMove = false, name, attributes, isValid, isSelected = false, themeSupportsLayout, isEditingContentOnlySection, blockEditingMode, mayDisplayControls, mayDisplayParentControls, index, blockApiVersion, blockType, blockTitle, isSubtreeDisabled, hasOverlay, initialPosition, isHighlighted, isMultiSelected, isPartiallySelected, isReusable, isDragging, hasChildSelected, isSectionBlock, isWithinSectionBlock, isSelectionWithinCurrentSection, isEditingDisabled, hasEditableOutline, className, defaultClassName, originalBlockClientId, bindableAttributes, blockBindingsSources, blockVisibility, deviceType, viewportSettings, supportsSplitting } = selectedProps;
 		const privateContext = {
 			isPreviewMode,
 			ghostBlock,
@@ -62740,6 +62740,7 @@ Icon: ButtonIcon });
 			canMove,
 			isBlockCurrentlyHidden,
 			bindableAttributes,
+			blockBindingsSources,
 			blockVisibility,
 			deviceType,
 			viewportSettings,
@@ -105802,85 +105803,91 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasDefaultEditingMode = context[blockEditingModeKey] === "default";
 		const blockContext = (0, _wordpress_element.useContext)(Context);
 		const registry = (0, _wordpress_data.useRegistry)();
-		const selector = (select) => {
-			if (!isBlockSelected && !isBlockMultiSelected) return { isSelected: false };
-			const { getSelectionStart, getSelectionEnd } = select(store);
-			const selectionStart = getSelectionStart();
-			const selectionEnd = getSelectionEnd();
-			const isInField = (end) => end.clientId === clientId && (identifier ? end.attributeKey === identifier : end[instanceIdKey] === instanceId);
-			let isSelected;
-			if (originalIsSelected === void 0) isSelected = isInField(selectionStart) && selectionEnd.clientId === clientId;
-			else if (originalIsSelected) isSelected = selectionStart.clientId === clientId;
-			const isCrossBlockEnd = !isSelected && selectionStart.clientId !== selectionEnd.clientId;
+		const hasValue = adjustedValue.length > 0;
+		const isInsidePatternOverrides = !!blockContext?.["pattern/overrides"];
+		const hasOverrideEnabled = blockBindings?.__default?.source === "core/pattern-overrides";
+		const shouldDisableForPattern = isInsidePatternOverrides && !hasOverrideEnabled;
+		const selectField = (select) => {
+			const selectSelection = () => {
+				if (!isBlockSelected && !isBlockMultiSelected) return { isSelected: false };
+				const { getSelectionStart, getSelectionEnd } = select(store);
+				const selectionStart = getSelectionStart();
+				const selectionEnd = getSelectionEnd();
+				const isInField = (end) => end.clientId === clientId && (identifier ? end.attributeKey === identifier : end[instanceIdKey] === instanceId);
+				let isSelected;
+				if (originalIsSelected === void 0) isSelected = isInField(selectionStart) && selectionEnd.clientId === clientId;
+				else if (originalIsSelected) isSelected = selectionStart.clientId === clientId;
+				const isCrossBlockEnd = !isSelected && selectionStart.clientId !== selectionEnd.clientId;
+				return {
+					selectionStart: isSelected ? selectionStart.offset : void 0,
+					selectionEnd: isSelected ? selectionEnd.offset : void 0,
+					isSelected,
+					crossBlockStart: isCrossBlockEnd && isInField(selectionStart) ? selectionStart.offset : void 0,
+					crossBlockEnd: isCrossBlockEnd && isInField(selectionEnd) ? selectionEnd.offset : void 0
+				};
+			};
+			const selectBindings = () => {
+				if (!blockBindings?.[identifier]) return {};
+				const { __experimentalBlockBindingsSupportedAttributes } = select(store).getSettings();
+				if (!__experimentalBlockBindingsSupportedAttributes?.[blockName]) return {};
+				const relatedBinding = blockBindings[identifier];
+				const blockBindingsSource = (0, _wordpress_blocks.getBlockBindingsSource)(relatedBinding.source);
+				const blockBindingsContext = {};
+				if (blockBindingsSource?.usesContext?.length) for (const key of blockBindingsSource.usesContext) blockBindingsContext[key] = blockContext[key];
+				const _disableBoundBlock = !blockBindingsSource?.canUserEditValue?.({
+					select,
+					context: blockBindingsContext,
+					args: relatedBinding.args
+				});
+				if (hasValue) return {
+					disableBoundBlock: _disableBoundBlock,
+					bindingsPlaceholder: null,
+					bindingsLabel: null
+				};
+				const { getBlockAttributes } = select(store);
+				const blockAttributes = getBlockAttributes(clientId);
+				let clientSideFieldLabel = null;
+				if (blockBindingsSource?.getFieldsList) clientSideFieldLabel = blockBindingsSource.getFieldsList({
+					select,
+					context: blockBindingsContext
+				})?.find((item) => (0, import_es6.default)(item.args, relatedBinding?.args))?.label;
+				const bindingKey = clientSideFieldLabel ?? blockBindingsSource?.label;
+				const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Add %s"), bindingKey);
+				const _bindingsLabel = _disableBoundBlock ? relatedBinding?.args?.key || blockBindingsSource?.label : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Empty %s; start writing to edit its value"), relatedBinding?.args?.key || blockBindingsSource?.label);
+				return {
+					disableBoundBlock: _disableBoundBlock,
+					bindingsPlaceholder: blockAttributes?.placeholder || _bindingsPlaceholder,
+					bindingsLabel: _bindingsLabel
+				};
+			};
+			const selectIsEditingHost = (disableBoundBlock) => {
+				if (readOnly || disableBoundBlock || shouldDisableForPattern || !hasDefaultEditingMode || !isBlockSelected) return false;
+				const { getSelectedBlockClientId, canHostEditableRoot } = unlock$2(select(store));
+				return canHostEditableRoot(getSelectedBlockClientId());
+			};
+			const bindings = selectBindings();
 			return {
-				selectionStart: isSelected ? selectionStart.offset : void 0,
-				selectionEnd: isSelected ? selectionEnd.offset : void 0,
-				isSelected,
-				crossBlockStart: isCrossBlockEnd && isInField(selectionStart) ? selectionStart.offset : void 0,
-				crossBlockEnd: isCrossBlockEnd && isInField(selectionEnd) ? selectionEnd.offset : void 0
+				...selectSelection(),
+				...bindings,
+				isEditingHost: selectIsEditingHost(bindings.disableBoundBlock)
 			};
 		};
-		const { selectionStart, selectionEnd, isSelected, crossBlockStart, crossBlockEnd } = (0, _wordpress_data.useSelect)(selector, [
+		const { selectionStart, selectionEnd, isSelected, crossBlockStart, crossBlockEnd, disableBoundBlock, bindingsPlaceholder, bindingsLabel, isEditingHost } = (0, _wordpress_data.useSelect)(selectField, [
 			clientId,
 			identifier,
 			instanceId,
 			originalIsSelected,
 			isBlockSelected,
-			isBlockMultiSelected
-		]);
-		const { disableBoundBlock, bindingsPlaceholder, bindingsLabel } = (0, _wordpress_data.useSelect)((select) => {
-			if (!blockBindings?.[identifier]) return {};
-			const { __experimentalBlockBindingsSupportedAttributes } = select(store).getSettings();
-			if (!__experimentalBlockBindingsSupportedAttributes?.[blockName]) return {};
-			const relatedBinding = blockBindings[identifier];
-			const blockBindingsSource = (0, _wordpress_blocks.getBlockBindingsSource)(relatedBinding.source);
-			const blockBindingsContext = {};
-			if (blockBindingsSource?.usesContext?.length) for (const key of blockBindingsSource.usesContext) blockBindingsContext[key] = blockContext[key];
-			const _disableBoundBlock = !blockBindingsSource?.canUserEditValue?.({
-				select,
-				context: blockBindingsContext,
-				args: relatedBinding.args
-			});
-			if (adjustedValue.length > 0) return {
-				disableBoundBlock: _disableBoundBlock,
-				bindingsPlaceholder: null,
-				bindingsLabel: null
-			};
-			const { getBlockAttributes } = select(store);
-			const blockAttributes = getBlockAttributes(clientId);
-			let clientSideFieldLabel = null;
-			if (blockBindingsSource?.getFieldsList) clientSideFieldLabel = blockBindingsSource.getFieldsList({
-				select,
-				context: blockBindingsContext
-			})?.find((item) => (0, import_es6.default)(item.args, relatedBinding?.args))?.label;
-			const bindingKey = clientSideFieldLabel ?? blockBindingsSource?.label;
-			const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Add %s"), bindingKey);
-			const _bindingsLabel = _disableBoundBlock ? relatedBinding?.args?.key || blockBindingsSource?.label : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Empty %s; start writing to edit its value"), relatedBinding?.args?.key || blockBindingsSource?.label);
-			return {
-				disableBoundBlock: _disableBoundBlock,
-				bindingsPlaceholder: blockAttributes?.placeholder || _bindingsPlaceholder,
-				bindingsLabel: _bindingsLabel
-			};
-		}, [
+			isBlockMultiSelected,
 			blockBindings,
-			identifier,
 			blockName,
-			adjustedValue,
-			clientId,
-			blockContext
+			hasValue,
+			blockContext,
+			readOnly,
+			shouldDisableForPattern,
+			hasDefaultEditingMode
 		]);
-		const isInsidePatternOverrides = !!blockContext?.["pattern/overrides"];
-		const hasOverrideEnabled = blockBindings?.__default?.source === "core/pattern-overrides";
-		const shouldDisableEditing = readOnly || disableBoundBlock || isInsidePatternOverrides && !hasOverrideEnabled;
-		const isEditingHost = (0, _wordpress_data.useSelect)((select) => {
-			if (shouldDisableEditing || !hasDefaultEditingMode || !isBlockSelected) return false;
-			const { getSelectedBlockClientId, canHostEditableRoot } = unlock$2(select(store));
-			return canHostEditableRoot(getSelectedBlockClientId());
-		}, [
-			shouldDisableEditing,
-			hasDefaultEditingMode,
-			isBlockSelected
-		]);
+		const shouldDisableEditing = readOnly || disableBoundBlock || shouldDisableForPattern;
 		const { getSelectionStart, getSelectionEnd, getBlockRootClientId } = (0, _wordpress_data.useSelect)(store);
 		const { selectionChange, __unstableMarkLastChangeAsPersistent } = (0, _wordpress_data.useDispatch)(store);
 		const adjustedAllowedFormats = getAllowedFormats({
@@ -118430,47 +118437,50 @@ If there's a particular need for this, please submit a feature request at https:
 	*
 	* @return {Function} Wrapped component.
 	*/
-	const withLayoutStyles = (0, _wordpress_compose.createHigherOrderComponent)((BlockListBlock) => function WithLayoutStyles(props) {
-		const { clientId, name, attributes } = props;
-		const blockSupportsLayout = hasLayoutBlockSupport(name);
-		const layoutClasses = useLayoutClasses(attributes, name);
-		const extraProps = (0, _wordpress_data.useSelect)((select) => {
-			if (!blockSupportsLayout) return;
-			const { getSettings, getBlockSettings } = unlock$2(select(store));
-			const settings = getSettings();
-			const { disableLayoutStyles } = settings;
-			if (disableLayoutStyles) return;
-			const [blockGapSupport] = getBlockSettings(clientId, "spacing.blockGap");
-			const globalStyles = settings[globalStylesDataKey];
-			let variationBlockGapValue;
-			const className = attributes?.className;
-			if (className?.includes(VARIATION_PREFIX)) {
-				const { getBlockStyles } = select(_wordpress_blocks.store);
-				const registeredStyles = getBlockStyles(name);
-				const variationName = getVariationNameFromClass(className, registeredStyles);
-				variationBlockGapValue = variationName ? globalStyles?.blocks?.[name]?.variations?.[variationName]?.spacing?.blockGap : void 0;
-			}
-			return {
-				blockGapSupport,
-				globalBlockGapValue: variationBlockGapValue ?? globalStyles?.blocks?.[name]?.spacing?.blockGap ?? globalStyles?.spacing?.blockGap,
-				viewportSettings: settings?.__experimentalFeatures?.viewport
-			};
-		}, [
-			blockSupportsLayout,
-			clientId,
-			attributes?.className,
-			name
-		]);
-		if (!extraProps) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockListBlock, {
-			...props,
-			__unstableLayoutClassNames: blockSupportsLayout ? layoutClasses : void 0
-		});
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockWithLayoutStyles, {
-			block: BlockListBlock,
-			props,
-			layoutClasses,
-			...extraProps
-		});
+	const withLayoutStyles = (0, _wordpress_compose.createHigherOrderComponent)((BlockListBlock) => {
+		function WithLayoutStyles(props) {
+			const { clientId, name, attributes } = props;
+			const layoutClasses = useLayoutClasses(attributes, name);
+			const extraProps = (0, _wordpress_data.useSelect)((select) => {
+				const { getSettings, getBlockSettings } = unlock$2(select(store));
+				const settings = getSettings();
+				const { disableLayoutStyles } = settings;
+				if (disableLayoutStyles) return;
+				const [blockGapSupport] = getBlockSettings(clientId, "spacing.blockGap");
+				const globalStyles = settings[globalStylesDataKey];
+				let variationBlockGapValue;
+				const className = attributes?.className;
+				if (className?.includes(VARIATION_PREFIX)) {
+					const { getBlockStyles } = select(_wordpress_blocks.store);
+					const registeredStyles = getBlockStyles(name);
+					const variationName = getVariationNameFromClass(className, registeredStyles);
+					variationBlockGapValue = variationName ? globalStyles?.blocks?.[name]?.variations?.[variationName]?.spacing?.blockGap : void 0;
+				}
+				return {
+					blockGapSupport,
+					globalBlockGapValue: variationBlockGapValue ?? globalStyles?.blocks?.[name]?.spacing?.blockGap ?? globalStyles?.spacing?.blockGap,
+					viewportSettings: settings?.__experimentalFeatures?.viewport
+				};
+			}, [
+				clientId,
+				attributes?.className,
+				name
+			]);
+			if (!extraProps) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockListBlock, {
+				...props,
+				__unstableLayoutClassNames: layoutClasses
+			});
+			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockWithLayoutStyles, {
+				block: BlockListBlock,
+				props,
+				layoutClasses,
+				...extraProps
+			});
+		}
+		return function WithLayoutSupport(props) {
+			if (!hasLayoutBlockSupport(props.name)) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockListBlock, { ...props });
+			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WithLayoutStyles, { ...props });
+		};
 	}, "withLayoutStyles");
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/layout/addAttribute", addAttribute);
 	(0, _wordpress_hooks.addFilter)("editor.BlockListBlock", "core/editor/layout/with-layout-styles", withLayoutStyles);
