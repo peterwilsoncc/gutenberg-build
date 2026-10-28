@@ -85294,7 +85294,6 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/video/edit.mjs
 	const ALLOWED_MEDIA_TYPES = ["video"];
 	function VideoEdit({ isSelected: isSingleSelected, attributes, className, setAttributes, insertBlocksAfter, onReplace }) {
-		const videoPlayer = (0, _wordpress_element.useRef)();
 		const { id, controls, poster, src, tracks, width, height, autoplay, loop, muted, playsInline } = attributes;
 		const aspectRatio = width && height ? `${width} / ${height}` : void 0;
 		const videoStyle = {
@@ -85312,12 +85311,9 @@ Icon: ButtonIcon });
 			onChange: onSelectVideo,
 			onError: onUploadError
 		});
-		(0, _wordpress_element.useEffect)(() => {
-			if (videoPlayer.current) videoPlayer.current.load();
-		}, [poster]);
-		(0, _wordpress_element.useEffect)(() => {
-			if (prefersReducedMotion) videoPlayer.current?.pause();
-		}, [prefersReducedMotion]);
+		const videoRef = (0, _wordpress_compose.useRefEffect)((node) => {
+			node.load();
+		}, [poster, prefersReducedMotion]);
 		function onSelectVideo(media) {
 			if (!media || !media.url) {
 				setAttributes({
@@ -85439,7 +85435,7 @@ Icon: ButtonIcon });
 						inert: inertValue(!isSingleSelected),
 						poster,
 						src: src || temporaryURL,
-						ref: videoPlayer,
+						ref: videoRef,
 						autoPlay: autoplay && !prefersReducedMotion,
 						loop,
 						muted,
