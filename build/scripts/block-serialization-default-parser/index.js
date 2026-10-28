@@ -196,11 +196,7 @@
 					addFreeform();
 					return false;
 				}
-				if (1 === stackDepth) {
-					addBlockFromStack();
-					return false;
-				}
-				while (0 < stack.length) addBlockFromStack();
+				implicitlyCloseAllOpenBlocks();
 				return false;
 			case "void-block":
 				if (0 === stackDepth) {
@@ -228,8 +224,10 @@
 				}
 				const stackTop = stack.pop();
 				const html = document.substr(stackTop.prevOffset, startOffset - stackTop.prevOffset);
-				stackTop.block.innerHTML += html;
-				stackTop.block.innerContent.push(html);
+				if (html) {
+					stackTop.block.innerHTML += html;
+					stackTop.block.innerContent.push(html);
+				}
 				stackTop.prevOffset = startOffset + tokenLength;
 				addInnerBlock(stackTop.block, stackTop.tokenStart, stackTop.tokenLength, startOffset + tokenLength);
 				offset = startOffset + tokenLength;
@@ -345,6 +343,36 @@
 		}
 		if (null !== leadingHtmlStart) output.push(Freeform(document.substr(leadingHtmlStart, tokenStart - leadingHtmlStart)));
 		output.push(block);
+	}
+	/**
+	* Closes all open blocks and adds remaining blocks and freeform content to the output list.
+	*
+	* @since 24.3.0
+	*/
+	function implicitlyCloseAllOpenBlocks() {
+		let implicitlyClosed = null;
+		let lastFreeform = null;
+		while (stack.length > 0) {
+			const stackTop = stack.pop();
+			let html;
+			if (lastFreeform !== null) html = document.substr(stackTop.prevOffset, lastFreeform[1] - stackTop.prevOffset);
+			else html = document.substr(stackTop.prevOffset);
+			if (html) {
+				stackTop.block.innerHTML += html;
+				stackTop.block.innerContent.push(html);
+			}
+			lastFreeform = [stackTop.leadingHtmlStart ?? 0, stackTop.tokenStart];
+			if (implicitlyClosed !== null) {
+				stackTop.block.innerContent.push(null);
+				stackTop.block.innerBlocks.push(implicitlyClosed);
+			}
+			implicitlyClosed = stackTop.block;
+		}
+		if (lastFreeform !== null && lastFreeform[1] > lastFreeform[0]) {
+			const html = document.substr(lastFreeform[0], lastFreeform[1] - lastFreeform[0]);
+			output.push(Freeform(html));
+		}
+		if (implicitlyClosed !== null) output.push(implicitlyClosed);
 	}
 
 exports.parse = parse;
