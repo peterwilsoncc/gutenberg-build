@@ -3426,7 +3426,8 @@ var wp;
       ":focus",
       ":focus-visible",
       "::placeholder"
-    ]
+    ],
+    select: [":hover", ":focus", ":focus-visible", ":active"]
   };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
