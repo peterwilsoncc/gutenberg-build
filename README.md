@@ -5,12 +5,12 @@ This is a duplicate of the [WordPress/Gutenberg](https://github.com/WordPress/gu
 You are currently viewing the version build from the source:
 
 * Branch: `wp/7.2`
-* Commit: [WordPress/Gutenberg@`c1d05a08ade`](https://github.com/WordPress/gutenberg/commit/c1d05a08adea7b19b122dba55461ab1c2f491c0a), [Browse files](https://github.com/WordPress/gutenberg/tree/c1d05a08adea7b19b122dba55461ab1c2f491c0a)
+* Commit: [WordPress/Gutenberg@`280d29962db`](https://github.com/WordPress/gutenberg/commit/280d29962db4c10108b226dbb1a7ec32f70d404b), [Browse files](https://github.com/WordPress/gutenberg/tree/280d29962db4c10108b226dbb1a7ec32f70d404b)
 
 > [!NOTE]
 > This readme file has replaced the original version included in the upstream repository.
 >
-> The [original `README.md` file](https://github.com/WordPress/gutenberg/blob/c1d05a08adea7b19b122dba55461ab1c2f491c0a/README.md) file for this commit can be found in the upstream repository.
+> The [original `README.md` file](https://github.com/WordPress/gutenberg/blob/280d29962db4c10108b226dbb1a7ec32f70d404b/README.md) file for this commit can be found in the upstream repository.
 
 ## Pupose
 
