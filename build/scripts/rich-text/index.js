@@ -2452,9 +2452,13 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		let isPointerDown = false;
 		function onPointerDown() {
 			isPointerDown = true;
+			defaultView.addEventListener("pointerup", onPointerUp);
+			defaultView.addEventListener("pointercancel", onPointerUp);
 		}
 		function onPointerUp() {
 			isPointerDown = false;
+			defaultView.removeEventListener("pointerup", onPointerUp);
+			defaultView.removeEventListener("pointercancel", onPointerUp);
 		}
 		function onInput(event) {
 			if (isComposing) return;
@@ -2563,8 +2567,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const unsubscribeCompositionEnd = subscribeOwnedListener(element, "compositionend", onCompositionEnd, true);
 		const unsubscribeFocus = subscribeDelegatedListener$1(element, "focusin", onFocus);
 		const unsubscribePointerDown = subscribeDelegatedListener$1(element, "pointerdown", onPointerDown);
-		const unsubscribePointerUp = subscribeDelegatedListener$1(defaultView, "pointerup", onPointerUp);
-		const unsubscribePointerCancel = subscribeDelegatedListener$1(defaultView, "pointercancel", onPointerUp);
 		const unsubscribeSelectionChange = subscribeOwnedListener(element, "selectionchange", handleSelectionChange);
 		const unsubscribeEnsureSelectionSync = [
 			"keydown",
@@ -2579,8 +2581,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			unsubscribeCompositionEnd();
 			unsubscribeFocus();
 			unsubscribePointerDown();
-			unsubscribePointerUp();
-			unsubscribePointerCancel();
+			onPointerUp();
 			unsubscribeSelectionChange();
 			unsubscribeEnsureSelectionSync.forEach((unsubscribe) => unsubscribe());
 		};
