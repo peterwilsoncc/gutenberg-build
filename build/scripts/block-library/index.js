@@ -55547,6 +55547,9 @@ Icon: ButtonIcon });
 		const placeholder = (0, _wordpress_element.useMemo)(() => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PlaceholderPreview, {}), []);
 		const hasMenuItems = !!blocks?.length;
 		const showPlaceholder = !hasCustomPlaceholder && !hasMenuItems && !isSelected;
+		let renderAppender = false;
+		if (isSelected && !hasMenuItems) renderAppender = _wordpress_block_editor.InnerBlocks.ButtonBlockAppender;
+		else if (parentOrChildHasSelection || hasSelectedDescendant) renderAppender = _wordpress_block_editor.InnerBlocks.DefaultBlockAppender;
 		const innerBlocksProps = (0, _wordpress_block_editor.useInnerBlocksProps)({ className: "wp-block-navigation__container" }, {
 			value: blocks,
 			onInput,
@@ -55556,7 +55559,7 @@ Icon: ButtonIcon });
 			directInsert: true,
 			orientation,
 			templateLock,
-			renderAppender: isSelected || isImmediateParentOfSelectedBlock && !selectedBlockHasChildren || hasSelectedDescendant || parentOrChildHasSelection ? _wordpress_block_editor.InnerBlocks.ButtonBlockAppender : false,
+			renderAppender,
 			placeholder: showPlaceholder ? placeholder : void 0,
 			__experimentalCaptureToolbars: true,
 			__unstableDisableLayoutClassNames: true
@@ -59374,6 +59377,18 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/navigation-link/edit.mjs
 	const DEFAULT_BLOCK = { name: "core/navigation-link" };
 	const NESTING_BLOCK_NAMES = ["core/navigation-link", "core/navigation-submenu"];
+	/**
+	* Focuses the appender of the block list that contains the given element.
+	*
+	* The parent's appender changes from the button appender to the dropdown
+	* appender once it has items, so the appender that opened the Link UI may no
+	* longer be there to receive focus when the Link UI closes.
+	*
+	* @param {?Element} container The block list container element.
+	*/
+	function focusAppender(container) {
+		container?.querySelector(":scope > .block-list-appender button")?.focus();
+	}
 	function getMissingText(type) {
 		let missingText = "";
 		switch (type) {
@@ -59405,8 +59420,8 @@ Icon: ButtonIcon });
 		const ref = (0, _wordpress_element.useRef)();
 		const linkUIref = (0, _wordpress_element.useRef)();
 		const isNewLink = (0, _wordpress_element.useRef)(label === void 0);
-		const shouldSelectSubmenuAppenderOnClose = (0, _wordpress_element.useRef)(false);
-		const { isAtMaxNesting, isTopLevelLink, isParentOfSelectedBlock, hasChildren, parentBlockClientId, isSubmenu } = (0, _wordpress_data.useSelect)((select) => {
+		const shouldFocusAppenderOnClose = (0, _wordpress_element.useRef)(false);
+		const { isAtMaxNesting, isTopLevelLink, isParentOfSelectedBlock, hasChildren, parentBlockClientId } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockCount, getBlockName, getBlockRootClientId, hasSelectedInnerBlock, getBlockParentsByBlockName } = select(_wordpress_block_editor.store);
 			const rootClientId = getBlockRootClientId(clientId);
 			const parentBlockName = getBlockName(rootClientId);
@@ -59418,8 +59433,7 @@ Icon: ButtonIcon });
 				isTopLevelLink: isTopLevel,
 				isParentOfSelectedBlock: hasSelectedInnerBlock(clientId, true),
 				hasChildren: !!getBlockCount(clientId),
-				parentBlockClientId: parentBlockId,
-				isSubmenu: parentBlockName === "core/navigation-submenu"
+				parentBlockClientId: parentBlockId
 			};
 		}, [clientId, maxNestingLevel]);
 		const validateLinkStatus = useEnableLinkStatusValidation(clientId);
@@ -59472,10 +59486,8 @@ Icon: ButtonIcon });
 			if ((0, _wordpress_url.isURL)((0, _wordpress_url.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) selectLabelText(ref);
 			else {
 				selectBlock(clientId, null);
-				if (isSubmenu) {
-					const parentBlocks = getBlocks(parentBlockClientId);
-					if (parentBlocks.length === 1 && parentBlocks[0].clientId === clientId) shouldSelectSubmenuAppenderOnClose.current = true;
-				}
+				const parentBlocks = getBlocks(parentBlockClientId);
+				if (parentBlocks.length === 1 && parentBlocks[0].clientId === clientId) shouldFocusAppenderOnClose.current = true;
 			}
 		}, [
 			url,
@@ -59607,15 +59619,15 @@ Icon: ButtonIcon });
 							onClose: () => {
 								setIsLinkOpen(false);
 								if (!url && !hasUrlBinding && onReplace) {
+									const container = listItemRef.current?.parentElement;
+									const isOnlyChild = getBlocks(parentBlockClientId).length === 1;
 									onReplace([]);
+									if (isOnlyChild) container?.ownerDocument.defaultView.requestAnimationFrame(() => focusAppender(container));
 									return;
 								}
-								if (shouldSelectSubmenuAppenderOnClose.current) {
-									shouldSelectSubmenuAppenderOnClose.current = false;
-									if (listItemRef.current?.nextElementSibling) {
-										const appenderButton = listItemRef.current.nextElementSibling.querySelector(".block-editor-button-block-appender");
-										if (appenderButton) appenderButton.focus();
-									}
+								if (shouldFocusAppenderOnClose.current) {
+									shouldFocusAppenderOnClose.current = false;
+									focusAppender(listItemRef.current?.parentElement);
 								}
 							},
 							anchor: popoverAnchor,
@@ -59974,7 +59986,7 @@ Icon: ButtonIcon });
 		const isDraggingWithin = useIsDraggingWithin(listItemRef);
 		const itemLabelPlaceholder = (0, _wordpress_i18n.__)("Add text…");
 		const ref = (0, _wordpress_element.useRef)();
-		const { parentCount, isParentOfSelectedBlock, isImmediateParentOfSelectedBlock, hasChildren, selectedBlockHasChildren, onlyDescendantIsEmptyLink } = (0, _wordpress_data.useSelect)((select) => {
+		const { parentCount, isParentOfSelectedBlock, hasChildren, selectedBlockHasChildren, onlyDescendantIsEmptyLink } = (0, _wordpress_data.useSelect)((select) => {
 			const { hasSelectedInnerBlock, getSelectedBlockClientId, getBlockParentsByBlockName, getBlock, getBlockCount, getBlockOrder } = select(_wordpress_block_editor.store);
 			let _onlyDescendantIsEmptyLink;
 			const selectedBlockChildren = getBlockOrder(getSelectedBlockClientId());
@@ -59985,7 +59997,6 @@ Icon: ButtonIcon });
 			return {
 				parentCount: getBlockParentsByBlockName(clientId, "core/navigation-submenu").length,
 				isParentOfSelectedBlock: hasSelectedInnerBlock(clientId, true),
-				isImmediateParentOfSelectedBlock: hasSelectedInnerBlock(clientId, false),
 				hasChildren: !!getBlockCount(clientId),
 				selectedBlockHasChildren: !!selectedBlockChildren?.length,
 				onlyDescendantIsEmptyLink: _onlyDescendantIsEmptyLink
@@ -60053,7 +60064,7 @@ Icon: ButtonIcon });
 			defaultBlock: DEFAULT_BLOCK$1,
 			directInsert: true,
 			__experimentalCaptureToolbars: true,
-			renderAppender: isSelected || isImmediateParentOfSelectedBlock && !selectedBlockHasChildren || hasChildren ? _wordpress_block_editor.InnerBlocks.ButtonBlockAppender : false
+			renderAppender: hasChildren ? _wordpress_block_editor.InnerBlocks.DefaultBlockAppender : isSelected && _wordpress_block_editor.InnerBlocks.ButtonBlockAppender
 		});
 		const ParentElement = openSubmenusOnClick ? "button" : "a";
 		function transformToLink() {
