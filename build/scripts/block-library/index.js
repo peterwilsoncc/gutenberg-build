@@ -28120,16 +28120,10 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/utils/caption.mjs
 	function Caption({ attributeKey = "caption", attributes, setAttributes, isSelected, insertBlocksAfter, placeholder = (0, _wordpress_i18n.__)("Add caption"), label = (0, _wordpress_i18n.__)("Caption text"), showToolbarButton = true, excludeElementClassName, className, readOnly, tagName = "figcaption", addLabel = (0, _wordpress_i18n.__)("Add caption"), removeLabel = (0, _wordpress_i18n.__)("Remove caption"), icon = caption_default, ...props }) {
 		const caption$1 = attributes[attributeKey];
-		const prevCaption = (0, _wordpress_compose.usePrevious)(caption$1);
 		const isCaptionEmpty = _wordpress_block_editor.RichText.isEmpty(caption$1);
-		const isPrevCaptionEmpty = _wordpress_block_editor.RichText.isEmpty(prevCaption);
 		const [showCaption, setShowCaption] = (0, _wordpress_element.useState)(!isCaptionEmpty);
-		(0, _wordpress_element.useEffect)(() => {
-			if (!isCaptionEmpty && isPrevCaptionEmpty) setShowCaption(true);
-		}, [isCaptionEmpty, isPrevCaptionEmpty]);
-		(0, _wordpress_element.useEffect)(() => {
-			if (!isSelected && isCaptionEmpty) setShowCaption(false);
-		}, [isSelected, isCaptionEmpty]);
+		if (!isCaptionEmpty && !showCaption) setShowCaption(true);
+		if (!isSelected && isCaptionEmpty && showCaption) setShowCaption(false);
 		const ref = (0, _wordpress_element.useCallback)((node) => {
 			if (node && isCaptionEmpty) node.focus();
 		}, [isCaptionEmpty]);
@@ -30658,9 +30652,7 @@ Icon: ButtonIcon });
 			});
 			setIsEditingURL(false);
 		}
-		(0, _wordpress_element.useEffect)(() => {
-			if (!isSelected) setIsEditingURL(false);
-		}, [isSelected]);
+		if (!isSelected && isEditingURL) setIsEditingURL(false);
 		const linkValue = (0, _wordpress_element.useMemo)(() => ({
 			url,
 			opensInNewTab,
@@ -45760,16 +45752,7 @@ Icon: ButtonIcon });
 	}, usedLayoutType = "", hasInnerBlocks = false }) {
 		const { style, backgroundColor, textColor, fontSize } = attributes;
 		const [showPlaceholder, setShowPlaceholder] = (0, _wordpress_element.useState)(!hasInnerBlocks && !backgroundColor && !fontSize && !textColor && !style && usedLayoutType !== "flex" && usedLayoutType !== "grid");
-		(0, _wordpress_element.useEffect)(() => {
-			if (!!hasInnerBlocks || !!backgroundColor || !!fontSize || !!textColor || !!style || usedLayoutType === "flex") setShowPlaceholder(false);
-		}, [
-			backgroundColor,
-			fontSize,
-			textColor,
-			style,
-			usedLayoutType,
-			hasInnerBlocks
-		]);
+		if (showPlaceholder && (!!hasInnerBlocks || !!backgroundColor || !!fontSize || !!textColor || !!style || usedLayoutType === "flex")) setShowPlaceholder(false);
 		return [showPlaceholder, setShowPlaceholder];
 	}
 	/**
@@ -55270,7 +55253,7 @@ Icon: ButtonIcon });
 		if (status === "publish") return (0, _wordpress_html_entities.decodeEntities)(title);
 		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s (%2$s)"), (0, _wordpress_html_entities.decodeEntities)(title), status);
 	}
-	function NavigationMenuSelector({ currentMenuId, onSelectNavigationMenu, onSelectClassicMenu, onCreateNew, actionLabel, createNavigationMenuIsSuccess, createNavigationMenuIsError }) {
+	function NavigationMenuSelector({ currentMenuId, onSelectNavigationMenu, onSelectClassicMenu, onCreateNew, actionLabel }) {
 		const createActionLabel = (0, _wordpress_i18n.__)("Create from '%s'");
 		const [isUpdatingMenuRef, setIsUpdatingMenuRef] = (0, _wordpress_element.useState)(false);
 		actionLabel = actionLabel || createActionLabel;
@@ -55309,18 +55292,6 @@ Icon: ButtonIcon });
 		if (isResolvingNavigationMenus) selectorLabel = (0, _wordpress_i18n.__)("Loading…");
 		else if (noMenuSelected || noBlockMenus || menuUnavailable || navMenuHasBeenDeleted) selectorLabel = (0, _wordpress_i18n.__)("Choose or create a Navigation Menu");
 		else selectorLabel = currentTitle;
-		(0, _wordpress_element.useEffect)(() => {
-			if (isUpdatingMenuRef && (createNavigationMenuIsSuccess || createNavigationMenuIsError)) setIsUpdatingMenuRef(false);
-		}, [
-			hasResolvedNavigationMenus,
-			createNavigationMenuIsSuccess,
-			canUserCreateNavigationMenus,
-			createNavigationMenuIsError,
-			isUpdatingMenuRef,
-			menuUnavailable,
-			noBlockMenus,
-			noMenuSelected
-		]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
 			label: selectorLabel,
 			icon: more_vertical_default,
@@ -55359,8 +55330,11 @@ Icon: ButtonIcon });
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
 						onClick: async () => {
 							setIsUpdatingMenuRef(true);
-							await onCreateNew();
-							setIsUpdatingMenuRef(false);
+							try {
+								await onCreateNew();
+							} finally {
+								setIsUpdatingMenuRef(false);
+							}
 							onClose();
 						},
 						disabled: isUpdatingMenuRef || isResolvingNavigationMenus || !hasResolvedNavigationMenus,
@@ -57955,7 +57929,7 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/navigation/edit/navigation-list-view-header.mjs
 	const { useBlockDisplayTitle: useBlockDisplayTitle$1 } = unlock$1(_wordpress_block_editor.privateApis);
 	const actionLabel$1 = (0, _wordpress_i18n.__)("Switch to '%s'");
-	function NavigationListViewHeader({ clientId, blockEditingMode, currentMenuId, onSelectClassicMenu, onSelectNavigationMenu, onCreateNew, createNavigationMenuIsSuccess, createNavigationMenuIsError, isManageMenusButtonDisabled }) {
+	function NavigationListViewHeader({ clientId, blockEditingMode, currentMenuId, onSelectClassicMenu, onSelectNavigationMenu, onCreateNew, isManageMenusButtonDisabled }) {
 		const blockTitle = useBlockDisplayTitle$1({
 			clientId,
 			context: "list-view"
@@ -57971,8 +57945,6 @@ Icon: ButtonIcon });
 				onSelectClassicMenu,
 				onSelectNavigationMenu,
 				onCreateNew,
-				createNavigationMenuIsSuccess,
-				createNavigationMenuIsError,
 				actionLabel: actionLabel$1,
 				isManageMenusButtonDisabled
 			})]
@@ -58011,7 +57983,7 @@ Icon: ButtonIcon });
 		});
 	};
 	const MenuInspectorControls = (props) => {
-		const { clientId, createNavigationMenuIsSuccess, createNavigationMenuIsError, currentMenuId = null, onCreateNew, onSelectClassicMenu, onSelectNavigationMenu, isManageMenusButtonDisabled, blockEditingMode } = props;
+		const { clientId, currentMenuId = null, onCreateNew, onSelectClassicMenu, onSelectNavigationMenu, isManageMenusButtonDisabled, blockEditingMode } = props;
 		const { isSelectionWithinCurrentSection } = (0, _wordpress_element.useContext)(PrivateBlockContext);
 		const blockTitle = useBlockDisplayTitle({
 			clientId,
@@ -58030,8 +58002,6 @@ Icon: ButtonIcon });
 					onSelectClassicMenu,
 					onSelectNavigationMenu,
 					onCreateNew,
-					createNavigationMenuIsSuccess,
-					createNavigationMenuIsError,
 					isManageMenusButtonDisabled
 				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MainContent, {
 					...props,
@@ -58050,8 +58020,6 @@ Icon: ButtonIcon });
 					onSelectClassicMenu,
 					onSelectNavigationMenu,
 					onCreateNew,
-					createNavigationMenuIsSuccess,
-					createNavigationMenuIsError,
 					actionLabel,
 					isManageMenusButtonDisabled
 				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MainContent, {
@@ -58589,8 +58557,6 @@ Icon: ButtonIcon });
 		if (hasUnsavedBlocks && !isCreatingNavigationMenu) return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuInspectorControls, {
 				clientId,
-				createNavigationMenuIsSuccess,
-				createNavigationMenuIsError,
 				currentMenuId: ref,
 				isNavigationMenuMissing,
 				isManageMenusButtonDisabled,
@@ -58629,8 +58595,6 @@ Icon: ButtonIcon });
 		] });
 		if (ref && isNavigationMenuMissing) return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuInspectorControls, {
 			clientId,
-			createNavigationMenuIsSuccess,
-			createNavigationMenuIsError,
 			currentMenuId: ref,
 			isNavigationMenuMissing,
 			isManageMenusButtonDisabled,
@@ -58673,8 +58637,6 @@ Icon: ButtonIcon });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuInspectorControls, {
 				clientId,
-				createNavigationMenuIsSuccess,
-				createNavigationMenuIsError,
 				currentMenuId: ref,
 				isNavigationMenuMissing,
 				isManageMenusButtonDisabled,
@@ -60012,9 +59974,7 @@ Icon: ButtonIcon });
 		* The hook shouldn't be necessary but due to a focus loss happening
 		* when selecting a suggestion in the link popover, we force close on block unselection.
 		*/
-		(0, _wordpress_element.useEffect)(() => {
-			if (!isSelected) setIsLinkOpen(false);
-		}, [isSelected]);
+		if (!isSelected && isLinkOpen) setIsLinkOpen(false);
 		(0, _wordpress_element.useEffect)(() => {
 			if (isLinkOpen && url) {
 				if ((0, _wordpress_url.isURL)((0, _wordpress_url.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) selectLabelText(ref);
@@ -64079,7 +64039,7 @@ Icon: ButtonIcon });
 		const onUploadError = (0, _wordpress_element.useCallback)((message) => {
 			createErrorNotice(message, { type: "snackbar" });
 		}, [createErrorNotice]);
-		const [currentTrackClientId, setCurrentTrackClientId] = (0, _wordpress_element.useState)(null);
+		const [selectedTrackClientId, setCurrentTrackClientId] = (0, _wordpress_element.useState)(null);
 		const { innerBlockTracks } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlock: _getBlock } = select(_wordpress_block_editor.store);
 			return { innerBlockTracks: _getBlock(clientId)?.innerBlocks ?? EMPTY_ARRAY$8 };
@@ -64089,17 +64049,7 @@ Icon: ButtonIcon });
 			...block.attributes,
 			clientId: block.clientId
 		})), [validTracks]);
-		(0, _wordpress_element.useEffect)(() => {
-			if (validTracks.length === 0) {
-				if (currentTrackClientId !== null) setCurrentTrackClientId(null);
-				return;
-			}
-			if (!validTracks.some((block) => block.clientId === currentTrackClientId)) setCurrentTrackClientId(validTracks[0].clientId);
-		}, [
-			currentTrackClientId,
-			setCurrentTrackClientId,
-			validTracks
-		]);
+		const currentTrackClientId = validTracks.some((block) => block.clientId === selectedTrackClientId) ? selectedTrackClientId : validTracks[0]?.clientId ?? null;
 		(0, _wordpress_element.useEffect)(() => {
 			if (validTracks.length > 0 || innerBlockTracks.length === 0) return;
 			__unstableMarkNextChangeAsNotPersistent();
@@ -67651,9 +67601,7 @@ Icon: ButtonIcon });
 			});
 			setFeaturedImage(0);
 		};
-		(0, _wordpress_element.useEffect)(() => {
-			if (mediaUrl && temporaryURL) setTemporaryURL();
-		}, [mediaUrl, temporaryURL]);
+		if (mediaUrl && temporaryURL) setTemporaryURL();
 		const { createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const onUploadError = (message) => {
 			createErrorNotice(message, { type: "snackbar" });
@@ -76245,9 +76193,7 @@ Icon: ButtonIcon });
 		let logoImage;
 		const isLoading = siteLogoId === void 0 || isRequestingMediaItem;
 		if (isLoading) logoImage = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {});
-		(0, _wordpress_element.useEffect)(() => {
-			if (logoUrl && temporaryURL) setTemporaryURL();
-		}, [logoUrl, temporaryURL]);
+		if (logoUrl && temporaryURL) setTemporaryURL();
 		if (!!logoUrl || !!temporaryURL) logoImage = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SiteLogo, {
 			alt,
 			attributes,
@@ -80167,9 +80113,7 @@ Icon: ButtonIcon });
 				columnIndex
 			}));
 		}
-		(0, _wordpress_element.useEffect)(() => {
-			if (!isSingleSelected) setSelectedCell();
-		}, [isSingleSelected]);
+		if (!isSingleSelected && selectedCell) setSelectedCell();
 		(0, _wordpress_element.useEffect)(() => {
 			if (hasTableCreated) {
 				tableRef?.current?.querySelector("td div[contentEditable=\"true\"]")?.focus();
