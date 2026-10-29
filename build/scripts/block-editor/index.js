@@ -64548,6 +64548,7 @@ Icon: ButtonIcon });
 				if (selectedClientIds.length === blockClientIds.length) {
 					if (rootClientId) {
 						node.ownerDocument.defaultView.getSelection().removeAllRanges();
+						setContentEditableWrapper(node, false);
 						selectBlock(rootClientId);
 					}
 					return;
