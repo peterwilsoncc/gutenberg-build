@@ -1,4 +1,5 @@
 import { speak } from "@wordpress/a11y";
+import { useWidgetIdentity } from "@wordpress/widget-primitives";
 
 // \0rolldown/runtime.js
 var __create = Object.create;
@@ -1696,6 +1697,7 @@ function PreviewUrlBar({ siteUrl, siteIconUrl }) {
 	});
 }
 function SitePreview() {
+	const { title } = useWidgetIdentity();
 	const [isIframeLoading, setIsIframeLoading] = (0, import_element.useState)(true);
 	const [isVisitLoading, setIsVisitLoading] = (0, import_element.useState)(false);
 	const [isEditLoading, setIsEditLoading] = (0, import_element.useState)(false);
@@ -1734,7 +1736,7 @@ function SitePreview() {
 					className: style_module_default.iframe,
 					loading: "lazy",
 					scrolling: "no",
-					title: (0, import_i18n.__)("Site preview"),
+					title: title ?? (0, import_i18n.__)("Site preview"),
 					src,
 					onLoad: () => setIsIframeLoading(false),
 					inert: "true"

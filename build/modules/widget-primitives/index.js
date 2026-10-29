@@ -91,13 +91,40 @@ function WidgetActionsCollector({ children }) {
 	});
 }
 
+// packages/widget-primitives/build-module/widget-identity/widget-identity.mjs
+const WidgetIdentityContext = (0, import_element.createContext)({});
+/**
+* Provides widget-type identity to the render below it. Mounted by
+* `WidgetRender` from the `widgetType` it already holds; not part of the
+* public package surface.
+*
+* @param {WidgetIdentityProviderProps} props Component props.
+*/
+function WidgetIdentityProvider({ value, children }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WidgetIdentityContext.Provider, {
+		value,
+		children
+	});
+}
+/**
+* Reads the identity of the widget type this render belongs to. Defaults
+* to `{}` when no provider is above: consumers guard each field.
+*/
+function useWidgetIdentity() {
+	return (0, import_element.useContext)(WidgetIdentityContext);
+}
+
 // packages/widget-primitives/build-module/components/widget-render/widget-render.mjs
 function WidgetRender({ widgetType, attributes, setAttributes, resolveWidgetModule }) {
 	const WidgetComponent = getLazyWidgetComponent(widgetType.renderModule, resolveWidgetModule);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WidgetActionsCollector, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WidgetComponent, {
-		attributes,
-		setAttributes
-	}) });
+	const identity = (0, import_element.useMemo)(() => ({ title: widgetType.title }), [widgetType.title]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WidgetIdentityProvider, {
+		value: identity,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WidgetActionsCollector, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WidgetComponent, {
+			attributes,
+			setAttributes
+		}) })
+	});
 }
 
 // packages/widget-primitives/build-module/widget-host/host-link.mjs
@@ -439,5 +466,5 @@ function useWidgetTypes(records) {
 	return [widgetTypes, isResolvingWidgetTypes];
 }
 
-export { HostLink, WidgetHostProvider, WidgetRender, registerFieldType, registerIconResolver, useWidgetActions, useWidgetHost, useWidgetTypes };
+export { HostLink, WidgetHostProvider, WidgetRender, registerFieldType, registerIconResolver, useWidgetActions, useWidgetHost, useWidgetIdentity, useWidgetTypes };
 //# sourceMappingURL=index.js.map
