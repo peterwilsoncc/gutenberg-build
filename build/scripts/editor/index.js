@@ -54827,8 +54827,7 @@ Icon: ButtonIcon });
 				baseValue,
 				onChange: onChangeTypography,
 				settings,
-				isGlobalStyles: !hasSelectedState,
-				showInheritanceLabelIndicators: false
+				isGlobalStyles: !hasSelectedState
 			}),
 			hasBackgroundPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesBackgroundPanel$2, {
 				inheritedValue: inheritedStyleWithResolvedBackground,
@@ -54836,38 +54835,33 @@ Icon: ButtonIcon });
 				baseValue,
 				onChange: setStyle$1,
 				settings,
-				defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
-				showInheritanceLabelIndicators: false
+				defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES
 			}),
 			shouldShowFiltersPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesFiltersPanel, {
 				inheritedValue: inheritedStyleWithLayout,
 				value: styleWithLayout,
 				onChange: setStyle$1,
 				settings,
-				includeLayoutControls: true,
-				showInheritanceLabelIndicators: false
+				includeLayoutControls: true
 			}),
 			hasDimensionsPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesDimensionsPanel$2, {
 				inheritedValue: inheritedStyleWithLayout,
 				value: styleWithLayout,
 				onChange: onChangeDimensions,
 				settings,
-				includeLayoutControls: true,
-				showInheritanceLabelIndicators: false
+				includeLayoutControls: true
 			}),
 			hasBorderPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesBorderPanel$1, {
 				inheritedValue: inheritedStyle,
 				value: style,
 				onChange: onChangeBorders,
-				settings,
-				showInheritanceLabelIndicators: false
+				settings
 			}),
 			hasColorPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesColorPanel, {
 				inheritedValue: inheritedStyle,
 				value: style,
 				onChange: setStyle$1,
-				settings,
-				showInheritanceLabelIndicators: false
+				settings
 			}),
 			hasImageSettingsPanel && !hasSelectedState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ImageSettingsPanel, {
 				onChange: onChangeLightbox,
@@ -54974,30 +54968,26 @@ Icon: ButtonIcon });
 				inheritedValue: inheritedStyle,
 				value: style,
 				onChange: setStyle,
-				settings,
-				showInheritanceLabelIndicators: false
+				settings
 			}),
 			hasBackgroundPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesBackgroundPanel$1, {
 				inheritedValue: inheritedStyle,
 				value: style,
 				onChange: setStyle,
 				settings,
-				defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
-				showInheritanceLabelIndicators: false
+				defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES
 			}),
 			hasDimensionsPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesDimensionsPanel$1, {
 				inheritedValue: inheritedStyle,
 				value: style,
 				onChange: setStyle,
-				settings,
-				showInheritanceLabelIndicators: false
+				settings
 			}),
 			hasBorderPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesBorderPanel, {
 				inheritedValue: inheritedStyle,
 				value: style,
 				onChange: onChangeBorders,
-				settings,
-				showInheritanceLabelIndicators: false
+				settings
 			}),
 			canEditCSS && !isRoot && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.PanelBody, {
 				title: (0, _wordpress_i18n.__)("Advanced"),
@@ -66671,8 +66661,7 @@ Icon: ButtonIcon });
 			value: style,
 			onChange: setStyle,
 			settings,
-			defaultValues: BACKGROUND_DEFAULT_VALUES,
-			showInheritanceLabelIndicators: false
+			defaultValues: BACKGROUND_DEFAULT_VALUES
 		});
 	}
 
@@ -67566,8 +67555,7 @@ Icon: ButtonIcon });
 			onChange,
 			settings,
 			includeLayoutControls: true,
-			defaultControls: DEFAULT_CONTROLS,
-			showInheritanceLabelIndicators: false
+			defaultControls: DEFAULT_CONTROLS
 		});
 	}
 

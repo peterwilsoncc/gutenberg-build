@@ -16767,7 +16767,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* <Icon icon={ wordpress } />
 	* ```
 	*/
-	const Icon$14 = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+	const Icon$13 = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
 		const mergedStyle = icon.props.style || style ? {
 			...icon.props.style,
 			...style
@@ -25440,7 +25440,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	*
 	* Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 	*/
-	const Button$70 = /*#__PURE__*/ react$1.forwardRef(function Button(componentProps, forwardedRef) {
+	const Button$69 = /*#__PURE__*/ react$1.forwardRef(function Button(componentProps, forwardedRef) {
 		const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 		const { getButtonProps, buttonRef } = useButton({
 			disabled,
@@ -25453,7 +25453,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			props: [elementProps, getButtonProps]
 		});
 	});
-	Button$70.displayName = "Button";
+	Button$69.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -33629,12 +33629,12 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$69 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
+	const Button$68 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
 		const mergedClassName = clsx(global_css_defense_module_default$18.button, resets_module_default$21["box-sizing"], focus_module_default$8["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$58.button, style_module_default$58[`is-${tone}`], style_module_default$58[`is-${variant}`], style_module_default$58[`is-${size}`], loading && style_module_default$58["is-loading"], className);
 		(0, _wordpress_element.useEffect)(() => {
 			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
 		}, [loading, loadingAnnouncement]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$70, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$69, {
 			ref,
 			className: mergedClassName,
 			focusableWhenDisabled,
@@ -33762,7 +33762,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		"spinner": "_1322fe375ff021a3__spinner"
 	};
 	const ButtonIcon = (0, _wordpress_element.forwardRef)(function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 			ref,
 			icon,
 			className: clsx(style_module_default$57.icon, className),
@@ -33779,7 +33779,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$68 = Object.assign(Button$69, { 
+	const Button$67 = Object.assign(Button$68, { 
 	/**
 	* An icon component specifically designed to work well when rendered inside
 	* a `Button` component.
@@ -34861,7 +34861,7 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuCheckboxItemIndicator, {
 				keepMounted: true,
 				className: style_module_default$51["item-selection-indicator"],
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 					icon: check_default,
 					size: 16,
 					className: style_module_default$51["checkbox-selection-icon"],
@@ -36075,7 +36075,7 @@ Icon: ButtonIcon });
 	* description in the same item.
 	*/
 	const PrefixIcon = (0, _wordpress_element.forwardRef)(function MenuPrefixIcon({ className, size = 16, style, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 			...props,
 			ref,
 			size,
@@ -36409,7 +36409,7 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuRadioItemIndicator, {
 				keepMounted: true,
 				className: style_module_default$44["item-selection-indicator"],
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 					icon: radioCheck,
 					className: style_module_default$44["radio-selection-icon"],
 					"aria-hidden": "true"
@@ -36932,7 +36932,7 @@ Icon: ButtonIcon });
 					shortcut,
 					shortcutDescriptionId,
 					suffix,
-					trailing: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+					trailing: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 						className: style_module_default$42["submenu-chevron"],
 						icon: chevron_right_small_default,
 						size: 24,
@@ -37780,7 +37780,7 @@ Icon: ButtonIcon });
 		const [element, setElement] = (0, _wordpress_element.useState)(null);
 		const mergedRef = (0, _wordpress_compose.useMergeRefs)([forwardedRef, setElement]);
 		const isTruncated = useIsTruncated(element, measurementVersion);
-		const button = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$68, {
+		const button = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 			...isMeasurement ? getMeasurementProps(props) : mergeProps$1(props, {
 				onBlur: () => onLinkBlur(itemKey),
 				onFocus: () => onLinkFocus(itemKey)
@@ -38604,7 +38604,7 @@ Icon: ButtonIcon });
 		"overflow-trigger": "_09c54ab1870c2733__overflow-trigger"
 	};
 	const OverflowTriggerButton = (0, _wordpress_element.forwardRef)(function UnforwardedOverflowTriggerButton({ children, className, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$68, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 			...props,
 			ref,
 			className: clsx(style_module_default$33["overflow-trigger"], className),
@@ -39814,7 +39814,7 @@ Icon: ButtonIcon });
 							className: clsx(style_module_default$28["header-trigger-positioner"]),
 							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 								className: clsx(style_module_default$28["header-trigger-wrapper"], global_css_defense_module_default$7.div),
-								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 									icon: chevron_down_default,
 									className: style_module_default$28["header-trigger"]
 								})
@@ -40739,7 +40739,7 @@ Icon: ButtonIcon });
 			ref,
 			...targetProps,
 			disabled: disabled && !focusableWhenDisabled,
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$68, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 				...restProps,
 				size,
 				"aria-label": label,
@@ -40747,7 +40747,7 @@ Icon: ButtonIcon });
 				focusableWhenDisabled
 			}),
 			className: classes,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 				icon,
 				size: 24,
 				className: style_module_default$24.icon
@@ -40990,7 +40990,7 @@ Icon: ButtonIcon });
 			className: clsx(style_module_default$23.notice, style_module_default$23[`is-${intent}`], resets_module_default$9["box-sizing"]),
 			"data-wp-ui-notice-politeness": politeness,
 			"data-wp-ui-notice-spoken-message": spokenMessage,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [children, iconElement && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [children, iconElement && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 				className: style_module_default$23.icon,
 				icon: iconElement
 			})] })
@@ -53145,7 +53145,7 @@ Icon: ButtonIcon });
 			...restProps,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CheckboxIndicator, {
 				className: style_module_default$10["indicator-icon"],
-				render: (props, state) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+				render: (props, state) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 					...props,
 					icon: state.indeterminate ? reset_default : check_default,
 					viewBox: "4 4 16 16",
@@ -53295,7 +53295,7 @@ Icon: ButtonIcon });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("p", {
 			id,
 			className: clsx(global_css_defense_module_default$3.p, style_module_default$9.indicator, style_module_default$9[`is-${type}`]),
-			children: [type === "validating" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$20, { className: style_module_default$9["indicator-spinner"] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+			children: [type === "validating" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$20, { className: style_module_default$9["indicator-spinner"] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 				className: style_module_default$9["indicator-icon"],
 				icon: ICON[type],
 				size: 16,
@@ -55120,7 +55120,7 @@ Icon: ButtonIcon });
 			...restProps,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 				className: item_popup_module_default$3["item-icon"],
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 					icon: check_default,
 					className: item_popup_module_default$3["item-indicator-icon"],
 					size: 16
@@ -55738,7 +55738,7 @@ Icon: ButtonIcon });
 					placeholder,
 					className: select_trigger_module_default["trigger-value"],
 					children
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 					className: select_trigger_module_default["trigger-caret"],
 					icon: chevron_down_default,
 					size: 18
@@ -84838,7 +84838,7 @@ If there's a particular need for this, please submit a feature request at https:
 			type: "email",
 			prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout.Slot, {
 				padding: "minimal",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, { icon: envelope_default })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, { icon: envelope_default })
 			})
 		});
 	}
@@ -84855,7 +84855,7 @@ If there's a particular need for this, please submit a feature request at https:
 			type: "tel",
 			prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout.Slot, {
 				padding: "minimal",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, { icon: mobile_default })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, { icon: mobile_default })
 			})
 		});
 	}
@@ -84872,7 +84872,7 @@ If there's a particular need for this, please submit a feature request at https:
 			type: "url",
 			prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout.Slot, {
 				padding: "minimal",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, { icon: link_default })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, { icon: link_default })
 			})
 		});
 	}
@@ -98203,7 +98203,7 @@ If there's a particular need for this, please submit a feature request at https:
 							className: "block-editor-block-styles__row",
 							children: row.map((style) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Composite.Item, {
 								id: getCompositeItemId(instanceId, style),
-								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$68, {
+								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 									className: "block-editor-block-styles__item",
 									tone: "neutral",
 									variant: activeStyle.name === style.name ? "solid" : "outline"
@@ -107280,136 +107280,6 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PositionControlsPanel, {});
 	};
 
-// packages/block-editor/build-module/components/global-styles/inheritance/index.mjs
-/**
-	* Whether the inspector marks up which controls are showing an inherited
-	* Global Styles value.
-	*
-	* This gates the indicators only: the dotted underline on an inherited label
-	* and the blue dot that resets a local override. The inherited values
-	* themselves reach the controls either way. Behind the
-	* `gutenberg-global-styles-inheritance-ui` Gutenberg experiment, so the
-	* indicators are off unless someone opts in on the Experiments screen.
-	*
-	* Evaluated per call rather than once at module scope, so tests can toggle
-	* the experiment and so a later move to a store-backed setting only has to
-	* change this one place. Always returns a boolean: callers pass the result
-	* down as a prop, and `undefined` would trigger a receiving component's own
-	* default parameter.
-	*
-	* @return Whether the indicator treatment is enabled.
-	*/
-	const isGlobalStylesInheritanceIndicatorUIEnabled = () => !!window.__experimentalGlobalStylesInheritanceUI;
-	/**
-	* Returns props to spread onto a wrapping `<InheritanceToolsPanelItem>`
-	* so its descendant label picks up the inherited-from-Global-Styles
-	* visual treatment.
-	*
-	* When `isInherited` is true without a local override, the descendant
-	* label text receives the inherited-from-Global-Styles treatment
-	* (dotted underline). No dot is shown.
-	*
-	* When `hasLocalOverride` is true, a small reset dot is rendered as a
-	* sibling of the control exposing a "Reset to inherited value" action.
-	*
-	* The two states are mutually exclusive at the source. If both are passed,
-	* only the local-override class is returned.
-	*
-	* Returned object shape allows direct spread:
-	*
-	*     <InheritanceToolsPanelItem
-	*         { ...getInheritanceProps( isInherited, hasLocalOverride ) }
-	*         label={ __( 'Line height' ) }
-	*         …
-	*     >
-	*
-	* @param isInherited      Control is inheriting at rest.
-	* @param hasLocalOverride Local override is set AND
-	*                         there is an inherited value
-	*                         being overridden.
-	* @param [baseClassName]  Optional className(s) to fold
-	*                         into the returned `className`.
-	*
-	* @return Props for the wrapping
-	*                                  `InheritanceToolsPanelItem`.
-	*/
-	function getInheritanceProps(isInherited, hasLocalOverride, baseClassName) {
-		const inheritedOnly = !!isInherited && !hasLocalOverride;
-		const className = clsx(baseClassName, {
-			"is-inherited-from-global-styles": inheritedOnly,
-			"has-local-override-from-global-styles": !!hasLocalOverride
-		});
-		return {
-			...className ? { className } : {},
-			isInherited: inheritedOnly,
-			hasLocalOverride: !!hasLocalOverride
-		};
-	}
-	/**
-	* Renders the small always-visible reset button shown next to a control
-	* that holds a local override of an inherited Global Styles value. Used by
-	* `<InheritanceToolsPanelItem>` and the color/gradient controls.
-	*
-	* At rest the button shows a blue dot signalling the local override. On
-	* hover/focus the dot morphs into the `reset` (dash) icon and the button
-	* exposes a "Reset to inherited value" tooltip. Activating it clears the
-	* override so the control falls back to its inherited value — the same
-	* action the `ToolsPanel` menu performs via `onDeselect`.
-	*
-	* @return The reset button.
-	*/
-	function InheritanceResetButton({ onResetToInherited, className }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Button, {
-			__next40pxDefaultSize: false,
-			label: (0, _wordpress_i18n.__)("Reset to inherited value"),
-			showTooltip: true,
-			className: clsx("has-local-override-from-global-styles__reset", className),
-			onClick: (event) => {
-				event.preventDefault();
-				event.stopPropagation();
-				onResetToInherited?.();
-			},
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-				"aria-hidden": "true",
-				className: "has-local-override-from-global-styles__dot"
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, {
-				className: "has-local-override-from-global-styles__reset-icon",
-				icon: reset_default
-			})]
-		});
-	}
-	/**
-	* A `ToolsPanelItem` that reflects whether its control's value is inherited
-	* from Global Styles or locally overridden. The two states are mutually
-	* exclusive.
-	*
-	* - Inherited: the control label receives the inherited-from-Global-Styles
-	*   treatment (dotted underline) via the `is-inherited-from-global-styles`
-	*   class applied through `getInheritanceProps`. No dot is shown.
-	* - Local override: a reset dot is rendered as a plain sibling of the control
-	*   at the item's inline-end — never nested in the label — exposing the same
-	*   one-click reset the `ToolsPanel` options menu performs via `onDeselect`.
-	*
-	* Controls that render their own reset control next to a custom toggle (color,
-	* background image) pass `showLocalOverrideActionsInLabel={ false }` so the
-	* item does not render a second reset dot.
-	*
-	* @return The panel item.
-	*/
-	function InheritanceToolsPanelItem({ className, isInherited, hasLocalOverride, label, onDeselect, showLocalOverrideActionsInLabel = true, hasInlineEndToggle = false, children, ...rest }) {
-		const showResetAffordance = hasLocalOverride && showLocalOverrideActionsInLabel;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanelItem, {
-			className,
-			label,
-			onDeselect,
-			...rest,
-			children: [children, showResetAffordance && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				className: clsx("global-styles-inheritance-affordance", { "global-styles-inheritance-affordance--offset-toggle": hasInlineEndToggle }),
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceResetButton, { onResetToInherited: onDeselect })
-			})]
-		});
-	}
-
 // packages/block-editor/build-module/components/global-styles/color-gradient-dropdown-item.mjs
 /**
 	* Renders the dropdown content containing the color/gradient picker tabs.
@@ -107496,15 +107366,11 @@ If there's a particular need for this, please submit a feature request at https:
 			} : void 0
 		});
 	}
-	function ColorGradientDropdownItem({ label, hasValue, resetValue, isShownByDefault, indicators, tabs, colorGradientControlSettings, panelId, contrastWarning, className = "block-editor-tools-panel-color-gradient-settings__item", isPlaceholder = false, hasInheritedValue = false, showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled() }) {
+	function ColorGradientDropdownItem({ label, hasValue, resetValue, isShownByDefault, indicators, tabs, colorGradientControlSettings, panelId, contrastWarning, className = "block-editor-tools-panel-color-gradient-settings__item" }) {
 		const popoverProps = useToolsPanelItemPopoverProps();
 		const colorGradientDropdownButtonRef = (0, _wordpress_element.useRef)(void 0);
-		const itemClassName = clsx("block-editor-color-gradient-item", className);
-		const hasLocalOverride = showInheritanceLabelIndicators && hasValue() && hasInheritedValue;
-		const inheritanceProps = showInheritanceLabelIndicators ? getInheritanceProps(isPlaceholder, hasLocalOverride, itemClassName) : { className: itemClassName };
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-			...inheritanceProps,
-			showLocalOverrideActionsInLabel: false,
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+			className: clsx("block-editor-color-gradient-item", className),
 			hasValue,
 			label,
 			onDeselect: resetValue,
@@ -107532,14 +107398,7 @@ If there's a particular need for this, please submit a feature request at https:
 								label
 							})
 						}),
-						hasValue() && (hasLocalOverride ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceResetButton, {
-							className: "block-editor-panel-color-gradient-settings__reset",
-							onResetToInherited: () => {
-								resetValue();
-								if (isOpen) onToggle();
-								colorGradientDropdownButtonRef.current?.focus();
-							}
-						}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+						hasValue() && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 							__next40pxDefaultSize: true,
 							label: (0, _wordpress_i18n.__)("Reset"),
 							className: "block-editor-panel-color-gradient-settings__reset",
@@ -107550,7 +107409,7 @@ If there's a particular need for this, please submit a feature request at https:
 								if (isOpen) onToggle();
 								colorGradientDropdownButtonRef.current?.focus();
 							}
-						})),
+						}),
 						contrastWarning && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 							__next40pxDefaultSize: true,
 							size: "small",
@@ -107909,7 +107768,7 @@ If there's a particular need for this, please submit a feature request at https:
 		button: true,
 		caption: true
 	};
-	function ColorPanel({ as: Wrapper = ColorToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$5, label, children, contrastWarning, additionalElements, showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled() }) {
+	function ColorPanel({ as: Wrapper = ColorToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$5, label, children, contrastWarning, additionalElements }) {
 		const { colors, gradients, areCustomSolidsEnabled, areCustomGradientsEnabled, hasSolidColors, hasGradientColors, allColors, decodeValue, encodeGradientValue } = useColorGradientSettings(settings);
 		const decodeInheritedColor = (rawValue) => (0, _wordpress_style_engine.getCSSValueFromRawStyle)(decodeValue(rawValue));
 		const showLinkPanel = useHasLinkPanel(settings);
@@ -108041,8 +107900,6 @@ If there's a particular need for this, please submit a feature request at https:
 			resetValue: resetLink,
 			isShownByDefault: defaultControls.link,
 			indicators: [userLinkColor ?? linkColor, userHoverLinkColor ?? hoverLinkColor],
-			isPlaceholder: userLinkColor === void 0 && userHoverLinkColor === void 0 && (linkColor !== void 0 || hoverLinkColor !== void 0),
-			hasInheritedValue: linkColor !== void 0 || hoverLinkColor !== void 0,
 			contrastWarning,
 			tabs: [{
 				key: "link",
@@ -108116,8 +107973,6 @@ If there's a particular need for this, please submit a feature request at https:
 			const isElementTextPlaceholder = elementTextUserColor === void 0 && elementTextColor !== void 0;
 			const isElementBackgroundPlaceholder = elementBackgroundUserColor === void 0 && elementBackgroundColor !== void 0;
 			const isElementGradientPlaceholder = elementGradientUserColor === void 0 && elementGradient !== void 0;
-			const isElementPlaceholder = elementTextUserColor === void 0 && elementBackgroundUserColor === void 0 && elementGradientUserColor === void 0 && (elementTextColor !== void 0 || elementBackgroundColor !== void 0 || elementGradient !== void 0);
-			const hasElementInheritedValue = elementTextColor !== void 0 || elementBackgroundColor !== void 0 || elementGradient !== void 0;
 			items.push({
 				key: name,
 				label: elementLabel,
@@ -108125,8 +107980,6 @@ If there's a particular need for this, please submit a feature request at https:
 				resetValue: resetElement,
 				isShownByDefault: defaultControls[name],
 				indicators: supportsBackground ? [elementTextUserColor ?? elementTextColor, elementGradientUserColor ?? elementGradient ?? elementBackgroundUserColor ?? elementBackgroundColor] : [elementTextUserColor ?? elementTextColor],
-				isPlaceholder: isElementPlaceholder,
-				hasInheritedValue: hasElementInheritedValue,
 				tabs: [
 					hasSolidColors && {
 						key: "text",
@@ -108172,7 +108025,6 @@ If there's a particular need for this, please submit a feature request at https:
 				const { key, ...restItem } = item;
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColorGradientDropdownItem, {
 					...restItem,
-					showInheritanceLabelIndicators,
 					colorGradientControlSettings: {
 						colors,
 						disableCustomColors: !areCustomSolidsEnabled,
@@ -109059,7 +108911,7 @@ If there's a particular need for this, please submit a feature request at https:
 			children: renderPreviewContent()
 		}) : renderPreviewContent();
 	}
-	function BackgroundControlsPanel({ label, filename, url: imgUrl, children, onToggle: onToggleCallback = noop$1, hasImageValue, onReset, hasLocalOverride, containerRef }) {
+	function BackgroundControlsPanel({ label, filename, url: imgUrl, children, onToggle: onToggleCallback = noop$1, hasImageValue, onReset, containerRef }) {
 		const popoverProps = {
 			...useToolsPanelItemPopoverProps(),
 			className: "block-editor-global-styles-background-panel__popover"
@@ -109083,14 +108935,7 @@ If there's a particular need for this, please submit a feature request at https:
 					toggleProps,
 					as: "button",
 					onToggleCallback
-				}), onReset && (hasLocalOverride ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceResetButton, {
-					className: "block-editor-global-styles-background-panel__reset",
-					onResetToInherited: () => {
-						onReset();
-						if (isOpen) onToggle();
-						focusToggleButton(containerRef);
-					}
-				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+				}), onReset && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 					__next40pxDefaultSize: true,
 					label: (0, _wordpress_i18n.__)("Reset"),
 					className: "block-editor-global-styles-background-panel__reset",
@@ -109101,7 +108946,7 @@ If there's a particular need for this, please submit a feature request at https:
 						if (isOpen) onToggle();
 						focusToggleButton(containerRef);
 					}
-				}))] });
+				})] });
 			},
 			renderContent: () => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalDropdownContentWrapper, {
 				className: "block-editor-global-styles-background-panel__dropdown-content-wrapper",
@@ -109334,7 +109179,7 @@ If there's a particular need for this, please submit a feature request at https:
 			]
 		});
 	}
-	function BackgroundImagePanel$2({ value, onChange, inheritedValue = value, settings, defaultValues = {}, showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled() }) {
+	function BackgroundImagePanel$2({ value, onChange, inheritedValue = value, settings, defaultValues = {} }) {
 		const { globalStyles, _links } = (0, _wordpress_data.useSelect)((select) => {
 			const { getSettings } = select(store);
 			const _settings = getSettings();
@@ -109362,7 +109207,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const { title, url } = value?.background?.backgroundImage || { ...resolvedInheritedValue?.background?.backgroundImage };
 		const localHasImageValue = hasBackgroundImageValue(value);
 		const hasImageValue = localHasImageValue || hasBackgroundImageValue(resolvedInheritedValue);
-		const hasLocalOverride = showInheritanceLabelIndicators && localHasImageValue && hasBackgroundImageValue(resolvedInheritedValue);
 		const imageValue = value?.background?.backgroundImage || inheritedValue?.background?.backgroundImage;
 		const shouldShowBackgroundImageControls = hasImageValue && "none" !== imageValue && (settings?.background?.backgroundSize || settings?.background?.backgroundPosition || settings?.background?.backgroundRepeat);
 		const [isDropDownOpen, setIsDropDownOpen] = (0, _wordpress_element.useState)(false);
@@ -109376,7 +109220,6 @@ If there's a particular need for this, please submit a feature request at https:
 				url,
 				onToggle: setIsDropDownOpen,
 				hasImageValue,
-				hasLocalOverride,
 				onReset: localHasImageValue ? resetBackground : void 0,
 				containerRef,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalVStack, {
@@ -109545,7 +109388,7 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		});
 	}
-	function BackgroundImagePanel$1({ as: Wrapper = BackgroundToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS$4, defaultValues = {}, headerLabel = (0, _wordpress_i18n.__)("Background"), contrastWarning, showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled() }) {
+	function BackgroundImagePanel$1({ as: Wrapper = BackgroundToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS$4, defaultValues = {}, headerLabel = (0, _wordpress_i18n.__)("Background"), contrastWarning }) {
 		const { colors, gradients, allColors, areCustomSolidsEnabled, areCustomGradientsEnabled, hasSolidColors, hasGradientColors, decodeValue, encodeGradientValue } = useColorGradientSettings(settings);
 		const hasBackgroundGradientControl = useHasBackgroundControl(settings, "gradient");
 		const hasColorPanelBackgroundSupport = useHasBackgroundColorPanel(settings);
@@ -109623,9 +109466,6 @@ If there's a particular need for this, please submit a feature request at https:
 			if (!newGradient && isTextGradient) newValue = setImmutably(newValue, ["background", "backgroundClip"], void 0);
 			onChange(newValue);
 		};
-		const inheritanceProps = (isInherited, hasLocalOverride, classNames) => showInheritanceLabelIndicators ? getInheritanceProps(isInherited, hasLocalOverride, classNames) : { className: classNames };
-		const inheritedBackgroundImage = hasBackgroundImageValue({ background: { backgroundImage: inheritedValue?.background?.backgroundImage } });
-		const hasLocalBackgroundImage = hasBackgroundImageValue(value);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Wrapper, {
 			resetAllFilter,
 			value,
@@ -109633,9 +109473,8 @@ If there's a particular need for this, please submit a feature request at https:
 			panelId,
 			headerLabel,
 			children: [
-				showBackgroundImageControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(inheritedBackgroundImage && !hasLocalBackgroundImage, hasLocalBackgroundImage && inheritedBackgroundImage, "block-editor-color-gradient-item"),
-					showLocalOverrideActionsInLabel: false,
+				showBackgroundImageControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					className: "block-editor-color-gradient-item",
 					hasValue: () => hasBackgroundImageValue(value),
 					label: (0, _wordpress_i18n.__)("Image"),
 					onDeselect: resetBackground,
@@ -109647,8 +109486,7 @@ If there's a particular need for this, please submit a feature request at https:
 						settings,
 						inheritedValue,
 						defaultControls,
-						defaultValues,
-						showInheritanceLabelIndicators
+						defaultValues
 					})
 				}),
 				showBackgroundColorControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColorGradientDropdownItem, {
@@ -109658,9 +109496,6 @@ If there's a particular need for this, please submit a feature request at https:
 					isShownByDefault: defaultControls.backgroundColor,
 					indicators: [userBackgroundColor ?? backgroundColor],
 					contrastWarning,
-					showInheritanceLabelIndicators,
-					isPlaceholder: userBackgroundColor === void 0 && backgroundColor !== void 0,
-					hasInheritedValue: backgroundColor !== void 0,
 					tabs: [{
 						key: "background",
 						label: (0, _wordpress_i18n.__)("Color"),
@@ -109683,9 +109518,6 @@ If there's a particular need for this, please submit a feature request at https:
 					resetValue: resetGradient,
 					isShownByDefault: defaultControls.gradient,
 					indicators: [currentGradient ?? inheritedGradient],
-					showInheritanceLabelIndicators,
-					isPlaceholder: currentGradient === void 0 && inheritedGradient !== void 0,
-					hasInheritedValue: inheritedGradient !== void 0,
 					tabs: [{
 						key: "gradient",
 						label: (0, _wordpress_i18n.__)("Gradient"),
@@ -109709,9 +109541,6 @@ If there's a particular need for this, please submit a feature request at https:
 					resetValue: resetLegacyColorGradient,
 					isShownByDefault: defaultControls.gradient,
 					indicators: [userLegacyColorGradient ?? legacyColorGradient],
-					showInheritanceLabelIndicators,
-					isPlaceholder: userLegacyColorGradient === void 0 && legacyColorGradient !== void 0,
-					hasInheritedValue: legacyColorGradient !== void 0,
 					tabs: [{
 						key: "gradient",
 						label: (0, _wordpress_i18n.__)("Gradient"),
@@ -109729,8 +109558,8 @@ If there's a particular need for this, please submit a feature request at https:
 					},
 					panelId
 				}),
-				showBackgroundClipControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(!!inheritedClip && !hasLocalClip, hasLocalClip && inheritedClip !== void 0, "block-editor-background-panel__clip-item"),
+				showBackgroundClipControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					className: "block-editor-background-panel__clip-item",
 					label: (0, _wordpress_i18n.__)("Clip"),
 					hasValue: () => hasLocalClip && !isTextGradient,
 					onDeselect: resetBackgroundClip,
@@ -110689,9 +110518,8 @@ If there's a particular need for this, please submit a feature request at https:
 		const [quantity] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(rawValue);
 		return quantity;
 	}
-	function TypographyPanel$1({ as: Wrapper = TypographyToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS$3, isGlobalStyles = false, showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled(), contrastWarning }) {
+	function TypographyPanel$1({ as: Wrapper = TypographyToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS$3, isGlobalStyles = false, contrastWarning }) {
 		const { colors, gradients, allColors, areCustomSolidsEnabled, areCustomGradientsEnabled, hasGradientColors, decodeValue, encodeGradientValue } = useColorGradientSettings(settings);
-		const inheritanceProps = (isInherited, hasLocalOverride, className) => getInheritanceProps(showInheritanceLabelIndicators && isInherited, showInheritanceLabelIndicators && hasLocalOverride, className);
 		const hasTextColorEnabled = useHasTextPanel(settings);
 		const textColor = decodeValue(inheritedValue?.color?.text);
 		const userTextColor = decodeValue(value?.color?.text);
@@ -110731,7 +110559,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasFontFamilyEnabled = useHasFontFamilyControl(settings);
 		const inheritedFontFamily = decodeValue(inheritedValue?.typography?.fontFamily);
 		const fontFamily = decodeValue(value?.typography?.fontFamily) ?? inheritedFontFamily;
-		const isFontFamilyPlaceholder = !hasValue$1(value?.typography?.fontFamily) && hasValue$1(inheritedFontFamily);
 		const { fontFamilies, fontFamilyFaces } = (0, _wordpress_element.useMemo)(() => {
 			return getMergedFontFamiliesAndFontFamilyFaces(settings, fontFamily);
 		}, [settings, fontFamily]);
@@ -110959,7 +110786,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasTextShadowControl = useHasTextShadowControl(settings);
 		const inheritedTextShadow = inheritedValue?.typography?.textShadow;
 		const textShadow = value?.typography?.textShadow ?? inheritedTextShadow;
-		const isTextShadowPlaceholder = !hasValue$1(value?.typography?.textShadow) && hasValue$1(inheritedTextShadow);
 		const setTextShadow = (newValue) => {
 			onChange(setImmutably(value, ["typography", "textShadow"], newValue || void 0));
 		};
@@ -111003,9 +110829,6 @@ If there's a particular need for this, please submit a feature request at https:
 					isShownByDefault: defaultControls.textColor,
 					indicators: [userTextColor ?? textColor],
 					contrastWarning,
-					showInheritanceLabelIndicators,
-					isPlaceholder: userTextColor === void 0 && textColor !== void 0,
-					hasInheritedValue: textColor !== void 0,
 					tabs: [{
 						key: "text",
 						label: (0, _wordpress_i18n.__)("Color"),
@@ -111028,9 +110851,6 @@ If there's a particular need for this, please submit a feature request at https:
 					resetValue: resetTextGradient,
 					isShownByDefault: defaultControls.textGradient,
 					indicators: [userTextGradient ?? inheritedTextGradient],
-					showInheritanceLabelIndicators,
-					isPlaceholder: isTextGradientPlaceholder,
-					hasInheritedValue: inheritedTextGradient !== void 0,
 					tabs: [{
 						key: "text-gradient",
 						label: (0, _wordpress_i18n.__)("Gradient"),
@@ -111048,8 +110868,7 @@ If there's a particular need for this, please submit a feature request at https:
 					},
 					panelId
 				}),
-				hasFontFamilyEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isFontFamilyPlaceholder, hasFontFamily() && inheritedFontFamily !== void 0),
+				hasFontFamilyEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Font"),
 					hasValue: hasFontFamily,
 					onDeselect: resetFontFamily,
@@ -111061,11 +110880,9 @@ If there's a particular need for this, please submit a feature request at https:
 						onChange: setFontFamily
 					})
 				}),
-				hasFontSizeEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isFontSizePlaceholder, hasFontSize() && rawInheritedFontSize !== void 0),
+				hasFontSizeEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Size"),
 					hasValue: hasFontSize,
-					hasInlineEndToggle: true,
 					onDeselect: resetFontSize,
 					isShownByDefault: defaultControls.fontSize,
 					panelId,
@@ -111079,8 +110896,7 @@ If there's a particular need for this, please submit a feature request at https:
 						withSlider: true
 					})
 				}),
-				hasAppearanceControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isFontAppearancePlaceholder, hasFontAppearance() && (inheritedFontStyle !== void 0 || inheritedFontWeight !== void 0)),
+				hasAppearanceControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: appearanceControlLabel,
 					hasValue: hasFontAppearance,
 					onDeselect: resetFontAppearance,
@@ -111097,8 +110913,8 @@ If there's a particular need for this, please submit a feature request at https:
 						fontFamilyFaces
 					})
 				}),
-				hasLineHeightEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isLineHeightPlaceholder, hasLineHeight() && inheritedLineHeight !== void 0, "single-column"),
+				hasLineHeightEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					className: "single-column",
 					label: (0, _wordpress_i18n.__)("Line height"),
 					hasValue: hasLineHeight,
 					onDeselect: resetLineHeight,
@@ -111111,8 +110927,8 @@ If there's a particular need for this, please submit a feature request at https:
 						...isLineHeightPlaceholder ? { placeholder: getNumericPlaceholder$1(inheritedLineHeight) } : {}
 					})
 				}),
-				hasLetterSpacingControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isLetterSpacingPlaceholder, hasLetterSpacing() && inheritedLetterSpacing !== void 0, "single-column"),
+				hasLetterSpacingControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					className: "single-column",
 					label: (0, _wordpress_i18n.__)("Letter spacing"),
 					hasValue: hasLetterSpacing,
 					onDeselect: resetLetterSpacing,
@@ -111125,8 +110941,7 @@ If there's a particular need for this, please submit a feature request at https:
 						placeholder: isLetterSpacingPlaceholder ? getNumericPlaceholder$1(inheritedLetterSpacing) : void 0
 					})
 				}),
-				hasTextIndentControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isTextIndentPlaceholder, hasTextIndent() && inheritedTextIndent !== void 0),
+				hasTextIndentControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Line indent"),
 					hasValue: hasTextIndent,
 					onDeselect: resetTextIndent,
@@ -111146,8 +110961,8 @@ If there's a particular need for this, please submit a feature request at https:
 						help: textIndentHelp
 					})]
 				}),
-				hasTextColumnsControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isTextColumnsPlaceholder, hasTextColumns() && inheritedTextColumns !== void 0, "single-column"),
+				hasTextColumnsControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					className: "single-column",
 					label: (0, _wordpress_i18n.__)("Columns"),
 					hasValue: hasTextColumns,
 					onDeselect: resetTextColumns,
@@ -111164,8 +110979,8 @@ If there's a particular need for this, please submit a feature request at https:
 						initialPosition: 1
 					})
 				}),
-				hasTextDecorationControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isTextDecorationPlaceholder, hasTextDecoration() && inheritedTextDecoration !== void 0, "single-column"),
+				hasTextDecorationControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					className: "single-column",
 					label: (0, _wordpress_i18n.__)("Decoration"),
 					hasValue: hasTextDecoration,
 					onDeselect: resetTextDecoration,
@@ -111177,8 +110992,8 @@ If there's a particular need for this, please submit a feature request at https:
 						__unstableInputWidth: "auto"
 					})
 				}),
-				hasWritingModeControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isWritingModePlaceholder, hasWritingMode() && inheritedWritingMode !== void 0, "single-column"),
+				hasWritingModeControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					className: "single-column",
 					label: (0, _wordpress_i18n.__)("Orientation"),
 					hasValue: hasWritingMode,
 					onDeselect: resetWritingMode,
@@ -111189,8 +111004,7 @@ If there's a particular need for this, please submit a feature request at https:
 						onChange: setWritingModeWithInheritedCommit
 					})
 				}),
-				hasTextTransformControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isTextTransformPlaceholder, hasTextTransform() && inheritedTextTransform !== void 0),
+				hasTextTransformControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Letter case"),
 					hasValue: hasTextTransform,
 					onDeselect: resetTextTransform,
@@ -111203,8 +111017,7 @@ If there's a particular need for this, please submit a feature request at https:
 						isBlock: true
 					})
 				}),
-				hasTextShadowControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isTextShadowPlaceholder, hasTextShadow() && inheritedTextShadow !== void 0),
+				hasTextShadowControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Text shadow"),
 					hasValue: hasTextShadow,
 					onDeselect: resetTextShadow,
@@ -111215,8 +111028,7 @@ If there's a particular need for this, please submit a feature request at https:
 						onChange: setTextShadow
 					})
 				}),
-				hasTextAlignmentControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isTextAlignPlaceholder, hasTextAlign() && inheritedTextAlign !== void 0),
+				hasTextAlignmentControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Text alignment"),
 					hasValue: hasTextAlign,
 					onDeselect: resetTextAlign,
@@ -112839,7 +112651,7 @@ If there's a particular need for this, please submit a feature request at https:
 				closeDelay: 200,
 				"aria-label": moreInfoLabel,
 				className: "block-editor-global-styles-state-control__badge-infotip",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$14, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
 					icon: info_default,
 					size: 20
 				})
@@ -115010,7 +114822,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/dimensions-tool/aspect-ratio-tool.mjs
-	function AspectRatioTool({ panelId, value, onChange = () => {}, options, defaultValue = "auto", hasValue, isShownByDefault = true, className, isInherited, hasLocalOverride }) {
+	function AspectRatioTool({ panelId, value, onChange = () => {}, options, defaultValue = "auto", hasValue, isShownByDefault = true, className }) {
 		const [defaultRatios, themeRatios, showDefaultRatios] = useSettings("dimensions.aspectRatios.default", "dimensions.aspectRatios.theme", "dimensions.defaultAspectRatios");
 		const themeOptions = themeRatios?.map(({ name, ratio }) => ({
 			label: name,
@@ -115036,10 +114848,8 @@ If there's a particular need for this, please submit a feature request at https:
 		];
 		const resolvedOptions = options ?? aspectRatioOptions;
 		const displayValue = value === void 0 || value === null || value === "auto" ? "auto" : findAspectRatioOption(value, resolvedOptions)?.value ?? "custom";
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 			className,
-			isInherited,
-			hasLocalOverride,
 			hasValue: hasValue ? hasValue : () => displayValue !== defaultValue,
 			label: (0, _wordpress_i18n.__)("Aspect ratio"),
 			onDeselect: () => onChange(void 0),
@@ -115056,22 +114866,6 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/block-editor/build-module/components/global-styles/dimensions-panel.mjs
 	const AXIAL_SIDES = ["horizontal", "vertical"];
-	/**
-	* Determines whether a spacing control (`BoxControl` or `SpacingSizesControl`)
-	* renders its linked/unlink toggle button, which the local-override reset dot
-	* offsets itself against.
-	*
-	* @param sides            Configurable sides for the control.
-	* @param isPresetsControl Whether the presets-based
-	*                         `SpacingSizesControl` is used.
-	*
-	* @return Whether the toggle button is rendered.
-	*/
-	function hasSpacingToggle(sides, isPresetsControl) {
-		if (sides?.length === 1) return false;
-		if (isPresetsControl) return !(sides?.includes("horizontal") && sides?.includes("vertical") && sides?.length === 2);
-		return true;
-	}
 	function useHasDimensionsPanel(settings, styleState = DEFAULT_BLOCK_STYLE_STATE) {
 		return hasContentSize(settings) || hasWideSize(settings) || hasPadding(settings) || hasMargin(settings) || hasGap(settings) || hasHeight(settings) || hasMinHeight(settings) || hasMinWidth(settings) || hasWidth(settings) || hasAspectRatio(settings, styleState) || hasChildLayout(settings, styleState);
 	}
@@ -115223,30 +115017,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const first = values[0];
 		return values.every((v) => v === first) ? first : void 0;
 	}
-	/**
-	* Returns whether a sides object (top/right/bottom/left) or shorthand string
-	* holds any value on at least one side.
-	*
-	* Unlike `getCommonSidesValue`, this does not require every side to be defined
-	* or equal. It is used to drive the inherited-from-Global-Styles label
-	* treatment and the local-override dot, which should reflect the mere presence
-	* of an inherited value regardless of whether the individual sides match (a
-	* constraint that only applies to BoxControl's single-string placeholder).
-	*
-	* @param sidesValue The sides shape.
-	* @return Whether any side holds a value.
-	*/
-	function hasAnySideValue(sidesValue) {
-		if (!hasValue(sidesValue)) return false;
-		if (typeof sidesValue === "string") return sidesValue !== "";
-		if (typeof sidesValue !== "object") return false;
-		return [
-			"top",
-			"right",
-			"bottom",
-			"left"
-		].some((side) => hasValue(sidesValue[side]));
-	}
 	function splitGapValue(value, isAxialGap) {
 		if (!hasValue(value)) return value;
 		if (typeof value === "string") return isAxialGap ? {
@@ -115287,7 +115057,7 @@ If there's a particular need for this, please submit a feature request at https:
 		aspectRatio: true,
 		childLayout: true
 	};
-	function DimensionsPanel$1({ as: Wrapper = DimensionsToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$2, onVisualize = () => {}, includeLayoutControls = false, allowAxialBlockGap = true, styleState = DEFAULT_BLOCK_STYLE_STATE, showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled() }) {
+	function DimensionsPanel$1({ as: Wrapper = DimensionsToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$2, onVisualize = () => {}, includeLayoutControls = false, allowAxialBlockGap = true, styleState = DEFAULT_BLOCK_STYLE_STATE }) {
 		const { dimensions, spacing } = settings;
 		const decodeValue = (rawValue) => {
 			if (rawValue && typeof rawValue === "object") return Object.keys(rawValue).reduce((acc, key) => {
@@ -115302,7 +115072,6 @@ If there's a particular need for this, please submit a feature request at https:
 				spacing
 			} }, "", rawValue);
 		};
-		const inheritanceProps = (isInherited, hasLocalOverride, className) => getInheritanceProps(showInheritanceLabelIndicators && isInherited, showInheritanceLabelIndicators && hasLocalOverride, className);
 		const showSpacingPresetsControl = hasSpacingPresets(settings);
 		const units = (0, _wordpress_components.__experimentalUseCustomUnits)({ availableUnits: settings?.spacing?.units || [
 			"%",
@@ -115367,8 +115136,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const paddingValues = hasValue(value?.spacing?.padding) ? localPaddingValues : inheritedPaddingValues;
 		const inheritedPaddingPlaceholder = getCommonSidesValue(inheritedPaddingValues);
 		const isPaddingPlaceholder = !hasValue(value?.spacing?.padding) && inheritedPaddingPlaceholder !== void 0;
-		const hasInheritedPadding = hasAnySideValue(inheritedPaddingValues);
-		const isPaddingInherited = !hasValue(value?.spacing?.padding) && hasInheritedPadding;
 		const paddingSides = Array.isArray(settings?.spacing?.padding) ? settings?.spacing?.padding : (settings?.spacing?.padding)?.sides;
 		const isAxialPadding = paddingSides && paddingSides.some((side) => AXIAL_SIDES.includes(side));
 		const setPaddingValues = (newPaddingValues) => {
@@ -115384,8 +115151,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const marginValues = hasValue(value?.spacing?.margin) ? localMarginValues : inheritedMarginValues;
 		const inheritedMarginPlaceholder = getCommonSidesValue(inheritedMarginValues);
 		const isMarginPlaceholder = !hasValue(value?.spacing?.margin) && inheritedMarginPlaceholder !== void 0;
-		const hasInheritedMargin = hasAnySideValue(inheritedMarginValues);
-		const isMarginInherited = !hasValue(value?.spacing?.margin) && hasInheritedMargin;
 		const marginSides = Array.isArray(settings?.spacing?.margin) ? settings?.spacing?.margin : (settings?.spacing?.margin)?.sides;
 		const isAxialMargin = marginSides && marginSides.some((side) => AXIAL_SIDES.includes(side));
 		const setMarginValues = (newMarginValues) => {
@@ -115467,7 +115232,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const localAspectRatioValue = decodeValue(value?.dimensions?.aspectRatio);
 		const inheritedAspectRatioValue = decodeValue(inheritedValue?.dimensions?.aspectRatio);
 		const aspectRatioValue = localAspectRatioValue ?? inheritedAspectRatioValue;
-		const isAspectRatioPlaceholder = !hasValue(value?.dimensions?.aspectRatio) && hasValue(inheritedAspectRatioValue);
 		const setAspectRatioValue = (newValue) => {
 			const tempValue = setImmutably(value, ["dimensions", "aspectRatio"], newValue);
 			onChange(setImmutably(tempValue, ["dimensions", "minHeight"], void 0));
@@ -115495,8 +115259,7 @@ If there's a particular need for this, please submit a feature request at https:
 					className: "span-columns",
 					children: (0, _wordpress_i18n.__)("Set the width of the main content area.")
 				}),
-				showContentSizeControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isContentSizePlaceholder, hasUserSetContentSizeValue() && inheritedContentSizeValue !== void 0),
+				showContentSizeControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Content width"),
 					hasValue: hasUserSetContentSizeValue,
 					onDeselect: resetContentSizeValue,
@@ -115517,8 +115280,7 @@ If there's a particular need for this, please submit a feature request at https:
 						})
 					})
 				}),
-				showWideSizeControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isWideSizePlaceholder, hasUserSetWideSizeValue() && inheritedWideSizeValue !== void 0),
+				showWideSizeControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Wide width"),
 					hasValue: hasUserSetWideSizeValue,
 					onDeselect: resetWideSizeValue,
@@ -115539,13 +115301,12 @@ If there's a particular need for this, please submit a feature request at https:
 						})
 					})
 				}),
-				showPaddingControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(InheritanceToolsPanelItem, {
+				showPaddingControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasPaddingValue,
 					label: (0, _wordpress_i18n.__)("Padding"),
-					hasInlineEndToggle: hasSpacingToggle(paddingSides, showSpacingPresetsControl),
 					onDeselect: resetPaddingValue,
 					isShownByDefault: defaultControls.padding ?? DEFAULT_CONTROLS$2.padding,
-					...inheritanceProps(isPaddingInherited, hasPaddingValue() && hasInheritedPadding, { "tools-panel-item-spacing": showSpacingPresetsControl }),
+					className: clsx({ "tools-panel-item-spacing": showSpacingPresetsControl }),
 					panelId,
 					children: [!showSpacingPresetsControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BoxControl, {
 						values: localPaddingValues,
@@ -115571,13 +115332,12 @@ If there's a particular need for this, please submit a feature request at https:
 						onMouseOut: onMouseLeaveControls
 					})]
 				}),
-				showMarginControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(InheritanceToolsPanelItem, {
+				showMarginControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasMarginValue,
 					label: (0, _wordpress_i18n.__)("Margin"),
-					hasInlineEndToggle: hasSpacingToggle(marginSides, showSpacingPresetsControl),
 					onDeselect: resetMarginValue,
 					isShownByDefault: defaultControls.margin ?? DEFAULT_CONTROLS$2.margin,
-					...inheritanceProps(isMarginInherited, hasMarginValue() && hasInheritedMargin, { "tools-panel-item-spacing": showSpacingPresetsControl }),
+					className: clsx({ "tools-panel-item-spacing": showSpacingPresetsControl }),
 					panelId,
 					children: [!showSpacingPresetsControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BoxControl, {
 						values: localMarginValues,
@@ -115611,13 +115371,12 @@ If there's a particular need for this, please submit a feature request at https:
 						onMouseOut: onMouseLeaveControls
 					})]
 				}),
-				showGapControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(InheritanceToolsPanelItem, {
+				showGapControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasGapValue,
 					label: (0, _wordpress_i18n.__)("Block spacing"),
-					hasInlineEndToggle: isAxialGap,
 					onDeselect: resetGapValue,
 					isShownByDefault: defaultControls.blockGap ?? DEFAULT_CONTROLS$2.blockGap,
-					...inheritanceProps(isGapPlaceholder, hasGapValue() && inheritedGapRaw !== void 0, {
+					className: clsx({
 						"tools-panel-item-spacing": showSpacingPresetsControl,
 						"single-column": !showSpacingPresetsControl && !isAxialGap
 					}),
@@ -115656,8 +115415,7 @@ If there's a particular need for this, please submit a feature request at https:
 					showGridSpanDefaults: !hasViewportBlockStyleState(styleState),
 					isShownByDefault: defaultControls.childLayout ?? DEFAULT_CONTROLS$2.childLayout
 				}),
-				showMinHeightControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isMinHeightPlaceholder, hasMinHeightValue() && inheritedMinHeightValue !== void 0),
+				showMinHeightControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasMinHeightValue,
 					label: (0, _wordpress_i18n.__)("Minimum height"),
 					onDeselect: resetMinHeightValue,
@@ -115671,8 +115429,7 @@ If there's a particular need for this, please submit a feature request at https:
 						dimensionSizes: dimensions?.dimensionSizes
 					})
 				}),
-				showMinWidthControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isMinWidthPlaceholder, hasMinWidthValue() && inheritedMinWidthValue !== void 0),
+				showMinWidthControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasMinWidthValue,
 					label: (0, _wordpress_i18n.__)("Minimum width"),
 					onDeselect: resetMinWidthValue,
@@ -115686,8 +115443,7 @@ If there's a particular need for this, please submit a feature request at https:
 						dimensionSizes: dimensions?.dimensionSizes
 					})
 				}),
-				showHeightControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isHeightPlaceholder, hasHeightValue() && inheritedHeightValue !== void 0),
+				showHeightControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasHeightValue,
 					label: (0, _wordpress_i18n.__)("Height"),
 					onDeselect: resetHeightValue,
@@ -115701,8 +115457,7 @@ If there's a particular need for this, please submit a feature request at https:
 						dimensionSizes: dimensions?.dimensionSizes
 					})
 				}),
-				showWidthControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isWidthPlaceholder, hasWidthValue() && inheritedWidthValue !== void 0),
+				showWidthControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasWidthValue,
 					label: (0, _wordpress_i18n.__)("Width"),
 					onDeselect: resetWidthValue,
@@ -115721,7 +115476,6 @@ If there's a particular need for this, please submit a feature request at https:
 					value: aspectRatioValue,
 					onChange: setAspectRatioValue,
 					panelId,
-					...inheritanceProps(isAspectRatioPlaceholder, hasAspectRatioValue() && inheritedAspectRatioValue !== void 0),
 					isShownByDefault: defaultControls.aspectRatio ?? DEFAULT_CONTROLS$2.aspectRatio
 				})
 			]
@@ -115802,14 +115556,13 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: label })] });
 	}
-	function ShadowPopover({ shadow, onShadowChange, settings, className, hasLocalValue = !!shadow, hasLocalOverride = false, onReset }) {
+	function ShadowPopover({ shadow, onShadowChange, settings, className, hasLocalValue = !!shadow, onReset }) {
 		const popoverProps = useToolsPanelItemPopoverProps();
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Dropdown, {
 			popoverProps,
 			className: clsx("block-editor-global-styles__shadow-dropdown", className),
 			renderToggle: renderShadowToggle(shadow, onShadowChange, {
 				hasLocalValue,
-				hasLocalOverride,
 				onReset: onReset ?? (() => onShadowChange(void 0))
 			}),
 			renderContent: () => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalDropdownContentWrapper, {
@@ -115823,7 +115576,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 	function renderShadowToggle(shadow$1, onShadowChange, resetConfig) {
-		const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
+		const { hasLocalValue, onReset } = resetConfig;
 		return function ShadowToggle({ onToggle, isOpen }) {
 			const shadowButtonRef = (0, _wordpress_element.useRef)(void 0);
 			const toggleProps = {
@@ -115848,17 +115601,14 @@ If there's a particular need for this, please submit a feature request at https:
 						size: 24
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, { children: (0, _wordpress_i18n.__)("Drop shadow") })]
 				})
-			}), hasLocalValue && (hasLocalOverride ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceResetButton, {
-				className: "block-editor-global-styles__shadow-editor__remove-button",
-				onResetToInherited: handleReset
-			}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+			}), hasLocalValue && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 				__next40pxDefaultSize: true,
 				size: "small",
 				icon: reset_default,
 				label: (0, _wordpress_i18n.__)("Remove"),
 				className: "block-editor-global-styles__shadow-editor__remove-button",
 				onClick: handleReset
-			}))] });
+			})] });
 		};
 	}
 	/**
@@ -115935,12 +115685,11 @@ If there's a particular need for this, please submit a feature request at https:
 		width: true,
 		shadow: true
 	};
-	function BorderPanel$1({ as: Wrapper = BorderToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$1, showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled() }) {
+	function BorderPanel$1({ as: Wrapper = BorderToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$1 }) {
 		const colors = useColorsPerOrigin(settings);
 		const itemPopoverProps = useToolsPanelItemPopoverProps();
 		const areCustomSolidsEnabled = settings?.color?.custom;
 		const decodeValue = (0, _wordpress_element.useCallback)((rawValue) => getValueFromVariable({ settings }, "", rawValue), [settings]);
-		const inheritanceProps = (isInherited, hasLocalOverride, className) => getInheritanceProps(showInheritanceLabelIndicators && isInherited, showInheritanceLabelIndicators && hasLocalOverride, className);
 		const encodeColorValue = (colorValue) => {
 			const colorObject = colors.flatMap(({ colors: originColors }) => originColors).find(({ color }) => color === colorValue);
 			return colorObject ? "var:preset|color|" + colorObject.slug : colorValue;
@@ -115969,8 +115718,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [decodeValue]);
 		const localBorder = (0, _wordpress_element.useMemo)(() => decodeBorder(value?.border), [value?.border, decodeBorder]);
 		const inheritedBorder = (0, _wordpress_element.useMemo)(() => decodeBorder(inheritedValue?.border), [inheritedValue?.border, decodeBorder]);
-		const isBorderPlaceholder = !(0, _wordpress_components.__experimentalIsDefinedBorder)(value?.border) && !!inheritedBorder && (0, _wordpress_components.__experimentalIsDefinedBorder)(inheritedBorder);
-		const border = isBorderPlaceholder ? inheritedBorder : localBorder;
+		const border = !(0, _wordpress_components.__experimentalIsDefinedBorder)(value?.border) && !!inheritedBorder && (0, _wordpress_components.__experimentalIsDefinedBorder)(inheritedBorder) ? inheritedBorder : localBorder;
 		const setBorder = (newBorder) => onChange({
 			...value,
 			border: newBorder
@@ -116041,7 +115789,6 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		const hasShadow = () => !!value?.shadow;
 		const resetShadow = () => setShadow(void 0);
-		const hasShadowLocalOverride = showInheritanceLabelIndicators && hasShadow() && inheritedShadow !== void 0;
 		const resetBorder = () => {
 			if (hasBorderRadius()) return setBorder({ radius: value?.border?.radius });
 			setBorder(void 0);
@@ -116080,11 +115827,9 @@ If there's a particular need for this, please submit a feature request at https:
 			panelId,
 			label: (0, _wordpress_i18n.__)("Borders"),
 			children: [
-				(showBorderWidth || showBorderColor) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isBorderPlaceholder, (0, _wordpress_components.__experimentalIsDefinedBorder)(value?.border) && !!inheritedBorder && (0, _wordpress_components.__experimentalIsDefinedBorder)(inheritedBorder)),
+				(showBorderWidth || showBorderColor) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: () => (0, _wordpress_components.__experimentalIsDefinedBorder)(value?.border),
 					label: (0, _wordpress_i18n.__)("Border"),
-					hasInlineEndToggle: true,
 					onDeselect: () => resetBorder(),
 					isShownByDefault: showBorderByDefault,
 					panelId,
@@ -116101,11 +115846,9 @@ If there's a particular need for this, please submit a feature request at https:
 						__experimentalIsRenderedInSidebar: true
 					})
 				}),
-				showBorderRadius && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isBorderRadiusPlaceholder, hasBorderRadius() && inheritedBorderRadius !== void 0),
+				showBorderRadius && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasBorderRadius,
 					label: (0, _wordpress_i18n.__)("Radius"),
-					hasInlineEndToggle: true,
 					onDeselect: () => setBorderRadius(void 0),
 					isShownByDefault: defaultControls.radius,
 					panelId,
@@ -116117,20 +115860,17 @@ If there's a particular need for this, please submit a feature request at https:
 						}
 					})
 				}),
-				hasShadowControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(InheritanceToolsPanelItem, {
-					...inheritanceProps(isShadowPlaceholder, hasShadow() && inheritedShadow !== void 0),
+				hasShadowControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Shadow"),
 					hasValue: hasShadow,
 					onDeselect: resetShadow,
 					isShownByDefault: defaultControls.shadow,
-					showLocalOverrideActionsInLabel: false,
 					panelId,
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BaseControl.VisualLabel, { children: (0, _wordpress_i18n.__)("Shadow") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ShadowPopover, {
 						shadow,
 						onShadowChange: setShadowWithInheritedCommit,
 						settings,
 						hasLocalValue: hasShadow(),
-						hasLocalOverride: hasShadowLocalOverride,
 						onReset: resetShadow
 					})]
 				})
@@ -116189,7 +115929,7 @@ If there's a particular need for this, please submit a feature request at https:
 		})]
 	});
 	const renderToggle = (duotone, resetConfig) => function Toggle({ onToggle, isOpen }) {
-		const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
+		const { hasLocalValue, onReset } = resetConfig;
 		const duotoneButtonRef = (0, _wordpress_element.useRef)(void 0);
 		const toggleProps = {
 			onClick: onToggle,
@@ -116209,25 +115949,21 @@ If there's a particular need for this, please submit a feature request at https:
 				indicator: duotone,
 				label: (0, _wordpress_i18n.__)("Duotone")
 			})
-		}), hasLocalValue && (hasLocalOverride ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceResetButton, {
-			className: "block-editor-panel-duotone-settings__reset",
-			onResetToInherited: handleReset
-		}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+		}), hasLocalValue && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 			size: "small",
 			icon: reset_default,
 			label: (0, _wordpress_i18n.__)("Reset"),
 			className: "block-editor-panel-duotone-settings__reset",
 			onClick: handleReset
-		}))] });
+		})] });
 	};
-	function FiltersPanel({ as: Wrapper = FiltersToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS, showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled() }) {
+	function FiltersPanel({ as: Wrapper = FiltersToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS }) {
 		const popoverProps = {
 			...useToolsPanelItemPopoverProps(),
 			className: "block-editor-duotone-control__popover",
 			headerTitle: (0, _wordpress_i18n.__)("Duotone")
 		};
 		const decodeValue = (rawValue) => getValueFromVariable({ settings }, "", rawValue);
-		const inheritanceProps = (isInherited, hasLocalOverride, className) => getInheritanceProps(showInheritanceLabelIndicators && isInherited, showInheritanceLabelIndicators && hasLocalOverride, className);
 		const hasDuotoneEnabled = useHasDuotoneControl(settings);
 		const duotonePalette = useMultiOriginColorPresets(settings, {
 			presetSetting: "duotone",
@@ -116258,7 +115994,6 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		const hasDuotone = () => !!value?.filter?.duotone;
 		const resetDuotone = () => setDuotone(void 0);
-		const hasDuotoneLocalOverride = showInheritanceLabelIndicators && hasDuotone() && inheritedDuotone !== void 0;
 		const resetAllFilter = (0, _wordpress_element.useCallback)((previousValue) => {
 			return {
 				...previousValue,
@@ -116273,20 +116008,17 @@ If there's a particular need for this, please submit a feature request at https:
 			value,
 			onChange,
 			panelId,
-			children: hasDuotoneEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InheritanceToolsPanelItem, {
-				...inheritanceProps(isDuotonePlaceholder, localDuotone !== void 0 && inheritedDuotone !== void 0),
+			children: hasDuotoneEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 				label: (0, _wordpress_i18n.__)("Duotone"),
 				hasValue: hasDuotone,
 				onDeselect: resetDuotone,
 				isShownByDefault: defaultControls.duotone,
-				showLocalOverrideActionsInLabel: false,
 				panelId,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Dropdown, {
 					popoverProps,
 					className: "block-editor-global-styles-filters-panel__dropdown",
 					renderToggle: renderToggle(duotone, {
 						hasLocalValue: hasDuotone(),
-						hasLocalOverride: hasDuotoneLocalOverride,
 						onReset: resetDuotone
 					}),
 					renderContent: () => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalDropdownContentWrapper, {
