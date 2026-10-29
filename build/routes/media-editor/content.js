@@ -43536,12 +43536,13 @@ const SETTLE_STENCIL_TRANSITION = [
 * @param root0.focusOnMount      Focus the crop area on mount.
 * @param root0.disabled          Ignore all crop interaction.
 * @param root0.onImageLoaded     Image load callback.
+* @param root0.onImageError      Image error callback.
 * @param root0.onGestureStart    Gesture boundary start.
 * @param root0.onGestureEnd      Gesture boundary end.
 * @param root0.className         Additional CSS class.
 * @param ref                     Forwarded ref for the container div.
 */
-function CropperInner({ src, controller, stencil: StencilComponent = RectangleStencil, showGrid = false, isPlacementActive = false, showDimming = true, showDimensions = true, minZoom, maxZoom, aspectRatio, freeformCrop = false, focusOnMount = false, disabled = false, onImageLoaded, onGestureStart, onGestureEnd, className }, ref) {
+function CropperInner({ src, controller, stencil: StencilComponent = RectangleStencil, showGrid = false, isPlacementActive = false, showDimming = true, showDimensions = true, minZoom, maxZoom, aspectRatio, freeformCrop = false, focusOnMount = false, disabled = false, onImageLoaded, onImageError, onGestureStart, onGestureEnd, className }, ref) {
 	const { state, setImage, setCropRect, settleCrop, setVisualSize, adjustCropRectForViewport } = controller;
 	const { viewport: viewportState, setViewportPan, resetViewport } = useViewport();
 	const canvasRef = (0, import_element.useRef)(null);
@@ -43989,6 +43990,7 @@ function CropperInner({ src, controller, stencil: StencilComponent = RectangleSt
 						src,
 						alt: "",
 						onLoad: handleImageLoad,
+						onError: onImageError,
 						style: imageStyle,
 						draggable: false
 					}),
@@ -44512,7 +44514,7 @@ function MediaEditorCanvas({ isPlacementActive = false, onGestureStart, onGestur
 	const { aspectRatioValue } = session.cropOptions;
 	const cropperImage = session.cropper.state.image;
 	const { beginGesture, endGesture, setSourceImage } = session;
-	const [status, setStatus] = (0, import_element.useState)("loading");
+	const [settled, setSettled] = (0, import_element.useState)();
 	const aspectRatio = (0, import_element.useMemo)(() => resolveAspectRatio(aspectRatioValue, cropperImage), [aspectRatioValue, cropperImage]);
 	const handleGestureStart = (0, import_element.useCallback)(() => {
 		beginGesture();
@@ -44540,19 +44542,19 @@ function MediaEditorCanvas({ isPlacementActive = false, onGestureStart, onGestur
 		setSourceImage
 	]);
 	const isImage = mediaType.type === "image";
-	(0, import_element.useEffect)(() => {
-		if (!mediaUrl || !isImage) return;
-		setStatus("loading");
-		const probe = new window.Image();
-		probe.onload = () => setStatus("loaded");
-		probe.onerror = () => setStatus("error");
-		probe.src = mediaUrl;
-		if (probe.complete) setStatus(probe.naturalWidth > 0 ? "loaded" : "error");
-		return () => {
-			probe.onload = null;
-			probe.onerror = null;
-		};
-	}, [mediaUrl, isImage]);
+	const status = settled && settled.url === mediaUrl ? settled.status : "loading";
+	const handleImageLoaded = (0, import_element.useCallback)(() => {
+		setSettled({
+			url: mediaUrl,
+			status: "loaded"
+		});
+	}, [mediaUrl]);
+	const handleImageError = (0, import_element.useCallback)(() => {
+		setSettled({
+			url: mediaUrl,
+			status: "error"
+		});
+	}, [mediaUrl]);
 	if (!mediaUrl || !isImage) return null;
 	if (status === "error") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: "media-editor-canvas",
@@ -44578,6 +44580,8 @@ function MediaEditorCanvas({ isPlacementActive = false, onGestureStart, onGestur
 				isPlacementActive,
 				onGestureStart: handleGestureStart,
 				onGestureEnd: handleGestureEnd,
+				onImageLoaded: handleImageLoaded,
+				onImageError: handleImageError,
 				disabled
 			})
 		})]
