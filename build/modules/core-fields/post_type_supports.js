@@ -17544,7 +17544,7 @@ function registerStyle33(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle33("8838f0ddf3", "._07acca500e190ef0__slug{border:0;margin:0;padding:0}._07acca500e190ef0__slug input{padding-inline-start:0}.b480ff45b7a56aba__help-link{overflow-wrap:anywhere;word-break:normal}._6be2ab7e1b5c20a1__help{display:flex;flex-direction:column}._32a05fe802d82cb1__help-slug{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+  registerStyle33("c04e33a2e9", "._07acca500e190ef0__slug{border:0;margin:0;padding:0}._07acca500e190ef0__slug input[type=text]{padding-inline-start:0}.b480ff45b7a56aba__help-link{overflow-wrap:anywhere;word-break:normal}._6be2ab7e1b5c20a1__help{display:flex;flex-direction:column}._32a05fe802d82cb1__help-slug{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
 }
 var style_default19 = { "slug": "_07acca500e190ef0__slug", "help-link": "b480ff45b7a56aba__help-link", "help": "_6be2ab7e1b5c20a1__help", "help-slug": "_32a05fe802d82cb1__help-slug" };
 var PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
