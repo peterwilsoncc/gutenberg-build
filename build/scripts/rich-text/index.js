@@ -2218,185 +2218,91 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return ref;
 	}
 
-// packages/rich-text/build-module/owns-selection.mjs
-/**
-	* Returns true when the element owns the document selection: either the
-	* element itself has focus, or its contentEditable editing host has focus
-	* (e.g. an editable block editor canvas wrapper) and the selection is fully
-	* contained within the element.
-	*
-	* @param element The editable element.
-	*
-	* @return Whether the element owns the document selection.
-	*/
-	function ownsSelection(element) {
-		const { ownerDocument } = element;
-		const { activeElement } = ownerDocument;
-		if (activeElement === element) return true;
-		if (!activeElement || activeElement.contentEditable !== "true" || element.contentEditable !== "true" || !activeElement.contains(element)) return false;
-		const selection = ownerDocument.defaultView?.getSelection();
-		if (!selection) return false;
-		const { anchorNode, focusNode } = selection;
-		return !!anchorNode && !!focusNode && element.contains(anchorNode) && element.contains(focusNode);
+// packages/rich-text/build-module/hook/event-listeners/copy-handler.mjs
+	function onCopy(field, event) {
+		const { record, handleChange } = field.props.current;
+		if (event.defaultPrevented || isCollapsed(record.current)) return;
+		const selectedRecord = slice(record.current);
+		const plainText = getTextContent(selectedRecord);
+		const html = toHTMLString({ value: selectedRecord });
+		event.clipboardData.setData("text/plain", plainText);
+		event.clipboardData.setData("text/html", html);
+		event.clipboardData.setData("rich-text", "true");
+		event.preventDefault();
+		if (event.type === "cut") handleChange(remove(record.current));
 	}
 
-// packages/rich-text/build-module/hook/event-listeners/copy-handler.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$4 } = unlock(_wordpress_compose.privateApis);
-	const copyHandler = (props) => (element) => {
-		function onCopy(event) {
-			const { record, handleChange } = props.current;
-			const { ownerDocument } = element;
-			if (event.defaultPrevented || isCollapsed(record.current) || !element.contains(ownerDocument.activeElement) && !ownsSelection(element)) return;
-			const selectedRecord = slice(record.current);
-			const plainText = getTextContent(selectedRecord);
-			const html = toHTMLString({ value: selectedRecord });
-			event.clipboardData.setData("text/plain", plainText);
-			event.clipboardData.setData("text/html", html);
-			event.clipboardData.setData("rich-text", "true");
-			event.preventDefault();
-			if (event.type === "cut") handleChange(remove(record.current));
-		}
-		const { defaultView } = element.ownerDocument;
-		const unsubscribeCopy = subscribeDelegatedListener$4(defaultView, "copy", onCopy);
-		const unsubscribeCut = subscribeDelegatedListener$4(defaultView, "cut", onCopy);
-		return () => {
-			unsubscribeCopy();
-			unsubscribeCut();
-		};
-	};
-
 // packages/rich-text/build-module/hook/event-listeners/select-object.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$3 } = unlock(_wordpress_compose.privateApis);
-	const selectObject = () => (element) => {
-		function onClick(event) {
-			const target = event.target;
-			if (target === element || target.textContent && target.isContentEditable) return;
-			const { ownerDocument } = target;
-			const { defaultView } = ownerDocument;
-			const selection = defaultView.getSelection();
-			if (selection.containsNode(target)) return;
-			const range = ownerDocument.createRange();
-			const nodeToSelect = target.isContentEditable ? target : target.closest("[contenteditable]");
-			range.selectNode(nodeToSelect);
-			selection.removeAllRanges();
-			selection.addRange(range);
-			event.preventDefault();
-		}
-		function onFocusIn(event) {
-			if (event.relatedTarget && !element.contains(event.relatedTarget)) onClick(event);
-		}
-		const unsubscribeClick = subscribeDelegatedListener$3(element, "click", onClick);
-		const unsubscribeFocusIn = subscribeDelegatedListener$3(element, "focusin", onFocusIn);
-		return () => {
-			unsubscribeClick();
-			unsubscribeFocusIn();
-		};
-	};
-
-// packages/rich-text/build-module/subscribe-owned-listener.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$2 } = unlock(_wordpress_compose.privateApis);
-	const registries = /* @__PURE__ */ new WeakMap();
-	/**
-	* Listens for events on the element. Unlike an element listener, it also
-	* fires when the selection is inside the element but a focused editing host
-	* around it (e.g. the editable canvas wrapper) is the event target.
-	*
-	* @param element   The editable element.
-	* @param eventType DOM event name.
-	* @param callback  Listener to be invoked with the event.
-	* @param capture   Use the capture phase. Defaults to `false`.
-	*
-	* @return Unsubscribe function.
-	*/
-	function subscribeOwnedListener(element, eventType, callback, capture = false) {
-		const { ownerDocument } = element;
-		let byEvent = registries.get(ownerDocument);
-		if (!byEvent) {
-			byEvent = /* @__PURE__ */ new Map();
-			registries.set(ownerDocument, byEvent);
-		}
-		const key = capture ? `${eventType}:capture` : eventType;
-		const elements = byEvent.get(key) ?? /* @__PURE__ */ new WeakMap();
-		if (!byEvent.has(key)) {
-			byEvent.set(key, elements);
-			subscribeDelegatedListener$2(ownerDocument, eventType, (event) => {
-				const { defaultView, activeElement } = ownerDocument;
-				const anchorNode = defaultView?.getSelection()?.anchorNode;
-				for (let node = anchorNode ?? activeElement; node; node = node.parentNode) {
-					const callbacks = elements.get(node);
-					if (callbacks && ownsSelection(node)) for (const cb of callbacks) cb(event);
-				}
-			}, capture);
-		}
-		let set = elements.get(element);
-		if (!set) {
-			set = /* @__PURE__ */ new Set();
-			elements.set(element, set);
-		}
-		set.add(callback);
-		return () => {
-			set.delete(callback);
-		};
+	function onClick(field, event) {
+		const target = event.target;
+		if (target === field.element || target.textContent && target.isContentEditable) return;
+		const { ownerDocument } = target;
+		const { defaultView } = ownerDocument;
+		const selection = defaultView.getSelection();
+		if (selection.containsNode(target)) return;
+		const range = ownerDocument.createRange();
+		const nodeToSelect = target.isContentEditable ? target : target.closest("[contenteditable]");
+		range.selectNode(nodeToSelect);
+		selection.removeAllRanges();
+		selection.addRange(range);
+		event.preventDefault();
+	}
+	function onFocusIn(field, event) {
+		if (event.relatedTarget && !field.element.contains(event.relatedTarget)) onClick(field, event);
 	}
 
 // packages/rich-text/build-module/hook/event-listeners/format-boundaries.mjs
 	const EMPTY_ACTIVE_FORMATS$1 = [];
-	const formatBoundaries = (props) => (element) => {
-		function onKeyDown(event) {
-			const { keyCode, shiftKey, altKey, metaKey, ctrlKey } = event;
-			if (shiftKey || altKey || metaKey || ctrlKey || keyCode !== _wordpress_keycodes.LEFT && keyCode !== _wordpress_keycodes.RIGHT) return;
-			const { record, applyRecord, forceRender } = props.current;
-			const { text, formats, start, end, activeFormats: currentActiveFormats = [] } = record.current;
-			const collapsed = isCollapsed(record.current);
-			const { defaultView } = element.ownerDocument;
-			const { direction } = defaultView.getComputedStyle(element);
-			const reverseKey = direction === "rtl" ? _wordpress_keycodes.RIGHT : _wordpress_keycodes.LEFT;
-			const isReverse = event.keyCode === reverseKey;
-			if (collapsed && currentActiveFormats.length === 0) {
-				if (start === 0 && isReverse) return;
-				if (end === text.length && !isReverse) return;
-			}
-			if (!collapsed || start === void 0) return;
-			const formatsBefore = formats[start - 1] || EMPTY_ACTIVE_FORMATS$1;
-			const formatsAfter = formats[start] || EMPTY_ACTIVE_FORMATS$1;
-			const destination = isReverse ? formatsBefore : formatsAfter;
-			const isIncreasing = currentActiveFormats.every((format, index) => format === destination[index]);
-			let newActiveFormatsLength = currentActiveFormats.length;
-			if (!isIncreasing) newActiveFormatsLength--;
-			else if (newActiveFormatsLength < destination.length) newActiveFormatsLength++;
-			if (newActiveFormatsLength === currentActiveFormats.length) {
-				record.current._newActiveFormats = destination;
-				return;
-			}
-			event.preventDefault();
-			const newActiveFormats = (isIncreasing ? destination : isReverse ? formatsAfter : formatsBefore).slice(0, newActiveFormatsLength);
-			const newValue = {
-				...record.current,
-				activeFormats: newActiveFormats
-			};
-			record.current = newValue;
-			applyRecord(newValue);
-			forceRender();
+	function onKeyDown$1(field, event) {
+		const { keyCode, shiftKey, altKey, metaKey, ctrlKey } = event;
+		if (shiftKey || altKey || metaKey || ctrlKey || keyCode !== _wordpress_keycodes.LEFT && keyCode !== _wordpress_keycodes.RIGHT) return;
+		const { record, applyRecord, forceRender } = field.props.current;
+		const { text, formats, start, end, activeFormats: currentActiveFormats = [] } = record.current;
+		const collapsed = isCollapsed(record.current);
+		const { defaultView } = field.element.ownerDocument;
+		const { direction } = defaultView.getComputedStyle(field.element);
+		const reverseKey = direction === "rtl" ? _wordpress_keycodes.RIGHT : _wordpress_keycodes.LEFT;
+		const isReverse = event.keyCode === reverseKey;
+		if (collapsed && currentActiveFormats.length === 0) {
+			if (start === 0 && isReverse) return;
+			if (end === text.length && !isReverse) return;
 		}
-		return subscribeOwnedListener(element, "keydown", onKeyDown, true);
-	};
+		if (!collapsed || start === void 0) return;
+		const formatsBefore = formats[start - 1] || EMPTY_ACTIVE_FORMATS$1;
+		const formatsAfter = formats[start] || EMPTY_ACTIVE_FORMATS$1;
+		const destination = isReverse ? formatsBefore : formatsAfter;
+		const isIncreasing = currentActiveFormats.every((format, index) => format === destination[index]);
+		let newActiveFormatsLength = currentActiveFormats.length;
+		if (!isIncreasing) newActiveFormatsLength--;
+		else if (newActiveFormatsLength < destination.length) newActiveFormatsLength++;
+		if (newActiveFormatsLength === currentActiveFormats.length) {
+			record.current._newActiveFormats = destination;
+			return;
+		}
+		event.preventDefault();
+		const newActiveFormats = (isIncreasing ? destination : isReverse ? formatsAfter : formatsBefore).slice(0, newActiveFormatsLength);
+		const newValue = {
+			...record.current,
+			activeFormats: newActiveFormats
+		};
+		record.current = newValue;
+		applyRecord(newValue);
+		forceRender();
+	}
 
 // packages/rich-text/build-module/hook/event-listeners/delete.mjs
-	const deleteHandler = (props) => (element) => {
-		function onKeyDown(event) {
-			const { keyCode } = event;
-			if (event.defaultPrevented) return;
-			if (keyCode !== _wordpress_keycodes.DELETE && keyCode !== _wordpress_keycodes.BACKSPACE) return;
-			const { createRecord, handleChange } = props.current;
-			const currentValue = createRecord();
-			const { start, end, text } = currentValue;
-			if (start === 0 && end !== 0 && end === text.length) {
-				handleChange(remove(currentValue));
-				event.preventDefault();
-			}
+	function onKeyDown(field, event) {
+		const { keyCode } = event;
+		if (event.defaultPrevented) return;
+		if (keyCode !== _wordpress_keycodes.DELETE && keyCode !== _wordpress_keycodes.BACKSPACE) return;
+		const { createRecord, handleChange } = field.props.current;
+		const currentValue = createRecord();
+		const { start, end, text } = currentValue;
+		if (start === 0 && end !== 0 && end === text.length) {
+			handleChange(remove(currentValue));
+			event.preventDefault();
 		}
-		return subscribeOwnedListener(element, "keydown", onKeyDown);
-	};
+	}
 
 // packages/rich-text/build-module/update-formats.mjs
 /**
@@ -2429,9 +2335,30 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return value;
 	}
 
+// packages/rich-text/build-module/owns-selection.mjs
+/**
+	* Returns true when the element owns the document selection: either the
+	* element itself has focus, or its contentEditable editing host has focus
+	* (e.g. an editable block editor canvas wrapper) and the selection is fully
+	* contained within the element.
+	*
+	* @param element The editable element.
+	*
+	* @return Whether the element owns the document selection.
+	*/
+	function ownsSelection(element) {
+		const { ownerDocument } = element;
+		const { activeElement } = ownerDocument;
+		if (activeElement === element) return true;
+		if (!activeElement || activeElement.contentEditable !== "true" || element.contentEditable !== "true" || !activeElement.contains(element)) return false;
+		const selection = ownerDocument.defaultView?.getSelection();
+		if (!selection) return false;
+		const { anchorNode, focusNode } = selection;
+		return !!anchorNode && !!focusNode && element.contains(anchorNode) && element.contains(focusNode);
+	}
+
 // packages/rich-text/build-module/hook/event-listeners/input-and-selection.mjs
-	const { subscribeDelegatedListener: subscribeDelegatedListener$1 } = unlock(_wordpress_compose.privateApis);
-	/**
+/**
 	* All inserting input types that would insert HTML into the DOM.
 	*
 	* @see https://www.w3.org/TR/input-events-2/#interface-InputEvent-Attributes
@@ -2445,210 +2372,226 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	]);
 	const EMPTY_ACTIVE_FORMATS = [];
 	const PLACEHOLDER_ATTR_NAME = "data-rich-text-placeholder";
-	const inputAndSelection = (props) => (element) => {
-		const { ownerDocument } = element;
-		const { defaultView } = ownerDocument;
-		let isComposing = false;
-		let isPointerDown = false;
-		function onPointerDown() {
-			isPointerDown = true;
-			defaultView.addEventListener("pointerup", onPointerUp);
-			defaultView.addEventListener("pointercancel", onPointerUp);
-		}
+	function onPointerDown(field) {
+		const { defaultView } = field.element.ownerDocument;
+		field.isPointerDown = true;
 		function onPointerUp() {
-			isPointerDown = false;
+			field.isPointerDown = false;
 			defaultView.removeEventListener("pointerup", onPointerUp);
 			defaultView.removeEventListener("pointercancel", onPointerUp);
 		}
-		function onInput(event) {
-			if (isComposing) return;
-			let inputType;
-			if (event && "inputType" in event) inputType = event.inputType;
-			const { record, applyRecord, createRecord, handleChange } = props.current;
-			if (inputType && (inputType.indexOf("format") === 0 || INSERTION_INPUT_TYPES_TO_IGNORE.has(inputType))) {
-				applyRecord(record.current);
-				return;
-			}
-			const currentValue = createRecord();
-			const { start } = record.current;
-			if (start === void 0 || currentValue.start === void 0) {
-				handleChange(currentValue);
-				return;
-			}
-			const clearFormats = !isCollapsed(record.current) && currentValue.start <= start;
-			const oldActiveFormats = getActiveFormats(record.current, EMPTY_ACTIVE_FORMATS);
-			handleChange(updateFormats({
-				value: currentValue,
-				start,
-				end: currentValue.start,
-				formats: clearFormats ? [] : oldActiveFormats
-			}));
+		defaultView.addEventListener("pointerup", onPointerUp);
+		defaultView.addEventListener("pointercancel", onPointerUp);
+	}
+	function onInput(field, event) {
+		if (field.isComposing) return;
+		let inputType;
+		if (event && "inputType" in event) inputType = event.inputType;
+		const { record, applyRecord, createRecord, handleChange } = field.props.current;
+		if (inputType && (inputType.indexOf("format") === 0 || INSERTION_INPUT_TYPES_TO_IGNORE.has(inputType))) {
+			applyRecord(record.current);
+			return;
 		}
-		let selectionSnapshot;
-		/**
-		* Syncs the selection to local state. A callback for the `selectionchange`
-		* event, and for the capture phase of events that consume the selection,
-		* which run before `selectionchange` is delivered.
-		*/
-		function handleSelectionChange() {
-			const { record, applyRecord, createRecord, onSelectionChange } = props.current;
-			if (element.contentEditable !== "true") return;
-			if (ownerDocument.activeElement !== element && !ownsSelection(element)) return;
-			if (isComposing) return;
-			const selection = defaultView.getSelection();
-			if (selectionSnapshot && selectionSnapshot.anchorNode === selection.anchorNode && selectionSnapshot.anchorOffset === selection.anchorOffset && selectionSnapshot.focusNode === selection.focusNode && selectionSnapshot.focusOffset === selection.focusOffset && selectionSnapshot.processedStart === record.current.start && selectionSnapshot.processedEnd === record.current.end) return;
-			const { start, end, text } = createRecord();
-			const oldRecord = record.current;
-			if (text.length === 0) applyRecord({
-				...oldRecord,
-				start,
-				end
-			});
-			selectionSnapshot = {
-				anchorNode: selection.anchorNode,
-				anchorOffset: selection.anchorOffset,
-				focusNode: selection.focusNode,
-				focusOffset: selection.focusOffset,
-				processedStart: start,
-				processedEnd: end
-			};
-			if (text !== oldRecord.text) {
-				onInput();
-				return;
-			}
-			if (start === oldRecord.start && end === oldRecord.end) return;
-			const newValue = {
-				...oldRecord,
-				start,
-				end,
-				activeFormats: oldRecord._newActiveFormats,
-				_newActiveFormats: void 0
-			};
-			newValue.activeFormats = getActiveFormats(newValue, EMPTY_ACTIVE_FORMATS);
-			record.current = newValue;
-			applyRecord(newValue, { domOnly: true });
-			onSelectionChange(start, end);
+		const currentValue = createRecord();
+		const { start } = record.current;
+		if (start === void 0 || currentValue.start === void 0) {
+			handleChange(currentValue);
+			return;
 		}
-		function onCompositionStart() {
-			isComposing = true;
-			element.querySelector(`[${PLACEHOLDER_ATTR_NAME}]`)?.remove();
-		}
-		function onCompositionEnd() {
-			isComposing = false;
-			onInput({ inputType: "insertText" });
-		}
-		function onFocus(event) {
-			if (event.target !== element) return;
-			if (element.contentEditable !== "true") return;
-			const { record, isSelected, onSelectionChange, applyRecord } = props.current;
-			if (element.parentElement.closest("[contenteditable=\"true\"]")) {
-				const selection = defaultView.getSelection();
-				if (!selection.anchorNode || !element.contains(selection.anchorNode)) {
-					if (isSelected && record.current.start !== void 0) applyRecord(record.current);
-					else selection.collapse(element, 0);
-				}
-				return;
-			}
-			if (!isSelected) {
-				const index = void 0;
-				record.current = {
-					...record.current,
-					start: index,
-					end: index,
-					activeFormats: EMPTY_ACTIVE_FORMATS
-				};
-				selectionSnapshot = void 0;
-			} else if (!isPointerDown) applyRecord(record.current);
-			onSelectionChange(record.current.start, record.current.end);
-			window.queueMicrotask(handleSelectionChange);
-		}
-		const unsubscribeInput = subscribeOwnedListener(element, "input", onInput, true);
-		const unsubscribeCompositionStart = subscribeOwnedListener(element, "compositionstart", onCompositionStart);
-		const unsubscribeCompositionEnd = subscribeOwnedListener(element, "compositionend", onCompositionEnd, true);
-		const unsubscribeFocus = subscribeDelegatedListener$1(element, "focusin", onFocus);
-		const unsubscribePointerDown = subscribeDelegatedListener$1(element, "pointerdown", onPointerDown);
-		const unsubscribeSelectionChange = subscribeOwnedListener(element, "selectionchange", handleSelectionChange);
-		const unsubscribeEnsureSelectionSync = [
-			"keydown",
-			"beforeinput",
-			"copy",
-			"cut",
-			"paste"
-		].map((eventType) => subscribeOwnedListener(element, eventType, handleSelectionChange, true));
-		return () => {
-			unsubscribeInput();
-			unsubscribeCompositionStart();
-			unsubscribeCompositionEnd();
-			unsubscribeFocus();
-			unsubscribePointerDown();
-			onPointerUp();
-			unsubscribeSelectionChange();
-			unsubscribeEnsureSelectionSync.forEach((unsubscribe) => unsubscribe());
+		const clearFormats = !isCollapsed(record.current) && currentValue.start <= start;
+		const oldActiveFormats = getActiveFormats(record.current, EMPTY_ACTIVE_FORMATS);
+		handleChange(updateFormats({
+			value: currentValue,
+			start,
+			end: currentValue.start,
+			formats: clearFormats ? [] : oldActiveFormats
+		}));
+	}
+	/**
+	* Syncs the selection to local state. A callback for the `selectionchange`
+	* event, and for the capture phase of events that consume the selection,
+	* which run before `selectionchange` is delivered.
+	*
+	* @param field The field.
+	*/
+	function handleSelectionChange(field) {
+		const { element } = field;
+		const { ownerDocument } = element;
+		const { defaultView } = ownerDocument;
+		const { record, applyRecord, createRecord, onSelectionChange } = field.props.current;
+		if (element.contentEditable !== "true") return;
+		if (ownerDocument.activeElement !== element && !ownsSelection(element)) return;
+		if (field.isComposing) return;
+		const selection = defaultView.getSelection();
+		const { selectionSnapshot } = field;
+		if (selectionSnapshot && selectionSnapshot.anchorNode === selection.anchorNode && selectionSnapshot.anchorOffset === selection.anchorOffset && selectionSnapshot.focusNode === selection.focusNode && selectionSnapshot.focusOffset === selection.focusOffset && selectionSnapshot.processedStart === record.current.start && selectionSnapshot.processedEnd === record.current.end) return;
+		const { start, end, text } = createRecord();
+		const oldRecord = record.current;
+		if (text.length === 0) applyRecord({
+			...oldRecord,
+			start,
+			end
+		});
+		field.selectionSnapshot = {
+			anchorNode: selection.anchorNode,
+			anchorOffset: selection.anchorOffset,
+			focusNode: selection.focusNode,
+			focusOffset: selection.focusOffset,
+			processedStart: start,
+			processedEnd: end
 		};
-	};
+		if (text !== oldRecord.text) {
+			onInput(field);
+			return;
+		}
+		if (start === oldRecord.start && end === oldRecord.end) return;
+		const newValue = {
+			...oldRecord,
+			start,
+			end,
+			activeFormats: oldRecord._newActiveFormats,
+			_newActiveFormats: void 0
+		};
+		newValue.activeFormats = getActiveFormats(newValue, EMPTY_ACTIVE_FORMATS);
+		record.current = newValue;
+		applyRecord(newValue, { domOnly: true });
+		onSelectionChange(start, end);
+	}
+	function onCompositionStart(field) {
+		field.isComposing = true;
+		field.element.querySelector(`[${PLACEHOLDER_ATTR_NAME}]`)?.remove();
+	}
+	function onCompositionEnd(field) {
+		field.isComposing = false;
+		onInput(field, { inputType: "insertText" });
+	}
+	function onFocus(field, event) {
+		const { element } = field;
+		const { defaultView } = element.ownerDocument;
+		if (event.target !== element) return;
+		if (element.contentEditable !== "true") return;
+		const { record, isSelected, onSelectionChange, applyRecord } = field.props.current;
+		if (element.parentElement.closest("[contenteditable=\"true\"]")) {
+			const selection = defaultView.getSelection();
+			if (!selection.anchorNode || !element.contains(selection.anchorNode)) {
+				if (isSelected && record.current.start !== void 0) applyRecord(record.current);
+				else selection.collapse(element, 0);
+			}
+			return;
+		}
+		if (!isSelected) {
+			const index = void 0;
+			record.current = {
+				...record.current,
+				start: index,
+				end: index,
+				activeFormats: EMPTY_ACTIVE_FORMATS
+			};
+			field.selectionSnapshot = void 0;
+		} else if (!field.isPointerDown) applyRecord(record.current);
+		onSelectionChange(record.current.start, record.current.end);
+		window.queueMicrotask(() => handleSelectionChange(field));
+	}
 
 // packages/rich-text/build-module/hook/event-listeners/selection-change-compat.mjs
-	const { subscribeDelegatedListener } = unlock(_wordpress_compose.privateApis);
-	/**
+/**
 	* Sometimes some browsers are not firing a `selectionchange` event when
 	* changing the selection by mouse or keyboard. This hook makes sure that, if we
 	* detect no `selectionchange` or `input` event between the up and down events,
 	* we fire a `selectionchange` event.
+	*
+	* @param field The field.
+	* @param event The pointer or key down event.
 	*/
-	const selectionChangeCompat = () => (element) => {
-		const { ownerDocument } = element;
+	function onDown(field, event) {
+		const { ownerDocument } = field.element;
 		const { defaultView } = ownerDocument;
 		const selection = defaultView?.getSelection();
-		let range;
+		const type = event.type === "keydown" ? "keyup" : "pointerup";
 		function getRange() {
 			return selection.rangeCount ? selection.getRangeAt(0) : null;
 		}
-		function onDown(event) {
-			const type = event.type === "keydown" ? "keyup" : "pointerup";
-			function onCancel() {
-				ownerDocument.removeEventListener(type, onUp);
-				ownerDocument.removeEventListener("selectionchange", onCancel);
-				ownerDocument.removeEventListener("input", onCancel);
-			}
-			function onUp() {
-				onCancel();
-				if (isRangeEqual(range, getRange())) return;
-				ownerDocument.dispatchEvent(new Event("selectionchange"));
-			}
-			ownerDocument.addEventListener(type, onUp);
-			ownerDocument.addEventListener("selectionchange", onCancel);
-			ownerDocument.addEventListener("input", onCancel);
-			range = getRange();
+		const range = getRange();
+		function onCancel() {
+			ownerDocument.removeEventListener(type, onUp);
+			ownerDocument.removeEventListener("selectionchange", onCancel);
+			ownerDocument.removeEventListener("input", onCancel);
 		}
-		const unsubscribePointerDown = subscribeDelegatedListener(element, "pointerdown", onDown);
-		const unsubscribeKeyDown = subscribeDelegatedListener(element, "keydown", onDown);
-		return () => {
-			unsubscribePointerDown();
-			unsubscribeKeyDown();
-		};
-	};
+		function onUp() {
+			onCancel();
+			if (isRangeEqual(range, getRange())) return;
+			ownerDocument.dispatchEvent(new Event("selectionchange"));
+		}
+		ownerDocument.addEventListener(type, onUp);
+		ownerDocument.addEventListener("selectionchange", onCancel);
+		ownerDocument.addEventListener("input", onCancel);
+	}
 
 // packages/rich-text/build-module/hook/event-listeners/index.mjs
-	const allEventListeners = [
-		inputAndSelection,
-		copyHandler,
-		selectObject,
-		formatBoundaries,
-		deleteHandler,
-		selectionChangeCompat
-	];
+	const first = {
+		keydown: {
+			selection: [handleSelectionChange, onKeyDown$1],
+			target: [onDown]
+		},
+		beforeinput: { selection: [handleSelectionChange] },
+		copy: { selection: [handleSelectionChange] },
+		cut: { selection: [handleSelectionChange] },
+		paste: { selection: [handleSelectionChange] },
+		input: { selection: [onInput] },
+		compositionstart: { selection: [onCompositionStart] },
+		compositionend: { selection: [onCompositionEnd] },
+		selectionchange: { selection: [handleSelectionChange] },
+		focusin: { target: [onFocus, onFocusIn] },
+		pointerdown: { target: [onPointerDown, onDown] }
+	};
+	const defaults = {
+		keydown: { selection: [onKeyDown] },
+		copy: { selection: [onCopy] },
+		cut: { selection: [onCopy] },
+		click: { target: [onClick] }
+	};
+	const fields = /* @__PURE__ */ new WeakMap();
+	const documents = /* @__PURE__ */ new WeakSet();
+	function forEachField(node, callback) {
+		for (; node; node = node.parentNode) {
+			const field = fields.get(node);
+			if (field) callback(field);
+		}
+	}
+	function addListeners(ownerDocument, handlers, capture) {
+		const defaultView = ownerDocument.defaultView;
+		for (const [eventType, { selection, target }] of Object.entries(handlers)) defaultView.addEventListener(eventType, (event) => {
+			if (selection) {
+				const anchorNode = defaultView.getSelection()?.anchorNode;
+				forEachField(anchorNode ?? ownerDocument.activeElement, (field) => {
+					if (ownsSelection(field.element)) for (const handler of selection) handler(field, event);
+				});
+			}
+			if (target) forEachField(event.target, (field) => {
+				for (const handler of target) handler(field, event);
+			});
+		}, capture);
+	}
 	function useEventListeners(props) {
 		const propsRef = (0, _wordpress_element.useRef)(props);
 		(0, _wordpress_element.useInsertionEffect)(() => {
 			propsRef.current = props;
 		});
-		const refEffects = (0, _wordpress_element.useMemo)(() => allEventListeners.map((refEffect) => refEffect(propsRef)), [propsRef]);
 		return (0, _wordpress_compose.useRefEffect)((element) => {
-			const cleanups = refEffects.map((effect) => effect(element));
+			const { ownerDocument } = element;
+			fields.set(element, {
+				element,
+				props: propsRef
+			});
+			if (!documents.has(ownerDocument)) {
+				documents.add(ownerDocument);
+				addListeners(ownerDocument, first, true);
+				addListeners(ownerDocument, defaults, false);
+			}
 			return () => {
-				cleanups.forEach((cleanup) => cleanup());
+				fields.delete(element);
 			};
-		}, [refEffects]);
+		}, []);
 	}
 
 // packages/rich-text/build-module/hook/use-format-types.mjs
@@ -3038,6 +2981,52 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			element.removeEventListener("input", onInput);
 		};
 	};
+
+// packages/rich-text/build-module/subscribe-owned-listener.mjs
+	const { subscribeDelegatedListener } = unlock(_wordpress_compose.privateApis);
+	const registries = /* @__PURE__ */ new WeakMap();
+	/**
+	* Listens for events on the element. Unlike an element listener, it also
+	* fires when the selection is inside the element but a focused editing host
+	* around it (e.g. the editable canvas wrapper) is the event target.
+	*
+	* @param element   The editable element.
+	* @param eventType DOM event name.
+	* @param callback  Listener to be invoked with the event.
+	* @param capture   Use the capture phase. Defaults to `false`.
+	*
+	* @return Unsubscribe function.
+	*/
+	function subscribeOwnedListener(element, eventType, callback, capture = false) {
+		const { ownerDocument } = element;
+		let byEvent = registries.get(ownerDocument);
+		if (!byEvent) {
+			byEvent = /* @__PURE__ */ new Map();
+			registries.set(ownerDocument, byEvent);
+		}
+		const key = capture ? `${eventType}:capture` : eventType;
+		const elements = byEvent.get(key) ?? /* @__PURE__ */ new WeakMap();
+		if (!byEvent.has(key)) {
+			byEvent.set(key, elements);
+			subscribeDelegatedListener(ownerDocument, eventType, (event) => {
+				const { defaultView, activeElement } = ownerDocument;
+				const anchorNode = defaultView?.getSelection()?.anchorNode;
+				for (let node = anchorNode ?? activeElement; node; node = node.parentNode) {
+					const callbacks = elements.get(node);
+					if (callbacks && ownsSelection(node)) for (const cb of callbacks) cb(event);
+				}
+			}, capture);
+		}
+		let set = elements.get(element);
+		if (!set) {
+			set = /* @__PURE__ */ new Set();
+			elements.set(element, set);
+		}
+		set.add(callback);
+		return () => {
+			set.delete(callback);
+		};
+	}
 
 // packages/rich-text/build-module/private-apis.mjs
 /**
