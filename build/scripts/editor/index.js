@@ -124822,6 +124822,21 @@ ${content}
   var import_i18n288 = __toESM(require_i18n(), 1);
   var REACTION_EMOJIS = [
     {
+      emoji: "\u{1F44D}",
+      hexKey: "1f44d",
+      label: (0, import_i18n288._x)("Thumbs up", "emoji reaction"),
+      sentenceLabel: (0, import_i18n288._x)(
+        "thumbs up",
+        'emoji reaction, after "reacted with"'
+      )
+    },
+    {
+      emoji: "\u2795",
+      hexKey: "2795",
+      label: (0, import_i18n288._x)("Plus", "emoji reaction"),
+      sentenceLabel: (0, import_i18n288._x)("plus", 'emoji reaction, after "reacted with"')
+    },
+    {
       emoji: "\u2764\uFE0F",
       hexKey: "2764",
       label: (0, import_i18n288._x)("Heart", "emoji reaction"),
