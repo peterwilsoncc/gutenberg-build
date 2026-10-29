@@ -112457,6 +112457,18 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const REACTION_EMOJIS = [
 		{
+			emoji: "👍",
+			hexKey: "1f44d",
+			label: (0, _wordpress_i18n._x)("Thumbs up", "emoji reaction"),
+			sentenceLabel: (0, _wordpress_i18n._x)("thumbs up", "emoji reaction, after \"reacted with\"")
+		},
+		{
+			emoji: "➕",
+			hexKey: "2795",
+			label: (0, _wordpress_i18n._x)("Plus", "emoji reaction"),
+			sentenceLabel: (0, _wordpress_i18n._x)("plus", "emoji reaction, after \"reacted with\"")
+		},
+		{
 			emoji: "❤️",
 			hexKey: "2764",
 			label: (0, _wordpress_i18n._x)("Heart", "emoji reaction"),
