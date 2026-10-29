@@ -74165,15 +74165,15 @@ The screen with id ${screen.id} will not be added.`);
 					ensureFilteredComponent();
 				}
 				componentDidMount() {
-					FilteredComponentRenderer.instances.push(this);
-					if (FilteredComponentRenderer.instances.length === 1) {
+					FilteredComponentRenderer.instances.add(this);
+					if (FilteredComponentRenderer.instances.size === 1) {
 						(0, _wordpress_hooks.addAction)("hookRemoved", namespace, onHooksUpdated);
 						(0, _wordpress_hooks.addAction)("hookAdded", namespace, onHooksUpdated);
 					}
 				}
 				componentWillUnmount() {
-					FilteredComponentRenderer.instances = FilteredComponentRenderer.instances.filter((instance) => instance !== this);
-					if (FilteredComponentRenderer.instances.length === 0) {
+					FilteredComponentRenderer.instances.delete(this);
+					if (FilteredComponentRenderer.instances.size === 0) {
 						(0, _wordpress_hooks.removeAction)("hookRemoved", namespace);
 						(0, _wordpress_hooks.removeAction)("hookAdded", namespace);
 					}
@@ -74182,7 +74182,7 @@ The screen with id ${screen.id} will not be added.`);
 					return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FilteredComponent, { ...this.props });
 				}
 			}
-			FilteredComponentRenderer.instances = [];
+			FilteredComponentRenderer.instances = /* @__PURE__ */ new Set();
 			/**
 			* Updates the FilteredComponent definition, forcing a render for each
 			* mounted instance. This occurs a maximum of once per animation frame.
