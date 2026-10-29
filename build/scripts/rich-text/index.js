@@ -1857,7 +1857,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 // packages/rich-text/build-module/lock-unlock.mjs
 	const { lock, unlock } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/rich-text");
 
-// packages/rich-text/build-module/hook/use-default-style.mjs
+// packages/rich-text/build-module/hook/default-style.mjs
 /**
 	* In HTML, leading and trailing spaces are not visible, and multiple spaces
 	* elsewhere are visually reduced to one space. This rule prevents spaces from
@@ -1877,11 +1877,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* https://html.spec.whatwg.org/multipage/interaction.html#best-practices-for-in-page-editors
 	*/
 	const whiteSpace = "pre-wrap";
-	function useDefaultStyle() {
-		return (0, _wordpress_element.useCallback)((element) => {
-			if (!element) return;
-			element.style.whiteSpace = element.style.whiteSpace || whiteSpace;
-		}, []);
+	function setDefaultStyle(element) {
+		element.style.whiteSpace = element.style.whiteSpace || whiteSpace;
 	}
 
 // node_modules/.store/colord@2.10.0-Qx66Amv6c9C3nDPQDizV6Q/node_modules/colord/index.mjs
@@ -2192,8 +2189,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	};
 
 // packages/rich-text/build-module/hook/use-boundary-style.mjs
-	function useBoundaryStyle({ record }) {
-		const ref = (0, _wordpress_element.useRef)(void 0);
+	function useBoundaryStyle({ record, ref }) {
 		const { activeFormats = [], replacements, start } = record.current;
 		const activeReplacement = start === void 0 ? void 0 : replacements[start];
 		(0, _wordpress_element.useEffect)(() => {
@@ -2214,8 +2210,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				ownerDocument.head.appendChild(globalStyle);
 			}
 			if (globalStyle.innerHTML !== style) globalStyle.innerHTML = style;
-		}, [activeFormats, activeReplacement]);
-		return ref;
+		}, [
+			ref,
+			activeFormats,
+			activeReplacement
+		]);
 	}
 
 // packages/rich-text/build-module/hook/event-listeners/copy-handler.mjs
@@ -2570,26 +2569,27 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			});
 		}, capture);
 	}
-	function useEventListeners(props) {
+	function useEventListenerProps(props) {
 		const propsRef = (0, _wordpress_element.useRef)(props);
 		(0, _wordpress_element.useInsertionEffect)(() => {
 			propsRef.current = props;
 		});
-		return (0, _wordpress_compose.useRefEffect)((element) => {
-			const { ownerDocument } = element;
-			fields.set(element, {
-				element,
-				props: propsRef
-			});
-			if (!documents.has(ownerDocument)) {
-				documents.add(ownerDocument);
-				addListeners(ownerDocument, first, true);
-				addListeners(ownerDocument, defaults, false);
-			}
-			return () => {
-				fields.delete(element);
-			};
-		}, []);
+		return propsRef;
+	}
+	function addField(element, props) {
+		const { ownerDocument } = element;
+		fields.set(element, {
+			element,
+			props
+		});
+		if (!documents.has(ownerDocument)) {
+			documents.add(ownerDocument);
+			addListeners(ownerDocument, first, true);
+			addListeners(ownerDocument, defaults, false);
+		}
+		return () => {
+			fields.delete(element);
+		};
 	}
 
 // packages/rich-text/build-module/hook/use-format-types.mjs
@@ -2802,29 +2802,32 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			selectionEnd,
 			isSelected
 		]);
-		const mergedRefs = (0, _wordpress_compose.useMergeRefs)([
-			ref,
-			useDefaultStyle(),
-			useBoundaryStyle({ record: recordRef }),
-			useEventListeners({
-				record: recordRef,
-				handleChange,
-				applyRecord,
-				createRecord,
-				isSelected,
-				onSelectionChange: sendSelection,
-				forceRender
-			}),
-			(0, _wordpress_compose.useRefEffect)((element) => {
-				setRecordFromProps();
-				applyRecord(recordRef.current, { domOnly: !hasFocus(element) });
-			}, [placeholder, ...__unstableDependencies])
-		]);
+		useBoundaryStyle({
+			record: recordRef,
+			ref
+		});
+		const eventListenerProps = useEventListenerProps({
+			record: recordRef,
+			handleChange,
+			applyRecord,
+			createRecord,
+			isSelected,
+			onSelectionChange: sendSelection,
+			forceRender
+		});
+		const richTextRef = (0, _wordpress_compose.useRefEffect)((element) => {
+			ref.current = element;
+			setDefaultStyle(element);
+			const removeField = addField(element, eventListenerProps);
+			setRecordFromProps();
+			applyRecord(recordRef.current, { domOnly: !hasFocus(element) });
+			return removeField;
+		}, [placeholder, ...__unstableDependencies]);
 		return {
 			value: recordRef.current,
 			getValue: () => recordRef.current,
 			onChange: handleChange,
-			ref: mergedRefs,
+			ref: richTextRef,
 			[getDomPositionKey]: (0, _wordpress_element.useCallback)((offset) => getDomPosition({
 				value: recordRef.current,
 				offset: Math.min(offset, recordRef.current.text.length),
