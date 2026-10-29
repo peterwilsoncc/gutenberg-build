@@ -65518,21 +65518,40 @@ Icon: ButtonIcon });
 		});
 	};
 
+// packages/block-editor/build-module/components/rich-text/format-toolbar/formats.mjs
+	const TOOLBAR_FORMATS = [
+		"bold",
+		"italic",
+		"link",
+		"unknown",
+		"non-breaking-space"
+	];
+	const DROPDOWN_FORMATS = [
+		"text-color",
+		"image",
+		"code",
+		"keyboard",
+		"strikethrough",
+		"superscript",
+		"subscript",
+		"language",
+		"math",
+		"footnote"
+	];
+
 // packages/block-editor/build-module/components/rich-text/format-toolbar/index.mjs
 	const POPOVER_PROPS$4 = { placement: "bottom-start" };
 	const FormatToolbar = () => {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [[
-			"bold",
-			"italic",
-			"link",
-			"unknown",
-			"non-breaking-space"
-		].map((format) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Slot, { name: `RichText.ToolbarControls.${format}` }, format)), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Slot, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [TOOLBAR_FORMATS.map((format) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Slot, { name: `RichText.ToolbarControls.${format}` }, format)), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Slot, {
 			name: "RichText.ToolbarControls",
 			children: (slotFills) => {
 				const fills = slotFills;
 				if (!fills.length) return null;
-				const hasActive = fills.map(([{ props }]) => props).some(({ isActive }) => isActive);
+				const allProps = orderBy(fills, ([{ props }]) => {
+					const index = DROPDOWN_FORMATS.indexOf(props.name ?? "");
+					return index === -1 ? Infinity : index;
+				}).map(([{ props }]) => props);
+				const hasActive = allProps.some(({ isActive }) => isActive);
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
 					icon: chevron_down_default,
 					label: (0, _wordpress_i18n.__)("More"),
@@ -65541,7 +65560,7 @@ Icon: ButtonIcon });
 						className: clsx(toggleProps.className, { "is-pressed": hasActive }),
 						description: (0, _wordpress_i18n.__)("Displays more block tools")
 					},
-					controls: orderBy(fills.map(([{ props }]) => props), "title"),
+					controls: allProps,
 					popoverProps: POPOVER_PROPS$4
 				}) });
 			}
@@ -105858,15 +105877,19 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/rich-text/toolbar-button.mjs
+	function NamedToolbarButton({ name, ...props }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, { ...props });
+	}
 	function RichTextToolbarButton({ name, shortcutType, shortcutCharacter, ...props }) {
 		let shortcut;
 		let fillName = "RichText.ToolbarControls";
-		if (name) fillName += `.${name}`;
+		if (name && TOOLBAR_FORMATS.includes(name)) fillName += `.${name}`;
 		if (shortcutType && shortcutCharacter) shortcut = _wordpress_keycodes.displayShortcut[shortcutType](shortcutCharacter);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Fill, {
 			name: fillName,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NamedToolbarButton, {
 				...props,
+				name,
 				shortcut
 			})
 		});

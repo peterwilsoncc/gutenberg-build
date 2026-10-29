@@ -85831,6 +85831,7 @@ Icon: ButtonIcon });
 				});
 			}
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+				name: "footnote",
 				icon: format_list_numbered_default,
 				title: (0, _wordpress_i18n.__)("Footnote"),
 				onClick,

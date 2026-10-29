@@ -335,6 +335,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				character: "x",
 				onUse: onClick
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+				name: "code",
 				icon: code_default,
 				title: title$13,
 				onClick,
@@ -15750,6 +15751,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				onFocus();
 			},
 			render: ({ open }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+				name: "image",
 				icon: inline_image_default,
 				title: isObjectActive ? (0, _wordpress_i18n.__)("Replace image") : title$12,
 				onClick: open,
@@ -16302,6 +16304,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				character: "d",
 				onUse: onClick
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+				name: "strikethrough",
 				icon: format_strikethrough_default,
 				title: title$9,
 				onClick,
@@ -16480,6 +16483,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		const hasColorsToChoose = !!colors.length || allowCustomControl;
 		if (!hasColorsToChoose && !isActive) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+			name: "text-color",
 			className: "format-library-text-color-button",
 			isActive,
 			icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default, {
@@ -16530,6 +16534,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				onFocus();
 			}
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+				name: "subscript",
 				icon: subscript_default,
 				title: title$6,
 				onClick,
@@ -16559,6 +16564,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				onFocus();
 			}
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+				name: "superscript",
 				icon: superscript_default,
 				title: title$5,
 				onClick,
@@ -16588,6 +16594,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				onFocus();
 			}
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+				name: "keyboard",
 				icon: button_default,
 				title: title$4,
 				onClick,
@@ -16647,6 +16654,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			setIsPopoverVisible((state) => !state);
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+			name: "language",
 			icon: language_default,
 			label: title$2,
 			title: title$2,
@@ -16823,6 +16831,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			onFocus();
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+			name: "math",
 			icon: math_default,
 			title: title$1,
 			onClick,
