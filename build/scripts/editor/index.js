@@ -125067,6 +125067,86 @@ ${content}
       /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(tooltip_exports.Popup, { children: label })
     ] });
   }
+  function ReactionPicker({ reactions, onToggle }) {
+    const [isOpen2, setIsOpen] = (0, import_element431.useState)(false);
+    return /* @__PURE__ */ (0, import_jsx_runtime674.jsxs)(
+      index_parts_exports4.Root,
+      {
+        orientation: "horizontal",
+        highlightItemOnHover: false,
+        open: isOpen2,
+        onOpenChange: setIsOpen,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            index_parts_exports4.Trigger,
+            {
+              render: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+                IconButton,
+                {
+                  size: "small",
+                  variant: "minimal",
+                  tone: "neutral",
+                  className: "editor-collab-sidebar-panel__add-reaction-button",
+                  icon: reaction_default,
+                  label: (0, import_i18n290.__)("Add reaction")
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(index_parts_exports4.Portal, { container: getWpCompatOverlaySlot(), children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+            index_parts_exports4.Positioner,
+            {
+              side: "bottom",
+              align: "end",
+              sideOffset: 8,
+              collisionPadding: 12,
+              children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+                index_parts_exports4.Popup,
+                {
+                  "aria-label": (0, import_i18n290.__)("Add reaction"),
+                  className: "editor-collab-sidebar-panel__reaction-picker",
+                  onKeyDownCapture: (event) => {
+                    if (event.key === "Escape") {
+                      event.stopPropagation();
+                      setIsOpen(false);
+                    }
+                  },
+                  children: REACTION_EMOJIS.map(({ emoji, hexKey, label }) => /* @__PURE__ */ (0, import_jsx_runtime674.jsxs)(tooltip_exports.Root, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+                      tooltip_exports.Trigger,
+                      {
+                        render: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+                          index_parts_exports4.CheckboxItem,
+                          {
+                            nativeButton: true,
+                            checked: !!reactions?.[hexKey]?.current_user_reaction,
+                            onCheckedChange: () => onToggle(hexKey),
+                            closeOnClick: true,
+                            label,
+                            "aria-label": label,
+                            className: "editor-collab-sidebar-panel__reaction-option",
+                            render: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+                              Button6,
+                              {
+                                variant: "minimal",
+                                tone: "neutral"
+                              }
+                            )
+                          }
+                        ),
+                        children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)("span", { className: "editor-collab-sidebar-panel__reaction-option-emoji", children: emoji })
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(tooltip_exports.Popup, { children: label })
+                  ] }, hexKey))
+                }
+              )
+            }
+          ) })
+        ]
+      }
+    );
+  }
   function NoteReactions({
     noteId,
     canReact,
@@ -125104,44 +125184,13 @@ ${content}
               },
               hexKey
             )),
-            canReact && /* @__PURE__ */ (0, import_jsx_runtime674.jsxs)(menu_exports.Root, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-                menu_exports.Trigger,
-                {
-                  render: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-                    IconButton,
-                    {
-                      size: "small",
-                      variant: "minimal",
-                      tone: "neutral",
-                      className: "editor-collab-sidebar-panel__add-reaction-button",
-                      icon: reaction_default,
-                      label: (0, import_i18n290.__)("Add reaction")
-                    }
-                  )
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-                menu_exports.Popup,
-                {
-                  "aria-label": (0, import_i18n290.__)("Add reaction"),
-                  positioner: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(menu_exports.Positioner, { side: "bottom", align: "end" }),
-                  children: REACTION_EMOJIS.map(
-                    ({ emoji, hexKey, label }) => /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-                      menu_exports.CheckboxItem,
-                      {
-                        checked: !!reactions?.[hexKey]?.current_user_reaction,
-                        onCheckedChange: () => toggleReaction(hexKey),
-                        closeOnClick: true,
-                        prefix: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)("span", { className: "editor-collab-sidebar-panel__reaction-option-emoji", children: emoji }),
-                        children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(menu_exports.ItemLabel, { children: label })
-                      },
-                      hexKey
-                    )
-                  )
-                }
-              )
-            ] })
+            canReact && /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
+              ReactionPicker,
+              {
+                reactions,
+                onToggle: toggleReaction
+              }
+            )
           ]
         }
       ) })
