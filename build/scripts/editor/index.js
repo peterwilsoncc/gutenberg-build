@@ -7597,10 +7597,36 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	/**
 	* Replaces the editor's content with the browser backup shown in the
 	* revisions view. Like any edit, it is saved by the next save or autosave.
+	*
+	* For unpublished posts, the current content is saved first so that it is kept
+	* as a revision.
 	*/
-	const restoreBrowserBackup = () => ({ select, dispatch, registry }) => {
+	const restoreBrowserBackup = () => async ({ select, dispatch, registry }) => {
 		const backup = select.getBrowserBackup();
 		if (!backup) return;
+		if (select.isSavingPost()) await new Promise((resolve) => {
+			const unsubscribe = registry.subscribe(() => {
+				if (!select.isSavingPost()) {
+					unsubscribe();
+					resolve();
+				}
+			}, STORE_NAME$2);
+		});
+		if (shouldSaveBeforeRestore(select, {
+			title: backup.title.raw,
+			content: backup.content.raw,
+			excerpt: backup.excerpt.raw
+		})) {
+			await dispatch.savePost();
+			if (didSaveFail(select)) {
+				registry.dispatch(_wordpress_notices.store).createErrorNotice((0, _wordpress_i18n.__)("The backup was not restored because the current version of the post could not be saved first. Your content has not been changed."), {
+					type: "snackbar",
+					explicitDismiss: true,
+					id: "editor-revision-restore-failed"
+				});
+				return;
+			}
+		}
 		dispatch.setCurrentRevisionId(null);
 		dispatch.editPost({
 			title: backup.title.raw,
@@ -7608,6 +7634,10 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		});
 		dispatch.resetEditorBlocks((0, _wordpress_blocks.parse)(backup.content.raw));
 		registry.dispatch(_wordpress_notices.store).removeNotice(BROWSER_BACKUP_NOTICE_ID);
+		registry.dispatch(_wordpress_notices.store).createSuccessNotice((0, _wordpress_i18n.__)("Backup restored."), {
+			type: "snackbar",
+			id: "editor-save"
+		});
 	};
 	/**
 	* Creates the notice shown when a revision is not restored because the post
@@ -7663,6 +7693,23 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		return select.didPostSaveRequestFail() || select.isEditedPostDirty();
 	}
 	/**
+	* Returns whether the current content should be saved before a restore
+	* replaces it: the post is saveable, neither its saved nor its edited status
+	* is public, and the restore would change it.
+	*
+	* @param {Object} select The editor store selectors.
+	* @param {Object} edits  The edits the restore would apply.
+	* @return {boolean} Whether to save first.
+	*/
+	function shouldSaveBeforeRestore(select, edits) {
+		return select.isEditedPostSaveable() && UNPUBLISHED_POST_STATUSES.includes(select.getCurrentPostAttribute("status")) && UNPUBLISHED_POST_STATUSES.includes(select.getEditedPostAttribute("status")) && hasContentToReplace({
+			title: select.getEditedPostAttribute("title"),
+			content: select.getEditedPostContent(),
+			excerpt: select.getEditedPostAttribute("excerpt"),
+			meta: select.getEditedPostAttribute("meta")
+		}, edits);
+	}
+	/**
 	* Restore a revision by replacing the current content with the revision's content
 	* and auto-saving.
 	*
@@ -7702,12 +7749,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 			createRestoreWhileSavingNotice(registry);
 			return;
 		}
-		if (select.isEditedPostSaveable() && UNPUBLISHED_POST_STATUSES.includes(select.getCurrentPostAttribute("status")) && UNPUBLISHED_POST_STATUSES.includes(select.getEditedPostAttribute("status")) && hasContentToReplace({
-			title: select.getEditedPostAttribute("title"),
-			content: select.getEditedPostContent(),
-			excerpt: select.getEditedPostAttribute("excerpt"),
-			meta: select.getEditedPostAttribute("meta")
-		}, edits)) {
+		if (shouldSaveBeforeRestore(select, edits)) {
 			await dispatch.savePost();
 			if (didSaveFail(select)) {
 				registry.dispatch(_wordpress_notices.store).createErrorNotice((0, _wordpress_i18n.__)("The revision was not restored because the current version of the post could not be saved first. Your content has not been changed."), {
