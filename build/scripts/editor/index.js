@@ -124724,17 +124724,12 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_jsx_runtime673 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement } = unlock(import_block_editor99.privateApis);
-  function AddNote({
-    clientId,
-    onSubmit,
-    onDiscard,
-    sidebarRef,
-    floating
-  }) {
+  function AddNote({ clientId, sidebarRef, floating }) {
     const blockElement = useBlockElement(clientId);
     const { toggleBlockHighlight } = unlock((0, import_data232.useDispatch)(import_block_editor99.store));
     const { selectNote: selectNote2 } = unlock((0, import_data232.useDispatch)(store));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data232.useSelect)(store));
+    const { onCreate, onDiscard } = useNoteActions();
     const isSubmittingRef = (0, import_element430.useRef)(false);
     const { initialValue, setDraft, hasDraft } = useNoteDraft(clientId);
     const focusOutside = (0, import_compose97.__experimentalUseFocusOutside)((event) => {
@@ -124778,7 +124773,7 @@ ${content}
             onSubmit: async (inputComment) => {
               isSubmittingRef.current = true;
               try {
-                const savedRecord = await onSubmit({
+                const savedRecord = await onCreate({
                   content: inputComment
                 });
                 if (savedRecord) {
@@ -125471,16 +125466,14 @@ ${content}
   }
   function NoteThread({
     note,
-    onEditNote,
-    onAddReply,
-    onDiscard,
-    onDeleteNote,
+    focusThreadOrAdjacent,
     isSelected: isSelected2,
     sidebarRef,
     floating,
     onKeyDown
   }) {
     const isFloating = !!floating;
+    const { onCreate, onEdit, onDiscard, onDelete } = useNoteActions();
     const { toggleBlockHighlight } = unlock((0, import_data235.useDispatch)(import_block_editor100.store));
     const drafts = (0, import_element433.useContext)(NoteDraftsContext);
     const pickNote = usePickNote({ drafts, onDiscard });
@@ -125552,13 +125545,25 @@ ${content}
       toggleBlockHighlight(note.blockClientId, false);
     }
     function handleResolve() {
-      onEditNote(note, { status: "approved" });
+      onEdit(note, { status: "approved" });
       onDeselectNote();
       if (isFloating) {
         relatedBlockElement?.focus();
       } else {
-        focusNoteThread(note.id, sidebarRef.current);
+        focusThreadOrAdjacent(note, { ...note, status: "approved" });
       }
+    }
+    async function handleDelete(noteToDelete) {
+      const deleted = await onDelete(noteToDelete);
+      if (!deleted) {
+        return;
+      }
+      if (noteToDelete.parent !== 0) {
+        selectNote2(noteToDelete.parent);
+        focusNoteThread(noteToDelete.parent, sidebarRef.current);
+        return;
+      }
+      focusThreadOrAdjacent(note, null);
     }
     const allReplies = note?.reply || [];
     const isThreadResolved = "approved" === note.status;
@@ -125582,8 +125587,6 @@ ${content}
         AddNote,
         {
           clientId: note.blockClientId,
-          onSubmit: onAddReply,
-          onDiscard,
           sidebarRef,
           floating: { y: floating.y, ref: floatingRef }
         },
@@ -125644,8 +125647,8 @@ ${content}
             {
               note,
               isSelected: isSelected2,
-              onEditNote,
-              onDeleteNote,
+              onEditNote: onEdit,
+              onDeleteNote: handleDelete,
               onResolve: handleResolve,
               isThreadResolved
             }
@@ -125656,8 +125659,8 @@ ${content}
               note: reply,
               parentNote: note,
               isSelected: isSelected2,
-              onEditNote,
-              onDeleteNote,
+              onEditNote: onEdit,
+              onDeleteNote: handleDelete,
               isThreadResolved
             },
             reply.id
@@ -125698,8 +125701,8 @@ ${content}
               note: lastReply,
               parentNote: note,
               isSelected: false,
-              onEditNote,
-              onDeleteNote,
+              onEditNote: onEdit,
+              onDeleteNote: handleDelete,
               isThreadResolved
             }
           ),
@@ -125707,12 +125710,12 @@ ${content}
             NoteReply,
             {
               note,
-              onEditNote,
-              onAddReply,
+              onEditNote: onEdit,
+              onAddReply: onCreate,
               onCancel: (event) => {
                 event.stopPropagation();
                 onDeselectNote();
-                focusNoteThread(note.id, sidebarRef.current);
+                focusThreadOrAdjacent(note, note);
               }
             }
           ),
@@ -125738,13 +125741,9 @@ ${content}
   var import_jsx_runtime677 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement: useBlockElement3 } = unlock(import_block_editor101.privateApis);
   function Notes({ notes, sidebarRef, isFloating = false }) {
-    const {
-      onCreate: onAddReply,
-      onEdit: onEditNote,
-      onDiscard,
-      onDelete
-    } = useNoteActions();
+    const { onDiscard } = useNoteActions();
     const { selectNote: selectNote2 } = unlock((0, import_data236.useDispatch)(store));
+    const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data236.useSelect)(store));
     const { toggleBlockHighlight } = unlock((0, import_data236.useDispatch)(import_block_editor101.store));
     const drafts = (0, import_element434.useContext)(NoteDraftsContext);
     const pickNote = usePickNote({ drafts, onDiscard });
@@ -125790,29 +125789,6 @@ ${content}
       selectedBlockClientId,
       orderedBlockIds
     ]);
-    const handleDelete = async (note) => {
-      const currentIndex = threads.findIndex((t2) => t2.id === note.id);
-      const nextThread = threads[currentIndex + 1];
-      const prevThread = threads[currentIndex - 1];
-      const deleted = await onDelete(note);
-      if (!deleted) {
-        return;
-      }
-      if (note.parent !== 0) {
-        selectNote2(note.parent);
-        focusNoteThread(note.parent, sidebarRef.current);
-        return;
-      }
-      const adjacentThread = nextThread ?? prevThread;
-      if (adjacentThread) {
-        pickNote(adjacentThread.id, adjacentThread.blockClientId);
-        focusNoteThread(adjacentThread.id, sidebarRef.current);
-      } else {
-        selectNote2(void 0);
-        toggleBlockHighlight(note.blockClientId, false);
-        relatedBlockElement?.focus();
-      }
-    };
     const { notePositions, heights, registerThread, unregisterThread } = useFloatingBoard({
       threads,
       selectedNoteId: selectedNote2,
@@ -125823,6 +125799,24 @@ ${content}
       sidebarRef,
       isPlaced: !isFloating || notePositions[selectedNote2] !== void 0
     });
+    function focusThreadOrAdjacent(thread, nextThread) {
+      if (nextThread) {
+        focusNoteThread(thread.id, sidebarRef.current);
+        return;
+      }
+      const currentIndex = threads.findIndex((t2) => t2.id === thread.id);
+      const adjacentThread = threads[currentIndex + 1] ?? threads[currentIndex - 1];
+      if (!adjacentThread) {
+        selectNote2(void 0);
+        toggleBlockHighlight(thread.blockClientId, false);
+        relatedBlockElement?.focus();
+        return;
+      }
+      if (getSelectedNote2() === thread.id) {
+        pickNote(adjacentThread.id, adjacentThread.blockClientId);
+      }
+      focusNoteThread(adjacentThread.id, sidebarRef.current);
+    }
     const navigate = (event, thread, isSelected2) => {
       if (event.defaultPrevented) {
         return;
@@ -125836,7 +125830,7 @@ ${content}
         if (thread.blockClientId) {
           toggleBlockHighlight(thread.blockClientId, false);
         }
-        focusNoteThread(thread.id, sidebarRef.current);
+        focusThreadOrAdjacent(thread, thread);
       } else if (isSelfTarget2) {
         const targetIndex = {
           ArrowDown: Math.min(currentIndex + 1, threads.length - 1),
@@ -125876,8 +125870,6 @@ ${content}
             AddNote,
             {
               clientId: selectedBlockClientId,
-              onSubmit: onAddReply,
-              onDiscard,
               sidebarRef
             },
             selectedBlockClientId
@@ -125898,10 +125890,7 @@ ${content}
               NoteThread,
               {
                 note: thread,
-                onAddReply,
-                onDiscard,
-                onDeleteNote: handleDelete,
-                onEditNote,
+                focusThreadOrAdjacent,
                 isSelected: selectedNote2 === thread.id,
                 sidebarRef,
                 floating: isFloating ? {
