@@ -5282,6 +5282,19 @@ mark.wp-note {
   gap: var(--wpds-dimension-gap-xs, 4px);
   min-width: 0;
 }
+@media (forced-colors: active) {
+  .editor-collab-sidebar-panel__reaction-button[aria-pressed=true] {
+    background-color: SelectedItem;
+    color: SelectedItemText;
+  }
+  .editor-collab-sidebar-panel__reaction-button[aria-pressed=true][data-disabled] {
+    background-color: GrayText;
+    color: Canvas;
+  }
+  .editor-collab-sidebar-panel__reaction-button[aria-pressed=true] > * {
+    forced-color-adjust: none;
+  }
+}
 
 .editor-collab-sidebar-panel__add-reaction-button:focus:not(:focus-visible):not([data-popup-open]) {
   outline: none;
@@ -5309,6 +5322,10 @@ mark.wp-note {
 @media (forced-colors: active) {
   .editor-collab-sidebar-panel__reaction-option[data-checked] {
     background-color: SelectedItem;
+    color: SelectedItemText;
+  }
+  .editor-collab-sidebar-panel__reaction-option[data-checked] > * {
+    forced-color-adjust: none;
   }
 }
 
