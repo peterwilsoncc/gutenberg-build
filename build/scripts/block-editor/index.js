@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_element, _wordpress_data, _wordpress_compose, _wordpress_hooks, _wordpress_i18n, _wordpress_components, _wordpress_primitives, react_jsx_runtime, _wordpress_deprecated, _wordpress_is_shallow_equal, _wordpress_private_apis, _wordpress_rich_text, _wordpress_block_serialization_default_parser, _wordpress_style_engine, _wordpress_a11y, _wordpress_notices, _wordpress_url, react, react_dom, _wordpress_warning, _wordpress_theme, _wordpress_keycodes, _wordpress_dom, _wordpress_keyboard_shortcuts, _wordpress_html_entities, _wordpress_upload_media, _wordpress_priority_queue, _wordpress_date, _wordpress_blob, _wordpress_token_list, _wordpress_preferences, _wordpress_commands) {
+(function(exports, _wordpress_blocks, _wordpress_element, _wordpress_data, _wordpress_compose, _wordpress_hooks, _wordpress_i18n, _wordpress_components, _wordpress_primitives, react_jsx_runtime, _wordpress_deprecated, _wordpress_is_shallow_equal, _wordpress_private_apis, _wordpress_rich_text, _wordpress_block_serialization_default_parser, _wordpress_style_engine, _wordpress_a11y, _wordpress_notices, _wordpress_url, react, react_dom, _wordpress_warning, _wordpress_theme, _wordpress_keycodes, _wordpress_dom, _wordpress_html_entities, _wordpress_upload_media, _wordpress_keyboard_shortcuts, _wordpress_priority_queue, _wordpress_date, _wordpress_blob, _wordpress_token_list, _wordpress_preferences, _wordpress_commands) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -61687,381 +61687,6 @@ Icon: ButtonIcon });
 		}, []);
 	}
 
-// packages/block-editor/build-module/components/block-visibility/utils.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$2 } = unlock$2(privateApis$29);
-	function getBlockVisibilityViewportEntries(viewportSettings) {
-		const breakpoints = getViewportBreakpoints$2(viewportSettings);
-		return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.filter(([viewport]) => (viewport !== BLOCK_VISIBILITY_VIEWPORTS.tablet.key || breakpoints.tablet !== void 0) && (viewport !== BLOCK_VISIBILITY_VIEWPORTS.mobile.key || breakpoints.mobile !== void 0));
-	}
-	/**
-	* Checks if a block is hidden for a specific viewport.
-	*
-	* @param block    The block to check.
-	* @param viewport The viewport to check (e.g., 'mobile', 'tablet', 'desktop').
-	* @return Whether the block is hidden for the viewport.
-	*/
-	function isBlockHiddenForViewport(block, viewport) {
-		if (!block) return false;
-		const blockVisibility = block.attributes?.metadata?.blockVisibility;
-		if (blockVisibility === true) return false;
-		if ("object" !== typeof blockVisibility) return false;
-		const viewportConfig = blockVisibility.viewport;
-		if (!viewportConfig || "object" !== typeof viewportConfig) return false;
-		if (!BLOCK_VISIBILITY_VIEWPORT_ENTRIES.some(([, { key }]) => key === viewport)) return false;
-		return viewportConfig[viewport] === false;
-	}
-	/**
-	* Gets the checkbox state for a viewport across multiple blocks.
-	* Returns `true` if all blocks are hidden, `null` if some are hidden, `false` if none are hidden.
-	*
-	* @param blocks   Array of blocks to check.
-	* @param viewport The viewport to check (e.g., 'mobile', 'tablet', 'desktop').
-	* @return `true` if all hidden, `null` if some hidden, `false` if none hidden.
-	*/
-	function getViewportCheckboxState(blocks, viewport) {
-		if (!blocks?.length) return false;
-		const hiddenCount = blocks.filter((block) => isBlockHiddenForViewport(block, viewport)).length;
-		if (hiddenCount === 0) return false;
-		if (hiddenCount === blocks.length) return true;
-		return null;
-	}
-	/**
-	* Gets the checkbox state for "hide everywhere" across multiple blocks.
-	* Returns `true` if all blocks are hidden everywhere, `null` if some are hidden everywhere, `false` if none are.
-	*
-	* @param blocks Array of blocks to check.
-	* @return `true` if all hidden everywhere, `null` if some hidden everywhere, `false` if none.
-	*/
-	function getHideEverywhereCheckboxState(blocks) {
-		if (!blocks?.length) return false;
-		const hiddenEverywhereCount = blocks.filter((block) => block && block.attributes?.metadata?.blockVisibility === false).length;
-		if (hiddenEverywhereCount === 0) return false;
-		if (hiddenEverywhereCount === blocks.length) return true;
-		return null;
-	}
-	/**
-	* Get a human-readable label describing which viewports a block is hidden on.
-	*
-	* @param blockVisibility  The block's visibility metadata.
-	* @param viewportSettings Viewport breakpoint settings.
-	* @return A descriptive label, or null if the block is not hidden.
-	*/
-	function getBlockVisibilityLabel(blockVisibility, viewportSettings) {
-		if (!blockVisibility && blockVisibility !== false) return null;
-		if (blockVisibility === false) return (0, _wordpress_i18n.__)("Block is hidden");
-		if (blockVisibility?.viewport) {
-			const hiddenViewports = getBlockVisibilityViewportEntries(viewportSettings).filter(([key]) => blockVisibility.viewport?.[key] === false).map(([, viewport]) => viewport.label);
-			if (hiddenViewports.length > 0) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block is hidden on %s"), hiddenViewports.join(", "));
-		}
-		return null;
-	}
-
-// packages/block-editor/build-module/components/block-visibility/modal.mjs
-	const DEFAULT_VIEWPORT_CHECKBOX_VALUES = {
-		[BLOCK_VISIBILITY_VIEWPORTS.mobile.key]: false,
-		[BLOCK_VISIBILITY_VIEWPORTS.tablet.key]: false,
-		[BLOCK_VISIBILITY_VIEWPORTS.desktop.key]: false
-	};
-	const EMPTY_BLOCKS = [];
-	/**
-	* Modal component for configuring block visibility across viewports.
-	*
-	* Allows users to hide blocks on specific viewport sizes (mobile, tablet, desktop)
-	* or hide them everywhere. When editing multiple blocks, checkboxes only show as
-	* checked if ALL selected blocks share the same setting to avoid ambiguity.
-	*
-	* @param props           Component props.
-	* @param props.clientIds The client IDs of the blocks to hide.
-	* @param props.onClose   Callback function invoked when the modal is closed.
-	* @return The modal component.
-	*/
-	function BlockVisibilityModal({ clientIds, onClose }) {
-		const { createSuccessNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
-		const { updateBlockAttributes } = (0, _wordpress_data.useDispatch)(store);
-		const blocks = (0, _wordpress_data.useSelect)((select) => select(store).getBlocksByClientId(clientIds) ?? EMPTY_BLOCKS, [clientIds]);
-		const listViewShortcut = (0, _wordpress_data.useSelect)((select) => {
-			return select(_wordpress_keyboard_shortcuts.store).getShortcutRepresentation("core/editor/toggle-list-view");
-		}, []);
-		const viewportSettings = (0, _wordpress_data.useSelect)((select) => select(store).getSettings().__experimentalFeatures?.viewport, []);
-		const viewportEntries = (0, _wordpress_element.useMemo)(() => getBlockVisibilityViewportEntries(viewportSettings), [viewportSettings]);
-		const initialViewportValues = (0, _wordpress_element.useMemo)(() => {
-			if (blocks?.length === 0) return {
-				hideEverywhere: false,
-				viewportChecked: {}
-			};
-			const viewportValues = {};
-			viewportEntries.forEach(([, { key }]) => {
-				viewportValues[key] = getViewportCheckboxState(blocks, key);
-			});
-			return {
-				hideEverywhere: getHideEverywhereCheckboxState(blocks),
-				viewportChecked: viewportValues
-			};
-		}, [blocks, viewportEntries]);
-		const [viewportChecked, setViewportChecked] = (0, _wordpress_element.useState)(initialViewportValues?.viewportChecked ?? {});
-		const [hideEverywhere, setHideEverywhere] = (0, _wordpress_element.useState)(initialViewportValues?.hideEverywhere ?? false);
-		const handleViewportCheckboxChange = (0, _wordpress_element.useCallback)((viewport, isChecked) => {
-			setViewportChecked({
-				...viewportChecked,
-				[viewport]: isChecked
-			});
-		}, [viewportChecked]);
-		const noticeMessage = (0, _wordpress_element.useMemo)(() => {
-			if (!hideEverywhere) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block visibility settings updated. You can access them via the List View (%s)."), listViewShortcut);
-			const message = blocks?.length > 1 ? (0, _wordpress_i18n.__)("Blocks hidden. You can access them via the List View (%s).") : (0, _wordpress_i18n.__)("Block hidden. You can access it via the List View (%s).");
-			return (0, _wordpress_i18n.sprintf)(message, listViewShortcut);
-		}, [
-			hideEverywhere,
-			blocks?.length,
-			listViewShortcut
-		]);
-		const isAnyViewportChecked = (0, _wordpress_element.useMemo)(() => Object.values(viewportChecked).some((checked) => checked === true || checked === null), [viewportChecked]);
-		const isDirty = (0, _wordpress_element.useMemo)(() => {
-			if (hideEverywhere !== initialViewportValues.hideEverywhere) return true;
-			return viewportEntries.some(([, { key }]) => viewportChecked[key] !== initialViewportValues.viewportChecked[key]);
-		}, [
-			hideEverywhere,
-			viewportChecked,
-			initialViewportValues,
-			viewportEntries
-		]);
-		const hasIndeterminateValues = (0, _wordpress_element.useMemo)(() => {
-			if (hideEverywhere === null) return true;
-			return Object.values(viewportChecked).some((checked) => checked === null);
-		}, [hideEverywhere, viewportChecked]);
-		const handleSubmit = (0, _wordpress_element.useCallback)((event) => {
-			event.preventDefault();
-			const newVisibility = hideEverywhere ? false : { viewport: viewportEntries.reduce((acc, [, { key }]) => {
-				if (viewportChecked[key]) acc[key] = false;
-				return acc;
-			}, {}) };
-			const attributesByClientId = Object.fromEntries(blocks.map(({ clientId, attributes }) => [clientId, { metadata: cleanEmptyObject({
-				...attributes?.metadata,
-				blockVisibility: newVisibility
-			}) }]));
-			updateBlockAttributes(clientIds, attributesByClientId, { uniqueByBlock: true });
-			createSuccessNotice(noticeMessage, {
-				id: hideEverywhere ? "block-visibility-hidden" : "block-visibility-viewports-updated",
-				type: "snackbar"
-			});
-			onClose();
-		}, [
-			blocks,
-			clientIds,
-			createSuccessNotice,
-			hideEverywhere,
-			noticeMessage,
-			onClose,
-			updateBlockAttributes,
-			viewportEntries,
-			viewportChecked
-		]);
-		const hasMultipleBlocks = blocks?.length > 1;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
-			title: clientIds?.length > 1 ? (0, _wordpress_i18n.__)("Hide blocks") : (0, _wordpress_i18n.__)("Hide block"),
-			onRequestClose: onClose,
-			overlayClassName: "block-editor-block-visibility-modal",
-			size: "small",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("form", {
-				onSubmit: handleSubmit,
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", { children: [
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("legend", { children: hasMultipleBlocks ? (0, _wordpress_i18n.__)("Select the viewport sizes for which you want to hide the blocks. Changes will apply to all selected blocks.") : (0, _wordpress_i18n.__)("Select the viewport size for which you want to hide the block.") }),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("ul", {
-						className: "block-editor-block-visibility-modal__options",
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("li", {
-							className: "block-editor-block-visibility-modal__options-item block-editor-block-visibility-modal__options-item--everywhere",
-							children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.CheckboxControl, {
-								className: "block-editor-block-visibility-modal__options-checkbox--everywhere",
-								label: (0, _wordpress_i18n.__)("Omit from published content"),
-								checked: hideEverywhere === true,
-								indeterminate: hideEverywhere === null,
-								onChange: (checked) => {
-									setHideEverywhere(checked);
-									setViewportChecked(DEFAULT_VIEWPORT_CHECKBOX_VALUES);
-								}
-							}), hideEverywhere !== true && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("ul", {
-								className: "block-editor-block-visibility-modal__sub-options",
-								children: viewportEntries.map(([, { label, icon, key }]) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("li", {
-									className: "block-editor-block-visibility-modal__options-item",
-									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.CheckboxControl, {
-										label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Hide on %s"), label),
-										checked: viewportChecked[key] ?? false,
-										indeterminate: viewportChecked[key] === null,
-										onChange: (checked) => handleViewportCheckboxChange(key, checked)
-									}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, {
-										icon,
-										className: clsx({ "block-editor-block-visibility-modal__options-icon--checked": viewportChecked[key] })
-									})]
-								}, key))
-							})]
-						})
-					}),
-					hasMultipleBlocks && hasIndeterminateValues && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
-						className: "block-editor-block-visibility-modal__description",
-						children: (0, _wordpress_i18n.__)("Selected blocks have different visibility settings. The checkboxes show an indeterminate state when settings differ.")
-					}),
-					!hasMultipleBlocks && hideEverywhere === true && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
-						className: "block-editor-block-visibility-modal__description",
-						children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block will be hidden in the editor, and omitted from the published markup on the frontend. You can configure it again by selecting it in the List View (%s)."), listViewShortcut)
-					}),
-					!hasMultipleBlocks && !hideEverywhere && isAnyViewportChecked && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
-						className: "block-editor-block-visibility-modal__description",
-						children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block will be hidden according to the selected viewports. It will be <strong>included in the published markup on the frontend</strong>. You can configure it again by selecting it in the List View (%s)."), listViewShortcut), { strong: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("strong", {}) })
-					})
-				] }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Flex, {
-					className: "block-editor-block-visibility-modal__actions",
-					justify: "flex-end",
-					expanded: false,
-					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-						variant: "tertiary",
-						onClick: onClose,
-						__next40pxDefaultSize: true,
-						children: (0, _wordpress_i18n.__)("Cancel")
-					}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-						variant: "primary",
-						type: "submit",
-						disabled: !isDirty,
-						accessibleWhenDisabled: true,
-						__next40pxDefaultSize: true,
-						children: (0, _wordpress_i18n.__)("Apply")
-					}) })]
-				})]
-			})
-		});
-	}
-
-// packages/block-editor/build-module/components/block-visibility/use-block-visibility.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock$2(privateApis$29);
-	/**
-	* Returns information about the current block visibility state.
-	*
-	* @param options                  Parameters to avoid extra store subscriptions.
-	* @param options.blockVisibility  Block visibility metadata.
-	* @param options.deviceType       Current device type.
-	* @param options.viewportSettings Viewport breakpoint settings.
-	* @param options.view             Window instance in which to perform viewport matching.
-	* @return Object with `isBlockCurrentlyHidden` and `currentViewport` properties.
-	*/
-	function useBlockVisibility({ blockVisibility, deviceType = "desktop", viewportSettings, view = window } = {}) {
-		const viewportBreakpoints = getViewportBreakpoints$1(viewportSettings);
-		const mobileMediaQuery = viewportBreakpoints.mobile ? `(width <= ${viewportBreakpoints.mobile})` : void 0;
-		const isMobileViewport = (0, _wordpress_compose.useMediaQuery)(mobileMediaQuery, view);
-		let tabletMediaQuery;
-		if (viewportBreakpoints.tablet) tabletMediaQuery = viewportBreakpoints.mobile ? `(${viewportBreakpoints.mobile} < width <= ${viewportBreakpoints.tablet})` : `(width <= ${viewportBreakpoints.tablet})`;
-		const isTabletViewport = (0, _wordpress_compose.useMediaQuery)(tabletMediaQuery, view);
-		let currentViewport;
-		if (deviceType === "mobile" && viewportBreakpoints.mobile) currentViewport = "mobile";
-		else if (deviceType === "tablet" && viewportBreakpoints.tablet) currentViewport = "tablet";
-		else if (isMobileViewport) currentViewport = "mobile";
-		else if (isTabletViewport && viewportBreakpoints.tablet) currentViewport = "tablet";
-		else currentViewport = "desktop";
-		return {
-			isBlockCurrentlyHidden: blockVisibility === false || typeof blockVisibility === "object" && blockVisibility?.viewport?.[currentViewport] === false,
-			currentViewport
-		};
-	}
-
-// packages/block-editor/build-module/components/block-visibility/viewport-toolbar.mjs
-	function BlockVisibilityViewportToolbar({ clientIds }) {
-		const hasBlockVisibilityButtonShownRef = (0, _wordpress_element.useRef)(false);
-		const [blockVisibility] = useSettings("blockVisibility.allowEditing");
-		const { canToggleBlockVisibility, areBlocksHiddenAnywhere } = (0, _wordpress_data.useSelect)((select) => {
-			const { getBlocksByClientId, getBlockName, isBlockHiddenAnywhere } = unlock$2(select(store));
-			return {
-				canToggleBlockVisibility: getBlocksByClientId(clientIds).every(({ clientId }) => (0, _wordpress_blocks.hasBlockSupport)(getBlockName(clientId), "visibility", true)),
-				areBlocksHiddenAnywhere: clientIds?.every((clientId) => isBlockHiddenAnywhere(clientId))
-			};
-		}, [clientIds]);
-		const blockEditorDispatch = (0, _wordpress_data.useDispatch)(store);
-		(0, _wordpress_element.useEffect)(() => {
-			if (areBlocksHiddenAnywhere) hasBlockVisibilityButtonShownRef.current = true;
-		}, [areBlocksHiddenAnywhere]);
-		if (blockVisibility === false) return null;
-		if (!areBlocksHiddenAnywhere && !hasBlockVisibilityButtonShownRef.current) return null;
-		const { showViewportModal } = unlock$2(blockEditorDispatch);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, {
-			className: "block-editor-block-visibility-toolbar",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
-				disabled: !canToggleBlockVisibility,
-				icon: areBlocksHiddenAnywhere ? unseen_default : seen_default,
-				label: areBlocksHiddenAnywhere ? (0, _wordpress_i18n.__)("Hidden") : (0, _wordpress_i18n.__)("Visible"),
-				onClick: () => showViewportModal(clientIds),
-				"aria-haspopup": "dialog"
-			})
-		});
-	}
-
-// packages/block-editor/build-module/components/block-visibility/viewport-menu-item.mjs
-	function BlockVisibilityViewportMenuItem({ clientIds }) {
-		const [blockVisibility] = useSettings("blockVisibility.allowEditing");
-		const { areBlocksHiddenAnywhere, shortcut } = (0, _wordpress_data.useSelect)((select) => {
-			const { isBlockHiddenAnywhere } = unlock$2(select(store));
-			return {
-				areBlocksHiddenAnywhere: clientIds?.every((clientId) => isBlockHiddenAnywhere(clientId)),
-				shortcut: select(_wordpress_keyboard_shortcuts.store).getShortcutRepresentation("core/block-editor/toggle-block-visibility")
-			};
-		}, [clientIds]);
-		const dispatch = (0, _wordpress_data.useDispatch)(store);
-		if (blockVisibility === false) return null;
-		const { showViewportModal } = unlock$2(dispatch);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
-			onClick: () => showViewportModal(clientIds),
-			shortcut,
-			children: areBlocksHiddenAnywhere ? (0, _wordpress_i18n.__)("Show") : (0, _wordpress_i18n.__)("Hide")
-		});
-	}
-
-// packages/block-editor/build-module/components/block-visibility/viewport-visibility-info.mjs
-	const DEFAULT_VISIBILITY_STATE = {
-		currentBlockVisibility: void 0,
-		hasParentHiddenEverywhere: false,
-		selectedDeviceType: BLOCK_VISIBILITY_VIEWPORTS.desktop.key
-	};
-	function ViewportVisibilityInfo({ clientId }) {
-		const { currentBlockVisibility, selectedDeviceType, viewportSettings, hasParentHiddenEverywhere } = (0, _wordpress_data.useSelect)((select) => {
-			if (!clientId) return DEFAULT_VISIBILITY_STATE;
-			const { getBlockAttributes, isBlockParentHiddenEverywhere, getSettings } = unlock$2(select(store));
-			const settings = getSettings();
-			return {
-				currentBlockVisibility: getBlockAttributes(clientId)?.metadata?.blockVisibility,
-				selectedDeviceType: settings?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
-				viewportSettings: settings?.__experimentalFeatures?.viewport,
-				hasParentHiddenEverywhere: isBlockParentHiddenEverywhere(clientId)
-			};
-		}, [clientId]);
-		const rawCanvasView = useBlockElement(clientId)?.ownerDocument?.defaultView;
-		const { isBlockCurrentlyHidden, currentViewport } = useBlockVisibility({
-			blockVisibility: currentBlockVisibility,
-			deviceType: selectedDeviceType,
-			viewportSettings,
-			view: rawCanvasView === null ? void 0 : rawCanvasView
-		});
-		const isBlockParentHiddenAtViewport = (0, _wordpress_data.useSelect)((select) => {
-			if (!clientId || !currentViewport) return false;
-			return unlock$2(select(store)).isBlockParentHiddenAtViewport(clientId, currentViewport);
-		}, [clientId, currentViewport]);
-		if (!(isBlockCurrentlyHidden || hasParentHiddenEverywhere || isBlockParentHiddenAtViewport)) return null;
-		let label;
-		if (isBlockCurrentlyHidden) {
-			if (currentBlockVisibility === false) label = (0, _wordpress_i18n.__)("Hidden");
-			else {
-				const viewportLabel = BLOCK_VISIBILITY_VIEWPORTS[currentViewport]?.label || currentViewport;
-				label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Hidden on %s"), viewportLabel);
-			}
-		}
-		if (hasParentHiddenEverywhere) label = (0, _wordpress_i18n.__)("Parent hidden");
-		else if (isBlockParentHiddenAtViewport) {
-			const viewportLabel = BLOCK_VISIBILITY_VIEWPORTS[currentViewport]?.label || currentViewport;
-			label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Parent hidden on %s"), viewportLabel);
-		}
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Root$7, {
-			className: "block-editor-block-visibility-info",
-			icon: unseen_default,
-			intent: "info",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Description$2, { children: label })
-		});
-	}
-
 // packages/block-editor/build-module/components/block-list/use-block-props/index.mjs
 /**
 	* Returns a ref that inserts a ghost block when the user enters it: the
@@ -62138,16 +61763,9 @@ Icon: ButtonIcon });
 	* @return {Object} Props to pass to the element to mark as a block.
 	*/
 	function useBlockProps(props = {}, { __unstableIsHtml } = {}) {
-		const { clientId, className, wrapperProps = {}, isAligned, index, mode, name, blockApiVersion, blockTitle, isSelected, isSubtreeDisabled, hasOverlay, initialPosition, blockEditingMode, isHighlighted, isMultiSelected, isPartiallySelected, isReusable, isDragging, hasChildSelected, isEditingDisabled, hasEditableOutline, isEditingContentOnlySection, defaultClassName, isSectionBlock, isWithinSectionBlock, canMove, blockVisibility, deviceType, viewportSettings, ariaLabel, ghostBlock, rootClientId } = (0, _wordpress_element.useContext)(PrivateBlockContext);
+		const { clientId, className, wrapperProps = {}, isAligned, index, mode, name, blockApiVersion, blockTitle, isSelected, isSubtreeDisabled, hasOverlay, initialPosition, blockEditingMode, isHighlighted, isMultiSelected, isPartiallySelected, isReusable, isDragging, hasChildSelected, isEditingDisabled, hasEditableOutline, isEditingContentOnlySection, defaultClassName, isSectionBlock, isWithinSectionBlock, canMove, isBlockCurrentlyHidden, ariaLabel, ghostBlock, rootClientId } = (0, _wordpress_element.useContext)(PrivateBlockContext);
 		const ghostRef = useGhostMaterialize(rootClientId, ghostBlock);
 		useRegisterBlockEventHandlers(clientId, wrapperProps);
-		const defaultViewRef = (0, _wordpress_compose.useRefEffect)((element) => {
-			if (element) {
-				const { ownerDocument } = element;
-				const defaultView = ownerDocument.defaultView;
-				defaultViewRef.current = defaultView;
-			}
-		}, []);
 		const blockLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block: %s"), blockTitle);
 		const htmlSuffix = mode === "html" && !__unstableIsHtml ? "-visual" : "";
 		const ffDragRef = useFirefoxDraggableCompatibility();
@@ -62155,7 +61773,6 @@ Icon: ButtonIcon });
 		const mergedRefs = (0, _wordpress_compose.useMergeRefs)([
 			props.ref,
 			ghostRef,
-			defaultViewRef,
 			useFocusFirstElement({
 				clientId,
 				initialPosition
@@ -62186,12 +61803,6 @@ Icon: ButtonIcon });
 			"--wp-admin-theme-color": "var(--wp-block-synced-color)",
 			"--wp-admin-theme-color--rgb": "var(--wp-block-synced-color--rgb)"
 		} : {};
-		const { isBlockCurrentlyHidden } = useBlockVisibility({
-			blockVisibility,
-			deviceType,
-			viewportSettings,
-			view: defaultViewRef.current
-		});
 		if (blockApiVersion < 2 && clientId === blockEditContext.clientId) (0, _wordpress_warning.default)(`Block type "${name}" must support API version 2 or higher to work correctly with "useBlockProps" method.`);
 		let hasNegativeMargin = false;
 		if (wrapperProps?.style?.marginTop?.charAt(0) === "-" || wrapperProps?.style?.marginBottom?.charAt(0) === "-" || wrapperProps?.style?.marginLeft?.charAt(0) === "-" || wrapperProps?.style?.marginRight?.charAt(0) === "-") hasNegativeMargin = true;
@@ -62327,6 +61938,58 @@ Icon: ButtonIcon });
 		const attributeUpdates = {};
 		for (const key of Object.keys(changes)) attributeUpdates[key] = applyValueChange(attributes[key], changes[key]);
 		return attributeUpdates;
+	}
+
+// packages/block-editor/build-module/components/block-visibility/use-block-visibility.mjs
+	const { getViewportBreakpoints: getViewportBreakpoints$2 } = unlock$2(privateApis$29);
+	/**
+	* Returns the viewport the block visibility rules apply to.
+	*
+	* @param options                  Parameters to avoid extra store subscriptions.
+	* @param options.deviceType       Current device type.
+	* @param options.viewportSettings Viewport breakpoint settings.
+	* @param options.view             Window instance in which to perform viewport matching.
+	* @return The current viewport.
+	*/
+	function useCurrentViewport({ deviceType = "desktop", viewportSettings, view = window } = {}) {
+		const viewportBreakpoints = getViewportBreakpoints$2(viewportSettings);
+		const mobileMediaQuery = viewportBreakpoints.mobile ? `(width <= ${viewportBreakpoints.mobile})` : void 0;
+		const isMobileViewport = (0, _wordpress_compose.useMediaQuery)(mobileMediaQuery, view);
+		let tabletMediaQuery;
+		if (viewportBreakpoints.tablet) tabletMediaQuery = viewportBreakpoints.mobile ? `(${viewportBreakpoints.mobile} < width <= ${viewportBreakpoints.tablet})` : `(width <= ${viewportBreakpoints.tablet})`;
+		const isTabletViewport = (0, _wordpress_compose.useMediaQuery)(tabletMediaQuery, view);
+		if (deviceType === "mobile" && viewportBreakpoints.mobile) return "mobile";
+		else if (deviceType === "tablet" && viewportBreakpoints.tablet) return "tablet";
+		else if (isMobileViewport) return "mobile";
+		else if (isTabletViewport && viewportBreakpoints.tablet) return "tablet";
+		return "desktop";
+	}
+	/**
+	* Returns whether a block is hidden in the given viewport.
+	*
+	* @param blockVisibility Block visibility metadata.
+	* @param currentViewport The current viewport.
+	* @return Whether the block is hidden.
+	*/
+	function isBlockHidden(blockVisibility, currentViewport) {
+		return blockVisibility === false || typeof blockVisibility === "object" && blockVisibility?.viewport?.[currentViewport] === false;
+	}
+	/**
+	* Returns information about the current block visibility state.
+	*
+	* @param options                  Parameters to avoid extra store subscriptions.
+	* @param options.blockVisibility  Block visibility metadata.
+	* @param options.deviceType       Current device type.
+	* @param options.viewportSettings Viewport breakpoint settings.
+	* @param options.view             Window instance in which to perform viewport matching.
+	* @return Object with `isBlockCurrentlyHidden` and `currentViewport` properties.
+	*/
+	function useBlockVisibility({ blockVisibility, ...options } = {}) {
+		const currentViewport = useCurrentViewport(options);
+		return {
+			isBlockCurrentlyHidden: isBlockHidden(blockVisibility, currentViewport),
+			currentViewport
+		};
 	}
 
 // packages/block-editor/build-module/components/block-list/block.mjs
@@ -62587,12 +62250,9 @@ Icon: ButtonIcon });
 			const attributes = getBlockAttributes(clientId) ?? ghostBlock?.attributes;
 			const { name: blockName, isValid } = blockWithoutAttributes;
 			const blockType = (0, _wordpress_blocks.getBlockType)(blockName);
-			const settings = getSettings();
-			const { supportsLayout, isPreviewMode, __experimentalBlockBindingsSupportedAttributes } = settings;
+			const { supportsLayout, isPreviewMode, __experimentalBlockBindingsSupportedAttributes } = getSettings();
 			const bindableAttributes = __experimentalBlockBindingsSupportedAttributes?.[blockName];
 			const blockVisibility = attributes?.metadata?.blockVisibility;
-			const deviceType = settings?.[deviceTypeKey]?.toLowerCase() || "desktop";
-			const viewportSettings = settings?.__experimentalFeatures?.viewport;
 			const hasLightBlockWrapper = blockType?.apiVersion > 1;
 			const isMultiSelected = isBlockMultiSelected(clientId);
 			const blockEditingMode = getBlockEditingMode(clientId);
@@ -62611,8 +62271,6 @@ Icon: ButtonIcon });
 				bindableAttributes,
 				blockBindingsSources: getAllBlockBindingsSources(),
 				blockVisibility,
-				deviceType,
-				viewportSettings,
 				isMultiSelected,
 				blockEditingMode,
 				isEditingDisabled: blockEditingMode === "disabled"
@@ -62659,8 +62317,6 @@ Icon: ButtonIcon });
 				hasEditableOutline: blockEditingMode !== "disabled" && getBlockEditingMode(rootClientId) === "disabled",
 				originalBlockClientId: isInvalid ? blocksWithSameName[0] : false,
 				blockVisibility,
-				deviceType,
-				viewportSettings,
 				supportsSplitting: (0, _wordpress_blocks.hasBlockSupport)(blockName, "splitting", false)
 			};
 		}, [
@@ -62669,25 +62325,14 @@ Icon: ButtonIcon });
 			ghostBlock,
 			ghostBlockWithoutAttributes
 		]);
-		const defaultViewRef = (0, _wordpress_compose.useRefEffect)((element) => {
-			if (element) {
-				const { ownerDocument } = element;
-				const defaultView = ownerDocument.defaultView;
-				defaultViewRef.current = defaultView;
-			}
-		}, []);
-		const { isBlockCurrentlyHidden } = useBlockVisibility({
-			blockVisibility: selectedProps?.blockVisibility,
-			deviceType: selectedProps?.deviceType,
-			viewportSettings: selectedProps?.viewportSettings,
-			view: defaultViewRef.current
-		});
+		const currentViewport = (0, _wordpress_element.useContext)(CurrentViewport);
 		const block = (0, _wordpress_element.useMemo)(() => ({
 			...selectedProps?.blockWithoutAttributes,
 			attributes: selectedProps?.attributes
 		}), [selectedProps?.blockWithoutAttributes, selectedProps?.attributes]);
 		if (!selectedProps) return null;
-		const { isPreviewMode, mode = "visual", isSelectionEnabled = false, isLocked = false, canRemove = false, canMove = false, name, attributes, isValid, isSelected = false, themeSupportsLayout, isEditingContentOnlySection, blockEditingMode, mayDisplayControls, mayDisplayParentControls, index, blockApiVersion, blockType, blockTitle, isSubtreeDisabled, hasOverlay, initialPosition, isHighlighted, isMultiSelected, isPartiallySelected, isReusable, isDragging, hasChildSelected, isSectionBlock, isWithinSectionBlock, isSelectionWithinCurrentSection, isEditingDisabled, hasEditableOutline, className, defaultClassName, originalBlockClientId, bindableAttributes, blockBindingsSources, blockVisibility, deviceType, viewportSettings, supportsSplitting } = selectedProps;
+		const { isPreviewMode, mode = "visual", isSelectionEnabled = false, isLocked = false, canRemove = false, canMove = false, name, attributes, isValid, isSelected = false, themeSupportsLayout, isEditingContentOnlySection, blockEditingMode, mayDisplayControls, mayDisplayParentControls, index, blockApiVersion, blockType, blockTitle, isSubtreeDisabled, hasOverlay, initialPosition, isHighlighted, isMultiSelected, isPartiallySelected, isReusable, isDragging, hasChildSelected, isSectionBlock, isWithinSectionBlock, isSelectionWithinCurrentSection, isEditingDisabled, hasEditableOutline, className, defaultClassName, originalBlockClientId, bindableAttributes, blockBindingsSources, supportsSplitting } = selectedProps;
+		const isBlockCurrentlyHidden = isBlockHidden(selectedProps.blockVisibility, currentViewport);
 		const privateContext = {
 			isPreviewMode,
 			ghostBlock,
@@ -62726,9 +62371,6 @@ Icon: ButtonIcon });
 			isBlockCurrentlyHidden,
 			bindableAttributes,
 			blockBindingsSources,
-			blockVisibility,
-			deviceType,
-			viewportSettings,
 			supportsSplitting
 		};
 		if (isBlockCurrentlyHidden && !isSelected && !isMultiSelected && !hasChildSelected) return null;
@@ -66298,6 +65940,9 @@ Icon: ButtonIcon });
 		};
 	}
 
+// packages/block-editor/build-module/components/iframe/canvas-window-context.mjs
+	const CanvasWindowContext = (0, _wordpress_element.createContext)(void 0);
+
 // packages/block-editor/build-module/components/iframe/index.mjs
 	function bubbleEvent(event, Constructor, frame) {
 		const init = {};
@@ -66476,7 +66121,10 @@ Icon: ButtonIcon });
 					className: clsx("block-editor-iframe__body", "editor-styles-wrapper", ...bodyClasses),
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalStyleProvider, {
 						document: iframeDocument,
-						children
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CanvasWindowContext.Provider, {
+							value: iframeDocument.defaultView ?? void 0,
+							children
+						})
 					})
 				}), iframeDocument.documentElement)
 			}),
@@ -91478,21 +91126,31 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/block-list/index.mjs
+	const CurrentViewport = (0, _wordpress_element.createContext)("desktop");
+	CurrentViewport.displayName = "CurrentViewportContext";
 	const IntersectionObserver$1 = (0, _wordpress_element.createContext)(void 0);
 	IntersectionObserver$1.displayName = "IntersectionObserverContext";
 	const pendingBlockVisibilityUpdatesPerRegistry = /* @__PURE__ */ new WeakMap();
 	const delayedBlockVisibilityDebounceOptions = { trailing: true };
 	function Root({ className, ...settings }) {
-		const { isOutlineMode, isFocusMode, isPreviewMode, editedContentOnlySection } = (0, _wordpress_data.useSelect)((select) => {
+		const { isOutlineMode, isFocusMode, isPreviewMode, editedContentOnlySection, deviceType, viewportSettings } = (0, _wordpress_data.useSelect)((select) => {
 			const { getSettings, isTyping, hasBlockSpotlight, getEditedContentOnlySection } = unlock$2(select(store));
-			const { outlineMode, focusMode, isPreviewMode: _isPreviewMode } = getSettings();
+			const editorSettings = getSettings();
+			const { outlineMode, focusMode, isPreviewMode: _isPreviewMode } = editorSettings;
 			return {
 				isOutlineMode: outlineMode && !isTyping(),
 				isFocusMode: !_isPreviewMode && (focusMode || hasBlockSpotlight()),
 				isPreviewMode: _isPreviewMode,
-				editedContentOnlySection: getEditedContentOnlySection()
+				editedContentOnlySection: getEditedContentOnlySection(),
+				deviceType: editorSettings[deviceTypeKey]?.toLowerCase() || "desktop",
+				viewportSettings: editorSettings.__experimentalFeatures?.viewport
 			};
 		}, []);
+		const currentViewport = useCurrentViewport({
+			deviceType,
+			viewportSettings,
+			view: (0, _wordpress_element.useContext)(CanvasWindowContext)
+		});
 		const registry = (0, _wordpress_data.useRegistry)();
 		const { setBlockVisibility } = (0, _wordpress_data.useDispatch)(store);
 		const delayedBlockVisibilityUpdates = (0, _wordpress_compose.useDebounce)((0, _wordpress_element.useCallback)(() => {
@@ -91522,9 +91180,12 @@ If there's a particular need for this, please submit a feature request at https:
 				"is-preview-mode": isPreviewMode
 			})
 		}, settings);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(IntersectionObserver$1.Provider, {
-			value: intersectionObserver,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ...innerBlocksProps }), !!editedContentOnlySection && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StopEditingContentOnlySectionOnOutsideSelect, { clientId: editedContentOnlySection })]
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CurrentViewport.Provider, {
+			value: currentViewport,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(IntersectionObserver$1.Provider, {
+				value: intersectionObserver,
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ...innerBlocksProps }), !!editedContentOnlySection && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StopEditingContentOnlySectionOnOutsideSelect, { clientId: editedContentOnlySection })]
+			})
 		});
 	}
 	function StopEditingContentOnlySectionOnOutsideSelect({ clientId }) {
@@ -93992,6 +93653,350 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/block-editor/build-module/components/block-rename/use-block-rename.mjs
 	function useBlockRename(name) {
 		return { canRename: !!name && (0, _wordpress_blocks.getBlockSupport)(name, "renaming", true) };
+	}
+
+// packages/block-editor/build-module/components/block-visibility/utils.mjs
+	const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock$2(privateApis$29);
+	function getBlockVisibilityViewportEntries(viewportSettings) {
+		const breakpoints = getViewportBreakpoints$1(viewportSettings);
+		return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.filter(([viewport]) => (viewport !== BLOCK_VISIBILITY_VIEWPORTS.tablet.key || breakpoints.tablet !== void 0) && (viewport !== BLOCK_VISIBILITY_VIEWPORTS.mobile.key || breakpoints.mobile !== void 0));
+	}
+	/**
+	* Checks if a block is hidden for a specific viewport.
+	*
+	* @param block    The block to check.
+	* @param viewport The viewport to check (e.g., 'mobile', 'tablet', 'desktop').
+	* @return Whether the block is hidden for the viewport.
+	*/
+	function isBlockHiddenForViewport(block, viewport) {
+		if (!block) return false;
+		const blockVisibility = block.attributes?.metadata?.blockVisibility;
+		if (blockVisibility === true) return false;
+		if ("object" !== typeof blockVisibility) return false;
+		const viewportConfig = blockVisibility.viewport;
+		if (!viewportConfig || "object" !== typeof viewportConfig) return false;
+		if (!BLOCK_VISIBILITY_VIEWPORT_ENTRIES.some(([, { key }]) => key === viewport)) return false;
+		return viewportConfig[viewport] === false;
+	}
+	/**
+	* Gets the checkbox state for a viewport across multiple blocks.
+	* Returns `true` if all blocks are hidden, `null` if some are hidden, `false` if none are hidden.
+	*
+	* @param blocks   Array of blocks to check.
+	* @param viewport The viewport to check (e.g., 'mobile', 'tablet', 'desktop').
+	* @return `true` if all hidden, `null` if some hidden, `false` if none hidden.
+	*/
+	function getViewportCheckboxState(blocks, viewport) {
+		if (!blocks?.length) return false;
+		const hiddenCount = blocks.filter((block) => isBlockHiddenForViewport(block, viewport)).length;
+		if (hiddenCount === 0) return false;
+		if (hiddenCount === blocks.length) return true;
+		return null;
+	}
+	/**
+	* Gets the checkbox state for "hide everywhere" across multiple blocks.
+	* Returns `true` if all blocks are hidden everywhere, `null` if some are hidden everywhere, `false` if none are.
+	*
+	* @param blocks Array of blocks to check.
+	* @return `true` if all hidden everywhere, `null` if some hidden everywhere, `false` if none.
+	*/
+	function getHideEverywhereCheckboxState(blocks) {
+		if (!blocks?.length) return false;
+		const hiddenEverywhereCount = blocks.filter((block) => block && block.attributes?.metadata?.blockVisibility === false).length;
+		if (hiddenEverywhereCount === 0) return false;
+		if (hiddenEverywhereCount === blocks.length) return true;
+		return null;
+	}
+	/**
+	* Get a human-readable label describing which viewports a block is hidden on.
+	*
+	* @param blockVisibility  The block's visibility metadata.
+	* @param viewportSettings Viewport breakpoint settings.
+	* @return A descriptive label, or null if the block is not hidden.
+	*/
+	function getBlockVisibilityLabel(blockVisibility, viewportSettings) {
+		if (!blockVisibility && blockVisibility !== false) return null;
+		if (blockVisibility === false) return (0, _wordpress_i18n.__)("Block is hidden");
+		if (blockVisibility?.viewport) {
+			const hiddenViewports = getBlockVisibilityViewportEntries(viewportSettings).filter(([key]) => blockVisibility.viewport?.[key] === false).map(([, viewport]) => viewport.label);
+			if (hiddenViewports.length > 0) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block is hidden on %s"), hiddenViewports.join(", "));
+		}
+		return null;
+	}
+
+// packages/block-editor/build-module/components/block-visibility/modal.mjs
+	const DEFAULT_VIEWPORT_CHECKBOX_VALUES = {
+		[BLOCK_VISIBILITY_VIEWPORTS.mobile.key]: false,
+		[BLOCK_VISIBILITY_VIEWPORTS.tablet.key]: false,
+		[BLOCK_VISIBILITY_VIEWPORTS.desktop.key]: false
+	};
+	const EMPTY_BLOCKS = [];
+	/**
+	* Modal component for configuring block visibility across viewports.
+	*
+	* Allows users to hide blocks on specific viewport sizes (mobile, tablet, desktop)
+	* or hide them everywhere. When editing multiple blocks, checkboxes only show as
+	* checked if ALL selected blocks share the same setting to avoid ambiguity.
+	*
+	* @param props           Component props.
+	* @param props.clientIds The client IDs of the blocks to hide.
+	* @param props.onClose   Callback function invoked when the modal is closed.
+	* @return The modal component.
+	*/
+	function BlockVisibilityModal({ clientIds, onClose }) {
+		const { createSuccessNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
+		const { updateBlockAttributes } = (0, _wordpress_data.useDispatch)(store);
+		const blocks = (0, _wordpress_data.useSelect)((select) => select(store).getBlocksByClientId(clientIds) ?? EMPTY_BLOCKS, [clientIds]);
+		const listViewShortcut = (0, _wordpress_data.useSelect)((select) => {
+			return select(_wordpress_keyboard_shortcuts.store).getShortcutRepresentation("core/editor/toggle-list-view");
+		}, []);
+		const viewportSettings = (0, _wordpress_data.useSelect)((select) => select(store).getSettings().__experimentalFeatures?.viewport, []);
+		const viewportEntries = (0, _wordpress_element.useMemo)(() => getBlockVisibilityViewportEntries(viewportSettings), [viewportSettings]);
+		const initialViewportValues = (0, _wordpress_element.useMemo)(() => {
+			if (blocks?.length === 0) return {
+				hideEverywhere: false,
+				viewportChecked: {}
+			};
+			const viewportValues = {};
+			viewportEntries.forEach(([, { key }]) => {
+				viewportValues[key] = getViewportCheckboxState(blocks, key);
+			});
+			return {
+				hideEverywhere: getHideEverywhereCheckboxState(blocks),
+				viewportChecked: viewportValues
+			};
+		}, [blocks, viewportEntries]);
+		const [viewportChecked, setViewportChecked] = (0, _wordpress_element.useState)(initialViewportValues?.viewportChecked ?? {});
+		const [hideEverywhere, setHideEverywhere] = (0, _wordpress_element.useState)(initialViewportValues?.hideEverywhere ?? false);
+		const handleViewportCheckboxChange = (0, _wordpress_element.useCallback)((viewport, isChecked) => {
+			setViewportChecked({
+				...viewportChecked,
+				[viewport]: isChecked
+			});
+		}, [viewportChecked]);
+		const noticeMessage = (0, _wordpress_element.useMemo)(() => {
+			if (!hideEverywhere) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block visibility settings updated. You can access them via the List View (%s)."), listViewShortcut);
+			const message = blocks?.length > 1 ? (0, _wordpress_i18n.__)("Blocks hidden. You can access them via the List View (%s).") : (0, _wordpress_i18n.__)("Block hidden. You can access it via the List View (%s).");
+			return (0, _wordpress_i18n.sprintf)(message, listViewShortcut);
+		}, [
+			hideEverywhere,
+			blocks?.length,
+			listViewShortcut
+		]);
+		const isAnyViewportChecked = (0, _wordpress_element.useMemo)(() => Object.values(viewportChecked).some((checked) => checked === true || checked === null), [viewportChecked]);
+		const isDirty = (0, _wordpress_element.useMemo)(() => {
+			if (hideEverywhere !== initialViewportValues.hideEverywhere) return true;
+			return viewportEntries.some(([, { key }]) => viewportChecked[key] !== initialViewportValues.viewportChecked[key]);
+		}, [
+			hideEverywhere,
+			viewportChecked,
+			initialViewportValues,
+			viewportEntries
+		]);
+		const hasIndeterminateValues = (0, _wordpress_element.useMemo)(() => {
+			if (hideEverywhere === null) return true;
+			return Object.values(viewportChecked).some((checked) => checked === null);
+		}, [hideEverywhere, viewportChecked]);
+		const handleSubmit = (0, _wordpress_element.useCallback)((event) => {
+			event.preventDefault();
+			const newVisibility = hideEverywhere ? false : { viewport: viewportEntries.reduce((acc, [, { key }]) => {
+				if (viewportChecked[key]) acc[key] = false;
+				return acc;
+			}, {}) };
+			const attributesByClientId = Object.fromEntries(blocks.map(({ clientId, attributes }) => [clientId, { metadata: cleanEmptyObject({
+				...attributes?.metadata,
+				blockVisibility: newVisibility
+			}) }]));
+			updateBlockAttributes(clientIds, attributesByClientId, { uniqueByBlock: true });
+			createSuccessNotice(noticeMessage, {
+				id: hideEverywhere ? "block-visibility-hidden" : "block-visibility-viewports-updated",
+				type: "snackbar"
+			});
+			onClose();
+		}, [
+			blocks,
+			clientIds,
+			createSuccessNotice,
+			hideEverywhere,
+			noticeMessage,
+			onClose,
+			updateBlockAttributes,
+			viewportEntries,
+			viewportChecked
+		]);
+		const hasMultipleBlocks = blocks?.length > 1;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
+			title: clientIds?.length > 1 ? (0, _wordpress_i18n.__)("Hide blocks") : (0, _wordpress_i18n.__)("Hide block"),
+			onRequestClose: onClose,
+			overlayClassName: "block-editor-block-visibility-modal",
+			size: "small",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("form", {
+				onSubmit: handleSubmit,
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", { children: [
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("legend", { children: hasMultipleBlocks ? (0, _wordpress_i18n.__)("Select the viewport sizes for which you want to hide the blocks. Changes will apply to all selected blocks.") : (0, _wordpress_i18n.__)("Select the viewport size for which you want to hide the block.") }),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("ul", {
+						className: "block-editor-block-visibility-modal__options",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("li", {
+							className: "block-editor-block-visibility-modal__options-item block-editor-block-visibility-modal__options-item--everywhere",
+							children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.CheckboxControl, {
+								className: "block-editor-block-visibility-modal__options-checkbox--everywhere",
+								label: (0, _wordpress_i18n.__)("Omit from published content"),
+								checked: hideEverywhere === true,
+								indeterminate: hideEverywhere === null,
+								onChange: (checked) => {
+									setHideEverywhere(checked);
+									setViewportChecked(DEFAULT_VIEWPORT_CHECKBOX_VALUES);
+								}
+							}), hideEverywhere !== true && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("ul", {
+								className: "block-editor-block-visibility-modal__sub-options",
+								children: viewportEntries.map(([, { label, icon, key }]) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("li", {
+									className: "block-editor-block-visibility-modal__options-item",
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.CheckboxControl, {
+										label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Hide on %s"), label),
+										checked: viewportChecked[key] ?? false,
+										indeterminate: viewportChecked[key] === null,
+										onChange: (checked) => handleViewportCheckboxChange(key, checked)
+									}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, {
+										icon,
+										className: clsx({ "block-editor-block-visibility-modal__options-icon--checked": viewportChecked[key] })
+									})]
+								}, key))
+							})]
+						})
+					}),
+					hasMultipleBlocks && hasIndeterminateValues && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+						className: "block-editor-block-visibility-modal__description",
+						children: (0, _wordpress_i18n.__)("Selected blocks have different visibility settings. The checkboxes show an indeterminate state when settings differ.")
+					}),
+					!hasMultipleBlocks && hideEverywhere === true && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+						className: "block-editor-block-visibility-modal__description",
+						children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block will be hidden in the editor, and omitted from the published markup on the frontend. You can configure it again by selecting it in the List View (%s)."), listViewShortcut)
+					}),
+					!hasMultipleBlocks && !hideEverywhere && isAnyViewportChecked && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+						className: "block-editor-block-visibility-modal__description",
+						children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block will be hidden according to the selected viewports. It will be <strong>included in the published markup on the frontend</strong>. You can configure it again by selecting it in the List View (%s)."), listViewShortcut), { strong: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("strong", {}) })
+					})
+				] }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Flex, {
+					className: "block-editor-block-visibility-modal__actions",
+					justify: "flex-end",
+					expanded: false,
+					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+						variant: "tertiary",
+						onClick: onClose,
+						__next40pxDefaultSize: true,
+						children: (0, _wordpress_i18n.__)("Cancel")
+					}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+						variant: "primary",
+						type: "submit",
+						disabled: !isDirty,
+						accessibleWhenDisabled: true,
+						__next40pxDefaultSize: true,
+						children: (0, _wordpress_i18n.__)("Apply")
+					}) })]
+				})]
+			})
+		});
+	}
+
+// packages/block-editor/build-module/components/block-visibility/viewport-toolbar.mjs
+	function BlockVisibilityViewportToolbar({ clientIds }) {
+		const hasBlockVisibilityButtonShownRef = (0, _wordpress_element.useRef)(false);
+		const [blockVisibility] = useSettings("blockVisibility.allowEditing");
+		const { canToggleBlockVisibility, areBlocksHiddenAnywhere } = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlocksByClientId, getBlockName, isBlockHiddenAnywhere } = unlock$2(select(store));
+			return {
+				canToggleBlockVisibility: getBlocksByClientId(clientIds).every(({ clientId }) => (0, _wordpress_blocks.hasBlockSupport)(getBlockName(clientId), "visibility", true)),
+				areBlocksHiddenAnywhere: clientIds?.every((clientId) => isBlockHiddenAnywhere(clientId))
+			};
+		}, [clientIds]);
+		const blockEditorDispatch = (0, _wordpress_data.useDispatch)(store);
+		(0, _wordpress_element.useEffect)(() => {
+			if (areBlocksHiddenAnywhere) hasBlockVisibilityButtonShownRef.current = true;
+		}, [areBlocksHiddenAnywhere]);
+		if (blockVisibility === false) return null;
+		if (!areBlocksHiddenAnywhere && !hasBlockVisibilityButtonShownRef.current) return null;
+		const { showViewportModal } = unlock$2(blockEditorDispatch);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, {
+			className: "block-editor-block-visibility-toolbar",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
+				disabled: !canToggleBlockVisibility,
+				icon: areBlocksHiddenAnywhere ? unseen_default : seen_default,
+				label: areBlocksHiddenAnywhere ? (0, _wordpress_i18n.__)("Hidden") : (0, _wordpress_i18n.__)("Visible"),
+				onClick: () => showViewportModal(clientIds),
+				"aria-haspopup": "dialog"
+			})
+		});
+	}
+
+// packages/block-editor/build-module/components/block-visibility/viewport-menu-item.mjs
+	function BlockVisibilityViewportMenuItem({ clientIds }) {
+		const [blockVisibility] = useSettings("blockVisibility.allowEditing");
+		const { areBlocksHiddenAnywhere, shortcut } = (0, _wordpress_data.useSelect)((select) => {
+			const { isBlockHiddenAnywhere } = unlock$2(select(store));
+			return {
+				areBlocksHiddenAnywhere: clientIds?.every((clientId) => isBlockHiddenAnywhere(clientId)),
+				shortcut: select(_wordpress_keyboard_shortcuts.store).getShortcutRepresentation("core/block-editor/toggle-block-visibility")
+			};
+		}, [clientIds]);
+		const dispatch = (0, _wordpress_data.useDispatch)(store);
+		if (blockVisibility === false) return null;
+		const { showViewportModal } = unlock$2(dispatch);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
+			onClick: () => showViewportModal(clientIds),
+			shortcut,
+			children: areBlocksHiddenAnywhere ? (0, _wordpress_i18n.__)("Show") : (0, _wordpress_i18n.__)("Hide")
+		});
+	}
+
+// packages/block-editor/build-module/components/block-visibility/viewport-visibility-info.mjs
+	const DEFAULT_VISIBILITY_STATE = {
+		currentBlockVisibility: void 0,
+		hasParentHiddenEverywhere: false,
+		selectedDeviceType: BLOCK_VISIBILITY_VIEWPORTS.desktop.key
+	};
+	function ViewportVisibilityInfo({ clientId }) {
+		const { currentBlockVisibility, selectedDeviceType, viewportSettings, hasParentHiddenEverywhere } = (0, _wordpress_data.useSelect)((select) => {
+			if (!clientId) return DEFAULT_VISIBILITY_STATE;
+			const { getBlockAttributes, isBlockParentHiddenEverywhere, getSettings } = unlock$2(select(store));
+			const settings = getSettings();
+			return {
+				currentBlockVisibility: getBlockAttributes(clientId)?.metadata?.blockVisibility,
+				selectedDeviceType: settings?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
+				viewportSettings: settings?.__experimentalFeatures?.viewport,
+				hasParentHiddenEverywhere: isBlockParentHiddenEverywhere(clientId)
+			};
+		}, [clientId]);
+		const rawCanvasView = useBlockElement(clientId)?.ownerDocument?.defaultView;
+		const { isBlockCurrentlyHidden, currentViewport } = useBlockVisibility({
+			blockVisibility: currentBlockVisibility,
+			deviceType: selectedDeviceType,
+			viewportSettings,
+			view: rawCanvasView === null ? void 0 : rawCanvasView
+		});
+		const isBlockParentHiddenAtViewport = (0, _wordpress_data.useSelect)((select) => {
+			if (!clientId || !currentViewport) return false;
+			return unlock$2(select(store)).isBlockParentHiddenAtViewport(clientId, currentViewport);
+		}, [clientId, currentViewport]);
+		if (!(isBlockCurrentlyHidden || hasParentHiddenEverywhere || isBlockParentHiddenAtViewport)) return null;
+		let label;
+		if (isBlockCurrentlyHidden) {
+			if (currentBlockVisibility === false) label = (0, _wordpress_i18n.__)("Hidden");
+			else {
+				const viewportLabel = BLOCK_VISIBILITY_VIEWPORTS[currentViewport]?.label || currentViewport;
+				label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Hidden on %s"), viewportLabel);
+			}
+		}
+		if (hasParentHiddenEverywhere) label = (0, _wordpress_i18n.__)("Parent hidden");
+		else if (isBlockParentHiddenAtViewport) {
+			const viewportLabel = BLOCK_VISIBILITY_VIEWPORTS[currentViewport]?.label || currentViewport;
+			label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Parent hidden on %s"), viewportLabel);
+		}
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Root$7, {
+			className: "block-editor-block-visibility-info",
+			icon: unseen_default,
+			intent: "info",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Description$2, { children: label })
+		});
 	}
 
 // packages/block-editor/build-module/components/block-settings-menu-controls/index.mjs
@@ -121048,5 +121053,5 @@ exports.withFontSizes = with_font_sizes_default;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).blockEditor = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.element, window.wp.data, window.wp.compose, window.wp.hooks, window.wp.i18n, window.wp.components, window.wp.primitives, window.ReactJSXRuntime, window.wp.deprecated, window.wp.isShallowEqual, window.wp.privateApis, window.wp.richText, window.wp.blockSerializationDefaultParser, window.wp.styleEngine, window.wp.a11y, window.wp.notices, window.wp.url, window.React, window.ReactDOM, window.wp.warning, window.wp.theme, window.wp.keycodes, window.wp.dom, window.wp.keyboardShortcuts, window.wp.htmlEntities, window.wp.uploadMedia, window.wp.priorityQueue, window.wp.date, window.wp.blob, window.wp.tokenList, window.wp.preferences, window.wp.commands);
+})({}, window.wp.blocks, window.wp.element, window.wp.data, window.wp.compose, window.wp.hooks, window.wp.i18n, window.wp.components, window.wp.primitives, window.ReactJSXRuntime, window.wp.deprecated, window.wp.isShallowEqual, window.wp.privateApis, window.wp.richText, window.wp.blockSerializationDefaultParser, window.wp.styleEngine, window.wp.a11y, window.wp.notices, window.wp.url, window.React, window.ReactDOM, window.wp.warning, window.wp.theme, window.wp.keycodes, window.wp.dom, window.wp.htmlEntities, window.wp.uploadMedia, window.wp.keyboardShortcuts, window.wp.priorityQueue, window.wp.date, window.wp.blob, window.wp.tokenList, window.wp.preferences, window.wp.commands);
 //# sourceMappingURL=index.js.map
