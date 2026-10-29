@@ -114834,6 +114834,49 @@ If there's a particular need for this, please submit a feature request at https:
 		return options.find((option) => parseAspectRatio(option.value) === ratio) ?? null;
 	}
 
+// packages/block-editor/build-module/components/dimensions-tool/aspect-ratio-icon.mjs
+	const BOX_SIZE = 24;
+	const MAX_SIDE = 16;
+	const STROKE_WIDTH = 1.5;
+	const MIN_RATIO = 1 / 3;
+	const MAX_RATIO = 3;
+	/**
+	* Renders a rounded rectangle with the shape of an aspect ratio, so that a
+	* ratio can be recognized without reading its label.
+	*
+	* @param props       Component props.
+	* @param props.ratio CSS `aspect-ratio` value, e.g. '16/9'. Values that are
+	*                    not a ratio, like 'auto', get the generic icon.
+	*/
+	function AspectRatioIcon({ ratio }) {
+		const parsedRatio = parseAspectRatio(ratio);
+		if (parsedRatio === null) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default, {
+			icon: aspect_ratio_default,
+			size: BOX_SIZE
+		});
+		const clampedRatio = Math.min(MAX_RATIO, Math.max(MIN_RATIO, parsedRatio));
+		const width = clampedRatio >= 1 ? MAX_SIDE : MAX_SIDE * clampedRatio;
+		const height = clampedRatio >= 1 ? MAX_SIDE / clampedRatio : MAX_SIDE;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
+			xmlns: "http://www.w3.org/2000/svg",
+			viewBox: `0 0 ${BOX_SIZE} ${BOX_SIZE}`,
+			width: BOX_SIZE,
+			height: BOX_SIZE,
+			fill: "none",
+			stroke: "currentColor",
+			strokeWidth: STROKE_WIDTH,
+			"aria-hidden": "true",
+			focusable: "false",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("rect", {
+				x: (BOX_SIZE - width) / 2,
+				y: (BOX_SIZE - height) / 2,
+				width,
+				height,
+				rx: "1.5"
+			})
+		});
+	}
+
 // packages/block-editor/build-module/components/dimensions-tool/aspect-ratio-tool.mjs
 	function AspectRatioTool({ panelId, value, onChange = () => {}, options, defaultValue = "auto", hasValue, isShownByDefault = true, className }) {
 		const [defaultRatios, themeRatios, showDefaultRatios] = useSettings("dimensions.aspectRatios.default", "dimensions.aspectRatios.theme", "dimensions.defaultAspectRatios");
@@ -114860,6 +114903,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		];
 		const resolvedOptions = options ?? aspectRatioOptions;
+		const visibleOptions = resolvedOptions.filter((item) => !item.hidden);
 		const displayValue = value === void 0 || value === null || value === "auto" ? "auto" : findAspectRatioOption(value, resolvedOptions)?.value ?? "custom";
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 			className,
@@ -114871,8 +114915,24 @@ If there's a particular need for this, please submit a feature request at https:
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
 				label: (0, _wordpress_i18n.__)("Aspect ratio"),
 				value: resolvedOptions.find((item) => item.value === displayValue) ?? resolvedOptions.find((item) => !item.disabled) ?? null,
-				items: resolvedOptions.filter((item) => !item.hidden),
-				onValueChange: (item) => onChange(item?.value ?? "")
+				items: visibleOptions,
+				onValueChange: (item) => onChange(item?.value ?? ""),
+				trigger: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Trigger, { children: (item) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+					className: "block-editor-dimensions-tool__aspect-ratio-option",
+					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AspectRatioIcon, { ratio: item.value === "custom" ? value ?? "" : item.value ?? "" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+						className: "block-editor-dimensions-tool__aspect-ratio-label",
+						children: item.label
+					})]
+				}) }),
+				children: visibleOptions.map((item) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Item, {
+					value: item,
+					label: item.label,
+					disabled: item.disabled,
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.ItemLabel, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+						className: "block-editor-dimensions-tool__aspect-ratio-option",
+						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AspectRatioIcon, { ratio: item.value }), item.label]
+					}) })
+				}, item.value))
 			})
 		});
 	}

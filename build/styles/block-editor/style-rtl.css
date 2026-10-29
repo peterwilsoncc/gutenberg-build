@@ -1725,6 +1725,22 @@ iframe[name=editor-canvas] {
   padding: 0;
 }
 
+.block-editor-dimensions-tool__aspect-ratio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.block-editor-dimensions-tool__aspect-ratio-option svg {
+  flex-shrink: 0;
+}
+
+.block-editor-dimensions-tool__aspect-ratio-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .block-editor-duotone-control__popover.components-popover > .components-popover__content {
   padding: 8px;
   width: 260px;
