@@ -108311,6 +108311,19 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 	}
 	/**
+	* Element layers for a block, from its attributes and block context. The
+	* non-hook form of what `useResolvedStyle` derives.
+	*
+	* @param blockName    Block name.
+	* @param attributes   Block attributes.
+	* @param blockContext Block context passed to the block's edit.
+	* @return Ordered element keys, low to high precedence.
+	*/
+	function getBlockElementLayers(blockName, attributes, blockContext) {
+		const contextKey = CONTEXT_HEADING_LEVEL_BLOCKS[blockName]?.contextKey;
+		return getElementLayers(blockName, getHeadingLevel(blockName, attributes?.level, contextKey ? blockContext?.[contextKey] : void 0));
+	}
+	/**
 	* Internal hook that derives the active block-style-variation slug from a
 	* block's `className` by matching registered styles via
 	* `getVariationNameFromClass`, together with the element layers that paint
@@ -116164,6 +116177,7 @@ If there's a particular need for this, please submit a feature request at https:
 		StateControlBadges: () => StateControlBadges,
 		ToolsPanelPopoverPropsContext: () => ToolsPanelPopoverPropsContext,
 		TypographyPanel: () => TypographyPanel$1,
+		getBlockElementLayers: () => getBlockElementLayers,
 		useHasBackgroundPanel: () => useHasBackgroundPanel,
 		useHasBorderPanel: () => useHasBorderPanel,
 		useHasBorderPanelControls: () => useHasBorderPanelControls,

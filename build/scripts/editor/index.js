@@ -3715,7 +3715,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	* @param context      Which slice to resolve (block, variation, state).
 	* @return Merged panel-scoped payload and source map; may be a cache hit.
 	*/
-	function resolveStyle$1(globalStyles, context = {}) {
+	function resolveStyle$2(globalStyles, context = {}) {
 		const styleData = globalStyles?.styles;
 		if (!styleData || typeof styleData !== "object") return computeResolvedStyle(globalStyles, context);
 		let byLinks = memo$8.get(styleData);
@@ -3749,7 +3749,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		getDuotoneFilter,
 		getDuotoneStylesheet,
 		getDuotoneUnsetStylesheet,
-		resolveStyle: resolveStyle$1,
+		resolveStyle: resolveStyle$2,
 		getVariationStyle
 	});
 
@@ -9722,7 +9722,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	* @param style
 	* @param state
 	*/
-	function resolveStyle(style, state) {
+	function resolveStyle$1(style, state) {
 		return typeof style === "function" ? style(state) : style;
 	}
 
@@ -9896,7 +9896,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		const { className: classNameProp, style: styleProp } = componentProps;
 		const { state = EMPTY_OBJECT$1, ref, props, stateAttributesMapping, enabled = true } = params;
 		const className = enabled ? resolveClassName(classNameProp, state) : void 0;
-		const style = enabled ? resolveStyle(styleProp, state) : void 0;
+		const style = enabled ? resolveStyle$1(styleProp, state) : void 0;
 		const stateProps = enabled ? getStateAttributesProps(state, stateAttributesMapping) : EMPTY_OBJECT$1;
 		const resolvedProps = enabled && props ? resolveRenderFunctionProps(props) : void 0;
 		const outProps = enabled ? mergeObjects(stateProps, resolvedProps) ?? {} : EMPTY_OBJECT$1;
@@ -22401,7 +22401,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 			...state,
 			transitionStatus: panelTransitionStatus
 		};
-		const resolvedStyle = resolveStyle(style, panelState);
+		const resolvedStyle = resolveStyle$1(style, panelState);
 		const element = useRenderElement("div", {
 			...componentProps,
 			style: void 0
@@ -104189,7 +104189,8 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/hooks/push-changes-to-global-styles/use-review-rows.mjs
-/**
+	const { resolveStyle } = unlock$5(privateApis$75);
+	/**
 	* Turns a raw style value into readable text, using the row's `format` hint so
 	* borders and spacing show as a single CSS value instead of a raw object.
 	*
@@ -104212,18 +104213,24 @@ If there's a particular need for this, please submit a feature request at https:
 	* current Global Styles value, and readable versions of the current and new
 	* values.
 	*
-	* @param {Array}  rows   Grouped rows from `useChangesToPush`.
-	* @param {Object} merged Merged Global Styles config.
-	* @param {string} name   Block name.
+	* @param {Array}    rows       Grouped rows from `useChangesToPush`.
+	* @param {Object}   merged     Merged Global Styles config.
+	* @param {string}   name       Block name.
+	* @param {string[]} [elements] Root-level element layers that paint the block,
+	*                              low to high precedence (e.g. `[ 'button' ]`).
 	*
 	* @return {Array} Rows with `label`, `currentValue`, `formattedCurrentValue`
 	*                 and `formattedNewValue` added.
 	*/
-	function useReviewRows(rows, merged, name) {
+	function useReviewRows(rows, merged, name, elements) {
 		return (0, _wordpress_element.useMemo)(() => {
 			const resolve = (value) => getValueFromVariable(merged, name, value);
+			const { value: resolvedStyle } = resolveStyle(merged, {
+				blockName: name,
+				elements
+			});
 			return rows.map((row) => {
-				const currentValue = getStyle(merged, row.primaryPath.join("."), name, false);
+				const currentValue = row.primaryPath.reduce((value, key) => value?.[key], resolvedStyle);
 				return {
 					...row,
 					label: getStyleLabel(row.primaryPath),
@@ -104235,7 +104242,8 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [
 			rows,
 			merged,
-			name
+			name,
+			elements
 		]);
 	}
 
@@ -104252,13 +104260,14 @@ If there's a particular need for this, please submit a feature request at https:
 	*
 	* @param {Object}   props                Component props.
 	* @param {string}   props.name           Block name.
+	* @param {string[]} props.elements       Root-level element layers that paint the block.
 	* @param {Array}    props.rows           The block's changed styles, grouped into rows.
 	* @param {Function} props.onApply        Called with the selected rows to apply.
 	* @param {Function} props.onRequestClose Called to close the modal.
 	*/
-	function ApplyGloballyModal({ name, rows, onApply, onRequestClose }) {
+	function ApplyGloballyModal({ name, elements, rows, onApply, onRequestClose }) {
 		const { merged } = useGlobalStyles();
-		const reviewRows = useReviewRows(rows, merged, name);
+		const reviewRows = useReviewRows(rows, merged, name, elements);
 		const [selection, setSelection] = (0, _wordpress_element.useState)(() => reviewRows.map((row) => row.id));
 		const [view, setView] = (0, _wordpress_element.useState)(() => ({
 			type: "pickerTable",
@@ -104341,7 +104350,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/hooks/push-changes-to-global-styles/index.mjs
-	const { cleanEmptyObject: cleanEmptyObject$1 } = unlock$5(_wordpress_block_editor.privateApis);
+	const { cleanEmptyObject: cleanEmptyObject$1, getBlockElementLayers } = unlock$5(_wordpress_block_editor.privateApis);
 	const STYLE_PROPERTY = {
 		..._wordpress_blocks.__EXPERIMENTAL_STYLE_PROPERTY,
 		blockGap: { value: ["spacing", "blockGap"] }
@@ -104647,10 +104656,15 @@ If there's a particular need for this, please submit a feature request at https:
 			newUserConfig
 		};
 	}
-	function PushChangesToGlobalStylesControl({ name, attributes, setAttributes }) {
+	function PushChangesToGlobalStylesControl({ name, attributes, setAttributes, context }) {
 		const { user: userConfig, setUser: setUserConfig } = useGlobalStyles();
 		const rows = useChangesToPush(name, attributes, userConfig);
 		const [isModalOpen, setIsModalOpen] = (0, _wordpress_element.useState)(false);
+		const elements = (0, _wordpress_element.useMemo)(() => getBlockElementLayers(name, attributes, context), [
+			name,
+			attributes,
+			context
+		]);
 		const { __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { createSuccessNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const pushChanges = (0, _wordpress_element.useCallback)((rowsToPush) => {
@@ -104700,6 +104714,7 @@ If there's a particular need for this, please submit a feature request at https:
 				}),
 				isModalOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ApplyGloballyModal, {
 					name,
+					elements,
 					rows,
 					onApply: pushChanges,
 					onRequestClose: () => setIsModalOpen(false)
