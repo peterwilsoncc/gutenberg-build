@@ -47176,7 +47176,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/html/modal.mjs
-	const { Tabs } = unlock$1(_wordpress_components.privateApis);
+	const { Tabs: WCTabs } = unlock$1(_wordpress_components.privateApis);
 	const { useNativeUndo } = unlock$1(_wordpress_block_editor.privateApis);
 	function HTMLEditModal({ onRequestClose, content, onUpdate }) {
 		const { html, css, js } = parseContent(content);
@@ -47213,7 +47213,7 @@ Icon: ButtonIcon });
 			shouldCloseOnClickOutside: false,
 			isFullScreen: isFullscreen,
 			__experimentalHideHeader: true,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs, {
 				orientation: "horizontal",
 				defaultTabId: "html",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalVStack, {
@@ -47222,16 +47222,16 @@ Icon: ButtonIcon });
 						/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
 							justify: "space-between",
 							className: "block-library-html__modal-header",
-							children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs.TabList, { children: [
-								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+							children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs.TabList, { children: [
+								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 									tabId: "html",
 									children: "HTML"
 								}),
-								canUserUseUnfilteredHTML && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+								canUserUseUnfilteredHTML && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 									tabId: "css",
 									children: "CSS"
 								}),
-								canUserUseUnfilteredHTML && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+								canUserUseUnfilteredHTML && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 									tabId: "js",
 									children: (0, _wordpress_i18n.__)("JavaScript")
 								})
@@ -47258,7 +47258,7 @@ Icon: ButtonIcon });
 								ref: nativeUndoRef,
 								className: "block-library-html__modal-content",
 								children: [
-									/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+									/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 										tabId: "html",
 										focusable: false,
 										className: "block-library-html__modal-tab",
@@ -47270,7 +47270,7 @@ Icon: ButtonIcon });
 											className: "block-library-html__modal-editor"
 										})
 									}),
-									canUserUseUnfilteredHTML && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+									canUserUseUnfilteredHTML && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 										tabId: "css",
 										focusable: false,
 										className: "block-library-html__modal-tab",
@@ -47282,7 +47282,7 @@ Icon: ButtonIcon });
 											className: "block-library-html__modal-editor"
 										})
 									}),
-									canUserUseUnfilteredHTML && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+									canUserUseUnfilteredHTML && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 										tabId: "js",
 										focusable: false,
 										className: "block-library-html__modal-tab",

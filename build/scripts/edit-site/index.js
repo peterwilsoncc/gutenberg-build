@@ -72089,7 +72089,7 @@ If there's a particular need for this, please submit a feature request at https:
 	});
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-	const { Tabs } = unlock(_wordpress_components.privateApis);
+	const { Tabs: WCTabs } = unlock(_wordpress_components.privateApis);
 	const DEFAULT_TAB = {
 		id: "installed-fonts",
 		title: (0, _wordpress_i18n._x)("Library", "Font library")

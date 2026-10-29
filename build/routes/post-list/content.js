@@ -51786,7 +51786,7 @@ if (typeof document !== "undefined" && !document.head.querySelector("style[data-
 // routes/post-list/stage.tsx
 const { useEntityRecordsWithPermissions } = unlock(import_core_data.privateApis);
 const { usePostActions, usePostFields } = unlock(import_editor.privateApis);
-const { Tabs } = unlock(import_components.privateApis);
+const { Tabs: WCTabs } = unlock(import_components.privateApis);
 const LAYOUT_LIST = "list";
 function getItemId(item) {
 	return item.id.toString();
@@ -51939,10 +51939,10 @@ function PostListView({ postType, slug, defaultView, defaultLayouts, viewList, a
 		children: [
 			viewList && viewList.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "routes-post-list__tabs-wrapper",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs, {
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs, {
 					onSelect: handleTabChange,
 					selectedTabId: slug,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.TabList, { children: viewList.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.Tab, {
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.TabList, { children: viewList.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.Tab, {
 						tabId: entry.slug,
 						children: entry.title
 					}, entry.slug)) })

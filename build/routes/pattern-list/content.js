@@ -48972,7 +48972,7 @@ if (typeof document !== "undefined" && !document.head.querySelector("style[data-
 
 // routes/pattern-list/stage.tsx
 const { usePostActions, usePostFields } = unlock(import_editor.privateApis);
-const { Tabs } = unlock(import_components.privateApis);
+const { Tabs: WCTabs } = unlock(import_components.privateApis);
 const { PATTERN_TYPES, CreatePatternModal } = unlock(import_patterns.privateApis);
 const PATTERN_POST_TYPE = "wp_block";
 function PatternList() {
@@ -49105,10 +49105,10 @@ function PatternListView({ type, defaultView, defaultLayouts }) {
 		children: [
 			DEFAULT_VIEWS.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "routes-pattern-list__tabs-wrapper",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs, {
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs, {
 					onSelect: handleTabChange,
 					selectedTabId: type ?? "all",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.TabList, { children: DEFAULT_VIEWS.map((filter) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.Tab, {
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.TabList, { children: DEFAULT_VIEWS.map((filter) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.Tab, {
 						tabId: filter.slug,
 						children: filter.label
 					}, filter.slug)) })

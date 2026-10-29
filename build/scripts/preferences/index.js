@@ -399,7 +399,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const { lock, unlock } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/preferences");
 
 // packages/preferences/build-module/components/preferences-modal-tabs/index.mjs
-	const { Tabs } = unlock(_wordpress_components.privateApis);
+	const { Tabs: WCTabs } = unlock(_wordpress_components.privateApis);
 	const PREFERENCES_MENU = "preferences-menu";
 	function PreferencesModalTabs({ sections }) {
 		const isLargeViewport = (0, _wordpress_compose.useViewportMatch)("medium");
@@ -430,18 +430,18 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		let modalContent;
 		if (isLargeViewport) modalContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "preferences__tabs",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs, {
 				defaultTabId: activeMenu !== PREFERENCES_MENU ? activeMenu : void 0,
 				onSelect: setActiveMenu,
 				orientation: "vertical",
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabList, {
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabList, {
 					className: "preferences__tabs-tablist",
-					children: tabs.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+					children: tabs.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 						tabId: tab.name,
 						className: "preferences__tabs-tab",
 						children: tab.title
 					}, tab.name))
-				}), tabs.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+				}), tabs.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 					tabId: tab.name,
 					className: "preferences__tabs-tabpanel",
 					focusable: false,

@@ -72434,7 +72434,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-editor/build-module/components/inserter/category-tabs/index.mjs
-	const { Tabs: Tabs$3 } = unlock$2(_wordpress_components.privateApis);
+	const { Tabs: WCTabs$3 } = unlock$2(_wordpress_components.privateApis);
 	function CategoryTabs({ categories, selectedCategory, onSelectCategory, children }) {
 		const defaultTransition = {
 			type: "tween",
@@ -72451,7 +72451,7 @@ Icon: ButtonIcon });
 		const [activeTabId, setActiveId] = (0, _wordpress_element.useState)();
 		const firstTabId = categories?.[0]?.name;
 		if (selectedTabId === null && !activeTabId && firstTabId) setActiveId(firstTabId);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs$3, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs$3, {
 			selectOnMove: false,
 			selectedTabId,
 			orientation: "vertical",
@@ -72460,14 +72460,14 @@ Icon: ButtonIcon });
 			},
 			activeTabId,
 			onActiveTabIdChange: setActiveId,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$3.TabList, {
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$3.TabList, {
 				className: "block-editor-inserter__category-tablist",
-				children: categories.map((category) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$3.Tab, {
+				children: categories.map((category) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$3.Tab, {
 					tabId: category.name,
 					"aria-current": category === selectedCategory ? "true" : void 0,
 					children: category.label
 				}, category.name))
-			}), categories.map((category) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$3.TabPanel, {
+			}), categories.map((category) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$3.TabPanel, {
 				tabId: category.name,
 				focusable: false,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__unstableMotion.div, {
@@ -89261,7 +89261,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/tabbed-sidebar/index.mjs
-	const { Tabs: Tabs$2 } = unlock$2(_wordpress_components.privateApis);
+	const { Tabs: WCTabs$2 } = unlock$2(_wordpress_components.privateApis);
 	/**
 	* A component that creates a tabbed sidebar with a close button.
 	*
@@ -89303,7 +89303,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function TabbedSidebar({ defaultTabId, onClose, onSelect, selectedTab, tabs, closeButtonLabel }, ref) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "block-editor-tabbed-sidebar",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs$2, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs$2, {
 				selectOnMove: false,
 				defaultTabId,
 				onSelect,
@@ -89316,16 +89316,16 @@ If there's a particular need for this, please submit a feature request at https:
 						label: closeButtonLabel,
 						onClick: () => onClose(),
 						size: "compact"
-					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$2.TabList, {
+					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$2.TabList, {
 						className: "block-editor-tabbed-sidebar__tablist",
 						ref,
-						children: tabs.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$2.Tab, {
+						children: tabs.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$2.Tab, {
 							tabId: tab.name,
 							className: "block-editor-tabbed-sidebar__tab",
 							children: tab.title
 						}, tab.name))
 					})]
-				}), tabs.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$2.TabPanel, {
+				}), tabs.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$2.TabPanel, {
 					tabId: tab.name,
 					focusable: false,
 					className: "block-editor-tabbed-sidebar__tabpanel",
@@ -99385,7 +99385,7 @@ If there's a particular need for this, please submit a feature request at https:
 	var color_palette_default = with_color_context_default(_wordpress_components.ColorPalette);
 
 // packages/block-editor/build-module/components/colors-gradients/control.mjs
-	const { Tabs: Tabs$1 } = unlock$2(_wordpress_components.privateApis);
+	const { Tabs: WCTabs$1 } = unlock$2(_wordpress_components.privateApis);
 	const colorsAndGradientKeys$1 = [
 		"colors",
 		"disableCustomColors",
@@ -99448,23 +99448,23 @@ If there's a particular need for this, please submit a feature request at https:
 							className: "block-editor-color-gradient-control__color-indicator",
 							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BaseControl.VisualLabel, { children: label })
 						}) }),
-						canChooseAColor && canChooseAGradient && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs$1, {
+						canChooseAColor && canChooseAGradient && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs$1, {
 							defaultTabId: gradientValue ? TAB_IDS.gradient : !!canChooseAColor && TAB_IDS.color,
 							children: [
-								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs$1.TabList, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$1.Tab, {
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs$1.TabList, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$1.Tab, {
 									tabId: TAB_IDS.color,
 									children: (0, _wordpress_i18n.__)("Color")
-								}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$1.Tab, {
+								}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$1.Tab, {
 									tabId: TAB_IDS.gradient,
 									children: (0, _wordpress_i18n.__)("Gradient")
 								})] }),
-								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$1.TabPanel, {
+								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$1.TabPanel, {
 									tabId: TAB_IDS.color,
 									className: "block-editor-color-gradient-control__panel",
 									focusable: false,
 									children: tabPanels.color
 								}),
-								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs$1.TabPanel, {
+								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs$1.TabPanel, {
 									tabId: TAB_IDS.gradient,
 									className: "block-editor-color-gradient-control__panel",
 									focusable: false,
@@ -112342,7 +112342,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/block-editor/build-module/components/inspector-controls-tabs/index.mjs
-	const { Tabs } = unlock$2(_wordpress_components.privateApis);
+	const { Tabs: WCTabs } = unlock$2(_wordpress_components.privateApis);
 	function InspectorControlsTabs({ blockName, clientId, hasBlockStyles, tabs, isSectionBlock, contentClientIds }) {
 		const listViewRef = (0, _wordpress_element.useRef)(null);
 		const showIconLabels = (0, _wordpress_data.useSelect)((select) => {
@@ -112409,20 +112409,20 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "block-editor-block-inspector__tabs",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs, {
 				selectedTabId,
 				onSelect: handleTabSelect,
 				children: [
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabList, { children: tabs.map((tab) => showIconLabels ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabList, { children: tabs.map((tab) => showIconLabels ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 						tabId: tab.name,
 						children: tab.title
-					}, tab.name) : /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+					}, tab.name) : /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 						tabId: tab.name,
 						"aria-label": tab.title,
 						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, {}),
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, { icon: tab.icon })
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: tab.title })] }, tab.name)) }),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs.TabPanel, {
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs.TabPanel, {
 						tabId: TAB_CONTENT.name,
 						focusable: false,
 						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ContentTab, {
@@ -112431,7 +112431,7 @@ If there's a particular need for this, please submit a feature request at https:
 							hasListViewTab
 						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, { group: "content" })]
 					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs.TabPanel, {
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs.TabPanel, {
 						tabId: TAB_LIST_VIEW.name,
 						focusable: false,
 						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, {
@@ -112439,12 +112439,12 @@ If there's a particular need for this, please submit a feature request at https:
 							ref: listViewRef
 						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ListViewContentPopover, { listViewRef })]
 					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 						tabId: TAB_SETTINGS.name,
 						focusable: false,
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SettingsTab, { showAdvancedControls: !!blockName })
 					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 						tabId: TAB_STYLES.name,
 						focusable: false,
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesTab, {

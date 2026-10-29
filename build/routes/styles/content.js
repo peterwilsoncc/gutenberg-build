@@ -20639,7 +20639,7 @@ var vmtx$1 = Object.freeze({
 });
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-const { Tabs } = unlock(import_components.privateApis);
+const { Tabs: WCTabs } = unlock(import_components.privateApis);
 const DEFAULT_TAB = {
 	id: "installed-fonts",
 	title: (0, import_i18n._x)("Library", "Font library")

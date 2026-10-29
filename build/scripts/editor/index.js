@@ -66085,7 +66085,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-	const { Tabs } = unlock$2(_wordpress_components.privateApis);
+	const { Tabs: WCTabs } = unlock$2(_wordpress_components.privateApis);
 	const DEFAULT_TAB = {
 		id: "installed-fonts",
 		title: (0, _wordpress_i18n._x)("Library", "Font library")
@@ -66116,11 +66116,11 @@ Icon: ButtonIcon });
 			onRequestClose,
 			isFullScreen: true,
 			className: "font-library-modal",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs, {
 				defaultTabId,
 				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					className: "font-library-modal__tablist-container",
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 						tabId: id,
 						children: title
 					}, id)) })
@@ -66135,7 +66135,7 @@ Icon: ButtonIcon });
 							break;
 						default: contents = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FontCollection, { slug: id });
 					}
-					return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+					return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 						tabId: id,
 						focusable: false,
 						className: "font-library-modal__tab-panel",

@@ -31151,7 +31151,7 @@ function UploadFonts() {
 }
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
-const { Tabs: Tabs$1 } = unlock$1(import_components.privateApis);
+const { Tabs: WCTabs$1 } = unlock$1(import_components.privateApis);
 const DEFAULT_TAB = {
 	id: "installed-fonts",
 	title: (0, import_i18n._x)("Library", "Font library")
@@ -31416,7 +31416,7 @@ if (typeof document !== "undefined" && !document.head.querySelector("style[data-
 }
 
 // routes/font-list/stage.tsx
-const { Tabs } = unlock(import_components.privateApis);
+const { Tabs: WCTabs } = unlock(import_components.privateApis);
 const { useGlobalStyles } = unlock(import_editor.privateApis);
 function FontLibraryPage() {
 	const { records: collections = [] } = (0, import_core_data.useEntityRecords)("root", "fontCollection", { _fields: "slug,name,description" });
@@ -31448,16 +31448,16 @@ function FontLibraryPage() {
 		className: "font-library-page",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: "font-library-page__content",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Tabs, {
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(WCTabs, {
 				selectedTabId: activeTab,
 				onSelect: (tabId) => setActiveTab(tabId),
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: "font-library-page__tablist",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.Tab, {
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.Tab, {
 						tabId: id,
 						children: title
 					}, id)) })
-				}), tabs.map(({ id }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.TabPanel, {
+				}), tabs.map(({ id }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.TabPanel, {
 					tabId: id,
 					focusable: false,
 					className: "font-library-page__tab-panel",

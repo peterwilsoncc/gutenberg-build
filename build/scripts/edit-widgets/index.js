@@ -6629,12 +6629,12 @@ Icon: ButtonIcon });
 	const SIDEBAR_ACTIVE_BY_DEFAULT = true;
 	const BLOCK_INSPECTOR_IDENTIFIER = "edit-widgets/block-inspector";
 	const WIDGET_AREAS_IDENTIFIER = "edit-widgets/block-areas";
-	const { Tabs } = unlock(_wordpress_components.privateApis);
+	const { Tabs: WCTabs } = unlock(_wordpress_components.privateApis);
 	function SidebarHeader({ selectedWidgetAreaBlock }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs.TabList, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs.TabList, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 			tabId: WIDGET_AREAS_IDENTIFIER,
 			children: selectedWidgetAreaBlock ? selectedWidgetAreaBlock.attributes.name : (0, _wordpress_i18n.__)("Widget Areas")
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Tab, {
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
 			tabId: BLOCK_INSPECTOR_IDENTIFIER,
 			children: (0, _wordpress_i18n.__)("Block")
 		})] });
@@ -6645,10 +6645,10 @@ Icon: ButtonIcon });
 			if (hasSelectedNonAreaBlock && currentArea === WIDGET_AREAS_IDENTIFIER && isGeneralSidebarOpen) enableComplementaryArea("core/edit-widgets", BLOCK_INSPECTOR_IDENTIFIER);
 			if (!hasSelectedNonAreaBlock && currentArea === BLOCK_INSPECTOR_IDENTIFIER && isGeneralSidebarOpen) enableComplementaryArea("core/edit-widgets", WIDGET_AREAS_IDENTIFIER);
 		}, [hasSelectedNonAreaBlock, enableComplementaryArea]);
-		const tabsContextValue = (0, _wordpress_element.useContext)(Tabs.Context);
+		const tabsContextValue = (0, _wordpress_element.useContext)(WCTabs.Context);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComplementaryArea, {
 			className: "edit-widgets-sidebar",
-			header: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.Context.Provider, {
+			header: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Context.Provider, {
 				value: tabsContextValue,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SidebarHeader, { selectedWidgetAreaBlock })
 			}),
@@ -6659,13 +6659,13 @@ Icon: ButtonIcon });
 			identifier: currentArea,
 			icon: (0, _wordpress_i18n.isRTL)() ? drawer_left_default : drawer_right_default,
 			isActiveByDefault: SIDEBAR_ACTIVE_BY_DEFAULT,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tabs.Context.Provider, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs.Context.Provider, {
 				value: tabsContextValue,
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 					tabId: WIDGET_AREAS_IDENTIFIER,
 					focusable: false,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WidgetAreas, { selectedWidgetAreaId: selectedWidgetAreaBlock?.attributes.id })
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs.TabPanel, {
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.TabPanel, {
 					tabId: BLOCK_INSPECTOR_IDENTIFIER,
 					focusable: false,
 					children: hasSelectedNonAreaBlock ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockInspector, {}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
@@ -6703,7 +6703,7 @@ Icon: ButtonIcon });
 		const onTabSelect = (0, _wordpress_element.useCallback)((newSelectedTabId) => {
 			if (!!newSelectedTabId) enableComplementaryArea(store.name, newSelectedTabId);
 		}, [enableComplementaryArea]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tabs, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs, {
 			selectedTabId: isGeneralSidebarOpen ? currentArea : null,
 			onSelect: onTabSelect,
 			selectOnMove: false,

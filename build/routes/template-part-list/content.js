@@ -48673,7 +48673,7 @@ if (typeof document !== "undefined" && !document.head.querySelector("style[data-
 // routes/template-part-list/stage.tsx
 const { useEntityRecordsWithPermissions } = unlock(import_core_data.privateApis);
 const { usePostActions, usePostFields } = unlock(import_editor.privateApis);
-const { Tabs } = unlock(import_components.privateApis);
+const { Tabs: WCTabs } = unlock(import_components.privateApis);
 const { CreateTemplatePartModal } = unlock(import_patterns.privateApis);
 const TEMPLATE_PART_POST_TYPE = "wp_template_part";
 function getItemId(item) {
@@ -48797,10 +48797,10 @@ function TemplatePartListView({ activeView, defaultView, defaultLayouts, viewLis
 		children: [
 			viewList && viewList.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "routes-template-part-list__tabs-wrapper",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs, {
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs, {
 					onSelect: handleTabChange,
 					selectedTabId: activeView,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.TabList, { children: viewList.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tabs.Tab, {
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.TabList, { children: viewList.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WCTabs.Tab, {
 						tabId: entry.slug,
 						children: entry.title
 					}, entry.slug)) })
