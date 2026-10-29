@@ -2253,7 +2253,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 
 // packages/rich-text/build-module/hook/event-listeners/format-boundaries.mjs
 	const EMPTY_ACTIVE_FORMATS$1 = [];
-	function onKeyDown$1(field, event) {
+	function onKeyDown(field, event) {
 		const { keyCode, shiftKey, altKey, metaKey, ctrlKey } = event;
 		if (shiftKey || altKey || metaKey || ctrlKey || keyCode !== _wordpress_keycodes.LEFT && keyCode !== _wordpress_keycodes.RIGHT) return;
 		const { record, applyRecord, forceRender } = field.props.current;
@@ -2291,10 +2291,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	}
 
 // packages/rich-text/build-module/hook/event-listeners/delete.mjs
-	function onKeyDown(field, event) {
-		const { keyCode } = event;
-		if (event.defaultPrevented) return;
-		if (keyCode !== _wordpress_keycodes.DELETE && keyCode !== _wordpress_keycodes.BACKSPACE) return;
+	function onBeforeInput(field, event) {
+		if (event.defaultPrevented || !event.inputType.startsWith("deleteContent")) return;
 		const { createRecord, handleChange } = field.props.current;
 		const currentValue = createRecord();
 		const { start, end, text } = currentValue;
@@ -2530,7 +2528,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 // packages/rich-text/build-module/hook/event-listeners/index.mjs
 	const first = {
 		keydown: {
-			selection: [handleSelectionChange, onKeyDown$1],
+			selection: [handleSelectionChange, onKeyDown],
 			target: [onDown]
 		},
 		beforeinput: { selection: [handleSelectionChange] },
@@ -2545,7 +2543,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		pointerdown: { target: [onPointerDown, onDown] }
 	};
 	const defaults = {
-		keydown: { selection: [onKeyDown] },
+		beforeinput: { selection: [onBeforeInput] },
 		copy: { selection: [onCopy] },
 		cut: { selection: [onCopy] },
 		click: { target: [onClick] }
