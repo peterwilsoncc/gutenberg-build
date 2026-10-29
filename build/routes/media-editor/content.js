@@ -43536,13 +43536,12 @@ const SETTLE_STENCIL_TRANSITION = [
 * @param root0.focusOnMount      Focus the crop area on mount.
 * @param root0.disabled          Ignore all crop interaction.
 * @param root0.onImageLoaded     Image load callback.
-* @param root0.onStateChange     Every-frame state callback.
 * @param root0.onGestureStart    Gesture boundary start.
 * @param root0.onGestureEnd      Gesture boundary end.
 * @param root0.className         Additional CSS class.
 * @param ref                     Forwarded ref for the container div.
 */
-function CropperInner({ src, controller, stencil: StencilComponent = RectangleStencil, showGrid = false, isPlacementActive = false, showDimming = true, showDimensions = true, minZoom, maxZoom, aspectRatio, freeformCrop = false, focusOnMount = false, disabled = false, onImageLoaded, onStateChange, onGestureStart, onGestureEnd, className }, ref) {
+function CropperInner({ src, controller, stencil: StencilComponent = RectangleStencil, showGrid = false, isPlacementActive = false, showDimming = true, showDimensions = true, minZoom, maxZoom, aspectRatio, freeformCrop = false, focusOnMount = false, disabled = false, onImageLoaded, onGestureStart, onGestureEnd, className }, ref) {
 	const { state, setImage, setCropRect, settleCrop, setVisualSize, adjustCropRectForViewport } = controller;
 	const { viewport: viewportState, setViewportPan, resetViewport } = useViewport();
 	const canvasRef = (0, import_element.useRef)(null);
@@ -43585,9 +43584,6 @@ function CropperInner({ src, controller, stencil: StencilComponent = RectangleSt
 			observer.disconnect();
 		};
 	}, []);
-	(0, import_element.useEffect)(() => {
-		onStateChange?.(state);
-	}, [state, onStateChange]);
 	useAriaAnnouncer(state);
 	const naturalWidth = state.image?.naturalWidth ?? 0;
 	const naturalHeight = state.image?.naturalHeight ?? 0;
@@ -44727,9 +44723,6 @@ function useRulerDrag(options) {
 		capturePointerId: 0,
 		windowPointerUp: null
 	});
-	(0, import_element.useEffect)(() => {
-		latestRef.current.value = value;
-	}, [value]);
 	const endDrag = (0, import_element.useCallback)(() => {
 		const state = latestRef.current;
 		if (!state.dragging) return;
@@ -44754,7 +44747,8 @@ function useRulerDrag(options) {
 			state.captureElement = event.currentTarget;
 			state.capturePointerId = event.pointerId;
 			state.startX = event.clientX;
-			state.startValue = state.value;
+			state.value = value;
+			state.startValue = value;
 			state.activeStep = event.shiftKey ? step / 2 : step;
 			state.dragging = true;
 			onPointerDownStart?.();
@@ -44766,7 +44760,8 @@ function useRulerDrag(options) {
 			disabled,
 			onPointerDownStart,
 			endDrag,
-			step
+			step,
+			value
 		]),
 		onPointerMove: (0, import_element.useCallback)((event) => {
 			const state = latestRef.current;
@@ -45794,11 +45789,6 @@ function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose
 			clearTimeout(placementControlTimerRef.current);
 		};
 	}, []);
-	(0, import_element.useEffect)(() => {
-		setIsPlacementActive(false);
-		setIsCanvasGestureActive(false);
-		setIsSourceReplaced(false);
-	}, [id]);
 	const originalId = sourceMedia?.edit_root;
 	const originalRecord = (0, import_data.useSelect)((select) => originalId ? select(import_core_data.store).getEntityRecord("postType", "attachment", originalId) : void 0, [originalId]);
 	const originalWidth = Number(originalRecord?.media_details?.width);

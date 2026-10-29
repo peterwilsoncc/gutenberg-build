@@ -98040,13 +98040,12 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param root0.focusOnMount      Focus the crop area on mount.
 	* @param root0.disabled          Ignore all crop interaction.
 	* @param root0.onImageLoaded     Image load callback.
-	* @param root0.onStateChange     Every-frame state callback.
 	* @param root0.onGestureStart    Gesture boundary start.
 	* @param root0.onGestureEnd      Gesture boundary end.
 	* @param root0.className         Additional CSS class.
 	* @param ref                     Forwarded ref for the container div.
 	*/
-	function CropperInner({ src, controller, stencil: StencilComponent = RectangleStencil, showGrid = false, isPlacementActive = false, showDimming = true, showDimensions = true, minZoom, maxZoom, aspectRatio, freeformCrop = false, focusOnMount = false, disabled = false, onImageLoaded, onStateChange, onGestureStart, onGestureEnd, className }, ref) {
+	function CropperInner({ src, controller, stencil: StencilComponent = RectangleStencil, showGrid = false, isPlacementActive = false, showDimming = true, showDimensions = true, minZoom, maxZoom, aspectRatio, freeformCrop = false, focusOnMount = false, disabled = false, onImageLoaded, onGestureStart, onGestureEnd, className }, ref) {
 		const { state, setImage, setCropRect, settleCrop, setVisualSize, adjustCropRectForViewport } = controller;
 		const { viewport: viewportState, setViewportPan, resetViewport } = useViewport();
 		const canvasRef = (0, _wordpress_element.useRef)(null);
@@ -98089,9 +98088,6 @@ If there's a particular need for this, please submit a feature request at https:
 				observer.disconnect();
 			};
 		}, []);
-		(0, _wordpress_element.useEffect)(() => {
-			onStateChange?.(state);
-		}, [state, onStateChange]);
 		useAriaAnnouncer(state);
 		const naturalWidth = state.image?.naturalWidth ?? 0;
 		const naturalHeight = state.image?.naturalHeight ?? 0;
@@ -99231,9 +99227,6 @@ If there's a particular need for this, please submit a feature request at https:
 			capturePointerId: 0,
 			windowPointerUp: null
 		});
-		(0, _wordpress_element.useEffect)(() => {
-			latestRef.current.value = value;
-		}, [value]);
 		const endDrag = (0, _wordpress_element.useCallback)(() => {
 			const state = latestRef.current;
 			if (!state.dragging) return;
@@ -99258,7 +99251,8 @@ If there's a particular need for this, please submit a feature request at https:
 				state.captureElement = event.currentTarget;
 				state.capturePointerId = event.pointerId;
 				state.startX = event.clientX;
-				state.startValue = state.value;
+				state.value = value;
+				state.startValue = value;
 				state.activeStep = event.shiftKey ? step / 2 : step;
 				state.dragging = true;
 				onPointerDownStart?.();
@@ -99270,7 +99264,8 @@ If there's a particular need for this, please submit a feature request at https:
 				disabled,
 				onPointerDownStart,
 				endDrag,
-				step
+				step,
+				value
 			]),
 			onPointerMove: (0, _wordpress_element.useCallback)((event) => {
 				const state = latestRef.current;
@@ -100289,11 +100284,6 @@ If there's a particular need for this, please submit a feature request at https:
 				clearTimeout(placementControlTimerRef.current);
 			};
 		}, []);
-		(0, _wordpress_element.useEffect)(() => {
-			setIsPlacementActive(false);
-			setIsCanvasGestureActive(false);
-			setIsSourceReplaced(false);
-		}, [id]);
 		const originalId = sourceMedia?.edit_root;
 		const originalRecord = (0, _wordpress_data.useSelect)((select) => originalId ? select(_wordpress_core_data.store).getEntityRecord("postType", "attachment", originalId) : void 0, [originalId]);
 		const originalWidth = Number(originalRecord?.media_details?.width);
