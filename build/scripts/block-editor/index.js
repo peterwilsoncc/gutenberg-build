@@ -104208,7 +104208,7 @@ If there's a particular need for this, please submit a feature request at https:
 			variant: "control",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 				onClick: isDisabled ? noop$5 : onSubmit,
-				label: (0, _wordpress_i18n.__)("Submit"),
+				label: (0, _wordpress_i18n.__)("Apply"),
 				icon: keyboard_return_default,
 				className: "block-editor-link-control__search-submit",
 				"aria-disabled": isDisabled,
@@ -106378,7 +106378,7 @@ If there's a particular need for this, please submit a feature request at https:
 							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 								size: "small",
 								icon: keyboard_return_default,
-								label: (0, _wordpress_i18n.__)("Submit"),
+								label: (0, _wordpress_i18n.__)("Apply"),
 								type: "submit"
 							})
 						})
