@@ -1,5 +1,45 @@
 import { getConfig, privateApis, store } from "@wordpress/interactivity";
 
+// packages/interactivity-router/build-module/html-directive-element.mjs
+/** The runtime's directive attribute name parser for internal consumers. */
+const { parseDirectiveName } = privateApis("I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress.");
+/** Prefix of attributes eligible for directive name parsing in `toVdom()`. */
+const directivePrefix = "data-wp-";
+/**
+* Finds the closest element, starting with `element` itself, whose content is
+* inert `data-wp-html` content.
+*
+* Inside an interactive region, this mirrors `toVdom()`: the element has a
+* `data-wp-html` entry without a suffix (as parsed by `parseDirectiveName()`;
+* a unique ID is allowed), and no `data-wp-text`, `data-wp-each` or
+* `data-wp-router-region` entry with any suffix or unique ID. Keep both in
+* sync; `test/html-directive-element.jsdom.test.ts` compares them.
+*
+* @param element The element to start from, or null.
+* @return The closest such element, or null when there is none.
+*/
+function closestHtmlDirectiveElement(element) {
+	for (let current = element; current; current = current.parentElement) {
+		if (!current.closest("[data-wp-interactive]")) return null;
+		let hasDefaultHtmlDirective = false;
+		let hasConflict = false;
+		for (const { name } of current.attributes) {
+			if (!name[8] || !name.startsWith(directivePrefix)) continue;
+			const parsed = parseDirectiveName(name);
+			if (!parsed) continue;
+			const { prefix, suffix } = parsed;
+			if (prefix === "html" && suffix === null) hasDefaultHtmlDirective = true;
+			if ([
+				"text",
+				"each",
+				"router-region"
+			].includes(prefix)) hasConflict = true;
+		}
+		if (hasDefaultHtmlDirective && !hasConflict) return current;
+	}
+	return null;
+}
+
 // packages/interactivity-router/build-module/assets/scs.mjs
 /**
 * Calculates the Shortest Common Supersequence (SCS) of two sequences.
@@ -757,6 +797,18 @@ const { getRegionRootFragment, initialVdomPromise, toVdom, parseDirectiveValue, 
 const regionAttr = `data-wp-router-region`;
 const interactiveAttr = `data-wp-interactive`;
 const regionsSelector = `[${interactiveAttr}][${regionAttr}], [${interactiveAttr}] [${interactiveAttr}][${regionAttr}]`;
+/**
+* Finds router regions outside `data-wp-html` content, in document order.
+*
+* The check starts at the region's parent, because `data-wp-router-region`
+* takes precedence over `data-wp-html` on the region itself. Regions nested in
+* other regions are kept, so `preparePage()` can handle them as part of their
+* parent's content.
+*
+* @param dom Document whose regions should be discovered.
+* @return Router region elements outside `data-wp-html` content.
+*/
+const discoverRegions = (dom) => Array.from(dom.querySelectorAll(regionsSelector)).filter((region) => !closestHtmlDirectiveElement(region.parentElement));
 const pages = /* @__PURE__ */ new Map();
 const getPagePath = (url) => {
 	const u = new URL(url, window.location.href);
@@ -883,7 +935,8 @@ const fetchPage = async (url, { html }) => {
 * Processes a DOM document to extract router regions and related resources.
 *
 * This function analyzes the provided DOM document and creates a virtual DOM
-* representation of all HTML regions marked with a `router-region` directive.
+* representation of regions marked with a `router-region` directive outside
+* `data-wp-html` content.
 * It also extracts and preloads associated styles and scripts to prepare for
 * rendering the page.
 *
@@ -895,7 +948,7 @@ const fetchPage = async (url, { html }) => {
 *                        regions. If a region exists in this cache, it will be
 *                        reused instead of creating a new vDOM representation.
 * @return                A Promise that resolves to a {@link Page} object
-*                        containing the virtual DOM for all router regions,
+*                        containing the virtual DOM for discovered router regions,
 *                        preloaded styles and scripts, page title, and initial
 *                        server-rendered data.
 */
@@ -903,7 +956,7 @@ const preparePage = async (url, dom, { vdom } = {}) => {
 	dom.querySelectorAll("noscript").forEach((el) => el.remove());
 	const regions = Object.create(null);
 	const regionsToAttach = Object.create(null);
-	dom.querySelectorAll(regionsSelector).forEach((region) => {
+	discoverRegions(dom).forEach((region) => {
 		const { id, attachTo } = parseRegionAttribute(region);
 		if (region.parentElement.closest(`[${regionAttr}]`)) regions[id] = void 0;
 		else regions[id] = vdom?.has(region) ? vdom.get(region) : toVdom(region);
@@ -923,14 +976,30 @@ const preparePage = async (url, dom, { vdom } = {}) => {
 	};
 };
 /**
+* Finds the first element matching `selector` in the live document that
+* neither has inert `data-wp-html` content nor sits inside it.
+*
+* @param selector CSS selector resolved against the live document.
+* @return The first usable element, or null if none exists or the selector
+*         is invalid.
+*/
+const resolveAttachTarget = (selector) => {
+	try {
+		for (const element of document.querySelectorAll(selector)) if (!closestHtmlDirectiveElement(element)) return element;
+	} catch {}
+	return null;
+};
+/**
 * Renders a page by applying styles, populating server data, rendering regions,
-* and updating the document title.
+* and updating the document title. Pending attachments resolve against the live
+* document on every render, including history restores. A region without a
+* usable target is omitted from this render without altering the cached page.
 *
 * @param page The {@link Page} object to render.
 */
 const renderPage = (page) => {
 	applyStyles(page.styles);
-	const regionsToAttach = Object.assign(Object.create(null), page.regionsToAttach);
+	const regions = Object.assign(Object.create(null), page.regions);
 	batch(() => {
 		populateServerData(page.initialData);
 		navigationSignal.value += 1;
@@ -938,26 +1007,30 @@ const renderPage = (page) => {
 			signal.value = null;
 		});
 		const parentsToUpdate = /* @__PURE__ */ new Set();
-		for (const id in regionsToAttach) {
-			const parent = document.querySelector(regionsToAttach[id]);
+		for (const id in page.regionsToAttach) {
+			const parent = resolveAttachTarget(page.regionsToAttach[id]);
+			if (!parent) {
+				delete regions[id];
+				continue;
+			}
 			if (!regionsToAttachByParent.has(parent)) regionsToAttachByParent.set(parent, []);
-			const regions = regionsToAttachByParent.get(parent);
-			if (!regions.includes(id)) {
-				regions.push(id);
+			const ids = regionsToAttachByParent.get(parent);
+			if (!ids.includes(id)) {
+				ids.push(id);
 				parentsToUpdate.add(parent);
 			}
 		}
-		for (const id in page.regions) if (routerRegions.has(id)) routerRegions.get(id).value = cloneRouterRegionContent(page.regions[id]);
+		for (const id in regions) if (routerRegions.has(id)) routerRegions.get(id).value = cloneRouterRegionContent(regions[id]);
 		parentsToUpdate.forEach((parent) => {
-			const vdoms = regionsToAttachByParent.get(parent).map((id) => page.regions[id]);
+			const vdoms = regionsToAttachByParent.get(parent).map((id) => regions[id]);
 			if (!rootFragmentsByParent.has(parent)) {
-				const regions = vdoms.map(({ props, type }) => {
+				const roots = vdoms.map(({ props, type }) => {
 					const elementType = typeof type === "function" ? props.type : type;
 					const region = document.createElement(elementType);
 					parent.appendChild(region);
 					return region;
 				});
-				rootFragmentsByParent.set(parent, getRegionRootFragment(regions));
+				rootFragmentsByParent.set(parent, getRegionRootFragment(roots));
 			}
 			const fragment = rootFragmentsByParent.get(parent);
 			render(vdoms, fragment);
@@ -1026,7 +1099,7 @@ window.addEventListener("popstate", async () => {
 		throw error;
 	}
 });
-document.querySelectorAll(regionsSelector).forEach((region) => {
+discoverRegions(document).forEach((region) => {
 	const { id, attachTo } = parseRegionAttribute(region);
 	if (attachTo) initialRegionsToAttach.add(id);
 });

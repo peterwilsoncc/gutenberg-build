@@ -2149,6 +2149,13 @@ const invalidCharsRegex = /[^a-z0-9-_]/i;
 * @return Whether the part is reserved.
 */
 const isReservedNamePart = (part) => isReservedKey(part.replace(/^-+|-+$/g, "").toLowerCase());
+/**
+* Splits a directive attribute name into its prefix, suffix and unique ID.
+*
+* @param directiveName The full attribute name, starting with `data-wp-`.
+* @return The parsed name, or null when the part after `data-wp-` contains
+*         unsupported characters, starts with a hyphen or has a reserved part.
+*/
 function parseDirectiveName(directiveName) {
 	const parsed = splitDirectiveName(directiveName);
 	if (parsed && (isReservedNamePart(parsed.prefix) || parsed.suffix !== null && parsed.suffix.split("--").some(isReservedNamePart) || parsed.uniqueId !== null && isReservedNamePart(parsed.uniqueId))) return null;
@@ -3691,6 +3698,7 @@ const privateApis = (lock) => {
 		getRegionRootFragment,
 		initialVdomPromise,
 		toVdom,
+		parseDirectiveName,
 		parseDirectiveValue,
 		directive,
 		getNamespace,
