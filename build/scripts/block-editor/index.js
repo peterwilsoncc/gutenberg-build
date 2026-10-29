@@ -104013,7 +104013,7 @@ If there's a particular need for this, please submit a feature request at https:
 					url: normalizedUrl
 				};
 			}
-			if (updatedValue?.kind === "taxonomy" && updatedValue?.url) entityUrlFallbackRef.current = updatedValue.url;
+			if ((updatedValue?.kind === "taxonomy" || updatedValue?.kind === "post-type") && updatedValue?.url) entityUrlFallbackRef.current = updatedValue.url;
 			const nonSettingsChanges = Object.keys(updatedValue).reduce((acc, key) => {
 				if (!settingsKeys.includes(key)) acc[key] = updatedValue[key];
 				return acc;
@@ -104106,7 +104106,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const isDisabled = currentInputIsEmpty || !isUrlValid || value && !valueHasChanges;
 		const showSettings = !!settings?.length && isEditingLink && hasLinkValue;
 		const previewValue = (0, _wordpress_element.useMemo)(() => {
-			if (value?.kind === "taxonomy" && !value?.url && entityUrlFallbackRef.current) return {
+			if ((value?.kind === "taxonomy" || value?.kind === "post-type") && !value?.url && entityUrlFallbackRef.current) return {
 				...value,
 				url: entityUrlFallbackRef.current
 			};
