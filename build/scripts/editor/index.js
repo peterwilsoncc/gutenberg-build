@@ -100243,19 +100243,8 @@ If there's a particular need for this, please submit a feature request at https:
 	function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose, onSaved, renderFrame, noticesClassName = "media-editor__snackbar", noticesPortalElement, shouldCloseOnEsc = false }) {
 		const session = useMediaEditor();
 		const isWide = (0, _wordpress_compose.useViewportMatch)("small");
-		const [activePanel, setActivePanel] = (0, _wordpress_element.useState)(isWide ? DETAILS_PANEL : null);
-		const hasChosenPanelRef = (0, _wordpress_element.useRef)(false);
-		const lastPanelRef = (0, _wordpress_element.useRef)(DETAILS_PANEL);
-		const hasChosenTabRef = (0, _wordpress_element.useRef)(false);
-		const selectPanel = (0, _wordpress_element.useCallback)((panel) => {
-			hasChosenTabRef.current = true;
-			lastPanelRef.current = panel;
-			setActivePanel(panel);
-		}, []);
-		const togglePanel = (0, _wordpress_element.useCallback)(() => {
-			hasChosenPanelRef.current = true;
-			setActivePanel((open) => open ? null : lastPanelRef.current);
-		}, []);
+		const [chosenPanel, setChosenPanel] = (0, _wordpress_element.useState)();
+		const [chosenTab, setChosenTab] = (0, _wordpress_element.useState)(null);
 		const layout = isWide ? "wide" : "narrow";
 		const sourceMedia = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).getEntityRecord("postType", "attachment", id), [id]);
 		const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
@@ -100324,12 +100313,16 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasChanges = session.hasOutputEdits || hasEdits || isSourceReplaced;
 		const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
 		const isImage = !!media && mediaType === "image";
-		(0, _wordpress_element.useEffect)(() => {
-			if (hasChosenPanelRef.current && hasChosenTabRef.current) return;
-			const defaultPanel = isWide && isImage ? CROP_PANEL : DETAILS_PANEL;
-			if (!hasChosenTabRef.current) lastPanelRef.current = defaultPanel;
-			if (!hasChosenPanelRef.current) setActivePanel(isWide ? lastPanelRef.current : null);
-		}, [isWide, isImage]);
+		const currentTab = chosenTab ?? (isWide && isImage ? CROP_PANEL : DETAILS_PANEL);
+		let activePanel = chosenPanel;
+		if (activePanel === void 0) activePanel = isWide ? currentTab : null;
+		const selectPanel = (0, _wordpress_element.useCallback)((panel) => {
+			setChosenTab(panel);
+			setChosenPanel((chosen) => chosen === void 0 ? chosen : panel);
+		}, []);
+		const togglePanel = (0, _wordpress_element.useCallback)(() => {
+			setChosenPanel(activePanel ? null : currentTab);
+		}, [activePanel, currentTab]);
 		const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
 		const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
 			session,

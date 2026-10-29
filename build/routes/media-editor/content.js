@@ -45748,19 +45748,8 @@ function SaveActions({ size = "default" }) {
 function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose, onSaved, renderFrame, noticesClassName = "media-editor__snackbar", noticesPortalElement, shouldCloseOnEsc = false }) {
 	const session = useMediaEditor();
 	const isWide = (0, import_compose.useViewportMatch)("small");
-	const [activePanel, setActivePanel] = (0, import_element.useState)(isWide ? DETAILS_PANEL : null);
-	const hasChosenPanelRef = (0, import_element.useRef)(false);
-	const lastPanelRef = (0, import_element.useRef)(DETAILS_PANEL);
-	const hasChosenTabRef = (0, import_element.useRef)(false);
-	const selectPanel = (0, import_element.useCallback)((panel) => {
-		hasChosenTabRef.current = true;
-		lastPanelRef.current = panel;
-		setActivePanel(panel);
-	}, []);
-	const togglePanel = (0, import_element.useCallback)(() => {
-		hasChosenPanelRef.current = true;
-		setActivePanel((open) => open ? null : lastPanelRef.current);
-	}, []);
+	const [chosenPanel, setChosenPanel] = (0, import_element.useState)();
+	const [chosenTab, setChosenTab] = (0, import_element.useState)(null);
 	const layout = isWide ? "wide" : "narrow";
 	const sourceMedia = (0, import_data.useSelect)((select) => select(import_core_data.store).getEntityRecord("postType", "attachment", id), [id]);
 	const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data.useDispatch)(import_core_data.store);
@@ -45829,12 +45818,16 @@ function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose
 	const hasChanges = session.hasOutputEdits || hasEdits || isSourceReplaced;
 	const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
 	const isImage = !!media && mediaType === "image";
-	(0, import_element.useEffect)(() => {
-		if (hasChosenPanelRef.current && hasChosenTabRef.current) return;
-		const defaultPanel = isWide && isImage ? CROP_PANEL : DETAILS_PANEL;
-		if (!hasChosenTabRef.current) lastPanelRef.current = defaultPanel;
-		if (!hasChosenPanelRef.current) setActivePanel(isWide ? lastPanelRef.current : null);
-	}, [isWide, isImage]);
+	const currentTab = chosenTab ?? (isWide && isImage ? CROP_PANEL : DETAILS_PANEL);
+	let activePanel = chosenPanel;
+	if (activePanel === void 0) activePanel = isWide ? currentTab : null;
+	const selectPanel = (0, import_element.useCallback)((panel) => {
+		setChosenTab(panel);
+		setChosenPanel((chosen) => chosen === void 0 ? chosen : panel);
+	}, []);
+	const togglePanel = (0, import_element.useCallback)(() => {
+		setChosenPanel(activePanel ? null : currentTab);
+	}, [activePanel, currentTab]);
 	const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
 	const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
 		session,
