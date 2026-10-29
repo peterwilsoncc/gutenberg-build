@@ -3729,7 +3729,7 @@ div.components-toolbar > div + div.has-left-divider::before {
 }
 
 .components-tooltip {
-  background: #000;
+  background: #1e1e1e;
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   border-radius: var(--wpds-border-radius-md, 4px);
   color: #f0f0f0;
