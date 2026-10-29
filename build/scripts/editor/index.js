@@ -21652,7 +21652,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	*
 	* Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 	*/
-	const Button$90 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
+	const Button$91 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
 		const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 		const { getButtonProps, buttonRef } = useButton({
 			disabled,
@@ -21665,7 +21665,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 			props: [elementProps, getButtonProps]
 		});
 	});
-	Button$90.displayName = "Button";
+	Button$91.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -29423,12 +29423,12 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$89 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
+	const Button$90 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
 		const mergedClassName = clsx(global_css_defense_module_default$17.button, resets_module_default$23["box-sizing"], focus_module_default$9["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$56.button, style_module_default$56[`is-${tone}`], style_module_default$56[`is-${variant}`], style_module_default$56[`is-${size}`], loading && style_module_default$56["is-loading"], className);
 		(0, _wordpress_element.useEffect)(() => {
 			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
 		}, [loading, loadingAnnouncement]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$90, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$91, {
 			ref,
 			className: mergedClassName,
 			focusableWhenDisabled,
@@ -29573,7 +29573,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$88 = Object.assign(Button$89, { 
+	const Button$89 = Object.assign(Button$90, { 
 	/**
 	* An icon component specifically designed to work well when rendered inside
 	* a `Button` component.
@@ -34599,7 +34599,7 @@ Icon: ButtonIcon });
 			ref,
 			...targetProps,
 			disabled: disabled && !focusableWhenDisabled,
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
 				...restProps,
 				size,
 				"aria-label": label,
@@ -35334,7 +35334,7 @@ Icon: ButtonIcon });
 			loading,
 			loadingAnnouncement: loadingAnnouncement ?? ""
 		} : {};
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
 			...props,
 			...loadingProps,
 			ref,
@@ -112625,7 +112625,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const emojiLabel = emoji?.label ?? hexKey;
 		const label = names?.length === count ? formatReactorNames(names, emoji?.sentenceLabel ?? hexKey) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%1$s, %2$s reaction", "%1$s, %2$s reactions", count), emojiLabel, count.toLocaleString());
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$11, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Trigger$5, {
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
 				size: "small",
 				variant: isActive ? "outline" : "minimal",
 				tone: isActive ? "brand" : "neutral",
@@ -112688,7 +112688,7 @@ If there's a particular need for this, please submit a feature request at https:
 								label,
 								"aria-label": label,
 								className: "editor-collab-sidebar-panel__reaction-option",
-								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
+								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
 									variant: "minimal",
 									tone: "neutral"
 								})
@@ -112876,7 +112876,7 @@ If there's a particular need for this, please submit a feature request at https:
 					confirmButtonText: (0, _wordpress_i18n.__)("Delete"),
 					children: deleteConfirmMessage
 				}),
-				isOverflowing && "edit" !== actionState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
+				isOverflowing && "edit" !== actionState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
 					className: "editor-collab-sidebar-panel__show-more-button",
 					variant: "unstyled",
 					size: "small",
@@ -112918,7 +112918,7 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		});
 	}
-	function NoteThread({ note, focusThreadOrAdjacent, isSelected, sidebarRef, floating, onKeyDown }) {
+	function NoteThread({ note, focusThreadOrAdjacent, isSelected, expandReplies = false, sidebarRef, floating, onKeyDown }) {
 		const isFloating = !!floating;
 		const { onCreate, onEdit, onDiscard, onDelete } = useNoteActions();
 		const { toggleBlockHighlight } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
@@ -113010,6 +113010,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const isThreadResolved = "approved" === note.status;
 		const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : void 0;
 		const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
+		const showAllReplies = isSelected || expandReplies;
 		const noteExcerpt = getNoteExcerpt((0, _wordpress_dom.__unstableStripHTML)(note.content?.rendered), 10);
 		const ariaLabel = !!note.blockClientId ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Note: %s"), noteExcerpt) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Original block deleted. Note: %s"), noteExcerpt);
 		if (isFloating && note.id === "new") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNote, {
@@ -113069,7 +113070,7 @@ If there's a particular need for this, please submit a feature request at https:
 					onResolve: handleResolve,
 					isThreadResolved
 				}),
-				isSelected && allReplies.map((reply) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Note, {
+				showAllReplies && allReplies.map((reply) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Note, {
 					note: reply,
 					parentNote: note,
 					isSelected,
@@ -113077,7 +113078,7 @@ If there's a particular need for this, please submit a feature request at https:
 					onDeleteNote: handleDelete,
 					isThreadResolved
 				}, reply.id)),
-				!isSelected && restReplies.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
+				!showAllReplies && restReplies.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
 					direction: "row",
 					align: "center",
 					justify: "space-between",
@@ -113093,7 +113094,7 @@ If there's a particular need for this, please submit a feature request at https:
 						children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s more reply", "%s more replies", restReplies.length), restReplies.length)
 					})
 				}),
-				!isSelected && lastReply && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Note, {
+				!showAllReplies && lastReply && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Note, {
 					note: lastReply,
 					parentNote: note,
 					isSelected: false,
@@ -113125,9 +113126,73 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
+// packages/editor/build-module/components/collab-sidebar/notes-filters.mjs
+	const NOTE_STATUS_FILTERS = [
+		"all",
+		"hold",
+		"approved"
+	];
+	const DEFAULT_NOTES_FILTERS = {
+		search: "",
+		status: "all"
+	};
+	function hasActiveNotesFilters(filters) {
+		return filters.search.trim() !== "" || filters.status !== "all";
+	}
+	function filterNotes(threads, filters, selectedNoteId) {
+		if (!hasActiveNotesFilters(filters)) return threads;
+		const search = filters.search.trim().toLowerCase();
+		return threads.filter((thread) => {
+			if (thread.id === selectedNoteId) return true;
+			const threadNotes = [thread, ...thread.reply ?? []];
+			return (filters.status === "all" || thread.status === filters.status) && (!search || threadNotes.some((note) => note.author_name.toLowerCase().includes(search) || (0, _wordpress_dom.__unstableStripHTML)(note.content.rendered).toLowerCase().includes(search)));
+		});
+	}
+	function NotesFilters({ filters, onChange }) {
+		const statusLabels = {
+			all: (0, _wordpress_i18n.__)("All"),
+			hold: (0, _wordpress_i18n.__)("Open"),
+			approved: (0, _wordpress_i18n.__)("Resolved")
+		};
+		const isStatusFiltered = filters.status !== "all";
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+			className: "editor-collab-sidebar-filters",
+			direction: "row",
+			gap: "sm",
+			align: "center",
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SearchControl, {
+				className: "editor-collab-sidebar-filters__search",
+				label: (0, _wordpress_i18n.__)("Search notes"),
+				value: filters.search,
+				onChange: (search) => onChange({
+					...filters,
+					search
+				})
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$6, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+				__next40pxDefaultSize: true,
+				className: clsx("editor-collab-sidebar-filters__toggle", { "is-active": isStatusFiltered }),
+				icon: settings_default,
+				label: isStatusFiltered ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Filter: %s"), statusLabels[filters.status]) : (0, _wordpress_i18n._x)("Filter", "verb")
+			}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$3, {
+				positioner: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner$3, { align: "end" }),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(RadioGroup$1, {
+					value: filters.status,
+					onValueChange: (status) => onChange({
+						...filters,
+						status
+					}),
+					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(GroupLabel$2, { children: (0, _wordpress_i18n.__)("Status") }), NOTE_STATUS_FILTERS.map((status) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RadioItem, {
+						value: status,
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: statusLabels[status] })
+					}, status))]
+				})
+			})] })]
+		});
+	}
+
 // packages/editor/build-module/components/collab-sidebar/notes.mjs
 	const { useBlockElement } = unlock$5(_wordpress_block_editor.privateApis);
-	function Notes({ notes, sidebarRef, isFloating = false }) {
+	function Notes({ notes, sidebarRef, isFloating = false, filters = DEFAULT_NOTES_FILTERS }) {
 		const { onDiscard } = useNoteActions();
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		const { getSelectedNote } = unlock$5((0, _wordpress_data.useSelect)(store));
@@ -113147,7 +113212,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const selectedNote = (0, _wordpress_data.useSelect)((select) => unlock$5(select(store)).getSelectedNote(), []);
 		const relatedBlockElement = useBlockElement(selectedBlockClientId);
 		const threads = (0, _wordpress_element.useMemo)(() => {
-			if (!isFloating || selectedNote !== "new") return notes;
+			if (!isFloating || selectedNote !== "new") return filterNotes(notes, filters, selectedNote);
 			const newNoteThread = {
 				id: "new",
 				blockClientId: selectedBlockClientId,
@@ -113162,10 +113227,24 @@ If there's a particular need for this, please submit a feature request at https:
 			return out;
 		}, [
 			notes,
+			filters,
 			isFloating,
 			selectedNote,
 			selectedBlockClientId,
 			orderedBlockIds
+		]);
+		const isFiltered = hasActiveNotesFilters(filters);
+		const debouncedSpeak = (0, _wordpress_compose.useDebounce)(_wordpress_a11y.speak, 500);
+		(0, _wordpress_element.useEffect)(() => {
+			if (!isFiltered) {
+				debouncedSpeak.cancel();
+				return;
+			}
+			debouncedSpeak((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d note found.", "%d notes found.", threads.length), threads.length));
+		}, [
+			isFiltered,
+			threads.length,
+			debouncedSpeak
 		]);
 		const { notePositions, heights, registerThread, unregisterThread } = useFloatingBoard({
 			threads,
@@ -113178,7 +113257,7 @@ If there's a particular need for this, please submit a feature request at https:
 			isPlaced: !isFloating || notePositions[selectedNote] !== void 0
 		});
 		function focusThreadOrAdjacent(thread, nextThread) {
-			if (nextThread) {
+			if (nextThread && filterNotes([nextThread], filters).length) {
 				focusNoteThread(thread.id, sidebarRef.current);
 				return;
 			}
@@ -113215,9 +113294,15 @@ If there's a particular need for this, please submit a feature request at https:
 				}
 			}
 		};
-		const firstResolvedIndex = isFloating ? -1 : threads.findIndex((thread) => thread.status === "approved" && !!thread.blockClientId);
+		const firstResolvedIndex = isFloating || filters.status !== "all" ? -1 : threads.findIndex((thread) => thread.status === "approved" && !!thread.blockClientId);
 		const isAddingNote = !isFloating && selectedNote === "new" && !!selectedBlockClientId;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+		const showNoResults = isFiltered && !isAddingNote && !threads.length;
+		const expandReplies = filters.search.trim() !== "";
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [showNoResults && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text$1, {
+			className: "editor-collab-sidebar-panel__no-results",
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {}),
+			children: (0, _wordpress_i18n.__)("No notes found.")
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 			className: "editor-collab-sidebar-panel",
 			role: "tree",
 			direction: "column",
@@ -113245,6 +113330,7 @@ If there's a particular need for this, please submit a feature request at https:
 				note: thread,
 				focusThreadOrAdjacent,
 				isSelected: selectedNote === thread.id,
+				expandReplies,
 				sidebarRef,
 				floating: isFloating ? {
 					y: notePositions[thread.id],
@@ -113254,7 +113340,7 @@ If there's a particular need for this, please submit a feature request at https:
 				} : void 0,
 				onKeyDown: (event) => navigate(event, thread, selectedNote === thread.id)
 			})] }, thread.id))]
-		});
+		})] });
 	}
 
 // packages/editor/build-module/components/collab-sidebar/notes-display-mode-menu.mjs
@@ -113558,6 +113644,7 @@ If there's a particular need for this, please submit a feature request at https:
 			onDiscard
 		});
 		const areNotesHidden = notesDisplayMode === "hidden";
+		const [filters, setFilters] = (0, _wordpress_element.useState)(DEFAULT_NOTES_FILTERS);
 		const showAllNotesSidebar = notes.length > 0 || !isLargeViewport || isAllNotesSidebarOpen;
 		const selectedThread = notes.find((thread) => thread.id === selectedNoteId);
 		const canSelectedNoteFloat = selectedNoteId !== void 0 && selectedThread?.status !== "approved";
@@ -113597,7 +113684,7 @@ If there's a particular need for this, please submit a feature request at https:
 				hasFloatingNotes,
 				hasAllNotes: showAllNotesSidebar
 			}),
-			showAllNotesSidebar && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PluginSidebar, {
+			showAllNotesSidebar && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(PluginSidebar, {
 				identifier: "edit-post/collab-history-sidebar",
 				title: (0, _wordpress_i18n.__)("All notes"),
 				header: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("h2", {
@@ -113606,13 +113693,17 @@ If there's a particular need for this, please submit a feature request at https:
 				}),
 				icon: comment_default,
 				closeLabel: (0, _wordpress_i18n.__)("Close Notes"),
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteDraftsContext.Provider, {
+				children: [(notes.length > 0 || hasActiveNotesFilters(filters)) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NotesFilters, {
+					filters,
+					onChange: setFilters
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteDraftsContext.Provider, {
 					value: drafts,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Notes, {
 						notes,
-						sidebarRef
+						sidebarRef,
+						filters
 					})
-				})
+				})]
 			}),
 			showFloatingNotes && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CanvasMargin.Fill, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				role: "region",
