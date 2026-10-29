@@ -98063,12 +98063,14 @@ If there's a particular need for this, please submit a feature request at https:
 			const observer = new ResizeObserver((entries) => {
 				for (const entry of entries) {
 					const { width, height } = entry.contentRect;
-					setCanvasSize((prev) => {
-						if (prev.width === width && prev.height === height) return prev;
-						return {
-							width,
-							height
-						};
+					(0, _wordpress_element.flushSync)(() => {
+						setCanvasSize((prev) => {
+							if (prev.width === width && prev.height === height) return prev;
+							return {
+								width,
+								height
+							};
+						});
 					});
 				}
 			});
@@ -100051,6 +100053,14 @@ If there's a particular need for this, please submit a feature request at https:
 	const DETAILS_PANEL = "details";
 	/** Identifier for the crop panel. Images only; other media has nothing to crop. */
 	const CROP_PANEL = "crop";
+	const SIDEBAR_ANIMATION_DURATION = .3;
+	const sidebarVariants = {
+		open: { width: "auto" },
+		closed: (transition) => ({
+			width: 0,
+			transition
+		})
+	};
 	function MediaEditorSidebar({ tabs, activeTab, onSelectTab, disabled = false }) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(NavigableRegion, {
 			className: "media-editor__sidebar",
@@ -100235,6 +100245,16 @@ If there's a particular need for this, please submit a feature request at https:
 	function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose, onSaved, renderFrame, noticesClassName = "media-editor__snackbar", noticesPortalElement, shouldCloseOnEsc = false }) {
 		const session = useMediaEditor();
 		const isWide = (0, _wordpress_compose.useViewportMatch)("small");
+		const sidebarTransition = {
+			type: "tween",
+			duration: (0, _wordpress_compose.useReducedMotion)() || !isWide ? 0 : SIDEBAR_ANIMATION_DURATION,
+			ease: [
+				.6,
+				0,
+				.4,
+				1
+			]
+		};
 		const [chosenPanel, setChosenPanel] = (0, _wordpress_element.useState)();
 		const [chosenTab, setChosenTab] = (0, _wordpress_element.useState)(null);
 		const layout = isWide ? "wide" : "narrow";
@@ -100426,11 +100446,23 @@ If there's a particular need for this, please submit a feature request at https:
 								className: "media-editor__canvas-toolbar",
 								children: [ruler, imageControls]
 							})]
-						}), !!activePanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorSidebar, {
-							tabs,
-							activeTab: tabs.some((tab) => tab.id === activePanel) ? activePanel : DETAILS_PANEL,
-							onSelectTab: selectPanel,
-							disabled: isSaving
+						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__unstableAnimatePresence, {
+							initial: false,
+							custom: sidebarTransition,
+							children: !!activePanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__unstableMotion.div, {
+								className: "media-editor__sidebar-container",
+								variants: sidebarVariants,
+								initial: "closed",
+								animate: "open",
+								exit: "closed",
+								transition: sidebarTransition,
+								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorSidebar, {
+									tabs,
+									activeTab: tabs.some((tab) => tab.id === activePanel) ? activePanel : DETAILS_PANEL,
+									onSelectTab: selectPanel,
+									disabled: isSaving
+								})
+							})
 						})]
 					})
 				}),

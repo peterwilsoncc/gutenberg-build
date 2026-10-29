@@ -4430,6 +4430,13 @@ div.dataviews-view-list {
 @media (min-width: 600px) {
   .media-editor .media-editor__content {
     margin: 0 24px;
+    transition: margin-left 0.3s cubic-bezier(0.6, 0, 0.4, 1);
+  }
+}
+@media (min-width: 600px) and (prefers-reduced-motion: reduce) {
+  .media-editor .media-editor__content {
+    transition-duration: 0s;
+    transition-delay: 0s;
   }
 }
 @container media-editor-body (min-width: 864px) {
@@ -4481,6 +4488,19 @@ div.dataviews-view-list {
   object-fit: contain;
 }
 
+.media-editor .media-editor__sidebar-container {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .media-editor .media-editor__sidebar-container {
+    flex: none;
+  }
+}
 .media-editor .media-editor__sidebar {
   display: flex;
   flex: 1;
