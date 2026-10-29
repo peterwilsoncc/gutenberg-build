@@ -106215,7 +106215,7 @@ If there's a particular need for this, please submit a feature request at https:
 						supportsSplitting
 					}),
 					anchorRef,
-					setAnchorElement
+					isSelected && setAnchorElement
 				]),
 				contentEditable: !shouldDisableEditing,
 				suppressContentEditableWarning: true,
