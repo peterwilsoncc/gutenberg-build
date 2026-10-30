@@ -7150,8 +7150,8 @@ function registerStyle$7(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
 }
-registerStyle$7("15abcab4d0", ".f37b9e2e191ebd66__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
-var style_module_default$6 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
+registerStyle$7("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+var style_module_default$6 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
 /**
 * Visually hides content while keeping it accessible to screen readers.
 * Useful when providing context that's only meaningful to assistive technology.
@@ -7310,8 +7310,8 @@ function registerStyle$6(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$6(targetDocument, hash, css);
 }
-registerStyle$6("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
-var wp_compat_overlay_slot_module_default = { "slot": "_11fc52b637ff8a7e__slot" };
+registerStyle$6("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
+var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
 /**
 * Marker attribute on the compat overlay slot element.
 */
@@ -7502,12 +7502,12 @@ function registerStyle$5(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$5(targetDocument, hash, css);
 }
-registerStyle$5("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-registerStyle$5("19fcc06039", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+registerStyle$5("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$5("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
 var style_module_default$5 = {
-	"positioner": "_480b748dd3510e64__positioner",
-	"popup": "_50096b232db7709d__popup"
+	"positioner": "b9266862d9435660__positioner",
+	"popup": "_7bb3fd8a0810be6d__popup"
 };
 /**
 * Used to apply custom positioning to `Tooltip`'s floating content.
@@ -7649,10 +7649,10 @@ function registerStyle$4(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$4(targetDocument, hash, css);
 }
-registerStyle$4("19fcc06039", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+registerStyle$4("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
 var style_module_default$4 = {
-	"positioner": "_480b748dd3510e64__positioner",
-	"popup": "_50096b232db7709d__popup"
+	"positioner": "b9266862d9435660__positioner",
+	"popup": "_7bb3fd8a0810be6d__popup"
 };
 const POPUP_COLOR = { background: "#1e1e1e" };
 const Popup = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
@@ -7797,8 +7797,8 @@ function registerStyle$3(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
 }
-registerStyle$3("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
-var style_module_default$3 = { "stack": "_19ce0419607e1896__stack" };
+registerStyle$3("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
+var style_module_default$3 = { "stack": "_8e8e79c1a2eec43b__stack" };
 const gapTokens = {
 	xs: "var(--wpds-dimension-gap-xs, 4px)",
 	sm: "var(--wpds-dimension-gap-sm, 8px)",
@@ -7934,12 +7934,12 @@ function registerStyle$2(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$2(targetDocument, hash, css);
 }
-registerStyle$2("ae8d7dc1c4", ".eddbc0a77c8a621a__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}.eddbc0a77c8a621a__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){.eddbc0a77c8a621a__avatar img{transition:opacity .1s linear}}.eddbc0a77c8a621a__avatar._5e74dacabd67dfdf__is-loaded img{opacity:1}.c0d40ce1da6dacc2__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.c0d40ce1da6dacc2__icon svg{fill:currentColor;margin-inline-start:-4px}._9e337be7fe946fd4__name{overflow:hidden;text-overflow:ellipsis}");
+registerStyle$2("9c246501a5", "._66de93a96eb5a44f__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}._66de93a96eb5a44f__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){._66de93a96eb5a44f__avatar img{transition:opacity .1s linear}}._66de93a96eb5a44f__avatar.fe521286e51cb220__is-loaded img{opacity:1}.dbd5d0f448658ef9__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.dbd5d0f448658ef9__icon svg{fill:currentColor;margin-inline-start:-4px}._5026ec0f3be21164__name{overflow:hidden;text-overflow:ellipsis}");
 var style_module_default$2 = {
-	"avatar": "eddbc0a77c8a621a__avatar",
-	"is-loaded": "_5e74dacabd67dfdf__is-loaded",
-	"icon": "c0d40ce1da6dacc2__icon",
-	"name": "_9e337be7fe946fd4__name"
+	"avatar": "_66de93a96eb5a44f__avatar",
+	"is-loaded": "fe521286e51cb220__is-loaded",
+	"icon": "dbd5d0f448658ef9__icon",
+	"name": "_5026ec0f3be21164__name"
 };
 function getIconForSource(originalSource) {
 	switch (originalSource) {
@@ -8152,10 +8152,10 @@ function registerStyle$1(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$1(targetDocument, hash, css);
 }
-registerStyle$1("cd9f81046b", ".f17c7d5418aade3c__title>span:first-child{display:block;flex-grow:0;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}._86b9872383a1ab5e__pattern-title>span:first-child{flex:1}");
+registerStyle$1("a4585ee5f7", "._6f88745c59f7b1df__title>span:first-child{display:block;flex-grow:0;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}.bfcb43aba334e5f0__pattern-title>span:first-child{flex:1}");
 var style_module_default$1 = {
-	"title": "f17c7d5418aade3c__title",
-	"pattern-title": "_86b9872383a1ab5e__pattern-title"
+	"title": "_6f88745c59f7b1df__title",
+	"pattern-title": "bfcb43aba334e5f0__pattern-title"
 };
 function BaseTitleView({ item, className, children }) {
 	const renderedTitle = getItemTitle(item);
@@ -8271,10 +8271,10 @@ function registerStyle(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle(targetDocument, hash, css);
 }
-registerStyle("cd9f81046b", ".f17c7d5418aade3c__title>span:first-child{display:block;flex-grow:0;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}._86b9872383a1ab5e__pattern-title>span:first-child{flex:1}");
+registerStyle("a4585ee5f7", "._6f88745c59f7b1df__title>span:first-child{display:block;flex-grow:0;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}.bfcb43aba334e5f0__pattern-title>span:first-child{flex:1}");
 var style_module_default = {
-	"title": "f17c7d5418aade3c__title",
-	"pattern-title": "_86b9872383a1ab5e__pattern-title"
+	"title": "_6f88745c59f7b1df__title",
+	"pattern-title": "bfcb43aba334e5f0__pattern-title"
 };
 /**
 * The title of a pattern, with a lock icon for the patterns that cannot be

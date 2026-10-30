@@ -7144,8 +7144,8 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$4(targetDocument, hash, css);
 	}
-	registerStyle$4("15abcab4d0", ".f37b9e2e191ebd66__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
-	var style_module_default$3 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
+	registerStyle$4("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+	var style_module_default$3 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
 	/**
 	* Visually hides content while keeping it accessible to screen readers.
 	* Useful when providing context that's only meaningful to assistive technology.
@@ -7304,8 +7304,8 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
 	}
-	registerStyle$3("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
-	var wp_compat_overlay_slot_module_default = { "slot": "_11fc52b637ff8a7e__slot" };
+	registerStyle$3("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
+	var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
 	/**
 	* Marker attribute on the compat overlay slot element.
 	*/
@@ -7495,12 +7495,12 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$2(targetDocument, hash, css);
 	}
-	registerStyle$2("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-	var resets_module_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-	registerStyle$2("19fcc06039", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+	registerStyle$2("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	registerStyle$2("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
 	var style_module_default$2 = {
-		"positioner": "_480b748dd3510e64__positioner",
-		"popup": "_50096b232db7709d__popup"
+		"positioner": "b9266862d9435660__positioner",
+		"popup": "_7bb3fd8a0810be6d__popup"
 	};
 	/**
 	* Used to apply custom positioning to `Tooltip`'s floating content.
@@ -7630,10 +7630,10 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$1(targetDocument, hash, css);
 	}
-	registerStyle$1("19fcc06039", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+	registerStyle$1("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
 	var style_module_default$1 = {
-		"positioner": "_480b748dd3510e64__positioner",
-		"popup": "_50096b232db7709d__popup"
+		"positioner": "b9266862d9435660__positioner",
+		"popup": "_7bb3fd8a0810be6d__popup"
 	};
 	const POPUP_COLOR = { background: "#1e1e1e" };
 	const Popup = (0, _wordpress_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
@@ -7783,8 +7783,8 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle(targetDocument, hash, css);
 	}
-	registerStyle("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
-	var style_module_default = { "stack": "_19ce0419607e1896__stack" };
+	registerStyle("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
+	var style_module_default = { "stack": "_8e8e79c1a2eec43b__stack" };
 	const gapTokens = {
 		xs: "var(--wpds-dimension-gap-xs, 4px)",
 		sm: "var(--wpds-dimension-gap-sm, 8px)",

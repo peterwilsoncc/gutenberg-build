@@ -6170,8 +6170,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle(targetDocument, hash, css);
 	}
-	registerStyle("8d074a190c", "._0ebd6d9bf8b95794__wrapper{display:contents}");
-	var style_module_default = { "wrapper": "_0ebd6d9bf8b95794__wrapper" };
+	registerStyle("a4c4016022", "._469c5f47eb2ba16a__wrapper{display:contents}");
+	var style_module_default = { "wrapper": "_469c5f47eb2ba16a__wrapper" };
 	const rootProviderCountByDocument = /* @__PURE__ */ new WeakMap();
 	/**
 	* Context provider that generates a theme from a set of seed color values and
