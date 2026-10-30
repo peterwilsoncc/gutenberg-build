@@ -16219,7 +16219,7 @@ function registerStyle27(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle27("e26bdc0796", ".eddbc0a77c8a621a__avatar{align-items:center;block-size:24px;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}.eddbc0a77c8a621a__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){.eddbc0a77c8a621a__avatar img{transition:opacity .1s linear}}.eddbc0a77c8a621a__avatar._5e74dacabd67dfdf__is-loaded img{opacity:1}.c0d40ce1da6dacc2__icon{block-size:24px;display:flex;flex-shrink:0;inline-size:24px}.c0d40ce1da6dacc2__icon svg{fill:currentColor;margin-inline-start:-4px}._9e337be7fe946fd4__name{overflow:hidden;text-overflow:ellipsis}");
+  registerStyle27("ae8d7dc1c4", ".eddbc0a77c8a621a__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}.eddbc0a77c8a621a__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){.eddbc0a77c8a621a__avatar img{transition:opacity .1s linear}}.eddbc0a77c8a621a__avatar._5e74dacabd67dfdf__is-loaded img{opacity:1}.c0d40ce1da6dacc2__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.c0d40ce1da6dacc2__icon svg{fill:currentColor;margin-inline-start:-4px}._9e337be7fe946fd4__name{overflow:hidden;text-overflow:ellipsis}");
 }
 var style_default13 = { "avatar": "eddbc0a77c8a621a__avatar", "is-loaded": "_5e74dacabd67dfdf__is-loaded", "icon": "c0d40ce1da6dacc2__icon", "name": "_9e337be7fe946fd4__name" };
 function AuthorView({ item }) {
@@ -16248,7 +16248,7 @@ function AuthorView({ item }) {
   if (!authorId) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(Stack, { direction: "row", align: "center", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(Stack, { direction: "row", align: "flex-start", children: [
     !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
       "div",
       {
@@ -17744,7 +17744,7 @@ function registerStyle34(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle34("9d4238146e", ".b250dbe2b8212181__icon{block-size:24px;inline-size:24px}.b250dbe2b8212181__icon svg{fill:currentColor;margin-inline-start:-4px}");
+  registerStyle34("ef6ce30fa5", ".b250dbe2b8212181__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.b250dbe2b8212181__icon svg{fill:currentColor;margin-inline-start:-4px}");
 }
 var style_default20 = { "icon": "b250dbe2b8212181__icon" };
 var ICONS = {
@@ -17765,7 +17765,7 @@ function StatusView({
   );
   const label = status?.label || currentStatus;
   const icon = ICONS[currentStatus];
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(Stack, { direction: "row", align: "center", justify: "flex-start", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(Stack, { direction: "row", align: "flex-start", justify: "flex-start", children: [
     icon && /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { className: style_default20.icon, children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Icon, { icon }) }),
     /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("span", { children: label })
   ] });
