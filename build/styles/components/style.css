@@ -2020,6 +2020,13 @@ body.modal-open {
   max-height: calc(100% - var(--wpds-dimension-gap-3xl, 40px));
   background: var(--wpds-color-background-surface-neutral-strong, #fff);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 27px rgba(0, 0, 0, 0.07), 0 30px 36px rgba(0, 0, 0, 0.04), 0 50px 43px rgba(0, 0, 0, 0.02);
+}
+@media (forced-colors: active) {
+  .components-modal__frame {
+    outline: var(--wpds-border-width-xs, 1px) solid CanvasText;
+  }
+}
+.components-modal__frame {
   border-radius: var(--wpds-border-radius-lg, 8px) var(--wpds-border-radius-lg, 8px) 0 0;
   overflow: hidden;
   display: flex;
