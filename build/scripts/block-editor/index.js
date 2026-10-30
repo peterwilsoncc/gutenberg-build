@@ -65451,7 +65451,7 @@ Icon: ButtonIcon });
 	}
 	function Fields({ clientIds, anchor, focus, keyboardShortcuts, contentRef }) {
 		const registry = (0, _wordpress_data.useRegistry)();
-		const { updateBlockAttributes, replaceBlocks, selectionChange } = (0, _wordpress_data.useDispatch)(store);
+		const { updateBlockAttributes, replaceBlocks, selectionChange, __unstableMarkLastChangeAsPersistent } = (0, _wordpress_data.useDispatch)(store);
 		const keys = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockName } = select(store);
 			return clientIds.map((clientId) => getSoleRichTextAttributeKey(getBlockName(clientId)));
@@ -65502,6 +65502,7 @@ Icon: ButtonIcon });
 			if (!parts) return;
 			if (parts.length === clientIds.length) {
 				updateBlockAttributes(clientIds, Object.fromEntries(clientIds.map((clientId, i) => [clientId, { [keys[i]]: toAttribute(parts[i], values[i]) }])), { uniqueByBlock: true });
+				__unstableMarkLastChangeAsPersistent();
 				return;
 			}
 			const { start, end } = newValue;
@@ -76939,7 +76940,7 @@ Icon: ButtonIcon });
 	*   React.useEffect(() => {}, [onClick]);
 	* }
 	*/
-	function useEvent$5(callback) {
+	function useEvent$4(callback) {
 		const ref = (0, react$1.useRef)(() => {
 			throw new Error("Cannot call an event handler while rendering.");
 		});
@@ -77086,7 +77087,7 @@ Icon: ButtonIcon });
 	* boolean value, which will be turned into a function.
 	*/
 	function useBooleanEvent(booleanOrCallback) {
-		return useEvent$5(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
+		return useEvent$4(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
 	}
 	/**
 	* Returns props with an additional `wrapElement` prop.
@@ -77129,7 +77130,7 @@ Icon: ButtonIcon });
 			addGlobalEventListener("scroll", resetMouseMoving, true);
 			hasInstalledGlobalEventListeners$1 = true;
 		}, []);
-		return useEvent$5(() => mouseMoving);
+		return useEvent$4(() => mouseMoving);
 	}
 	let mouseMoving = false;
 	let previousScreenX = 0;
@@ -77311,7 +77312,7 @@ Icon: ButtonIcon });
 		return tabIndexProp ?? 0;
 	}
 	function useDisableEvent(onEvent, disabled) {
-		return useEvent$5((event) => {
+		return useEvent$4((event) => {
 			onEvent?.(event);
 			if (event.defaultPrevented) return;
 			if (disabled) {
@@ -77364,7 +77365,7 @@ Icon: ButtonIcon });
 		const [focusVisible, setFocusVisible] = (0, react$1.useState)(false);
 		const focusVisibleRef = (0, react$1.useRef)(false);
 		const nativeSubmitObserverCleanupRef = (0, react$1.useRef)(null);
-		const cleanupFocusVisible = useEvent$5((element) => {
+		const cleanupFocusVisible = useEvent$4((element) => {
 			nativeSubmitObserverCleanupRef.current?.();
 			nativeSubmitObserverCleanupRef.current = null;
 			focusVisibleRef.current = false;
@@ -77428,7 +77429,7 @@ Icon: ButtonIcon });
 			setFocusVisible(true);
 		};
 		const onKeyDownCaptureProp = props.onKeyDownCapture;
-		const onKeyDownCapture = useEvent$5((event) => {
+		const onKeyDownCapture = useEvent$4((event) => {
 			onKeyDownCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!focusable) return;
@@ -77441,7 +77442,7 @@ Icon: ButtonIcon });
 			queueBeforeEvent(element, "focusout", applyFocusVisible);
 		});
 		const onFocusCaptureProp = props.onFocusCapture;
-		const onFocusCapture = useEvent$5((event) => {
+		const onFocusCapture = useEvent$4((event) => {
 			onFocusCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!focusable) return;
@@ -77455,7 +77456,7 @@ Icon: ButtonIcon });
 			else setFocusVisible(false);
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$5((event) => {
+		const onBlur = useEvent$4((event) => {
 			onBlurProp?.(event);
 			if (!focusable) return;
 			if (!isFocusEventOutside(event)) return;
@@ -77463,7 +77464,7 @@ Icon: ButtonIcon });
 			setFocusVisible(false);
 		});
 		const autoFocusOnShow = (0, react$1.useContext)(FocusableContext);
-		const autoFocusRef = useEvent$5((element) => {
+		const autoFocusRef = useEvent$4((element) => {
 			if (!focusable) return;
 			if (!autoFocus) return;
 			if (!element) return;
@@ -77599,7 +77600,7 @@ Icon: ButtonIcon });
 			setActive(false);
 		}, [disabled]);
 		const onKeyDownProp = props.onKeyDown;
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$4((event) => {
 			onKeyDownProp?.(event);
 			const element = event.currentTarget;
 			if (event.defaultPrevented) return;
@@ -77636,7 +77637,7 @@ Icon: ButtonIcon });
 			}
 		});
 		const onKeyUpProp = props.onKeyUp;
-		const onKeyUp = useEvent$5((event) => {
+		const onKeyUp = useEvent$4((event) => {
 			onKeyUpProp?.(event);
 			if (isDuplicate) return;
 			const isSpace = clickOnSpace && event.key === " ";
@@ -77655,7 +77656,7 @@ Icon: ButtonIcon });
 			queueMicrotask(() => fireClickEvent(element, eventInit));
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$5((event) => {
+		const onBlur = useEvent$4((event) => {
 			onBlurProp?.(event);
 			if (!activeRef.current) return;
 			activeRef.current = false;
@@ -79293,7 +79294,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return [react$1.useMemo(() => ({
 			...store,
 			useState
-		}), [store, useState]), useEvent$5(() => {
+		}), [store, useState]), useEvent$4(() => {
 			setStore((store) => createStore({
 				...props,
 				...store.getState()
@@ -79454,7 +79455,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasFocusedComposite = (0, react$1.useRef)(false);
 		const cancelScheduledFocusRedirectRef = (0, react$1.useRef)(null);
 		const present = usePresentItem(store);
-		const onFocus = useEvent$5((event) => {
+		const onFocus = useEvent$4((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isPortalEvent(event)) return;
@@ -79516,7 +79517,7 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 		});
 		const onBlurCaptureProp = props.onBlurCapture;
-		const onBlurCapture = useEvent$5((event) => {
+		const onBlurCapture = useEvent$4((event) => {
 			onBlurCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if ((store?.getState())?.virtualFocus && hasFocusedComposite.current) {
@@ -79528,7 +79529,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onKeyDownProp = props.onKeyDown;
 		const preventScrollOnKeyDownProp = useBooleanEvent(preventScrollOnKeyDown);
 		const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$4((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isSelfTarget(event)) return;
@@ -79716,7 +79717,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
 	}
 	function useKeyboardEventProxy(store, onKeyboardEvent, previousElementRef) {
-		return useEvent$5((event) => {
+		return useEvent$4((event) => {
 			onKeyboardEvent?.(event);
 			if (event.defaultPrevented) return;
 			if (event.isPropagationStopped()) return;
@@ -79899,7 +79900,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onKeyDownCapture = useKeyboardEventProxy(store, props.onKeyDownCapture, previousElementRef);
 		const onKeyUpCapture = useKeyboardEventProxy(store, props.onKeyUpCapture, previousElementRef);
 		const onFocusCaptureProp = props.onFocusCapture;
-		const onFocusCapture = useEvent$5((event) => {
+		const onFocusCapture = useEvent$4((event) => {
 			scheduleFocusUpdateRef.current?.();
 			onFocusCaptureProp?.(event);
 			if (event.defaultPrevented) return;
@@ -79914,7 +79915,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$5((event) => {
+		const onFocus = useEvent$4((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!composite) return;
@@ -79942,7 +79943,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onBlurCaptureProp = props.onBlurCapture;
-		const onBlurCapture = useEvent$5((event) => {
+		const onBlurCapture = useEvent$4((event) => {
 			scheduleFocusUpdateRef.current?.();
 			onBlurCaptureProp?.(event);
 			if (event.defaultPrevented) return;
@@ -79965,7 +79966,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const onKeyDownProp = props.onKeyDown;
 		const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$4((event) => {
 			onKeyDownProp?.(event);
 			if (event.nativeEvent.isComposing) return;
 			if (event.defaultPrevented) return;
@@ -80595,7 +80596,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const isMouseMoving = useIsMouseMoving();
 		const onMouseMoveProp = props.onMouseMove;
 		const focusOnHoverProp = useBooleanEvent(focusOnHover);
-		const onMouseMove = useEvent$5((event) => {
+		const onMouseMove = useEvent$4((event) => {
 			onMouseMoveProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isMouseMoving()) return;
@@ -80608,7 +80609,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const onMouseLeaveProp = props.onMouseLeave;
 		const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
-		const onMouseLeave = useEvent$5((event) => {
+		const onMouseLeave = useEvent$4((event) => {
 			onMouseLeaveProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isMouseMoving()) return;
@@ -80883,7 +80884,7 @@ If there's a particular need for this, please submit a feature request at https:
 			firstItemAutoSelected,
 			storeInputValue
 		]);
-		const getAutoSelectIdProp = useEvent$5(getAutoSelectId);
+		const getAutoSelectIdProp = useEvent$4(getAutoSelectId);
 		const autoSelectIdRef = (0, react$1.useRef)(null);
 		const autoSelectMovedRef = (0, react$1.useRef)(void 0);
 		const userScrolledRef = (0, react$1.useRef)(false);
@@ -81012,7 +81013,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onChangeProp = props.onChange;
 		const showOnChangeProp = useBooleanEvent(showOnChange ?? canShow);
 		const setValueOnChangeProp = useBooleanEvent(setValueOnChange ?? !store.tag);
-		const onChange = useEvent$5((event) => {
+		const onChange = useEvent$4((event) => {
 			onChangeProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!store) return;
@@ -81044,14 +81045,14 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		(0, react$1.useEffect)(() => cancelCompositionEndFrame, []);
 		const onCompositionStartProp = props.onCompositionStart;
-		const onCompositionStart = useEvent$5((event) => {
+		const onCompositionStart = useEvent$4((event) => {
 			cancelCompositionEndFrame();
 			canAutoSelectRef.current = false;
 			composingRef.current = true;
 			onCompositionStartProp?.(event);
 		});
 		const onCompositionEndProp = props.onCompositionEnd;
-		const onCompositionEnd = useEvent$5((event) => {
+		const onCompositionEnd = useEvent$4((event) => {
 			canAutoSelectRef.current = true;
 			composingRef.current = false;
 			onCompositionEndProp?.(event);
@@ -81068,7 +81069,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const blurActiveItemOnClickProp = useBooleanEvent(blurActiveItemOnClick ?? (() => store.getState().compositeElementInFocusOrder));
 		const setValueOnClickProp = useBooleanEvent(setValueOnClick);
 		const showOnClickProp = useBooleanEvent(showOnClick ?? canShow);
-		const onMouseDown = useEvent$5((event) => {
+		const onMouseDown = useEvent$4((event) => {
 			onMouseDownProp?.(event);
 			if (event.defaultPrevented) return;
 			if (event.button) return;
@@ -81080,7 +81081,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const onKeyDownProp = props.onKeyDown;
 		const showOnKeyPressProp = useBooleanEvent(showOnKeyPress ?? canShow);
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$4((event) => {
 			onKeyDownProp?.(event);
 			if (!event.repeat) canAutoSelectRef.current = false;
 			if (event.defaultPrevented) return;
@@ -81103,7 +81104,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$5((event) => {
+		const onBlur = useEvent$4((event) => {
 			canAutoSelectRef.current = false;
 			onBlurProp?.(event);
 		});
@@ -81269,7 +81270,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
 		const resetValueOnSelectProp = useBooleanEvent(resetValueOnSelect ?? resetValueOnSelectState);
 		const hideOnClickProp = useBooleanEvent(hideOnClick);
-		const onClick = useEvent$5((event) => {
+		const onClick = useEvent$4((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isDownloading(event)) return;
@@ -81288,7 +81289,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if (hideOnClickProp(event)) store?.hide();
 		});
 		const onKeyDownProp = props.onKeyDown;
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$4((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			const compositeElement = store?.getState().compositeElement;
@@ -81636,7 +81637,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const scopedContextSameStore = !!store && store === scopedContext;
 		invariant(store, "ComboboxList must receive a `store` prop or be wrapped in a ComboboxProvider component.");
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$5((event) => {
+		const onFocus = useEvent$4((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isSelfTarget(event)) return;
@@ -105217,55 +105218,6 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	};
 
-// packages/block-editor/build-module/components/rich-text/use-mark-persistent.mjs
-	const TYPING_TIMEOUT = 1e3;
-	/**
-	* Classifies the change between two snapshots of the value.
-	*
-	* @param previous Previous snapshot.
-	* @param next     Next snapshot.
-	*
-	* @return The change type.
-	*/
-	function getChangeType(previous, next) {
-		if (previous.html === next.html && previous.hasActiveFormats === next.hasActiveFormats) return "none";
-		return previous.text === next.text ? "discrete" : "typing";
-	}
-	function useMarkPersistent({ html, value, onMarkPersistent }) {
-		const { text } = value;
-		const hasActiveFormats = !!value.activeFormats?.length;
-		const previousRef = (0, _wordpress_element.useRef)(void 0);
-		const markPersistent = (0, _wordpress_compose.useEvent)(onMarkPersistent);
-		const markPersistentDebounced = (0, _wordpress_compose.useDebounce)(markPersistent, TYPING_TIMEOUT);
-		(0, _wordpress_element.useLayoutEffect)(() => {
-			const previous = previousRef.current;
-			const next = {
-				html,
-				text,
-				hasActiveFormats
-			};
-			if (!previous) {
-				previousRef.current = next;
-				return;
-			}
-			const changeType = getChangeType(previous, next);
-			if (changeType === "none") return;
-			previousRef.current = next;
-			if (changeType === "typing") {
-				markPersistentDebounced();
-				return;
-			}
-			markPersistentDebounced.cancel();
-			markPersistent();
-		}, [
-			html,
-			text,
-			hasActiveFormats,
-			markPersistent,
-			markPersistentDebounced
-		]);
-	}
-
 // packages/block-editor/build-module/components/rich-text/event-listeners/before-input-rules.mjs
 	const { subscribeOwnedListener: subscribeOwnedListener$8 } = unlock$2(_wordpress_rich_text.privateApis);
 	/**
@@ -106001,9 +105953,14 @@ If there's a particular need for this, please submit a feature request at https:
 			instanceId,
 			selectionChange
 		]);
+		const lastChangeRef = (0, _wordpress_element.useRef)(0);
 		const { value, getValue, onChange, ref: richTextRef, formatTypes, [getDomPositionKey]: getDomPosition } = useRichText({
 			value: adjustedValue,
-			onChange: adjustedOnChange,
+			onChange(newValue, meta) {
+				if (Date.now() - lastChangeRef.current >= 1e3) __unstableMarkLastChangeAsPersistent();
+				adjustedOnChange(newValue, meta);
+				lastChangeRef.current = meta.__unstableText === value.text ? 0 : Date.now();
+			},
 			selectionStart,
 			selectionEnd,
 			onSelectionChange,
@@ -106086,11 +106043,6 @@ If there's a particular need for this, please submit a feature request at https:
 			ariaOwns,
 			ariaActiveDescendant
 		]);
-		useMarkPersistent({
-			html: adjustedValue,
-			value,
-			onMarkPersistent: __unstableMarkLastChangeAsPersistent
-		});
 		const [keyboardShortcuts] = (0, _wordpress_element.useState)(() => /* @__PURE__ */ new Set());
 		const [inputEvents] = (0, _wordpress_element.useState)(() => /* @__PURE__ */ new Set());
 		function onFocus() {
