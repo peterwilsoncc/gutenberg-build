@@ -64743,17 +64743,7 @@ Icon: ButtonIcon });
 		function onSelectTrack(media) {
 			const mediaUrl = media?.url ?? media?.source_url;
 			if (!media || !mediaUrl) {
-				setAttributes({
-					blob: void 0,
-					id: void 0,
-					artist: void 0,
-					album: void 0,
-					image: void 0,
-					imageAlt: void 0,
-					length: void 0,
-					title: void 0,
-					url: void 0
-				});
+				setAttributes({ blob: void 0 });
 				setTemporaryURL();
 				return;
 			}
