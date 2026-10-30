@@ -1041,6 +1041,10 @@ button.font-library__upload-area {
   min-width: 24px;
 }
 
+.global-styles-ui-block-types-item-list.global-styles-ui-element-block-overrides__list {
+  margin-inline: 0;
+}
+
 .global-styles-ui-block-types-item-list__no-results {
   padding-top: 16px;
 }

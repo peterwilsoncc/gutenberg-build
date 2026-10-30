@@ -234,7 +234,7 @@ function resolveClassName(className, state) {
 * @param style
 * @param state
 */
-function resolveStyle$1(style, state) {
+function resolveStyle$2(style, state) {
 	return typeof style === "function" ? style(state) : style;
 }
 
@@ -408,7 +408,7 @@ function useRenderElementProps(componentProps, params, renderProp) {
 	const { className: classNameProp, style: styleProp } = componentProps;
 	const { state = EMPTY_OBJECT, ref, props, stateAttributesMapping, enabled = true } = params;
 	const className = enabled ? resolveClassName(classNameProp, state) : void 0;
-	const style = enabled ? resolveStyle$1(styleProp, state) : void 0;
+	const style = enabled ? resolveStyle$2(styleProp, state) : void 0;
 	const stateProps = enabled ? getStateAttributesProps(state, stateAttributesMapping) : EMPTY_OBJECT;
 	const resolvedProps = enabled && props ? resolveRenderFunctionProps(props) : void 0;
 	const outProps = enabled ? mergeObjects(stateProps, resolvedProps) ?? {} : EMPTY_OBJECT;
@@ -10483,7 +10483,7 @@ const memo$1 = /* @__PURE__ */ new WeakMap();
 * @param context      Which slice to resolve (block, variation, state).
 * @return Merged panel-scoped payload and source map; may be a cache hit.
 */
-function resolveStyle(globalStyles, context = {}) {
+function resolveStyle$1(globalStyles, context = {}) {
 	const styleData = globalStyles?.styles;
 	if (!styleData || typeof styleData !== "object") return computeResolvedStyle(globalStyles, context);
 	let byLinks = memo$1.get(styleData);
@@ -10517,7 +10517,7 @@ lock$1(privateApis$11, {
 	getDuotoneFilter,
 	getDuotoneStylesheet,
 	getDuotoneUnsetStylesheet,
-	resolveStyle,
+	resolveStyle: resolveStyle$1,
 	getVariationStyle
 });
 
@@ -10596,7 +10596,7 @@ function NavigationButtonAsItem(props) {
 const { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-ui");
 
 // packages/global-styles-ui/build-module/utils.mjs
-const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock(privateApis$11);
+const { getViewportBreakpoints: getViewportBreakpoints$1, resolveStyle } = unlock(privateApis$11);
 /**
 * Valid states for elements with their labels.
 * This mirrors the PHP constant in lib/class-wp-theme-json-gutenberg.php
@@ -10790,6 +10790,26 @@ function getFontFamilies(themeJson) {
 	else headingFontFamily = getFontFamilyFromSetting(fontFamilies, themeJson?.styles?.elements?.heading?.typography?.fontFamily);
 	return [bodyFontFamily, headingFontFamily];
 }
+const BOX_SIDES = [
+	"top",
+	"right",
+	"bottom",
+	"left"
+];
+const SHORTHAND_LONGHANDS = {
+	"border.color": BOX_SIDES.map((side) => `border.${side}.color`),
+	"border.style": BOX_SIDES.map((side) => `border.${side}.style`),
+	"border.width": BOX_SIDES.map((side) => `border.${side}.width`),
+	"color.gradient": [
+		"color.background",
+		"background.backgroundImage",
+		"background.backgroundPosition",
+		"background.backgroundRepeat",
+		"background.backgroundSize",
+		"background.backgroundAttachment",
+		"background.backgroundClip"
+	]
+};
 
 // packages/global-styles-ui/build-module/hooks.mjs
 /**
@@ -11283,9 +11303,6 @@ function useBlockVariations(name) {
 // packages/global-styles-ui/build-module/screen-header.mjs
 const { StateControl, StateControlBadges } = unlock(import_block_editor.privateApis);
 
-// packages/global-styles-ui/build-module/block-preview-panel.mjs
-const { getViewportBreakpoints, getViewportBreakpointValueInPixels } = unlock(privateApis$11);
-
 // packages/global-styles-ui/build-module/subtitle.mjs
 function Subtitle({ children, level = 2 }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalHeading, {
@@ -11295,11 +11312,14 @@ function Subtitle({ children, level = 2 }) {
 	});
 }
 
+// packages/global-styles-ui/build-module/block-preview-panel.mjs
+const { getViewportBreakpoints, getViewportBreakpointValueInPixels } = unlock(privateApis$11);
+
 // packages/global-styles-ui/build-module/screen-block.mjs
 const { useHasDimensionsPanel: useHasDimensionsPanel$3, useHasTypographyPanel: useHasTypographyPanel$2, useHasBorderPanel: useHasBorderPanel$2, useSettingsForBlockElement: useSettingsForBlockElement$4, useHasColorPanel: useHasColorPanel$1, useHasFiltersPanel, useHasImageSettingsPanel, useHasBackgroundPanel: useHasBackgroundPanel$3, BackgroundPanel: StylesBackgroundPanel$2, BorderPanel: StylesBorderPanel$1, ColorPanel: StylesColorPanel, TypographyPanel: StylesTypographyPanel$1, DimensionsPanel: StylesDimensionsPanel$2, FiltersPanel: StylesFiltersPanel, ImageSettingsPanel, AdvancedPanel: StylesAdvancedPanel$2 } = unlock(import_block_editor.privateApis);
 
 // packages/global-styles-ui/build-module/screen-element.mjs
-const { useSettingsForBlockElement: useSettingsForBlockElement$3, useHasBackgroundPanel: useHasBackgroundPanel$2, useHasBorderPanel: useHasBorderPanel$1, useHasDimensionsPanel: useHasDimensionsPanel$2, useHasTypographyPanel: useHasTypographyPanel$1, BackgroundPanel: StylesBackgroundPanel$1, BorderPanel: StylesBorderPanel, DimensionsPanel: StylesDimensionsPanel$1, TypographyPanel: StylesTypographyPanel, AdvancedPanel: StylesAdvancedPanel$1 } = unlock(import_block_editor.privateApis);
+const { useSettingsForBlockElement: useSettingsForBlockElement$3, useHasBackgroundPanel: useHasBackgroundPanel$2, useHasBorderPanel: useHasBorderPanel$1, useHasDimensionsPanel: useHasDimensionsPanel$2, useHasTypographyPanel: useHasTypographyPanel$1, BackgroundPanel: StylesBackgroundPanel$1, BorderPanel: StylesBorderPanel, DimensionsPanel: StylesDimensionsPanel$1, TypographyPanel: StylesTypographyPanel, AdvancedPanel: StylesAdvancedPanel$1, getBlockTypesForElement } = unlock(import_block_editor.privateApis);
 const ELEMENTS = {
 	text: {
 		description: (0, import_i18n.__)("Manage the fonts used on the site."),
