@@ -52485,7 +52485,6 @@ Icon: ButtonIcon });
 		const [blockRef, setBlockRef] = (0, _wordpress_element.useState)();
 		const [error, setError] = (0, _wordpress_element.useState)(null);
 		const [latexToMathML, setLatexToMathML] = (0, _wordpress_element.useState)();
-		const formRef = (0, _wordpress_element.useRef)();
 		const { __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const renderLatest = (0, _wordpress_compose.useEvent)((convert) => {
 			if (!latex) return;
@@ -52523,10 +52522,8 @@ Icon: ButtonIcon });
 				offset: 8,
 				anchor: blockRef,
 				focusOnMount: false,
-				onFocusOutside: () => formRef.current?.reportValidity(),
 				__unstableSlotName: "__unstable-block-tools-after",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("form", {
-					ref: formRef,
 					style: {
 						padding: "16px",
 						minWidth: "300px"

@@ -16740,7 +16740,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	function InlineUI({ value, onChange, activeObjectAttributes, contentRef, latexToMathML }) {
 		const [latex, setLatex] = (0, _wordpress_element.useState)(activeObjectAttributes["data-latex"] || "");
 		const [error, setError] = (0, _wordpress_element.useState)(null);
-		const formRef = (0, _wordpress_element.useRef)(null);
 		const popoverAnchor = (0, _wordpress_rich_text.useAnchor)({
 			editableContentElement: contentRef.current,
 			settings: math
@@ -16772,10 +16771,8 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			offset: 8,
 			focusOnMount: false,
 			anchor: popoverAnchor,
-			onFocusOutside: () => formRef.current?.reportValidity(),
 			className: "block-editor-format-toolbar__math-popover",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("form", {
-				ref: formRef,
 				style: {
 					minWidth: "300px",
 					padding: "16px"
