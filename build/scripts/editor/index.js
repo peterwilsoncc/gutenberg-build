@@ -72612,7 +72612,7 @@ Icon: ButtonIcon });
 	*   React.useEffect(() => {}, [onClick]);
 	* }
 	*/
-	function useEvent$5(callback) {
+	function useEvent$6(callback) {
 		const ref = (0, react.useRef)(() => {
 			throw new Error("Cannot call an event handler while rendering.");
 		});
@@ -72759,7 +72759,7 @@ Icon: ButtonIcon });
 	* boolean value, which will be turned into a function.
 	*/
 	function useBooleanEvent(booleanOrCallback) {
-		return useEvent$5(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
+		return useEvent$6(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
 	}
 	/**
 	* Returns props with an additional `wrapElement` prop.
@@ -72802,7 +72802,7 @@ Icon: ButtonIcon });
 			addGlobalEventListener("scroll", resetMouseMoving, true);
 			hasInstalledGlobalEventListeners$1 = true;
 		}, []);
-		return useEvent$5(() => mouseMoving);
+		return useEvent$6(() => mouseMoving);
 	}
 	let mouseMoving = false;
 	let previousScreenX = 0;
@@ -72984,7 +72984,7 @@ Icon: ButtonIcon });
 		return tabIndexProp ?? 0;
 	}
 	function useDisableEvent(onEvent, disabled) {
-		return useEvent$5((event) => {
+		return useEvent$6((event) => {
 			onEvent?.(event);
 			if (event.defaultPrevented) return;
 			if (disabled) {
@@ -73037,7 +73037,7 @@ Icon: ButtonIcon });
 		const [focusVisible, setFocusVisible] = (0, react.useState)(false);
 		const focusVisibleRef = (0, react.useRef)(false);
 		const nativeSubmitObserverCleanupRef = (0, react.useRef)(null);
-		const cleanupFocusVisible = useEvent$5((element) => {
+		const cleanupFocusVisible = useEvent$6((element) => {
 			nativeSubmitObserverCleanupRef.current?.();
 			nativeSubmitObserverCleanupRef.current = null;
 			focusVisibleRef.current = false;
@@ -73101,7 +73101,7 @@ Icon: ButtonIcon });
 			setFocusVisible(true);
 		};
 		const onKeyDownCaptureProp = props.onKeyDownCapture;
-		const onKeyDownCapture = useEvent$5((event) => {
+		const onKeyDownCapture = useEvent$6((event) => {
 			onKeyDownCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!focusable) return;
@@ -73114,7 +73114,7 @@ Icon: ButtonIcon });
 			queueBeforeEvent(element, "focusout", applyFocusVisible);
 		});
 		const onFocusCaptureProp = props.onFocusCapture;
-		const onFocusCapture = useEvent$5((event) => {
+		const onFocusCapture = useEvent$6((event) => {
 			onFocusCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!focusable) return;
@@ -73128,7 +73128,7 @@ Icon: ButtonIcon });
 			else setFocusVisible(false);
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$5((event) => {
+		const onBlur = useEvent$6((event) => {
 			onBlurProp?.(event);
 			if (!focusable) return;
 			if (!isFocusEventOutside(event)) return;
@@ -73136,7 +73136,7 @@ Icon: ButtonIcon });
 			setFocusVisible(false);
 		});
 		const autoFocusOnShow = (0, react.useContext)(FocusableContext);
-		const autoFocusRef = useEvent$5((element) => {
+		const autoFocusRef = useEvent$6((element) => {
 			if (!focusable) return;
 			if (!autoFocus) return;
 			if (!element) return;
@@ -73272,7 +73272,7 @@ Icon: ButtonIcon });
 			setActive(false);
 		}, [disabled]);
 		const onKeyDownProp = props.onKeyDown;
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$6((event) => {
 			onKeyDownProp?.(event);
 			const element = event.currentTarget;
 			if (event.defaultPrevented) return;
@@ -73309,7 +73309,7 @@ Icon: ButtonIcon });
 			}
 		});
 		const onKeyUpProp = props.onKeyUp;
-		const onKeyUp = useEvent$5((event) => {
+		const onKeyUp = useEvent$6((event) => {
 			onKeyUpProp?.(event);
 			if (isDuplicate) return;
 			const isSpace = clickOnSpace && event.key === " ";
@@ -73328,7 +73328,7 @@ Icon: ButtonIcon });
 			queueMicrotask(() => fireClickEvent(element, eventInit));
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$5((event) => {
+		const onBlur = useEvent$6((event) => {
 			onBlurProp?.(event);
 			if (!activeRef.current) return;
 			activeRef.current = false;
@@ -74966,7 +74966,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return [react.useMemo(() => ({
 			...store,
 			useState
-		}), [store, useState]), useEvent$5(() => {
+		}), [store, useState]), useEvent$6(() => {
 			setStore((store) => createStore({
 				...props,
 				...store.getState()
@@ -75127,7 +75127,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasFocusedComposite = (0, react.useRef)(false);
 		const cancelScheduledFocusRedirectRef = (0, react.useRef)(null);
 		const present = usePresentItem(store);
-		const onFocus = useEvent$5((event) => {
+		const onFocus = useEvent$6((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isPortalEvent(event)) return;
@@ -75189,7 +75189,7 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 		});
 		const onBlurCaptureProp = props.onBlurCapture;
-		const onBlurCapture = useEvent$5((event) => {
+		const onBlurCapture = useEvent$6((event) => {
 			onBlurCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if ((store?.getState())?.virtualFocus && hasFocusedComposite.current) {
@@ -75201,7 +75201,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onKeyDownProp = props.onKeyDown;
 		const preventScrollOnKeyDownProp = useBooleanEvent(preventScrollOnKeyDown);
 		const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$6((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isSelfTarget(event)) return;
@@ -75389,7 +75389,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
 	}
 	function useKeyboardEventProxy(store, onKeyboardEvent, previousElementRef) {
-		return useEvent$5((event) => {
+		return useEvent$6((event) => {
 			onKeyboardEvent?.(event);
 			if (event.defaultPrevented) return;
 			if (event.isPropagationStopped()) return;
@@ -75572,7 +75572,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onKeyDownCapture = useKeyboardEventProxy(store, props.onKeyDownCapture, previousElementRef);
 		const onKeyUpCapture = useKeyboardEventProxy(store, props.onKeyUpCapture, previousElementRef);
 		const onFocusCaptureProp = props.onFocusCapture;
-		const onFocusCapture = useEvent$5((event) => {
+		const onFocusCapture = useEvent$6((event) => {
 			scheduleFocusUpdateRef.current?.();
 			onFocusCaptureProp?.(event);
 			if (event.defaultPrevented) return;
@@ -75587,7 +75587,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$5((event) => {
+		const onFocus = useEvent$6((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!composite) return;
@@ -75615,7 +75615,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onBlurCaptureProp = props.onBlurCapture;
-		const onBlurCapture = useEvent$5((event) => {
+		const onBlurCapture = useEvent$6((event) => {
 			scheduleFocusUpdateRef.current?.();
 			onBlurCaptureProp?.(event);
 			if (event.defaultPrevented) return;
@@ -75638,7 +75638,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const onKeyDownProp = props.onKeyDown;
 		const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$6((event) => {
 			onKeyDownProp?.(event);
 			if (event.nativeEvent.isComposing) return;
 			if (event.defaultPrevented) return;
@@ -76268,7 +76268,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const isMouseMoving = useIsMouseMoving();
 		const onMouseMoveProp = props.onMouseMove;
 		const focusOnHoverProp = useBooleanEvent(focusOnHover);
-		const onMouseMove = useEvent$5((event) => {
+		const onMouseMove = useEvent$6((event) => {
 			onMouseMoveProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isMouseMoving()) return;
@@ -76281,7 +76281,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const onMouseLeaveProp = props.onMouseLeave;
 		const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
-		const onMouseLeave = useEvent$5((event) => {
+		const onMouseLeave = useEvent$6((event) => {
 			onMouseLeaveProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isMouseMoving()) return;
@@ -76556,7 +76556,7 @@ If there's a particular need for this, please submit a feature request at https:
 			firstItemAutoSelected,
 			storeInputValue
 		]);
-		const getAutoSelectIdProp = useEvent$5(getAutoSelectId);
+		const getAutoSelectIdProp = useEvent$6(getAutoSelectId);
 		const autoSelectIdRef = (0, react.useRef)(null);
 		const autoSelectMovedRef = (0, react.useRef)(void 0);
 		const userScrolledRef = (0, react.useRef)(false);
@@ -76685,7 +76685,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onChangeProp = props.onChange;
 		const showOnChangeProp = useBooleanEvent(showOnChange ?? canShow);
 		const setValueOnChangeProp = useBooleanEvent(setValueOnChange ?? !store.tag);
-		const onChange = useEvent$5((event) => {
+		const onChange = useEvent$6((event) => {
 			onChangeProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!store) return;
@@ -76717,14 +76717,14 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		(0, react.useEffect)(() => cancelCompositionEndFrame, []);
 		const onCompositionStartProp = props.onCompositionStart;
-		const onCompositionStart = useEvent$5((event) => {
+		const onCompositionStart = useEvent$6((event) => {
 			cancelCompositionEndFrame();
 			canAutoSelectRef.current = false;
 			composingRef.current = true;
 			onCompositionStartProp?.(event);
 		});
 		const onCompositionEndProp = props.onCompositionEnd;
-		const onCompositionEnd = useEvent$5((event) => {
+		const onCompositionEnd = useEvent$6((event) => {
 			canAutoSelectRef.current = true;
 			composingRef.current = false;
 			onCompositionEndProp?.(event);
@@ -76741,7 +76741,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const blurActiveItemOnClickProp = useBooleanEvent(blurActiveItemOnClick ?? (() => store.getState().compositeElementInFocusOrder));
 		const setValueOnClickProp = useBooleanEvent(setValueOnClick);
 		const showOnClickProp = useBooleanEvent(showOnClick ?? canShow);
-		const onMouseDown = useEvent$5((event) => {
+		const onMouseDown = useEvent$6((event) => {
 			onMouseDownProp?.(event);
 			if (event.defaultPrevented) return;
 			if (event.button) return;
@@ -76753,7 +76753,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const onKeyDownProp = props.onKeyDown;
 		const showOnKeyPressProp = useBooleanEvent(showOnKeyPress ?? canShow);
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$6((event) => {
 			onKeyDownProp?.(event);
 			if (!event.repeat) canAutoSelectRef.current = false;
 			if (event.defaultPrevented) return;
@@ -76776,7 +76776,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$5((event) => {
+		const onBlur = useEvent$6((event) => {
 			canAutoSelectRef.current = false;
 			onBlurProp?.(event);
 		});
@@ -76942,7 +76942,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
 		const resetValueOnSelectProp = useBooleanEvent(resetValueOnSelect ?? resetValueOnSelectState);
 		const hideOnClickProp = useBooleanEvent(hideOnClick);
-		const onClick = useEvent$5((event) => {
+		const onClick = useEvent$6((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isDownloading(event)) return;
@@ -76961,7 +76961,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if (hideOnClickProp(event)) store?.hide();
 		});
 		const onKeyDownProp = props.onKeyDown;
-		const onKeyDown = useEvent$5((event) => {
+		const onKeyDown = useEvent$6((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			const compositeElement = store?.getState().compositeElement;
@@ -77309,7 +77309,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const scopedContextSameStore = !!store && store === scopedContext;
 		invariant(store, "ComboboxList must receive a `store` prop or be wrapped in a ComboboxProvider component.");
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$5((event) => {
+		const onFocus = useEvent$6((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isSelfTarget(event)) return;
@@ -106378,6 +106378,17 @@ If there's a particular need for this, please submit a feature request at https:
 		return !!element?.contains(element.ownerDocument.activeElement);
 	}
 	/**
+	* Block a thread shows at: the selected block when the note belongs to it,
+	* else the note's first block.
+	*
+	* @param {Object}  thread           Note thread.
+	* @param {?string} selectedClientId Selected block client ID.
+	* @return {?string} Block client ID.
+	*/
+	function getAnchorClientId(thread, selectedClientId) {
+		return thread.blockClientIds?.includes(selectedClientId) ? selectedClientId : thread.blockClientId;
+	}
+	/**
 	* Picks the most relevant thread from a list: first unresolved, else first.
 	*
 	* @param {Array} threads Ordered list of thread objects.
@@ -112059,22 +112070,26 @@ If there's a particular need for this, please submit a feature request at https:
 				unresolvedNotes: []
 			};
 			const blocksWithNotes = {};
-			const clientIdByNoteId = /* @__PURE__ */ new Map();
+			const clientIdsByNoteId = /* @__PURE__ */ new Map();
 			for (const clientId of clientIds) {
 				const metadata = getBlockAttributes(clientId)?.metadata;
 				const noteIds = getNoteIdsFromMetadata(metadata);
-				if (noteIds.length > 0) {
-					blocksWithNotes[clientId] = noteIds;
-					for (const noteId of noteIds) clientIdByNoteId.set(noteId, clientId);
+				if (noteIds.length === 0) continue;
+				blocksWithNotes[clientId] = noteIds;
+				for (const noteId of noteIds) {
+					if (!clientIdsByNoteId.has(noteId)) clientIdsByNoteId.set(noteId, []);
+					clientIdsByNoteId.get(noteId).push(clientId);
 				}
 			}
 			const threadsById = /* @__PURE__ */ new Map();
 			const rootThreads = [];
 			for (const item of threads) {
+				const blockClientIds = item.parent === 0 && clientIdsByNoteId.get(item.id) || [];
 				const thread = {
 					...item,
 					reply: [],
-					blockClientId: item.parent === 0 ? clientIdByNoteId.get(item.id) ?? null : null
+					blockClientIds,
+					blockClientId: blockClientIds[0] ?? null
 				};
 				threadsById.set(item.id, thread);
 				if (item.parent === 0) rootThreads.push(thread);
@@ -112090,7 +112105,7 @@ If there's a particular need for this, please submit a feature request at https:
 				const attributes = getBlockAttributes(clientId);
 				const orderedThreads = noteIds.map((noteId) => {
 					const thread = threadsById.get(noteId);
-					if (!thread) return null;
+					if (!thread || thread.blockClientId !== clientId) return null;
 					return {
 						thread,
 						start: getInlineMarkerStart(thread, attributes)
@@ -112140,16 +112155,27 @@ If there's a particular need for this, please submit a feature request at https:
 				isDismissible: true
 			});
 		};
-		const updateNoteAnchor = (clientId, attributes) => {
+		const updateNoteAnchor = (clientIds, attributes, options) => {
 			__unstableMarkNextChangeAsNotPersistent({ history: "ignore" });
-			updateBlockAttributes(clientId, attributes);
+			updateBlockAttributes(clientIds, attributes, options);
 			__unstableMarkLastChangeAsPersistent();
 		};
-		const removeNoteMarker = (clientId, noteId) => {
-			const removed = removeInlineNote(getNoteAttributes(clientId), noteId);
-			if (removed) updateNoteAnchor(clientId, { [removed.attributeKey]: removed.value });
+		const updateNoteAnchors = (clientIds, getNewAttributes) => {
+			const attributesByClientId = {};
+			for (const clientId of clientIds) {
+				const attributes = getNoteAttributes(clientId);
+				if (!attributes) continue;
+				const newAttributes = getNewAttributes(attributes, clientId);
+				if (newAttributes && Object.keys(newAttributes).length > 0) attributesByClientId[clientId] = newAttributes;
+			}
+			const updatedClientIds = Object.keys(attributesByClientId);
+			if (updatedClientIds.length > 0) updateNoteAnchor(updatedClientIds, attributesByClientId, { uniqueByBlock: true });
 		};
-		const onDiscard = (clientId) => removeNoteMarker(clientId, "new");
+		const removeNoteMarker = (clientIds, noteId) => updateNoteAnchors(clientIds, (attributes) => {
+			const removed = removeInlineNote(attributes, noteId);
+			return removed && { [removed.attributeKey]: removed.value };
+		});
+		const onDiscard = (clientId) => removeNoteMarker([clientId], "new");
 		const onStart = (clientId) => {
 			const selection = readInlineSelection(getSelectionStart, getSelectionEnd);
 			if (selection?.clientId !== clientId) return;
@@ -112202,7 +112228,7 @@ If there's a particular need for this, please submit a feature request at https:
 						meta: { _wp_note_status: status === "approved" ? "resolved" : "reopen" }
 					};
 					const savedRecord = await saveEntityRecord("root", "comment", newNoteData, { throwOnError: true });
-					if (status === "approved" && note.blockClientId) removeNoteMarker(note.blockClientId, id);
+					if (status === "approved") removeNoteMarker(note.blockClientIds, id);
 					(0, _wordpress_a11y.speak)(status === "approved" ? (0, _wordpress_i18n.__)("Note marked as resolved.") : (0, _wordpress_i18n.__)("Note reopened."));
 					return savedRecord;
 				}
@@ -112220,24 +112246,23 @@ If there's a particular need for this, please submit a feature request at https:
 				onError(error);
 			}
 		};
-		const restoreNote = async (noteId, anchor) => {
+		const restoreNote = async (noteId, anchors) => {
 			try {
 				await saveEntityRecord("root", "comment", {
 					id: noteId,
 					status: "untrash"
 				}, { throwOnError: true });
-				const attributes = anchor ? getNoteAttributes(anchor.clientId) : null;
-				if (attributes) {
+				updateNoteAnchors(anchors.keys(), (attributes, clientId) => {
 					const newAttributes = {};
 					if (!getNoteIdsFromMetadata(attributes.metadata).includes(noteId)) newAttributes.metadata = addNoteIdToMetadata(attributes.metadata, noteId);
-					const { inline } = anchor;
+					const inline = anchors.get(clientId);
 					const value = inline && attributes[inline.attributeKey];
 					if (inline && !findNoteInBlock(attributes, noteId) && value?.text?.slice(inline.start, inline.end) === inline.text) {
 						const wrapped = wrapInlineNote(value, noteId, inline.start, inline.end);
 						if (wrapped) newAttributes[inline.attributeKey] = wrapped;
 					}
-					if (Object.keys(newAttributes).length > 0) updateNoteAnchor(anchor.clientId, newAttributes);
-				}
+					return newAttributes;
+				});
 				createNotice("snackbar", (0, _wordpress_i18n.__)("Note restored."), {
 					type: "snackbar",
 					isDismissible: true
@@ -112248,33 +112273,33 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		const onDelete = async (note) => {
 			try {
-				const clientId = !note.parent ? note.blockClientId : null;
 				const canMoveToTrash = !!note._links?.["wp:action-trash"];
 				await deleteEntityRecord("root", "comment", note.id, canMoveToTrash ? void 0 : { force: true }, { throwOnError: true });
-				let anchor = null;
-				const attributes = clientId ? getNoteAttributes(clientId) : null;
-				if (getNoteIdsFromMetadata(attributes?.metadata).includes(note.id)) {
-					anchor = { clientId };
+				const anchors = /* @__PURE__ */ new Map();
+				updateNoteAnchors(note.blockClientIds, (attributes, clientId) => {
+					if (!getNoteIdsFromMetadata(attributes.metadata).includes(note.id)) return null;
 					const newAttributes = { metadata: cleanEmptyObject(removeNoteIdFromMetadata(attributes.metadata, note.id)) };
+					let inline = null;
 					const removed = removeInlineNote(attributes, note.id);
 					if (removed) {
 						const { attributeKey, start, end, value } = removed;
 						newAttributes[attributeKey] = value;
-						anchor.inline = {
+						inline = {
 							attributeKey,
 							start,
 							end,
 							text: value.text.slice(start, end)
 						};
 					}
-					updateNoteAnchor(clientId, newAttributes);
-				}
+					anchors.set(clientId, inline);
+					return newAttributes;
+				});
 				createNotice("snackbar", (0, _wordpress_i18n.__)("Note deleted."), {
 					type: "snackbar",
 					isDismissible: true,
 					actions: canMoveToTrash ? [{
 						label: (0, _wordpress_i18n.__)("Undo"),
-						onClick: () => restoreNote(note.id, anchor)
+						onClick: () => restoreNote(note.id, anchors)
 					}] : []
 				});
 				return true;
@@ -112358,9 +112383,10 @@ If there's a particular need for this, please submit a feature request at https:
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		useCaretChange((caret) => {
 			const selectedNoteId = getSelectedNote();
+			const blockNoteIds = getNoteIdsFromMetadata(caret.attributes?.metadata);
 			const noteId = pickNoteForCaret({
 				...caret,
-				blockThreads: caret.clientId ? notes.filter((thread) => thread.blockClientId === caret.clientId) : [],
+				blockThreads: notes.filter((thread) => blockNoteIds.includes(thread.id)),
 				hasDraft: drafts.has(caret.clientId),
 				selectedNoteId
 			});
@@ -113124,7 +113150,7 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		});
 	}
-	function NoteThread({ note, focusThreadOrAdjacent, isSelected, expandReplies = false, sidebarRef, floating, onKeyDown }) {
+	function NoteThread({ note, anchorClientId, focusThreadOrAdjacent, isSelected, expandReplies = false, sidebarRef, floating, onKeyDown }) {
 		const isFloating = !!floating;
 		const { onCreate, onEdit, onDiscard, onDelete } = useNoteActions();
 		const { toggleBlockHighlight } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
@@ -113135,8 +113161,15 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		const { getSelectedNote } = unlock$5((0, _wordpress_data.useSelect)(store));
-		const relatedBlockElement = useBlockElement$1(note.blockClientId);
-		const debouncedToggleBlockHighlight = (0, _wordpress_compose.useDebounce)(toggleBlockHighlight, 50);
+		const relatedBlockElement = useBlockElement$1(anchorClientId);
+		const setBlockHighlight = (0, _wordpress_compose.useEvent)((isHighlighted) => {
+			if (isHighlighted) {
+				toggleBlockHighlight(anchorClientId, true);
+				return;
+			}
+			for (const clientId of note.blockClientIds) toggleBlockHighlight(clientId, false);
+		});
+		const debouncedSetBlockHighlight = (0, _wordpress_compose.useDebounce)(setBlockHighlight, 50);
 		const floatingRef = (0, _wordpress_element.useRef)(null);
 		const isKeyboardTabbingRef = (0, _wordpress_element.useRef)(false);
 		const [hasFocus, setHasFocus] = (0, _wordpress_element.useState)(false);
@@ -113167,32 +113200,32 @@ If there's a particular need for this, please submit a feature request at https:
 			const isNoteFocused = event.relatedTarget?.closest(".editor-collab-sidebar-panel__thread");
 			if (isNoteFocused && !isKeyboardTabbingRef.current) return;
 			if (!isNoteFocused) {
-				debouncedToggleBlockHighlight.cancel();
-				toggleBlockHighlight(note.blockClientId, false);
+				debouncedSetBlockHighlight.cancel();
+				setBlockHighlight(false);
 			}
 			if (hasFocusWithin(relatedBlockElement)) return;
 			if (getSelectedNote() === note.id) onDeselectNote();
 		});
 		function onMouseEnter() {
-			debouncedToggleBlockHighlight(note.blockClientId, true);
+			debouncedSetBlockHighlight(true);
 		}
 		function onMouseLeave() {
-			debouncedToggleBlockHighlight(note.blockClientId, false);
+			debouncedSetBlockHighlight(false);
 		}
 		function onFocus(event) {
 			focusOutside.onFocus(event);
 			setHasFocus(true);
-			debouncedToggleBlockHighlight.cancel();
-			toggleBlockHighlight(note.blockClientId, true);
+			debouncedSetBlockHighlight.cancel();
+			setBlockHighlight(true);
 		}
 		function onSelectNote() {
 			if (isSelected) return;
-			pickNote(note.id, note.blockClientId);
+			pickNote(note.id, anchorClientId);
 			focusNoteThread(note.id, sidebarRef.current);
 		}
 		function onDeselectNote() {
 			selectNote(void 0);
-			toggleBlockHighlight(note.blockClientId, false);
+			setBlockHighlight(false);
 		}
 		function handleResolve() {
 			onEdit(note, { status: "approved" });
@@ -113220,13 +113253,13 @@ If there's a particular need for this, please submit a feature request at https:
 		const noteExcerpt = getNoteExcerpt((0, _wordpress_dom.__unstableStripHTML)(note.content?.rendered), 10);
 		const ariaLabel = !!note.blockClientId ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Note: %s"), noteExcerpt) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Original block deleted. Note: %s"), noteExcerpt);
 		if (isFloating && note.id === "new") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNote, {
-			clientId: note.blockClientId,
+			clientId: anchorClientId,
 			sidebarRef,
 			floating: {
 				y: floating.y,
 				ref: floatingRef
 			}
-		}, note.blockClientId);
+		}, anchorClientId);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(FloatingContainer, {
 			floating: isFloating ? {
 				y: floating.y,
@@ -113471,21 +113504,22 @@ If there's a particular need for this, please submit a feature request at https:
 			const adjacentThread = threads[currentIndex + 1] ?? threads[currentIndex - 1];
 			if (!adjacentThread) {
 				selectNote(void 0);
-				toggleBlockHighlight(thread.blockClientId, false);
+				toggleBlockHighlight(getAnchorClientId(thread, selectedBlockClientId), false);
 				relatedBlockElement?.focus();
 				return;
 			}
-			if (getSelectedNote() === thread.id) pickNote(adjacentThread.id, adjacentThread.blockClientId);
+			if (getSelectedNote() === thread.id) pickNote(adjacentThread.id, getAnchorClientId(adjacentThread, selectedBlockClientId));
 			focusNoteThread(adjacentThread.id, sidebarRef.current);
 		}
 		const navigate = (event, thread, isSelected) => {
 			if (event.defaultPrevented) return;
 			const currentIndex = threads.findIndex((t) => t.id === thread.id);
 			const isSelfTarget = event.currentTarget === event.target;
-			if ((event.key === "Enter" || event.key === "ArrowRight") && isSelfTarget && !isSelected) pickNote(thread.id, thread.blockClientId);
+			const anchorClientId = getAnchorClientId(thread, selectedBlockClientId);
+			if ((event.key === "Enter" || event.key === "ArrowRight") && isSelfTarget && !isSelected) pickNote(thread.id, anchorClientId);
 			else if ((event.key === "Enter" || event.key === "ArrowLeft") && isSelfTarget && isSelected || event.key === "Escape") {
 				selectNote(void 0);
-				if (thread.blockClientId) toggleBlockHighlight(thread.blockClientId, false);
+				if (anchorClientId) toggleBlockHighlight(anchorClientId, false);
 				focusThreadOrAdjacent(thread, thread);
 			} else if (isSelfTarget) {
 				const targetIndex = {
@@ -113534,6 +113568,7 @@ If there's a particular need for this, please submit a feature request at https:
 				})
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteThread, {
 				note: thread,
+				anchorClientId: getAnchorClientId(thread, selectedBlockClientId),
 				focusThreadOrAdjacent,
 				isSelected: selectedNote === thread.id,
 				expandReplies,
@@ -113768,19 +113803,25 @@ If there's a particular need for this, please submit a feature request at https:
 	* Builds CSS that covers each block with a block-level note in a tinted,
 	* bordered overlay in its author's color.
 	*
-	* A thread is block-level when its block contains no `core/note` marker with
-	* its id. When a block has several, the first one supplies the color.
+	* A thread is block-level when none of its blocks contains a `core/note`
+	* marker with its id. A split can leave a block with the note's id but none
+	* of its text, which shouldn't turn an inline note into a block-level one.
+	* When a block has several, the first one supplies the color.
 	*
-	* @param {Array}                         threads            Unresolved note threads (each with `id`, `author` and `blockClientId`).
+	* @param {Array}                         threads            Unresolved note threads (each with `id`, `author` and `blockClientIds`).
 	* @param {(clientId: string) => ?Object} getBlockAttributes Block-editor selector.
 	* @return {string} A serialized CSS string targeting the blocks' wrapper elements.
 	*/
 	function buildBlockHighlightCss(threads, getBlockAttributes) {
 		const rules = [];
 		const highlightedBlocks = /* @__PURE__ */ new Set();
-		for (const thread of threads ?? []) {
-			const clientId = thread?.blockClientId;
-			if (!thread?.id || !clientId || highlightedBlocks.has(clientId) || findNoteInBlock(getBlockAttributes(clientId), thread.id)) continue;
+		const isBlockLevel = (thread) => !thread.blockClientIds.some((clientId) => findNoteInBlock(getBlockAttributes(clientId), thread.id));
+		const anchors = (threads ?? []).flatMap((thread) => thread?.id && isBlockLevel(thread) ? thread.blockClientIds.map((clientId) => ({
+			thread,
+			clientId
+		})) : []);
+		for (const { thread, clientId } of anchors) {
+			if (highlightedBlocks.has(clientId)) continue;
 			highlightedBlocks.add(clientId);
 			const color = getAvatarBorderColor(thread.author ?? 0);
 			const blockSel = `[data-block="${clientId}"]`;
@@ -113883,7 +113924,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNoteMenuItem, { onClick: (menuClientId) => addNewNoteForBlock(menuClientId) }),
 			notes.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNoteToolbarButton, {
-				count: notes.filter((thread) => thread.blockClientId === clientId).length,
+				count: notes.filter((thread) => thread.blockClientIds.includes(clientId)).length,
 				onClick: addNewNoteForBlock
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(NotesDisplayModeMenu, {
