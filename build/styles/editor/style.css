@@ -4093,11 +4093,25 @@ div.dataviews-view-list {
   max-width: 100%;
 }
 
-.media-editor-preview--file {
-  text-align: center;
+.media-editor-preview--pdf {
+  align-items: stretch;
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.media-editor-preview__pdf {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  border: 0;
+  border-radius: 2px;
 }
 
 .media-editor-preview__file-info {
+  text-align: center;
   background: #f0f0f0;
   padding: 24px;
   border-radius: 2px;

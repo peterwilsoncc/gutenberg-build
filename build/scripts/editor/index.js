@@ -94482,8 +94482,30 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/media-editor/build-module/components/media-preview/index.mjs
-	function MediaPreviewContent({ mediaType, mediaUrl, altText, displayTitle, mimeType, onLoad, onError, loadingState }) {
-		switch (mediaType.type) {
+	function MediaPreviewFileInfo({ mediaUrl, displayTitle, mimeType }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+			className: "media-editor-preview__file-info",
+			children: [
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+					className: "media-editor-preview__file-name",
+					children: displayTitle
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+					className: "media-editor-preview__mime-type",
+					children: mimeType
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
+					href: mediaUrl,
+					target: "_blank",
+					rel: "noopener",
+					className: "media-editor-preview__download-link",
+					children: (0, _wordpress_i18n.__)("View file")
+				})
+			]
+		});
+	}
+	function MediaPreviewContent({ previewType, mediaUrl, altText, displayTitle, mimeType, onLoad, onError, loadingState }) {
+		switch (previewType) {
 			case "image": return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
 				className: loadingState === "loaded" ? "loaded" : "",
 				src: mediaUrl,
@@ -94503,25 +94525,21 @@ If there's a particular need for this, please submit a feature request at https:
 				onError,
 				children: displayTitle
 			});
-			default: return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-				className: "media-editor-preview__file-info",
-				children: [
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
-						className: "media-editor-preview__file-name",
-						children: displayTitle
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
-						className: "media-editor-preview__mime-type",
-						children: mimeType
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
-						href: mediaUrl,
-						target: "_blank",
-						rel: "noopener",
-						className: "media-editor-preview__download-link",
-						children: (0, _wordpress_i18n.__)("View file")
-					})
-				]
+			case "pdf": return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("object", {
+				className: "media-editor-preview__pdf",
+				data: `${mediaUrl}#view=Fit&zoom=page-fit`,
+				type: "application/pdf",
+				"aria-label": (0, _wordpress_i18n.__)("Embed of the selected PDF file."),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreviewFileInfo, {
+					mediaUrl,
+					displayTitle,
+					mimeType
+				})
+			});
+			default: return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreviewFileInfo, {
+				mediaUrl,
+				displayTitle,
+				mimeType
 			});
 		}
 	}
@@ -94537,6 +94555,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const { media } = useMediaEditorContext();
 		const { source_url: mediaUrl, mime_type: mimeType, alt_text: altText, title } = media || {};
 		const mediaType = getMediaTypeFromMimeType(mimeType);
+		const previewType = mimeType === "application/pdf" && window.navigator.pdfViewerEnabled ? "pdf" : mediaType.type;
 		if (!mediaUrl) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "media-editor-preview media-editor-preview--empty",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.__)("No media file available.") })
@@ -94551,12 +94570,12 @@ If there's a particular need for this, please submit a feature request at https:
 		const displayTitle = typeof title === "string" ? title : title?.rendered || title?.raw;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			...props,
-			className: `media-editor-preview media-editor-preview--${mediaType.type}`,
-			children: [mediaType.type === "image" && loadingState === "loading" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			className: `media-editor-preview media-editor-preview--${previewType}`,
+			children: [previewType === "image" && loadingState === "loading" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				className: "media-editor-preview__spinner",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreviewContent, {
-				mediaType,
+				previewType,
 				mediaUrl,
 				altText,
 				displayTitle,
