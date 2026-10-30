@@ -46131,6 +46131,23 @@ Icon: ButtonIcon });
 			example: example$16
 		}
 	];
+	if (window.__experimentalEnableGridInteractivity) variations$11.push({
+		name: "group-canvas",
+		title: (0, _wordpress_i18n.__)("Canvas"),
+		description: (0, _wordpress_i18n.__)("Place blocks freely on a grid."),
+		attributes: { layout: {
+			type: "grid",
+			isManualPlacement: true
+		} },
+		scope: [
+			"block",
+			"inserter",
+			"transform"
+		],
+		isActive: ["layout.type", "layout.isManualPlacement"],
+		icon: layout_default,
+		example: example$16
+	});
 
 // packages/block-library/build-module/group/index.mjs
 	var group_exports = /* @__PURE__ */ __exportAll({

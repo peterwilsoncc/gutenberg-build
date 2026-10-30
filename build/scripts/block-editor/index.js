@@ -15351,16 +15351,9 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			const showFillControl = !layout?.isManualPlacement;
 			const defaultColumnCount = layout.isManualPlacement ? 3 : void 0;
 			const hasLayoutValue = (key, defaultValue) => (layout?.[key] ?? defaultValue) !== (resetLayout?.[key] ?? defaultValue);
-			const hasGridTypeValue = () => hasLayoutValue("isManualPlacement", false);
 			const hasColumnsAndRowsValue = () => hasLayoutValue("columnCount", defaultColumnCount) || hasLayoutValue("rowCount");
 			const hasMinimumColumnWidthValue = () => hasLayoutValue("minimumColumnWidth");
 			const hasFillValue = () => hasLayoutValue("autoFit", false);
-			const resetGridType = () => onChange(cleanEmptyObject({
-				...layout,
-				isManualPlacement: resetLayout?.isManualPlacement,
-				rowCount: resetLayout?.rowCount,
-				minimumColumnWidth: resetLayout?.minimumColumnWidth
-			}));
 			const resetColumnsAndRows = () => onChange(cleanEmptyObject({
 				...layout,
 				columnCount: resetLayout?.columnCount ?? defaultColumnCount,
@@ -15375,17 +15368,6 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				autoFit: resetLayout?.autoFit
 			}));
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
-				window.__experimentalEnableGridInteractivity && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-					label: (0, _wordpress_i18n.__)("Grid item position"),
-					hasValue: hasGridTypeValue,
-					onDeselect: resetGridType,
-					isShownByDefault: true,
-					panelId: clientId,
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridLayoutTypeControl, {
-						layout,
-						onChange
-					})
-				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Columns and rows"),
 					hasValue: hasColumnsAndRowsValue,
@@ -15600,46 +15582,6 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				...layout,
 				autoFit: value
 			})
-		});
-	}
-	function GridLayoutTypeControl({ layout, onChange }) {
-		const { columnCount, rowCount, minimumColumnWidth, isManualPlacement } = layout;
-		/**
-		* When switching, temporarily save any custom values set on the
-		* previous type so we can switch back without loss.
-		*/
-		const [tempColumnCount, setTempColumnCount] = (0, _wordpress_element.useState)(columnCount || 3);
-		const [tempRowCount, setTempRowCount] = (0, _wordpress_element.useState)(rowCount);
-		const [tempMinimumColumnWidth, setTempMinimumColumnWidth] = (0, _wordpress_element.useState)(minimumColumnWidth || "12rem");
-		const gridPlacement = isManualPlacement ? "manual" : "auto";
-		const onChangeType = (value) => {
-			if (value === "manual") setTempMinimumColumnWidth(minimumColumnWidth || "12rem");
-			else {
-				setTempColumnCount(columnCount || 3);
-				setTempRowCount(rowCount);
-			}
-			onChange({
-				...layout,
-				columnCount: value === "manual" ? tempColumnCount : tempColumnCount,
-				rowCount: value === "manual" ? tempRowCount : void 0,
-				isManualPlacement: value === "manual" ? true : void 0,
-				minimumColumnWidth: value === "auto" ? tempMinimumColumnWidth : null
-			});
-		};
-		const helpText = gridPlacement === "manual" ? (0, _wordpress_i18n.__)("Grid items can be manually placed in any position on the grid.") : (0, _wordpress_i18n.__)("Grid items are placed automatically depending on their order.");
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToggleGroupControl, {
-			label: (0, _wordpress_i18n.__)("Grid item position"),
-			value: gridPlacement,
-			onChange: onChangeType,
-			isBlock: true,
-			help: helpText,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
-				value: "auto",
-				label: (0, _wordpress_i18n.__)("Auto")
-			}, "auto"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
-				value: "manual",
-				label: (0, _wordpress_i18n.__)("Manual")
-			}, "manual")]
 		});
 	}
 
@@ -118967,6 +118909,8 @@ If there's a particular need for this, please submit a feature request at https:
 		(0, _wordpress_element.useEffect)(() => {
 			const updates = {};
 			if (gridLayout.isManualPlacement) {
+				const columnCount = gridLayout.columnCount ?? 3;
+				const rowCount = gridLayout.rowCount ?? 3;
 				const occupiedRects = [];
 				for (const clientId of blockOrder) {
 					const { columnStart, rowStart, columnSpan = 1, rowSpan = 1 } = getBlockAttributes(clientId).style?.layout ?? {};
@@ -118982,7 +118926,7 @@ If there's a particular need for this, please submit a feature request at https:
 					const attributes = getBlockAttributes(clientId);
 					const { columnStart, rowStart, columnSpan = 1, rowSpan = 1 } = attributes.style?.layout ?? {};
 					if (columnStart && rowStart) continue;
-					const [newColumnStart, newRowStart] = placeBlock(occupiedRects, gridLayout.columnCount, columnSpan, rowSpan, previouslySelectedBlockRect?.columnEnd, previouslySelectedBlockRect?.rowEnd);
+					const [newColumnStart, newRowStart] = placeBlock(occupiedRects, columnCount, columnSpan, rowSpan, previouslySelectedBlockRect?.columnEnd, previouslySelectedBlockRect?.rowEnd);
 					occupiedRects.push(new GridRect({
 						columnStart: newColumnStart,
 						rowStart: newRowStart,
@@ -118999,9 +118943,11 @@ If there's a particular need for this, please submit a feature request at https:
 					} };
 				}
 				const bottomMostRow = Math.max(...occupiedRects.map((r) => r.rowEnd));
-				if (!gridLayout.rowCount || gridLayout.rowCount < bottomMostRow) updates[gridClientId] = { layout: {
+				const newRowCount = Math.max(rowCount, bottomMostRow);
+				if (gridLayout.columnCount !== columnCount || gridLayout.rowCount !== newRowCount) updates[gridClientId] = { layout: {
 					...gridLayout,
-					rowCount: bottomMostRow
+					columnCount,
+					rowCount: newRowCount
 				} };
 				for (const clientId of previousBlockOrder ?? []) if (!blockOrder.includes(clientId)) {
 					const rootClientId = getBlockRootClientId(clientId);
