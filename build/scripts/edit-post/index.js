@@ -10014,11 +10014,6 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 			filterTaps: true
 		});
 		if (!hasAnyVisible) return;
-		const contents = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: "edit-post-layout__metaboxes edit-post-meta-boxes-main__liner",
-			hidden: !isOpen,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MetaBoxes, { location: "normal" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MetaBoxes, { location: "advanced" })]
-		});
 		const isAutoHeight = openHeight === void 0;
 		const usedHeight = isOpen ? isShort ? "auto" : openHeight : min;
 		const usedAriaValueNow = max === void 0 || isAutoHeight ? 50 : getAriaValueNow(usedHeight);
@@ -10050,7 +10045,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: "edit-post-meta-boxes-main__presenter",
 				children: [toggle, separator]
-			}), contents]
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+				className: "edit-post-layout__metaboxes edit-post-meta-boxes-main__liner",
+				hidden: !isOpen,
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MetaBoxes, { location: "normal" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MetaBoxes, { location: "advanced" })]
+			})]
 		});
 	}
 	function Layout({ postId: initialPostId, postType: initialPostType, settings, initialEdits }) {
