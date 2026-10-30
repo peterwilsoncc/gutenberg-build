@@ -110754,7 +110754,7 @@ If there's a particular need for this, please submit a feature request at https:
 				typography: {},
 				background
 			};
-			return {
+			const resetValue = {
 				...previousValue,
 				typography: {},
 				background,
@@ -110763,6 +110763,14 @@ If there's a particular need for this, please submit a feature request at https:
 					text: void 0
 				}
 			};
+			const linkColor = previousValue?.elements?.link?.color?.text;
+			if (linkColor !== void 0 && linkColor === previousValue?.color?.text) return setImmutably(resetValue, [
+				"elements",
+				"link",
+				"color",
+				"text"
+			], void 0);
+			return resetValue;
 		}, [
 			baseClip,
 			hasTextColorEnabled,
@@ -111996,8 +112004,11 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 	function TypographyInspectorControl({ children, resetAllFilter }) {
-		const attributesResetAllFilter = (0, _wordpress_element.useCallback)((attributes) => {
-			const updatedStyle = resetAllFilter(attributesToStyle$1(attributes));
+		const attributesResetAllFilter = (0, _wordpress_element.useCallback)((attributes, context) => {
+			const updatedStyle = resetAllFilter(attributesToStyle$1({
+				textColor: context?.attributes?.textColor,
+				...attributes
+			}));
 			return {
 				...attributes,
 				...styleToAttributes$1(updatedStyle)
