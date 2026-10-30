@@ -8355,7 +8355,7 @@ function registerStyle$3(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
 }
-registerStyle$3("0a7219ef54", ".f538a139de526526__avatar{align-items:center;block-size:24px;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}.f538a139de526526__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:1}@media not (prefers-reduced-motion){._376e868d5ce17756__is-loading img,._86ee87153607c328__is-loaded img{transition:opacity .1s linear}}._376e868d5ce17756__is-loading img{opacity:0}._86ee87153607c328__is-loaded img{opacity:1}._559568e925bff556__icon{block-size:24px;display:flex;flex-shrink:0;inline-size:24px}._559568e925bff556__icon svg{fill:currentColor;margin-inline-start:-4px}._756368e82f9dfc25__name{overflow:hidden;text-overflow:ellipsis}");
+registerStyle$3("83f6a134b3", ".f538a139de526526__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}.f538a139de526526__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:1}@media not (prefers-reduced-motion){._376e868d5ce17756__is-loading img,._86ee87153607c328__is-loaded img{transition:opacity .1s linear}}._376e868d5ce17756__is-loading img{opacity:0}._86ee87153607c328__is-loaded img{opacity:1}._559568e925bff556__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}._559568e925bff556__icon svg{fill:currentColor;margin-inline-start:-4px}._756368e82f9dfc25__name{overflow:hidden;text-overflow:ellipsis}");
 var style_module_default$3 = {
 	"avatar": "f538a139de526526__avatar",
 	"is-loading": "_376e868d5ce17756__is-loading",
@@ -8379,7 +8379,7 @@ function AuthorView({ item }) {
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
 		direction: "row",
-		align: "center",
+		align: "flex-start",
 		justify: "flex-start",
 		children: [
 			!!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {

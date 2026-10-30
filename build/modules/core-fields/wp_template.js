@@ -975,7 +975,7 @@ function registerStyle$1(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$1(targetDocument, hash, css);
 }
-registerStyle$1("e26bdc0796", ".eddbc0a77c8a621a__avatar{align-items:center;block-size:24px;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}.eddbc0a77c8a621a__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){.eddbc0a77c8a621a__avatar img{transition:opacity .1s linear}}.eddbc0a77c8a621a__avatar._5e74dacabd67dfdf__is-loaded img{opacity:1}.c0d40ce1da6dacc2__icon{block-size:24px;display:flex;flex-shrink:0;inline-size:24px}.c0d40ce1da6dacc2__icon svg{fill:currentColor;margin-inline-start:-4px}._9e337be7fe946fd4__name{overflow:hidden;text-overflow:ellipsis}");
+registerStyle$1("ae8d7dc1c4", ".eddbc0a77c8a621a__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}.eddbc0a77c8a621a__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){.eddbc0a77c8a621a__avatar img{transition:opacity .1s linear}}.eddbc0a77c8a621a__avatar._5e74dacabd67dfdf__is-loaded img{opacity:1}.c0d40ce1da6dacc2__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.c0d40ce1da6dacc2__icon svg{fill:currentColor;margin-inline-start:-4px}._9e337be7fe946fd4__name{overflow:hidden;text-overflow:ellipsis}");
 var style_module_default$1 = {
 	"avatar": "eddbc0a77c8a621a__avatar",
 	"is-loaded": "_5e74dacabd67dfdf__is-loaded",
@@ -1007,7 +1007,7 @@ function TemplateAuthorView({ item }) {
 	}, [originalSource, authorId]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
 		direction: "row",
-		align: "center",
+		align: "flex-start",
 		children: [
 			imageUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx(style_module_default$1.avatar, { [style_module_default$1["is-loaded"]]: isImageLoaded }),
