@@ -193,9 +193,9 @@ var wp;
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React101 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef46 = React101.useRef, useEffect21 = React101.useEffect, useMemo31 = React101.useMemo, useDebugValue2 = React101.useDebugValue;
+        var React101 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef45 = React101.useRef, useEffect21 = React101.useEffect, useMemo31 = React101.useMemo, useDebugValue2 = React101.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-          var instRef = useRef46(null);
+          var instRef = useRef45(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -18958,7 +18958,6 @@ var wp;
       activeObjectAttributes["data-latex"] || ""
     );
     const [error2, setError] = (0, import_element55.useState)(null);
-    const formRef = (0, import_element55.useRef)(null);
     const popoverAnchor = (0, import_rich_text16.useAnchor)({
       // eslint-disable-next-line react-hooks/refs
       editableContentElement: contentRef.current,
@@ -19002,12 +19001,10 @@ var wp;
         offset: 8,
         focusOnMount: false,
         anchor: popoverAnchor,
-        onFocusOutside: () => formRef.current?.reportValidity(),
         className: "block-editor-format-toolbar__math-popover",
         children: /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(
           "form",
           {
-            ref: formRef,
             style: { minWidth: "300px", padding: "16px" },
             onSubmit: (event) => event.preventDefault(),
             children: [

@@ -2591,9 +2591,9 @@ var wp;
           return x3 === y2 && (0 !== x3 || 1 / x3 === 1 / y2) || x3 !== x3 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React138 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef89 = React138.useRef, useEffect81 = React138.useEffect, useMemo85 = React138.useMemo, useDebugValue2 = React138.useDebugValue;
+        var React138 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef88 = React138.useRef, useEffect81 = React138.useEffect, useMemo85 = React138.useMemo, useDebugValue2 = React138.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-          var instRef = useRef89(null);
+          var instRef = useRef88(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -60242,7 +60242,6 @@ ${text}
     const [blockRef, setBlockRef] = (0, import_element128.useState)();
     const [error2, setError] = (0, import_element128.useState)(null);
     const [latexToMathML, setLatexToMathML] = (0, import_element128.useState)();
-    const formRef = (0, import_element128.useRef)();
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data55.useDispatch)(import_block_editor116.store);
     const renderLatest = (0, import_compose32.useEvent)((convert) => {
       if (!latex) {
@@ -60284,12 +60283,10 @@ ${text}
           offset: 8,
           anchor: blockRef,
           focusOnMount: false,
-          onFocusOutside: () => formRef.current?.reportValidity(),
           __unstableSlotName: "__unstable-block-tools-after",
           children: /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(
             "form",
             {
-              ref: formRef,
               style: { padding: "16px", minWidth: "300px" },
               onSubmit: (event) => event.preventDefault(),
               children: [
