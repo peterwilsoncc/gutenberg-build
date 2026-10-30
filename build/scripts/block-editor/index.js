@@ -98802,7 +98802,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/preset-input-control/constants.mjs
-	const CUSTOM_VALUE_SETTINGS$1 = {
+	const CUSTOM_VALUE_SETTINGS = {
 		px: {
 			max: 300,
 			steps: 1
@@ -99027,7 +99027,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*
 	* @return The PresetInputControl component.
 	*/
-	function PresetInputControl({ allowNegativeOnDrag = false, ariaLabel, className: classNameProp, customValueSettings = CUSTOM_VALUE_SETTINGS$1, disableCustomValues, icon, isMixed, value: valueProp, minimumCustomValue, onChange, onMouseOut, onMouseOver, onUnitChange, placeholder, presets = [], presetType, selectedUnit, showTooltip, units }) {
+	function PresetInputControl({ allowNegativeOnDrag = false, ariaLabel, className: classNameProp, customValueSettings = CUSTOM_VALUE_SETTINGS, disableCustomValues, icon, isMixed, value: valueProp, minimumCustomValue, onChange, onMouseOut, onMouseOver, onUnitChange, placeholder, presets = [], presetType, selectedUnit, showTooltip, units }) {
 		const value = (0, _wordpress_element.useMemo)(() => getPresetValueFromCustomValue$1(valueProp, presets, presetType), [
 			valueProp,
 			presets,
@@ -100555,7 +100555,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/block-editor/build-module/components/dimension-control/index.mjs
 	const EMPTY_ARRAY$6 = [];
 	const DIMENSION_CUSTOM_VALUE_SETTINGS = {
-		...CUSTOM_VALUE_SETTINGS$1,
+		...CUSTOM_VALUE_SETTINGS,
 		px: {
 			max: 1e3,
 			steps: 1
@@ -106668,120 +106668,6 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/spacing-sizes-control/input-controls/spacing-input-control.mjs
-	const CUSTOM_VALUE_SETTINGS = {
-		px: {
-			max: 300,
-			steps: 1
-		},
-		"%": {
-			max: 100,
-			steps: 1
-		},
-		vw: {
-			max: 100,
-			steps: 1
-		},
-		vh: {
-			max: 100,
-			steps: 1
-		},
-		em: {
-			max: 10,
-			steps: .1
-		},
-		rm: {
-			max: 10,
-			steps: .1
-		},
-		svw: {
-			max: 100,
-			steps: 1
-		},
-		lvw: {
-			max: 100,
-			steps: 1
-		},
-		dvw: {
-			max: 100,
-			steps: 1
-		},
-		svh: {
-			max: 100,
-			steps: 1
-		},
-		lvh: {
-			max: 100,
-			steps: 1
-		},
-		dvh: {
-			max: 100,
-			steps: 1
-		},
-		vi: {
-			max: 100,
-			steps: 1
-		},
-		svi: {
-			max: 100,
-			steps: 1
-		},
-		lvi: {
-			max: 100,
-			steps: 1
-		},
-		dvi: {
-			max: 100,
-			steps: 1
-		},
-		vb: {
-			max: 100,
-			steps: 1
-		},
-		svb: {
-			max: 100,
-			steps: 1
-		},
-		lvb: {
-			max: 100,
-			steps: 1
-		},
-		dvb: {
-			max: 100,
-			steps: 1
-		},
-		vmin: {
-			max: 100,
-			steps: 1
-		},
-		svmin: {
-			max: 100,
-			steps: 1
-		},
-		lvmin: {
-			max: 100,
-			steps: 1
-		},
-		dvmin: {
-			max: 100,
-			steps: 1
-		},
-		vmax: {
-			max: 100,
-			steps: 1
-		},
-		svmax: {
-			max: 100,
-			steps: 1
-		},
-		lvmax: {
-			max: 100,
-			steps: 1
-		},
-		dvmax: {
-			max: 100,
-			steps: 1
-		}
-	};
 	function SpacingInputControl({ icon, isMixed = false, minimumCustomValue, onChange, onMouseOut, onMouseOver, showSideInLabel = true, side, spacingSizes, type, value, ...restProps }) {
 		const disableCustomSpacingSizes = (0, _wordpress_data.useSelect)((select) => {
 			return select(store).getSettings()?.disableCustomSpacingSizes;
@@ -106807,7 +106693,6 @@ If there's a particular need for this, please submit a feature request at https:
 			allowNegativeOnDrag: minimumCustomValue < 0,
 			ariaLabel,
 			className: "spacing-sizes-control",
-			customValueSettings: CUSTOM_VALUE_SETTINGS,
 			disableCustomValues: disableCustomSpacingSizes,
 			icon,
 			isMixed,
