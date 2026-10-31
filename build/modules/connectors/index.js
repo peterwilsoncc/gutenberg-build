@@ -216,11 +216,10 @@ function useConnectorSettingsSave(onSave, fallbackErrorMessage) {
 		handleSave
 	};
 }
-function ConnectorSettingsFrame({ readOnly, children }) {
+function ConnectorSettingsFrame({ children }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalVStack, {
 		spacing: 4,
 		className: "connector-settings",
-		style: readOnly ? { "--wp-components-color-background": "#f0f0f0" } : void 0,
 		children
 	});
 }
@@ -280,29 +279,26 @@ function DefaultConnectorSettings({ onSave, onRemove, initialValue = "", helpUrl
 		});
 		return helpLink;
 	};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ConnectorSettingsFrame, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ConnectorSettingsFrame, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.TextControl, {
+		label: (0, import_i18n.__)("API Key"),
+		value: apiKey,
+		onChange: (value) => {
+			if (!readOnly) {
+				setSaveError(null);
+				setApiKey(value);
+			}
+		},
+		placeholder: (0, import_i18n.__)("Enter your API key"),
+		disabled: readOnly || isSaving,
+		autoComplete: "off",
+		help: getHelp()
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ConnectorSettingsFooter, {
 		readOnly,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.TextControl, {
-			label: (0, import_i18n.__)("API Key"),
-			value: apiKey,
-			onChange: (value) => {
-				if (!readOnly) {
-					setSaveError(null);
-					setApiKey(value);
-				}
-			},
-			placeholder: (0, import_i18n.__)("Enter your API key"),
-			disabled: readOnly || isSaving,
-			autoComplete: "off",
-			help: getHelp()
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ConnectorSettingsFooter, {
-			readOnly,
-			onRemove,
-			canSave: !!apiKey,
-			isSaving,
-			onSave: () => handleSave(apiKey)
-		})]
-	});
+		onRemove,
+		canSave: !!apiKey,
+		isSaving,
+		onSave: () => handleSave(apiKey)
+	})] });
 }
 /**
 * Default settings form for application password connectors.
@@ -329,49 +325,46 @@ function ApplicationPasswordConnectorSettings({ onSave, onRemove, initialUsernam
 		className: "connector-settings__error",
 		children: saveError
 	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ConnectorSettingsFrame, {
-		readOnly,
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.TextControl, {
-				label: (0, import_i18n.__)("Username"),
-				value: username,
-				onChange: (value) => {
-					if (!readOnly) {
-						setSaveError(null);
-						setUsername(value);
-					}
-				},
-				placeholder: (0, import_i18n.__)("Enter your username"),
-				disabled: readOnly || isSaving,
-				autoComplete: "username"
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.TextControl, {
-				label: (0, import_i18n.__)("Application password"),
-				value: readOnly ? "••••••••••••••••" : applicationPassword,
-				onChange: (value) => {
-					if (!readOnly) {
-						setSaveError(null);
-						setApplicationPassword(value);
-					}
-				},
-				type: "password",
-				placeholder: (0, import_i18n.__)("Enter your application password"),
-				disabled: readOnly || isSaving,
-				autoComplete: "new-password",
-				help: applicationPasswordHelp
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ConnectorSettingsFooter, {
-				readOnly,
-				onRemove,
-				canSave: !!username.trim() && !!applicationPassword,
-				isSaving,
-				onSave: () => handleSave({
-					username: username.trim(),
-					applicationPassword
-				})
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ConnectorSettingsFrame, { children: [
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.TextControl, {
+			label: (0, import_i18n.__)("Username"),
+			value: username,
+			onChange: (value) => {
+				if (!readOnly) {
+					setSaveError(null);
+					setUsername(value);
+				}
+			},
+			placeholder: (0, import_i18n.__)("Enter your username"),
+			disabled: readOnly || isSaving,
+			autoComplete: "username"
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.TextControl, {
+			label: (0, import_i18n.__)("Application password"),
+			value: readOnly ? "••••••••••••••••" : applicationPassword,
+			onChange: (value) => {
+				if (!readOnly) {
+					setSaveError(null);
+					setApplicationPassword(value);
+				}
+			},
+			type: "password",
+			placeholder: (0, import_i18n.__)("Enter your application password"),
+			disabled: readOnly || isSaving,
+			autoComplete: "new-password",
+			help: applicationPasswordHelp
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ConnectorSettingsFooter, {
+			readOnly,
+			onRemove,
+			canSave: !!username.trim() && !!applicationPassword,
+			isSaving,
+			onSave: () => handleSave({
+				username: username.trim(),
+				applicationPassword
 			})
-		]
-	});
+		})
+	] });
 }
 
 // packages/connectors/build-module/private-apis.mjs
