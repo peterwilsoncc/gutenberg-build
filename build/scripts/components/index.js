@@ -60279,15 +60279,23 @@ VisualLabel });
 		});
 	}
 	function deduplicateElementSlugs(elements) {
-		const slugCounts = {};
+		const usedSlugs = new Set(elements.map(({ slug }) => slug));
+		const nextSuffixes = /* @__PURE__ */ new Map();
 		return elements.map((element) => {
-			let newSlug;
 			const { slug } = element;
-			slugCounts[slug] = (slugCounts[slug] || 0) + 1;
-			if (slugCounts[slug] > 1) newSlug = `${slug}-${slugCounts[slug] - 1}`;
+			let newSlug = slug;
+			let suffix = nextSuffixes.get(slug) ?? 1;
+			if (nextSuffixes.has(slug)) {
+				do {
+					newSlug = `${slug}-${suffix}`;
+					suffix++;
+				} while (usedSlugs.has(newSlug));
+				usedSlugs.add(newSlug);
+			}
+			nextSuffixes.set(slug, suffix);
 			return {
 				...element,
-				slug: newSlug ?? slug
+				slug: newSlug
 			};
 		});
 	}
