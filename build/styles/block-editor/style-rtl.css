@@ -4118,6 +4118,9 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 .block-editor-inserter__main-area.show-as-tabs {
   gap: 0;
 }
+.block-editor-inserter__main-area .block-editor-tabbed-sidebar__tabpanel:has(> .block-editor-inserter__search) {
+  scroll-padding-top: 73px;
+}
 @media (min-width: 782px) {
   .block-editor-inserter__main-area .block-editor-tabbed-sidebar {
     width: 350px;
