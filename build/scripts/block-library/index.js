@@ -7105,10 +7105,12 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const listNavigation = "list-navigation";
 	const keyboard = "keyboard";
 	const pointer = "pointer";
+	const cancelOpen = "cancel-open";
 	const disabled = "disabled";
 	const missing = "missing";
 	const initial = "initial";
 	const imperativeAction = "imperative-action";
+	const windowResize = "window-resize";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
 /**
@@ -7851,17 +7853,17 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 /**
 	* Present when the popup is open.
 	*/
-	const popupOpen$2 = "data-popup-open";
+	const popupOpen$3 = "data-popup-open";
 	/**
 	* Present when a pressable trigger is pressed.
 	*/
-	const pressed$1 = "data-pressed";
+	const pressed$2 = "data-pressed";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popupStateMapping.mjs
-	const TRIGGER_HOOK = { [popupOpen$2]: "" };
+	const TRIGGER_HOOK = { [popupOpen$3]: "" };
 	const PRESSABLE_TRIGGER_HOOK = {
-		[popupOpen$2]: "",
-		[pressed$1]: ""
+		[popupOpen$3]: "",
+		[pressed$2]: ""
 	};
 	const POPUP_OPEN_HOOK = { [open]: "" };
 	const POPUP_CLOSED_HOOK = { [closed]: "" };
@@ -7893,7 +7895,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 /**
 	* Present when the corresponding tooltip is open.
 	*/
-	const popupOpen$1 = popupOpen$2;
+	const popupOpen$2 = popupOpen$3;
 	/**
 	* Present when the trigger is disabled, either by the `disabled` prop or by a parent `<Tooltip.Root>` component.
 	*/
@@ -8162,7 +8164,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		bottom: "top",
 		top: "bottom"
 	};
-	function clamp(start, value, end) {
+	function clamp$1(start, value, end) {
 		return max(start, min(value, end));
 	}
 	function evaluate(value, param) {
@@ -11163,7 +11165,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	};
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
-	const selectors$22 = {
+	const selectors$23 = {
 		open: (state) => state.open,
 		transitionStatus: (state) => state.transitionStatus,
 		domReferenceElement: (state) => state.domReferenceElement,
@@ -11184,7 +11186,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				events: createEventEmitter(),
 				nested,
 				triggerElements
-			}, selectors$22);
+			}, selectors$23);
 			this.syncOnly = syncOnly;
 		}
 		/**
@@ -12363,6 +12365,109 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		]);
 	}
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useTypeahead.mjs
+/**
+	* Provides a matching callback that can be used to focus an item as the user
+	* types, often used in tandem with `useListNavigation()`.
+	* @see https://floating-ui.com/docs/useTypeahead
+	*/
+	function useTypeahead(store, props) {
+		const { listRef, elementsRef, activeIndex, onMatch: onMatchProp, disabledIndices, onTyping: onTypingProp, enabled = true, resetMs = 750, selectedIndex = null } = props;
+		const onTyping = useStableCallback(onTypingProp);
+		const open = store.useState("open");
+		const timeout = useTimeout();
+		const stringRef = react.useRef("");
+		const prevIndexRef = react.useRef(selectedIndex ?? activeIndex ?? -1);
+		const matchIndexRef = react.useRef(null);
+		const onKeyDown = useStableCallback((event) => {
+			function getElement(index) {
+				return elementsRef?.current[index];
+			}
+			function isItemAvailable(index) {
+				const element = getElement(index);
+				if (element && !isElementVisible(element) || element?.matches(":disabled")) return false;
+				return disabledIndices == null || !isListIndexDisabled(EMPTY_ARRAY$12, index, disabledIndices);
+			}
+			function getMatchingIndex(list, string, startIndex = 0) {
+				if (list.length === 0) return -1;
+				const normalizedStartIndex = (startIndex % list.length + list.length) % list.length;
+				const lowerString = string.toLowerCase();
+				for (let offset = 0; offset < list.length; offset += 1) {
+					const index = (normalizedStartIndex + offset) % list.length;
+					if (!list[index]?.toLowerCase().startsWith(lowerString) || !isItemAvailable(index)) continue;
+					return index;
+				}
+				return -1;
+			}
+			const listContent = listRef.current;
+			if (stringRef.current.length > 0 && event.key === " ") {
+				stopEvent(event);
+				onTyping?.(true);
+			}
+			if (stringRef.current.length > 0 && stringRef.current[0] !== " ") {
+				if (getMatchingIndex(listContent, stringRef.current) === -1 && event.key !== " ") onTyping?.(false);
+			}
+			if (listContent == null || event.key.length !== 1 || event.ctrlKey || event.metaKey || event.altKey) return;
+			if (open && event.key !== " ") {
+				stopEvent(event);
+				onTyping?.(true);
+			}
+			const isNewSession = stringRef.current === "";
+			if (isNewSession) prevIndexRef.current = selectedIndex ?? activeIndex ?? -1;
+			if (listContent.every((text, index) => text && isItemAvailable(index) ? text[0]?.toLowerCase() !== text[1]?.toLowerCase() : true) && stringRef.current === event.key) {
+				stringRef.current = "";
+				prevIndexRef.current = matchIndexRef.current;
+			}
+			stringRef.current += event.key;
+			timeout.start(resetMs, () => {
+				stringRef.current = "";
+				prevIndexRef.current = matchIndexRef.current;
+				onTyping?.(false);
+			});
+			const startIndex = ((isNewSession ? selectedIndex ?? activeIndex ?? -1 : prevIndexRef.current) ?? 0) + 1;
+			const index = getMatchingIndex(listContent, stringRef.current, startIndex);
+			if (index !== -1) {
+				onMatchProp?.(index, event);
+				matchIndexRef.current = index;
+			} else if (event.key !== " ") {
+				stringRef.current = "";
+				onTyping?.(false);
+			}
+		});
+		const onBlur = useStableCallback((event) => {
+			const next = event.relatedTarget;
+			const currentDomReferenceElement = store.select("domReferenceElement");
+			const currentFloatingElement = store.select("floatingElement");
+			if (contains(currentDomReferenceElement, next) || contains(currentFloatingElement, next)) return;
+			timeout.clear();
+			stringRef.current = "";
+			prevIndexRef.current = matchIndexRef.current;
+			onTyping?.(false);
+		});
+		useIsoLayoutEffect(() => {
+			if (!open && selectedIndex !== null) return;
+			timeout.clear();
+			matchIndexRef.current = null;
+			if (stringRef.current !== "") {
+				stringRef.current = "";
+				onTyping?.(false);
+			}
+		}, [
+			open,
+			selectedIndex,
+			timeout,
+			onTyping
+		]);
+		const sharedProps = react.useMemo(() => ({
+			onKeyDown,
+			onBlur
+		}), [onKeyDown, onBlur]);
+		return react.useMemo(() => enabled ? {
+			reference: sharedProps,
+			floating: sharedProps
+		} : {}, [enabled, sharedProps]);
+	}
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
 	const CURSOR_SPEED_THRESHOLD = .1;
 	const CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
@@ -12855,7 +12960,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				const mainAxis = getOppositeAxis(crossAxis);
 				let mainAxisCoord = coords[mainAxis];
 				let crossAxisCoord = coords[crossAxis];
-				const clampCoord = (axis, coord) => clamp(coord + overflow[axis === "y" ? "top" : "left"], coord, coord - overflow[axis === "y" ? "bottom" : "right"]);
+				const clampCoord = (axis, coord) => clamp$1(coord + overflow[axis === "y" ? "top" : "left"], coord, coord - overflow[axis === "y" ? "bottom" : "right"]);
 				if (checkMainAxis) mainAxisCoord = clampCoord(mainAxis, mainAxisCoord);
 				if (checkCrossAxis) crossAxisCoord = clampCoord(crossAxis, crossAxisCoord);
 				const limitedCoords = limiter.fn({
@@ -13003,7 +13108,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function unwrapElement(element) {
 		return !isElement(element) ? element.contextElement : element;
 	}
-	function getScale(element) {
+	function getScale$1(element) {
 		const domElement = unwrapElement(element);
 		if (!isHTMLElement(domElement)) return createCoords(1);
 		const rect = domElement.getBoundingClientRect();
@@ -13038,8 +13143,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		let scale = createCoords(1);
 		if (includeScale) {
 			if (offsetParent) {
-				if (isElement(offsetParent)) scale = getScale(offsetParent);
-			} else scale = getScale(element);
+				if (isElement(offsetParent)) scale = getScale$1(offsetParent);
+			} else scale = getScale$1(element);
 		}
 		const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
 		let x = (clientRect.left + visualOffsets.x) / scale.x;
@@ -13052,7 +13157,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			let currentWin = win;
 			let currentIFrame = getFrameElement(currentWin);
 			while (currentIFrame && offsetWin !== currentWin) {
-				const iframeScale = getScale(currentIFrame);
+				const iframeScale = getScale$1(currentIFrame);
 				const iframeRect = currentIFrame.getBoundingClientRect();
 				const css = getComputedStyle$3(currentIFrame);
 				const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
@@ -13103,7 +13208,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) scroll = getNodeScroll(offsetParent);
 			if (isOffsetParentAnElement) {
 				const offsetRect = getBoundingClientRect(offsetParent);
-				scale = getScale(offsetParent);
+				scale = getScale$1(offsetParent);
 				offsets.x = offsetRect.x + offsetParent.clientLeft;
 				offsets.y = offsetRect.y + offsetParent.clientTop;
 			}
@@ -13181,7 +13286,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
 		const top = clientRect.top + element.clientTop;
 		const left = clientRect.left + element.clientLeft;
-		const scale = getScale(element);
+		const scale = getScale$1(element);
 		return {
 			width: element.clientWidth * scale.x,
 			height: element.clientHeight * scale.y,
@@ -13330,7 +13435,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		getElementRects,
 		getClientRects,
 		getDimensions,
-		getScale,
+		getScale: getScale$1,
 		isElement,
 		isRTL: isRTL$14
 	};
@@ -14166,7 +14271,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* Non-reactive values shared with the combobox parts. Nothing here is observable through
 	* `selectors`, so writing to a ref never notifies subscribers.
 	*/
-	const selectors$21 = {
+	const selectors$22 = {
 		id: (state) => state.id,
 		labelId: (state) => state.labelId,
 		items: (state) => state.items,
@@ -14798,7 +14903,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				valuesRef,
 				pointerDownItemRef,
 				selectionEventRef
-			}, selectors$21);
+			}, selectors$22);
 		}).current;
 		const fieldRawValue = selectionMode === "none" ? inputValue : selectedValue;
 		const fieldStringValue = react.useMemo(() => {
@@ -15437,16 +15542,16 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 /**
 	* Present when the corresponding popup is open.
 	*/
-	const popupOpen = popupOpen$2;
+	const popupOpen$1 = popupOpen$3;
 	/**
 	* Present when the input is pressed.
 	*/
-	const pressed = pressed$1;
+	const pressed$1 = pressed$2;
 	/**
 	* Indicates which side the corresponding popup is positioned relative to its anchor.
 	* @type {'top' | 'bottom' | 'left' | 'right' | 'inline-end' | 'inline-start' | null}
 	*/
-	const popupSide = "data-popup-side";
+	const popupSide$1 = "data-popup-side";
 	/**
 	* Present when the corresponding items list is empty.
 	*/
@@ -15456,7 +15561,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const triggerStateAttributesMapping = {
 		...pressableTriggerOpenStateMapping,
 		...fieldValidityMapping,
-		popupSide: (side) => side ? { [popupSide]: side } : null,
+		popupSide: (side) => side ? { [popupSide$1]: side } : null,
 		listEmpty: (empty) => empty ? { [listEmpty]: "" } : null
 	};
 
@@ -15488,6 +15593,44 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			setFieldFocused
 		]);
 		return setFieldFocused;
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getPseudoElementBounds.mjs
+	const BOUNDARY_OFFSET = 5;
+	/**
+	* Determines if a mouse event occurred within the bounds of an element
+	* (including its pseudo-elements), with a small tolerance for pointer drift.
+	*/
+	function isMouseWithinBounds(event, element) {
+		const bounds = getPseudoElementBounds(element);
+		return event.clientX >= bounds.left - BOUNDARY_OFFSET && event.clientX <= bounds.right + BOUNDARY_OFFSET && event.clientY >= bounds.top - BOUNDARY_OFFSET && event.clientY <= bounds.bottom + BOUNDARY_OFFSET;
+	}
+	function getPseudoElementBounds(element) {
+		const elementRect = element.getBoundingClientRect();
+		const win = getWindow(element);
+		if (jsdom) return elementRect;
+		const beforeStyles = win.getComputedStyle(element, "::before");
+		const afterStyles = win.getComputedStyle(element, "::after");
+		if (!(beforeStyles.content !== "none" || afterStyles.content !== "none")) return elementRect;
+		const beforeWidth = parseFloat(beforeStyles.width) || 0;
+		const beforeHeight = parseFloat(beforeStyles.height) || 0;
+		const afterWidth = parseFloat(afterStyles.width) || 0;
+		const afterHeight = parseFloat(afterStyles.height) || 0;
+		const totalWidth = Math.max(elementRect.width, beforeWidth, afterWidth);
+		const totalHeight = Math.max(elementRect.height, beforeHeight, afterHeight);
+		const widthDiff = totalWidth - elementRect.width;
+		const heightDiff = totalHeight - elementRect.height;
+		return {
+			left: elementRect.left - widthDiff / 2,
+			right: elementRect.right + widthDiff / 2,
+			top: elementRect.top - heightDiff / 2,
+			bottom: elementRect.bottom + heightDiff / 2
+		};
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/resolveAriaLabelledBy.mjs
+	function resolveAriaLabelledBy(fieldLabelId, localLabelId) {
+		return fieldLabelId ?? localLabelId;
 	}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/combobox/utils/parts.mjs
@@ -15870,7 +16013,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	ComboboxInputGroup.displayName = "ComboboxInputGroup";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/combobox/clear/ComboboxClear.mjs
-	const stateAttributesMapping$3 = {
+	const stateAttributesMapping$6 = {
 		...transitionStatusMapping,
 		...triggerOpenStateMapping
 	};
@@ -15951,7 +16094,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				elementProps,
 				getButtonProps
 			],
-			stateAttributesMapping: stateAttributesMapping$3
+			stateAttributesMapping: stateAttributesMapping$6
 		});
 		if (!(keepMounted || mounted)) return null;
 		return element;
@@ -16293,7 +16436,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			const min = minPadding;
 			const max = clientSize - arrowDimensions[length] - maxPadding;
 			const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
-			const offset = clamp(min, center, max);
+			const offset = clamp$1(min, center, max);
 			const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset && rects.reference[length] / 2 - (center < min ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
 			const alignmentOffset = shouldAddOffset ? center < min ? center - min : center - max : 0;
 			return {
@@ -16364,7 +16507,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* The coordinates that this element is anchored to. Used for animations and transitions.
 	* @type {string}
 	*/
-	const transformOrigin = "--transform-origin";
+	const transformOrigin$1 = "--transform-origin";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
 	const AVAILABLE_WIDTH_VAR = availableWidth;
@@ -16540,7 +16683,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				else crossOrigin = `${(isVertical ? middlewareData.arrow?.x || 0 : middlewareData.arrow?.y || 0) + (isVertical ? arrowEl?.clientWidth || 0 : arrowEl?.clientHeight || 0) / 2}px`;
 				let sideOrigin = renderedSide === "top" || renderedSide === "left" ? `calc(100% + ${sideOffsetValue}px)` : `${-sideOffsetValue}px`;
 				if (crossAxisShiftEnabled && isVertical && Math.abs(middlewareData.shift?.y || 0) > sideOffsetValue) sideOrigin = `${rects.reference.y + rects.reference.height / 2 - y}px`;
-				floating.style.setProperty(transformOrigin, isVertical ? `${crossOrigin} ${sideOrigin}` : `${sideOrigin} ${crossOrigin}`);
+				floating.style.setProperty(transformOrigin$1, isVertical ? `${crossOrigin} ${sideOrigin}` : `${sideOrigin} ${crossOrigin}`);
 				return {};
 			}
 		}, hide, adaptiveOrigin);
@@ -16821,7 +16964,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	ComboboxPositioner.displayName = "ComboboxPositioner";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/combobox/popup/ComboboxPopup.mjs
-	const stateAttributesMapping$2 = {
+	const stateAttributesMapping$5 = {
 		...popupStateMapping,
 		...transitionStatusMapping
 	};
@@ -16884,7 +17027,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				getDisabledMountTransitionStyles(transitionStatus),
 				elementProps
 			],
-			stateAttributesMapping: stateAttributesMapping$2
+			stateAttributesMapping: stateAttributesMapping$5
 		});
 		const resolvedInitialFocus = initialFocus === void 0 ? inputInsidePopup ? (interactionType) => interactionType === "touch" ? store.context.popupRef.current : inputElement : false : initialFocus;
 		let resolvedFinalFocus;
@@ -18140,6 +18283,15 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	const ComboboxSeparator = ListboxSeparator;
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/toolbar/root/ToolbarRootContext.mjs
+	const ToolbarRootContext = /*#__PURE__*/ react.createContext(void 0);
+	ToolbarRootContext.displayName = "ToolbarRootContext";
+	function useToolbarRootContext(optional) {
+		const context = react.useContext(ToolbarRootContext);
+		if (context === void 0 && !optional) throw new Error("Base UI: ToolbarRootContext is missing. Toolbar parts must be placed within <Toolbar.Root>.");
+		return context;
+	}
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
 	function useCompositeItem(params = {}) {
 		const { highlightItemOnHover, highlightedIndex, onHighlightedIndexChange } = useCompositeRootContext();
@@ -18163,6 +18315,24 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			compositeRef: mergedRef,
 			index
 		};
+	}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/usePreviousValue.mjs
+/**
+	* Returns a previous value of its argument.
+	* @param value Current value.
+	* @returns Previous value, or null if there is no previous value.
+	*/
+	function usePreviousValue(value) {
+		const [state, setState] = react.useState({
+			current: value,
+			previous: null
+		});
+		if (!Object.is(value, state.current)) setState({
+			current: value,
+			previous: state.current
+		});
+		return state.previous;
 	}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getCssDimensions.mjs
@@ -18210,6 +18380,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const DEFAULT_CSP_CONTEXT_VALUE = { disableStyleElements: false };
 	function useCSPContext() {
 		return react.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
+	}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/clamp.mjs
+	function clamp(val, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
+		return Math.max(min, Math.min(val, max));
 	}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getElementTransform.mjs
@@ -19009,6 +19184,1461 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(react.Fragment, { children: [portalSubtree, portalNode && /*#__PURE__*/ react_dom.createPortal(children, portalNode)] });
 	});
 	FloatingPortalLite.displayName = "FloatingPortalLite";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/styles.mjs
+	const DISABLE_SCROLLBAR_CLASS_NAME = "base-ui-disable-scrollbar";
+	const styleDisableScrollbar = {
+		className: DISABLE_SCROLLBAR_CLASS_NAME,
+		getElement(nonce) {
+			return /*#__PURE__*/ (0, react_jsx_runtime.jsx)("style", {
+				nonce,
+				href: DISABLE_SCROLLBAR_CLASS_NAME,
+				precedence: "base-ui:low",
+				children: `.${DISABLE_SCROLLBAR_CLASS_NAME}{scrollbar-width:none}.${DISABLE_SCROLLBAR_CLASS_NAME}::-webkit-scrollbar{display:none}`
+			});
+		}
+	};
+	styleDisableScrollbar.getElement.displayName = "styleDisableScrollbar.getElement";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/scrollEdges.mjs
+	const SCROLL_EDGE_TOLERANCE_PX = 1;
+	function getMaxScrollOffset(scrollSize, clientSize) {
+		return Math.max(0, scrollSize - clientSize);
+	}
+	function normalizeScrollOffset(value, max) {
+		if (max <= 0) return 0;
+		const clamped = clamp(value, 0, max);
+		const startDistance = clamped;
+		const endDistance = max - clamped;
+		const withinStartTolerance = startDistance <= 1;
+		const withinEndTolerance = endDistance <= 1;
+		if (withinStartTolerance && withinEndTolerance) return startDistance <= endDistance ? 0 : max;
+		if (withinStartTolerance) return 0;
+		if (withinEndTolerance) return max;
+		return clamped;
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/root/SelectRootContext.mjs
+	const SelectRootContext = /*#__PURE__*/ react.createContext(void 0);
+	SelectRootContext.displayName = "SelectRootContext";
+	const SelectFloatingContext = /*#__PURE__*/ react.createContext(void 0);
+	SelectFloatingContext.displayName = "SelectFloatingContext";
+	function useSelectRootContext() {
+		const store = react.useContext(SelectRootContext);
+		if (store === void 0) throw new Error("Base UI: SelectRootContext is missing. Select parts must be placed within <Select.Root>.");
+		return store;
+	}
+	function useSelectFloatingContext() {
+		const context = react.useContext(SelectFloatingContext);
+		if (context === void 0) throw new Error("Base UI: SelectFloatingContext is missing. Select parts must be placed within <Select.Root>.");
+		return context;
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/store.mjs
+/**
+	* Non-reactive values shared with the select parts. Nothing here is observable through
+	* `selectors`, so writing to a ref never notifies subscribers.
+	*/
+	const selectors$21 = {
+		id: (state) => state.id,
+		labelId: (state) => state.labelId,
+		modal: (state) => state.modal,
+		multiple: (state) => state.multiple,
+		disabled: (state) => state.disabled,
+		readOnly: (state) => state.readOnly,
+		required: (state) => state.required,
+		highlightItemOnHover: (state) => state.highlightItemOnHover,
+		items: (state) => state.items,
+		itemToStringLabel: (state) => state.itemToStringLabel,
+		isItemEqualToValue: (state) => state.isItemEqualToValue,
+		value: (state) => state.value,
+		hasSelectedValue: (state) => {
+			const { value, multiple, itemToStringValue } = state;
+			if (value == null) return false;
+			if (multiple && Array.isArray(value)) return value.length > 0;
+			return stringifyAsValue(value, itemToStringValue) !== "";
+		},
+		hasNullItemLabel: (state, enabled) => {
+			return enabled ? hasNullItemLabel(state.items) : false;
+		},
+		open: (state) => state.open,
+		mounted: (state) => state.mounted,
+		forceMount: (state) => state.forceMount,
+		transitionStatus: (state) => state.transitionStatus,
+		openMethod: (state) => state.openMethod,
+		activeIndex: (state) => state.activeIndex,
+		selectedIndex: (state) => state.selectedIndex,
+		isActive: (state, index) => state.activeIndex === index,
+		isSelected: (state, itemValue) => {
+			const comparer = state.isItemEqualToValue;
+			const storeValue = state.value;
+			if (state.multiple) return Array.isArray(storeValue) && storeValue.some((selectedItem) => compareItemEquality(itemValue, selectedItem, comparer));
+			return compareItemEquality(itemValue, storeValue, comparer);
+		},
+		isSelectedByFocus: (state, index) => {
+			return state.selectedIndex === index;
+		},
+		popupProps: (state) => state.popupProps,
+		triggerProps: (state) => state.triggerProps,
+		itemRoot: (state) => state.itemRoot,
+		triggerElement: (state) => state.triggerElement,
+		positionerElement: (state) => state.positionerElement,
+		listElement: (state) => state.listElement,
+		popupSide: (state) => state.popupSide,
+		scrollUpArrowVisible: (state) => state.scrollUpArrowVisible,
+		scrollDownArrowVisible: (state) => state.scrollDownArrowVisible,
+		hasScrollArrows: (state) => state.hasScrollArrows
+	};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/root/SelectRoot.mjs
+/**
+	* Groups all parts of the select.
+	* Doesn't render its own HTML element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	function SelectRoot(props) {
+		const { id, value: valueProp, defaultValue = null, onValueChange, open: openProp, defaultOpen = false, onOpenChange, name: nameProp, form, autoComplete, disabled: disabledProp = false, readOnly = false, required = false, modal = true, actionsRef, inputRef, onOpenChangeComplete, items, multiple = false, itemToStringLabel, itemToStringValue, isItemEqualToValue = defaultItemEquality, highlightItemOnHover = true, children } = props;
+		const { clearErrors } = useFormContext();
+		const { setDirty, setTouched, setFocused, validityData, setFilled, name: fieldName, disabled: fieldDisabled, validation, validationMode } = useFieldRootContext();
+		const generatedId = useLabelableId({ id });
+		const disabled = fieldDisabled || disabledProp;
+		const name = fieldName ?? nameProp;
+		const [value, setValueUnwrapped] = useControlled({
+			controlled: valueProp,
+			default: multiple ? defaultValue ?? EMPTY_ARRAY$12 : defaultValue,
+			name: "Select",
+			state: "value"
+		});
+		const [open, setOpenUnwrapped] = useControlled({
+			controlled: openProp,
+			default: defaultOpen,
+			name: "Select",
+			state: "open"
+		});
+		const listRef = react.useRef([]);
+		const labelsRef = react.useRef([]);
+		const popupRef = react.useRef(null);
+		const scrollHandlerRef = react.useRef(null);
+		const scrollArrowsMountedCountRef = react.useRef(0);
+		const valueRef = react.useRef(null);
+		const valuesRef = react.useRef([]);
+		const typingRef = react.useRef(false);
+		const firstItemTextRef = react.useRef(null);
+		const selectedItemTextRef = react.useRef(null);
+		const selectionRef = react.useRef({
+			allowSelectedMouseUp: false,
+			allowUnselectedMouseUp: false,
+			dragY: 0
+		});
+		const alignItemWithTriggerActiveRef = react.useRef(false);
+		const initialValueRef = react.useRef(value);
+		const { openMethod, triggerProps: interactionTypeProps } = useOpenInteractionType(open);
+		const store = useRefWithInit(() => new ReactStore({
+			id: generatedId,
+			labelId: void 0,
+			modal,
+			multiple,
+			disabled,
+			readOnly,
+			required,
+			highlightItemOnHover,
+			itemToStringLabel,
+			itemToStringValue,
+			isItemEqualToValue,
+			value,
+			open,
+			mounted: open,
+			transitionStatus: void 0,
+			items,
+			forceMount: false,
+			openMethod: null,
+			activeIndex: null,
+			selectedIndex: null,
+			popupProps: EMPTY_OBJECT$2,
+			triggerProps: EMPTY_OBJECT$2,
+			itemRoot: {
+				props: EMPTY_OBJECT$2,
+				multiple,
+				disabled,
+				readOnly,
+				isItemEqualToValue
+			},
+			triggerElement: null,
+			positionerElement: null,
+			listElement: null,
+			popupSide: null,
+			scrollUpArrowVisible: false,
+			scrollDownArrowVisible: false,
+			hasScrollArrows: false
+		}, {
+			setValue: NOOP$2,
+			setOpen: NOOP$2,
+			handleScrollArrowVisibility: NOOP$2,
+			onOpenChangeComplete: NOOP$2,
+			listRef,
+			popupRef,
+			scrollHandlerRef,
+			scrollArrowsMountedCountRef,
+			valueRef,
+			valuesRef,
+			labelsRef,
+			typingRef,
+			selectionRef,
+			firstItemTextRef,
+			selectedItemTextRef,
+			alignItemWithTriggerActiveRef,
+			initialValueRef
+		}, selectors$21)).current;
+		const [preventUnmountOnClose, setPreventUnmountOnClose] = react.useState(false);
+		const { mounted, transitionStatus, forceUnmount: handleUnmount } = useUnmountAfterClose({
+			open,
+			ref: popupRef,
+			preventUnmountOnClose,
+			setPreventUnmountOnClose,
+			onUnmount() {
+				store.update({
+					activeIndex: null,
+					openMethod: null,
+					scrollUpArrowVisible: false,
+					scrollDownArrowVisible: false
+				});
+				onOpenChangeComplete?.(false);
+			}
+		});
+		const activeIndex = store.useState("activeIndex");
+		const selectedIndex = store.useState("selectedIndex");
+		const triggerElement = store.useState("triggerElement");
+		const positionerElement = store.useState("positionerElement");
+		const previousOpenMethod = usePreviousValue(openMethod);
+		const renderedOpenMethod = openMethod ?? previousOpenMethod;
+		const serializedValue = react.useMemo(() => {
+			if (multiple) return "";
+			return stringifyAsValue(value, itemToStringValue);
+		}, [
+			multiple,
+			value,
+			itemToStringValue
+		]);
+		const fieldStringValue = react.useMemo(() => {
+			if (multiple && Array.isArray(value)) return value.map((currentValue) => stringifyAsValue(currentValue, itemToStringValue));
+			return stringifyAsValue(value, itemToStringValue);
+		}, [
+			multiple,
+			value,
+			itemToStringValue
+		]);
+		const controlRef = useValueAsRef(triggerElement);
+		const getStringifiedValueForForm = useStableCallback(() => fieldStringValue);
+		useRegisterFieldControl(controlRef, generatedId, value, getStringifiedValueForForm, !disabled, nameProp);
+		const hasSelectedValue = multiple ? Array.isArray(value) && value.length > 0 : value != null && serializedValue !== "";
+		useIsoLayoutEffect(() => {
+			setFilled(hasSelectedValue);
+		}, [hasSelectedValue, setFilled]);
+		useIsoLayoutEffect(function syncSelectedIndex() {
+			const nextIndex = findSelectionIndex(valuesRef.current, value, isItemEqualToValue, multiple);
+			if (nextIndex === null) selectedItemTextRef.current = null;
+			if (open) return;
+			store.set("selectedIndex", nextIndex);
+		}, [
+			multiple,
+			open,
+			value,
+			isItemEqualToValue,
+			store
+		]);
+		useValueChanged(value, () => {
+			clearErrors(name);
+			setDirty(isSelectedValueDirty(value, validityData.initialValue, isItemEqualToValue));
+			validation.change(value);
+		});
+		const setOpen = useStableCallback((nextOpen, eventDetails) => {
+			const openEventDetails = eventDetails;
+			const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(openEventDetails);
+			onOpenChange?.(nextOpen, openEventDetails);
+			if (eventDetails.isCanceled) return;
+			if (!nextOpen) setPreventUnmountOnClose(shouldPreventUnmountOnClose());
+			setOpenUnwrapped(nextOpen);
+			if (!nextOpen && (eventDetails.reason === "focus-out" || eventDetails.reason === "outside-press")) {
+				setTouched(true);
+				setFocused(false);
+				if (validationMode === "onBlur") validation.commit(value);
+			}
+		});
+		react.useImperativeHandle(actionsRef, () => ({
+			unmount: handleUnmount,
+			close: () => {
+				if (store.state.open) setOpen(false, createChangeEventDetails(imperativeAction));
+			}
+		}), [
+			handleUnmount,
+			setOpen,
+			store
+		]);
+		const setValue = useStableCallback((nextValue, eventDetails) => {
+			onValueChange?.(nextValue, eventDetails);
+			if (eventDetails.isCanceled) return;
+			setValueUnwrapped(nextValue);
+		});
+		const handleScrollArrowVisibility = useStableCallback((scroller) => {
+			const maxScrollTop = getMaxScrollOffset(scroller.scrollHeight, scroller.clientHeight);
+			const scrollTop = normalizeScrollOffset(scroller.scrollTop, maxScrollTop);
+			const shouldShowUp = scrollTop > 0;
+			const shouldShowDown = scrollTop < maxScrollTop;
+			store.set("scrollUpArrowVisible", shouldShowUp);
+			store.set("scrollDownArrowVisible", shouldShowDown);
+		});
+		const floatingContext = useFloatingRootContext({
+			open,
+			onOpenChange: setOpen,
+			elements: {
+				reference: triggerElement,
+				floating: positionerElement
+			}
+		});
+		const click = useClick(floatingContext, {
+			enabled: !disabled,
+			event: "mousedown"
+		});
+		const dismiss = useDismiss(floatingContext);
+		const listNavigation = useListNavigation(floatingContext, {
+			enabled: !disabled,
+			listRef,
+			activeIndex,
+			selectedIndex,
+			disabledIndices: EMPTY_ARRAY$12,
+			onNavigate(nextActiveIndex) {
+				if (nextActiveIndex === null && !open) return;
+				store.set("activeIndex", nextActiveIndex);
+			},
+			focusItemOnHover: highlightItemOnHover
+		});
+		const typeahead = useTypeahead(floatingContext, {
+			enabled: !disabled && (open || !readOnly && !multiple),
+			listRef: labelsRef,
+			activeIndex,
+			selectedIndex,
+			disabledIndices: (index) => isElementDisabled(listRef.current[index]),
+			onMatch(index) {
+				if (open) store.set("activeIndex", index);
+				else setValue(valuesRef.current[index], createChangeEventDetails(none));
+			},
+			onTyping(typing) {
+				typingRef.current = typing;
+			}
+		});
+		const mergedTriggerProps = react.useMemo(() => mergeProps(typeahead.reference, listNavigation.reference, dismiss.reference, click.reference, interactionTypeProps), [
+			click.reference,
+			typeahead.reference,
+			listNavigation.reference,
+			dismiss.reference,
+			interactionTypeProps
+		]);
+		const popupProps = react.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, typeahead.floating, listNavigation.floating, dismiss.floating), [
+			typeahead.floating,
+			listNavigation.floating,
+			dismiss.floating
+		]);
+		const itemProps = listNavigation.item ?? EMPTY_OBJECT$2;
+		const itemRoot = react.useMemo(() => ({
+			props: itemProps,
+			multiple,
+			disabled,
+			readOnly,
+			isItemEqualToValue
+		}), [
+			itemProps,
+			multiple,
+			disabled,
+			readOnly,
+			isItemEqualToValue
+		]);
+		store.useContextCallback("setValue", setValue);
+		store.useContextCallback("setOpen", setOpen);
+		store.useContextCallback("handleScrollArrowVisibility", handleScrollArrowVisibility);
+		store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
+		useOnFirstRender(() => {
+			store.update({
+				popupProps,
+				triggerProps: mergedTriggerProps,
+				itemRoot
+			});
+		});
+		store.useSyncedValues({
+			id: generatedId,
+			modal,
+			multiple,
+			disabled,
+			readOnly,
+			required,
+			highlightItemOnHover,
+			value,
+			open,
+			mounted,
+			transitionStatus,
+			popupProps,
+			triggerProps: mergedTriggerProps,
+			itemRoot,
+			items,
+			itemToStringLabel,
+			itemToStringValue,
+			isItemEqualToValue,
+			openMethod: renderedOpenMethod
+		});
+		const ref = useMergedRefs(inputRef, validation.inputRef);
+		const hiddenInputName = multiple ? void 0 : name;
+		const hiddenInputs = react.useMemo(() => {
+			if (!multiple || !Array.isArray(value) || !name) return null;
+			return value.map((v) => {
+				const currentSerializedValue = stringifyAsValue(v, itemToStringValue);
+				return /*#__PURE__*/ (0, react_jsx_runtime.jsx)("input", {
+					type: "hidden",
+					form,
+					name,
+					value: currentSerializedValue,
+					disabled
+				}, currentSerializedValue);
+			});
+		}, [
+			multiple,
+			value,
+			form,
+			name,
+			itemToStringValue,
+			disabled
+		]);
+		return /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(SelectRootContext.Provider, {
+			value: store,
+			children: [
+				/*#__PURE__*/ (0, react_jsx_runtime.jsx)(SelectFloatingContext.Provider, {
+					value: floatingContext,
+					children
+				}),
+				/*#__PURE__*/ (0, react_jsx_runtime.jsx)("input", {
+					...validation.getValidationProps(disabled, {
+						onFocus() {
+							store.state.triggerElement?.focus({ focusVisible: true });
+						},
+						onChange(event) {
+							if (event.nativeEvent.defaultPrevented || disabled || readOnly) return;
+							const nextValue = event.currentTarget.value;
+							const details = createChangeEventDetails(none, event.nativeEvent);
+							function handleChange() {
+								if (multiple) return;
+								const nextValueLower = nextValue.toLowerCase();
+								let matchingIndex = valuesRef.current.findIndex((candidate) => stringifyAsValue(candidate, itemToStringValue).toLowerCase() === nextValueLower || stringifyAsLabel(candidate, itemToStringLabel).toLowerCase() === nextValueLower);
+								if (matchingIndex === -1) matchingIndex = valuesRef.current.findIndex((_, index) => {
+									const renderedLabel = labelsRef.current[index];
+									return renderedLabel != null && renderedLabel.toLowerCase() === nextValueLower;
+								});
+								const matchingValue = valuesRef.current[matchingIndex];
+								if (matchingValue != null) setValue(matchingValue, details);
+							}
+							store.set("forceMount", true);
+							queueMicrotask(handleChange);
+						}
+					}),
+					id: generatedId && hiddenInputName == null ? `${generatedId}-hidden-input` : void 0,
+					form,
+					name: hiddenInputName,
+					autoComplete,
+					value: serializedValue,
+					disabled,
+					required: required && !(multiple && hasSelectedValue),
+					readOnly,
+					ref,
+					style: name ? visuallyHiddenInput : visuallyHidden,
+					tabIndex: -1,
+					"aria-hidden": true,
+					suppressHydrationWarning: true
+				}),
+				hiddenInputs
+			]
+		});
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/trigger/SelectTriggerDataAttributes.mjs
+/**
+	* Present when the corresponding select is open.
+	*/
+	const popupOpen = popupOpen$3;
+	/**
+	* Present when the trigger is pressed.
+	*/
+	const pressed = pressed$2;
+	/**
+	* Indicates which side the corresponding popup is positioned relative to its anchor.
+	* @type {'top' | 'bottom' | 'left' | 'right' | 'inline-end' | 'inline-start' | null}
+	*/
+	const popupSide = "data-popup-side";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/trigger/SelectTrigger.mjs
+	const SELECTED_DELAY = 400;
+	const stateAttributesMapping$4 = {
+		...pressableTriggerOpenStateMapping,
+		...fieldValidityMapping,
+		popupSide: (side) => side ? { [popupSide]: side } : null,
+		value: () => null
+	};
+	/**
+	* A button that opens the select popup.
+	* Renders a `<button>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectTrigger = /*#__PURE__*/ react.forwardRef(function SelectTrigger(componentProps, forwardedRef) {
+		const { render, className, id: idProp, disabled: disabledProp = false, nativeButton = true, style, ...elementProps } = componentProps;
+		const { setTouched, validationMode, validation, state: fieldState, disabled: fieldDisabled } = useFieldRootContext();
+		const { labelId: fieldLabelId } = useLabelableContext();
+		const store = useSelectRootContext();
+		const readOnly = store.useState("readOnly");
+		const required = store.useState("required");
+		const selectDisabled = store.useState("disabled");
+		const disabled = fieldDisabled || selectDisabled || disabledProp;
+		const open = store.useState("open");
+		const mounted = store.useState("mounted");
+		const value = store.useState("value");
+		const triggerProps = store.useState("triggerProps");
+		const positionerElement = store.useState("positionerElement");
+		const listElement = store.useState("listElement");
+		const popupSideValue = store.useState("popupSide");
+		const rootId = store.useState("id");
+		const selectLabelId = store.useState("labelId");
+		const hasSelectedValue = store.useState("hasSelectedValue");
+		const popupSide = mounted && positionerElement ? popupSideValue : null;
+		const id = idProp ?? rootId;
+		const ariaLabelledBy = resolveAriaLabelledBy(fieldLabelId, selectLabelId);
+		useLabelableId({ id: idProp });
+		const positionerRef = useValueAsRef(positionerElement);
+		const triggerRef = react.useRef(null);
+		const setFocused = useSetFieldFocused(disabled, triggerRef);
+		const { getButtonProps, buttonRef } = useButton({
+			disabled,
+			native: nativeButton
+		});
+		const setTriggerElement = store.useStateSetter("triggerElement");
+		const timeoutFocus = useTimeout();
+		const timeoutMouseDown = useTimeout();
+		const selectedDelayTimeout = useTimeout();
+		react.useEffect(() => {
+			if (open) {
+				selectedDelayTimeout.start(SELECTED_DELAY, () => {
+					store.context.selectionRef.current.allowUnselectedMouseUp = true;
+					store.context.selectionRef.current.allowSelectedMouseUp = true;
+				});
+				return () => {
+					selectedDelayTimeout.clear();
+				};
+			}
+			store.context.selectionRef.current = {
+				allowSelectedMouseUp: false,
+				allowUnselectedMouseUp: false,
+				dragY: 0
+			};
+			timeoutMouseDown.clear();
+		}, [
+			open,
+			store,
+			timeoutMouseDown,
+			selectedDelayTimeout
+		]);
+		const mergedProps = mergeProps(triggerProps, {
+			id,
+			role: "combobox",
+			"aria-expanded": open,
+			"aria-haspopup": "listbox",
+			"aria-controls": open ? listElement?.id ?? getFloatingFocusElement(positionerElement)?.id : void 0,
+			"aria-labelledby": ariaLabelledBy,
+			"aria-readonly": readOnly || void 0,
+			"aria-required": required || void 0,
+			tabIndex: disabled ? -1 : 0,
+			onFocus(event) {
+				setFocused(true);
+				if (open && store.context.alignItemWithTriggerActiveRef.current) store.context.setOpen(false, createChangeEventDetails(none, event.nativeEvent));
+				timeoutFocus.start(0, () => {
+					store.set("forceMount", true);
+				});
+			},
+			onBlur(event) {
+				if (contains(positionerElement, event.relatedTarget)) return;
+				setTouched(true);
+				setFocused(false);
+				if (validationMode === "onBlur") validation.commit(value);
+			},
+			onMouseDown(event) {
+				if (open) return;
+				const doc = ownerDocument(event.currentTarget);
+				function handleMouseUp(mouseEvent) {
+					if (!triggerRef.current) return;
+					const mouseUpTarget = mouseEvent.target;
+					if (contains(triggerRef.current, mouseUpTarget) || contains(positionerRef.current, mouseUpTarget)) return;
+					if (isMouseWithinBounds(mouseEvent, triggerRef.current)) return;
+					store.context.setOpen(false, createChangeEventDetails(cancelOpen, mouseEvent));
+				}
+				timeoutMouseDown.start(0, () => {
+					doc.addEventListener("mouseup", handleMouseUp, { once: true });
+				});
+			}
+		}, elementProps, getButtonProps);
+		const props = validation.getValidationProps(disabled, mergedProps);
+		props.role = "combobox";
+		const state = {
+			...fieldState,
+			open,
+			disabled,
+			value,
+			readOnly,
+			popupSide,
+			placeholder: !hasSelectedValue
+		};
+		return useRenderElement("button", componentProps, {
+			ref: [
+				forwardedRef,
+				triggerRef,
+				buttonRef,
+				setTriggerElement
+			],
+			state,
+			stateAttributesMapping: stateAttributesMapping$4,
+			props
+		});
+	});
+	SelectTrigger.displayName = "SelectTrigger";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/value/SelectValue.mjs
+	const stateAttributesMapping$3 = { value: () => null };
+	/**
+	* A text label of the currently selected item.
+	* Renders a `<span>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectValue = /*#__PURE__*/ react.forwardRef(function SelectValue(componentProps, forwardedRef) {
+		const { className, render, children: childrenProp, placeholder, style, ...elementProps } = componentProps;
+		const store = useSelectRootContext();
+		const value = store.useState("value");
+		const items = store.useState("items");
+		const itemToStringLabel = store.useState("itemToStringLabel");
+		const hasSelectedValue = store.useState("hasSelectedValue");
+		const shouldCheckNullItemLabel = !hasSelectedValue && placeholder != null && childrenProp == null;
+		const hasNullLabel = store.useState("hasNullItemLabel", shouldCheckNullItemLabel);
+		const state = {
+			value,
+			placeholder: !hasSelectedValue
+		};
+		let children = null;
+		if (typeof childrenProp === "function") children = childrenProp(value);
+		else if (childrenProp != null) children = childrenProp;
+		else if (shouldCheckNullItemLabel && !hasNullLabel) children = placeholder;
+		else if (Array.isArray(value)) children = resolveMultipleLabels(value, items, itemToStringLabel);
+		else children = resolveSelectedLabel(value, items, itemToStringLabel);
+		return useRenderElement("span", componentProps, {
+			state,
+			ref: [forwardedRef, store.context.valueRef],
+			props: [{ children }, elementProps],
+			stateAttributesMapping: stateAttributesMapping$3
+		});
+	});
+	SelectValue.displayName = "SelectValue";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/portal/SelectPortal.mjs
+/**
+	* A portal element that moves the popup to a different part of the DOM.
+	* By default, the portal element is appended to `<body>`.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectPortal = /*#__PURE__*/ react.forwardRef(function SelectPortal(portalProps, forwardedRef) {
+		const store = useSelectRootContext();
+		const mounted = store.useState("mounted");
+		const forceMount = store.useState("forceMount");
+		if (!(mounted || forceMount)) return null;
+		return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(FloatingPortal, {
+			ref: forwardedRef,
+			...portalProps
+		});
+	});
+	SelectPortal.displayName = "SelectPortal";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositionerContext.mjs
+	const SelectPositionerContext = /*#__PURE__*/ react.createContext(void 0);
+	SelectPositionerContext.displayName = "SelectPositionerContext";
+	function useSelectPositionerContext() {
+		const context = react.useContext(SelectPositionerContext);
+		if (!context) throw new Error("Base UI: SelectPositionerContext is missing. SelectPositioner parts must be placed within <Select.Positioner>.");
+		return context;
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/popup/utils.mjs
+	function clearStyles(element, originalStyles) {
+		if (element) Object.assign(element.style, originalStyles);
+	}
+	const LIST_FUNCTIONAL_STYLES = {
+		position: "relative",
+		maxHeight: "100%",
+		overflowX: "hidden",
+		overflowY: "auto"
+	};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositioner.mjs
+	const FIXED = { position: "fixed" };
+	/**
+	* Positions the select popup.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectPositioner = /*#__PURE__*/ react.forwardRef(function SelectPositioner(componentProps, forwardedRef) {
+		const { anchor, className, render, positionMethod, side, align, sideOffset, alignOffset, collisionBoundary = "clipping-ancestors", collisionPadding, arrowPadding, sticky, disableAnchorTracking, alignItemWithTrigger = true, collisionAvoidance = DROPDOWN_COLLISION_AVOIDANCE, style, ...elementProps } = componentProps;
+		const store = useSelectRootContext();
+		const floatingRootContext = useSelectFloatingContext();
+		const open = store.useState("open");
+		const mounted = store.useState("mounted");
+		const modal = store.useState("modal");
+		const value = store.useState("value");
+		const openMethod = store.useState("openMethod");
+		const positionerElement = store.useState("positionerElement");
+		const triggerElement = store.useState("triggerElement");
+		const isItemEqualToValue = store.useState("isItemEqualToValue");
+		const transitionStatus = store.useState("transitionStatus");
+		const scrollUpArrowRef = react.useRef(null);
+		const scrollDownArrowRef = react.useRef(null);
+		const [controlledAlignItemWithTrigger, setControlledAlignItemWithTrigger] = react.useState(alignItemWithTrigger);
+		const alignItemWithTriggerActive = mounted && controlledAlignItemWithTrigger && openMethod !== "touch";
+		if (!mounted && controlledAlignItemWithTrigger !== alignItemWithTrigger) setControlledAlignItemWithTrigger(alignItemWithTrigger);
+		react.useImperativeHandle(store.context.alignItemWithTriggerActiveRef, () => alignItemWithTriggerActive);
+		useAnchoredPopupScrollLock((alignItemWithTriggerActive || modal) && open, openMethod === "touch", positionerElement, triggerElement);
+		const positioning = useAnchorPositioning({
+			anchor,
+			floatingRootContext,
+			positionMethod,
+			mounted,
+			side,
+			sideOffset,
+			align,
+			alignOffset,
+			arrowPadding,
+			collisionBoundary,
+			collisionPadding,
+			sticky,
+			disableAnchorTracking: disableAnchorTracking ?? alignItemWithTriggerActive,
+			collisionAvoidance,
+			keepMounted: true
+		});
+		const renderedSide = alignItemWithTriggerActive ? "none" : positioning.side;
+		const positionerStyles = alignItemWithTriggerActive ? FIXED : positioning.positionerStyles;
+		const state = {
+			open,
+			side: renderedSide,
+			align: positioning.align,
+			anchorHidden: positioning.anchorHidden
+		};
+		useIsoLayoutEffect(() => {
+			store.set("popupSide", positioning.side);
+		}, [store, positioning.side]);
+		const setPositionerElement = store.useStateSetter("positionerElement");
+		const element = usePositioner(componentProps, state, {
+			styles: positionerStyles,
+			transitionStatus,
+			props: elementProps,
+			refs: [forwardedRef, setPositionerElement],
+			hidden: !mounted,
+			inert: !open
+		});
+		const prevMapSizeRef = react.useRef(0);
+		const onMapChange = useStableCallback((map) => {
+			if (store.context.valuesRef.current.length === 0) return;
+			const prevSize = prevMapSizeRef.current;
+			prevMapSizeRef.current = map.size;
+			const eventDetails = createChangeEventDetails(none);
+			if (prevSize !== 0 && !store.state.multiple && value !== null) {
+				if (findItemIndex(store.context.valuesRef.current, value, isItemEqualToValue) === -1) {
+					const initialSelectedValue = store.context.initialValueRef.current;
+					const nextValue = initialSelectedValue != null && findItemIndex(store.context.valuesRef.current, initialSelectedValue, isItemEqualToValue) !== -1 ? initialSelectedValue : null;
+					store.context.setValue(nextValue, eventDetails);
+					if (nextValue === null) {
+						store.set("selectedIndex", null);
+						store.context.selectedItemTextRef.current = null;
+					}
+				}
+			}
+			if (prevSize !== 0 && store.state.multiple && Array.isArray(value)) {
+				const nextValue = value.filter((selectedItemValue) => findItemIndex(store.context.valuesRef.current, selectedItemValue, isItemEqualToValue) !== -1);
+				if (nextValue.length !== value.length) {
+					store.context.setValue(nextValue, eventDetails);
+					if (nextValue.length === 0) {
+						store.set("selectedIndex", null);
+						store.context.selectedItemTextRef.current = null;
+					}
+				}
+			}
+			if (open && alignItemWithTriggerActive) {
+				store.update({
+					scrollUpArrowVisible: false,
+					scrollDownArrowVisible: false
+				});
+				const stylesToClear = { height: "" };
+				clearStyles(positionerElement, stylesToClear);
+				clearStyles(store.context.popupRef.current, stylesToClear);
+			}
+		});
+		const contextValue = react.useMemo(() => ({
+			...positioning,
+			side: renderedSide,
+			alignItemWithTriggerActive,
+			setControlledAlignItemWithTrigger,
+			scrollUpArrowRef,
+			scrollDownArrowRef
+		}), [
+			positioning,
+			renderedSide,
+			alignItemWithTriggerActive,
+			setControlledAlignItemWithTrigger
+		]);
+		return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(CompositeList, {
+			elementsRef: store.context.listRef,
+			labelsRef: store.context.labelsRef,
+			onMapChange,
+			children: /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(SelectPositionerContext.Provider, {
+				value: contextValue,
+				children: [mounted && modal && /*#__PURE__*/ (0, react_jsx_runtime.jsx)(InternalBackdrop, {
+					inert: inertValue$1(!open),
+					cutout: triggerElement
+				}), element]
+			})
+		});
+	});
+	SelectPositioner.displayName = "SelectPositioner";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositionerCssVars.mjs
+/**
+	* The coordinates that this element is anchored to. Used for animations and transitions.
+	* @type {string}
+	*/
+	const transformOrigin = "--transform-origin";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/popup/SelectPopup.mjs
+	const stateAttributesMapping$2 = {
+		...popupStateMapping,
+		...transitionStatusMapping
+	};
+	/**
+	* A container for the select list.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectPopup = /*#__PURE__*/ react.forwardRef(function SelectPopup(componentProps, forwardedRef) {
+		const { render, className, style, finalFocus, ...elementProps } = componentProps;
+		const store = useSelectRootContext();
+		const multiple = store.useState("multiple");
+		const readOnly = store.useState("readOnly");
+		const highlightItemOnHover = store.useState("highlightItemOnHover");
+		const floatingRootContext = useSelectFloatingContext();
+		const { side, align, alignItemWithTriggerActive, isPositioned, setControlledAlignItemWithTrigger } = useSelectPositionerContext();
+		const insideToolbar = useToolbarRootContext(true) != null;
+		const direction = useDirection();
+		const { nonce, disableStyleElements } = useCSPContext();
+		const id = store.useState("id");
+		const open = store.useState("open");
+		const openMethod = store.useState("openMethod");
+		const mounted = store.useState("mounted");
+		const popupProps = store.useState("popupProps");
+		const transitionStatus = store.useState("transitionStatus");
+		const triggerElement = store.useState("triggerElement");
+		const positionerElement = store.useState("positionerElement");
+		const listElement = store.useState("listElement");
+		const reachedMaxHeightRef = react.useRef(false);
+		const initialPlacedRef = react.useRef(false);
+		const originalPositionerStylesRef = react.useRef({});
+		const scrollArrowFrame = useAnimationFrame();
+		const handleScroll = useStableCallback((scroller) => {
+			if (!positionerElement || !store.context.popupRef.current || !initialPlacedRef.current) return;
+			const isTopPositioned = positionerElement.style.top === "0px";
+			const isBottomPositioned = positionerElement.style.bottom === "0px";
+			if (reachedMaxHeightRef.current || !alignItemWithTriggerActive || !isTopPositioned && !isBottomPositioned) {
+				store.context.handleScrollArrowVisibility(scroller);
+				return;
+			}
+			const scale = getScale(positionerElement);
+			const currentHeight = normalizeSize(positionerElement.getBoundingClientRect().height, "y", scale);
+			const doc = ownerDocument(positionerElement);
+			const win = getWindow(positionerElement);
+			const positionerStyles = win.getComputedStyle(positionerElement);
+			const marginTop = parseFloat(positionerStyles.marginTop);
+			const marginBottom = parseFloat(positionerStyles.marginBottom);
+			const maxPopupHeight = getMaxPopupHeight(win.getComputedStyle(store.context.popupRef.current));
+			const maxAvailableHeight = Math.min(doc.documentElement.clientHeight - marginTop - marginBottom, maxPopupHeight);
+			const scrollTop = scroller.scrollTop;
+			const maxScrollTop = getMaxScrollTop(scroller);
+			let nextScrollTop = null;
+			const setHeight = (height) => {
+				positionerElement.style.height = `${height}px`;
+			};
+			const diff = isTopPositioned ? maxScrollTop - scrollTop : scrollTop;
+			const nextHeight = Math.min(currentHeight + diff, maxAvailableHeight);
+			if (diff <= 1) {
+				const heightDelta = clamp(diff, 0, maxAvailableHeight - currentHeight);
+				if (heightDelta > 0) setHeight(currentHeight + heightDelta);
+				scroller.scrollTop = isTopPositioned ? maxScrollTop : 0;
+				if (maxAvailableHeight - (currentHeight + heightDelta) <= 1) reachedMaxHeightRef.current = true;
+				store.context.handleScrollArrowVisibility(scroller);
+				return;
+			}
+			if (maxAvailableHeight - nextHeight > 1) nextScrollTop = isTopPositioned ? Infinity : 0;
+			else if (isBottomPositioned && scrollTop < maxScrollTop) nextScrollTop = scrollTop - (diff - (currentHeight + diff - maxAvailableHeight));
+			const nextPositionerHeight = Math.ceil(nextHeight);
+			if (nextPositionerHeight !== 0) setHeight(nextPositionerHeight);
+			if (nextScrollTop != null) {
+				const target = clamp(nextScrollTop, 0, getMaxScrollTop(scroller));
+				if (Math.abs(scroller.scrollTop - target) > 1) scroller.scrollTop = target;
+			}
+			if (nextPositionerHeight >= maxAvailableHeight - 1) reachedMaxHeightRef.current = true;
+			store.context.handleScrollArrowVisibility(scroller);
+		});
+		react.useImperativeHandle(store.context.scrollHandlerRef, () => handleScroll, [handleScroll]);
+		useOpenChangeComplete({
+			open,
+			ref: store.context.popupRef,
+			onComplete() {
+				if (open) store.context.onOpenChangeComplete(true);
+			}
+		});
+		const state = {
+			open,
+			transitionStatus,
+			side,
+			align
+		};
+		useIsoLayoutEffect(() => {
+			if (!positionerElement || !store.context.popupRef.current || Object.keys(originalPositionerStylesRef.current).length) return;
+			originalPositionerStylesRef.current = {
+				top: positionerElement.style.top || "0",
+				left: positionerElement.style.left || "0",
+				right: positionerElement.style.right,
+				height: positionerElement.style.height,
+				bottom: positionerElement.style.bottom,
+				minHeight: positionerElement.style.minHeight,
+				maxHeight: positionerElement.style.maxHeight,
+				marginTop: positionerElement.style.marginTop,
+				marginBottom: positionerElement.style.marginBottom
+			};
+		}, [store, positionerElement]);
+		useIsoLayoutEffect(() => {
+			if (open || alignItemWithTriggerActive) return;
+			initialPlacedRef.current = false;
+			reachedMaxHeightRef.current = false;
+			clearStyles(positionerElement, originalPositionerStylesRef.current);
+		}, [
+			open,
+			alignItemWithTriggerActive,
+			positionerElement
+		]);
+		useIsoLayoutEffect(() => {
+			const popupElement = store.context.popupRef.current;
+			if (!open || !triggerElement || !positionerElement || !popupElement || alignItemWithTriggerActive && !isPositioned || store.state.transitionStatus === "ending") return;
+			initialPlacedRef.current = true;
+			popupElement.style.removeProperty(transformOrigin);
+			if (!alignItemWithTriggerActive) {
+				scrollArrowFrame.request(() => store.context.handleScrollArrowVisibility(listElement || popupElement));
+				return;
+			}
+			const restoreTransformStyles = unsetTransformStyles(popupElement);
+			try {
+				let textElement = store.context.selectedItemTextRef.current;
+				if (!textElement?.isConnected) textElement = !store.select("hasSelectedValue") && store.context.firstItemTextRef.current?.isConnected ? store.context.firstItemTextRef.current : null;
+				const valueElement = store.context.valueRef.current;
+				const win = getWindow(positionerElement);
+				const positionerStyles = win.getComputedStyle(positionerElement);
+				const popupStyles = win.getComputedStyle(popupElement);
+				const doc = ownerDocument(triggerElement);
+				const scale = getScale(triggerElement);
+				const triggerRect = normalizeRect(triggerElement.getBoundingClientRect(), scale);
+				const positionerRect = normalizeRect(positionerElement.getBoundingClientRect(), scale);
+				const triggerHeight = triggerRect.height;
+				const scroller = listElement || popupElement;
+				const scrollHeight = scroller.scrollHeight;
+				const borderBottom = parseFloat(popupStyles.borderBottomWidth);
+				const marginTop = parseFloat(positionerStyles.marginTop) || 10;
+				const marginBottom = parseFloat(positionerStyles.marginBottom) || 10;
+				const minHeight = parseFloat(positionerStyles.minHeight) || 100;
+				const maxPopupHeight = getMaxPopupHeight(popupStyles);
+				const paddingLeft = 5;
+				const paddingRight = 5;
+				const triggerCollisionThreshold = 20;
+				const viewportHeight = doc.documentElement.clientHeight - marginTop - marginBottom;
+				const viewportWidth = doc.documentElement.clientWidth;
+				const availableSpaceBeneathTrigger = viewportHeight - triggerRect.bottom + triggerHeight;
+				let textRect;
+				let alignedLeft = direction === "rtl" ? triggerRect.right - positionerRect.width : triggerRect.left;
+				let offsetY = 0;
+				if (textElement && valueElement) {
+					const valueRect = normalizeRect(valueElement.getBoundingClientRect(), scale);
+					textRect = normalizeRect(textElement.getBoundingClientRect(), scale);
+					alignedLeft = positionerRect.left + (direction === "rtl" ? valueRect.right - textRect.right : valueRect.left - textRect.left);
+					const valueCenterFromTriggerTop = valueRect.top - triggerRect.top + valueRect.height / 2;
+					offsetY = textRect.top - positionerRect.top + textRect.height / 2 - valueCenterFromTriggerTop;
+				}
+				const idealHeight = availableSpaceBeneathTrigger + offsetY + marginBottom + borderBottom;
+				let height = Math.min(viewportHeight, idealHeight);
+				const maxHeight = viewportHeight - marginTop - marginBottom;
+				const scrollTop = idealHeight - height;
+				const maxRight = viewportWidth - paddingRight;
+				positionerElement.style.left = `${clamp(alignedLeft, paddingLeft, maxRight - positionerRect.width)}px`;
+				positionerElement.style.height = `${height}px`;
+				positionerElement.style.maxHeight = "none";
+				positionerElement.style.marginTop = `${marginTop}px`;
+				positionerElement.style.marginBottom = `${marginBottom}px`;
+				popupElement.style.height = "100%";
+				const maxScrollTop = getMaxScrollTop(scroller);
+				const isTopPositioned = scrollTop >= maxScrollTop - 1;
+				if (isTopPositioned) height = Math.min(viewportHeight, positionerRect.height) - (scrollTop - maxScrollTop);
+				const fallbackToAlignPopupToTrigger = triggerRect.top < triggerCollisionThreshold || triggerRect.bottom > viewportHeight - triggerCollisionThreshold || Math.ceil(height) + 1 < Math.min(scrollHeight, minHeight);
+				const isPinchZoomed = (win.visualViewport?.scale ?? 1) !== 1 && webkit;
+				if (fallbackToAlignPopupToTrigger || isPinchZoomed) {
+					clearStyles(positionerElement, originalPositionerStylesRef.current);
+					setControlledAlignItemWithTrigger(false);
+					return;
+				}
+				const initialHeight = Math.max(minHeight, height);
+				if (isTopPositioned) {
+					const topOffset = Math.max(0, viewportHeight - idealHeight);
+					positionerElement.style.top = positionerRect.height >= maxHeight ? "0" : `${topOffset}px`;
+					positionerElement.style.height = `${height}px`;
+					scroller.scrollTop = getMaxScrollTop(scroller);
+				} else {
+					positionerElement.style.bottom = "0";
+					scroller.scrollTop = scrollTop;
+				}
+				if (textRect) {
+					const popupTop = positionerRect.top;
+					const popupHeight = positionerRect.height;
+					const textCenterY = textRect.top + textRect.height / 2;
+					const clampedY = clamp(popupHeight > 0 ? (textCenterY - popupTop) / popupHeight * 100 : 50, 0, 100);
+					popupElement.style.setProperty(transformOrigin, `50% ${clampedY}%`);
+				}
+				if (initialHeight === viewportHeight || height >= maxPopupHeight) reachedMaxHeightRef.current = true;
+				store.context.handleScrollArrowVisibility(scroller);
+				if (highlightItemOnHover && store.state.selectedIndex === null && store.state.activeIndex === null && store.context.listRef.current[0] != null) store.set("activeIndex", 0);
+			} finally {
+				restoreTransformStyles();
+			}
+		}, [
+			store,
+			open,
+			positionerElement,
+			triggerElement,
+			alignItemWithTriggerActive,
+			setControlledAlignItemWithTrigger,
+			scrollArrowFrame,
+			listElement,
+			highlightItemOnHover,
+			direction,
+			isPositioned
+		]);
+		react.useEffect(() => {
+			if (!alignItemWithTriggerActive || !positionerElement || !open) return;
+			const win = getWindow(positionerElement);
+			function handleResize(event) {
+				store.context.setOpen(false, createChangeEventDetails(windowResize, event));
+			}
+			return addEventListener(win, "resize", handleResize);
+		}, [
+			store,
+			alignItemWithTriggerActive,
+			positionerElement,
+			open
+		]);
+		const defaultProps = {
+			...listElement ? { role: "presentation" } : {
+				role: "listbox",
+				"aria-multiselectable": multiple || void 0,
+				"aria-readonly": readOnly || void 0,
+				id: `${id}-list`
+			},
+			onKeyDown(event) {
+				if (insideToolbar && COMPOSITE_KEYS.has(event.key)) event.stopPropagation();
+			},
+			onScroll(event) {
+				if (listElement) return;
+				handleScroll(event.currentTarget);
+			},
+			...alignItemWithTriggerActive && { style: listElement ? { height: "100%" } : LIST_FUNCTIONAL_STYLES },
+			className: !listElement && alignItemWithTriggerActive ? styleDisableScrollbar.className : void 0
+		};
+		const element = useRenderElement("div", componentProps, {
+			ref: [forwardedRef, store.context.popupRef],
+			state,
+			stateAttributesMapping: stateAttributesMapping$2,
+			props: [
+				popupProps,
+				defaultProps,
+				getDisabledMountTransitionStyles(transitionStatus),
+				elementProps
+			]
+		});
+		return /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(react.Fragment, { children: [!disableStyleElements && styleDisableScrollbar.getElement(nonce), /*#__PURE__*/ (0, react_jsx_runtime.jsx)(FloatingFocusManager, {
+			context: floatingRootContext,
+			modal: false,
+			disabled: !mounted,
+			openInteractionType: openMethod,
+			returnFocus: finalFocus,
+			restoreFocus: true,
+			children: element
+		})] });
+	});
+	SelectPopup.displayName = "SelectPopup";
+	function getMaxPopupHeight(popupStyles) {
+		const maxHeightStyle = popupStyles.maxHeight;
+		return maxHeightStyle.endsWith("px") ? parseFloat(maxHeightStyle) || Infinity : Infinity;
+	}
+	function getMaxScrollTop(scroller) {
+		return getMaxScrollOffset(scroller.scrollHeight, scroller.clientHeight);
+	}
+	function getScale(element) {
+		return platform.getScale(element);
+	}
+	function normalizeSize(size, axis, scale) {
+		return size / scale[axis];
+	}
+	function normalizeRect(rect, scale) {
+		return rectToClientRect({
+			x: normalizeSize(rect.x, "x", scale),
+			y: normalizeSize(rect.y, "y", scale),
+			width: normalizeSize(rect.width, "x", scale),
+			height: normalizeSize(rect.height, "y", scale)
+		});
+	}
+	const TRANSFORM_STYLE_RESETS = [
+		["transform", "none"],
+		["scale", "1"],
+		["translate", "0 0"]
+	];
+	function unsetTransformStyles(popupElement) {
+		const { style } = popupElement;
+		const originalStyles = {};
+		for (const [property, value] of TRANSFORM_STYLE_RESETS) {
+			originalStyles[property] = style.getPropertyValue(property);
+			style.setProperty(property, value, "important");
+		}
+		return () => {
+			for (const [property] of TRANSFORM_STYLE_RESETS) {
+				const originalValue = originalStyles[property];
+				if (originalValue) style.setProperty(property, originalValue);
+				else style.removeProperty(property);
+			}
+		};
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/list/SelectList.mjs
+/**
+	* A container for the select items.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectList = /*#__PURE__*/ react.forwardRef(function SelectList(componentProps, forwardedRef) {
+		const { render, className, style, ...elementProps } = componentProps;
+		const store = useSelectRootContext();
+		const multiple = store.useState("multiple");
+		const readOnly = store.useState("readOnly");
+		const { alignItemWithTriggerActive } = useSelectPositionerContext();
+		const hasScrollArrows = store.useState("hasScrollArrows");
+		const openMethod = store.useState("openMethod");
+		const defaultProps = {
+			id: `${store.useState("id")}-list`,
+			role: "listbox",
+			"aria-multiselectable": multiple || void 0,
+			"aria-readonly": readOnly || void 0,
+			onScroll(event) {
+				store.context.scrollHandlerRef.current?.(event.currentTarget);
+			},
+			...alignItemWithTriggerActive && { style: LIST_FUNCTIONAL_STYLES },
+			className: hasScrollArrows && openMethod !== "touch" ? styleDisableScrollbar.className : void 0
+		};
+		const setListElement = store.useStateSetter("listElement");
+		return useRenderElement("div", componentProps, {
+			ref: [forwardedRef, setListElement],
+			props: [defaultProps, elementProps]
+		});
+	});
+	SelectList.displayName = "SelectList";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item/SelectItemContext.mjs
+	const SelectItemContext = /*#__PURE__*/ react.createContext(void 0);
+	SelectItemContext.displayName = "SelectItemContext";
+	function useSelectItemContext() {
+		const context = react.useContext(SelectItemContext);
+		if (!context) throw new Error("Base UI: SelectItemContext is missing. SelectItem parts must be placed within <Select.Item>.");
+		return context;
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item/SelectItem.mjs
+/**
+	* An individual option in the select popup.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectItem = /*#__PURE__*/ react.memo(/*#__PURE__*/ react.forwardRef(function SelectItem(componentProps, forwardedRef) {
+		const { render, className, style, value: itemValue = null, label, disabled: disabledProp = false, nativeButton = false, ...elementProps } = componentProps;
+		const textRef = react.useRef(null);
+		const listItem = useCompositeListItem({
+			guess: true,
+			label,
+			textRef
+		});
+		const store = useSelectRootContext();
+		const { props: itemProps, multiple, disabled: selectDisabled, readOnly, isItemEqualToValue } = store.useState("itemRoot");
+		const disabled = selectDisabled || disabledProp;
+		const highlighted = store.useState("isActive", listItem.index);
+		const open = store.useState("open");
+		const selected = store.useState("isSelected", itemValue);
+		const selectedByFocus = store.useState("isSelectedByFocus", listItem.index);
+		const index = listItem.index;
+		const itemRef = react.useRef(null);
+		useIsoLayoutEffect(() => {
+			const values = store.context.valuesRef.current;
+			values[index] = itemValue;
+			return () => {
+				delete values[index];
+			};
+		}, [
+			index,
+			itemValue,
+			store
+		]);
+		useIsoLayoutEffect(() => {
+			const selectedValue = store.state.value;
+			const currentIndex = store.state.selectedIndex;
+			let nextIndex = currentIndex;
+			let claims;
+			if (multiple && Array.isArray(selectedValue)) {
+				nextIndex = resolveSelectedIndex(index, itemValue, store.context.valuesRef.current, selectedValue, isItemEqualToValue, currentIndex);
+				claims = nextIndex === index;
+				if (index === currentIndex && !claims) store.context.selectedItemTextRef.current = null;
+			} else {
+				claims = selectedValue !== void 0 && compareItemEquality(itemValue, selectedValue, isItemEqualToValue);
+				if (claims) nextIndex = index;
+			}
+			store.set("selectedIndex", nextIndex);
+			if (claims && textRef.current) store.context.selectedItemTextRef.current = textRef.current;
+		}, [
+			index,
+			multiple,
+			isItemEqualToValue,
+			store,
+			itemValue
+		]);
+		const pointerTypeRef = react.useRef("mouse");
+		const allowMouseSelectionRef = react.useRef(false);
+		const { getButtonProps, buttonRef } = useButton({
+			disabled,
+			focusableWhenDisabled: true,
+			native: nativeButton,
+			composite: true
+		});
+		const state = {
+			disabled,
+			selected,
+			highlighted
+		};
+		function commitSelection(event) {
+			if (selectDisabled || readOnly) return;
+			const selectedValue = store.state.value;
+			if (multiple) {
+				const currentValue = Array.isArray(selectedValue) ? selectedValue : [];
+				const nextValue = selected ? removeItem(currentValue, itemValue, isItemEqualToValue) : [...currentValue, itemValue];
+				store.context.setValue(nextValue, createChangeEventDetails(itemPress, event));
+			} else {
+				store.context.setValue(itemValue, createChangeEventDetails(itemPress, event));
+				store.context.setOpen(false, createChangeEventDetails(itemPress, event));
+			}
+		}
+		function resetDragMovement() {
+			store.context.selectionRef.current.dragY = 0;
+		}
+		const defaultProps = {
+			role: "option",
+			"aria-selected": selected,
+			tabIndex: open && highlighted ? 0 : -1,
+			onKeyDown(event) {
+				store.set("activeIndex", index);
+				if (event.key === " " && store.context.typingRef.current) event.preventDefault();
+			},
+			onClick(event) {
+				const isMouseClick = pointerTypeRef.current !== "touch";
+				const clickPointerType = event.nativeEvent.pointerType;
+				const isVirtualMouseClick = isMouseClick && isVirtualClick(event.nativeEvent) && (clickPointerType !== void 0 || highlighted);
+				const isInvalidMouseClick = isMouseClick && !isVirtualMouseClick && !allowMouseSelectionRef.current;
+				allowMouseSelectionRef.current = false;
+				if (disabled || isInvalidMouseClick) return;
+				commitSelection(event.nativeEvent);
+			},
+			onPointerEnter(event) {
+				pointerTypeRef.current = event.pointerType;
+			},
+			onPointerMove(event) {
+				if (event.pointerType === "mouse" && event.buttons === 1) {
+					const selection = store.context.selectionRef.current;
+					selection.dragY += event.movementY;
+					if (selection.dragY ** 2 >= 64) selection.allowUnselectedMouseUp = true;
+				}
+			},
+			onPointerDown(event) {
+				pointerTypeRef.current = event.pointerType;
+				allowMouseSelectionRef.current = true;
+				resetDragMovement();
+			},
+			onMouseUp() {
+				resetDragMovement();
+				if (disabled || pointerTypeRef.current === "touch") return;
+				if (allowMouseSelectionRef.current) return;
+				const disallowSelectedMouseUp = !store.context.selectionRef.current.allowSelectedMouseUp && selected;
+				const disallowUnselectedMouseUp = !store.context.selectionRef.current.allowUnselectedMouseUp && !selected;
+				if (disallowSelectedMouseUp || disallowUnselectedMouseUp) return;
+				allowMouseSelectionRef.current = true;
+				itemRef.current?.click();
+				allowMouseSelectionRef.current = false;
+			}
+		};
+		const element = useRenderElement("div", componentProps, {
+			ref: [
+				buttonRef,
+				forwardedRef,
+				listItem.ref,
+				itemRef
+			],
+			state,
+			props: [
+				itemProps,
+				defaultProps,
+				elementProps,
+				getButtonProps
+			]
+		});
+		const contextValue = react.useMemo(() => ({
+			selected,
+			index,
+			textRef,
+			selectedByFocus
+		}), [
+			selected,
+			index,
+			textRef,
+			selectedByFocus
+		]);
+		return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(SelectItemContext.Provider, {
+			value: contextValue,
+			children: element
+		});
+	}));
+	SelectItem.displayName = "SelectItem";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item-text/SelectItemText.mjs
+/**
+	* A text label of the select item.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectItemText = /*#__PURE__*/ react.memo(/*#__PURE__*/ react.forwardRef(function SelectItemText(componentProps, forwardedRef) {
+		const { index, textRef, selectedByFocus } = useSelectItemContext();
+		const store = useSelectRootContext();
+		const { render, className, style, ...elementProps } = componentProps;
+		const localRef = react.useCallback((node) => {
+			if (!node) return;
+			if (index === 0) store.context.firstItemTextRef.current = node;
+			if (selectedByFocus) store.context.selectedItemTextRef.current = node;
+		}, [
+			store,
+			index,
+			selectedByFocus
+		]);
+		return useRenderElement("div", componentProps, {
+			ref: [
+				localRef,
+				forwardedRef,
+				textRef
+			],
+			props: elementProps
+		});
+	}));
+	SelectItemText.displayName = "SelectItemText";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroupContext.mjs
+	const SelectGroupContext = /*#__PURE__*/ react.createContext(void 0);
+	SelectGroupContext.displayName = "SelectGroupContext";
+	function useSelectGroupContext() {
+		const context = react.useContext(SelectGroupContext);
+		if (context === void 0) throw new Error("Base UI: SelectGroupContext is missing. SelectGroup parts must be placed within <Select.Group>.");
+		return context;
+	}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroup.mjs
+/**
+	* Groups related select items with the corresponding label.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectGroup = /*#__PURE__*/ react.forwardRef(function SelectGroup(componentProps, forwardedRef) {
+		const { render, className, style, ...elementProps } = componentProps;
+		const [labelId, setLabelId] = react.useState();
+		const contextValue = react.useMemo(() => ({
+			labelId,
+			setLabelId
+		}), [labelId, setLabelId]);
+		const element = useRenderElement("div", componentProps, {
+			ref: forwardedRef,
+			props: [{
+				role: "group",
+				"aria-labelledby": labelId
+			}, elementProps]
+		});
+		return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(SelectGroupContext.Provider, {
+			value: contextValue,
+			children: element
+		});
+	});
+	SelectGroup.displayName = "SelectGroup";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group-label/SelectGroupLabel.mjs
+/**
+	* An accessible label that is automatically associated with its parent group.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectGroupLabel = /*#__PURE__*/ react.forwardRef(function SelectGroupLabel(componentProps, forwardedRef) {
+		const { render, className, style, id: idProp, ...elementProps } = componentProps;
+		const { setLabelId } = useSelectGroupContext();
+		const id = useBaseUiId(idProp);
+		useIsoLayoutEffect(() => {
+			setLabelId(id);
+			return () => {
+				setLabelId((currentId) => currentId === id ? void 0 : currentId);
+			};
+		}, [id, setLabelId]);
+		return useRenderElement("div", componentProps, {
+			ref: forwardedRef,
+			props: [{
+				id,
+				"aria-hidden": true
+			}, elementProps]
+		});
+	});
+	SelectGroupLabel.displayName = "SelectGroupLabel";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/separator/SelectSeparator.mjs
+/**
+	* A visual separator between items or groups.
+	* Renders a `<div>` element.
+	*
+	* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+	*/
+	const SelectSeparator = ListboxSeparator;
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/hydration.mjs
 	const emptySubscribe = () => () => {};
@@ -20285,6 +21915,1454 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	}
 
 // packages/ui/build-module/spinner/spinner.mjs
+	const STYLE_HASH_ATTRIBUTE$51 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$51() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$51(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$51(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$51}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$51) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$51(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$51();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$51(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$51, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$51(targetDocument) {
+		const runtime = getRuntime$51();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$51(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$51(hash, css) {
+		const runtime = getRuntime$51();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$51(targetDocument, hash, css);
+	}
+	registerStyle$51("b081213352", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.da418dc15e63be57__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}._8b83deccaefa3c92__indicator{fill:transparent;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_0da63cf2c7b08803__spinner-spin 1.4s linear infinite both}@keyframes _0da63cf2c7b08803__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+	var style_module_default$25 = {
+		"spinner": "da418dc15e63be57__spinner",
+		"indicator": "_8b83deccaefa3c92__indicator",
+		"spinner-spin": "_0da63cf2c7b08803__spinner-spin"
+	};
+	/**
+	* A component used to notify users that their action is being processed.
+	*/
+	const Spinner$31 = (0, _wordpress_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
+			className: clsx(style_module_default$25.spinner, className),
+			style: color === void 0 ? style : {
+				...style,
+				color
+			},
+			viewBox: "0 0 24 24",
+			xmlns: "http://www.w3.org/2000/svg",
+			role: "presentation",
+			focusable: "false",
+			...props,
+			ref,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", {
+				className: style_module_default$25.indicator,
+				d: "m 12 0 a 12 12 0 0 1 0 24"
+			})
+		});
+	});
+
+// packages/ui/build-module/button/button.mjs
+	const STYLE_HASH_ATTRIBUTE$50 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$50() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$50(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$50(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$50}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$50) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$50(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$50();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$50(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$50, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$50(targetDocument) {
+		const runtime = getRuntime$50();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$50(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$50(hash, css) {
+		const runtime = getRuntime$50();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$50(targetDocument, hash, css);
+	}
+	registerStyle$50("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
+	var style_module_default$24 = {
+		"button": "e01b07636421375d__button",
+		"is-unstyled": "ec10ae721bc68934__is-unstyled",
+		"is-loading": "_414eb921eb9928fa__is-loading",
+		"is-small": "_36aecfa8aa1c059c__is-small",
+		"icon": "_6e27e09880945492__icon",
+		"is-brand": "e861e38ec209c386__is-brand",
+		"is-outline": "_126c37d7228179eb__is-outline",
+		"is-minimal": "_52d3a0733adabb28__is-minimal",
+		"is-neutral": "_4f1e6661283d0b09__is-neutral",
+		"is-solid": "_7b8ab25ed58515d2__is-solid",
+		"is-compact": "df99f7773c9c8915__is-compact",
+		"spinner": "_20f9e334daee91a7__spinner"
+	};
+	registerStyle$50("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$9 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	registerStyle$50("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+	var focus_module_default$6 = {
+		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+	};
+	registerStyle$50("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	var global_css_defense_module_default$12 = {
+		"button": "_78c10a0773e51a91__button",
+		"input": "_5b33aa2d48624b4f__input",
+		"textarea": "_980b3b4776ac8f81__textarea",
+		"div": "_43e478b4279a076c__div",
+		"p": "_698099e25b0fb1a6__p",
+		"heading": "_326aee4184d261fd__heading",
+		"a": "e9576240835601ba__a",
+		"ol": "_3f05789653864a73__ol",
+		"li": "_3c72ff72abe57859__li",
+		"span": "_79d16267c15d9eb2__span"
+	};
+	/**
+	* A versatile button component with multiple variants, tones, and sizes.
+	*
+	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+	*/
+	const Button$44 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
+		const mergedClassName = clsx(global_css_defense_module_default$12.button, resets_module_default$9["box-sizing"], focus_module_default$6["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$24.button, style_module_default$24[`is-${tone}`], style_module_default$24[`is-${variant}`], style_module_default$24[`is-${size}`], loading && style_module_default$24["is-loading"], className);
+		(0, _wordpress_element.useEffect)(() => {
+			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
+		}, [loading, loadingAnnouncement]);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$45, {
+			ref,
+			className: mergedClassName,
+			focusableWhenDisabled,
+			disabled: disabled ?? loading,
+			...props,
+			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$31, { className: style_module_default$24.spinner })]
+		});
+	});
+
+// packages/ui/build-module/button/icon.mjs
+	const STYLE_HASH_ATTRIBUTE$49 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$49() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$49(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$49(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$49}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$49) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$49(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$49();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$49(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$49, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$49(targetDocument) {
+		const runtime = getRuntime$49();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$49(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$49(hash, css) {
+		const runtime = getRuntime$49();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$49(targetDocument, hash, css);
+	}
+	registerStyle$49("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
+	var style_module_default$23 = {
+		"button": "e01b07636421375d__button",
+		"is-unstyled": "ec10ae721bc68934__is-unstyled",
+		"is-loading": "_414eb921eb9928fa__is-loading",
+		"is-small": "_36aecfa8aa1c059c__is-small",
+		"icon": "_6e27e09880945492__icon",
+		"is-brand": "e861e38ec209c386__is-brand",
+		"is-outline": "_126c37d7228179eb__is-outline",
+		"is-minimal": "_52d3a0733adabb28__is-minimal",
+		"is-neutral": "_4f1e6661283d0b09__is-neutral",
+		"is-solid": "_7b8ab25ed58515d2__is-solid",
+		"is-compact": "df99f7773c9c8915__is-compact",
+		"spinner": "_20f9e334daee91a7__spinner"
+	};
+	const ButtonIcon = (0, _wordpress_element.forwardRef)(function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+			ref,
+			icon,
+			className: clsx(style_module_default$23.icon, className),
+			size: 24,
+			...props
+		});
+	});
+
+// packages/ui/build-module/button/index.mjs
+	ButtonIcon.displayName = "Button.Icon";
+	/**
+	* A versatile button component with multiple variants, tones, and sizes.
+	*
+	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+	*/
+	const Button$43 = Object.assign(Button$44, { 
+	/**
+	* An icon component specifically designed to work well when rendered inside
+	* a `Button` component.
+	*/
+Icon: ButtonIcon });
+
+// packages/ui/build-module/visually-hidden/visually-hidden.mjs
+	const STYLE_HASH_ATTRIBUTE$48 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$48() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$48(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$48(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$48}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$48) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$48(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$48();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$48(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$48, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$48(targetDocument) {
+		const runtime = getRuntime$48();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$48(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$48(hash, css) {
+		const runtime = getRuntime$48();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$48(targetDocument, hash, css);
+	}
+	registerStyle$48("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+	var style_module_default$22 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
+	/**
+	* Visually hides content while keeping it accessible to screen readers.
+	* Useful when providing context that's only meaningful to assistive technology.
+	*
+	* Renders a `<div>` by default. Use the `render` prop to swap the
+	* underlying element while preserving the visually-hidden behavior.
+	*
+	* ## Composing with other components
+	*
+	* When composing with another component that uses the `render` prop
+	* pattern, keep `VisuallyHidden` as the **host** (outer component) and
+	* pass the other component via `render`. This keeps the other
+	* component's HTML element and semantics intact, while `VisuallyHidden`
+	* only adds its hiding styles:
+	*
+	* ```jsx
+	* // OtherComponent keeps its semantic element (e.g. <h2>).
+	* <VisuallyHidden render={ <OtherComponent /> }>
+	*   Accessible text
+	* </VisuallyHidden>
+	* ```
+	*/
+	const VisuallyHidden = (0, _wordpress_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
+		return useRender({
+			render,
+			ref,
+			props: mergeProps({ className: style_module_default$22["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
+		});
+	});
+
+// packages/ui/build-module/utils/keyboard-shortcut.mjs
+/**
+	* Returns shortcut accessibility metadata for an interactive element.
+	*
+	* Render `KeyboardShortcutDescription` with the returned `descriptionId` when
+	* a shortcut is provided.
+	*/
+	function useKeyboardShortcutProps({ "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, shortcut }) {
+		const generatedDescriptionId = (0, _wordpress_element.useId)();
+		const descriptionId = shortcut ? generatedDescriptionId : void 0;
+		return {
+			descriptionId,
+			targetProps: {
+				"aria-describedby": [ariaDescribedBy, descriptionId].filter(Boolean).join(" ") || void 0,
+				"aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
+			}
+		};
+	}
+	/**
+	* Renders a localized, visually hidden description for a keyboard shortcut.
+	*/
+	const KeyboardShortcutDescription = (0, _wordpress_element.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+			id: descriptionId,
+			"aria-hidden": "true",
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { ref }),
+			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+		});
+	});
+	/**
+	* Renders a visual keyboard shortcut while hiding it from assistive
+	* technology.
+	*/
+	const KeyboardShortcutDisplay = (0, _wordpress_element.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+			ref,
+			"aria-hidden": "true",
+			className,
+			dir: "ltr",
+			children: shortcut.displayShortcut
+		});
+	});
+
+// packages/ui/build-module/utils/item-popup/item-content.mjs
+	function parseItemContent(children, { Label, Description, validationMessage }) {
+		const [label, ...descriptions] = _wordpress_element.Children.toArray(children);
+		const hasLabel = (0, _wordpress_element.isValidElement)(label) && label.type === Label;
+		const descriptionElements = descriptions.filter((description) => (0, _wordpress_element.isValidElement)(description) && description.type === Description);
+		if (!hasLabel || descriptionElements.length !== descriptions.length) throw new Error(validationMessage);
+		return {
+			descriptionIds: descriptionElements.map((description) => description.props.id),
+			hasLabel,
+			labelId: hasLabel ? label.props.id : void 0
+		};
+	}
+	function useItemContent(children, components, { "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy } = {}) {
+		const generatedLabelId = (0, _wordpress_element.useId)();
+		const generatedDescriptionId = (0, _wordpress_element.useId)();
+		const { descriptionIds, hasLabel, labelId } = parseItemContent(children, components);
+		const resolvedLabelId = hasLabel ? labelId ?? generatedLabelId : void 0;
+		const resolvedDescriptionIds = descriptionIds.map((descriptionId, index) => descriptionId ?? `${generatedDescriptionId}-${index}`);
+		const itemDescribedBy = Array.from(/* @__PURE__ */ new Set([...ariaDescribedBy?.split(/\s+/).filter(Boolean) ?? [], ...resolvedDescriptionIds])).join(" ");
+		let descriptionIndex = 0;
+		const { Label, Description, descriptionValidationToken } = components;
+		return {
+			contentChildren: _wordpress_element.Children.map(children, (child) => {
+				if (!(0, _wordpress_element.isValidElement)(child)) return child;
+				if (child.type === Label) return child.props.id === resolvedLabelId ? child : (0, _wordpress_element.cloneElement)(child, { id: resolvedLabelId });
+				if (child.type !== Description) return child;
+				const descriptionId = resolvedDescriptionIds[descriptionIndex++];
+				if (!descriptionValidationToken && child.props.id === descriptionId) return child;
+				return (0, _wordpress_element.cloneElement)(child, {
+					id: descriptionId,
+					...descriptionValidationToken && { validationToken: descriptionValidationToken }
+				});
+			}),
+			resolvedLabelId,
+			itemAriaProps: {
+				"aria-describedby": itemDescribedBy || void 0,
+				"aria-label": ariaLabel,
+				"aria-labelledby": ariaLabelledBy ?? (ariaLabel ? void 0 : resolvedLabelId)
+			}
+		};
+	}
+
+// packages/ui/build-module/text/text.mjs
+	const STYLE_HASH_ATTRIBUTE$47 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$47() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$47(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$47(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$47}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$47) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$47(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$47();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$47(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$47, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$47(targetDocument) {
+		const runtime = getRuntime$47();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$47(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$47(hash, css) {
+		const runtime = getRuntime$47();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$47(targetDocument, hash, css);
+	}
+	registerStyle$47("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+	var style_module_default$21 = {
+		"text": "_9745ffa515d864cf__text",
+		"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
+		"heading-xl": "_664e3e7687c45603__heading-xl",
+		"heading-lg": "dac661a5de0ed2bd__heading-lg",
+		"heading-md": "_59c7f3f740e2f96e__heading-md",
+		"heading-sm": "cf052fbad8d93b7e__heading-sm",
+		"body-xl": "_212b9cfef57a0af4__body-xl",
+		"body-lg": "_07f57bc0aa36b2c6__body-lg",
+		"body-md": "_0c6da4457aec9e62__body-md",
+		"body-sm": "b998f87ff17b7bec__body-sm"
+	};
+	registerStyle$47("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	var global_css_defense_module_default$11 = {
+		"button": "_78c10a0773e51a91__button",
+		"input": "_5b33aa2d48624b4f__input",
+		"textarea": "_980b3b4776ac8f81__textarea",
+		"div": "_43e478b4279a076c__div",
+		"p": "_698099e25b0fb1a6__p",
+		"heading": "_326aee4184d261fd__heading",
+		"a": "e9576240835601ba__a",
+		"ol": "_3f05789653864a73__ol",
+		"li": "_3c72ff72abe57859__li",
+		"span": "_79d16267c15d9eb2__span"
+	};
+	/**
+	* A text component for rendering content with predefined typographic variants.
+	* Built on design tokens for consistent typography across the UI.
+	*/
+	const Text = (0, _wordpress_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
+		return useRender({
+			render,
+			defaultTagName: "span",
+			ref,
+			props: mergeProps(props, { className: clsx(style_module_default$21.text, global_css_defense_module_default$11.heading, global_css_defense_module_default$11.p, style_module_default$21[variant], className) })
+		});
+	});
+
+// packages/ui/build-module/utils/render-slot-with-children.mjs
+/**
+	* Fills an optional "slot" element prop with content by cloning it and
+	* injecting the given `children`. When `slot` is undefined, the provided
+	* `defaultSlot` is used in its place.
+	*
+	* Shared by overlay `Popup` components for their slot-shaped customization
+	* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
+	* children injection — stays consistent across all of them.
+	*
+	* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
+	* any subtree passed on the slot element is overwritten by `children`.
+	*
+	* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
+	*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
+	*                    is used. Injected `children` replace any subtree the caller
+	*                    may have passed on the slot element.
+	* @param defaultSlot Unpopulated default element used when `slot` is omitted
+	*                    (e.g. `<Tooltip.Portal />`).
+	* @param children    Content to inject as the slot's children (backdrop,
+	*                    positioner, popup subtree, etc.).
+	*/
+	function renderSlotWithChildren(slot, defaultSlot, children) {
+		return (0, _wordpress_element.cloneElement)(slot ?? defaultSlot, { children });
+	}
+
+// packages/ui/build-module/utils/css/item-popup.mjs
+	const STYLE_HASH_ATTRIBUTE$46 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$46() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$46(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$46(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$46}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$46) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$46(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$46();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$46(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$46, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$46(targetDocument) {
+		const runtime = getRuntime$46();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$46(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$46(hash, css) {
+		const runtime = getRuntime$46();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$46(targetDocument, hash, css);
+	}
+	registerStyle$46("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$20 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	function getItemPopupWidthClassName(width = "anchor") {
+		switch (width) {
+			case "available": return item_popup_module_default$20["is-width-available"];
+			case "content": return item_popup_module_default$20["is-width-content"];
+			case "lg": return item_popup_module_default$20["is-width-lg"];
+			case "md": return item_popup_module_default$20["is-width-md"];
+			case "sm": return item_popup_module_default$20["is-width-sm"];
+			case "anchor": return item_popup_module_default$20["is-width-anchor"];
+			default: return false;
+		}
+	}
+
+// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+	const STYLE_HASH_ATTRIBUTE$45 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$45() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$45(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$45(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$45}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$45) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$45(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$45();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$45(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$45, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$45(targetDocument) {
+		const runtime = getRuntime$45();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$45(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$45(hash, css) {
+		const runtime = getRuntime$45();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$45(targetDocument, hash, css);
+	}
+	registerStyle$45("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
+	var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
+	/**
+	* Marker attribute on the compat overlay slot element.
+	*/
+	const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+	function resolveOwnerDocument() {
+		return typeof document === "undefined" ? null : document;
+	}
+	function isInWordPressEnvironment() {
+		let topWp;
+		try {
+			topWp = window.top?.wp;
+		} catch {}
+		const wp = topWp ?? window.wp;
+		return typeof wp?.components === "object" && wp.components !== null;
+	}
+	let cachedSlot = null;
+	function ensureSlotIsAccessible(element) {
+		element.setAttribute("aria-hidden", "false");
+		return element;
+	}
+	function createSlot(ownerDocument) {
+		const element = ownerDocument.createElement("div");
+		element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+		if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
+		ownerDocument.body.appendChild(element);
+		return element;
+	}
+	/**
+	* Returns the body-level compat overlay slot when the runtime opts in,
+	* lazily creating it on first call. Returns `undefined` otherwise — so the
+	* return value can be forwarded straight to a `container` prop, leaving the
+	* default portal container in effect.
+	*
+	* Two opt-in paths:
+	*
+	* - Auto-detected when `window.wp.components` is on the global — the
+	*   typical script-loader setup for WordPress plugins and admin screens.
+	* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
+	*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
+	*   relying on the global.
+	*
+	* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
+	* local document's body. Subsequent calls return the same element; if it's
+	* been removed it's recreated, and a slot created by another
+	* `@wordpress/ui` instance in the same document is adopted rather than
+	* duplicated.
+	*/
+	function getWpCompatOverlaySlot() {
+		if (typeof window === "undefined") return;
+		if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
+		const ownerDocument = resolveOwnerDocument();
+		if (!ownerDocument || !ownerDocument.body) return;
+		if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
+		const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
+		if (existing instanceof HTMLDivElement) {
+			cachedSlot = ensureSlotIsAccessible(existing);
+			return cachedSlot;
+		}
+		if (cachedSlot?.isConnected) cachedSlot.remove();
+		cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
+		return cachedSlot;
+	}
+
+// packages/ui/build-module/form/primitives/constants.mjs
+/**
+	* Shared positioning defaults for item-list popups, e.g. Select, Combobox,
+	* or Autocomplete.
+	*/
+	const ITEM_POPUP_POSITIONER_PROPS = {
+		align: "start",
+		sideOffset: 8,
+		collisionPadding: 12
+	};
+
+// packages/ui/build-module/utils/direction-provider.mjs
+/**
+	* Provides WordPress's text direction to Base UI components.
+	*/
+	function DirectionProvider({ children }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider$1, {
+			direction: (0, _wordpress_i18n.isRTL)() ? "rtl" : "ltr",
+			children
+		});
+	}
+
+// packages/ui/build-module/tooltip/portal.mjs
+/**
+	* Used to apply custom portal behavior to `Tooltip`'s floating content.
+	* `container` defaults to the `@wordpress/ui` compat overlay slot.
+	*/
+	const Portal$2 = (0, _wordpress_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipPortal, {
+			container: container === void 0 ? getWpCompatOverlaySlot() : container,
+			...restProps,
+			ref
+		});
+	});
+
+// packages/ui/build-module/tooltip/positioner.mjs
+	const STYLE_HASH_ATTRIBUTE$44 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$44() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$44(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$44(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$44}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$44) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$44(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$44();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$44(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$44, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$44(targetDocument) {
+		const runtime = getRuntime$44();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$44(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$44(hash, css) {
+		const runtime = getRuntime$44();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$44(targetDocument, hash, css);
+	}
+	registerStyle$44("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$8 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	registerStyle$44("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+	var style_module_default$20 = {
+		"positioner": "b9266862d9435660__positioner",
+		"popup": "_7bb3fd8a0810be6d__popup"
+	};
+	/**
+	* Used to apply custom positioning to `Tooltip`'s floating content.
+	*/
+	const Positioner$2 = (0, _wordpress_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipPositioner, {
+			ref,
+			align,
+			side,
+			sideOffset,
+			...props,
+			className: clsx(resets_module_default$8["box-sizing"], style_module_default$20.positioner, className)
+		});
+	});
+
+// packages/ui/build-module/lock-unlock.mjs
+	const { lock: lock$2, unlock: unlock$2 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
+
+// packages/ui/build-module/utils/theme-provider.mjs
+	function getThemeProvider() {
+		const themePackage = _wordpress_theme;
+		if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
+		if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
+		return unlock$2(themePackage.privateApis).ThemeProvider;
+	}
+	const ThemeProvider = getThemeProvider();
+
+// packages/ui/build-module/tooltip/popup.mjs
+	const STYLE_HASH_ATTRIBUTE$43 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$43() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$43(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$43(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$43}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$43) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$43(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$43();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$43(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$43, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$43(targetDocument) {
+		const runtime = getRuntime$43();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$43(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$43(hash, css) {
+		const runtime = getRuntime$43();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$43(targetDocument, hash, css);
+	}
+	registerStyle$43("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+	var style_module_default$19 = {
+		"positioner": "b9266862d9435660__positioner",
+		"popup": "_7bb3fd8a0810be6d__popup"
+	};
+	const POPUP_COLOR = { background: "#1e1e1e" };
+	const Popup$2 = (0, _wordpress_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
+		const popupContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ThemeProvider, {
+			color: POPUP_COLOR,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipPopup, {
+				ref,
+				className: clsx(style_module_default$19.popup, className),
+				...props,
+				children
+			})
+		});
+		const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner$2, {}), popupContent);
+		return renderSlotWithChildren(portal, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Portal$2, {}), positionedPopup);
+	});
+
+// packages/ui/build-module/tooltip/trigger.mjs
+	const Trigger$2 = (0, _wordpress_element.forwardRef)(function TooltipTrigger$1(props, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipTrigger, {
+			ref,
+			...props
+		});
+	});
+
+// packages/ui/build-module/tooltip/root.mjs
+/**
+	* `Tooltip` is used to visually show the label of an icon button, or other such
+	* interactive controls that don't have a visual text label.
+	*
+	* Tooltip popups are visual-only and not exposed to assistive technologies.
+	* The trigger's accessible name (e.g. `aria-label`) is the source of truth
+	* for screen reader users. Tooltips are not available on touch devices,
+	* and thus should not be used for infotips, descriptions, or dynamic status
+	* messages.
+	*
+	* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
+	* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
+	*/
+	function Root$4(props) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
+	}
+
+// packages/ui/build-module/link/link.mjs
 	const STYLE_HASH_ATTRIBUTE$42 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -20386,36 +23464,92 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$42(targetDocument, hash, css);
 	}
-	registerStyle$42("b081213352", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.da418dc15e63be57__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}._8b83deccaefa3c92__indicator{fill:transparent;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_0da63cf2c7b08803__spinner-spin 1.4s linear infinite both}@keyframes _0da63cf2c7b08803__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
-	var style_module_default$23 = {
-		"spinner": "da418dc15e63be57__spinner",
-		"indicator": "_8b83deccaefa3c92__indicator",
-		"spinner-spin": "_0da63cf2c7b08803__spinner-spin"
+	registerStyle$42("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$7 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	registerStyle$42("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+	var focus_module_default$5 = {
+		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+	};
+	registerStyle$42("c87d91cdf7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a574f9f242212d58__link{--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);border-radius:var(--wpds-border-radius-sm,2px);text-decoration-thickness:from-font;text-underline-offset:.2em}._2d2f0506e717a46c__link-with-icon{text-decoration-line:none}._92b7b6a03fbb27ac__link-contents{text-decoration:inherit;text-decoration-line:underline}._69f40d9212adc58d__is-brand,._69f40d9212adc58d__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}._69f40d9212adc58d__is-brand:active,._69f40d9212adc58d__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._9a9c54c6e67b4c3c__is-neutral,._9a9c54c6e67b4c3c__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._9a9c54c6e67b4c3c__is-neutral:active,._9a9c54c6e67b4c3c__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._93be0b747897baad__is-unstyled{--_gcd-a-border-radius:0;--_gcd-a-color:inherit;color:inherit;text-decoration:none}._9c39df40fdc09594__link-icon{font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._9c39df40fdc09594__link-icon:after{content:\"\\2060\\2197\"}._9c39df40fdc09594__link-icon:dir(rtl):after{content:\"\\2060\\2196\"}}}");
+	var style_module_default$18 = {
+		"link": "a574f9f242212d58__link",
+		"link-with-icon": "_2d2f0506e717a46c__link-with-icon",
+		"link-contents": "_92b7b6a03fbb27ac__link-contents",
+		"is-brand": "_69f40d9212adc58d__is-brand",
+		"is-neutral": "_9a9c54c6e67b4c3c__is-neutral",
+		"is-unstyled": "_93be0b747897baad__is-unstyled",
+		"link-icon": "_9c39df40fdc09594__link-icon"
+	};
+	registerStyle$42("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	var global_css_defense_module_default$10 = {
+		"button": "_78c10a0773e51a91__button",
+		"input": "_5b33aa2d48624b4f__input",
+		"textarea": "_980b3b4776ac8f81__textarea",
+		"div": "_43e478b4279a076c__div",
+		"p": "_698099e25b0fb1a6__p",
+		"heading": "_326aee4184d261fd__heading",
+		"a": "e9576240835601ba__a",
+		"ol": "_3f05789653864a73__ol",
+		"li": "_3c72ff72abe57859__li",
+		"span": "_79d16267c15d9eb2__span"
 	};
 	/**
-	* A component used to notify users that their action is being processed.
+	* A styled anchor element with support for semantic color tones and an
+	* unstyled escape hatch.
+	*
+	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Spinner$31 = (0, _wordpress_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
-			className: clsx(style_module_default$23.spinner, className),
-			style: color === void 0 ? style : {
-				...style,
-				color
-			},
-			viewBox: "0 0 24 24",
-			xmlns: "http://www.w3.org/2000/svg",
-			role: "presentation",
-			focusable: "false",
-			...props,
+	const Link = (0, _wordpress_element.forwardRef)(function UnforwardedLink({ children, variant = "default", tone = "brand", openInNewTab = false, target, render, className, ...props }, ref) {
+		const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+		return useRender({
+			render,
+			defaultTagName: "a",
 			ref,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", {
-				className: style_module_default$23.indicator,
-				d: "m 12 0 a 12 12 0 0 1 0 24"
+			props: mergeProps(props, {
+				className: clsx(global_css_defense_module_default$10.a, resets_module_default$7["box-sizing"], focus_module_default$5["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$18.link, variant !== "unstyled" && shouldShowNewTabIndicator && style_module_default$18["link-with-icon"], variant !== "unstyled" && style_module_default$18[`is-${tone}`], variant === "unstyled" && style_module_default$18["is-unstyled"], className),
+				target: target ?? (openInNewTab ? "_blank" : void 0),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: style_module_default$18["link-contents"],
+					children
+				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: style_module_default$18["link-icon"],
+					role: "img",
+					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+				})] })
 			})
 		});
 	});
 
-// packages/ui/build-module/button/button.mjs
+// packages/react-inert-value/build-module/index.mjs
+	const majorVersion = parseInt(react.version, 10);
+	/**
+	* Returns a value for the `inert` prop that the running version of React
+	* renders as the `inert` HTML attribute.
+	*
+	* React 19 handles `inert` as a boolean attribute, while React 18 knows nothing
+	* about `inert` and ignores `inert={ true }`, so it has to be given the string
+	* `'true'` instead.
+	*
+	* The return type describes what React 19 types accept. React 18 doesn't support
+	* `inert` HTML attribute at all, so a TypeScript call site still
+	* needs a `@ts-expect-error` annotation.
+	*
+	* Inspired by the helper of the same name in the Base UI library.
+	*
+	* @param value Boolean value for the `inert` prop.
+	* @return The actual value to pass to the `inert` prop.
+	*/
+	function inertValue(value) {
+		if (majorVersion >= 19) return value;
+		return value ? "true" : void 0;
+	}
+
+// packages/ui/build-module/stack/stack.mjs
 	const STYLE_HASH_ATTRIBUTE$41 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -20517,66 +23651,40 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$41(targetDocument, hash, css);
 	}
-	registerStyle$41("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
-	var style_module_default$22 = {
-		"button": "e01b07636421375d__button",
-		"is-unstyled": "ec10ae721bc68934__is-unstyled",
-		"is-loading": "_414eb921eb9928fa__is-loading",
-		"is-small": "_36aecfa8aa1c059c__is-small",
-		"icon": "_6e27e09880945492__icon",
-		"is-brand": "e861e38ec209c386__is-brand",
-		"is-outline": "_126c37d7228179eb__is-outline",
-		"is-minimal": "_52d3a0733adabb28__is-minimal",
-		"is-neutral": "_4f1e6661283d0b09__is-neutral",
-		"is-solid": "_7b8ab25ed58515d2__is-solid",
-		"is-compact": "df99f7773c9c8915__is-compact",
-		"spinner": "_20f9e334daee91a7__spinner"
-	};
-	registerStyle$41("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-	var resets_module_default$7 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	registerStyle$41("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-	var focus_module_default$5 = {
-		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-	};
-	registerStyle$41("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$11 = {
-		"button": "_78c10a0773e51a91__button",
-		"input": "_5b33aa2d48624b4f__input",
-		"textarea": "_980b3b4776ac8f81__textarea",
-		"div": "_43e478b4279a076c__div",
-		"p": "_698099e25b0fb1a6__p",
-		"heading": "_326aee4184d261fd__heading",
-		"a": "e9576240835601ba__a",
-		"ol": "_3f05789653864a73__ol",
-		"li": "_3c72ff72abe57859__li",
-		"span": "_79d16267c15d9eb2__span"
+	registerStyle$41("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
+	var style_module_default$17 = { "stack": "_8e8e79c1a2eec43b__stack" };
+	const gapTokens = {
+		xs: "var(--wpds-dimension-gap-xs, 4px)",
+		sm: "var(--wpds-dimension-gap-sm, 8px)",
+		md: "var(--wpds-dimension-gap-md, 12px)",
+		lg: "var(--wpds-dimension-gap-lg, 16px)",
+		xl: "var(--wpds-dimension-gap-xl, 24px)",
+		"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+		"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 	};
 	/**
-	* A versatile button component with multiple variants, tones, and sizes.
-	*
-	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+	* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
+	* Built on design tokens for predictable spacing values.
 	*/
-	const Button$44 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
-		const mergedClassName = clsx(global_css_defense_module_default$11.button, resets_module_default$7["box-sizing"], focus_module_default$5["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$22.button, style_module_default$22[`is-${tone}`], style_module_default$22[`is-${variant}`], style_module_default$22[`is-${size}`], loading && style_module_default$22["is-loading"], className);
-		(0, _wordpress_element.useEffect)(() => {
-			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
-		}, [loading, loadingAnnouncement]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$45, {
+	const Stack = (0, _wordpress_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+		const style = {
+			gap: gap && gapTokens[gap],
+			alignItems: align,
+			justifyContent: justify,
+			flexDirection: direction,
+			flexWrap: wrap
+		};
+		return useRender({
+			render,
 			ref,
-			className: mergedClassName,
-			focusableWhenDisabled,
-			disabled: disabled ?? loading,
-			...props,
-			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$31, { className: style_module_default$22.spinner })]
+			props: mergeProps(props, {
+				style,
+				className: style_module_default$17.stack
+			})
 		});
 	});
 
-// packages/ui/build-module/button/icon.mjs
+// packages/ui/build-module/icon-button/icon-button.mjs
 	const STYLE_HASH_ATTRIBUTE$40 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -20678,47 +23786,89 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$40(targetDocument, hash, css);
 	}
-	registerStyle$40("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
-	var style_module_default$21 = {
-		"button": "e01b07636421375d__button",
-		"is-unstyled": "ec10ae721bc68934__is-unstyled",
-		"is-loading": "_414eb921eb9928fa__is-loading",
-		"is-small": "_36aecfa8aa1c059c__is-small",
-		"icon": "_6e27e09880945492__icon",
-		"is-brand": "e861e38ec209c386__is-brand",
-		"is-outline": "_126c37d7228179eb__is-outline",
-		"is-minimal": "_52d3a0733adabb28__is-minimal",
-		"is-neutral": "_4f1e6661283d0b09__is-neutral",
-		"is-solid": "_7b8ab25ed58515d2__is-solid",
-		"is-compact": "df99f7773c9c8915__is-compact",
-		"spinner": "_20f9e334daee91a7__spinner"
+	registerStyle$40("2a111665b3", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._7f5dbf30e44a43dd__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}._1b3c0d159ecbf3d5__icon{margin:-1px}}}");
+	var style_module_default$16 = {
+		"icon-button": "_7f5dbf30e44a43dd__icon-button",
+		"icon": "_1b3c0d159ecbf3d5__icon"
 	};
-	const ButtonIcon = (0, _wordpress_element.forwardRef)(function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
-			ref,
-			icon,
-			className: clsx(style_module_default$21.icon, className),
-			size: 24,
-			...props
-		});
-	});
-
-// packages/ui/build-module/button/index.mjs
-	ButtonIcon.displayName = "Button.Icon";
 	/**
-	* A versatile button component with multiple variants, tones, and sizes.
+	* An icon-only button with automatic tooltip and optimized styling.
+	* Inherits all Button props while providing icon-specific enhancements.
+	*
+	* When rendering a group of `IconButton`s, wrap them in a `Tooltip.Provider`
+	* to coordinate tooltip delays across the group.
 	*
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$43 = Object.assign(Button$44, { 
-	/**
-	* An icon component specifically designed to work well when rendered inside
-	* a `Button` component.
-	*/
-Icon: ButtonIcon });
+	const IconButton = (0, _wordpress_element.forwardRef)(function UnforwardedIconButton({ label, className, children: _children, disabled, focusableWhenDisabled = true, icon, size, shortcut, positioner, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, ...restProps }, ref) {
+		const classes = clsx(style_module_default$16["icon-button"], className);
+		const { descriptionId, targetProps } = useKeyboardShortcutProps({
+			"aria-describedby": ariaDescribedBy,
+			"aria-keyshortcuts": ariaKeyShortcuts,
+			shortcut
+		});
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Trigger$2, {
+			ref,
+			...targetProps,
+			disabled: disabled && !focusableWhenDisabled,
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$43, {
+				...restProps,
+				size,
+				"aria-label": label,
+				disabled,
+				focusableWhenDisabled
+			}),
+			className: classes,
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+				icon,
+				size: 24,
+				className: style_module_default$16.icon
+			}), shortcut && descriptionId && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(KeyboardShortcutDescription, {
+				descriptionId,
+				shortcut
+			})]
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Popup$2, {
+			positioner,
+			children: [label, shortcut && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [" ", /* @__PURE__ */ (0, react_jsx_runtime.jsx)(KeyboardShortcutDisplay, { shortcut })] })]
+		})] });
+	});
 
-// packages/ui/build-module/visually-hidden/visually-hidden.mjs
+// packages/ui/build-module/utils/use-schedule-validation.mjs
+/**
+	* Dev-only hook that returns a stable `scheduleValidation` function.
+	*
+	* Each call debounces to `setTimeout(…, 0)` so that rapid
+	* register / unregister cycles (e.g. React strict-mode double-mount)
+	* settle before the check runs. The timer is cleaned up on unmount,
+	* and calls after unmount are silently ignored.
+	*
+	* @param validate Callback that performs the actual validation.
+	*                 Wrapped in `useEvent`, so it can be an unstable closure.
+	*/
+	function useScheduleValidation(validate) {
+		const validateEvent = (0, _wordpress_compose.useEvent)(validate);
+		const timerRef = (0, _wordpress_element.useRef)(null);
+		const unmountedRef = (0, _wordpress_element.useRef)(false);
+		const scheduleValidation = (0, _wordpress_element.useCallback)(() => {
+			if (unmountedRef.current) return;
+			if (timerRef.current) clearTimeout(timerRef.current);
+			timerRef.current = setTimeout(() => {
+				validateEvent();
+				timerRef.current = null;
+			}, 0);
+		}, [validateEvent]);
+		(0, _wordpress_element.useEffect)(() => {
+			unmountedRef.current = false;
+			return () => {
+				unmountedRef.current = true;
+				if (timerRef.current) clearTimeout(timerRef.current);
+			};
+		}, []);
+		return scheduleValidation;
+	}
+
+// packages/ui/build-module/tabs/list.mjs
 	const STYLE_HASH_ATTRIBUTE$39 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -20820,124 +23970,154 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$39(targetDocument, hash, css);
 	}
-	registerStyle$39("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
-	var style_module_default$20 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
+	registerStyle$39("3d953ec7ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a0e75f120439a0aa__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.d0a55a85eda75e42__is-scrolling){overflow:visible}&._3458825d62377029__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._3458825d62377029__is-overflowing-first._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._75bc52ead60e02b3__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._8db3ebc0bb0b18de__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;.a0e75f120439a0aa__tablist:has(>.cbf34d4b11b8d6d4__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.cbf34d4b11b8d6d4__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:\"\";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._75bc52ead60e02b3__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._75bc52ead60e02b3__is-minimal-variant.d0a55a85eda75e42__is-scrolling[data-orientation=horizontal] &{&:before{content:\"\";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px);&:after{content:\"\";inset:0;outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}}}._48bd1f7fa091c988__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}}}");
+	var style_module_default$15 = {
+		"tablist": "a0e75f120439a0aa__tablist",
+		"is-scrolling": "d0a55a85eda75e42__is-scrolling",
+		"is-overflowing-first": "_3458825d62377029__is-overflowing-first",
+		"is-overflowing-last": "_485eb1577637fe68__is-overflowing-last",
+		"is-minimal-variant": "_75bc52ead60e02b3__is-minimal-variant",
+		"indicator": "_8db3ebc0bb0b18de__indicator",
+		"tab": "cbf34d4b11b8d6d4__tab",
+		"tab-children": "_48bd1f7fa091c988__tab-children"
+	};
+	const SCROLL_EPSILON = 1;
 	/**
-	* Visually hides content while keeping it accessible to screen readers.
-	* Useful when providing context that's only meaningful to assistive technology.
+	* Groups the individual tab buttons.
 	*
-	* Renders a `<div>` by default. Use the `render` prop to swap the
-	* underlying element while preserving the visually-hidden behavior.
-	*
-	* ## Composing with other components
-	*
-	* When composing with another component that uses the `render` prop
-	* pattern, keep `VisuallyHidden` as the **host** (outer component) and
-	* pass the other component via `render`. This keeps the other
-	* component's HTML element and semantics intact, while `VisuallyHidden`
-	* only adds its hiding styles:
-	*
-	* ```jsx
-	* // OtherComponent keeps its semantic element (e.g. <h2>).
-	* <VisuallyHidden render={ <OtherComponent /> }>
-	*   Accessible text
-	* </VisuallyHidden>
-	* ```
+	* `Tabs` is a collection of React components that combine to render
+	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
 	*/
-	const VisuallyHidden = (0, _wordpress_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
-		return useRender({
-			render,
-			ref,
-			props: mergeProps({ className: style_module_default$20["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
+	const List$1 = (0, _wordpress_element.forwardRef)(function TabList({ children, variant = "default", className, activateOnFocus, ...otherProps }, forwardedRef) {
+		const [listEl, setListEl] = (0, _wordpress_element.useState)(null);
+		const [overflow, setOverflow] = (0, _wordpress_element.useState)({
+			first: false,
+			last: false,
+			isScrolling: false
+		});
+		(0, _wordpress_element.useEffect)(() => {
+			if (!listEl) return;
+			const measureOverflow = () => {
+				const { scrollWidth, clientWidth, scrollLeft } = listEl;
+				const maxScroll = Math.max(scrollWidth - clientWidth, 0);
+				const scrollFromStart = (listEl.dir || (typeof window !== "undefined" ? window.getComputedStyle(listEl).direction : "ltr")) === "rtl" && scrollLeft < 0 ? -scrollLeft : scrollLeft;
+				const next = {
+					first: scrollFromStart > SCROLL_EPSILON,
+					last: scrollFromStart < maxScroll - SCROLL_EPSILON,
+					isScrolling: scrollWidth > clientWidth
+				};
+				setOverflow((prev) => prev.first === next.first && prev.last === next.last && prev.isScrolling === next.isScrolling ? prev : next);
+			};
+			const resizeObserver = new ResizeObserver(measureOverflow);
+			const observeTabs = () => {
+				resizeObserver.disconnect();
+				resizeObserver.observe(listEl);
+				listEl.querySelectorAll("[role=\"tab\"]").forEach((tab) => resizeObserver.observe(tab));
+			};
+			const mutationObserver = new MutationObserver(observeTabs);
+			mutationObserver.observe(listEl, {
+				childList: true,
+				subtree: true
+			});
+			let scrollTick = false;
+			const throttleMeasureOverflowOnScroll = () => {
+				if (!scrollTick) {
+					requestAnimationFrame(() => {
+						measureOverflow();
+						scrollTick = false;
+					});
+					scrollTick = true;
+				}
+			};
+			listEl.addEventListener("scroll", throttleMeasureOverflowOnScroll, { passive: true });
+			observeTabs();
+			measureOverflow();
+			return () => {
+				listEl.removeEventListener("scroll", throttleMeasureOverflowOnScroll);
+				resizeObserver.disconnect();
+				mutationObserver.disconnect();
+			};
+		}, [listEl]);
+		const mergedListRef = (0, _wordpress_compose.useMergeRefs)([forwardedRef, (el) => setListEl(el)]);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(TabsList, {
+			ref: mergedListRef,
+			activateOnFocus,
+			"data-select-on-move": activateOnFocus ? "true" : "false",
+			className: clsx(style_module_default$15.tablist, overflow.isScrolling && style_module_default$15["is-scrolling"], overflow.first && style_module_default$15["is-overflowing-first"], overflow.last && style_module_default$15["is-overflowing-last"], style_module_default$15[`is-${variant}-variant`], className),
+			...otherProps,
+			tabIndex: otherProps.tabIndex ?? (overflow.isScrolling ? -1 : void 0),
+			children: [children, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsIndicator, { className: style_module_default$15.indicator })]
 		});
 	});
 
-// packages/ui/build-module/utils/keyboard-shortcut.mjs
-/**
-	* Returns shortcut accessibility metadata for an interactive element.
+// packages/ui/build-module/tabs/context.mjs
+	const TabsValidationContext = (0, _wordpress_element.createContext)(null);
+	function useRegisterTabDev() {
+		const context = (0, _wordpress_element.useContext)(TabsValidationContext);
+		(0, _wordpress_element.useEffect)(() => {
+			if (context) return context.registerTab();
+		}, [context]);
+	}
+	/**
+	* Hook that registers a Tab for count validation in development mode.
+	*/
+	const useRegisterTab = useRegisterTabDev;
+	function useRegisterPanelDev() {
+		const context = (0, _wordpress_element.useContext)(TabsValidationContext);
+		(0, _wordpress_element.useEffect)(() => {
+			if (context) return context.registerPanel();
+		}, [context]);
+	}
+	/**
+	* Hook that registers a Panel for count validation in development mode.
+	*/
+	const useRegisterPanel = useRegisterPanelDev;
+	/**
+	* Development-only provider that tracks the number of registered tabs and
+	* panels, and warns when the counts don't match.
+	*/
+	function TabsValidationProviderDev({ children }) {
+		const tabCountRef = (0, _wordpress_element.useRef)(0);
+		const panelCountRef = (0, _wordpress_element.useRef)(0);
+		const scheduleValidation = useScheduleValidation(() => {
+			const tabCount = tabCountRef.current;
+			const panelCount = panelCountRef.current;
+			if (tabCount !== panelCount) throw new Error(`Tabs: Tab/Panel count mismatch (${tabCount} Tabs, ${panelCount} Panels). Each Tab must be associated with exactly one Panel. Mismatched or missing associations can break screen reader navigation and violate WAI-ARIA Tabs pattern requirements.`);
+		});
+		const registerTab = (0, _wordpress_element.useCallback)(() => {
+			tabCountRef.current += 1;
+			scheduleValidation();
+			return () => {
+				tabCountRef.current -= 1;
+				scheduleValidation();
+			};
+		}, [scheduleValidation]);
+		const registerPanel = (0, _wordpress_element.useCallback)(() => {
+			panelCountRef.current += 1;
+			scheduleValidation();
+			return () => {
+				panelCountRef.current -= 1;
+				scheduleValidation();
+			};
+		}, [scheduleValidation]);
+		const contextValue = (0, _wordpress_element.useMemo)(() => ({
+			registerTab,
+			registerPanel
+		}), [registerTab, registerPanel]);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsValidationContext.Provider, {
+			value: contextValue,
+			children
+		});
+	}
+	/**
+	* Provider component that validates the number of tabs matches the number
+	* of panels in development mode.
 	*
-	* Render `KeyboardShortcutDescription` with the returned `descriptionId` when
-	* a shortcut is provided.
+	* In production, this component is a no-op and just renders children.
 	*/
-	function useKeyboardShortcutProps({ "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, shortcut }) {
-		const generatedDescriptionId = (0, _wordpress_element.useId)();
-		const descriptionId = shortcut ? generatedDescriptionId : void 0;
-		return {
-			descriptionId,
-			targetProps: {
-				"aria-describedby": [ariaDescribedBy, descriptionId].filter(Boolean).join(" ") || void 0,
-				"aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
-			}
-		};
-	}
-	/**
-	* Renders a localized, visually hidden description for a keyboard shortcut.
-	*/
-	const KeyboardShortcutDescription = (0, _wordpress_element.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-			id: descriptionId,
-			"aria-hidden": "true",
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { ref }),
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
-		});
-	});
-	/**
-	* Renders a visual keyboard shortcut while hiding it from assistive
-	* technology.
-	*/
-	const KeyboardShortcutDisplay = (0, _wordpress_element.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-			ref,
-			"aria-hidden": "true",
-			className,
-			dir: "ltr",
-			children: shortcut.displayShortcut
-		});
-	});
+	const TabsValidationProvider = TabsValidationProviderDev;
 
-// packages/ui/build-module/utils/item-popup/item-content.mjs
-	function parseItemContent(children, { Label, Description, validationMessage }) {
-		const [label, ...descriptions] = _wordpress_element.Children.toArray(children);
-		const hasLabel = (0, _wordpress_element.isValidElement)(label) && label.type === Label;
-		const descriptionElements = descriptions.filter((description) => (0, _wordpress_element.isValidElement)(description) && description.type === Description);
-		if (!hasLabel || descriptionElements.length !== descriptions.length) throw new Error(validationMessage);
-		return {
-			descriptionIds: descriptionElements.map((description) => description.props.id),
-			hasLabel,
-			labelId: hasLabel ? label.props.id : void 0
-		};
-	}
-	function useItemContent(children, components, { "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy } = {}) {
-		const generatedLabelId = (0, _wordpress_element.useId)();
-		const generatedDescriptionId = (0, _wordpress_element.useId)();
-		const { descriptionIds, hasLabel, labelId } = parseItemContent(children, components);
-		const resolvedLabelId = hasLabel ? labelId ?? generatedLabelId : void 0;
-		const resolvedDescriptionIds = descriptionIds.map((descriptionId, index) => descriptionId ?? `${generatedDescriptionId}-${index}`);
-		const itemDescribedBy = Array.from(/* @__PURE__ */ new Set([...ariaDescribedBy?.split(/\s+/).filter(Boolean) ?? [], ...resolvedDescriptionIds])).join(" ");
-		let descriptionIndex = 0;
-		const { Label, Description, descriptionValidationToken } = components;
-		return {
-			contentChildren: _wordpress_element.Children.map(children, (child) => {
-				if (!(0, _wordpress_element.isValidElement)(child)) return child;
-				if (child.type === Label) return child.props.id === resolvedLabelId ? child : (0, _wordpress_element.cloneElement)(child, { id: resolvedLabelId });
-				if (child.type !== Description) return child;
-				const descriptionId = resolvedDescriptionIds[descriptionIndex++];
-				if (!descriptionValidationToken && child.props.id === descriptionId) return child;
-				return (0, _wordpress_element.cloneElement)(child, {
-					id: descriptionId,
-					...descriptionValidationToken && { validationToken: descriptionValidationToken }
-				});
-			}),
-			resolvedLabelId,
-			itemAriaProps: {
-				"aria-describedby": itemDescribedBy || void 0,
-				"aria-label": ariaLabel,
-				"aria-labelledby": ariaLabelledBy ?? (ariaLabel ? void 0 : resolvedLabelId)
-			}
-		};
-	}
-
-// packages/ui/build-module/text/text.mjs
+// packages/ui/build-module/tabs/panel.mjs
 	const STYLE_HASH_ATTRIBUTE$38 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -21039,21 +24219,8 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$38(targetDocument, hash, css);
 	}
-	registerStyle$38("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-	var style_module_default$19 = {
-		"text": "_9745ffa515d864cf__text",
-		"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
-		"heading-xl": "_664e3e7687c45603__heading-xl",
-		"heading-lg": "dac661a5de0ed2bd__heading-lg",
-		"heading-md": "_59c7f3f740e2f96e__heading-md",
-		"heading-sm": "cf052fbad8d93b7e__heading-sm",
-		"body-xl": "_212b9cfef57a0af4__body-xl",
-		"body-lg": "_07f57bc0aa36b2c6__body-lg",
-		"body-md": "_0c6da4457aec9e62__body-md",
-		"body-sm": "b998f87ff17b7bec__body-sm"
-	};
 	registerStyle$38("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$10 = {
+	var global_css_defense_module_default$9 = {
 		"button": "_78c10a0773e51a91__button",
 		"input": "_5b33aa2d48624b4f__input",
 		"textarea": "_980b3b4776ac8f81__textarea",
@@ -21065,46 +24232,44 @@ Icon: ButtonIcon });
 		"li": "_3c72ff72abe57859__li",
 		"span": "_79d16267c15d9eb2__span"
 	};
+	registerStyle$38("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+	var focus_module_default$4 = {
+		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+	};
 	/**
-	* A text component for rendering content with predefined typographic variants.
-	* Built on design tokens for consistent typography across the UI.
+	* A panel displayed when the corresponding tab is active.
+	*
+	* `Tabs` is a collection of React components that combine to render
+	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
 	*/
-	const Text = (0, _wordpress_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
-		return useRender({
-			render,
-			defaultTagName: "span",
-			ref,
-			props: mergeProps(props, { className: clsx(style_module_default$19.text, global_css_defense_module_default$10.heading, global_css_defense_module_default$10.p, style_module_default$19[variant], className) })
+	const Panel = (0, _wordpress_element.forwardRef)(function TabPanel({ className, ...otherProps }, forwardedRef) {
+		useRegisterPanel();
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsPanel, {
+			ref: forwardedRef,
+			className: clsx(global_css_defense_module_default$9.div, focus_module_default$4["outset-ring--focus-visible"], className),
+			...otherProps
 		});
 	});
 
-// packages/ui/build-module/utils/render-slot-with-children.mjs
+// packages/ui/build-module/tabs/root.mjs
 /**
-	* Fills an optional "slot" element prop with content by cloning it and
-	* injecting the given `children`. When `slot` is undefined, the provided
-	* `defaultSlot` is used in its place.
+	* Groups the tabs and the corresponding panels.
 	*
-	* Shared by overlay `Popup` components for their slot-shaped customization
-	* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
-	* children injection — stays consistent across all of them.
-	*
-	* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
-	* any subtree passed on the slot element is overwritten by `children`.
-	*
-	* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
-	*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
-	*                    is used. Injected `children` replace any subtree the caller
-	*                    may have passed on the slot element.
-	* @param defaultSlot Unpopulated default element used when `slot` is omitted
-	*                    (e.g. `<Tooltip.Portal />`).
-	* @param children    Content to inject as the slot's children (backdrop,
-	*                    positioner, popup subtree, etc.).
+	* `Tabs` is a collection of React components that combine to render
+	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
 	*/
-	function renderSlotWithChildren(slot, defaultSlot, children) {
-		return (0, _wordpress_element.cloneElement)(slot ?? defaultSlot, { children });
-	}
+	const Root$3 = (0, _wordpress_element.forwardRef)(function TabsRoot$1({ ...otherProps }, forwardedRef) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsRoot, {
+			ref: forwardedRef,
+			...otherProps
+		}) }) });
+	});
 
-// packages/ui/build-module/utils/css/item-popup.mjs
+// packages/ui/build-module/tabs/tab.mjs
 	const STYLE_HASH_ATTRIBUTE$37 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -21206,48 +24371,37 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$37(targetDocument, hash, css);
 	}
-	registerStyle$37("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$12 = {
-		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
-		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
-		"is-width-content": "_8f1224a085e41ee8__is-width-content",
-		"is-width-available": "_80926ed7e7d54be0__is-width-available",
-		"is-width-sm": "d08be1bfb7489969__is-width-sm",
-		"is-width-md": "b38610fddbff3473__is-width-md",
-		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
-		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
-		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
-		"list-chrome": "_750bf16b8304f204__list-chrome",
-		"item-icon": "d786737b2e57c2d3__item-icon",
-		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
-		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
-		"list-footer": "_759a12af5db7a8dd__list-footer",
-		"group": "_74a6a24cc319fdba__group",
-		"group-label": "_09632da7090fc022__group-label",
-		"separator": "d9a1c5812534c804__separator",
-		"item": "bbed87bc28f61ead__item",
-		"is-size-small": "_2426aa84de39c4dd__is-size-small",
-		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
-		"item-content": "_6fc483b6919abf79__item-content",
-		"item-text": "_583f0728d87c5db1__item-text",
-		"item-label": "aa96b6c7fcb20ae8__item-label",
-		"item-description": "_26fffe8e4119e36e__item-description",
-		"status": "_7738d24c2d5904c5__status",
-		"empty": "bb720e36b47aa491__empty"
+	registerStyle$37("3d953ec7ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a0e75f120439a0aa__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.d0a55a85eda75e42__is-scrolling){overflow:visible}&._3458825d62377029__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._3458825d62377029__is-overflowing-first._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._75bc52ead60e02b3__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._8db3ebc0bb0b18de__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;.a0e75f120439a0aa__tablist:has(>.cbf34d4b11b8d6d4__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.cbf34d4b11b8d6d4__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:\"\";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._75bc52ead60e02b3__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._75bc52ead60e02b3__is-minimal-variant.d0a55a85eda75e42__is-scrolling[data-orientation=horizontal] &{&:before{content:\"\";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px);&:after{content:\"\";inset:0;outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}}}._48bd1f7fa091c988__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}}}");
+	var style_module_default$14 = {
+		"tablist": "a0e75f120439a0aa__tablist",
+		"is-scrolling": "d0a55a85eda75e42__is-scrolling",
+		"is-overflowing-first": "_3458825d62377029__is-overflowing-first",
+		"is-overflowing-last": "_485eb1577637fe68__is-overflowing-last",
+		"is-minimal-variant": "_75bc52ead60e02b3__is-minimal-variant",
+		"indicator": "_8db3ebc0bb0b18de__indicator",
+		"tab": "cbf34d4b11b8d6d4__tab",
+		"tab-children": "_48bd1f7fa091c988__tab-children"
 	};
-	function getItemPopupWidthClassName(width = "anchor") {
-		switch (width) {
-			case "available": return item_popup_module_default$12["is-width-available"];
-			case "content": return item_popup_module_default$12["is-width-content"];
-			case "lg": return item_popup_module_default$12["is-width-lg"];
-			case "md": return item_popup_module_default$12["is-width-md"];
-			case "sm": return item_popup_module_default$12["is-width-sm"];
-			case "anchor": return item_popup_module_default$12["is-width-anchor"];
-			default: return false;
-		}
-	}
+	/**
+	* An individual interactive tab button that toggles the corresponding panel.
+	*
+	* `Tabs` is a collection of React components that combine to render
+	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+	*/
+	const Tab = (0, _wordpress_element.forwardRef)(function UnforwardedTab({ className, children, ...otherProps }, forwardedRef) {
+		useRegisterTab();
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsTab, {
+			ref: forwardedRef,
+			className: clsx(style_module_default$14.tab, className),
+			...otherProps,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+				className: style_module_default$14["tab-children"],
+				children
+			})
+		});
+	});
 
-// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+// packages/ui/build-module/badge/badge.mjs
 	const STYLE_HASH_ATTRIBUTE$36 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -21349,107 +24503,60 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$36(targetDocument, hash, css);
 	}
-	registerStyle$36("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
-	var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
-	/**
-	* Marker attribute on the compat overlay slot element.
-	*/
-	const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-	function resolveOwnerDocument() {
-		return typeof document === "undefined" ? null : document;
-	}
-	function isInWordPressEnvironment() {
-		let topWp;
-		try {
-			topWp = window.top?.wp;
-		} catch {}
-		const wp = topWp ?? window.wp;
-		return typeof wp?.components === "object" && wp.components !== null;
-	}
-	let cachedSlot = null;
-	function ensureSlotIsAccessible(element) {
-		element.setAttribute("aria-hidden", "false");
-		return element;
-	}
-	function createSlot(ownerDocument) {
-		const element = ownerDocument.createElement("div");
-		element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-		if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
-		ownerDocument.body.appendChild(element);
-		return element;
-	}
-	/**
-	* Returns the body-level compat overlay slot when the runtime opts in,
-	* lazily creating it on first call. Returns `undefined` otherwise — so the
-	* return value can be forwarded straight to a `container` prop, leaving the
-	* default portal container in effect.
-	*
-	* Two opt-in paths:
-	*
-	* - Auto-detected when `window.wp.components` is on the global — the
-	*   typical script-loader setup for WordPress plugins and admin screens.
-	* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
-	*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
-	*   relying on the global.
-	*
-	* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
-	* local document's body. Subsequent calls return the same element; if it's
-	* been removed it's recreated, and a slot created by another
-	* `@wordpress/ui` instance in the same document is adopted rather than
-	* duplicated.
-	*/
-	function getWpCompatOverlaySlot() {
-		if (typeof window === "undefined") return;
-		if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
-		const ownerDocument = resolveOwnerDocument();
-		if (!ownerDocument || !ownerDocument.body) return;
-		if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
-		const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
-		if (existing instanceof HTMLDivElement) {
-			cachedSlot = ensureSlotIsAccessible(existing);
-			return cachedSlot;
-		}
-		if (cachedSlot?.isConnected) cachedSlot.remove();
-		cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
-		return cachedSlot;
-	}
-
-// packages/ui/build-module/form/primitives/constants.mjs
-/**
-	* Shared positioning defaults for item-list popups, e.g. Select, Combobox,
-	* or Autocomplete.
-	*/
-	const ITEM_POPUP_POSITIONER_PROPS = {
-		align: "start",
-		sideOffset: 8,
-		collisionPadding: 12
+	registerStyle$36("7daf4893c9", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9ce8c05efea8e203__badge{border-radius:var(--wpds-border-radius-lg,8px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._8b848c49ae4c70ec__infotip-trigger{--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-button-font-weight:var(--wpds-typography-font-weight-default,400);align-items:center;border:0;cursor:var(--wpds-cursor-control,pointer);display:inline-flex;gap:var(--wpds-dimension-gap-xs,4px);text-align:start;vertical-align:middle}._8b848c49ae4c70ec__infotip-trigger:focus{outline:none}._8b848c49ae4c70ec__infotip-trigger:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0b34a322e3f931d1__infotip-icon{flex-shrink:0;margin-inline-end:-3px}.dbaa78793aa9ed55__is-high-intent{background-color:var(--wpds-color-background-surface-error,#fae5e1);color:var(--wpds-color-foreground-content-error,#470000)}.e7014da94d135da5__is-medium-intent{background-color:var(--wpds-color-background-surface-warning,#fde6be);color:var(--wpds-color-foreground-content-warning,#2e1900)}._0ea3f993ed9a8b93__is-low-intent{background-color:var(--wpds-color-background-surface-caution,#fee995);color:var(--wpds-color-foreground-content-caution,#281d00)}._2cb7bc48c640ffb1__is-stable-intent{background-color:var(--wpds-color-background-surface-success,#c2f8ca);color:var(--wpds-color-foreground-content-success,#002900)}._4ad31051a45a43b8__is-informational-intent{background-color:var(--wpds-color-background-surface-info,#deebfa);color:var(--wpds-color-foreground-content-info,#001b4f)}._0161efc7afeedbfd__is-draft-intent{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._8d100360e716930c__is-none-intent{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}}}");
+	var style_module_default$13 = {
+		"badge": "_9ce8c05efea8e203__badge",
+		"infotip-trigger": "_8b848c49ae4c70ec__infotip-trigger",
+		"infotip-icon": "_0b34a322e3f931d1__infotip-icon",
+		"is-high-intent": "dbaa78793aa9ed55__is-high-intent",
+		"is-medium-intent": "e7014da94d135da5__is-medium-intent",
+		"is-low-intent": "_0ea3f993ed9a8b93__is-low-intent",
+		"is-stable-intent": "_2cb7bc48c640ffb1__is-stable-intent",
+		"is-informational-intent": "_4ad31051a45a43b8__is-informational-intent",
+		"is-draft-intent": "_0161efc7afeedbfd__is-draft-intent",
+		"is-none-intent": "_8d100360e716930c__is-none-intent"
 	};
-
-// packages/ui/build-module/utils/direction-provider.mjs
-/**
-	* Provides WordPress's text direction to Base UI components.
+	registerStyle$36("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	var global_css_defense_module_default$8 = {
+		"button": "_78c10a0773e51a91__button",
+		"input": "_5b33aa2d48624b4f__input",
+		"textarea": "_980b3b4776ac8f81__textarea",
+		"div": "_43e478b4279a076c__div",
+		"p": "_698099e25b0fb1a6__p",
+		"heading": "_326aee4184d261fd__heading",
+		"a": "e9576240835601ba__a",
+		"ol": "_3f05789653864a73__ol",
+		"li": "_3c72ff72abe57859__li",
+		"span": "_79d16267c15d9eb2__span"
+	};
+	/**
+	* A badge component for displaying labels with semantic intent.
+	* Add an infotip to explain a status in a popover.
 	*/
-	function DirectionProvider({ children }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider$1, {
-			direction: (0, _wordpress_i18n.isRTL)() ? "rtl" : "ltr",
-			children
+	const Badge = (0, _wordpress_element.forwardRef)(function UnforwardedBadge({ intent = "none", className, children, infotip, render, ...props }, ref) {
+		const badge = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Text, {
+			ref,
+			className: clsx(style_module_default$13.badge, style_module_default$13[`is-${intent}-intent`], className),
+			...props,
+			render: infotip ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(infotip.popover.Trigger, {
+				className: clsx(style_module_default$13["infotip-trigger"], global_css_defense_module_default$8.button),
+				openOnHover: true,
+				delay: 200,
+				closeDelay: 200,
+				render
+			}) : render,
+			variant: "body-sm",
+			children: [children, infotip && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+				icon: help_default,
+				size: 16,
+				"aria-hidden": "true",
+				className: style_module_default$13["infotip-icon"]
+			})]
 		});
-	}
-
-// packages/ui/build-module/tooltip/portal.mjs
-/**
-	* Used to apply custom portal behavior to `Tooltip`'s floating content.
-	* `container` defaults to the `@wordpress/ui` compat overlay slot.
-	*/
-	const Portal$1 = (0, _wordpress_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipPortal, {
-			container: container === void 0 ? getWpCompatOverlaySlot() : container,
-			...restProps,
-			ref
-		});
+		return infotip ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(infotip.popover.Root, { children: [badge, infotip.popup] }) : badge;
 	});
 
-// packages/ui/build-module/tooltip/positioner.mjs
+// packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
 	const STYLE_HASH_ATTRIBUTE$35 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -21551,40 +24658,58 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$35(targetDocument, hash, css);
 	}
+	registerStyle$35("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	var global_css_defense_module_default$7 = {
+		"button": "_78c10a0773e51a91__button",
+		"input": "_5b33aa2d48624b4f__input",
+		"textarea": "_980b3b4776ac8f81__textarea",
+		"div": "_43e478b4279a076c__div",
+		"p": "_698099e25b0fb1a6__p",
+		"heading": "_326aee4184d261fd__heading",
+		"a": "e9576240835601ba__a",
+		"ol": "_3f05789653864a73__ol",
+		"li": "_3c72ff72abe57859__li",
+		"span": "_79d16267c15d9eb2__span"
+	};
 	registerStyle$35("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 	var resets_module_default$6 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	registerStyle$35("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
-	var style_module_default$18 = {
-		"positioner": "b9266862d9435660__positioner",
-		"popup": "_7bb3fd8a0810be6d__popup"
+	registerStyle$35("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
+	var style_module_default$12 = {
+		"input-layout": "b58f09bec1a5dbde__input-layout",
+		"is-size-compact": "c6959524c70627d6__is-size-compact",
+		"is-size-small": "aa52ad890a16cc91__is-size-small",
+		"is-disabled": "_50a72abb47530e8a__is-disabled",
+		"is-borderless": "_33a5f404fc55a9f2__is-borderless",
+		"input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot",
+		"slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper",
+		"is-padding-minimal": "_50d0eced305893d5__is-padding-minimal"
 	};
 	/**
-	* Used to apply custom positioning to `Tooltip`'s floating content.
+	* A low-level component that handles the visual layout of an input-like field,
+	* including disabled states and standard prefix/suffix slots.
 	*/
-	const Positioner$1 = (0, _wordpress_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipPositioner, {
+	const InputLayout$1 = (0, _wordpress_element.forwardRef)(function UnforwardedInputLayout({ className, children, visuallyDisabled, size = "default", isBorderless, prefix, suffix, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			ref,
-			align,
-			side,
-			sideOffset,
-			...props,
-			className: clsx(resets_module_default$6["box-sizing"], style_module_default$18.positioner, className)
+			className: clsx(global_css_defense_module_default$7.div, resets_module_default$6["box-sizing"], style_module_default$12["input-layout"], style_module_default$12[`is-size-${size}`], visuallyDisabled && style_module_default$12["is-disabled"], isBorderless && style_module_default$12["is-borderless"], className),
+			...restProps,
+			children: [
+				_wordpress_element.Children.count(prefix) > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: style_module_default$12["slot-wrapper"],
+					"data-slot-type": "prefix",
+					children: prefix
+				}),
+				children,
+				_wordpress_element.Children.count(suffix) > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: style_module_default$12["slot-wrapper"],
+					"data-slot-type": "suffix",
+					children: suffix
+				})
+			]
 		});
 	});
 
-// packages/ui/build-module/lock-unlock.mjs
-	const { lock: lock$2, unlock: unlock$2 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
-
-// packages/ui/build-module/utils/theme-provider.mjs
-	function getThemeProvider() {
-		const themePackage = _wordpress_theme;
-		if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
-		if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
-		return unlock$2(themePackage.privateApis).ThemeProvider;
-	}
-	const ThemeProvider = getThemeProvider();
-
-// packages/ui/build-module/tooltip/popup.mjs
+// packages/ui/build-module/form/primitives/input-layout/slot.mjs
 	const STYLE_HASH_ATTRIBUTE$34 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -21686,53 +24811,37 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$34(targetDocument, hash, css);
 	}
-	registerStyle$34("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
-	var style_module_default$17 = {
-		"positioner": "b9266862d9435660__positioner",
-		"popup": "_7bb3fd8a0810be6d__popup"
+	registerStyle$34("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
+	var style_module_default$11 = {
+		"input-layout": "b58f09bec1a5dbde__input-layout",
+		"is-size-compact": "c6959524c70627d6__is-size-compact",
+		"is-size-small": "aa52ad890a16cc91__is-size-small",
+		"is-disabled": "_50a72abb47530e8a__is-disabled",
+		"is-borderless": "_33a5f404fc55a9f2__is-borderless",
+		"input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot",
+		"slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper",
+		"is-padding-minimal": "_50d0eced305893d5__is-padding-minimal"
 	};
-	const POPUP_COLOR = { background: "#1e1e1e" };
-	const Popup$1 = (0, _wordpress_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
-		const popupContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ThemeProvider, {
-			color: POPUP_COLOR,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipPopup, {
-				ref,
-				className: clsx(style_module_default$17.popup, className),
-				...props,
-				children
-			})
-		});
-		const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner$1, {}), popupContent);
-		return renderSlotWithChildren(portal, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Portal$1, {}), positionedPopup);
-	});
-
-// packages/ui/build-module/tooltip/trigger.mjs
-	const Trigger = (0, _wordpress_element.forwardRef)(function TooltipTrigger$1(props, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipTrigger, {
-			ref,
-			...props
-		});
-	});
-
-// packages/ui/build-module/tooltip/root.mjs
-/**
-	* `Tooltip` is used to visually show the label of an icon button, or other such
-	* interactive controls that don't have a visual text label.
-	*
-	* Tooltip popups are visual-only and not exposed to assistive technologies.
-	* The trigger's accessible name (e.g. `aria-label`) is the source of truth
-	* for screen reader users. Tooltips are not available on touch devices,
-	* and thus should not be used for infotips, descriptions, or dynamic status
-	* messages.
-	*
-	* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
-	* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
+	/**
+	* A layout helper to add paddings in a prefix or suffix.
 	*/
-	function Root$3(props) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
-	}
+	const InputLayoutSlot = (0, _wordpress_element.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			ref,
+			className: clsx(style_module_default$11["input-layout-slot"], style_module_default$11[`is-padding-${padding}`], className),
+			...restProps
+		});
+	});
+	InputLayoutSlot.displayName = "InputLayout.Slot";
 
-// packages/ui/build-module/link/link.mjs
+// packages/ui/build-module/form/primitives/input-layout/index.mjs
+/**
+	* A low-level component that handles the visual layout of an input-like field,
+	* including disabled states and standard prefix/suffix slots.
+	*/
+	const InputLayout = Object.assign(InputLayout$1, { Slot: InputLayoutSlot });
+
+// packages/ui/build-module/form/primitives/input/input.mjs
 	const STYLE_HASH_ATTRIBUTE$33 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -21834,28 +24943,8 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$33(targetDocument, hash, css);
 	}
-	registerStyle$33("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-	var resets_module_default$5 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	registerStyle$33("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-	var focus_module_default$4 = {
-		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-	};
-	registerStyle$33("c87d91cdf7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a574f9f242212d58__link{--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);border-radius:var(--wpds-border-radius-sm,2px);text-decoration-thickness:from-font;text-underline-offset:.2em}._2d2f0506e717a46c__link-with-icon{text-decoration-line:none}._92b7b6a03fbb27ac__link-contents{text-decoration:inherit;text-decoration-line:underline}._69f40d9212adc58d__is-brand,._69f40d9212adc58d__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}._69f40d9212adc58d__is-brand:active,._69f40d9212adc58d__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._9a9c54c6e67b4c3c__is-neutral,._9a9c54c6e67b4c3c__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._9a9c54c6e67b4c3c__is-neutral:active,._9a9c54c6e67b4c3c__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._93be0b747897baad__is-unstyled{--_gcd-a-border-radius:0;--_gcd-a-color:inherit;color:inherit;text-decoration:none}._9c39df40fdc09594__link-icon{font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._9c39df40fdc09594__link-icon:after{content:\"\\2060\\2197\"}._9c39df40fdc09594__link-icon:dir(rtl):after{content:\"\\2060\\2196\"}}}");
-	var style_module_default$16 = {
-		"link": "a574f9f242212d58__link",
-		"link-with-icon": "_2d2f0506e717a46c__link-with-icon",
-		"link-contents": "_92b7b6a03fbb27ac__link-contents",
-		"is-brand": "_69f40d9212adc58d__is-brand",
-		"is-neutral": "_9a9c54c6e67b4c3c__is-neutral",
-		"is-unstyled": "_93be0b747897baad__is-unstyled",
-		"link-icon": "_9c39df40fdc09594__link-icon"
-	};
 	registerStyle$33("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$9 = {
+	var global_css_defense_module_default$6 = {
 		"button": "_78c10a0773e51a91__button",
 		"input": "_5b33aa2d48624b4f__input",
 		"textarea": "_980b3b4776ac8f81__textarea",
@@ -21867,59 +24956,41 @@ Icon: ButtonIcon });
 		"li": "_3c72ff72abe57859__li",
 		"span": "_79d16267c15d9eb2__span"
 	};
+	registerStyle$33("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+	var focus_module_default$3 = {
+		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+	};
+	registerStyle$33("a53cd10a80", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9edfcd97eeaee9dc__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);--_gcd-input-font-size:max(var(--wpds-typography-font-size-md,13px),16px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;@media (min-width:600px){--_gcd-input-font-size:inherit}&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}@layer compositions{.edc52bf0fe80b57f__layout{font-size:max(var(--wpds-typography-font-size-md,13px),16px);@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}}}}");
+	var style_module_default$10 = {
+		"input": "_9edfcd97eeaee9dc__input",
+		"layout": "edc52bf0fe80b57f__layout"
+	};
 	/**
-	* A styled anchor element with support for semantic color tones and an
-	* unstyled escape hatch.
+	* A low-level primitive for an input field.
 	*
-	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+	* Prefer `InputControl` when using with a standard label and description.
 	*/
-	const Link = (0, _wordpress_element.forwardRef)(function UnforwardedLink({ children, variant = "default", tone = "brand", openInNewTab = false, target, render, className, ...props }, ref) {
-		const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
-		return useRender({
-			render,
-			defaultTagName: "a",
-			ref,
-			props: mergeProps(props, {
-				className: clsx(global_css_defense_module_default$9.a, resets_module_default$5["box-sizing"], focus_module_default$4["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$16.link, variant !== "unstyled" && shouldShowNewTabIndicator && style_module_default$16["link-with-icon"], variant !== "unstyled" && style_module_default$16[`is-${tone}`], variant === "unstyled" && style_module_default$16["is-unstyled"], className),
-				target: target ?? (openInNewTab ? "_blank" : void 0),
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					className: style_module_default$16["link-contents"],
-					children
-				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					className: style_module_default$16["link-icon"],
-					role: "img",
-					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
-				})] })
+	const Input$2 = (0, _wordpress_element.forwardRef)(function UnforwardedInput({ className, size = "default", prefix, suffix, style, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout, {
+			className: clsx(style_module_default$10.layout, focus_module_default$3["outset-ring--focus-within"], className),
+			style,
+			size,
+			visuallyDisabled: restProps.disabled,
+			prefix,
+			suffix,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Input$1, {
+				ref,
+				className: clsx(global_css_defense_module_default$6.input, style_module_default$10.input),
+				...restProps
 			})
 		});
 	});
 
-// packages/react-inert-value/build-module/index.mjs
-	const majorVersion = parseInt(react.version, 10);
-	/**
-	* Returns a value for the `inert` prop that the running version of React
-	* renders as the `inert` HTML attribute.
-	*
-	* React 19 handles `inert` as a boolean attribute, while React 18 knows nothing
-	* about `inert` and ignores `inert={ true }`, so it has to be given the string
-	* `'true'` instead.
-	*
-	* The return type describes what React 19 types accept. React 18 doesn't support
-	* `inert` HTML attribute at all, so a TypeScript call site still
-	* needs a `@ts-expect-error` annotation.
-	*
-	* Inspired by the helper of the same name in the Base UI library.
-	*
-	* @param value Boolean value for the `inert` prop.
-	* @return The actual value to pass to the `inert` prop.
-	*/
-	function inertValue(value) {
-		if (majorVersion >= 19) return value;
-		return value ? "true" : void 0;
-	}
-
-// packages/ui/build-module/stack/stack.mjs
+// packages/ui/build-module/form/primitives/checkbox/checkbox.mjs
 	const STYLE_HASH_ATTRIBUTE$32 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -22021,40 +25092,47 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$32(targetDocument, hash, css);
 	}
-	registerStyle$32("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
-	var style_module_default$15 = { "stack": "_8e8e79c1a2eec43b__stack" };
-	const gapTokens = {
-		xs: "var(--wpds-dimension-gap-xs, 4px)",
-		sm: "var(--wpds-dimension-gap-sm, 8px)",
-		md: "var(--wpds-dimension-gap-md, 12px)",
-		lg: "var(--wpds-dimension-gap-lg, 16px)",
-		xl: "var(--wpds-dimension-gap-xl, 24px)",
-		"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-		"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+	registerStyle$32("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$5 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	registerStyle$32("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+	var focus_module_default$2 = {
+		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+	};
+	registerStyle$32("ecdf49ebe4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._63457135733e4745__root{--_checkbox-input-size:var(--wp-ui-checkbox-input-size,var(--wpds-dimension-size-2xs,16px));aspect-ratio:1;background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:min(var(--wpds-border-radius-sm,2px),2px);display:inline-block;flex-shrink:0;padding:0;position:relative;width:var(--_checkbox-input-size);&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:hover,[data-highlighted] &{background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&[aria-checked=mixed],&[aria-checked=true]{background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));border-color:transparent;color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:after{aspect-ratio:1;content:\"\";left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:max(var(--_checkbox-input-size),var(--wpds-dimension-size-sm,24px))}}.e5da9f589362d532__indicator-icon{inset:calc(0px - var(--wpds-border-width-xs, 1px));position:absolute}}}");
+	var style_module_default$9 = {
+		"root": "_63457135733e4745__root",
+		"indicator-icon": "e5da9f589362d532__indicator-icon"
 	};
 	/**
-	* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
-	* Built on design tokens for predictable spacing values.
+	* A low-level checkbox primitive.
+	*
+	* Prefer `CheckboxControl` for labeled items. For grouping and nested parent
+	* checkboxes, see the [Checkbox Groups](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-form-checkbox-groups--docs)
+	* documentation.
 	*/
-	const Stack = (0, _wordpress_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
-		const style = {
-			gap: gap && gapTokens[gap],
-			alignItems: align,
-			justifyContent: justify,
-			flexDirection: direction,
-			flexWrap: wrap
-		};
-		return useRender({
-			render,
+	const Checkbox = (0, _wordpress_element.forwardRef)(function UnforwardedCheckbox({ className, indeterminate, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CheckboxRoot, {
 			ref,
-			props: mergeProps(props, {
-				style,
-				className: style_module_default$15.stack
+			className: clsx(resets_module_default$5["box-sizing"], focus_module_default$2["outset-ring--focus"], style_module_default$9.root, className),
+			indeterminate,
+			...restProps,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CheckboxIndicator, {
+				className: style_module_default$9["indicator-icon"],
+				render: (props, state) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+					...props,
+					icon: state.indeterminate ? reset_default : check_default,
+					viewBox: "4 4 16 16",
+					size: 16
+				})
 			})
 		});
 	});
 
-// packages/ui/build-module/icon-button/icon-button.mjs
+// packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
 	const STYLE_HASH_ATTRIBUTE$31 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -22156,1164 +25234,7 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$31(targetDocument, hash, css);
 	}
-	registerStyle$31("2a111665b3", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._7f5dbf30e44a43dd__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}._1b3c0d159ecbf3d5__icon{margin:-1px}}}");
-	var style_module_default$14 = {
-		"icon-button": "_7f5dbf30e44a43dd__icon-button",
-		"icon": "_1b3c0d159ecbf3d5__icon"
-	};
-	/**
-	* An icon-only button with automatic tooltip and optimized styling.
-	* Inherits all Button props while providing icon-specific enhancements.
-	*
-	* When rendering a group of `IconButton`s, wrap them in a `Tooltip.Provider`
-	* to coordinate tooltip delays across the group.
-	*
-	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
-	*/
-	const IconButton = (0, _wordpress_element.forwardRef)(function UnforwardedIconButton({ label, className, children: _children, disabled, focusableWhenDisabled = true, icon, size, shortcut, positioner, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, ...restProps }, ref) {
-		const classes = clsx(style_module_default$14["icon-button"], className);
-		const { descriptionId, targetProps } = useKeyboardShortcutProps({
-			"aria-describedby": ariaDescribedBy,
-			"aria-keyshortcuts": ariaKeyShortcuts,
-			shortcut
-		});
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$3, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Trigger, {
-			ref,
-			...targetProps,
-			disabled: disabled && !focusableWhenDisabled,
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$43, {
-				...restProps,
-				size,
-				"aria-label": label,
-				disabled,
-				focusableWhenDisabled
-			}),
-			className: classes,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
-				icon,
-				size: 24,
-				className: style_module_default$14.icon
-			}), shortcut && descriptionId && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(KeyboardShortcutDescription, {
-				descriptionId,
-				shortcut
-			})]
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Popup$1, {
-			positioner,
-			children: [label, shortcut && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [" ", /* @__PURE__ */ (0, react_jsx_runtime.jsx)(KeyboardShortcutDisplay, { shortcut })] })]
-		})] });
-	});
-
-// packages/ui/build-module/utils/use-schedule-validation.mjs
-/**
-	* Dev-only hook that returns a stable `scheduleValidation` function.
-	*
-	* Each call debounces to `setTimeout(…, 0)` so that rapid
-	* register / unregister cycles (e.g. React strict-mode double-mount)
-	* settle before the check runs. The timer is cleaned up on unmount,
-	* and calls after unmount are silently ignored.
-	*
-	* @param validate Callback that performs the actual validation.
-	*                 Wrapped in `useEvent`, so it can be an unstable closure.
-	*/
-	function useScheduleValidation(validate) {
-		const validateEvent = (0, _wordpress_compose.useEvent)(validate);
-		const timerRef = (0, _wordpress_element.useRef)(null);
-		const unmountedRef = (0, _wordpress_element.useRef)(false);
-		const scheduleValidation = (0, _wordpress_element.useCallback)(() => {
-			if (unmountedRef.current) return;
-			if (timerRef.current) clearTimeout(timerRef.current);
-			timerRef.current = setTimeout(() => {
-				validateEvent();
-				timerRef.current = null;
-			}, 0);
-		}, [validateEvent]);
-		(0, _wordpress_element.useEffect)(() => {
-			unmountedRef.current = false;
-			return () => {
-				unmountedRef.current = true;
-				if (timerRef.current) clearTimeout(timerRef.current);
-			};
-		}, []);
-		return scheduleValidation;
-	}
-
-// packages/ui/build-module/tabs/list.mjs
-	const STYLE_HASH_ATTRIBUTE$30 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$30() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$30(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$30(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$30}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$30) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$30(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$30();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$30(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$30, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$30(targetDocument) {
-		const runtime = getRuntime$30();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$30(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$30(hash, css) {
-		const runtime = getRuntime$30();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$30(targetDocument, hash, css);
-	}
-	registerStyle$30("3d953ec7ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a0e75f120439a0aa__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.d0a55a85eda75e42__is-scrolling){overflow:visible}&._3458825d62377029__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._3458825d62377029__is-overflowing-first._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._75bc52ead60e02b3__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._8db3ebc0bb0b18de__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;.a0e75f120439a0aa__tablist:has(>.cbf34d4b11b8d6d4__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.cbf34d4b11b8d6d4__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:\"\";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._75bc52ead60e02b3__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._75bc52ead60e02b3__is-minimal-variant.d0a55a85eda75e42__is-scrolling[data-orientation=horizontal] &{&:before{content:\"\";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px);&:after{content:\"\";inset:0;outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}}}._48bd1f7fa091c988__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}}}");
-	var style_module_default$13 = {
-		"tablist": "a0e75f120439a0aa__tablist",
-		"is-scrolling": "d0a55a85eda75e42__is-scrolling",
-		"is-overflowing-first": "_3458825d62377029__is-overflowing-first",
-		"is-overflowing-last": "_485eb1577637fe68__is-overflowing-last",
-		"is-minimal-variant": "_75bc52ead60e02b3__is-minimal-variant",
-		"indicator": "_8db3ebc0bb0b18de__indicator",
-		"tab": "cbf34d4b11b8d6d4__tab",
-		"tab-children": "_48bd1f7fa091c988__tab-children"
-	};
-	const SCROLL_EPSILON = 1;
-	/**
-	* Groups the individual tab buttons.
-	*
-	* `Tabs` is a collection of React components that combine to render
-	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
-	*/
-	const List$1 = (0, _wordpress_element.forwardRef)(function TabList({ children, variant = "default", className, activateOnFocus, ...otherProps }, forwardedRef) {
-		const [listEl, setListEl] = (0, _wordpress_element.useState)(null);
-		const [overflow, setOverflow] = (0, _wordpress_element.useState)({
-			first: false,
-			last: false,
-			isScrolling: false
-		});
-		(0, _wordpress_element.useEffect)(() => {
-			if (!listEl) return;
-			const measureOverflow = () => {
-				const { scrollWidth, clientWidth, scrollLeft } = listEl;
-				const maxScroll = Math.max(scrollWidth - clientWidth, 0);
-				const scrollFromStart = (listEl.dir || (typeof window !== "undefined" ? window.getComputedStyle(listEl).direction : "ltr")) === "rtl" && scrollLeft < 0 ? -scrollLeft : scrollLeft;
-				const next = {
-					first: scrollFromStart > SCROLL_EPSILON,
-					last: scrollFromStart < maxScroll - SCROLL_EPSILON,
-					isScrolling: scrollWidth > clientWidth
-				};
-				setOverflow((prev) => prev.first === next.first && prev.last === next.last && prev.isScrolling === next.isScrolling ? prev : next);
-			};
-			const resizeObserver = new ResizeObserver(measureOverflow);
-			const observeTabs = () => {
-				resizeObserver.disconnect();
-				resizeObserver.observe(listEl);
-				listEl.querySelectorAll("[role=\"tab\"]").forEach((tab) => resizeObserver.observe(tab));
-			};
-			const mutationObserver = new MutationObserver(observeTabs);
-			mutationObserver.observe(listEl, {
-				childList: true,
-				subtree: true
-			});
-			let scrollTick = false;
-			const throttleMeasureOverflowOnScroll = () => {
-				if (!scrollTick) {
-					requestAnimationFrame(() => {
-						measureOverflow();
-						scrollTick = false;
-					});
-					scrollTick = true;
-				}
-			};
-			listEl.addEventListener("scroll", throttleMeasureOverflowOnScroll, { passive: true });
-			observeTabs();
-			measureOverflow();
-			return () => {
-				listEl.removeEventListener("scroll", throttleMeasureOverflowOnScroll);
-				resizeObserver.disconnect();
-				mutationObserver.disconnect();
-			};
-		}, [listEl]);
-		const mergedListRef = (0, _wordpress_compose.useMergeRefs)([forwardedRef, (el) => setListEl(el)]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(TabsList, {
-			ref: mergedListRef,
-			activateOnFocus,
-			"data-select-on-move": activateOnFocus ? "true" : "false",
-			className: clsx(style_module_default$13.tablist, overflow.isScrolling && style_module_default$13["is-scrolling"], overflow.first && style_module_default$13["is-overflowing-first"], overflow.last && style_module_default$13["is-overflowing-last"], style_module_default$13[`is-${variant}-variant`], className),
-			...otherProps,
-			tabIndex: otherProps.tabIndex ?? (overflow.isScrolling ? -1 : void 0),
-			children: [children, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsIndicator, { className: style_module_default$13.indicator })]
-		});
-	});
-
-// packages/ui/build-module/tabs/context.mjs
-	const TabsValidationContext = (0, _wordpress_element.createContext)(null);
-	function useRegisterTabDev() {
-		const context = (0, _wordpress_element.useContext)(TabsValidationContext);
-		(0, _wordpress_element.useEffect)(() => {
-			if (context) return context.registerTab();
-		}, [context]);
-	}
-	/**
-	* Hook that registers a Tab for count validation in development mode.
-	*/
-	const useRegisterTab = useRegisterTabDev;
-	function useRegisterPanelDev() {
-		const context = (0, _wordpress_element.useContext)(TabsValidationContext);
-		(0, _wordpress_element.useEffect)(() => {
-			if (context) return context.registerPanel();
-		}, [context]);
-	}
-	/**
-	* Hook that registers a Panel for count validation in development mode.
-	*/
-	const useRegisterPanel = useRegisterPanelDev;
-	/**
-	* Development-only provider that tracks the number of registered tabs and
-	* panels, and warns when the counts don't match.
-	*/
-	function TabsValidationProviderDev({ children }) {
-		const tabCountRef = (0, _wordpress_element.useRef)(0);
-		const panelCountRef = (0, _wordpress_element.useRef)(0);
-		const scheduleValidation = useScheduleValidation(() => {
-			const tabCount = tabCountRef.current;
-			const panelCount = panelCountRef.current;
-			if (tabCount !== panelCount) throw new Error(`Tabs: Tab/Panel count mismatch (${tabCount} Tabs, ${panelCount} Panels). Each Tab must be associated with exactly one Panel. Mismatched or missing associations can break screen reader navigation and violate WAI-ARIA Tabs pattern requirements.`);
-		});
-		const registerTab = (0, _wordpress_element.useCallback)(() => {
-			tabCountRef.current += 1;
-			scheduleValidation();
-			return () => {
-				tabCountRef.current -= 1;
-				scheduleValidation();
-			};
-		}, [scheduleValidation]);
-		const registerPanel = (0, _wordpress_element.useCallback)(() => {
-			panelCountRef.current += 1;
-			scheduleValidation();
-			return () => {
-				panelCountRef.current -= 1;
-				scheduleValidation();
-			};
-		}, [scheduleValidation]);
-		const contextValue = (0, _wordpress_element.useMemo)(() => ({
-			registerTab,
-			registerPanel
-		}), [registerTab, registerPanel]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsValidationContext.Provider, {
-			value: contextValue,
-			children
-		});
-	}
-	/**
-	* Provider component that validates the number of tabs matches the number
-	* of panels in development mode.
-	*
-	* In production, this component is a no-op and just renders children.
-	*/
-	const TabsValidationProvider = TabsValidationProviderDev;
-
-// packages/ui/build-module/tabs/panel.mjs
-	const STYLE_HASH_ATTRIBUTE$29 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$29() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$29(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$29(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$29}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$29) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$29(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$29();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$29(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$29, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$29(targetDocument) {
-		const runtime = getRuntime$29();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$29(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$29(hash, css) {
-		const runtime = getRuntime$29();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$29(targetDocument, hash, css);
-	}
-	registerStyle$29("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$8 = {
-		"button": "_78c10a0773e51a91__button",
-		"input": "_5b33aa2d48624b4f__input",
-		"textarea": "_980b3b4776ac8f81__textarea",
-		"div": "_43e478b4279a076c__div",
-		"p": "_698099e25b0fb1a6__p",
-		"heading": "_326aee4184d261fd__heading",
-		"a": "e9576240835601ba__a",
-		"ol": "_3f05789653864a73__ol",
-		"li": "_3c72ff72abe57859__li",
-		"span": "_79d16267c15d9eb2__span"
-	};
-	registerStyle$29("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-	var focus_module_default$3 = {
-		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-	};
-	/**
-	* A panel displayed when the corresponding tab is active.
-	*
-	* `Tabs` is a collection of React components that combine to render
-	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
-	*/
-	const Panel = (0, _wordpress_element.forwardRef)(function TabPanel({ className, ...otherProps }, forwardedRef) {
-		useRegisterPanel();
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsPanel, {
-			ref: forwardedRef,
-			className: clsx(global_css_defense_module_default$8.div, focus_module_default$3["outset-ring--focus-visible"], className),
-			...otherProps
-		});
-	});
-
-// packages/ui/build-module/tabs/root.mjs
-/**
-	* Groups the tabs and the corresponding panels.
-	*
-	* `Tabs` is a collection of React components that combine to render
-	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
-	*/
-	const Root$2 = (0, _wordpress_element.forwardRef)(function TabsRoot$1({ ...otherProps }, forwardedRef) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsRoot, {
-			ref: forwardedRef,
-			...otherProps
-		}) }) });
-	});
-
-// packages/ui/build-module/tabs/tab.mjs
-	const STYLE_HASH_ATTRIBUTE$28 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$28() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$28(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$28(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$28}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$28) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$28(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$28();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$28(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$28, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$28(targetDocument) {
-		const runtime = getRuntime$28();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$28(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$28(hash, css) {
-		const runtime = getRuntime$28();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$28(targetDocument, hash, css);
-	}
-	registerStyle$28("3d953ec7ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a0e75f120439a0aa__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.d0a55a85eda75e42__is-scrolling){overflow:visible}&._3458825d62377029__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._3458825d62377029__is-overflowing-first._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._75bc52ead60e02b3__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._8db3ebc0bb0b18de__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;.a0e75f120439a0aa__tablist:has(>.cbf34d4b11b8d6d4__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.cbf34d4b11b8d6d4__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:\"\";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._75bc52ead60e02b3__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._75bc52ead60e02b3__is-minimal-variant.d0a55a85eda75e42__is-scrolling[data-orientation=horizontal] &{&:before{content:\"\";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px);&:after{content:\"\";inset:0;outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}}}._48bd1f7fa091c988__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}}}");
-	var style_module_default$12 = {
-		"tablist": "a0e75f120439a0aa__tablist",
-		"is-scrolling": "d0a55a85eda75e42__is-scrolling",
-		"is-overflowing-first": "_3458825d62377029__is-overflowing-first",
-		"is-overflowing-last": "_485eb1577637fe68__is-overflowing-last",
-		"is-minimal-variant": "_75bc52ead60e02b3__is-minimal-variant",
-		"indicator": "_8db3ebc0bb0b18de__indicator",
-		"tab": "cbf34d4b11b8d6d4__tab",
-		"tab-children": "_48bd1f7fa091c988__tab-children"
-	};
-	/**
-	* An individual interactive tab button that toggles the corresponding panel.
-	*
-	* `Tabs` is a collection of React components that combine to render
-	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
-	*/
-	const Tab = (0, _wordpress_element.forwardRef)(function UnforwardedTab({ className, children, ...otherProps }, forwardedRef) {
-		useRegisterTab();
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsTab, {
-			ref: forwardedRef,
-			className: clsx(style_module_default$12.tab, className),
-			...otherProps,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-				className: style_module_default$12["tab-children"],
-				children
-			})
-		});
-	});
-
-// packages/ui/build-module/badge/badge.mjs
-	const STYLE_HASH_ATTRIBUTE$27 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$27() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$27(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$27(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$27}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$27) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$27(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$27();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$27(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$27, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$27(targetDocument) {
-		const runtime = getRuntime$27();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$27(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$27(hash, css) {
-		const runtime = getRuntime$27();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$27(targetDocument, hash, css);
-	}
-	registerStyle$27("7daf4893c9", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9ce8c05efea8e203__badge{border-radius:var(--wpds-border-radius-lg,8px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._8b848c49ae4c70ec__infotip-trigger{--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-button-font-weight:var(--wpds-typography-font-weight-default,400);align-items:center;border:0;cursor:var(--wpds-cursor-control,pointer);display:inline-flex;gap:var(--wpds-dimension-gap-xs,4px);text-align:start;vertical-align:middle}._8b848c49ae4c70ec__infotip-trigger:focus{outline:none}._8b848c49ae4c70ec__infotip-trigger:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0b34a322e3f931d1__infotip-icon{flex-shrink:0;margin-inline-end:-3px}.dbaa78793aa9ed55__is-high-intent{background-color:var(--wpds-color-background-surface-error,#fae5e1);color:var(--wpds-color-foreground-content-error,#470000)}.e7014da94d135da5__is-medium-intent{background-color:var(--wpds-color-background-surface-warning,#fde6be);color:var(--wpds-color-foreground-content-warning,#2e1900)}._0ea3f993ed9a8b93__is-low-intent{background-color:var(--wpds-color-background-surface-caution,#fee995);color:var(--wpds-color-foreground-content-caution,#281d00)}._2cb7bc48c640ffb1__is-stable-intent{background-color:var(--wpds-color-background-surface-success,#c2f8ca);color:var(--wpds-color-foreground-content-success,#002900)}._4ad31051a45a43b8__is-informational-intent{background-color:var(--wpds-color-background-surface-info,#deebfa);color:var(--wpds-color-foreground-content-info,#001b4f)}._0161efc7afeedbfd__is-draft-intent{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._8d100360e716930c__is-none-intent{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}}}");
-	var style_module_default$11 = {
-		"badge": "_9ce8c05efea8e203__badge",
-		"infotip-trigger": "_8b848c49ae4c70ec__infotip-trigger",
-		"infotip-icon": "_0b34a322e3f931d1__infotip-icon",
-		"is-high-intent": "dbaa78793aa9ed55__is-high-intent",
-		"is-medium-intent": "e7014da94d135da5__is-medium-intent",
-		"is-low-intent": "_0ea3f993ed9a8b93__is-low-intent",
-		"is-stable-intent": "_2cb7bc48c640ffb1__is-stable-intent",
-		"is-informational-intent": "_4ad31051a45a43b8__is-informational-intent",
-		"is-draft-intent": "_0161efc7afeedbfd__is-draft-intent",
-		"is-none-intent": "_8d100360e716930c__is-none-intent"
-	};
-	registerStyle$27("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$7 = {
-		"button": "_78c10a0773e51a91__button",
-		"input": "_5b33aa2d48624b4f__input",
-		"textarea": "_980b3b4776ac8f81__textarea",
-		"div": "_43e478b4279a076c__div",
-		"p": "_698099e25b0fb1a6__p",
-		"heading": "_326aee4184d261fd__heading",
-		"a": "e9576240835601ba__a",
-		"ol": "_3f05789653864a73__ol",
-		"li": "_3c72ff72abe57859__li",
-		"span": "_79d16267c15d9eb2__span"
-	};
-	/**
-	* A badge component for displaying labels with semantic intent.
-	* Add an infotip to explain a status in a popover.
-	*/
-	const Badge = (0, _wordpress_element.forwardRef)(function UnforwardedBadge({ intent = "none", className, children, infotip, render, ...props }, ref) {
-		const badge = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Text, {
-			ref,
-			className: clsx(style_module_default$11.badge, style_module_default$11[`is-${intent}-intent`], className),
-			...props,
-			render: infotip ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(infotip.popover.Trigger, {
-				className: clsx(style_module_default$11["infotip-trigger"], global_css_defense_module_default$7.button),
-				openOnHover: true,
-				delay: 200,
-				closeDelay: 200,
-				render
-			}) : render,
-			variant: "body-sm",
-			children: [children, infotip && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
-				icon: help_default,
-				size: 16,
-				"aria-hidden": "true",
-				className: style_module_default$11["infotip-icon"]
-			})]
-		});
-		return infotip ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(infotip.popover.Root, { children: [badge, infotip.popup] }) : badge;
-	});
-
-// packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
-	const STYLE_HASH_ATTRIBUTE$26 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$26() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$26(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$26(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$26}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$26) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$26(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$26();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$26(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$26, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$26(targetDocument) {
-		const runtime = getRuntime$26();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$26(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$26(hash, css) {
-		const runtime = getRuntime$26();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$26(targetDocument, hash, css);
-	}
-	registerStyle$26("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$6 = {
-		"button": "_78c10a0773e51a91__button",
-		"input": "_5b33aa2d48624b4f__input",
-		"textarea": "_980b3b4776ac8f81__textarea",
-		"div": "_43e478b4279a076c__div",
-		"p": "_698099e25b0fb1a6__p",
-		"heading": "_326aee4184d261fd__heading",
-		"a": "e9576240835601ba__a",
-		"ol": "_3f05789653864a73__ol",
-		"li": "_3c72ff72abe57859__li",
-		"span": "_79d16267c15d9eb2__span"
-	};
-	registerStyle$26("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-	var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	registerStyle$26("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
-	var style_module_default$10 = {
-		"input-layout": "b58f09bec1a5dbde__input-layout",
-		"is-size-compact": "c6959524c70627d6__is-size-compact",
-		"is-size-small": "aa52ad890a16cc91__is-size-small",
-		"is-disabled": "_50a72abb47530e8a__is-disabled",
-		"is-borderless": "_33a5f404fc55a9f2__is-borderless",
-		"input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot",
-		"slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper",
-		"is-padding-minimal": "_50d0eced305893d5__is-padding-minimal"
-	};
-	/**
-	* A low-level component that handles the visual layout of an input-like field,
-	* including disabled states and standard prefix/suffix slots.
-	*/
-	const InputLayout$1 = (0, _wordpress_element.forwardRef)(function UnforwardedInputLayout({ className, children, visuallyDisabled, size = "default", isBorderless, prefix, suffix, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			ref,
-			className: clsx(global_css_defense_module_default$6.div, resets_module_default$4["box-sizing"], style_module_default$10["input-layout"], style_module_default$10[`is-size-${size}`], visuallyDisabled && style_module_default$10["is-disabled"], isBorderless && style_module_default$10["is-borderless"], className),
-			...restProps,
-			children: [
-				_wordpress_element.Children.count(prefix) > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: style_module_default$10["slot-wrapper"],
-					"data-slot-type": "prefix",
-					children: prefix
-				}),
-				children,
-				_wordpress_element.Children.count(suffix) > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: style_module_default$10["slot-wrapper"],
-					"data-slot-type": "suffix",
-					children: suffix
-				})
-			]
-		});
-	});
-
-// packages/ui/build-module/form/primitives/input-layout/slot.mjs
-	const STYLE_HASH_ATTRIBUTE$25 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$25() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$25(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$25(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$25}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$25) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$25(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$25();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$25(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$25, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$25(targetDocument) {
-		const runtime = getRuntime$25();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$25(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$25(hash, css) {
-		const runtime = getRuntime$25();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$25(targetDocument, hash, css);
-	}
-	registerStyle$25("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
-	var style_module_default$9 = {
-		"input-layout": "b58f09bec1a5dbde__input-layout",
-		"is-size-compact": "c6959524c70627d6__is-size-compact",
-		"is-size-small": "aa52ad890a16cc91__is-size-small",
-		"is-disabled": "_50a72abb47530e8a__is-disabled",
-		"is-borderless": "_33a5f404fc55a9f2__is-borderless",
-		"input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot",
-		"slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper",
-		"is-padding-minimal": "_50d0eced305893d5__is-padding-minimal"
-	};
-	/**
-	* A layout helper to add paddings in a prefix or suffix.
-	*/
-	const InputLayoutSlot = (0, _wordpress_element.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			ref,
-			className: clsx(style_module_default$9["input-layout-slot"], style_module_default$9[`is-padding-${padding}`], className),
-			...restProps
-		});
-	});
-	InputLayoutSlot.displayName = "InputLayout.Slot";
-
-// packages/ui/build-module/form/primitives/input-layout/index.mjs
-/**
-	* A low-level component that handles the visual layout of an input-like field,
-	* including disabled states and standard prefix/suffix slots.
-	*/
-	const InputLayout = Object.assign(InputLayout$1, { Slot: InputLayoutSlot });
-
-// packages/ui/build-module/form/primitives/input/input.mjs
-	const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$24() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$24(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$24(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$24}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$24) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$24(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$24();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$24(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$24, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$24(targetDocument) {
-		const runtime = getRuntime$24();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$24(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$24(hash, css) {
-		const runtime = getRuntime$24();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
-	}
-	registerStyle$24("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	registerStyle$31("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 	var global_css_defense_module_default$5 = {
 		"button": "_78c10a0773e51a91__button",
 		"input": "_5b33aa2d48624b4f__input",
@@ -23326,299 +25247,8 @@ Icon: ButtonIcon });
 		"li": "_3c72ff72abe57859__li",
 		"span": "_79d16267c15d9eb2__span"
 	};
-	registerStyle$24("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-	var focus_module_default$2 = {
-		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-	};
-	registerStyle$24("a53cd10a80", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9edfcd97eeaee9dc__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);--_gcd-input-font-size:max(var(--wpds-typography-font-size-md,13px),16px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;@media (min-width:600px){--_gcd-input-font-size:inherit}&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}@layer compositions{.edc52bf0fe80b57f__layout{font-size:max(var(--wpds-typography-font-size-md,13px),16px);@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}}}}");
+	registerStyle$31("aba5ec2cd2", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._065156d308cd9e34__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);@media not (prefers-reduced-motion){animation:_0b9b0205648471e6__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._1433e92faa429aa6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._8f2844793b7e3dbd__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}._9b4c4f0124b71294__indicator-icon{flex-shrink:0}.c07a36506fa9f62a__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _0b9b0205648471e6__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}");
 	var style_module_default$8 = {
-		"input": "_9edfcd97eeaee9dc__input",
-		"layout": "edc52bf0fe80b57f__layout"
-	};
-	/**
-	* A low-level primitive for an input field.
-	*
-	* Prefer `InputControl` when using with a standard label and description.
-	*/
-	const Input$2 = (0, _wordpress_element.forwardRef)(function UnforwardedInput({ className, size = "default", prefix, suffix, style, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout, {
-			className: clsx(style_module_default$8.layout, focus_module_default$2["outset-ring--focus-within"], className),
-			style,
-			size,
-			visuallyDisabled: restProps.disabled,
-			prefix,
-			suffix,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Input$1, {
-				ref,
-				className: clsx(global_css_defense_module_default$5.input, style_module_default$8.input),
-				...restProps
-			})
-		});
-	});
-
-// packages/ui/build-module/form/primitives/checkbox/checkbox.mjs
-	const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$23() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$23(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$23(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$23}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$23) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$23(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$23();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$23(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$23, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$23(targetDocument) {
-		const runtime = getRuntime$23();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$23(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$23(hash, css) {
-		const runtime = getRuntime$23();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
-	}
-	registerStyle$23("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-	var resets_module_default$3 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	registerStyle$23("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-	var focus_module_default$1 = {
-		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-	};
-	registerStyle$23("ecdf49ebe4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._63457135733e4745__root{--_checkbox-input-size:var(--wp-ui-checkbox-input-size,var(--wpds-dimension-size-2xs,16px));aspect-ratio:1;background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:min(var(--wpds-border-radius-sm,2px),2px);display:inline-block;flex-shrink:0;padding:0;position:relative;width:var(--_checkbox-input-size);&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:hover,[data-highlighted] &{background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&[aria-checked=mixed],&[aria-checked=true]{background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));border-color:transparent;color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:after{aspect-ratio:1;content:\"\";left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:max(var(--_checkbox-input-size),var(--wpds-dimension-size-sm,24px))}}.e5da9f589362d532__indicator-icon{inset:calc(0px - var(--wpds-border-width-xs, 1px));position:absolute}}}");
-	var style_module_default$7 = {
-		"root": "_63457135733e4745__root",
-		"indicator-icon": "e5da9f589362d532__indicator-icon"
-	};
-	/**
-	* A low-level checkbox primitive.
-	*
-	* Prefer `CheckboxControl` for labeled items. For grouping and nested parent
-	* checkboxes, see the [Checkbox Groups](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-form-checkbox-groups--docs)
-	* documentation.
-	*/
-	const Checkbox = (0, _wordpress_element.forwardRef)(function UnforwardedCheckbox({ className, indeterminate, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CheckboxRoot, {
-			ref,
-			className: clsx(resets_module_default$3["box-sizing"], focus_module_default$1["outset-ring--focus"], style_module_default$7.root, className),
-			indeterminate,
-			...restProps,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CheckboxIndicator, {
-				className: style_module_default$7["indicator-icon"],
-				render: (props, state) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
-					...props,
-					icon: state.indeterminate ? reset_default : check_default,
-					viewBox: "4 4 16 16",
-					size: 16
-				})
-			})
-		});
-	});
-
-// packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-	const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$22() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$22(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$22(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$22}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$22) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$22(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$22();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$22(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$22, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$22(targetDocument) {
-		const runtime = getRuntime$22();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$22(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$22(hash, css) {
-		const runtime = getRuntime$22();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
-	}
-	registerStyle$22("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$4 = {
-		"button": "_78c10a0773e51a91__button",
-		"input": "_5b33aa2d48624b4f__input",
-		"textarea": "_980b3b4776ac8f81__textarea",
-		"div": "_43e478b4279a076c__div",
-		"p": "_698099e25b0fb1a6__p",
-		"heading": "_326aee4184d261fd__heading",
-		"a": "e9576240835601ba__a",
-		"ol": "_3f05789653864a73__ol",
-		"li": "_3c72ff72abe57859__li",
-		"span": "_79d16267c15d9eb2__span"
-	};
-	registerStyle$22("aba5ec2cd2", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._065156d308cd9e34__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);@media not (prefers-reduced-motion){animation:_0b9b0205648471e6__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._1433e92faa429aa6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._8f2844793b7e3dbd__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}._9b4c4f0124b71294__indicator-icon{flex-shrink:0}.c07a36506fa9f62a__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _0b9b0205648471e6__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}");
-	var style_module_default$6 = {
 		"indicator": "_065156d308cd9e34__indicator",
 		"indicator-jump": "_0b9b0205648471e6__indicator-jump",
 		"is-invalid": "_1433e92faa429aa6__is-invalid",
@@ -23641,9 +25271,9 @@ Icon: ButtonIcon });
 	function ValidityIndicator({ id, type, message }) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("p", {
 			id,
-			className: clsx(global_css_defense_module_default$4.p, style_module_default$6.indicator, style_module_default$6[`is-${type}`]),
-			children: [type === "validating" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$31, { className: style_module_default$6["indicator-spinner"] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
-				className: style_module_default$6["indicator-icon"],
+			className: clsx(global_css_defense_module_default$5.p, style_module_default$8.indicator, style_module_default$8[`is-${type}`]),
+			children: [type === "validating" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$31, { className: style_module_default$8["indicator-spinner"] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+				className: style_module_default$8["indicator-icon"],
 				icon: ICON[type],
 				size: 16,
 				fill: "currentColor"
@@ -23800,6 +25430,1386 @@ Icon: ButtonIcon });
 	});
 
 // packages/ui/build-module/form/primitives/combobox/chip-with-remove.mjs
+	const STYLE_HASH_ATTRIBUTE$30 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$30() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$30(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$30(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$30}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$30) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$30(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$30();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$30(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$30, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$30(targetDocument) {
+		const runtime = getRuntime$30();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$30(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$30(hash, css) {
+		const runtime = getRuntime$30();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$30(targetDocument, hash, css);
+	}
+	registerStyle$30("9a3f4d8d08", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d954948df795818a__search-icon:dir(ltr){transform:scaleX(-1)}._3ef2bd7ee63a6243__positioner{z-index:var(--wp-ui-combobox-z-index,initial)}._29a93a83a9324a43__chip{--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-sm,8px);align-items:center;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:1px solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:12px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:default;display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-xs,16px);max-width:100%;min-height:var(--wpds-dimension-size-sm,24px);overflow:hidden;&:not([data-disabled]):focus,&:not([data-disabled]):has(button:not(:disabled,[aria-disabled=true]):hover){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);outline:none;@media (forced-colors:active){background-color:SelectedItem}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:has(.a1eeee87af17fee1__chip-prefix){--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-xs,4px)}}.a1eeee87af17fee1__chip-prefix{align-items:center;border-radius:50%;display:flex;flex-shrink:0;height:var(--wpds-dimension-size-xs,20px);justify-content:center;margin-inline-start:1px;overflow:hidden;width:var(--wpds-dimension-size-xs,20px)}.c9681fe97c3a9909__chip-content{min-width:0;overflow-wrap:anywhere;padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline-start:var(--wp-ui-combobox-chip-content-padding-inline-start)}.cb005d96197b8b53__chip-remove{border:none}}}");
+	var style_module_default$7 = {
+		"search-icon": "d954948df795818a__search-icon",
+		"positioner": "_3ef2bd7ee63a6243__positioner",
+		"chip": "_29a93a83a9324a43__chip",
+		"chip-prefix": "a1eeee87af17fee1__chip-prefix",
+		"chip-content": "c9681fe97c3a9909__chip-content",
+		"chip-remove": "cb005d96197b8b53__chip-remove"
+	};
+	/**
+	* A utility component that combines a chip and a remove button,
+	* with standard styling.
+	*/
+	const ChipWithRemove = (0, _wordpress_element.forwardRef)(function UnforwardedChipWithRemove({ className, children, prefix, removeLabel = (0, _wordpress_i18n.__)("Remove"), "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, "aria-describedby": ariaDescribedby, ...restProps }, ref) {
+		const labelId = (0, _wordpress_element.useId)();
+		const hintId = (0, _wordpress_element.useId)();
+		const chipNameFrom = ariaLabelledby || labelId;
+		const nameFromAriaLabel = Boolean(ariaLabel && !ariaLabelledby);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ComboboxChip, {
+			ref,
+			className: clsx(style_module_default$7.chip, className),
+			...restProps,
+			"aria-labelledby": chipNameFrom,
+			"aria-describedby": clsx(ariaDescribedby, hintId) || void 0,
+			children: [
+				prefix && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: style_module_default$7["chip-prefix"],
+					"aria-hidden": nameFromAriaLabel ? true : void 0,
+					children: prefix
+				}),
+				nameFromAriaLabel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+					id: labelId,
+					"aria-hidden": "true",
+					children: ariaLabel
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					id: nameFromAriaLabel ? void 0 : labelId,
+					className: style_module_default$7["chip-content"],
+					"aria-hidden": nameFromAriaLabel ? true : void 0,
+					children
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+					id: hintId,
+					"aria-hidden": "true",
+					children: (0, _wordpress_i18n.__)("Press Backspace or Delete to remove.")
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxChipRemove, {
+					className: style_module_default$7["chip-remove"],
+					render: (props, { disabled }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
+						icon: close_small_default,
+						label: removeLabel,
+						size: "small",
+						variant: "minimal",
+						tone: "neutral",
+						focusableWhenDisabled: false,
+						disabled,
+						...props,
+						"aria-describedby": clsx(props["aria-describedby"], chipNameFrom) || void 0
+					})
+				})
+			]
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/clear.mjs
+	const DEFAULT_RENDER$2 = ({ "aria-label": ariaLabel = (0, _wordpress_i18n.__)("Clear"), ...props }, { disabled }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
+		icon: close_small_default,
+		focusableWhenDisabled: false,
+		disabled,
+		"aria-hidden": disabled || void 0,
+		size: "small",
+		variant: "minimal",
+		tone: "neutral",
+		label: ariaLabel,
+		...props
+	});
+	/**
+	* A button that clears the selected value(s).
+	*/
+	const Clear = (0, _wordpress_element.forwardRef)(function UnforwardedClear({ render = DEFAULT_RENDER$2, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxClear, {
+			ref,
+			render,
+			...restProps
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/collection.mjs
+	function Collection({ children, ...restProps }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxCollection, {
+			...restProps,
+			children
+		});
+	}
+
+// packages/ui/build-module/form/primitives/combobox/empty.mjs
+	const STYLE_HASH_ATTRIBUTE$29 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$29() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$29(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$29(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$29}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$29) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$29(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$29();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$29(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$29, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$29(targetDocument) {
+		const runtime = getRuntime$29();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$29(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$29(hash, css) {
+		const runtime = getRuntime$29();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$29(targetDocument, hash, css);
+	}
+	registerStyle$29("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$19 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	const Empty = (0, _wordpress_element.forwardRef)(function UnforwardedEmpty({ className, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxEmpty, {
+			className: clsx(item_popup_module_default$19.empty, className),
+			ref,
+			...restProps
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/group.mjs
+	const STYLE_HASH_ATTRIBUTE$28 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$28() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$28(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$28(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$28}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$28) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$28(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$28();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$28(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$28, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$28(targetDocument) {
+		const runtime = getRuntime$28();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$28(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$28(hash, css) {
+		const runtime = getRuntime$28();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$28(targetDocument, hash, css);
+	}
+	registerStyle$28("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$18 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	/**
+	* Groups related items together with an associated label rendered by
+	* `Combobox.GroupLabel`. When `items` is provided, child
+	* `Combobox.Collection` components iterate over them.
+	*/
+	const Group$1 = (0, _wordpress_element.forwardRef)(function UnforwardedGroup({ className, children, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxGroup, {
+			className: clsx(item_popup_module_default$18.group, className),
+			ref,
+			...restProps,
+			children
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/group-label.mjs
+	const STYLE_HASH_ATTRIBUTE$27 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$27() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$27(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$27(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$27}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$27) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$27(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$27();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$27(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$27, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$27(targetDocument) {
+		const runtime = getRuntime$27();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$27(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$27(hash, css) {
+		const runtime = getRuntime$27();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$27(targetDocument, hash, css);
+	}
+	registerStyle$27("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$17 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	/**
+	* Renders a label for a `Combobox.Group`, describing the group of items
+	* it is associated with.
+	*/
+	const GroupLabel$1 = (0, _wordpress_element.forwardRef)(function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
+			variant: "heading-sm",
+			className: clsx(item_popup_module_default$17["group-label"], className),
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxGroupLabel, {
+				ref,
+				...restProps
+			}),
+			children
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/input-group.mjs
+/**
+	* Wrapper around `Combobox.Input` that defines the visual control
+	* boundary when the input is composed with prefix/suffix slots or other
+	* elements. Without this wrapper, the popup anchors to the bare `<input>`
+	* instead of the full control. Also adds `role="group"`.
+	*/
+	const InputGroup = (0, _wordpress_element.forwardRef)(function UnforwardedInputGroup(props, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxInputGroup, {
+			ref,
+			...props
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/input.mjs
+	const STYLE_HASH_ATTRIBUTE$26 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$26() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$26(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$26(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$26}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$26) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$26(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$26();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$26(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$26, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$26(targetDocument) {
+		const runtime = getRuntime$26();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$26(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$26(hash, css) {
+		const runtime = getRuntime$26();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$26(targetDocument, hash, css);
+	}
+	registerStyle$26("9a3f4d8d08", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d954948df795818a__search-icon:dir(ltr){transform:scaleX(-1)}._3ef2bd7ee63a6243__positioner{z-index:var(--wp-ui-combobox-z-index,initial)}._29a93a83a9324a43__chip{--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-sm,8px);align-items:center;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:1px solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:12px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:default;display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-xs,16px);max-width:100%;min-height:var(--wpds-dimension-size-sm,24px);overflow:hidden;&:not([data-disabled]):focus,&:not([data-disabled]):has(button:not(:disabled,[aria-disabled=true]):hover){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);outline:none;@media (forced-colors:active){background-color:SelectedItem}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:has(.a1eeee87af17fee1__chip-prefix){--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-xs,4px)}}.a1eeee87af17fee1__chip-prefix{align-items:center;border-radius:50%;display:flex;flex-shrink:0;height:var(--wpds-dimension-size-xs,20px);justify-content:center;margin-inline-start:1px;overflow:hidden;width:var(--wpds-dimension-size-xs,20px)}.c9681fe97c3a9909__chip-content{min-width:0;overflow-wrap:anywhere;padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline-start:var(--wp-ui-combobox-chip-content-padding-inline-start)}.cb005d96197b8b53__chip-remove{border:none}}}");
+	var style_module_default$6 = {
+		"search-icon": "d954948df795818a__search-icon",
+		"positioner": "_3ef2bd7ee63a6243__positioner",
+		"chip": "_29a93a83a9324a43__chip",
+		"chip-prefix": "a1eeee87af17fee1__chip-prefix",
+		"chip-content": "c9681fe97c3a9909__chip-content",
+		"chip-remove": "cb005d96197b8b53__chip-remove"
+	};
+	const DEFAULT_RENDER$1 = (props) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Input$2, {
+		prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout.Slot, {
+			padding: "minimal",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+				icon: search_default,
+				className: style_module_default$6["search-icon"]
+			})
+		}),
+		...props
+	});
+	const Input = (0, _wordpress_element.forwardRef)(function UnforwardedInput({ render = DEFAULT_RENDER$1, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxInput, {
+			ref,
+			render,
+			...restProps
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/item-description.mjs
+	const STYLE_HASH_ATTRIBUTE$25 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$25() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$25(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$25(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$25}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$25) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$25(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$25();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$25(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$25, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$25(targetDocument) {
+		const runtime = getRuntime$25();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$25(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$25(hash, css) {
+		const runtime = getRuntime$25();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$25(targetDocument, hash, css);
+	}
+	registerStyle$25("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$16 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	const ITEM_DESCRIPTION_DIRECT_CHILD$1 = Symbol();
+	/**
+	* Supplementary content for a combobox item. Its text contributes to the
+	* item's accessible description. Use it as a direct child after
+	* `Combobox.ItemLabel`. Content should be text or non-interactive inline markup.
+	*/
+	const ForwardedItemDescription = (0, _wordpress_element.forwardRef)(function ItemDescription(props, ref) {
+		const { className, validationToken, ...restProps } = props;
+		if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD$1) throw new Error("ItemDescription: Missing direct item parent. Render ItemDescription as a direct child of Item.");
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
+			ref,
+			variant: "body-sm",
+			className: clsx(item_popup_module_default$16["item-description"], className),
+			...restProps
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/item-label.mjs
+	const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$24() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$24(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$24(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$24}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$24) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$24(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$24();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$24(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$24, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$24(targetDocument) {
+		const runtime = getRuntime$24();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$24(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$24(hash, css) {
+		const runtime = getRuntime$24();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
+	}
+	registerStyle$24("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$15 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	/**
+	* The primary label of a combobox item. Use it as the first direct child of
+	* every item. Its content is the item's accessible name. The selected value
+	* still uses the item's `label` or the content of `Combobox.Value`.
+	*/
+	const ForwardedItemLabel = (0, _wordpress_element.forwardRef)(function ItemLabel({ className, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
+			ref,
+			variant: "body-md",
+			className: clsx(item_popup_module_default$15["item-label"], className),
+			...restProps
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/item.mjs
+	const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$23() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$23(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$23(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$23}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$23) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$23(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$23();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$23(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$23, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$23(targetDocument) {
+		const runtime = getRuntime$23();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$23(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$23(hash, css) {
+		const runtime = getRuntime$23();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
+	}
+	registerStyle$23("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	var global_css_defense_module_default$4 = {
+		"button": "_78c10a0773e51a91__button",
+		"input": "_5b33aa2d48624b4f__input",
+		"textarea": "_980b3b4776ac8f81__textarea",
+		"div": "_43e478b4279a076c__div",
+		"p": "_698099e25b0fb1a6__p",
+		"heading": "_326aee4184d261fd__heading",
+		"a": "e9576240835601ba__a",
+		"ol": "_3f05789653864a73__ol",
+		"li": "_3c72ff72abe57859__li",
+		"span": "_79d16267c15d9eb2__span"
+	};
+	registerStyle$23("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$14 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	registerStyle$23("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	const ITEM_CONTENT_COMPONENTS$1 = {
+		Label: ForwardedItemLabel,
+		Description: ForwardedItemDescription,
+		descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD$1,
+		validationMessage: "Combobox.ItemLabel must be the first direct child of every combobox item, followed only by Combobox.ItemDescription components."
+	};
+	const Item$3 = (0, _wordpress_element.forwardRef)(function UnforwardedItem({ className, children, variant = "default", "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...restProps }, ref) {
+		const { contentChildren, itemAriaProps } = useItemContent(children, ITEM_CONTENT_COMPONENTS$1, {
+			"aria-describedby": ariaDescribedBy,
+			"aria-label": ariaLabel,
+			"aria-labelledby": ariaLabelledBy
+		});
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ComboboxItem, {
+			className: clsx(global_css_defense_module_default$4.div, resets_module_default$4["box-sizing"], item_popup_module_default$14.item, className),
+			ref,
+			...itemAriaProps,
+			...restProps,
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+				className: item_popup_module_default$14["item-icon"],
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+					icon: variant === "creatable" ? plus_default : check_default,
+					className: clsx(variant !== "creatable" && item_popup_module_default$14["item-indicator-icon"]),
+					size: 16
+				})
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: item_popup_module_default$14["item-text"],
+				children: contentChildren
+			})]
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/list.mjs
+	const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$22() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$22(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$22(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$22}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$22) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$22(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$22();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$22(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$22, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$22(targetDocument) {
+		const runtime = getRuntime$22();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$22(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$22(hash, css) {
+		const runtime = getRuntime$22();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
+	}
+	registerStyle$22("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$13 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	const List = (0, _wordpress_element.forwardRef)(function UnforwardedList({ className, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxList, {
+			className: clsx(item_popup_module_default$13.list, className),
+			ref,
+			...restProps
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/list-body.mjs
 	const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -23901,102 +26911,48 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$21(targetDocument, hash, css);
 	}
-	registerStyle$21("9a3f4d8d08", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d954948df795818a__search-icon:dir(ltr){transform:scaleX(-1)}._3ef2bd7ee63a6243__positioner{z-index:var(--wp-ui-combobox-z-index,initial)}._29a93a83a9324a43__chip{--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-sm,8px);align-items:center;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:1px solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:12px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:default;display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-xs,16px);max-width:100%;min-height:var(--wpds-dimension-size-sm,24px);overflow:hidden;&:not([data-disabled]):focus,&:not([data-disabled]):has(button:not(:disabled,[aria-disabled=true]):hover){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);outline:none;@media (forced-colors:active){background-color:SelectedItem}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:has(.a1eeee87af17fee1__chip-prefix){--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-xs,4px)}}.a1eeee87af17fee1__chip-prefix{align-items:center;border-radius:50%;display:flex;flex-shrink:0;height:var(--wpds-dimension-size-xs,20px);justify-content:center;margin-inline-start:1px;overflow:hidden;width:var(--wpds-dimension-size-xs,20px)}.c9681fe97c3a9909__chip-content{min-width:0;overflow-wrap:anywhere;padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline-start:var(--wp-ui-combobox-chip-content-padding-inline-start)}.cb005d96197b8b53__chip-remove{border:none}}}");
-	var style_module_default$5 = {
-		"search-icon": "d954948df795818a__search-icon",
-		"positioner": "_3ef2bd7ee63a6243__positioner",
-		"chip": "_29a93a83a9324a43__chip",
-		"chip-prefix": "a1eeee87af17fee1__chip-prefix",
-		"chip-content": "c9681fe97c3a9909__chip-content",
-		"chip-remove": "cb005d96197b8b53__chip-remove"
+	registerStyle$21("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$12 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
 	};
 	/**
-	* A utility component that combines a chip and a remove button,
-	* with standard styling.
+	* A layout container for the main scrolling area in the `List`, for holding `Item`s.
 	*/
-	const ChipWithRemove = (0, _wordpress_element.forwardRef)(function UnforwardedChipWithRemove({ className, children, prefix, removeLabel = (0, _wordpress_i18n.__)("Remove"), "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, "aria-describedby": ariaDescribedby, ...restProps }, ref) {
-		const labelId = (0, _wordpress_element.useId)();
-		const hintId = (0, _wordpress_element.useId)();
-		const chipNameFrom = ariaLabelledby || labelId;
-		const nameFromAriaLabel = Boolean(ariaLabel && !ariaLabelledby);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ComboboxChip, {
-			ref,
-			className: clsx(style_module_default$5.chip, className),
-			...restProps,
-			"aria-labelledby": chipNameFrom,
-			"aria-describedby": clsx(ariaDescribedby, hintId) || void 0,
-			children: [
-				prefix && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					className: style_module_default$5["chip-prefix"],
-					"aria-hidden": nameFromAriaLabel ? true : void 0,
-					children: prefix
-				}),
-				nameFromAriaLabel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-					id: labelId,
-					"aria-hidden": "true",
-					children: ariaLabel
-				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					id: nameFromAriaLabel ? void 0 : labelId,
-					className: style_module_default$5["chip-content"],
-					"aria-hidden": nameFromAriaLabel ? true : void 0,
-					children
-				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-					id: hintId,
-					"aria-hidden": "true",
-					children: (0, _wordpress_i18n.__)("Press Backspace or Delete to remove.")
-				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxChipRemove, {
-					className: style_module_default$5["chip-remove"],
-					render: (props, { disabled }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
-						icon: close_small_default,
-						label: removeLabel,
-						size: "small",
-						variant: "minimal",
-						tone: "neutral",
-						focusableWhenDisabled: false,
-						disabled,
-						...props,
-						"aria-describedby": clsx(props["aria-describedby"], chipNameFrom) || void 0
-					})
-				})
-			]
-		});
-	});
-
-// packages/ui/build-module/form/primitives/combobox/clear.mjs
-	const DEFAULT_RENDER$2 = ({ "aria-label": ariaLabel = (0, _wordpress_i18n.__)("Clear"), ...props }, { disabled }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
-		icon: close_small_default,
-		focusableWhenDisabled: false,
-		disabled,
-		"aria-hidden": disabled || void 0,
-		size: "small",
-		variant: "minimal",
-		tone: "neutral",
-		label: ariaLabel,
-		...props
-	});
-	/**
-	* A button that clears the selected value(s).
-	*/
-	const Clear = (0, _wordpress_element.forwardRef)(function UnforwardedClear({ render = DEFAULT_RENDER$2, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxClear, {
-			ref,
+	const ListBody = (0, _wordpress_element.forwardRef)(function UnforwardedListBody({ render, ...props }, ref) {
+		return useRender({
+			defaultTagName: "div",
 			render,
-			...restProps
+			ref,
+			props: mergeProps({ className: item_popup_module_default$12["list-scrollable-container"] }, props)
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/collection.mjs
-	function Collection({ children, ...restProps }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxCollection, {
-			...restProps,
-			children
-		});
-	}
-
-// packages/ui/build-module/form/primitives/combobox/empty.mjs
+// packages/ui/build-module/form/primitives/combobox/list-footer.mjs
 	const STYLE_HASH_ATTRIBUTE$20 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -24127,15 +27083,35 @@ Icon: ButtonIcon });
 		"status": "_7738d24c2d5904c5__status",
 		"empty": "bb720e36b47aa491__empty"
 	};
-	const Empty = (0, _wordpress_element.forwardRef)(function UnforwardedEmpty({ className, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxEmpty, {
-			className: clsx(item_popup_module_default$11.empty, className),
+	/**
+	* A layout container for the footer row in the `List`,
+	* for holding a single `Item` that triggers the creation of a new item.
+	*/
+	const ListFooter = (0, _wordpress_element.forwardRef)(function UnforwardedListFooter({ render, ...props }, ref) {
+		return useRender({
+			defaultTagName: "div",
+			render,
 			ref,
-			...restProps
+			props: mergeProps({ className: item_popup_module_default$11["list-footer"] }, props)
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/group.mjs
+// packages/ui/build-module/form/primitives/combobox/portal.mjs
+/**
+	* Root element that portals `Combobox` popup content. Pass to
+	* `Combobox.Popup`'s `portal` prop. When `portal` is omitted,
+	* `Combobox.Popup` uses this component with default props.
+	* `container` defaults to the `@wordpress/ui` compat overlay slot.
+	*/
+	const Portal$1 = (0, _wordpress_element.forwardRef)(function ComboboxPortal$1({ container, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxPortal, {
+			container: container === void 0 ? getWpCompatOverlaySlot() : container,
+			...restProps,
+			ref
+		});
+	});
+
+// packages/ui/build-module/form/primitives/combobox/positioner.mjs
 	const STYLE_HASH_ATTRIBUTE$19 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -24237,50 +27213,30 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$19(targetDocument, hash, css);
 	}
-	registerStyle$19("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$10 = {
-		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
-		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
-		"is-width-content": "_8f1224a085e41ee8__is-width-content",
-		"is-width-available": "_80926ed7e7d54be0__is-width-available",
-		"is-width-sm": "d08be1bfb7489969__is-width-sm",
-		"is-width-md": "b38610fddbff3473__is-width-md",
-		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
-		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
-		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
-		"list-chrome": "_750bf16b8304f204__list-chrome",
-		"item-icon": "d786737b2e57c2d3__item-icon",
-		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
-		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
-		"list-footer": "_759a12af5db7a8dd__list-footer",
-		"group": "_74a6a24cc319fdba__group",
-		"group-label": "_09632da7090fc022__group-label",
-		"separator": "d9a1c5812534c804__separator",
-		"item": "bbed87bc28f61ead__item",
-		"is-size-small": "_2426aa84de39c4dd__is-size-small",
-		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
-		"item-content": "_6fc483b6919abf79__item-content",
-		"item-text": "_583f0728d87c5db1__item-text",
-		"item-label": "aa96b6c7fcb20ae8__item-label",
-		"item-description": "_26fffe8e4119e36e__item-description",
-		"status": "_7738d24c2d5904c5__status",
-		"empty": "bb720e36b47aa491__empty"
+	registerStyle$19("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$3 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	registerStyle$19("9a3f4d8d08", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d954948df795818a__search-icon:dir(ltr){transform:scaleX(-1)}._3ef2bd7ee63a6243__positioner{z-index:var(--wp-ui-combobox-z-index,initial)}._29a93a83a9324a43__chip{--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-sm,8px);align-items:center;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:1px solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:12px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:default;display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-xs,16px);max-width:100%;min-height:var(--wpds-dimension-size-sm,24px);overflow:hidden;&:not([data-disabled]):focus,&:not([data-disabled]):has(button:not(:disabled,[aria-disabled=true]):hover){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);outline:none;@media (forced-colors:active){background-color:SelectedItem}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:has(.a1eeee87af17fee1__chip-prefix){--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-xs,4px)}}.a1eeee87af17fee1__chip-prefix{align-items:center;border-radius:50%;display:flex;flex-shrink:0;height:var(--wpds-dimension-size-xs,20px);justify-content:center;margin-inline-start:1px;overflow:hidden;width:var(--wpds-dimension-size-xs,20px)}.c9681fe97c3a9909__chip-content{min-width:0;overflow-wrap:anywhere;padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline-start:var(--wp-ui-combobox-chip-content-padding-inline-start)}.cb005d96197b8b53__chip-remove{border:none}}}");
+	var style_module_default$5 = {
+		"search-icon": "d954948df795818a__search-icon",
+		"positioner": "_3ef2bd7ee63a6243__positioner",
+		"chip": "_29a93a83a9324a43__chip",
+		"chip-prefix": "a1eeee87af17fee1__chip-prefix",
+		"chip-content": "c9681fe97c3a9909__chip-content",
+		"chip-remove": "cb005d96197b8b53__chip-remove"
 	};
 	/**
-	* Groups related items together with an associated label rendered by
-	* `Combobox.GroupLabel`. When `items` is provided, child
-	* `Combobox.Collection` components iterate over them.
+	* Used to apply custom positioning to `Combobox`'s popup content.
 	*/
-	const Group = (0, _wordpress_element.forwardRef)(function UnforwardedGroup({ className, children, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxGroup, {
-			className: clsx(item_popup_module_default$10.group, className),
+	const Positioner$1 = (0, _wordpress_element.forwardRef)(function ComboboxPositioner$1({ className, ...props }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxPositioner, {
+			...ITEM_POPUP_POSITIONER_PROPS,
+			...props,
 			ref,
-			...restProps,
-			children
+			className: clsx(resets_module_default$3["box-sizing"], style_module_default$5.positioner, className)
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/group-label.mjs
+// packages/ui/build-module/form/primitives/combobox/popup.mjs
 	const STYLE_HASH_ATTRIBUTE$18 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -24383,7 +27339,7 @@ Icon: ButtonIcon });
 		for (const targetDocument of runtime.documents.keys()) injectStyle$18(targetDocument, hash, css);
 	}
 	registerStyle$18("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$9 = {
+	var item_popup_module_default$10 = {
 		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
 		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
 		"is-width-content": "_8f1224a085e41ee8__is-width-content",
@@ -24411,37 +27367,28 @@ Icon: ButtonIcon });
 		"status": "_7738d24c2d5904c5__status",
 		"empty": "bb720e36b47aa491__empty"
 	};
-	/**
-	* Renders a label for a `Combobox.Group`, describing the group of items
-	* it is associated with.
-	*/
-	const GroupLabel = (0, _wordpress_element.forwardRef)(function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
-			variant: "heading-sm",
-			className: clsx(item_popup_module_default$9["group-label"], className),
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxGroupLabel, {
-				ref,
-				...restProps
-			}),
-			children
-		});
-	});
-
-// packages/ui/build-module/form/primitives/combobox/input-group.mjs
-/**
-	* Wrapper around `Combobox.Input` that defines the visual control
-	* boundary when the input is composed with prefix/suffix slots or other
-	* elements. Without this wrapper, the popup anchors to the bare `<input>`
-	* instead of the full control. Also adds `role="group"`.
-	*/
-	const InputGroup = (0, _wordpress_element.forwardRef)(function UnforwardedInputGroup(props, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxInputGroup, {
+	const Popup$1 = (0, _wordpress_element.forwardRef)(function UnforwardedPopup({ className, portal, positioner, width, ...restProps }, ref) {
+		const popupContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxPopup, {
 			ref,
-			...props
+			className: clsx(item_popup_module_default$10.popup, item_popup_module_default$10["fixed-width-presets"], getItemPopupWidthClassName(width), className),
+			...restProps
 		});
+		const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner$1, {}), popupContent);
+		return renderSlotWithChildren(portal, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Portal$1, {}), positionedPopup);
 	});
 
-// packages/ui/build-module/form/primitives/combobox/input.mjs
+// packages/ui/build-module/form/primitives/combobox/root.mjs
+/**
+	* Low-level primitive for a combobox that has an associated selection state.
+	*
+	* See `SearchableSelectControl` and `SearchableChipSelectControl` for standard
+	* implementations of a single and multiple selection combobox.
+	*/
+	function Root$2(props) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxRoot, { ...props }) });
+	}
+
+// packages/ui/build-module/form/primitives/combobox/separator.mjs
 	const STYLE_HASH_ATTRIBUTE$17 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -24543,34 +27490,47 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$17(targetDocument, hash, css);
 	}
-	registerStyle$17("9a3f4d8d08", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d954948df795818a__search-icon:dir(ltr){transform:scaleX(-1)}._3ef2bd7ee63a6243__positioner{z-index:var(--wp-ui-combobox-z-index,initial)}._29a93a83a9324a43__chip{--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-sm,8px);align-items:center;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:1px solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:12px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:default;display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-xs,16px);max-width:100%;min-height:var(--wpds-dimension-size-sm,24px);overflow:hidden;&:not([data-disabled]):focus,&:not([data-disabled]):has(button:not(:disabled,[aria-disabled=true]):hover){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);outline:none;@media (forced-colors:active){background-color:SelectedItem}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:has(.a1eeee87af17fee1__chip-prefix){--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-xs,4px)}}.a1eeee87af17fee1__chip-prefix{align-items:center;border-radius:50%;display:flex;flex-shrink:0;height:var(--wpds-dimension-size-xs,20px);justify-content:center;margin-inline-start:1px;overflow:hidden;width:var(--wpds-dimension-size-xs,20px)}.c9681fe97c3a9909__chip-content{min-width:0;overflow-wrap:anywhere;padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline-start:var(--wp-ui-combobox-chip-content-padding-inline-start)}.cb005d96197b8b53__chip-remove{border:none}}}");
-	var style_module_default$4 = {
-		"search-icon": "d954948df795818a__search-icon",
-		"positioner": "_3ef2bd7ee63a6243__positioner",
-		"chip": "_29a93a83a9324a43__chip",
-		"chip-prefix": "a1eeee87af17fee1__chip-prefix",
-		"chip-content": "c9681fe97c3a9909__chip-content",
-		"chip-remove": "cb005d96197b8b53__chip-remove"
+	registerStyle$17("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$9 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
 	};
-	const DEFAULT_RENDER$1 = (props) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Input$2, {
-		prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout.Slot, {
-			padding: "minimal",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
-				icon: search_default,
-				className: style_module_default$4["search-icon"]
-			})
-		}),
-		...props
-	});
-	const Input = (0, _wordpress_element.forwardRef)(function UnforwardedInput({ render = DEFAULT_RENDER$1, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxInput, {
+	/**
+	* Renders a visual separator between combobox items or groups.
+	*/
+	const Separator$1 = (0, _wordpress_element.forwardRef)(function ComboboxSeparator$1({ className, orientation: _orientation, ...props }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxSeparator, {
 			ref,
-			render,
-			...restProps
+			className: clsx(item_popup_module_default$9.separator, className),
+			...props
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/item-description.mjs
+// packages/ui/build-module/form/primitives/combobox/status.mjs
 	const STYLE_HASH_ATTRIBUTE$16 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -24701,24 +27661,38 @@ Icon: ButtonIcon });
 		"status": "_7738d24c2d5904c5__status",
 		"empty": "bb720e36b47aa491__empty"
 	};
-	const ITEM_DESCRIPTION_DIRECT_CHILD = Symbol();
 	/**
-	* Supplementary content for a combobox item. Its text contributes to the
-	* item's accessible description. Use it as a direct child after
-	* `Combobox.ItemLabel`. Content should be text or non-interactive inline markup.
+	* Announces a status message politely to screen readers. Use it for the
+	* status of an asynchronously loaded list.
+	*
+	* Keep this element mounted. Do not hide it with `display: none`, `hidden`,
+	* `aria-hidden`, or by omitting the component. Change or omit the children
+	* instead.
 	*/
-	const ForwardedItemDescription = (0, _wordpress_element.forwardRef)(function ItemDescription(props, ref) {
-		const { className, validationToken, ...restProps } = props;
-		if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD) throw new Error("ItemDescription: Missing direct item parent. Render ItemDescription as a direct child of Item.");
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
+	const Status = (0, _wordpress_element.forwardRef)(function UnforwardedStatus({ className, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxStatus, {
+			className: clsx(item_popup_module_default$8.status, className),
 			ref,
-			variant: "body-sm",
-			className: clsx(item_popup_module_default$8["item-description"], className),
 			...restProps
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/item-label.mjs
+// packages/ui/build-module/form/primitives/combobox/use-filtered-items.mjs
+/**
+	* Returns the items currently visible after the combobox's client-side filter.
+	*
+	* Call this from a descendant of `Combobox.Root`.
+	*/
+	function useFilteredItems() {
+		return useFilteredItems$1();
+	}
+
+// packages/ui/build-module/form/primitives/combobox/value.mjs
+	function Value(props) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxValue, { ...props });
+	}
+
+// packages/ui/build-module/form/primitives/field/root.mjs
 	const STYLE_HASH_ATTRIBUTE$15 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -24820,50 +27794,40 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$15(targetDocument, hash, css);
 	}
-	registerStyle$15("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$7 = {
-		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
-		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
-		"is-width-content": "_8f1224a085e41ee8__is-width-content",
-		"is-width-available": "_80926ed7e7d54be0__is-width-available",
-		"is-width-sm": "d08be1bfb7489969__is-width-sm",
-		"is-width-md": "b38610fddbff3473__is-width-md",
-		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
-		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
-		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
-		"list-chrome": "_750bf16b8304f204__list-chrome",
-		"item-icon": "d786737b2e57c2d3__item-icon",
-		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
-		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
-		"list-footer": "_759a12af5db7a8dd__list-footer",
-		"group": "_74a6a24cc319fdba__group",
-		"group-label": "_09632da7090fc022__group-label",
-		"separator": "d9a1c5812534c804__separator",
-		"item": "bbed87bc28f61ead__item",
-		"is-size-small": "_2426aa84de39c4dd__is-size-small",
-		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
-		"item-content": "_6fc483b6919abf79__item-content",
-		"item-text": "_583f0728d87c5db1__item-text",
-		"item-label": "aa96b6c7fcb20ae8__item-label",
-		"item-description": "_26fffe8e4119e36e__item-description",
-		"status": "_7738d24c2d5904c5__status",
-		"empty": "bb720e36b47aa491__empty"
-	};
+	registerStyle$15("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$2 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	const DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
+		...props,
+		direction: "column",
+		gap: "sm"
+	});
 	/**
-	* The primary label of a combobox item. Use it as the first direct child of
-	* every item. Its content is the item's accessible name. The selected value
-	* still uses the item's `label` or the content of `Combobox.Value`.
+	* A low-level component that associates an accessible label and description
+	* with a single form control element.
+	*
+	* To label a group of multiple form control elements, use the `Fieldset` component instead.
+	*
+	* Simply wrapping a control with this component does not guarantee
+	* accessible labeling. See examples for how to associate the label in different cases.
 	*/
-	const ForwardedItemLabel = (0, _wordpress_element.forwardRef)(function ItemLabel({ className, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
+	const Root$1 = (0, _wordpress_element.forwardRef)(function UnforwardedRoot({ className, render = DEFAULT_RENDER, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldRoot, {
 			ref,
-			variant: "body-md",
-			className: clsx(item_popup_module_default$7["item-label"], className),
+			className: clsx(resets_module_default$2["box-sizing"], className),
+			render,
 			...restProps
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/item.mjs
+// packages/ui/build-module/form/primitives/field/item.mjs
+	const Item$2 = (0, _wordpress_element.forwardRef)(function UnforwardedItem(props, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldItem, {
+			ref,
+			...props
+		});
+	});
+
+// packages/ui/build-module/form/primitives/field/label.mjs
 	const STYLE_HASH_ATTRIBUTE$14 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -24965,82 +27929,23 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$14(targetDocument, hash, css);
 	}
-	registerStyle$14("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$3 = {
-		"button": "_78c10a0773e51a91__button",
-		"input": "_5b33aa2d48624b4f__input",
-		"textarea": "_980b3b4776ac8f81__textarea",
-		"div": "_43e478b4279a076c__div",
-		"p": "_698099e25b0fb1a6__p",
-		"heading": "_326aee4184d261fd__heading",
-		"a": "e9576240835601ba__a",
-		"ol": "_3f05789653864a73__ol",
-		"li": "_3c72ff72abe57859__li",
-		"span": "_79d16267c15d9eb2__span"
+	registerStyle$14("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+	var field_module_default$2 = {
+		"label": "b83e088455118c35__label",
+		"is-plain": "_7cbfa5d2e598834a__is-plain",
+		"description": "_507b5c7970fe2ffd__description"
 	};
-	registerStyle$14("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$6 = {
-		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
-		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
-		"is-width-content": "_8f1224a085e41ee8__is-width-content",
-		"is-width-available": "_80926ed7e7d54be0__is-width-available",
-		"is-width-sm": "d08be1bfb7489969__is-width-sm",
-		"is-width-md": "b38610fddbff3473__is-width-md",
-		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
-		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
-		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
-		"list-chrome": "_750bf16b8304f204__list-chrome",
-		"item-icon": "d786737b2e57c2d3__item-icon",
-		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
-		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
-		"list-footer": "_759a12af5db7a8dd__list-footer",
-		"group": "_74a6a24cc319fdba__group",
-		"group-label": "_09632da7090fc022__group-label",
-		"separator": "d9a1c5812534c804__separator",
-		"item": "bbed87bc28f61ead__item",
-		"is-size-small": "_2426aa84de39c4dd__is-size-small",
-		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
-		"item-content": "_6fc483b6919abf79__item-content",
-		"item-text": "_583f0728d87c5db1__item-text",
-		"item-label": "aa96b6c7fcb20ae8__item-label",
-		"item-description": "_26fffe8e4119e36e__item-description",
-		"status": "_7738d24c2d5904c5__status",
-		"empty": "bb720e36b47aa491__empty"
-	};
-	registerStyle$14("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-	var resets_module_default$2 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	const ITEM_CONTENT_COMPONENTS = {
-		Label: ForwardedItemLabel,
-		Description: ForwardedItemDescription,
-		descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD,
-		validationMessage: "Combobox.ItemLabel must be the first direct child of every combobox item, followed only by Combobox.ItemDescription components."
-	};
-	const Item$1 = (0, _wordpress_element.forwardRef)(function UnforwardedItem({ className, children, variant = "default", "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...restProps }, ref) {
-		const { contentChildren, itemAriaProps } = useItemContent(children, ITEM_CONTENT_COMPONENTS, {
-			"aria-describedby": ariaDescribedBy,
-			"aria-label": ariaLabel,
-			"aria-labelledby": ariaLabelledBy
-		});
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ComboboxItem, {
-			className: clsx(global_css_defense_module_default$3.div, resets_module_default$2["box-sizing"], item_popup_module_default$6.item, className),
+	const Label = (0, _wordpress_element.forwardRef)(function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
+		const label = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldLabel, {
 			ref,
-			...itemAriaProps,
-			...restProps,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-				className: item_popup_module_default$6["item-icon"],
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
-					icon: variant === "creatable" ? plus_default : check_default,
-					className: clsx(variant !== "creatable" && item_popup_module_default$6["item-indicator-icon"]),
-					size: 16
-				})
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				className: item_popup_module_default$6["item-text"],
-				children: contentChildren
-			})]
+			className: clsx(field_module_default$2.label, variant && field_module_default$2[`is-${variant}`], className),
+			...restProps
 		});
+		if (hideFromVision) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { render: label });
+		return label;
 	});
 
-// packages/ui/build-module/form/primitives/combobox/list.mjs
+// packages/ui/build-module/form/primitives/field/description.mjs
 	const STYLE_HASH_ATTRIBUTE$13 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -25142,44 +28047,34 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$13(targetDocument, hash, css);
 	}
-	registerStyle$13("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$5 = {
-		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
-		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
-		"is-width-content": "_8f1224a085e41ee8__is-width-content",
-		"is-width-available": "_80926ed7e7d54be0__is-width-available",
-		"is-width-sm": "d08be1bfb7489969__is-width-sm",
-		"is-width-md": "b38610fddbff3473__is-width-md",
-		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
-		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
-		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
-		"list-chrome": "_750bf16b8304f204__list-chrome",
-		"item-icon": "d786737b2e57c2d3__item-icon",
-		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
-		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
-		"list-footer": "_759a12af5db7a8dd__list-footer",
-		"group": "_74a6a24cc319fdba__group",
-		"group-label": "_09632da7090fc022__group-label",
-		"separator": "d9a1c5812534c804__separator",
-		"item": "bbed87bc28f61ead__item",
-		"is-size-small": "_2426aa84de39c4dd__is-size-small",
-		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
-		"item-content": "_6fc483b6919abf79__item-content",
-		"item-text": "_583f0728d87c5db1__item-text",
-		"item-label": "aa96b6c7fcb20ae8__item-label",
-		"item-description": "_26fffe8e4119e36e__item-description",
-		"status": "_7738d24c2d5904c5__status",
-		"empty": "bb720e36b47aa491__empty"
+	registerStyle$13("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	var global_css_defense_module_default$3 = {
+		"button": "_78c10a0773e51a91__button",
+		"input": "_5b33aa2d48624b4f__input",
+		"textarea": "_980b3b4776ac8f81__textarea",
+		"div": "_43e478b4279a076c__div",
+		"p": "_698099e25b0fb1a6__p",
+		"heading": "_326aee4184d261fd__heading",
+		"a": "e9576240835601ba__a",
+		"ol": "_3f05789653864a73__ol",
+		"li": "_3c72ff72abe57859__li",
+		"span": "_79d16267c15d9eb2__span"
 	};
-	const List = (0, _wordpress_element.forwardRef)(function UnforwardedList({ className, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxList, {
-			className: clsx(item_popup_module_default$5.list, className),
+	registerStyle$13("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+	var field_module_default$1 = {
+		"label": "b83e088455118c35__label",
+		"is-plain": "_7cbfa5d2e598834a__is-plain",
+		"description": "_507b5c7970fe2ffd__description"
+	};
+	const Description = (0, _wordpress_element.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldDescription, {
 			ref,
+			className: clsx(global_css_defense_module_default$3.p, field_module_default$1.description, className),
 			...restProps
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/list-body.mjs
+// packages/ui/build-module/form/primitives/field/details.mjs
 	const STYLE_HASH_ATTRIBUTE$12 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -25281,48 +28176,36 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$12(targetDocument, hash, css);
 	}
-	registerStyle$12("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$4 = {
-		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
-		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
-		"is-width-content": "_8f1224a085e41ee8__is-width-content",
-		"is-width-available": "_80926ed7e7d54be0__is-width-available",
-		"is-width-sm": "d08be1bfb7489969__is-width-sm",
-		"is-width-md": "b38610fddbff3473__is-width-md",
-		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
-		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
-		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
-		"list-chrome": "_750bf16b8304f204__list-chrome",
-		"item-icon": "d786737b2e57c2d3__item-icon",
-		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
-		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
-		"list-footer": "_759a12af5db7a8dd__list-footer",
-		"group": "_74a6a24cc319fdba__group",
-		"group-label": "_09632da7090fc022__group-label",
-		"separator": "d9a1c5812534c804__separator",
-		"item": "bbed87bc28f61ead__item",
-		"is-size-small": "_2426aa84de39c4dd__is-size-small",
-		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
-		"item-content": "_6fc483b6919abf79__item-content",
-		"item-text": "_583f0728d87c5db1__item-text",
-		"item-label": "aa96b6c7fcb20ae8__item-label",
-		"item-description": "_26fffe8e4119e36e__item-description",
-		"status": "_7738d24c2d5904c5__status",
-		"empty": "bb720e36b47aa491__empty"
+	registerStyle$12("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+	var field_module_default = {
+		"label": "b83e088455118c35__label",
+		"is-plain": "_7cbfa5d2e598834a__is-plain",
+		"description": "_507b5c7970fe2ffd__description"
 	};
 	/**
-	* A layout container for the main scrolling area in the `List`, for holding `Item`s.
+	* A component for showing additional information about the field,
+	* styled similarly to a normal `Field.Description`.
+	* Unlike a normal description, it can include links and other semantic elements.
+	*
+	* Although this content is not associated with the field using direct semantics,
+	* it is made discoverable to screen reader users via a visually hidden description,
+	* alerting them to the presence of additional information below.
+	*
+	* If the content only includes plain text, use `Field.Description` instead,
+	* so the readout is not unnecessarily verbose for screen reader users.
 	*/
-	const ListBody = (0, _wordpress_element.forwardRef)(function UnforwardedListBody({ render, ...props }, ref) {
-		return useRender({
-			defaultTagName: "div",
-			render,
+	const Details = (0, _wordpress_element.forwardRef)(function UnforwardedDetails({ className, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldDescription, {}),
+			children: (0, _wordpress_i18n.__)("More details follow the field.")
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			ref,
-			props: mergeProps({ className: item_popup_module_default$4["list-scrollable-container"] }, props)
-		});
+			className: clsx(field_module_default.description, className),
+			...restProps
+		})] });
 	});
 
-// packages/ui/build-module/form/primitives/combobox/list-footer.mjs
+// packages/ui/build-module/form/primitives/select/group.mjs
 	const STYLE_HASH_ATTRIBUTE$11 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -25425,7 +28308,7 @@ Icon: ButtonIcon });
 		for (const targetDocument of runtime.documents.keys()) injectStyle$11(targetDocument, hash, css);
 	}
 	registerStyle$11("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$3 = {
+	var item_popup_module_default$7 = {
 		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
 		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
 		"is-width-content": "_8f1224a085e41ee8__is-width-content",
@@ -25454,34 +28337,19 @@ Icon: ButtonIcon });
 		"empty": "bb720e36b47aa491__empty"
 	};
 	/**
-	* A layout container for the footer row in the `List`,
-	* for holding a single `Item` that triggers the creation of a new item.
+	* Groups related items together with an associated label rendered by
+	* `Select.GroupLabel`.
 	*/
-	const ListFooter = (0, _wordpress_element.forwardRef)(function UnforwardedListFooter({ render, ...props }, ref) {
-		return useRender({
-			defaultTagName: "div",
-			render,
+	const Group = (0, _wordpress_element.forwardRef)(function UnforwardedGroup({ className, children, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectGroup, {
+			className: clsx(item_popup_module_default$7.group, className),
 			ref,
-			props: mergeProps({ className: item_popup_module_default$3["list-footer"] }, props)
-		});
-	});
-
-// packages/ui/build-module/form/primitives/combobox/portal.mjs
-/**
-	* Root element that portals `Combobox` popup content. Pass to
-	* `Combobox.Popup`'s `portal` prop. When `portal` is omitted,
-	* `Combobox.Popup` uses this component with default props.
-	* `container` defaults to the `@wordpress/ui` compat overlay slot.
-	*/
-	const Portal = (0, _wordpress_element.forwardRef)(function ComboboxPortal$1({ container, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxPortal, {
-			container: container === void 0 ? getWpCompatOverlaySlot() : container,
 			...restProps,
-			ref
+			children
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/positioner.mjs
+// packages/ui/build-module/form/primitives/select/group-label.mjs
 	const STYLE_HASH_ATTRIBUTE$10 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -25583,30 +28451,52 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$10(targetDocument, hash, css);
 	}
-	registerStyle$10("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-	var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	registerStyle$10("9a3f4d8d08", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d954948df795818a__search-icon:dir(ltr){transform:scaleX(-1)}._3ef2bd7ee63a6243__positioner{z-index:var(--wp-ui-combobox-z-index,initial)}._29a93a83a9324a43__chip{--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-sm,8px);align-items:center;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:1px solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:12px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:default;display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-xs,16px);max-width:100%;min-height:var(--wpds-dimension-size-sm,24px);overflow:hidden;&:not([data-disabled]):focus,&:not([data-disabled]):has(button:not(:disabled,[aria-disabled=true]):hover){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);outline:none;@media (forced-colors:active){background-color:SelectedItem}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:has(.a1eeee87af17fee1__chip-prefix){--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-xs,4px)}}.a1eeee87af17fee1__chip-prefix{align-items:center;border-radius:50%;display:flex;flex-shrink:0;height:var(--wpds-dimension-size-xs,20px);justify-content:center;margin-inline-start:1px;overflow:hidden;width:var(--wpds-dimension-size-xs,20px)}.c9681fe97c3a9909__chip-content{min-width:0;overflow-wrap:anywhere;padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline-start:var(--wp-ui-combobox-chip-content-padding-inline-start)}.cb005d96197b8b53__chip-remove{border:none}}}");
-	var style_module_default$3 = {
-		"search-icon": "d954948df795818a__search-icon",
-		"positioner": "_3ef2bd7ee63a6243__positioner",
-		"chip": "_29a93a83a9324a43__chip",
-		"chip-prefix": "a1eeee87af17fee1__chip-prefix",
-		"chip-content": "c9681fe97c3a9909__chip-content",
-		"chip-remove": "cb005d96197b8b53__chip-remove"
+	registerStyle$10("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$6 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
 	};
 	/**
-	* Used to apply custom positioning to `Combobox`'s popup content.
+	* Renders a label for a `Select.Group`, describing the group of items
+	* it is associated with.
 	*/
-	const Positioner = (0, _wordpress_element.forwardRef)(function ComboboxPositioner$1({ className, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxPositioner, {
-			...ITEM_POPUP_POSITIONER_PROPS,
-			...props,
-			ref,
-			className: clsx(resets_module_default$1["box-sizing"], style_module_default$3.positioner, className)
+	const GroupLabel = (0, _wordpress_element.forwardRef)(function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
+			variant: "heading-sm",
+			className: clsx(item_popup_module_default$6["group-label"], className),
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectGroupLabel, {
+				ref,
+				...restProps
+			}),
+			children
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/popup.mjs
+// packages/ui/build-module/form/primitives/select/item-description.mjs
 	const STYLE_HASH_ATTRIBUTE$9 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -25709,7 +28599,7 @@ Icon: ButtonIcon });
 		for (const targetDocument of runtime.documents.keys()) injectStyle$9(targetDocument, hash, css);
 	}
 	registerStyle$9("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$2 = {
+	var item_popup_module_default$5 = {
 		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
 		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
 		"is-width-content": "_8f1224a085e41ee8__is-width-content",
@@ -25737,28 +28627,24 @@ Icon: ButtonIcon });
 		"status": "_7738d24c2d5904c5__status",
 		"empty": "bb720e36b47aa491__empty"
 	};
-	const Popup = (0, _wordpress_element.forwardRef)(function UnforwardedPopup({ className, portal, positioner, width, ...restProps }, ref) {
-		const popupContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxPopup, {
+	const ITEM_DESCRIPTION_DIRECT_CHILD = Symbol();
+	/**
+	* Supplementary content for a select item. Its text contributes to the item's
+	* accessible description. Use it as a direct child after `Select.ItemLabel`.
+	* Content should be text or non-interactive inline markup.
+	*/
+	const ItemDescription = (0, _wordpress_element.forwardRef)(function UnforwardedItemDescription(props, ref) {
+		const { className, validationToken, ...restProps } = props;
+		if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD) throw new Error("Select.ItemDescription: Missing direct select item parent. Render <Select.ItemDescription> as a direct child of <Select.Item>.");
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
 			ref,
-			className: clsx(item_popup_module_default$2.popup, item_popup_module_default$2["fixed-width-presets"], getItemPopupWidthClassName(width), className),
+			variant: "body-sm",
+			className: clsx(item_popup_module_default$5["item-description"], className),
 			...restProps
 		});
-		const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner, {}), popupContent);
-		return renderSlotWithChildren(portal, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Portal, {}), positionedPopup);
 	});
 
-// packages/ui/build-module/form/primitives/combobox/root.mjs
-/**
-	* Low-level primitive for a combobox that has an associated selection state.
-	*
-	* See `SearchableSelectControl` and `SearchableChipSelectControl` for standard
-	* implementations of a single and multiple selection combobox.
-	*/
-	function Root$1(props) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxRoot, { ...props }) });
-	}
-
-// packages/ui/build-module/form/primitives/combobox/separator.mjs
+// packages/ui/build-module/form/primitives/select/item-label.mjs
 	const STYLE_HASH_ATTRIBUTE$8 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -25861,7 +28747,7 @@ Icon: ButtonIcon });
 		for (const targetDocument of runtime.documents.keys()) injectStyle$8(targetDocument, hash, css);
 	}
 	registerStyle$8("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default$1 = {
+	var item_popup_module_default$4 = {
 		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
 		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
 		"is-width-content": "_8f1224a085e41ee8__is-width-content",
@@ -25890,17 +28776,23 @@ Icon: ButtonIcon });
 		"empty": "bb720e36b47aa491__empty"
 	};
 	/**
-	* Renders a visual separator between combobox items or groups.
+	* The primary label of a select item. Use it as the first direct child of
+	* every item. Its content is the item's accessible name. The trigger label
+	* still comes from the selected item's `label` (via `items` or an object
+	* value) or from `Select.Trigger` children.
 	*/
-	const Separator = (0, _wordpress_element.forwardRef)(function ComboboxSeparator$1({ className, orientation: _orientation, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxSeparator, {
+	const ItemLabel = (0, _wordpress_element.forwardRef)(function UnforwardedItemLabel({ children, className, render, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
 			ref,
-			className: clsx(item_popup_module_default$1.separator, className),
-			...props
+			variant: "body-md",
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectItemText, { render }),
+			className: clsx(item_popup_module_default$4["item-label"], className),
+			...restProps,
+			children
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/status.mjs
+// packages/ui/build-module/form/primitives/select/item.mjs
 	const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -26002,8 +28894,21 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
 	}
+	registerStyle$7("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+	var global_css_defense_module_default$2 = {
+		"button": "_78c10a0773e51a91__button",
+		"input": "_5b33aa2d48624b4f__input",
+		"textarea": "_980b3b4776ac8f81__textarea",
+		"div": "_43e478b4279a076c__div",
+		"p": "_698099e25b0fb1a6__p",
+		"heading": "_326aee4184d261fd__heading",
+		"a": "e9576240835601ba__a",
+		"ol": "_3f05789653864a73__ol",
+		"li": "_3c72ff72abe57859__li",
+		"span": "_79d16267c15d9eb2__span"
+	};
 	registerStyle$7("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-	var item_popup_module_default = {
+	var item_popup_module_default$3 = {
 		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
 		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
 		"is-width-content": "_8f1224a085e41ee8__is-width-content",
@@ -26031,38 +28936,54 @@ Icon: ButtonIcon });
 		"status": "_7738d24c2d5904c5__status",
 		"empty": "bb720e36b47aa491__empty"
 	};
-	/**
-	* Announces a status message politely to screen readers. Use it for the
-	* status of an asynchronously loaded list.
-	*
-	* Keep this element mounted. Do not hide it with `display: none`, `hidden`,
-	* `aria-hidden`, or by omitting the component. Change or omit the children
-	* instead.
-	*/
-	const Status = (0, _wordpress_element.forwardRef)(function UnforwardedStatus({ className, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxStatus, {
-			className: clsx(item_popup_module_default.status, className),
+	registerStyle$7("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	const ITEM_CONTENT_COMPONENTS = {
+		Label: ItemLabel,
+		Description: ItemDescription,
+		descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD,
+		validationMessage: "Select.ItemLabel must be the first direct child of every select item, followed only by Select.ItemDescription components."
+	};
+	const Item$1 = (0, _wordpress_element.forwardRef)(function UnforwardedItem({ className, value, size = "default", children, "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...restProps }, ref) {
+		const { contentChildren, itemAriaProps } = useItemContent(children, ITEM_CONTENT_COMPONENTS, {
+			"aria-describedby": ariaDescribedBy,
+			"aria-label": ariaLabel,
+			"aria-labelledby": ariaLabelledBy
+		});
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(SelectItem, {
+			className: clsx(global_css_defense_module_default$2.div, resets_module_default$1["box-sizing"], item_popup_module_default$3.item, size === "small" && item_popup_module_default$3["is-size-small"], className),
+			value,
 			ref,
-			...restProps
+			...itemAriaProps,
+			...restProps,
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+				className: item_popup_module_default$3["item-icon"],
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+					icon: check_default,
+					className: item_popup_module_default$3["item-indicator-icon"],
+					size: 16
+				})
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: item_popup_module_default$3["item-text"],
+				children: contentChildren
+			})]
 		});
 	});
 
-// packages/ui/build-module/form/primitives/combobox/use-filtered-items.mjs
+// packages/ui/build-module/form/primitives/select/portal.mjs
 /**
-	* Returns the items currently visible after the combobox's client-side filter.
-	*
-	* Call this from a descendant of `Combobox.Root`.
+	* Used to apply custom portal behavior to `Select`'s listbox content.
+	* `container` defaults to the `@wordpress/ui` compat overlay slot.
 	*/
-	function useFilteredItems() {
-		return useFilteredItems$1();
-	}
+	const Portal = (0, _wordpress_element.forwardRef)(function SelectPortal$1({ container, ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectPortal, {
+			container: container === void 0 ? getWpCompatOverlaySlot() : container,
+			...restProps,
+			ref
+		});
+	});
 
-// packages/ui/build-module/form/primitives/combobox/value.mjs
-	function Value(props) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxValue, { ...props });
-	}
-
-// packages/ui/build-module/form/primitives/field/root.mjs
+// packages/ui/build-module/form/primitives/select/positioner.mjs
 	const STYLE_HASH_ATTRIBUTE$6 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -26166,38 +29087,54 @@ Icon: ButtonIcon });
 	}
 	registerStyle$6("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 	var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	const DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
-		...props,
-		direction: "column",
-		gap: "sm"
-	});
+	registerStyle$6("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$2 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
+	};
+	registerStyle$6("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
+	var style_module_default$4 = {
+		"positioner": "cc0f09fba19eb669__positioner",
+		"list": "_3a3c25e09f4fd1ec__list"
+	};
 	/**
-	* A low-level component that associates an accessible label and description
-	* with a single form control element.
-	*
-	* To label a group of multiple form control elements, use the `Fieldset` component instead.
-	*
-	* Simply wrapping a control with this component does not guarantee
-	* accessible labeling. See examples for how to associate the label in different cases.
+	* Used to apply custom positioning to `Select`'s listbox content.
 	*/
-	const Root = (0, _wordpress_element.forwardRef)(function UnforwardedRoot({ className, render = DEFAULT_RENDER, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldRoot, {
+	const Positioner = (0, _wordpress_element.forwardRef)(function SelectPositioner$1({ className, alignItemWithTrigger = true, ...props }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectPositioner, {
+			...ITEM_POPUP_POSITIONER_PROPS,
+			...props,
+			alignItemWithTrigger,
 			ref,
-			className: clsx(resets_module_default["box-sizing"], className),
-			render,
-			...restProps
+			className: clsx(resets_module_default["box-sizing"], style_module_default$4.positioner, alignItemWithTrigger && item_popup_module_default$2["is-align-item-with-trigger"], className)
 		});
 	});
 
-// packages/ui/build-module/form/primitives/field/item.mjs
-	const Item = (0, _wordpress_element.forwardRef)(function UnforwardedItem(props, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldItem, {
-			ref,
-			...props
-		});
-	});
-
-// packages/ui/build-module/form/primitives/field/label.mjs
+// packages/ui/build-module/form/primitives/select/popup.mjs
 	const STYLE_HASH_ATTRIBUTE$5 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -26299,23 +29236,73 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$5(targetDocument, hash, css);
 	}
-	registerStyle$5("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-	var field_module_default$2 = {
-		"label": "b83e088455118c35__label",
-		"is-plain": "_7cbfa5d2e598834a__is-plain",
-		"description": "_507b5c7970fe2ffd__description"
+	registerStyle$5("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default$1 = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
 	};
-	const Label = (0, _wordpress_element.forwardRef)(function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
-		const label = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldLabel, {
+	registerStyle$5("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
+	var style_module_default$3 = {
+		"positioner": "cc0f09fba19eb669__positioner",
+		"list": "_3a3c25e09f4fd1ec__list"
+	};
+	const Popup = (0, _wordpress_element.forwardRef)(function UnforwardedPopup({ className, portal, positioner, width, children, ...restProps }, ref) {
+		const popupContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectPopup, {
 			ref,
-			className: clsx(field_module_default$2.label, variant && field_module_default$2[`is-${variant}`], className),
-			...restProps
+			className: clsx(item_popup_module_default$1.popup, getItemPopupWidthClassName(width), className),
+			...restProps,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectList, {
+				className: clsx(item_popup_module_default$1["list-chrome"], style_module_default$3.list),
+				children
+			})
 		});
-		if (hideFromVision) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { render: label });
-		return label;
+		const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner, {}), popupContent);
+		return renderSlotWithChildren(portal, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Portal, {}), positionedPopup);
 	});
 
-// packages/ui/build-module/form/primitives/field/description.mjs
+// packages/ui/build-module/form/primitives/select/root.mjs
+/**
+	* A component that lets users choose one option from a list.
+	*
+	* Prefer `SelectControl` when using with a standard label and description.
+	*
+	* When using object values, pass an `items` array so `Select.Trigger` can
+	* auto-resolve the selected item's label. By default, items should use a
+	* `{ value, label }` shape, or provide `itemToStringLabel` for a custom shape.
+	*
+	* Object values are compared with `Object.is` by default, so use the same
+	* object references for `value` / `defaultValue` and `Select.Item` values, or
+	* provide `isItemEqualToValue`.
+	*/
+	function Root(props) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectRoot, { ...props }) });
+	}
+
+// packages/ui/build-module/form/primitives/select/separator.mjs
 	const STYLE_HASH_ATTRIBUTE$4 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -26417,34 +29404,47 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$4(targetDocument, hash, css);
 	}
-	registerStyle$4("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$2 = {
-		"button": "_78c10a0773e51a91__button",
-		"input": "_5b33aa2d48624b4f__input",
-		"textarea": "_980b3b4776ac8f81__textarea",
-		"div": "_43e478b4279a076c__div",
-		"p": "_698099e25b0fb1a6__p",
-		"heading": "_326aee4184d261fd__heading",
-		"a": "e9576240835601ba__a",
-		"ol": "_3f05789653864a73__ol",
-		"li": "_3c72ff72abe57859__li",
-		"span": "_79d16267c15d9eb2__span"
+	registerStyle$4("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+	var item_popup_module_default = {
+		"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+		"is-width-content": "_8f1224a085e41ee8__is-width-content",
+		"is-width-available": "_80926ed7e7d54be0__is-width-available",
+		"is-width-sm": "d08be1bfb7489969__is-width-sm",
+		"is-width-md": "b38610fddbff3473__is-width-md",
+		"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+		"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+		"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+		"list-chrome": "_750bf16b8304f204__list-chrome",
+		"item-icon": "d786737b2e57c2d3__item-icon",
+		"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+		"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+		"list-footer": "_759a12af5db7a8dd__list-footer",
+		"group": "_74a6a24cc319fdba__group",
+		"group-label": "_09632da7090fc022__group-label",
+		"separator": "d9a1c5812534c804__separator",
+		"item": "bbed87bc28f61ead__item",
+		"is-size-small": "_2426aa84de39c4dd__is-size-small",
+		"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+		"item-content": "_6fc483b6919abf79__item-content",
+		"item-text": "_583f0728d87c5db1__item-text",
+		"item-label": "aa96b6c7fcb20ae8__item-label",
+		"item-description": "_26fffe8e4119e36e__item-description",
+		"status": "_7738d24c2d5904c5__status",
+		"empty": "bb720e36b47aa491__empty"
 	};
-	registerStyle$4("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-	var field_module_default$1 = {
-		"label": "b83e088455118c35__label",
-		"is-plain": "_7cbfa5d2e598834a__is-plain",
-		"description": "_507b5c7970fe2ffd__description"
-	};
-	const Description = (0, _wordpress_element.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldDescription, {
+	/**
+	* Renders a visual separator between select items or groups.
+	*/
+	const Separator = (0, _wordpress_element.forwardRef)(function SelectSeparator$1({ className, orientation: _orientation, ...props }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectSeparator, {
 			ref,
-			className: clsx(global_css_defense_module_default$2.p, field_module_default$1.description, className),
-			...restProps
+			className: clsx(item_popup_module_default.separator, className),
+			...props
 		});
 	});
 
-// packages/ui/build-module/form/primitives/field/details.mjs
+// packages/ui/build-module/form/primitives/select/trigger.mjs
 	const STYLE_HASH_ATTRIBUTE$3 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -26546,33 +29546,43 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
 	}
-	registerStyle$3("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-	var field_module_default = {
-		"label": "b83e088455118c35__label",
-		"is-plain": "_7cbfa5d2e598834a__is-plain",
-		"description": "_507b5c7970fe2ffd__description"
+	registerStyle$3("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+	var focus_module_default$1 = {
+		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
 	};
-	/**
-	* A component for showing additional information about the field,
-	* styled similarly to a normal `Field.Description`.
-	* Unlike a normal description, it can include links and other semantic elements.
-	*
-	* Although this content is not associated with the field using direct semantics,
-	* it is made discoverable to screen reader users via a visually hidden description,
-	* alerting them to the presence of additional information below.
-	*
-	* If the content only includes plain text, use `Field.Description` instead,
-	* so the readout is not unnecessarily verbose for screen reader users.
-	*/
-	const Details = (0, _wordpress_element.forwardRef)(function UnforwardedDetails({ className, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldDescription, {}),
-			children: (0, _wordpress_i18n.__)("More details follow the field.")
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			ref,
-			className: clsx(field_module_default.description, className),
-			...restProps
-		})] });
+	registerStyle$3("56b0509c70", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.f19aaaa579fccf54__trigger-wrapper{&.bfac6d240be543bd__is-minimal{width:fit-content}}.e1f5987e5bdc9112__trigger{align-items:center;background-color:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:inherit;font-size:inherit;gap:var(--wpds-dimension-gap-xs,4px);justify-content:space-between;line-height:1.4;padding-block:4px;padding-inline-end:calc(var(--wp-ui-input-layout-padding-inline) - 4px);padding-inline-start:var(--wp-ui-input-layout-padding-inline);text-align:start;user-select:none;width:100%;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&.bfac6d240be543bd__is-minimal{width:auto}&:focus{outline:none}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}}.ba63264311039401__trigger-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;.e1f5987e5bdc9112__trigger[data-placeholder]:not([data-disabled]) &{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}}.cb34834e4f533240__trigger-caret{flex:0 0 auto}}}");
+	var select_trigger_module_default = {
+		"trigger-wrapper": "f19aaaa579fccf54__trigger-wrapper",
+		"is-minimal": "bfac6d240be543bd__is-minimal",
+		"trigger": "e1f5987e5bdc9112__trigger",
+		"trigger-value": "ba63264311039401__trigger-value",
+		"trigger-caret": "cb34834e4f533240__trigger-caret"
+	};
+	const Trigger$1 = (0, _wordpress_element.forwardRef)(function UnforwardedTrigger({ className, size, variant, children, placeholder = (0, _wordpress_i18n.__)("Select"), ...restProps }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout, {
+			className: clsx(focus_module_default$1["outset-ring--focus-within-except-active"], select_trigger_module_default["trigger-wrapper"], variant === "minimal" && select_trigger_module_default["is-minimal"], className),
+			size,
+			isBorderless: variant === "minimal",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(SelectTrigger, {
+				...restProps,
+				className: clsx(select_trigger_module_default.trigger, variant === "minimal" && select_trigger_module_default["is-minimal"]),
+				"data-can-disable-input-layout": true,
+				ref,
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectValue, {
+					placeholder,
+					className: select_trigger_module_default["trigger-value"],
+					children
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+					className: select_trigger_module_default["trigger-caret"],
+					icon: chevron_down_default,
+					size: 18
+				})]
+			})
+		});
 	});
 
 // packages/ui/build-module/form/primitives/searchable-results.mjs
@@ -26612,12 +29622,12 @@ Icon: ButtonIcon });
 				if (shouldSkipCollectionEntry(entry)) return null;
 				if (children) return children(entry, ...args);
 				if (isItemGroup$1(entry)) return null;
-				return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Item$1, {
+				return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Item$3, {
 					value: entry,
 					disabled: entry.disabled,
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ForwardedItemLabel, { children: entry.label }), entry.description ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ForwardedItemDescription, { children: entry.description }) : null]
 				}, entry.value);
-			} }) }), creatableItem && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ListFooter, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Item$1, {
+			} }) }), creatableItem && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ListFooter, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Item$3, {
 				variant: "creatable",
 				value: creatableItem,
 				disabled: creatableItem.disabled,
@@ -26809,7 +29819,7 @@ Icon: ButtonIcon });
 	const SearchableChipSelect$1 = (0, _wordpress_element.forwardRef)(function UnforwardedSearchableChipSelect({ children, disabled, emptyContent = (0, _wordpress_i18n.__)("No results found."), statusContent, items, onValueChange, chipsContent, searchPlaceholder = (0, _wordpress_i18n.__)("Search"), popupWidth, showClearButton = true, clearButtonLabel = (0, _wordpress_i18n.__)("Clear all"), "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, "aria-describedby": ariaDescribedby, ...restProps }, ref) {
 		const inputHintId = (0, _wordpress_element.useId)();
 		warnSearchableChipSelectProps(items, children);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$1, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$2, {
 			items,
 			multiple: true,
 			disabled,
@@ -26856,7 +29866,7 @@ Icon: ButtonIcon });
 					"aria-hidden": "true",
 					children: selectionHint
 				})] });
-			} }) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup, {
+			} }) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$1, {
 				width: popupWidth,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SearchableResults, {
 					emptyContent,
@@ -26868,12 +29878,12 @@ Icon: ButtonIcon });
 	});
 
 // packages/ui/build-module/form/primitives/searchable-chip-select/index.mjs
-	Item$1.displayName = "SearchableChipSelect.Item";
+	Item$3.displayName = "SearchableChipSelect.Item";
 	ForwardedItemLabel.displayName = "SearchableChipSelect.ItemLabel";
 	ForwardedItemDescription.displayName = "SearchableChipSelect.ItemDescription";
 	ChipWithRemove.displayName = "SearchableChipSelect.ChipWithRemove";
-	Group.displayName = "SearchableChipSelect.Group";
-	GroupLabel.displayName = "SearchableChipSelect.GroupLabel";
+	Group$1.displayName = "SearchableChipSelect.Group";
+	GroupLabel$1.displayName = "SearchableChipSelect.GroupLabel";
 	/**
 	* A low-level primitive for a searchable multi-selection field with chips, with
 	* support for a creatable footer action.
@@ -26881,13 +29891,13 @@ Icon: ButtonIcon });
 	* Prefer `SearchableChipSelectControl` when using with a standard label and description.
 	*/
 	const SearchableChipSelect = Object.assign(SearchableChipSelect$1, {
-		Item: Item$1,
+		Item: Item$3,
 		ItemLabel: ForwardedItemLabel,
 		ItemDescription: ForwardedItemDescription,
 		ChipWithRemove,
-		Group,
-		GroupLabel,
-		Separator,
+		Group: Group$1,
+		GroupLabel: GroupLabel$1,
+		Separator: Separator$1,
 		Collection,
 		useFilteredItems
 	});
@@ -27045,7 +30055,7 @@ Icon: ButtonIcon });
 	* and description.
 	*/
 	const SearchableChipSelectControl$1 = (0, _wordpress_element.forwardRef)(function UnforwardedSearchableChipSelectControl({ className, label, description, details, hideLabelFromVision, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$1, {
 			className,
 			children: [
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Label, {
@@ -27068,10 +30078,10 @@ Icon: ButtonIcon });
 	* and description.
 	*/
 	const SearchableChipSelectControl = Object.assign(SearchableChipSelectControl$1, {
-		Group,
-		GroupLabel,
-		Separator,
-		Item: Item$1,
+		Group: Group$1,
+		GroupLabel: GroupLabel$1,
+		Separator: Separator$1,
+		Item: Item$3,
 		ItemLabel: ForwardedItemLabel,
 		ItemDescription: ForwardedItemDescription,
 		ChipWithRemove,
@@ -27205,10 +30215,10 @@ Icon: ButtonIcon });
 	*/
 	const CheckboxControl$6 = (0, _wordpress_element.forwardRef)(function UnforwardedCheckboxControl({ label, description, details, hideLabelFromVision, className, name, ...checkboxProps }, ref) {
 		const hasSupportingText = !!description || !!details;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Root, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Root$1, {
 			name,
 			className: clsx(style_module_default.root, className),
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Item, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Item$2, {
 				render: ITEM_RENDER,
 				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					className: style_module_default["checkbox-wrapper"],
@@ -27234,12 +30244,121 @@ Icon: ButtonIcon });
 		});
 	});
 
+// packages/ui/build-module/form/select-control/dev-warnings.mjs
+	function warnSelectControlProps(items, itemToStringValue) {
+		if (!itemToStringValue && items?.some((item) => item.value === "")) (0, _wordpress_warning.default)("SelectControl: empty string item values are treated as empty selections by default. Use a non-empty item value or return a non-empty string from `itemToStringValue`. Use `null` for an option that clears the selection.");
+	}
+
+// packages/ui/build-module/form/select-control/item.mjs
+	const Item = (0, _wordpress_element.forwardRef)(function UnforwardedItem(props, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Item$1, {
+			ref,
+			...props
+		});
+	});
+
+// packages/ui/build-module/form/select-control/trigger.mjs
+/**
+	* The trigger button for a `SelectControl`.
+	*/
+	const Trigger = (0, _wordpress_element.forwardRef)(function UnforwardedTrigger(props, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$1, {
+			ref,
+			...props
+		});
+	});
+
+// packages/ui/build-module/form/select-control/select-control.mjs
+	const DEFAULT_TRIGGER = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger, {});
+	/**
+	* A complete select field with integrated label and description.
+	*/
+	const SelectControl$24 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+		warnSelectControlProps(items, restProps.itemToStringValue);
+		const triggerElement = useRender({
+			render: trigger ?? DEFAULT_TRIGGER,
+			ref,
+			props: {
+				placeholder,
+				size
+			}
+		});
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$1, {
+			className,
+			children: [
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Label, {
+					hideFromVision: hideLabelFromVision,
+					children: label
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root, {
+					items,
+					...restProps,
+					children: [triggerElement, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup, {
+						width: popupWidth,
+						children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Item, {
+							value: item,
+							label: item.label,
+							disabled: item.disabled,
+							children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel, { children: item.label }), item.description ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemDescription, { children: item.description }) : null]
+						}, item.value ?? "null"))
+					})]
+				}),
+				description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Description, { children: description }),
+				details && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Details, { children: details })
+			]
+		});
+	});
+
+// packages/ui/build-module/form/select-control/index.mjs
+	Trigger.displayName = "SelectControl.Trigger";
+	Group.displayName = "SelectControl.Group";
+	GroupLabel.displayName = "SelectControl.GroupLabel";
+	Item.displayName = "SelectControl.Item";
+	ItemLabel.displayName = "SelectControl.ItemLabel";
+	ItemDescription.displayName = "SelectControl.ItemDescription";
+	/**
+	* A complete select field with integrated label and description.
+	*/
+	const SelectControl$23 = Object.assign(SelectControl$24, {
+		/**
+		* The trigger button, passed through the `trigger` prop to customize
+		* its props while retaining the control's label and selected content.
+		*/
+		Trigger,
+		/**
+		* Groups related items together with an associated label rendered by
+		* `SelectControl.GroupLabel`.
+		*/
+		Group,
+		/**
+		* Renders a label for a `SelectControl.Group`.
+		*/
+		GroupLabel,
+		/**
+		* An item rendered inside a `SelectControl` popup.
+		*/
+		Item,
+		/**
+		* The primary label of a select item.
+		*/
+		ItemLabel,
+		/**
+		* Supplementary content that describes a select item via
+		* `aria-describedby`.
+		*/
+		ItemDescription,
+		/**
+		* Renders a visual separator between items or groups.
+		*/
+		Separator
+	});
+
 // packages/ui/build-module/form/textarea-control/textarea-control.mjs
 /**
 	* A complete textarea field with integrated label and description.
 	*/
 	const TextareaControl$6 = (0, _wordpress_element.forwardRef)(function UnforwardedTextareaControl({ className, label, description, details, hideLabelFromVision, ...restProps }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$1, {
 			className,
 			children: [
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Label, {
@@ -47712,7 +50831,7 @@ Icon: ButtonIcon });
 			title: (0, _wordpress_i18n.__)("Icon library"),
 			onRequestClose: onClose,
 			isFullScreen: true,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$2, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$3, {
 				className: "wp-block-icon__inserter",
 				orientation: "vertical",
 				value: collectionSlug,
@@ -75601,19 +78720,21 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/separator/edit.mjs
-	const HtmlElementControl = ({ tagName, setAttributes }) => {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+	const HTML_ELEMENT_ITEMS = [{
+		label: (0, _wordpress_i18n.__)("Default (<hr>)"),
+		value: "hr"
+	}, {
+		label: "<div>",
+		value: "div"
+	}];
+	const HtmlElementControl = ({ tagName = "hr", setAttributes }) => {
+		const selectedItem = HTML_ELEMENT_ITEMS.find((item) => item.value === tagName) ?? HTML_ELEMENT_ITEMS[0];
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$23, {
 			label: (0, _wordpress_i18n.__)("HTML element"),
-			value: tagName,
-			onChange: (newValue) => setAttributes({ tagName: newValue }),
-			options: [{
-				label: (0, _wordpress_i18n.__)("Default (<hr>)"),
-				value: "hr"
-			}, {
-				label: "<div>",
-				value: "div"
-			}],
-			help: tagName === "hr" ? (0, _wordpress_i18n.__)("Only select <hr> if the separator conveys important information and should be announced by screen readers.") : (0, _wordpress_i18n.__)("The <div> element should only be used if the block is a design element with no semantic meaning.")
+			value: selectedItem,
+			onValueChange: (item) => setAttributes({ tagName: item?.value ?? "hr" }),
+			items: HTML_ELEMENT_ITEMS,
+			description: tagName === "hr" ? (0, _wordpress_i18n.__)("Only select <hr> if the separator conveys important information and should be announced by screen readers.") : (0, _wordpress_i18n.__)("The <div> element should only be used if the block is a design element with no semantic meaning.")
 		});
 	};
 	function SeparatorEdit({ attributes, setAttributes }) {
@@ -81197,7 +84318,37 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/table-of-contents/edit.mjs
-/** @typedef {import('./utils').HeadingData} HeadingData */
+	const HEADING_LEVEL_ITEMS = [
+		{
+			value: "all",
+			label: (0, _wordpress_i18n.__)("All levels")
+		},
+		{
+			value: "1",
+			label: (0, _wordpress_i18n.__)("Heading 1")
+		},
+		{
+			value: "2",
+			label: (0, _wordpress_i18n.__)("Heading 2")
+		},
+		{
+			value: "3",
+			label: (0, _wordpress_i18n.__)("Heading 3")
+		},
+		{
+			value: "4",
+			label: (0, _wordpress_i18n.__)("Heading 4")
+		},
+		{
+			value: "5",
+			label: (0, _wordpress_i18n.__)("Heading 5")
+		},
+		{
+			value: "6",
+			label: (0, _wordpress_i18n.__)("Heading 6")
+		}
+	];
+	/** @typedef {import('./utils').HeadingData} HeadingData */
 	function TableOfContentsToolbar({ clientId, headingTree, ordered, setAttributes }) {
 		const canInsertList = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockRootClientId, canInsertBlockType } = select(_wordpress_block_editor.store);
@@ -81293,41 +84444,12 @@ Icon: ButtonIcon });
 				label: (0, _wordpress_i18n.__)("Limit heading levels"),
 				onDeselect: () => setAttributes({ maxLevel: void 0 }),
 				isShownByDefault: true,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$23, {
 					label: (0, _wordpress_i18n.__)("Include headings down to level"),
-					value: maxLevel || "",
-					options: [
-						{
-							value: "",
-							label: (0, _wordpress_i18n.__)("All levels")
-						},
-						{
-							value: "1",
-							label: (0, _wordpress_i18n.__)("Heading 1")
-						},
-						{
-							value: "2",
-							label: (0, _wordpress_i18n.__)("Heading 2")
-						},
-						{
-							value: "3",
-							label: (0, _wordpress_i18n.__)("Heading 3")
-						},
-						{
-							value: "4",
-							label: (0, _wordpress_i18n.__)("Heading 4")
-						},
-						{
-							value: "5",
-							label: (0, _wordpress_i18n.__)("Heading 5")
-						},
-						{
-							value: "6",
-							label: (0, _wordpress_i18n.__)("Heading 6")
-						}
-					],
-					onChange: (value) => setAttributes({ maxLevel: value ? parseInt(value) : void 0 }),
-					help: !maxLevel ? (0, _wordpress_i18n.__)("Including all heading levels in the table of contents.") : (0, _wordpress_i18n.__)("Only include headings up to and including this level.")
+					value: HEADING_LEVEL_ITEMS.find((item) => item.value === (maxLevel ? String(maxLevel) : "all")) ?? HEADING_LEVEL_ITEMS[0],
+					items: HEADING_LEVEL_ITEMS,
+					onValueChange: (item) => setAttributes({ maxLevel: item?.value && item.value !== "all" ? parseInt(item.value, 10) : void 0 }),
+					description: !maxLevel ? (0, _wordpress_i18n.__)("Including all heading levels in the table of contents.") : (0, _wordpress_i18n.__)("Only include headings up to and including this level.")
 				})
 			})]
 		}) });
