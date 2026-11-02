@@ -75954,7 +75954,10 @@ Icon: ButtonIcon });
 		parent: ["core/query-pagination"],
 		description: "Displays the next posts page link.",
 		textdomain: "default",
-		attributes: { "label": { "type": "string" } },
+		attributes: { "label": {
+			"type": "string",
+			"role": "content"
+		} },
 		usesContext: [
 			"queryId",
 			"query",
@@ -76168,7 +76171,10 @@ Icon: ButtonIcon });
 		parent: ["core/query-pagination"],
 		description: "Displays the previous posts page link.",
 		textdomain: "default",
-		attributes: { "label": { "type": "string" } },
+		attributes: { "label": {
+			"type": "string",
+			"role": "content"
+		} },
 		usesContext: [
 			"queryId",
 			"query",

@@ -7418,7 +7418,8 @@ return array(
 		'textdomain' => 'default',
 		'attributes' => array(
 			'label' => array(
-				'type' => 'string'
+				'type' => 'string',
+				'role' => 'content'
 			)
 		),
 		'usesContext' => array(
@@ -7547,7 +7548,8 @@ return array(
 		'textdomain' => 'default',
 		'attributes' => array(
 			'label' => array(
-				'type' => 'string'
+				'type' => 'string',
+				'role' => 'content'
 			)
 		),
 		'usesContext' => array(
