@@ -56420,7 +56420,7 @@ Icon: ButtonIcon });
 	* inline once the control has been touched (blurred at least once) or the
 	* enclosing form is submitted.
 	*/
-	const ValidatedInputControl$1 = (0, _wordpress_element.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+	const ValidatedInputControl = (0, _wordpress_element.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
 		const validityTargetRef = (0, _wordpress_element.useRef)(null);
 		const mergedRefs = (0, _wordpress_compose.useMergeRefs)([forwardedRef, validityTargetRef]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ControlWithError, {
@@ -83868,7 +83868,7 @@ If there's a particular need for this, please submit a feature request at https:
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 				direction: "column",
 				gap: "lg",
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl$1, {
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl, {
 					ref: inputControlRef,
 					required: !!isValid?.required,
 					customValidity: getCustomValidity(isValid, validity),
@@ -84459,7 +84459,7 @@ If there's a particular need for this, please submit a feature request at https:
 			setValue,
 			onChange
 		]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl$1, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl, {
 			required: !!isValid.required,
 			markWhenOptional,
 			customValidity: getCustomValidity(isValid, validity),
@@ -84706,7 +84706,7 @@ If there's a particular need for this, please submit a feature request at https:
 				direction: "row",
 				gap: "sm",
 				justify: "space-between",
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl$1, {
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl, {
 					type: "time",
 					label: (0, _wordpress_i18n.__)("From"),
 					value: from,
@@ -84716,7 +84716,7 @@ If there's a particular need for this, please submit a feature request at https:
 					step,
 					min,
 					max: to || max
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl$1, {
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl, {
 					type: "time",
 					label: (0, _wordpress_i18n.__)("To"),
 					value: to,
@@ -84769,7 +84769,7 @@ If there's a particular need for this, please submit a feature request at https:
 				max
 			});
 		}
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl$1, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl, {
 			required: !!isValid.required,
 			markWhenOptional,
 			customValidity: getCustomValidity(isValid, validity),
@@ -85010,7 +85010,7 @@ If there's a particular need for this, please submit a feature request at https:
 			onChange,
 			setValue
 		]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl$1, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidatedInputControl, {
 			required: !!field.isValid?.required,
 			markWhenOptional,
 			customValidity: getCustomValidity(isValid, validity),
@@ -104543,7 +104543,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/url-input/index.mjs
-	const { ValidatedInputControl } = unlock$2(_wordpress_components.privateApis);
+	const { ValidatedInputControl: WCValidatedInputControl } = unlock$2(_wordpress_components.privateApis);
 	const noop$3 = () => {};
 	/**
 	* Whether the argument is a function.
@@ -104755,7 +104755,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const [isValidated, setIsValidated] = (0, _wordpress_element.useState)(customValidity !== void 0);
 		if (customValidity !== void 0 && !isValidated) setIsValidated(true);
 		if (renderControl) return renderControl(controlProps, inputProps, isLoading);
-		const MaybeValidatedInputControl = isValidated ? ValidatedInputControl : _wordpress_components.__experimentalInputControl;
+		const MaybeValidatedInputControl = isValidated ? WCValidatedInputControl : _wordpress_components.__experimentalInputControl;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.BaseControl, {
 			...controlProps,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MaybeValidatedInputControl, {
