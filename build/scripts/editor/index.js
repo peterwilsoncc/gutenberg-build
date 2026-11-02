@@ -46331,7 +46331,7 @@ Icon: ButtonIcon });
 				dir: isRightToLeft ? "rtl" : "ltr",
 				...weekStartsOn === void 0 ? {} : { weekStartsOn },
 				formatters: {
-					formatDay: dayNumberFormatter.format,
+					formatDay: (date) => dayNumberFormatter.formatToParts(date).find((part) => part.type === "day")?.value ?? dayNumberFormatter.format(date),
 					formatWeekdayName: weekdayNarrowFormatter.format,
 					formatCaption: monthNameFormatter.format
 				},
