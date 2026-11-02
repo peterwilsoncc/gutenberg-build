@@ -118600,6 +118600,15 @@ If there's a particular need for this, please submit a feature request at https:
 			right: false
 		});
 		(0, _wordpress_element.useEffect)(() => {
+			if (isManualGrid) {
+				setEnableSide({
+					top: true,
+					bottom: true,
+					left: true,
+					right: true
+				});
+				return;
+			}
 			const observer = new window.ResizeObserver(() => {
 				const blockClientRect = blockElement.getBoundingClientRect();
 				const rootBlockClientRect = rootBlockElement.getBoundingClientRect();
@@ -118608,9 +118617,9 @@ If there's a particular need for this, please submit a feature request at https:
 				const leftAvailable = blockClientRect.left > rootBlockClientRect.left;
 				const rightAvailable = blockClientRect.right < rootBlockClientRect.right;
 				setEnableSide({
-					top: !!isManualGrid ? topAvailable : !bottomAvailable && topAvailable,
+					top: !bottomAvailable && topAvailable,
 					bottom: bottomAvailable,
-					left: !!isManualGrid ? leftAvailable : !rightAvailable && leftAvailable,
+					left: !rightAvailable && leftAvailable,
 					right: rightAvailable
 				});
 			});
