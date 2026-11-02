@@ -469,7 +469,7 @@
 	/**
 	* Initializes the Command Palette.
 	*
-	* @param {Object} settings Command palette settings.
+	* @param settings Command palette settings.
 	*/
 	function initializeCommandPalette(settings) {
 		const root = document.createElement("div");

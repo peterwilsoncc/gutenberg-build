@@ -946,14 +946,15 @@
 	const { lock, unlock } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/router");
 
 // packages/router/build-module/private-apis.mjs
-	const privateApis = {};
-	lock(privateApis, {
+	const lockedApis = {
 		useHistory,
 		useLocation,
 		RouterProvider,
 		useLink,
 		Link
-	});
+	};
+	const privateApis = {};
+	lock(privateApis, lockedApis);
 
 exports.privateApis = privateApis;
 Object.defineProperty(exports, '__esModule', { value: true });
