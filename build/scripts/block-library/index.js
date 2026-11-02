@@ -30084,7 +30084,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$23 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	const SelectControl$22 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 		warnSelectControlProps(items, restProps.itemToStringValue);
 		const triggerElement = useRender({
 			render: trigger ?? DEFAULT_TRIGGER,
@@ -30130,7 +30130,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$22 = Object.assign(SelectControl$23, {
+	const SelectControl$21 = Object.assign(SelectControl$22, {
 		/**
 		* The trigger button, passed through the `trigger` prop to customize
 		* its props while retaining the control's label and selected content.
@@ -30291,7 +30291,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => type !== "monthly",
 						onDeselect: () => setAttributes({ type: "monthly" }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$22, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$21, {
 							label: (0, _wordpress_i18n.__)("Group by"),
 							items: ARCHIVE_TYPE_ITEMS,
 							value: ARCHIVE_TYPE_ITEMS.find((item) => item.value === type) ?? ARCHIVE_TYPE_ITEMS[0],
@@ -54036,7 +54036,7 @@ Icon: ButtonIcon });
 						label: (0, _wordpress_i18n.__)("Display content"),
 						onDeselect: () => setAttributes({ displayContent: "excerpt" }),
 						isShownByDefault: true,
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$22, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$21, {
 							label: (0, _wordpress_i18n.__)("Display content"),
 							items: DISPLAY_CONTENT_ITEMS,
 							value: DISPLAY_CONTENT_ITEMS.find((item) => item.value === displayContent) ?? DISPLAY_CONTENT_ITEMS[0],
@@ -55171,7 +55171,7 @@ Icon: ButtonIcon });
 	];
 
 // packages/block-library/build-module/list/ordered-list-settings.mjs
-	const LIST_STYLE_OPTIONS = [
+	const LIST_STYLE_ITEMS = [
 		{
 			label: (0, _wordpress_i18n.__)("Numbers"),
 			value: "decimal"
@@ -55211,11 +55211,11 @@ Icon: ButtonIcon });
 					isShownByDefault: true,
 					hasValue: () => !!type,
 					onDeselect: () => setAttributes({ type: void 0 }),
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$21, {
 						label: (0, _wordpress_i18n.__)("List style"),
-						options: LIST_STYLE_OPTIONS,
-						value: type || "decimal",
-						onChange: (newValue) => setAttributes({ type: newValue })
+						items: LIST_STYLE_ITEMS,
+						value: LIST_STYLE_ITEMS.find((item) => item.value === type) ?? LIST_STYLE_ITEMS[0],
+						onValueChange: (item) => item && setAttributes({ type: item.value })
 					})
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
@@ -78731,7 +78731,7 @@ Icon: ButtonIcon });
 	}];
 	const HtmlElementControl = ({ tagName = "hr", setAttributes }) => {
 		const selectedItem = HTML_ELEMENT_ITEMS.find((item) => item.value === tagName) ?? HTML_ELEMENT_ITEMS[0];
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$22, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$21, {
 			label: (0, _wordpress_i18n.__)("HTML element"),
 			value: selectedItem,
 			onValueChange: (item) => setAttributes({ tagName: item?.value ?? "hr" }),
@@ -84446,7 +84446,7 @@ Icon: ButtonIcon });
 				label: (0, _wordpress_i18n.__)("Limit heading levels"),
 				onDeselect: () => setAttributes({ maxLevel: void 0 }),
 				isShownByDefault: true,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$22, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$21, {
 					label: (0, _wordpress_i18n.__)("Include headings down to level"),
 					value: HEADING_LEVEL_ITEMS.find((item) => item.value === (maxLevel ? String(maxLevel) : "all")) ?? HEADING_LEVEL_ITEMS[0],
 					items: HEADING_LEVEL_ITEMS,
