@@ -31564,7 +31564,11 @@ var useLocalizationProps = ({
       dir: isRightToLeft ? "rtl" : "ltr",
       ...weekStartsOn === void 0 ? {} : { weekStartsOn },
       formatters: {
-        formatDay: dayNumberFormatter.format,
+        // Some locales append a literal suffix to a standalone day,
+        // such as `日` in `ja` / `zh` or the trailing period in `cs`
+        // (`15.`), which doesn't belong in a calendar grid. Only keep
+        // the localized day number.
+        formatDay: (date) => dayNumberFormatter.formatToParts(date).find((part) => part.type === "day")?.value ?? dayNumberFormatter.format(date),
         formatWeekdayName: weekdayNarrowFormatter.format,
         formatCaption: monthNameFormatter.format
       },
