@@ -30084,7 +30084,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$19 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	const SelectControl$18 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 		warnSelectControlProps(items, restProps.itemToStringValue);
 		const triggerElement = useRender({
 			render: trigger ?? DEFAULT_TRIGGER,
@@ -30130,7 +30130,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$18 = Object.assign(SelectControl$19, {
+	const SelectControl$17 = Object.assign(SelectControl$18, {
 		/**
 		* The trigger button, passed through the `trigger` prop to customize
 		* its props while retaining the control's label and selected content.
@@ -30291,7 +30291,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => type !== "monthly",
 						onDeselect: () => setAttributes({ type: "monthly" }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 							label: (0, _wordpress_i18n.__)("Group by"),
 							items: ARCHIVE_TYPE_ITEMS,
 							value: ARCHIVE_TYPE_ITEMS.find((item) => item.value === type) ?? ARCHIVE_TYPE_ITEMS[0],
@@ -44524,7 +44524,7 @@ Icon: ButtonIcon });
 					isShownByDefault: true,
 					hasValue: () => textLinkHref !== href,
 					onDeselect: () => changeLinkDestinationOption(href),
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 						label: (0, _wordpress_i18n.__)("Link to"),
 						value: linkDestinationItems.find((item) => item.value === textLinkHref) ?? linkDestinationItems[0],
 						items: linkDestinationItems,
@@ -54042,7 +54042,7 @@ Icon: ButtonIcon });
 						label: (0, _wordpress_i18n.__)("Display content"),
 						onDeselect: () => setAttributes({ displayContent: "excerpt" }),
 						isShownByDefault: true,
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 							label: (0, _wordpress_i18n.__)("Display content"),
 							items: DISPLAY_CONTENT_ITEMS,
 							value: DISPLAY_CONTENT_ITEMS.find((item) => item.value === displayContent) ?? DISPLAY_CONTENT_ITEMS[0],
@@ -55217,7 +55217,7 @@ Icon: ButtonIcon });
 					isShownByDefault: true,
 					hasValue: () => !!type,
 					onDeselect: () => setAttributes({ type: void 0 }),
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 						label: (0, _wordpress_i18n.__)("List style"),
 						items: LIST_STYLE_ITEMS,
 						value: LIST_STYLE_ITEMS.find((item) => item.value === type) ?? LIST_STYLE_ITEMS[0],
@@ -67595,7 +67595,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => order !== "asc",
 						onDeselect: () => setAttributes({ order: "asc" }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 							label: (0, _wordpress_i18n.__)("Order"),
 							value: selectedOrderItem,
 							items: ORDER_ITEMS,
@@ -67635,7 +67635,7 @@ Icon: ButtonIcon });
 						hasValue: () => waveformStyle !== DEFAULT_WAVEFORM_STYLE,
 						onDeselect: () => onChangeWaveformStyle(DEFAULT_WAVEFORM_STYLE),
 						panelId: waveformPanelId,
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 							label: (0, _wordpress_i18n.__)("Shape"),
 							value: WAVEFORM_STYLE_ITEMS.find((item) => item.value === waveformStyle) ?? WAVEFORM_STYLE_ITEMS[0],
 							items: WAVEFORM_STYLE_ITEMS,
@@ -68350,7 +68350,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => avatarSize !== 48,
 						onDeselect: () => setAttributes({ avatarSize: 48 }),
-						children: avatarSizes.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+						children: avatarSizes.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 							label: (0, _wordpress_i18n.__)("Avatar size"),
 							value: avatarSizes.find((item) => item.value === String(avatarSize)) ?? avatarSizes[0],
 							items: avatarSizes,
@@ -78749,7 +78749,7 @@ Icon: ButtonIcon });
 	}];
 	const HtmlElementControl = ({ tagName = "hr", setAttributes }) => {
 		const selectedItem = HTML_ELEMENT_ITEMS.find((item) => item.value === tagName) ?? HTML_ELEMENT_ITEMS[0];
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 			label: (0, _wordpress_i18n.__)("HTML element"),
 			value: selectedItem,
 			onValueChange: (item) => setAttributes({ tagName: item?.value ?? "hr" }),
@@ -81176,10 +81176,10 @@ Icon: ButtonIcon });
 	}];
 
 // packages/block-library/build-module/social-links/edit.mjs
-	const sizeOptions = [
+	const sizeItems = [
 		{
 			label: (0, _wordpress_i18n.__)("Default"),
-			value: ""
+			value: null
 		},
 		{
 			label: (0, _wordpress_i18n.__)("Small"),
@@ -81285,13 +81285,11 @@ Icon: ButtonIcon });
 						hasValue: () => !!size,
 						label: (0, _wordpress_i18n.__)("Icon size"),
 						onDeselect: () => setAttributes({ size: void 0 }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 							label: (0, _wordpress_i18n.__)("Icon size"),
-							onChange: (newSize) => {
-								setAttributes({ size: newSize === "" ? void 0 : newSize });
-							},
-							value: size ?? "",
-							options: sizeOptions
+							onValueChange: (item) => item && setAttributes({ size: item.value ?? void 0 }),
+							value: sizeItems.find((item) => item.value === (size || null)) ?? sizeItems[0],
+							items: sizeItems
 						})
 					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
@@ -84464,7 +84462,7 @@ Icon: ButtonIcon });
 				label: (0, _wordpress_i18n.__)("Limit heading levels"),
 				onDeselect: () => setAttributes({ maxLevel: void 0 }),
 				isShownByDefault: true,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$18, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$17, {
 					label: (0, _wordpress_i18n.__)("Include headings down to level"),
 					value: HEADING_LEVEL_ITEMS.find((item) => item.value === (maxLevel ? String(maxLevel) : "all")) ?? HEADING_LEVEL_ITEMS[0],
 					items: HEADING_LEVEL_ITEMS,
