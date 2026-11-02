@@ -5703,195 +5703,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		}
 	};
 
-// packages/block-library/build-module/archives/edit.mjs
-	function ArchivesEdit({ attributes, setAttributes, name }) {
-		const { showLabel, showPostCounts, displayAsDropdown, type } = attributes;
-		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-		const { content, status, error } = (0, _wordpress_server_side_render.useServerSideRender)({
-			attributes,
-			skipBlockSupportAttributes: true,
-			block: name
-		});
-		const disabledRef = (0, _wordpress_compose.useDisabled)();
-		const blockProps = (0, _wordpress_block_editor.useBlockProps)({ ref: disabledRef });
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanel, {
-				label: (0, _wordpress_i18n.__)("Settings"),
-				resetAll: () => {
-					setAttributes({
-						displayAsDropdown: false,
-						showLabel: true,
-						showPostCounts: false,
-						type: "monthly"
-					});
-				},
-				dropdownMenuProps,
-				children: [
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-						label: (0, _wordpress_i18n.__)("Display as dropdown"),
-						isShownByDefault: true,
-						hasValue: () => displayAsDropdown,
-						onDeselect: () => setAttributes({ displayAsDropdown: false }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
-							label: (0, _wordpress_i18n.__)("Display as dropdown"),
-							checked: displayAsDropdown,
-							onChange: () => setAttributes({ displayAsDropdown: !displayAsDropdown })
-						})
-					}),
-					displayAsDropdown && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-						label: (0, _wordpress_i18n.__)("Show label"),
-						isShownByDefault: true,
-						hasValue: () => !showLabel,
-						onDeselect: () => setAttributes({ showLabel: true }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
-							label: (0, _wordpress_i18n.__)("Show label"),
-							checked: showLabel,
-							onChange: () => setAttributes({ showLabel: !showLabel })
-						})
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-						label: (0, _wordpress_i18n.__)("Show post counts"),
-						isShownByDefault: true,
-						hasValue: () => showPostCounts,
-						onDeselect: () => setAttributes({ showPostCounts: false }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
-							label: (0, _wordpress_i18n.__)("Show post counts"),
-							checked: showPostCounts,
-							onChange: () => setAttributes({ showPostCounts: !showPostCounts })
-						})
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-						label: (0, _wordpress_i18n.__)("Group by"),
-						isShownByDefault: true,
-						hasValue: () => type !== "monthly",
-						onDeselect: () => setAttributes({ type: "monthly" }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
-							label: (0, _wordpress_i18n.__)("Group by"),
-							options: [
-								{
-									label: (0, _wordpress_i18n.__)("Year"),
-									value: "yearly"
-								},
-								{
-									label: (0, _wordpress_i18n.__)("Month"),
-									value: "monthly"
-								},
-								{
-									label: (0, _wordpress_i18n.__)("Week"),
-									value: "weekly"
-								},
-								{
-									label: (0, _wordpress_i18n.__)("Day"),
-									value: "daily"
-								}
-							],
-							value: type,
-							onChange: (value) => setAttributes({ type: value })
-						})
-					})
-				]
-			}) }),
-			status === "loading" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
-			}),
-			status === "error" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error: %s"), error) })
-			}),
-			status === "success" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
-				wrapperProps: blockProps,
-				html: content
-			})
-		] });
-	}
-
-// packages/block-library/build-module/archives/index.mjs
-	var archives_exports = /* @__PURE__ */ __exportAll({
-		init: () => init$111,
-		metadata: () => block_default$111,
-		name: () => name$223,
-		settings: () => settings$111
-	}, 1);
-	const { name: name$223 } = block_default$111;
-	const settings$111 = {
-		icon: archive_default,
-		example: {},
-		edit: ArchivesEdit
-	};
-	const init$111 = () => initBlock({
-		name: name$223,
-		metadata: block_default$111,
-		settings: settings$111
-	});
-
-// packages/block-library/build-module/avatar/block.json
-	var block_default$110 = {
-		$schema: "https://schemas.wp.org/trunk/block.json",
-		apiVersion: 3,
-		name: "core/avatar",
-		title: "Avatar",
-		category: "theme",
-		description: "Add a user’s avatar.",
-		textdomain: "default",
-		attributes: {
-			"userId": { "type": "number" },
-			"size": {
-				"type": "number",
-				"default": 96
-			},
-			"isLink": {
-				"type": "boolean",
-				"default": false
-			},
-			"linkTarget": {
-				"type": "string",
-				"default": "_self"
-			}
-		},
-		usesContext: [
-			"postType",
-			"postId",
-			"commentId"
-		],
-		supports: {
-			"anchor": true,
-			"html": false,
-			"align": true,
-			"alignWide": false,
-			"spacing": {
-				"margin": true,
-				"padding": true,
-				"__experimentalDefaultControls": {
-					"margin": false,
-					"padding": false
-				}
-			},
-			"__experimentalBorder": {
-				"__experimentalSkipSerialization": true,
-				"radius": true,
-				"width": true,
-				"color": true,
-				"style": true,
-				"__experimentalDefaultControls": { "radius": true }
-			},
-			"color": {
-				"text": false,
-				"background": false
-			},
-			"filter": { "duotone": true },
-			"shadow": { "__experimentalSkipSerialization": true },
-			"interactivity": { "clientNavigation": true }
-		},
-		selectors: {
-			"border": ".wp-block-avatar img",
-			"shadow": ".wp-block-avatar img",
-			"filter": { "duotone": ".wp-block-avatar img" }
-		},
-		editorStyle: "wp-block-avatar-editor",
-		style: "wp-block-avatar"
-	};
-
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useRefWithInit.mjs
 	const UNINITIALIZED = {};
 	/**
@@ -11165,7 +10976,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	};
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
-	const selectors$23 = {
+	const selectors$24 = {
 		open: (state) => state.open,
 		transitionStatus: (state) => state.transitionStatus,
 		domReferenceElement: (state) => state.domReferenceElement,
@@ -11186,7 +10997,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				events: createEventEmitter(),
 				nested,
 				triggerElements
-			}, selectors$23);
+			}, selectors$24);
 			this.syncOnly = syncOnly;
 		}
 		/**
@@ -14271,7 +14082,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* Non-reactive values shared with the combobox parts. Nothing here is observable through
 	* `selectors`, so writing to a ref never notifies subscribers.
 	*/
-	const selectors$22 = {
+	const selectors$23 = {
 		id: (state) => state.id,
 		labelId: (state) => state.labelId,
 		items: (state) => state.items,
@@ -14903,7 +14714,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				valuesRef,
 				pointerDownItemRef,
 				selectionEventRef
-			}, selectors$22);
+			}, selectors$23);
 		}).current;
 		const fieldRawValue = selectionMode === "none" ? inputValue : selectedValue;
 		const fieldStringValue = react.useMemo(() => {
@@ -19239,7 +19050,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* Non-reactive values shared with the select parts. Nothing here is observable through
 	* `selectors`, so writing to a ref never notifies subscribers.
 	*/
-	const selectors$21 = {
+	const selectors$22 = {
 		id: (state) => state.id,
 		labelId: (state) => state.labelId,
 		modal: (state) => state.modal,
@@ -19389,7 +19200,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			selectedItemTextRef,
 			alignItemWithTriggerActiveRef,
 			initialValueRef
-		}, selectors$21)).current;
+		}, selectors$22)).current;
 		const [preventUnmountOnClose, setPreventUnmountOnClose] = react.useState(false);
 		const { mounted, transitionStatus, forceUnmount: handleUnmount } = useUnmountAfterClose({
 			open,
@@ -21425,7 +21236,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
-	const selectors$20 = {
+	const selectors$21 = {
 		...popupStoreSelectors,
 		disabled: (state) => state.disabled,
 		instantType: (state) => state.instantType,
@@ -21449,7 +21260,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	var TooltipStore = class extends ReactStore {
 		constructor(initialState, floatingId, nested) {
 			const triggerElements = new PopupTriggerMap();
-			super(createInitialState(initialState, triggerElements, floatingId, nested), createInitialContext(triggerElements), selectors$20);
+			super(createInitialState(initialState, triggerElements, floatingId, nested), createInitialContext(triggerElements), selectors$21);
 		}
 		setOpen = (nextOpen, eventDetails) => {
 			applyPopupOpenChange(this, nextOpen, eventDetails, { extraState: { openChangeReason: eventDetails.reason } });
@@ -22025,7 +21836,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	/**
 	* A component used to notify users that their action is being processed.
 	*/
-	const Spinner$31 = (0, _wordpress_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
+	const Spinner$32 = (0, _wordpress_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
 			className: clsx(style_module_default$25.spinner, className),
 			style: color === void 0 ? style : {
@@ -22202,7 +22013,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			focusableWhenDisabled,
 			disabled: disabled ?? loading,
 			...props,
-			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$31, { className: style_module_default$24.spinner })]
+			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$32, { className: style_module_default$24.spinner })]
 		});
 	});
 
@@ -25272,7 +25083,7 @@ Icon: ButtonIcon });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("p", {
 			id,
 			className: clsx(global_css_defense_module_default$5.p, style_module_default$8.indicator, style_module_default$8[`is-${type}`]),
-			children: [type === "validating" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$31, { className: style_module_default$8["indicator-spinner"] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
+			children: [type === "validating" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$32, { className: style_module_default$8["indicator-spinner"] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$1, {
 				className: style_module_default$8["indicator-icon"],
 				icon: ICON[type],
 				size: 16,
@@ -30399,6 +30210,196 @@ Icon: ButtonIcon });
 			})
 		});
 	});
+
+// packages/block-library/build-module/archives/edit.mjs
+	const ARCHIVE_TYPE_ITEMS = [
+		{
+			label: (0, _wordpress_i18n.__)("Year"),
+			value: "yearly"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Month"),
+			value: "monthly"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Week"),
+			value: "weekly"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Day"),
+			value: "daily"
+		}
+	];
+	function ArchivesEdit({ attributes, setAttributes, name }) {
+		const { showLabel, showPostCounts, displayAsDropdown, type } = attributes;
+		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+		const { content, status, error } = (0, _wordpress_server_side_render.useServerSideRender)({
+			attributes,
+			skipBlockSupportAttributes: true,
+			block: name
+		});
+		const disabledRef = (0, _wordpress_compose.useDisabled)();
+		const blockProps = (0, _wordpress_block_editor.useBlockProps)({ ref: disabledRef });
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanel, {
+				label: (0, _wordpress_i18n.__)("Settings"),
+				resetAll: () => {
+					setAttributes({
+						displayAsDropdown: false,
+						showLabel: true,
+						showPostCounts: false,
+						type: "monthly"
+					});
+				},
+				dropdownMenuProps,
+				children: [
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+						label: (0, _wordpress_i18n.__)("Display as dropdown"),
+						isShownByDefault: true,
+						hasValue: () => displayAsDropdown,
+						onDeselect: () => setAttributes({ displayAsDropdown: false }),
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
+							label: (0, _wordpress_i18n.__)("Display as dropdown"),
+							checked: displayAsDropdown,
+							onChange: () => setAttributes({ displayAsDropdown: !displayAsDropdown })
+						})
+					}),
+					displayAsDropdown && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+						label: (0, _wordpress_i18n.__)("Show label"),
+						isShownByDefault: true,
+						hasValue: () => !showLabel,
+						onDeselect: () => setAttributes({ showLabel: true }),
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
+							label: (0, _wordpress_i18n.__)("Show label"),
+							checked: showLabel,
+							onChange: () => setAttributes({ showLabel: !showLabel })
+						})
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+						label: (0, _wordpress_i18n.__)("Show post counts"),
+						isShownByDefault: true,
+						hasValue: () => showPostCounts,
+						onDeselect: () => setAttributes({ showPostCounts: false }),
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
+							label: (0, _wordpress_i18n.__)("Show post counts"),
+							checked: showPostCounts,
+							onChange: () => setAttributes({ showPostCounts: !showPostCounts })
+						})
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+						label: (0, _wordpress_i18n.__)("Group by"),
+						isShownByDefault: true,
+						hasValue: () => type !== "monthly",
+						onDeselect: () => setAttributes({ type: "monthly" }),
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$23, {
+							label: (0, _wordpress_i18n.__)("Group by"),
+							items: ARCHIVE_TYPE_ITEMS,
+							value: ARCHIVE_TYPE_ITEMS.find((item) => item.value === type) ?? ARCHIVE_TYPE_ITEMS[0],
+							onValueChange: (item) => item && setAttributes({ type: item.value })
+						})
+					})
+				]
+			}) }),
+			status === "loading" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				...blockProps,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
+			}),
+			status === "error" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				...blockProps,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error: %s"), error) })
+			}),
+			status === "success" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
+				wrapperProps: blockProps,
+				html: content
+			})
+		] });
+	}
+
+// packages/block-library/build-module/archives/index.mjs
+	var archives_exports = /* @__PURE__ */ __exportAll({
+		init: () => init$111,
+		metadata: () => block_default$111,
+		name: () => name$223,
+		settings: () => settings$111
+	}, 1);
+	const { name: name$223 } = block_default$111;
+	const settings$111 = {
+		icon: archive_default,
+		example: {},
+		edit: ArchivesEdit
+	};
+	const init$111 = () => initBlock({
+		name: name$223,
+		metadata: block_default$111,
+		settings: settings$111
+	});
+
+// packages/block-library/build-module/avatar/block.json
+	var block_default$110 = {
+		$schema: "https://schemas.wp.org/trunk/block.json",
+		apiVersion: 3,
+		name: "core/avatar",
+		title: "Avatar",
+		category: "theme",
+		description: "Add a user’s avatar.",
+		textdomain: "default",
+		attributes: {
+			"userId": { "type": "number" },
+			"size": {
+				"type": "number",
+				"default": 96
+			},
+			"isLink": {
+				"type": "boolean",
+				"default": false
+			},
+			"linkTarget": {
+				"type": "string",
+				"default": "_self"
+			}
+		},
+		usesContext: [
+			"postType",
+			"postId",
+			"commentId"
+		],
+		supports: {
+			"anchor": true,
+			"html": false,
+			"align": true,
+			"alignWide": false,
+			"spacing": {
+				"margin": true,
+				"padding": true,
+				"__experimentalDefaultControls": {
+					"margin": false,
+					"padding": false
+				}
+			},
+			"__experimentalBorder": {
+				"__experimentalSkipSerialization": true,
+				"radius": true,
+				"width": true,
+				"color": true,
+				"style": true,
+				"__experimentalDefaultControls": { "radius": true }
+			},
+			"color": {
+				"text": false,
+				"background": false
+			},
+			"filter": { "duotone": true },
+			"shadow": { "__experimentalSkipSerialization": true },
+			"interactivity": { "clientNavigation": true }
+		},
+		selectors: {
+			"border": ".wp-block-avatar img",
+			"shadow": ".wp-block-avatar img",
+			"filter": { "duotone": ".wp-block-avatar img" }
+		},
+		editorStyle: "wp-block-avatar-editor",
+		style: "wp-block-avatar"
+	};
 
 // packages/block-library/build-module/avatar/hooks.mjs
 	function getAvatarSizes(sizes) {
@@ -74283,7 +74284,7 @@ Icon: ButtonIcon });
 			direction: "row",
 			gap: "sm",
 			align: "center",
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$31, {}), (0, _wordpress_i18n.__)("Loading…")]
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$32, {}), (0, _wordpress_i18n.__)("Loading…")]
 		});
 		else if (isLimited) statusContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "block-library-query-inspector__taxonomy-control-limited-count",
