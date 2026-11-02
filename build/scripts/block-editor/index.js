@@ -108685,43 +108685,111 @@ If there's a particular need for this, please submit a feature request at https:
 		return warning?.message;
 	}
 
+// packages/block-editor/build-module/components/background-clip-control/background-clip-icon.mjs
+	const BOX_SIZE$1 = 24;
+	const ICON_SIZE = 20;
+	const STROKE_WIDTH$1 = 1.5;
+	const FILL_OPACITY = .4;
+	const FILL_INSETS = {
+		"border-box": 4,
+		"padding-box": 7,
+		"content-box": 10
+	};
+	const TEXT_STRIPES = [
+		7,
+		12,
+		17
+	];
+	/**
+	* Renders a box with the area that a `background-clip` value fills: the fill is
+	* the background, the dashed edge the border. Values without a preview, like
+	* 'default', get an empty icon, which keeps their label aligned with the others.
+	*
+	* @param props       Component props.
+	* @param props.value CSS `background-clip` value, e.g. 'padding-box'.
+	*/
+	function BackgroundClipIcon({ value }) {
+		const fillInset = FILL_INSETS[value];
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("svg", {
+			xmlns: "http://www.w3.org/2000/svg",
+			viewBox: `0 0 ${BOX_SIZE$1} ${BOX_SIZE$1}`,
+			width: ICON_SIZE,
+			height: ICON_SIZE,
+			fill: "none",
+			stroke: "currentColor",
+			strokeWidth: STROKE_WIDTH$1,
+			"aria-hidden": "true",
+			focusable: "false",
+			children: [fillInset !== void 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("rect", {
+				x: fillInset,
+				y: fillInset,
+				width: BOX_SIZE$1 - fillInset * 2,
+				height: BOX_SIZE$1 - fillInset * 2,
+				rx: "1",
+				fill: "currentColor",
+				fillOpacity: FILL_OPACITY,
+				stroke: "none"
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("rect", {
+				x: "4.75",
+				y: "4.75",
+				width: "14.5",
+				height: "14.5",
+				rx: "1.25",
+				strokeDasharray: "2.5 2"
+			})] }), value === "text" && TEXT_STRIPES.map((y) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("line", {
+				x1: "4",
+				x2: "20",
+				y1: y,
+				y2: y
+			}, y))]
+		});
+	}
+
 // packages/block-editor/build-module/components/background-clip-control/index.mjs
-	const BACKGROUND_CLIP_OPTIONS = [
+	const BACKGROUND_CLIP_ITEMS = [
 		{
-			key: "border-box",
-			name: (0, _wordpress_i18n.__)("Border box")
+			value: "border-box",
+			label: (0, _wordpress_i18n.__)("Border box")
 		},
 		{
-			key: "padding-box",
-			name: (0, _wordpress_i18n.__)("Padding box")
+			value: "padding-box",
+			label: (0, _wordpress_i18n.__)("Padding box")
 		},
 		{
-			key: "content-box",
-			name: (0, _wordpress_i18n.__)("Content box")
+			value: "content-box",
+			label: (0, _wordpress_i18n.__)("Content box")
 		},
 		{
-			key: "text",
-			name: (0, _wordpress_i18n.__)("Text")
+			value: "text",
+			label: (0, _wordpress_i18n.__)("Text")
 		}
 	];
+	const DEFAULT_ITEM = {
+		value: "default",
+		label: (0, _wordpress_i18n.__)("Default")
+	};
 	function BackgroundClipControl({ value, onChange, allowedValues }) {
-		const options = (allowedValues ? BACKGROUND_CLIP_OPTIONS.filter((option) => allowedValues.includes(option.key)) : BACKGROUND_CLIP_OPTIONS).map((option) => ({
-			...option,
-			className: `block-editor-background-clip-control__option is-${option.key}`
-		}));
-		if (!options.length) return null;
-		const defaultOption = {
-			key: "default",
-			name: (0, _wordpress_i18n.__)("Default"),
-			className: "block-editor-background-clip-control__option is-default"
-		};
-		const selectedOption = options.find((option) => option.key === value) ?? defaultOption;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.CustomSelectControl, {
+		const items = allowedValues ? BACKGROUND_CLIP_ITEMS.filter((item) => allowedValues.includes(item.value)) : BACKGROUND_CLIP_ITEMS;
+		if (!items.length) return null;
+		const visibleItems = [DEFAULT_ITEM, ...items];
+		const selectedItem = items.find((item) => item.value === value) ?? DEFAULT_ITEM;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
 			className: "block-editor-background-clip-control",
 			label: (0, _wordpress_i18n.__)("Clip"),
-			options: [defaultOption, ...options],
-			value: selectedOption,
-			onChange: ({ selectedItem }) => onChange(selectedItem?.key === defaultOption.key ? void 0 : selectedItem?.key)
+			items: visibleItems,
+			value: selectedItem,
+			onValueChange: (item) => {
+				if (!item || item.value === DEFAULT_ITEM.value || item.value === null) onChange(void 0);
+				else onChange(item.value);
+			},
+			children: visibleItems.map((item) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Item, {
+				value: item,
+				label: item.label,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.ItemLabel, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+					className: "block-editor-background-clip-control__option",
+					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BackgroundClipIcon, { value: item.value }), item.label]
+				}) })
+			}, item.value))
 		});
 	}
 

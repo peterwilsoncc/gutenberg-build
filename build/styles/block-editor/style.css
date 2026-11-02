@@ -138,37 +138,14 @@ body.admin-color-fresh {
   background-color: transparent !important;
 }
 
-.block-editor-background-clip-control__option::before {
-  content: "";
+.block-editor-background-clip-control__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.block-editor-background-clip-control__option svg {
   flex-shrink: 0;
-  align-self: center;
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-  border-radius: 2px;
-  box-sizing: border-box;
-  background-color: rgba(30, 30, 30, 0.55);
-  border: 3px dashed #ddd;
-  background-clip: border-box;
-}
-
-.block-editor-background-clip-control__option.is-default::before {
-  visibility: hidden;
-}
-
-.block-editor-background-clip-control__option.is-padding-box::before {
-  background-clip: padding-box;
-}
-
-.block-editor-background-clip-control__option.is-content-box::before {
-  padding: 3px;
-  background-clip: content-box;
-}
-
-.block-editor-background-clip-control__option.is-text::before {
-  border: none;
-  mask-image: repeating-linear-gradient(to bottom, #000 0 5px, transparent 5px 9px);
-  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0 5px, transparent 5px 9px);
 }
 
 .block-editor-global-styles-background-panel__inspector-media-replace-container {
