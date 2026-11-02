@@ -259,7 +259,7 @@
 		}, [records, search]);
 		return {
 			commands: (0, _wordpress_element.useMemo)(() => {
-				if (!canCreateTemplate || !isBlockBasedTheme && false) return [];
+				if (!canCreateTemplate || !isBlockBasedTheme && templateType !== "wp_template_part") return [];
 				const isSiteEditor = (0, _wordpress_url.getPath)(window.location.href)?.includes("site-editor.php");
 				const result = [];
 				result.push(...orderedRecords.map((record) => {
