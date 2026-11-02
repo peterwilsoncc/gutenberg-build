@@ -30084,7 +30084,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$24 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	const SelectControl$23 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 		warnSelectControlProps(items, restProps.itemToStringValue);
 		const triggerElement = useRender({
 			render: trigger ?? DEFAULT_TRIGGER,
@@ -30130,7 +30130,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$23 = Object.assign(SelectControl$24, {
+	const SelectControl$22 = Object.assign(SelectControl$23, {
 		/**
 		* The trigger button, passed through the `trigger` prop to customize
 		* its props while retaining the control's label and selected content.
@@ -30291,7 +30291,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => type !== "monthly",
 						onDeselect: () => setAttributes({ type: "monthly" }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$23, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$22, {
 							label: (0, _wordpress_i18n.__)("Group by"),
 							items: ARCHIVE_TYPE_ITEMS,
 							value: ARCHIVE_TYPE_ITEMS.find((item) => item.value === type) ?? ARCHIVE_TYPE_ITEMS[0],
@@ -53971,6 +53971,20 @@ Icon: ButtonIcon });
 	* @type {number}
 	*/
 	const MAX_COMMENTS = 100;
+	const DISPLAY_CONTENT_ITEMS = [
+		{
+			label: (0, _wordpress_i18n.__)("No content"),
+			value: "none"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Excerpt"),
+			value: "excerpt"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Full content"),
+			value: "full"
+		}
+	];
 	function LatestComments({ attributes, setAttributes, name }) {
 		const { commentsToShow, displayAvatar, displayDate, displayContent } = attributes;
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -54022,24 +54036,11 @@ Icon: ButtonIcon });
 						label: (0, _wordpress_i18n.__)("Display content"),
 						onDeselect: () => setAttributes({ displayContent: "excerpt" }),
 						isShownByDefault: true,
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$22, {
 							label: (0, _wordpress_i18n.__)("Display content"),
-							value: displayContent,
-							options: [
-								{
-									label: (0, _wordpress_i18n.__)("No content"),
-									value: "none"
-								},
-								{
-									label: (0, _wordpress_i18n.__)("Excerpt"),
-									value: "excerpt"
-								},
-								{
-									label: (0, _wordpress_i18n.__)("Full content"),
-									value: "full"
-								}
-							],
-							onChange: (value) => setAttributes({ displayContent: value })
+							items: DISPLAY_CONTENT_ITEMS,
+							value: DISPLAY_CONTENT_ITEMS.find((item) => item.value === displayContent) ?? DISPLAY_CONTENT_ITEMS[0],
+							onValueChange: (item) => item && setAttributes({ displayContent: item.value })
 						})
 					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
@@ -78730,7 +78731,7 @@ Icon: ButtonIcon });
 	}];
 	const HtmlElementControl = ({ tagName = "hr", setAttributes }) => {
 		const selectedItem = HTML_ELEMENT_ITEMS.find((item) => item.value === tagName) ?? HTML_ELEMENT_ITEMS[0];
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$23, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$22, {
 			label: (0, _wordpress_i18n.__)("HTML element"),
 			value: selectedItem,
 			onValueChange: (item) => setAttributes({ tagName: item?.value ?? "hr" }),
@@ -84445,7 +84446,7 @@ Icon: ButtonIcon });
 				label: (0, _wordpress_i18n.__)("Limit heading levels"),
 				onDeselect: () => setAttributes({ maxLevel: void 0 }),
 				isShownByDefault: true,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$23, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$22, {
 					label: (0, _wordpress_i18n.__)("Include headings down to level"),
 					value: HEADING_LEVEL_ITEMS.find((item) => item.value === (maxLevel ? String(maxLevel) : "all")) ?? HEADING_LEVEL_ITEMS[0],
 					items: HEADING_LEVEL_ITEMS,
