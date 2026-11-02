@@ -38144,7 +38144,10 @@ Icon: ButtonIcon });
 		parent: ["core/comments-pagination"],
 		description: "Displays the previous comment's page link.",
 		textdomain: "default",
-		attributes: { "label": { "type": "string" } },
+		attributes: { "label": {
+			"type": "string",
+			"role": "content"
+		} },
 		usesContext: ["postId", "comments/paginationArrow"],
 		supports: {
 			"anchor": true,
@@ -38403,7 +38406,10 @@ Icon: ButtonIcon });
 		parent: ["core/comments-pagination"],
 		description: "Displays the next comment's page link.",
 		textdomain: "default",
-		attributes: { "label": { "type": "string" } },
+		attributes: { "label": {
+			"type": "string",
+			"role": "content"
+		} },
 		usesContext: ["postId", "comments/paginationArrow"],
 		supports: {
 			"anchor": true,
