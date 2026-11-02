@@ -170,7 +170,7 @@ function gutenberg_guidelines_wp_admin_enqueue_scripts( $hook_suffix ) {
 		// This script serves two purposes:
 		// 1. It ensures all the globals that are made available to the modules are loaded.
 		// 2. It initializes the boot module as an inline script.
-		wp_register_script( 'guidelines-wp-admin-prerequisites', '', $asset['dependencies'], $asset['version'], true );
+		wp_register_script( 'guidelines-wp-admin-prerequisites', false, $asset['dependencies'], $asset['version'], true );
 
 		$init_modules = [];
 

@@ -164,7 +164,7 @@ function gutenberg_options_connectors_render_page() {
 		// This script serves two purposes:
 		// 1. It ensures all the globals that are made available to the modules are loaded.
 		// 2. It initializes the boot module as an inline script.
-		wp_register_script( 'options-connectors-prerequisites', '', $asset['dependencies'], $asset['version'], true );
+		wp_register_script( 'options-connectors-prerequisites', false, $asset['dependencies'], $asset['version'], true );
 
 		// Add inline script to initialize the app
 		$init_modules = [];

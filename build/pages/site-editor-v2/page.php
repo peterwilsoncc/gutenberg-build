@@ -164,7 +164,7 @@ function gutenberg_site_editor_v2_render_page() {
 		// This script serves two purposes:
 		// 1. It ensures all the globals that are made available to the modules are loaded.
 		// 2. It initializes the boot module as an inline script.
-		wp_register_script( 'site-editor-v2-prerequisites', '', $asset['dependencies'], $asset['version'], true );
+		wp_register_script( 'site-editor-v2-prerequisites', false, $asset['dependencies'], $asset['version'], true );
 
 		// Add inline script to initialize the app
 		$init_modules = ["@wordpress/edit-site-init"];
