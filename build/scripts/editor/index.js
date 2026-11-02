@@ -21707,7 +21707,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	*
 	* Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 	*/
-	const Button$91 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
+	const Button$90 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
 		const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 		const { getButtonProps, buttonRef } = useButton({
 			disabled,
@@ -21720,7 +21720,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 			props: [elementProps, getButtonProps]
 		});
 	});
-	Button$91.displayName = "Button";
+	Button$90.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -29478,12 +29478,12 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$90 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
+	const Button$89 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
 		const mergedClassName = clsx(global_css_defense_module_default$18.button, resets_module_default$23["box-sizing"], focus_module_default$9["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$56.button, style_module_default$56[`is-${tone}`], style_module_default$56[`is-${variant}`], style_module_default$56[`is-${size}`], loading && style_module_default$56["is-loading"], className);
 		(0, _wordpress_element.useEffect)(() => {
 			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
 		}, [loading, loadingAnnouncement]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$91, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$90, {
 			ref,
 			className: mergedClassName,
 			focusableWhenDisabled,
@@ -29628,7 +29628,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$89 = Object.assign(Button$90, { 
+	const Button$88 = Object.assign(Button$89, { 
 	/**
 	* An icon component specifically designed to work well when rendered inside
 	* a `Button` component.
@@ -34654,7 +34654,7 @@ Icon: ButtonIcon });
 			ref,
 			...targetProps,
 			disabled: disabled && !focusableWhenDisabled,
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
 				...restProps,
 				size,
 				"aria-label": label,
@@ -35389,7 +35389,7 @@ Icon: ButtonIcon });
 			loading,
 			loadingAnnouncement: loadingAnnouncement ?? ""
 		} : {};
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
 			...props,
 			...loadingProps,
 			ref,
@@ -68284,18 +68284,14 @@ Icon: ButtonIcon });
 	}
 	function ActionTrigger({ action, onClick, isBusy, items }) {
 		const label = getActionLabel(action, items);
-		const isMobile = (0, _wordpress_compose.useViewportMatch)("medium", "<");
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-			variant: "secondary",
-			className: "dataviews-bulk-actions__action",
-			disabled: !!action.disabled || isBusy,
-			accessibleWhenDisabled: true,
-			label: isMobile ? label : void 0,
-			icon: isMobile ? action.icon : void 0,
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
+			variant: "outline",
+			tone: "neutral",
 			size: "compact",
+			disabled: !!action.disabled || isBusy,
+			loading: isBusy,
 			onClick,
-			isBusy,
-			children: !isMobile && label
+			children: label
 		});
 	}
 	const EMPTY_ARRAY$12 = [];
@@ -68318,15 +68314,15 @@ Icon: ButtonIcon });
 		});
 	}
 	function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, onAction, onChangeSelection, totalItems, isMobile, selectionCheckboxRef) {
-		const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+		const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
 			className: "dataviews-bulk-actions__clear",
-			icon: close_small_default,
-			showTooltip: true,
-			tooltipPosition: "top",
+			variant: "minimal",
+			tone: "neutral",
 			size: "compact",
+			icon: close_small_default,
 			label: (0, _wordpress_i18n.__)("Cancel"),
 			disabled: !!actionInProgress,
-			accessibleWhenDisabled: false,
+			focusableWhenDisabled: false,
 			onClick: () => onChangeSelection(EMPTY_ARRAY$12)
 		});
 		const renderActions = (isMenuItem = false) => actionsToShow.map((action) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionButton, {
@@ -68368,19 +68364,17 @@ Icon: ButtonIcon });
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
 					direction: "row",
+					className: "dataviews-bulk-actions__actions",
 					gap: "md",
 					justify: "start",
 					children: isMobile ? actionsToShow.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$6, {
 						disabled: !!actionInProgress,
-						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-							variant: "secondary",
+						render: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$88, {
+							variant: "outline",
+							tone: "neutral",
 							size: "compact",
-							icon: chevron_down_default,
-							iconPosition: "right",
-							className: "dataviews-bulk-actions__action",
-							isBusy: !!actionInProgress,
-							accessibleWhenDisabled: true,
-							children: (0, _wordpress_i18n.__)("Actions")
+							loading: !!actionInProgress,
+							children: [(0, _wordpress_i18n.__)("Actions"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88.Icon, { icon: chevron_down_default })]
 						})
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$3, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Group$2, { children: renderActions(true) }) })] }) : renderActions()
 				}),
@@ -112878,7 +112872,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const emojiLabel = emoji?.label ?? hexKey;
 		const label = names?.length === count ? formatReactorNames(names, emoji?.sentenceLabel ?? hexKey) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%1$s, %2$s reaction", "%1$s, %2$s reactions", count), emojiLabel, count.toLocaleString());
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$11, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Trigger$5, {
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
 				size: "small",
 				variant: isActive ? "outline" : "minimal",
 				tone: isActive ? "brand" : "neutral",
@@ -112941,7 +112935,7 @@ If there's a particular need for this, please submit a feature request at https:
 								label,
 								"aria-label": label,
 								className: "editor-collab-sidebar-panel__reaction-option",
-								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
+								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
 									variant: "minimal",
 									tone: "neutral"
 								})
@@ -113129,7 +113123,7 @@ If there's a particular need for this, please submit a feature request at https:
 					confirmButtonText: (0, _wordpress_i18n.__)("Delete"),
 					children: deleteConfirmMessage
 				}),
-				isOverflowing && "edit" !== actionState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$89, {
+				isOverflowing && "edit" !== actionState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$88, {
 					className: "editor-collab-sidebar-panel__show-more-button",
 					variant: "unstyled",
 					size: "small",

@@ -9577,7 +9577,7 @@ function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, refer
 *
 * Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 */
-const Button$18 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Button(componentProps, forwardedRef) {
+const Button$17 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Button(componentProps, forwardedRef) {
 	const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 	const { getButtonProps, buttonRef } = useButton({
 		disabled,
@@ -9590,7 +9590,7 @@ const Button$18 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Butt
 		props: [elementProps, getButtonProps]
 	});
 });
-Button$18.displayName = "Button";
+Button$17.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -15836,12 +15836,12 @@ var global_css_defense_module_default$13 = {
 * See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 * for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
-const Button$17 = (0, import_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, import_i18n.__)("Loading"), children, ...props }, ref) {
+const Button$16 = (0, import_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, import_i18n.__)("Loading"), children, ...props }, ref) {
 	const mergedClassName = clsx(global_css_defense_module_default$13.button, resets_module_default$14["box-sizing"], focus_module_default$6["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$45.button, style_module_default$45[`is-${tone}`], style_module_default$45[`is-${variant}`], style_module_default$45[`is-${size}`], loading && style_module_default$45["is-loading"], className);
 	(0, import_element.useEffect)(() => {
 		if (loading && loadingAnnouncement) speak(loadingAnnouncement);
 	}, [loading, loadingAnnouncement]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$18, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$17, {
 		ref,
 		className: mergedClassName,
 		focusableWhenDisabled,
@@ -15986,7 +15986,7 @@ ButtonIcon.displayName = "Button.Icon";
 * See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 * for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
-const Button$16 = Object.assign(Button$17, { 
+const Button$15 = Object.assign(Button$16, { 
 /**
 * An icon component specifically designed to work well when rendered inside
 * a `Button` component.
@@ -20973,7 +20973,7 @@ const IconButton = (0, import_element.forwardRef)(function UnforwardedIconButton
 		ref,
 		...targetProps,
 		disabled: disabled && !focusableWhenDisabled,
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$16, {
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$15, {
 			...restProps,
 			size,
 			"aria-label": label,
@@ -35408,18 +35408,14 @@ function BulkSelectionCheckbox({ selection, onChangeSelection, data, actions, ge
 }
 function ActionTrigger({ action, onClick, isBusy, items }) {
 	const label = getActionLabel(action, items);
-	const isMobile = (0, import_compose.useViewportMatch)("medium", "<");
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-		variant: "secondary",
-		className: "dataviews-bulk-actions__action",
-		disabled: !!action.disabled || isBusy,
-		accessibleWhenDisabled: true,
-		label: isMobile ? label : void 0,
-		icon: isMobile ? action.icon : void 0,
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$15, {
+		variant: "outline",
+		tone: "neutral",
 		size: "compact",
+		disabled: !!action.disabled || isBusy,
+		loading: isBusy,
 		onClick,
-		isBusy,
-		children: !isMobile && label
+		children: label
 	});
 }
 const EMPTY_ARRAY$4 = [];
@@ -35442,15 +35438,15 @@ function ActionButton({ action, selectedItems, actionInProgress, onAction, isMen
 	});
 }
 function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, onAction, onChangeSelection, totalItems, isMobile, selectionCheckboxRef) {
-	const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
+	const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(IconButton, {
 		className: "dataviews-bulk-actions__clear",
-		icon: close_small_default,
-		showTooltip: true,
-		tooltipPosition: "top",
+		variant: "minimal",
+		tone: "neutral",
 		size: "compact",
+		icon: close_small_default,
 		label: (0, import_i18n.__)("Cancel"),
 		disabled: !!actionInProgress,
-		accessibleWhenDisabled: false,
+		focusableWhenDisabled: false,
 		onClick: () => onChangeSelection(EMPTY_ARRAY$4)
 	});
 	const renderActions = (isMenuItem = false) => actionsToShow.map((action) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionButton, {
@@ -35492,19 +35488,17 @@ function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, se
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
 				direction: "row",
+				className: "dataviews-bulk-actions__actions",
 				gap: "md",
 				justify: "start",
 				children: isMobile ? actionsToShow.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$9, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$3, {
 					disabled: !!actionInProgress,
-					render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-						variant: "secondary",
+					render: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$15, {
+						variant: "outline",
+						tone: "neutral",
 						size: "compact",
-						icon: chevron_down_default,
-						iconPosition: "right",
-						className: "dataviews-bulk-actions__action",
-						isBusy: !!actionInProgress,
-						accessibleWhenDisabled: true,
-						children: (0, import_i18n.__)("Actions")
+						loading: !!actionInProgress,
+						children: [(0, import_i18n.__)("Actions"), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$15.Icon, { icon: chevron_down_default })]
 					})
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$2, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Group, { children: renderActions(true) }) })] }) : renderActions()
 			}),
@@ -52009,7 +52003,7 @@ function SavedPost({ postId, postTitle, onWriteAnother }) {
 				href: editUrl,
 				openInNewTab: true,
 				children: (0, import_i18n.__)("Continue editing")
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$16, {
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$15, {
 				variant: "minimal",
 				size: "compact",
 				onClick: onWriteAnother,
@@ -52221,16 +52215,16 @@ function QuickDraft() {
 			direction: "row",
 			gap: "md",
 			justify: "flex-start",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$16, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$15, {
 				variant: "solid",
 				onClick: saveDraftPost,
 				loading: isSaving,
 				disabled: !canSave,
 				children: (0, import_i18n.__)("Save as draft")
-			}), !showDraftsList && hasDrafts && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$16, {
+			}), !showDraftsList && hasDrafts && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$15, {
 				variant: "minimal",
 				onClick: () => setIsListOpenInCompact(true),
-				children: [(0, import_i18n.__)("Draft posts"), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$16.Icon, { icon: chevron_right_default })]
+				children: [(0, import_i18n.__)("Draft posts"), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$15.Icon, { icon: chevron_right_default })]
 			})]
 		})]
 	});
@@ -52246,12 +52240,12 @@ function QuickDraft() {
 			direction: "row",
 			justify: "flex-start",
 			className: style_module_default["back-row"],
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$16, {
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$15, {
 				variant: "minimal",
 				tone: "neutral",
 				size: "compact",
 				onClick: () => setIsListOpenInCompact(false),
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$16.Icon, { icon: chevron_left_default }), (0, import_i18n.__)("Back")]
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$15.Icon, { icon: chevron_left_default }), (0, import_i18n.__)("Back")]
 			})
 		})]
 	});

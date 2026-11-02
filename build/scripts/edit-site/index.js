@@ -10422,7 +10422,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	*
 	* Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 	*/
-	const Button$45 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
+	const Button$44 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
 		const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 		const { getButtonProps, buttonRef } = useButton({
 			disabled,
@@ -10435,7 +10435,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 			props: [elementProps, getButtonProps]
 		});
 	});
-	Button$45.displayName = "Button";
+	Button$44.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -16857,12 +16857,12 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$44 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
+	const Button$43 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
 		const mergedClassName = clsx(global_css_defense_module_default$13.button, resets_module_default$18["box-sizing"], focus_module_default$6["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$44.button, style_module_default$44[`is-${tone}`], style_module_default$44[`is-${variant}`], style_module_default$44[`is-${size}`], loading && style_module_default$44["is-loading"], className);
 		(0, _wordpress_element.useEffect)(() => {
 			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
 		}, [loading, loadingAnnouncement]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$45, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$44, {
 			ref,
 			className: mergedClassName,
 			focusableWhenDisabled,
@@ -17007,7 +17007,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$43 = Object.assign(Button$44, { 
+	const Button$42 = Object.assign(Button$43, { 
 	/**
 	* An icon component specifically designed to work well when rendered inside
 	* a `Button` component.
@@ -22580,7 +22580,7 @@ Icon: ButtonIcon });
 			ref,
 			...targetProps,
 			disabled: disabled && !focusableWhenDisabled,
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$43, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$42, {
 				...restProps,
 				size,
 				"aria-label": label,
@@ -44954,18 +44954,14 @@ Icon: ButtonIcon });
 	}
 	function ActionTrigger({ action, onClick, isBusy, items }) {
 		const label = getActionLabel(action, items);
-		const isMobile = (0, _wordpress_compose.useViewportMatch)("medium", "<");
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-			variant: "secondary",
-			className: "dataviews-bulk-actions__action",
-			disabled: !!action.disabled || isBusy,
-			accessibleWhenDisabled: true,
-			label: isMobile ? label : void 0,
-			icon: isMobile ? action.icon : void 0,
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$42, {
+			variant: "outline",
+			tone: "neutral",
 			size: "compact",
+			disabled: !!action.disabled || isBusy,
+			loading: isBusy,
 			onClick,
-			isBusy,
-			children: !isMobile && label
+			children: label
 		});
 	}
 	const EMPTY_ARRAY$10 = [];
@@ -44988,15 +44984,15 @@ Icon: ButtonIcon });
 		});
 	}
 	function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, onAction, onChangeSelection, totalItems, isMobile, selectionCheckboxRef) {
-		const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+		const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
 			className: "dataviews-bulk-actions__clear",
-			icon: close_small_default,
-			showTooltip: true,
-			tooltipPosition: "top",
+			variant: "minimal",
+			tone: "neutral",
 			size: "compact",
+			icon: close_small_default,
 			label: (0, _wordpress_i18n.__)("Cancel"),
 			disabled: !!actionInProgress,
-			accessibleWhenDisabled: false,
+			focusableWhenDisabled: false,
 			onClick: () => onChangeSelection(EMPTY_ARRAY$10)
 		});
 		const renderActions = (isMenuItem = false) => actionsToShow.map((action) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionButton, {
@@ -45038,19 +45034,17 @@ Icon: ButtonIcon });
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
 					direction: "row",
+					className: "dataviews-bulk-actions__actions",
 					gap: "md",
 					justify: "start",
 					children: isMobile ? actionsToShow.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$9, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$3, {
 						disabled: !!actionInProgress,
-						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-							variant: "secondary",
+						render: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$42, {
+							variant: "outline",
+							tone: "neutral",
 							size: "compact",
-							icon: chevron_down_default,
-							iconPosition: "right",
-							className: "dataviews-bulk-actions__action",
-							isBusy: !!actionInProgress,
-							accessibleWhenDisabled: true,
-							children: (0, _wordpress_i18n.__)("Actions")
+							loading: !!actionInProgress,
+							children: [(0, _wordpress_i18n.__)("Actions"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$42.Icon, { icon: chevron_down_default })]
 						})
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Group, { children: renderActions(true) }) })] }) : renderActions()
 				}),

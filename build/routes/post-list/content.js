@@ -9957,7 +9957,7 @@ function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, refer
 *
 * Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 */
-const Button$20 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Button(componentProps, forwardedRef) {
+const Button$19 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Button(componentProps, forwardedRef) {
 	const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 	const { getButtonProps, buttonRef } = useButton({
 		disabled,
@@ -9970,7 +9970,7 @@ const Button$20 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Butt
 		props: [elementProps, getButtonProps]
 	});
 });
-Button$20.displayName = "Button";
+Button$19.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -16216,12 +16216,12 @@ var global_css_defense_module_default$13 = {
 * See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 * for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
-const Button$19 = (0, import_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, import_i18n.__)("Loading"), children, ...props }, ref) {
+const Button$18 = (0, import_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, import_i18n.__)("Loading"), children, ...props }, ref) {
 	const mergedClassName = clsx(global_css_defense_module_default$13.button, resets_module_default$14["box-sizing"], focus_module_default$6["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$40.button, style_module_default$40[`is-${tone}`], style_module_default$40[`is-${variant}`], style_module_default$40[`is-${size}`], loading && style_module_default$40["is-loading"], className);
 	(0, import_element.useEffect)(() => {
 		if (loading && loadingAnnouncement) speak(loadingAnnouncement);
 	}, [loading, loadingAnnouncement]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$20, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$19, {
 		ref,
 		className: mergedClassName,
 		focusableWhenDisabled,
@@ -16366,7 +16366,7 @@ ButtonIcon.displayName = "Button.Icon";
 * See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 * for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
-const Button$18 = Object.assign(Button$19, { 
+const Button$17 = Object.assign(Button$18, { 
 /**
 * An icon component specifically designed to work well when rendered inside
 * a `Button` component.
@@ -21318,7 +21318,7 @@ const IconButton = (0, import_element.forwardRef)(function UnforwardedIconButton
 		ref,
 		...targetProps,
 		disabled: disabled && !focusableWhenDisabled,
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$18, {
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$17, {
 			...restProps,
 			size,
 			"aria-label": label,
@@ -34841,18 +34841,14 @@ function BulkSelectionCheckbox({ selection, onChangeSelection, data, actions, ge
 }
 function ActionTrigger({ action, onClick, isBusy, items }) {
 	const label = getActionLabel(action, items);
-	const isMobile = (0, import_compose.useViewportMatch)("medium", "<");
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-		variant: "secondary",
-		className: "dataviews-bulk-actions__action",
-		disabled: !!action.disabled || isBusy,
-		accessibleWhenDisabled: true,
-		label: isMobile ? label : void 0,
-		icon: isMobile ? action.icon : void 0,
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$17, {
+		variant: "outline",
+		tone: "neutral",
 		size: "compact",
+		disabled: !!action.disabled || isBusy,
+		loading: isBusy,
 		onClick,
-		isBusy,
-		children: !isMobile && label
+		children: label
 	});
 }
 const EMPTY_ARRAY$4 = [];
@@ -34875,15 +34871,15 @@ function ActionButton({ action, selectedItems, actionInProgress, onAction, isMen
 	});
 }
 function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, onAction, onChangeSelection, totalItems, isMobile, selectionCheckboxRef) {
-	const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
+	const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(IconButton, {
 		className: "dataviews-bulk-actions__clear",
-		icon: close_small_default,
-		showTooltip: true,
-		tooltipPosition: "top",
+		variant: "minimal",
+		tone: "neutral",
 		size: "compact",
+		icon: close_small_default,
 		label: (0, import_i18n.__)("Cancel"),
 		disabled: !!actionInProgress,
-		accessibleWhenDisabled: false,
+		focusableWhenDisabled: false,
 		onClick: () => onChangeSelection(EMPTY_ARRAY$4)
 	});
 	const renderActions = (isMenuItem = false) => actionsToShow.map((action) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionButton, {
@@ -34925,19 +34921,17 @@ function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, se
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
 				direction: "row",
+				className: "dataviews-bulk-actions__actions",
 				gap: "md",
 				justify: "start",
 				children: isMobile ? actionsToShow.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$8, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$3, {
 					disabled: !!actionInProgress,
-					render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-						variant: "secondary",
+					render: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$17, {
+						variant: "outline",
+						tone: "neutral",
 						size: "compact",
-						icon: chevron_down_default,
-						iconPosition: "right",
-						className: "dataviews-bulk-actions__action",
-						isBusy: !!actionInProgress,
-						accessibleWhenDisabled: true,
-						children: (0, import_i18n.__)("Actions")
+						loading: !!actionInProgress,
+						children: [(0, import_i18n.__)("Actions"), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$17.Icon, { icon: chevron_down_default })]
 					})
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$2, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Group, { children: renderActions(true) }) })] }) : renderActions()
 			}),
