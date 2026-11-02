@@ -100315,7 +100315,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return context;
 	}
 	function HeaderActions({ showCloseButton = false }) {
-		const { isImage, isSaving, onCancel, isWide, activePanel, onTogglePanel, canRestoreOriginal, isSourceReplaced, onRestoreOriginal } = useMediaEditorFrameContext();
+		const { isImage, isSaving, onCancel, isWide, activePanel, onTogglePanel } = useMediaEditorFrameContext();
 		const isPanelOpen = !!activePanel;
 		const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, _wordpress_element.useState)(false);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
@@ -100336,17 +100336,7 @@ If there's a particular need for this, please submit a feature request at https:
 					icon: more_vertical_default,
 					label: (0, _wordpress_i18n.__)("More options"),
 					toggleProps: { size: "compact" },
-					children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [canRestoreOriginal && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
-						icon: backup_default,
-						iconPosition: "left",
-						disabled: isSourceReplaced || isSaving,
-						info: (0, _wordpress_i18n.__)("Discards unsaved changes and loads the original image."),
-						onClick: () => {
-							onRestoreOriginal();
-							closeMenu();
-						},
-						children: (0, _wordpress_i18n.__)("Restore original image")
-					}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
+					children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
 						icon: keyboard_default,
 						iconPosition: "left",
 						onClick: () => {
@@ -100354,7 +100344,7 @@ If there's a particular need for this, please submit a feature request at https:
 							closeMenu();
 						},
 						children: (0, _wordpress_i18n.__)("Keyboard shortcuts")
-					}) })] })
+					}) })
 				}),
 				showCloseButton && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 					size: "compact",
@@ -100369,7 +100359,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 	function HistoryActions() {
-		const { isImage, isUndoRedoDisabled, isWide, activePanel } = useMediaEditorFrameContext();
+		const { isImage, isSaving, isUndoRedoDisabled, isWide, activePanel, canRestoreOriginal, isSourceReplaced, onRestoreOriginal } = useMediaEditorFrameContext();
 		const { reset, isDirty, hasUndo, hasRedo, undo: undoCrop, redo: redoCrop } = useMediaEditor();
 		if (!isImage || !isWide && !!activePanel) return null;
 		const handleUndo = () => {
@@ -100391,14 +100381,6 @@ If there's a particular need for this, please submit a feature request at https:
 			children: [
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 					size: "compact",
-					variant: "tertiary",
-					disabled: isUndoRedoDisabled || !isDirty,
-					accessibleWhenDisabled: true,
-					onClick: handleReset,
-					children: (0, _wordpress_i18n.__)("Reset")
-				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-					size: "compact",
 					icon: undo_default$1,
 					label: (0, _wordpress_i18n.__)("Undo"),
 					showTooltip: true,
@@ -100416,6 +100398,32 @@ If there's a particular need for this, please submit a feature request at https:
 					disabled: isUndoRedoDisabled || !hasRedo,
 					accessibleWhenDisabled: true,
 					onClick: handleRedo
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
+					icon: backup_default,
+					label: (0, _wordpress_i18n.__)("History"),
+					popoverProps: { placement: "top-start" },
+					toggleProps: {
+						size: "compact",
+						disabled: isUndoRedoDisabled || !isDirty && !canRestoreOriginal,
+						accessibleWhenDisabled: true
+					},
+					children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
+						disabled: isUndoRedoDisabled || !isDirty,
+						onClick: () => {
+							handleReset();
+							closeMenu();
+						},
+						children: (0, _wordpress_i18n.__)("Reset image edits")
+					}) }), canRestoreOriginal && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
+						disabled: isSourceReplaced || isSaving,
+						info: (0, _wordpress_i18n.__)("Discards unsaved changes."),
+						onClick: () => {
+							onRestoreOriginal();
+							closeMenu();
+						},
+						children: (0, _wordpress_i18n.__)("Restore original")
+					}) })] })
 				})
 			]
 		});

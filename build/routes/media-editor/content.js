@@ -45688,7 +45688,7 @@ function useMediaEditorFrameContext() {
 	return context;
 }
 function HeaderActions({ showCloseButton = false }) {
-	const { isImage, isSaving, onCancel, isWide, activePanel, onTogglePanel, canRestoreOriginal, isSourceReplaced, onRestoreOriginal } = useMediaEditorFrameContext();
+	const { isImage, isSaving, onCancel, isWide, activePanel, onTogglePanel } = useMediaEditorFrameContext();
 	const isPanelOpen = !!activePanel;
 	const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element.useState)(false);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
@@ -45709,17 +45709,7 @@ function HeaderActions({ showCloseButton = false }) {
 				icon: more_vertical_default,
 				label: (0, import_i18n.__)("More options"),
 				toggleProps: { size: "compact" },
-				children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [canRestoreOriginal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
-					icon: backup_default,
-					iconPosition: "left",
-					disabled: isSourceReplaced || isSaving,
-					info: (0, import_i18n.__)("Discards unsaved changes and loads the original image."),
-					onClick: () => {
-						onRestoreOriginal();
-						closeMenu();
-					},
-					children: (0, import_i18n.__)("Restore original image")
-				}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
+				children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
 					icon: keyboard_default,
 					iconPosition: "left",
 					onClick: () => {
@@ -45727,7 +45717,7 @@ function HeaderActions({ showCloseButton = false }) {
 						closeMenu();
 					},
 					children: (0, import_i18n.__)("Keyboard shortcuts")
-				}) })] })
+				}) })
 			}),
 			showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 				size: "compact",
@@ -45742,7 +45732,7 @@ function HeaderActions({ showCloseButton = false }) {
 	});
 }
 function HistoryActions() {
-	const { isImage, isUndoRedoDisabled, isWide, activePanel } = useMediaEditorFrameContext();
+	const { isImage, isSaving, isUndoRedoDisabled, isWide, activePanel, canRestoreOriginal, isSourceReplaced, onRestoreOriginal } = useMediaEditorFrameContext();
 	const { reset, isDirty, hasUndo, hasRedo, undo: undoCrop, redo: redoCrop } = useMediaEditor();
 	if (!isImage || !isWide && !!activePanel) return null;
 	const handleUndo = () => {
@@ -45764,14 +45754,6 @@ function HistoryActions() {
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 				size: "compact",
-				variant: "tertiary",
-				disabled: isUndoRedoDisabled || !isDirty,
-				accessibleWhenDisabled: true,
-				onClick: handleReset,
-				children: (0, import_i18n.__)("Reset")
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-				size: "compact",
 				icon: undo_default,
 				label: (0, import_i18n.__)("Undo"),
 				showTooltip: true,
@@ -45789,6 +45771,32 @@ function HistoryActions() {
 				disabled: isUndoRedoDisabled || !hasRedo,
 				accessibleWhenDisabled: true,
 				onClick: handleRedo
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.DropdownMenu, {
+				icon: backup_default,
+				label: (0, import_i18n.__)("History"),
+				popoverProps: { placement: "top-start" },
+				toggleProps: {
+					size: "compact",
+					disabled: isUndoRedoDisabled || !isDirty && !canRestoreOriginal,
+					accessibleWhenDisabled: true
+				},
+				children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
+					disabled: isUndoRedoDisabled || !isDirty,
+					onClick: () => {
+						handleReset();
+						closeMenu();
+					},
+					children: (0, import_i18n.__)("Reset image edits")
+				}) }), canRestoreOriginal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
+					disabled: isSourceReplaced || isSaving,
+					info: (0, import_i18n.__)("Discards unsaved changes."),
+					onClick: () => {
+						onRestoreOriginal();
+						closeMenu();
+					},
+					children: (0, import_i18n.__)("Restore original")
+				}) })] })
 			})
 		]
 	});
