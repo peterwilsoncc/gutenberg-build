@@ -60902,35 +60902,15 @@ VisualLabel });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$47(targetDocument, hash, css);
 	}
-	registerStyle$47("8fb62af6ee", "._64136a8517cf68f9__spinner{background-color:transparent;color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));display:inline-block;height:16px;margin:5px 11px 0;opacity:1;overflow:visible;position:relative;width:16px}._386089008e9d3165__indicator,._925bba0d59620e53__track{fill:transparent;stroke-width:1.5px}._925bba0d59620e53__track{stroke:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb))}._386089008e9d3165__indicator{stroke:currentColor;stroke-linecap:round;animation:_22685de5c4714943__spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _22685de5c4714943__spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}");
-	var style_module_default$47 = {
-		"spinner": "_64136a8517cf68f9__spinner",
-		"track": "_925bba0d59620e53__track",
-		"indicator": "_386089008e9d3165__indicator",
-		"spin": "_22685de5c4714943__spin"
-	};
+	registerStyle$47("18db75ec1e", "._1ee8ab363b716447__spinner{margin:5px 11px 0}");
+	var style_module_default$47 = { "spinner": "_1ee8ab363b716447__spinner" };
 	function UnforwardedSpinner({ className, ...props }, forwardedRef) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("svg", {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$1, {
 			className: clsx("components-spinner", style_module_default$47.spinner, className),
-			viewBox: "0 0 100 100",
 			width: "16",
 			height: "16",
-			xmlns: "http://www.w3.org/2000/svg",
-			role: "presentation",
-			focusable: "false",
 			...props,
-			ref: forwardedRef,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("circle", {
-				className: style_module_default$47.track,
-				cx: "50",
-				cy: "50",
-				r: "50",
-				vectorEffect: "non-scaling-stroke"
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", {
-				className: style_module_default$47.indicator,
-				d: "m 50 0 a 50 50 0 0 1 50 50",
-				vectorEffect: "non-scaling-stroke"
-			})]
+			ref: forwardedRef
 		});
 	}
 	/**
