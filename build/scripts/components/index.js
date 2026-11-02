@@ -59461,24 +59461,8 @@ VisualLabel });
 	* CustomGradientPicker is a React component that renders a UI for specifying
 	* linear or radial gradients. Radial gradients are displayed in the picker as
 	* a slice of the gradient from the center to the outside.
-	*
-	* ```jsx
-	* import { CustomGradientPicker } from '@wordpress/components';
-	* import { useState } from '@wordpress/element';
-	*
-	* const MyCustomGradientPicker = () => {
-	*   const [ gradient, setGradient ] = useState();
-	*
-	*   return (
-	*     <CustomGradientPicker
-	*			value={ gradient }
-	*			onChange={ setGradient }
-	*     />
-	*   );
-	* };
-	* ```
 	*/
-	function CustomGradientPicker({ value, onChange, enableAlpha = true, __experimentalIsRenderedInSidebar = false }) {
+	function CustomGradientPicker$1({ value, onChange, enableAlpha = true, __experimentalIsRenderedInSidebar = false }) {
 		const { gradientAST, hasGradient } = getGradientAstWithDefault(value);
 		const background = getLinearGradientRepresentation(gradientAST);
 		const controlPoints = gradientAST.colorStops.map((colorStop) => {
@@ -59751,7 +59735,7 @@ VisualLabel });
 		const clearGradient = (0, _wordpress_element.useCallback)(() => onChange(void 0), [onChange]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(VStack, {
 			spacing: gradients.length ? 4 : 0,
-			children: [!disableCustomGradients && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CustomGradientPicker, {
+			children: [!disableCustomGradients && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CustomGradientPicker$1, {
 				__experimentalIsRenderedInSidebar,
 				enableAlpha,
 				value,
@@ -60366,7 +60350,7 @@ VisualLabel });
 				}),
 				variant === "gradient" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					className: "components-palette-edit__popover-gradient-picker",
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CustomGradientPicker, {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CustomGradientPicker$1, {
 						__experimentalIsRenderedInSidebar: true,
 						value: element.gradient,
 						onChange: (newGradient) => {
@@ -67070,6 +67054,48 @@ VisualLabel });
 				})
 			]
 		});
+	}
+
+// packages/components/build-module/custom-gradient-picker/deprecated.mjs
+/**
+	* CustomGradientPicker is a React component that renders a UI for specifying
+	* linear or radial gradients. Radial gradients are displayed in the picker as
+	* a slice of the gradient from the center to the outside.
+	*
+	* This component is deprecated. Use `GradientPicker` with `clearable={ false }`
+	* instead. Without the `gradients` prop, it renders the same gradient editor
+	* without presets or a Clear button.
+	*
+	* `GradientPicker` types its `onChange` argument as `string | undefined`.
+	* Without presets or a Clear button it only passes a string, but a callback
+	* that accepts only a string needs to narrow the value first.
+	*
+	* @deprecated Use `GradientPicker` with `clearable={ false }` instead.
+	*
+	* ```jsx
+	* import { GradientPicker } from '@wordpress/components';
+	* import { useState } from '@wordpress/element';
+	*
+	* const MyGradientEditor = () => {
+	*   const [ gradient, setGradient ] = useState();
+	*
+	*   return (
+	*     <GradientPicker
+	*       clearable={ false }
+	*       value={ gradient }
+	*       onChange={ setGradient }
+	*     />
+	*   );
+	* };
+	* ```
+	*/
+	function CustomGradientPicker(props) {
+		(0, _wordpress_deprecated.default)("wp.components.CustomGradientPicker", {
+			since: "7.3",
+			alternative: "wp.components.GradientPicker",
+			hint: "Set `clearable={ false }` to render only the custom gradient editor."
+		});
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CustomGradientPicker$1, { ...props });
 	}
 
 // packages/components/build-module/guide/icons.mjs
