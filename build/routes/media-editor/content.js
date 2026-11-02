@@ -45471,13 +45471,20 @@ const CROP_TOLERANCE = .1;
 * leave the sign alone because `flip_h · flip_v = -I` commutes with
 * rotation.
 *
-* @param state     Current cropper state.
-* @param imageSize Natural dimensions of the source image.
-* @return Ordered modifier array; empty when nothing is server-relevant.
+* @param cropper The cropper controller. The current edit and the loaded
+*                image's natural size are both read from its state.
+* @return Ordered modifier array; empty when nothing is server-relevant or
+*         no image has loaded.
 */
-function buildModifiers(state, imageSize) {
+function buildModifiers(cropper) {
 	const modifiers = [];
-	if (imageSize.width === 0 || imageSize.height === 0) return modifiers;
+	const { state } = cropper;
+	const { image } = state;
+	if (!image || image.naturalWidth === 0 || image.naturalHeight === 0) return modifiers;
+	const imageSize = {
+		width: image.naturalWidth,
+		height: image.naturalHeight
+	};
 	const { cropRect, pan, zoom, flip } = state;
 	const hasFlipH = flip.horizontal;
 	const hasFlipV = flip.vertical;
@@ -45536,12 +45543,8 @@ const METADATA_EDIT_KEYS = [
 ];
 const MEDIA_EDITOR_NOTICES_CONTEXT = "media-editor";
 function getCropModifiers(session) {
-	const { state } = session.cropper;
-	if (!session.hasOutputEdits || !state.image) return [];
-	return buildModifiers(state, {
-		width: state.image.naturalWidth,
-		height: state.image.naturalHeight
-	});
+	if (!session.hasOutputEdits) return [];
+	return buildModifiers(session.cropper);
 }
 function getMetadataEdits(pendingEdits, media) {
 	const metadataEdits = {};
