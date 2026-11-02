@@ -100314,38 +100314,47 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!context) throw new Error("useMediaEditorFrameContext must be used within MediaEditor");
 		return context;
 	}
-	function HeaderActions({ showCloseButton = false }) {
-		const { isImage, isSaving, onCancel, isWide, activePanel, onTogglePanel } = useMediaEditorFrameContext();
+	function PanelToggle() {
+		const { isWide, activePanel, onTogglePanel } = useMediaEditorFrameContext();
 		const isPanelOpen = !!activePanel;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+			size: "compact",
+			icon: drawer_right_default,
+			label: (0, _wordpress_i18n.__)("Media settings"),
+			isPressed: isPanelOpen,
+			"aria-expanded": isWide ? isPanelOpen : void 0,
+			onClick: onTogglePanel
+		});
+	}
+	function MoreMenu$1() {
+		const { isImage } = useMediaEditorFrameContext();
 		const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, _wordpress_element.useState)(false);
+		if (!isImage) return null;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
+			icon: more_vertical_default,
+			label: (0, _wordpress_i18n.__)("More options"),
+			toggleProps: { size: "compact" },
+			children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
+				icon: keyboard_default,
+				iconPosition: "left",
+				onClick: () => {
+					setIsShortcutsModalOpen(true);
+					closeMenu();
+				},
+				children: (0, _wordpress_i18n.__)("Keyboard shortcuts")
+			}) })
+		}), isShortcutsModalOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorKeyboardShortcutsModal, { onClose: () => setIsShortcutsModalOpen(false) })] });
+	}
+	function HeaderActions({ showCloseButton = false }) {
+		const { isSaving, onCancel } = useMediaEditorFrameContext();
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 			className: "media-editor__header-actions",
 			justify: "flex-end",
 			align: "center",
 			gap: "sm",
 			children: [
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-					size: "compact",
-					icon: drawer_right_default,
-					label: (0, _wordpress_i18n.__)("Media settings"),
-					isPressed: isPanelOpen,
-					"aria-expanded": isWide ? isPanelOpen : void 0,
-					onClick: onTogglePanel
-				}),
-				isImage && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
-					icon: more_vertical_default,
-					label: (0, _wordpress_i18n.__)("More options"),
-					toggleProps: { size: "compact" },
-					children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
-						icon: keyboard_default,
-						iconPosition: "left",
-						onClick: () => {
-							setIsShortcutsModalOpen(true);
-							closeMenu();
-						},
-						children: (0, _wordpress_i18n.__)("Keyboard shortcuts")
-					}) })
-				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(PanelToggle, {}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MoreMenu$1, {}),
 				showCloseButton && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 					size: "compact",
 					icon: close_default,
@@ -100353,8 +100362,7 @@ If there's a particular need for this, please submit a feature request at https:
 					onClick: onCancel,
 					disabled: isSaving,
 					accessibleWhenDisabled: true
-				}),
-				isShortcutsModalOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorKeyboardShortcutsModal, { onClose: () => setIsShortcutsModalOpen(false) })
+				})
 			]
 		});
 	}
@@ -100729,6 +100737,8 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorContent, { ...props }) }, props.id);
 	}
 	MediaEditor.HeaderActions = HeaderActions;
+	MediaEditor.PanelToggle = PanelToggle;
+	MediaEditor.MoreMenu = MoreMenu$1;
 	MediaEditor.HistoryActions = HistoryActions;
 	MediaEditor.SaveActions = SaveActions;
 

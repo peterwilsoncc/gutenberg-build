@@ -45687,38 +45687,47 @@ function useMediaEditorFrameContext() {
 	if (!context) throw new Error("useMediaEditorFrameContext must be used within MediaEditor");
 	return context;
 }
-function HeaderActions({ showCloseButton = false }) {
-	const { isImage, isSaving, onCancel, isWide, activePanel, onTogglePanel } = useMediaEditorFrameContext();
+function PanelToggle() {
+	const { isWide, activePanel, onTogglePanel } = useMediaEditorFrameContext();
 	const isPanelOpen = !!activePanel;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
+		size: "compact",
+		icon: drawer_right_default,
+		label: (0, import_i18n.__)("Media settings"),
+		isPressed: isPanelOpen,
+		"aria-expanded": isWide ? isPanelOpen : void 0,
+		onClick: onTogglePanel
+	});
+}
+function MoreMenu() {
+	const { isImage } = useMediaEditorFrameContext();
 	const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element.useState)(false);
+	if (!isImage) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.DropdownMenu, {
+		icon: more_vertical_default,
+		label: (0, import_i18n.__)("More options"),
+		toggleProps: { size: "compact" },
+		children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
+			icon: keyboard_default,
+			iconPosition: "left",
+			onClick: () => {
+				setIsShortcutsModalOpen(true);
+				closeMenu();
+			},
+			children: (0, import_i18n.__)("Keyboard shortcuts")
+		}) })
+	}), isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditorKeyboardShortcutsModal, { onClose: () => setIsShortcutsModalOpen(false) })] });
+}
+function HeaderActions({ showCloseButton = false }) {
+	const { isSaving, onCancel } = useMediaEditorFrameContext();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
 		className: "media-editor__header-actions",
 		justify: "flex-end",
 		align: "center",
 		gap: "sm",
 		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-				size: "compact",
-				icon: drawer_right_default,
-				label: (0, import_i18n.__)("Media settings"),
-				isPressed: isPanelOpen,
-				"aria-expanded": isWide ? isPanelOpen : void 0,
-				onClick: onTogglePanel
-			}),
-			isImage && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.DropdownMenu, {
-				icon: more_vertical_default,
-				label: (0, import_i18n.__)("More options"),
-				toggleProps: { size: "compact" },
-				children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
-					icon: keyboard_default,
-					iconPosition: "left",
-					onClick: () => {
-						setIsShortcutsModalOpen(true);
-						closeMenu();
-					},
-					children: (0, import_i18n.__)("Keyboard shortcuts")
-				}) })
-			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PanelToggle, {}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreMenu, {}),
 			showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 				size: "compact",
 				icon: close_default,
@@ -45726,8 +45735,7 @@ function HeaderActions({ showCloseButton = false }) {
 				onClick: onCancel,
 				disabled: isSaving,
 				accessibleWhenDisabled: true
-			}),
-			isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditorKeyboardShortcutsModal, { onClose: () => setIsShortcutsModalOpen(false) })
+			})
 		]
 	});
 }
@@ -46102,6 +46110,8 @@ function MediaEditor$1(props) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditorContent, { ...props }) }, props.id);
 }
 MediaEditor$1.HeaderActions = HeaderActions;
+MediaEditor$1.PanelToggle = PanelToggle;
+MediaEditor$1.MoreMenu = MoreMenu;
 MediaEditor$1.HistoryActions = HistoryActions;
 MediaEditor$1.SaveActions = SaveActions;
 
@@ -46317,8 +46327,9 @@ function MediaEditorRoute() {
 					}, { label: title }] }),
 					actions: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 						!isNarrow && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.HistoryActions, {}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.HeaderActions, {}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.SaveActions, { size: "compact" })
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.PanelToggle, {}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.SaveActions, { size: "compact" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.MoreMenu, {})
 					] }),
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: "media-editor-route__content",
