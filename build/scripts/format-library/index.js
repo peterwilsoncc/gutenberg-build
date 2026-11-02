@@ -16897,10 +16897,19 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				if (!range) return;
 				const [from, to] = range;
 				const { text } = value;
-				onChange({
+				let newValue = {
 					...value,
 					text: text.slice(0, from) + text.slice(from, to).replaceAll(NBSP, " ") + text.slice(to)
-				});
+				};
+				for (let index = to - 1; index >= from; index--) {
+					const isCollapsed = [newValue.text[index - 1], newValue.text[index + 1]].some((character) => [
+						void 0,
+						" ",
+						"\n"
+					].includes(character));
+					if (text[index] === NBSP && isCollapsed) newValue = (0, _wordpress_rich_text.remove)(newValue, index, index + 1);
+				}
+				onChange(newValue);
 				onFocus();
 			}
 			const selectedValue = value.start && value.end ? value.text.slice(value.start, value.end) : null;
