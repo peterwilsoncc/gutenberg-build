@@ -1690,7 +1690,7 @@ button.font-library__upload-area {
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip.has-reset {
-  padding-inline-end: calc(var(--wpds-dimension-size-sm, 24px) + var(--wpds-dimension-padding-xs, 4px));
+  padding-inline-end: calc(var(--wpds-dimension-size-sm, 24px) + var(--wpds-dimension-padding-sm, 8px));
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip:hover:not(.dataviews-filters__summary-chip-container .dataviews-filters__summary-chip.is-not-clickable), .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip:focus-visible, .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip[aria-expanded=true] {
@@ -1712,8 +1712,8 @@ button.font-library__upload-area {
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip .dataviews-filters__summary-filter-text-name {
@@ -1763,8 +1763,8 @@ button.font-library__upload-area {
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip-remove:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
 }
 
 .dataviews-filters__search-widget-filter-combobox-list {
