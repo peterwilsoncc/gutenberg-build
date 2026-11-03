@@ -99419,12 +99419,13 @@ If there's a particular need for this, please submit a feature request at https:
 			enableAlpha,
 			headingLevel
 		});
+		const notice = noticeProps && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Notice, {
+			isDismissible: false,
+			...noticeProps
+		});
 		const tabPanels = {
-			[TAB_IDS.color]: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [colorPalette, noticeProps && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Notice, {
-				isDismissible: false,
-				...noticeProps
-			})] }),
-			[TAB_IDS.gradient]: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.GradientPicker, {
+			[TAB_IDS.color]: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [colorPalette, notice] }),
+			[TAB_IDS.gradient]: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.GradientPicker, {
 				value: gradientValue,
 				selectedSlug: gradientSlug,
 				onChange: canChooseAColor ? (newGradient, _index, newSlug) => {
@@ -99436,7 +99437,7 @@ If there's a particular need for this, please submit a feature request at https:
 				__experimentalIsRenderedInSidebar,
 				clearable,
 				headingLevel
-			})
+			}), notice] })
 		};
 		const renderPanelType = (type) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "block-editor-color-gradient-control__panel",
@@ -107203,7 +107204,7 @@ If there's a particular need for this, please submit a feature request at https:
 			onGradientChange: isGradient ? onChange : void 0,
 			clearable: userValue !== void 0,
 			headingLevel: 3,
-			noticeProps: !isGradient && contrastWarning ? {
+			noticeProps: contrastWarning ? {
 				children: contrastWarning,
 				status: "warning",
 				spokenMessage: null,
@@ -108598,9 +108599,69 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
+// packages/block-editor/build-module/hooks/contrast-checker-utils.mjs
+	D([r]);
+	const RGB_COLOR = /rgba?\([^)]*\)/g;
+	const OTHER_COLOR = /\b(?:oklch|oklab|lch|lab|hwb|color|color-mix|light-dark)\(|currentcolor/i;
+	/**
+	* Returns the stop colors of a computed `background-image` made only of
+	* gradients, or `null` when it holds an image or a color that can't be read.
+	*
+	* @param backgroundImage Computed `background-image` value.
+	* @return The stop colors, or `null`.
+	*/
+	function getGradientStopColors(backgroundImage) {
+		if (!backgroundImage || "none" === backgroundImage || backgroundImage.includes("url(") || !backgroundImage.includes("gradient(") || OTHER_COLOR.test(backgroundImage)) return null;
+		return backgroundImage.match(RGB_COLOR);
+	}
+	/**
+	* Returns the opaque color with the lowest contrast against the backdrop.
+	* Translucent colors are skipped, as what shows through them is unknown.
+	*
+	* @param colors   Candidate colors.
+	* @param backdrop Backdrop color.
+	* @return The lowest contrast color, if any is opaque.
+	*/
+	function getLowestContrastColor(colors, backdrop) {
+		let lowest;
+		let lowestContrast = Infinity;
+		for (const color of colors) {
+			const parsed = A(color);
+			if (parsed.alpha() < 1) continue;
+			const contrast = parsed.contrast(backdrop);
+			if (contrast < lowestContrast) {
+				lowest = color;
+				lowestContrast = contrast;
+			}
+		}
+		return lowest;
+	}
+
 // packages/block-editor/build-module/hooks/contrast-checker.mjs
 	function getComputedValue(node, property) {
 		return node.ownerDocument.defaultView.getComputedStyle(node).getPropertyValue(property);
+	}
+	/**
+	* Returns the color the reader sees for an element's text. A transparent fill
+	* shows the background of the nearest element clipping its background to the
+	* text, which for a gradient is its lowest contrast stop against the backdrop.
+	* Returns `undefined` when that can't be measured, such as for an image.
+	*
+	* @param element  Element holding the text.
+	* @param backdrop Color behind the text.
+	* @return The visible text color, if it can be measured.
+	*/
+	function getVisibleTextColor(element, backdrop) {
+		const fill = getComputedValue(element, "-webkit-text-fill-color");
+		if (!A(fill).isValid()) return getComputedValue(element, "color");
+		if (A(fill).alpha() > 0) return fill;
+		let clipElement = element;
+		while (clipElement && "text" !== getComputedValue(clipElement, "background-clip")) clipElement = clipElement.parentElement;
+		if (!clipElement) return fill;
+		const backgroundImage = getComputedValue(clipElement, "background-image");
+		if ("none" === backgroundImage) return getComputedValue(clipElement, "background-color");
+		const stops = getGradientStopColors(backgroundImage);
+		return stops ? getLowestContrastColor(stops, backdrop) : void 0;
 	}
 	function getBlockElementColors(blockEl, blockType) {
 		if (!blockEl || !blockType) return {};
@@ -108609,14 +108670,16 @@ If there's a particular need for this, please submit a feature request at https:
 		const textElement = blockEl.querySelector(textSelector) || blockEl;
 		const backgroundElement = blockEl.querySelector(backgroundSelector) || blockEl;
 		const linkElement = blockEl.querySelector("a");
-		const textColor = getComputedValue(textElement, "color");
-		const linkColor = linkElement && linkElement.textContent ? getComputedValue(linkElement, "color") : void 0;
 		let backgroundColorNode = backgroundElement;
-		let backgroundColor = getComputedValue(backgroundColorNode, "background-color");
-		while (backgroundColor === "rgba(0, 0, 0, 0)" && backgroundColorNode.parentNode && backgroundColorNode.parentNode.nodeType === backgroundColorNode.parentNode.ELEMENT_NODE) {
-			backgroundColorNode = backgroundColorNode.parentNode;
+		let backgroundColor = "rgba(0, 0, 0, 0)";
+		while (backgroundColorNode) {
 			backgroundColor = getComputedValue(backgroundColorNode, "background-color");
+			if (backgroundColor !== "rgba(0, 0, 0, 0)" && "text" !== getComputedValue(backgroundColorNode, "background-clip")) break;
+			backgroundColorNode = backgroundColorNode.parentElement;
 		}
+		if (!backgroundColorNode) backgroundColor = "rgba(0, 0, 0, 0)";
+		const textColor = getVisibleTextColor(textElement, backgroundColor);
+		const linkColor = linkElement && linkElement.textContent ? getVisibleTextColor(linkElement, backgroundColor) : void 0;
 		return {
 			textColor,
 			backgroundColor,
@@ -110802,7 +110865,7 @@ If there's a particular need for this, please submit a feature request at https:
 					resetValue: resetTextColor,
 					isShownByDefault: defaultControls.textColor,
 					indicators: [userTextColor ?? textColor],
-					contrastWarning,
+					contrastWarning: isTextGradient ? void 0 : contrastWarning,
 					tabs: [{
 						key: "text",
 						label: (0, _wordpress_i18n.__)("Color"),
@@ -110825,6 +110888,7 @@ If there's a particular need for this, please submit a feature request at https:
 					resetValue: resetTextGradient,
 					isShownByDefault: defaultControls.textGradient,
 					indicators: [userTextGradient ?? inheritedTextGradient],
+					contrastWarning: isTextGradient ? contrastWarning : void 0,
 					tabs: [{
 						key: "text-gradient",
 						label: (0, _wordpress_i18n.__)("Gradient"),
@@ -112098,13 +112162,14 @@ If there's a particular need for this, please submit a feature request at https:
 			if ((newAttributes.fontSize || newAttributes.style?.typography?.fontSize) && fitText) newAttributes.fitText = void 0;
 			setAttributes(newAttributes);
 		};
-		const enableContrastChecking = !value?.color?.gradient && "text" !== value?.background?.backgroundClip && !!value?.color?.text && settings?.color?.text && false !== (0, _wordpress_blocks.getBlockSupport)(name, ["color", "enableContrastChecker"]);
+		const hasTextGradient = "text" === value?.background?.backgroundClip && !!value?.background?.gradient;
+		const enableContrastChecking = !value?.color?.gradient && ("text" === value?.background?.backgroundClip ? hasTextGradient : !!value?.color?.text && settings?.color?.text) && false !== (0, _wordpress_blocks.getBlockSupport)(name, ["color", "enableContrastChecker"]);
 		const contrastWarning = useBlockColorContrastWarning({
 			clientId,
 			name,
 			enabled: !!enableContrastChecking,
 			checkLinkColor: false,
-			messageOverride: (0, _wordpress_i18n.__)("This color has poor contrast against the background. Consider increasing contrast.")
+			messageOverride: hasTextGradient ? (0, _wordpress_i18n.__)("Part of this gradient has poor contrast against the background. Consider increasing contrast.") : (0, _wordpress_i18n.__)("This color has poor contrast against the background. Consider increasing contrast.")
 		});
 		if (!isEnabled) return null;
 		const typographyDefaultControls = (0, _wordpress_blocks.getBlockSupport)(name, [TYPOGRAPHY_SUPPORT_KEY, "__experimentalDefaultControls"]);
