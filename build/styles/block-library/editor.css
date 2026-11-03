@@ -2284,6 +2284,10 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   width: 250px;
 }
 
+.wp-block-social-link__url-input.block-editor-url-input.is-full-width {
+  min-width: 0;
+}
+
 .wp-block-social-links div.block-editor-url-input {
   display: inline-block;
   margin-left: 8px;

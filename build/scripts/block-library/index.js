@@ -46706,8 +46706,8 @@ Icon: ButtonIcon });
 	const { lock, unlock } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$36 = {};
-	lock(privateApis$36, {
+	const privateApis$37 = {};
+	lock(privateApis$37, {
 		getResponsiveMediaQueries: getResponsiveMediaQueries$2,
 		getViewportBreakpoints,
 		getViewportBreakpointValueInPixels,
@@ -46823,7 +46823,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/gallery/gallery-styles.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$1(privateApis$36);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$1(privateApis$37);
 	const { globalStylesDataKey } = unlock$1(_wordpress_block_editor.privateApis);
 	const GALLERY_BLOCK_NAME = "core/gallery";
 	const FALLBACK_VALUE = `var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )`;
@@ -61307,7 +61307,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/navigation/edit/use-layout-custom-properties.mjs
-	const { getResponsiveMediaQueries } = unlock$1(privateApis$36);
+	const { getResponsiveMediaQueries } = unlock$1(privateApis$37);
 	const JUSTIFICATION_VALUES = {
 		left: "flex-start",
 		center: "center",
@@ -80586,7 +80586,69 @@ Icon: ButtonIcon });
 		};
 	}
 
+// packages/block-library/build-module/social-link/is-valid-link.mjs
+	const { isURLLike } = unlock$1(_wordpress_block_editor.privateApis);
+	/**
+	* Returns whether a Social Icon's link looks valid: a URL, with or without
+	* its protocol, or an email address for the Mail icon. It uses the same check
+	* as the link popover, and an empty link is valid.
+	*
+	* @param url The link.
+	* @return Whether the link is valid.
+	*/
+	function isValidLink(url) {
+		if (!url) return true;
+		return (0, _wordpress_url.isEmail)(url) || !!isURLLike(url) && (0, _wordpress_url.isURL)((0, _wordpress_url.prependHTTPS)(url));
+	}
+
 // packages/block-library/build-module/social-link/edit.mjs
+	const INVALID_LINK = {
+		type: "invalid",
+		message: (0, _wordpress_i18n.__)("Please enter a valid URL.")
+	};
+	/**
+	* Shows an error for an invalid Social Icon link once it is checked, without
+	* rejecting the link. The error is only set when the link is checked, on blur,
+	* because `URLInput` remounts its input the first time it is given
+	* a validity, which would otherwise interrupt typing.
+	*
+	* @param {string} url The link.
+	* @return {Object} The `URLInput` props, and `validate`, which checks the link
+	*                  and returns whether it is valid.
+	*/
+	function useLinkValidity(url) {
+		const [customValidity, setCustomValidity] = (0, _wordpress_element.useState)();
+		const inputRef = (0, _wordpress_element.useRef)();
+		if (customValidity && isValidLink(url)) setCustomValidity(void 0);
+		const validate = () => {
+			if (isValidLink(url)) return true;
+			(0, _wordpress_element.flushSync)(() => setCustomValidity(INVALID_LINK));
+			inputRef.current?.dispatchEvent(new window.Event("invalid"));
+			return false;
+		};
+		return {
+			customValidity,
+			inputRef,
+			validate
+		};
+	}
+	/**
+	* Returns the link the front end renders for a valid Social Icon link: an
+	* email address becomes a `mailto:` link, and a link without a protocol uses
+	* HTTPS.
+	*
+	* Keep this in sync with how `render_block_core_social_link()` in `index.php`
+	* builds the link, so View opens the same URL as the front end.
+	*
+	* @param {string} url The link.
+	* @return {string|undefined} The rendered link.
+	*/
+	const getRenderedLink = (url) => {
+		if (!url || !isValidLink(url)) return;
+		if ((0, _wordpress_url.isEmail)(url) && !(0, _wordpress_url.getProtocol)(url)) return `mailto:${url}`;
+		if (/^[^:/?#]+:\d{1,5}(?:\/|$)/.test(url)) return `https://${url}`;
+		return (0, _wordpress_url.prependHTTPS)(url);
+	};
 	const SocialLinkURLPopover = ({ url, setAttributes, setPopover, popoverAnchor, clientId }) => {
 		const { removeBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.URLPopover, {
@@ -80636,6 +80698,7 @@ Icon: ButtonIcon });
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 		const { showLabels, iconColor, iconColorValue, iconBackgroundColor, iconBackgroundColorValue } = context;
 		const [showURLPopover, setPopover] = (0, _wordpress_element.useState)(false);
+		const { customValidity: linkValidity, inputRef: linkInputRef, validate: validateLink } = useLinkValidity(url);
 		const wrapperClasses = clsx("wp-social-link", "wp-block-social-link", "wp-social-link-" + service, {
 			"wp-social-link__is-incomplete": !url,
 			[`has-${iconColor}-color`]: iconColor,
@@ -80682,28 +80745,60 @@ Icon: ButtonIcon });
 					})
 				})
 			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanel, {
-				label: (0, _wordpress_i18n.__)("Settings"),
-				resetAll: () => {
-					setAttributes({ label: void 0 });
-				},
-				dropdownMenuProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-					isShownByDefault: true,
-					label: (0, _wordpress_i18n.__)("Text"),
-					hasValue: () => !!label,
-					onDeselect: () => {
-						setAttributes({ label: void 0 });
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, {
+				group: "content",
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanel, {
+					label: (0, _wordpress_i18n.__)("Settings"),
+					resetAll: () => {
+						setAttributes({
+							url: void 0,
+							label: void 0
+						});
 					},
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.TextControl, {
-						label: (0, _wordpress_i18n.__)("Text"),
-						help: (0, _wordpress_i18n.__)("The text is visible when enabled from the parent Social Icons block."),
-						value: label,
-						onChange: (value) => setAttributes({ label: value }),
-						placeholder: socialLinkName
-					})
+					dropdownMenuProps,
+					children: [
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+							isShownByDefault: true,
+							label: (0, _wordpress_i18n.__)("Text"),
+							hasValue: () => !!label,
+							onDeselect: () => {
+								setAttributes({ label: void 0 });
+							},
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.TextControl, {
+								label: (0, _wordpress_i18n.__)("Text"),
+								help: (0, _wordpress_i18n.__)("The text is visible when enabled from the parent Social Icons block."),
+								value: label,
+								onChange: (value) => setAttributes({ label: value }),
+								placeholder: socialLinkName
+							})
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+							isShownByDefault: true,
+							label: (0, _wordpress_i18n.__)("Link to"),
+							hasValue: () => !!url,
+							onDeselect: () => {
+								setAttributes({ url: void 0 });
+							},
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+								onBlur: validateLink,
+								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.URLInput, {
+									className: "wp-block-social-link__url-input",
+									label: (0, _wordpress_i18n.__)("Link to"),
+									placeholder: (0, _wordpress_i18n.__)("Enter social link"),
+									value: url || "",
+									onChange: (value) => setAttributes({ url: value || void 0 }),
+									disableSuggestions: true,
+									isFullWidth: true,
+									required: false,
+									inputRef: linkInputRef,
+									customValidity: linkValidity
+								})
+							})
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ViewLinkButton, { url: getRenderedLink(url) })
+					]
 				})
-			}) }),
+			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, {
 				group: "advanced",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.TextControl, {
