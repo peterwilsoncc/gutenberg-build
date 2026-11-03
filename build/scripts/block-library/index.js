@@ -84369,7 +84369,7 @@ Icon: ButtonIcon });
 		}
 	];
 	/** @typedef {import('./utils').HeadingData} HeadingData */
-	function TableOfContentsToolbar({ clientId, headingTree, ordered, setAttributes }) {
+	function TableOfContentsToolbar({ canDetach, clientId, headingTree, ordered, setAttributes }) {
 		const canInsertList = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockRootClientId, canInsertBlockType } = select(_wordpress_block_editor.store);
 			return canInsertBlockType("core/list", getBlockRootClientId(clientId));
@@ -84388,7 +84388,7 @@ Icon: ButtonIcon });
 			description: (0, _wordpress_i18n.__)("Convert to ordered list"),
 			onClick: () => setAttributes({ ordered: true }),
 			isActive: ordered === true
-		})] }), canInsertList && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
+		})] }), canDetach && canInsertList && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
 			onClick: () => setIsConfirmingDetach(true),
 			children: (0, _wordpress_i18n.__)("Detach")
 		}) })] }), isConfirmingDetach && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalConfirmDialog, {
@@ -84433,6 +84433,7 @@ Icon: ButtonIcon });
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 		const headingTree = linearToNestedHeadingList(headings);
 		const toolbarControls = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TableOfContentsToolbar, {
+			canDetach: !!postId,
 			clientId,
 			headingTree,
 			ordered,
@@ -84492,7 +84493,7 @@ Icon: ButtonIcon });
 					ordered
 				}) })
 			}),
-			!!postId && toolbarControls,
+			toolbarControls,
 			inspectorControls
 		] });
 	}
