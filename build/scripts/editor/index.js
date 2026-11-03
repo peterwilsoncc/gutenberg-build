@@ -112863,7 +112863,7 @@ If there's a particular need for this, please submit a feature request at https:
 				post: select(store).getCurrentPostId(),
 				parent: noteId,
 				type: "reaction",
-				status: "all",
+				status: "approve",
 				per_page: -1,
 				_fields: "id,author_name,content"
 			});
