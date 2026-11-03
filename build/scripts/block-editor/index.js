@@ -62090,20 +62090,20 @@ Icon: ButtonIcon });
 			})
 		});
 	}
-	const applyWithDispatch = (0, _wordpress_data.withDispatch)((dispatch, untypedOwnProps, registry) => {
-		const ownProps = untypedOwnProps;
+	function mapDispatchToProps(dispatch, ownProps, registry) {
 		const { updateBlockAttributes, insertBlocks, mergeBlocks, replaceBlocks, toggleSelection, __unstableMarkLastChangeAsPersistent, moveBlocksToPosition, removeBlock, selectBlock } = dispatch(store);
 		return {
 			setAttributes(nextAttributes) {
 				const { getMultiSelectedBlockClientIds, getBlockAttributes } = registry.select(store);
 				const multiSelectedBlockClientIds = getMultiSelectedBlockClientIds();
-				const { clientId, attributes } = ownProps;
+				const { clientId } = ownProps;
+				const attributes = getBlockAttributes(clientId) ?? {};
 				const newAttributes = typeof nextAttributes === "function" ? nextAttributes(attributes) : nextAttributes;
 				if (!multiSelectedBlockClientIds.length) {
 					updateBlockAttributes(clientId, newAttributes);
 					return;
 				}
-				const changes = getAttributeChanges(attributes ?? {}, newAttributes ?? {});
+				const changes = getAttributeChanges(attributes, newAttributes ?? {});
 				if (!changes) return;
 				const updatesByClientId = {};
 				for (const selectedClientId of multiSelectedBlockClientIds) updatesByClientId[selectedClientId] = applyAttributeChanges(getBlockAttributes(selectedClientId) ?? {}, changes);
@@ -62234,10 +62234,19 @@ Icon: ButtonIcon });
 				toggleSelection(selectionEnabled);
 			}
 		};
-	});
-	const FilteredBlockListBlock = (0, _wordpress_compose.compose)(applyWithDispatch, (0, _wordpress_components.withFilters)("editor.BlockListBlock"))(BlockListBlock);
+	}
+	const FilteredBlockListBlock = (0, _wordpress_components.withFilters)("editor.BlockListBlock")(BlockListBlock);
 	function BlockListBlockProvider(props) {
 		const { clientId, rootClientId, ghostBlock } = props;
+		const registry = (0, _wordpress_data.useRegistry)();
+		const dispatchProps = (0, _wordpress_element.useMemo)(() => mapDispatchToProps(registry.dispatch, {
+			clientId,
+			rootClientId
+		}, registry), [
+			registry,
+			clientId,
+			rootClientId
+		]);
 		const ghostBlockWithoutAttributes = (0, _wordpress_element.useMemo)(() => ghostBlock ? {
 			clientId: ghostBlock.clientId,
 			name: ghostBlock.name,
@@ -62388,7 +62397,8 @@ Icon: ButtonIcon });
 				name,
 				attributes,
 				isValid,
-				isSelected
+				isSelected,
+				...dispatchProps
 			})
 		});
 	}
