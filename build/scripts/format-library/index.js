@@ -19150,6 +19150,8 @@ var wp;
         onChange((0, import_rich_text17.insert)(value, NBSP));
       }
       const range = getNonBreakingSpaceRange(value);
+      const rangeText = range ? value.text.slice(range[0], range[1]) : "";
+      const nonBreakingSpaceCount = rangeText.split(NBSP).length - 1;
       function replaceNonBreakingSpaces() {
         if (!range) {
           return;
@@ -19177,7 +19179,7 @@ var wp;
           {
             name: "non-breaking-space",
             icon,
-            title: (0, import_i18n23.__)("Replace non-breaking spaces"),
+            title: nonBreakingSpaceCount === 1 ? (0, import_i18n23.__)("Replace non-breaking space") : (0, import_i18n23.__)("Replace non-breaking spaces"),
             onClick: replaceNonBreakingSpaces,
             isActive: true
           }
