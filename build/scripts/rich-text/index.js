@@ -686,6 +686,31 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			appendText: appendText$1
 		}).children);
 	}
+	/**
+	* Creates the HTML of the editable tree of a value: the markup `toDom` builds
+	* as nodes, with the editor-only attributes and the placeholder.
+	*
+	* @param $1             Named arguments.
+	* @param $1.value       The value, with editor-only formats prepared.
+	* @param $1.placeholder Placeholder text.
+	*
+	* @return The HTML.
+	*/
+	function toEditableHTMLString({ value, placeholder }) {
+		return createChildrenHTML(toTree({
+			value,
+			createEmpty,
+			append: append$1,
+			getLastChild: getLastChild$1,
+			getParent: getParent$1,
+			isText: isText$1,
+			getText: getText$1,
+			remove: remove$2,
+			appendText: appendText$1,
+			isEditableTree: true,
+			placeholder
+		}).children);
+	}
 	function createEmpty() {
 		return {};
 	}
@@ -721,7 +746,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		let attributeString = "";
 		for (const key in attributes) {
 			if (!(0, _wordpress_escape_html.isValidAttributeName)(key)) continue;
-			attributeString += ` ${key}="${(0, _wordpress_escape_html.escapeAttribute)(attributes[key])}"`;
+			attributeString += ` ${key}="${(0, _wordpress_escape_html.escapeAttribute)(String(attributes[key]))}"`;
 		}
 		if (object) return `<${type}${attributeString}>`;
 		return `<${type}${attributeString}>${createChildrenHTML(children)}</${type}>`;
@@ -1757,6 +1782,16 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* @param [options.placeholder]         Placeholder text.
 	*/
 	function apply({ value, current, prepareEditableTree, __unstableDomOnly, placeholder }) {
+		if (__unstableDomOnly && !current.firstChild) {
+			current.innerHTML = toEditableHTMLString({
+				value: prepareEditableTree ? {
+					...value,
+					formats: prepareEditableTree(value)
+				} : value,
+				placeholder
+			});
+			return;
+		}
 		const { body, selection } = toDom({
 			value,
 			prepareEditableTree,
