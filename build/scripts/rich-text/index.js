@@ -1027,9 +1027,13 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* @return New element with collapsed whitespace.
 	*/
 	function collapseWhiteSpace(element, isRoot = true, hasPrecedingSpace = false, hasTrailingSpace = false) {
-		const clone = element.cloneNode(true);
-		clone.normalize();
-		Array.from(clone.childNodes).forEach((node, i, nodes) => {
+		if (isRoot) {
+			element = element.cloneNode(true);
+			element.normalize();
+		}
+		const nodes = element.childNodes;
+		for (let i = 0; i < nodes.length; i++) {
+			const node = nodes[i];
 			if (node.nodeType === node.TEXT_NODE) {
 				let newNodeValue = node.nodeValue;
 				if (/[\n\t\r\f]/.test(newNodeValue)) newNodeValue = newNodeValue.replace(/[\n\t\r\f]+/g, " ");
@@ -1041,10 +1045,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				const { previousSibling, nextSibling } = node;
 				const prevHasSpace = previousSibling?.textContent.endsWith(" ");
 				const nextHasSpace = nextSibling?.textContent.startsWith(" ");
-				node.replaceWith(collapseWhiteSpace(node, false, previousSibling ? prevHasSpace : isRoot || hasPrecedingSpace, nextSibling ? nextHasSpace : isRoot || hasTrailingSpace));
+				collapseWhiteSpace(node, false, previousSibling ? prevHasSpace : isRoot || hasPrecedingSpace, nextSibling ? nextHasSpace : isRoot || hasTrailingSpace);
 			}
-		});
-		return clone;
+		}
+		return element;
 	}
 	/**
 	* We need to normalise line breaks to `\n` so they are consistent across
