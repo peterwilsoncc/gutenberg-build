@@ -19158,10 +19158,22 @@ var wp;
         }
         const [from, to] = range;
         const { text } = value;
-        onChange({
+        let newValue = {
           ...value,
           text: text.slice(0, from) + text.slice(from, to).replaceAll(NBSP, " ") + text.slice(to)
-        });
+        };
+        for (let index3 = to - 1; index3 >= from; index3--) {
+          const isCollapsed4 = [
+            newValue.text[index3 - 1],
+            newValue.text[index3 + 1]
+          ].some(
+            (character) => [void 0, " ", "\n"].includes(character)
+          );
+          if (text[index3] === NBSP && isCollapsed4) {
+            newValue = (0, import_rich_text17.remove)(newValue, index3, index3 + 1);
+          }
+        }
+        onChange(newValue);
         onFocus();
       }
       const selectedValue = value.start && value.end ? value.text.slice(value.start, value.end) : null;
