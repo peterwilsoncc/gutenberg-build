@@ -91923,12 +91923,8 @@ If there's a particular need for this, please submit a feature request at https:
 		const postLinkRef = (0, _wordpress_element.useCallback)((node) => {
 			if (focusOnMount && node) node.focus();
 		}, [focusOnMount]);
-		const postPublishNonLinkHeader = isScheduled ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
-			(0, _wordpress_i18n.__)("is now scheduled. It will go live on"),
-			" ",
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(PostScheduleLabel, {}),
-			"."
-		] }) : (0, _wordpress_i18n.__)("is now live.");
+		const scheduleLabel = usePostScheduleLabel({ full: true });
+		const postPublishNonLinkHeader = isScheduled ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("is now scheduled. It will go live on %s."), scheduleLabel) : (0, _wordpress_i18n.__)("is now live.");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "post-publish-panel__postpublish",
 			children: [
