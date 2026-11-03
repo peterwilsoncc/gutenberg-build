@@ -80596,6 +80596,7 @@ Icon: ButtonIcon });
 				setPopover(false);
 				popoverAnchor?.focus();
 			},
+			onFocusOutside: () => setPopover(false),
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("form", {
 				className: "block-editor-url-popover__link-editor",
 				onSubmit: (event) => {
