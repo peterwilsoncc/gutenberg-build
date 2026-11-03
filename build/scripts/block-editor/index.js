@@ -113061,6 +113061,7 @@ If there's a particular need for this, please submit a feature request at https:
 				!isEditingStyleState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockVariationTransforms, { blockClientId: renderedBlockClientId }),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockInspectorPreTabsSlot, {}),
 				isEditingStyleState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StyleStateInspectorSlots, {
+					blockName,
 					clientId: renderedBlockClientId,
 					contentClientIds,
 					isSectionBlock,
