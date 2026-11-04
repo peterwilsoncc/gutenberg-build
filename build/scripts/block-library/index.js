@@ -31504,7 +31504,7 @@ Icon: ButtonIcon });
 		const { html, provider_name: providerName } = preview;
 		const providerNameSlug = kebabCase$1((providerName || title).toLowerCase());
 		if (isFromWordPress(html)) type = WP_EMBED_TYPE;
-		if (html || "photo" === type) {
+		if (html) {
 			attributes.type = type;
 			attributes.providerNameSlug = providerNameSlug;
 		}
@@ -43796,22 +43796,21 @@ Icon: ButtonIcon });
 		const { invalidateResolution } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
 		const { __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { preview, fetching, themeSupportsResponsive, cannotEmbed, hasResolved } = (0, _wordpress_data.useSelect)((select) => {
-			const { getEmbedPreview, isPreviewEmbedFallback, isRequestingEmbedPreview, getThemeSupports, hasFinishedResolution } = select(_wordpress_core_data.store);
+			const { getEmbedPreview, isPreviewEmbedFallback, getThemeSupports, hasFinishedResolution } = select(_wordpress_core_data.store);
 			if (!attributesUrl) return {
 				fetching: false,
 				cannotEmbed: false
 			};
 			const embedPreview = getEmbedPreview(attributesUrl);
 			const previewIsFallback = isPreviewEmbedFallback(attributesUrl);
-			const badEmbedProvider = embedPreview?.html === false && embedPreview?.type === void 0;
-			const wordpressCantEmbed = embedPreview?.data?.status === 404;
-			const validPreview = !!embedPreview && !badEmbedProvider && !wordpressCantEmbed;
+			const validPreview = !!embedPreview?.html;
+			const resolved = hasFinishedResolution("getEmbedPreview", [attributesUrl]);
 			return {
 				preview: validPreview ? embedPreview : void 0,
-				fetching: isRequestingEmbedPreview(attributesUrl),
+				fetching: !resolved,
 				themeSupportsResponsive: getThemeSupports()["responsive-embeds"],
 				cannotEmbed: !validPreview || previewIsFallback,
-				hasResolved: hasFinishedResolution("getEmbedPreview", [attributesUrl])
+				hasResolved: resolved
 			};
 		}, [attributesUrl]);
 		/**
