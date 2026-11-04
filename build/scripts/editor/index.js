@@ -112668,7 +112668,7 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/editor/build-module/components/collab-sidebar/add-note.mjs
 	const { useBlockElement: useBlockElement$2 } = unlock$5(_wordpress_block_editor.privateApis);
-	function AddNote({ clientId, sidebarRef, floating }) {
+	function AddNote({ clientId, floating }) {
 		const blockElement = useBlockElement$2(clientId);
 		const { toggleBlockHighlight } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
@@ -112706,10 +112706,7 @@ If there's a particular need for this, please submit a feature request at https:
 					isSubmittingRef.current = true;
 					try {
 						const savedRecord = await onCreate({ content: inputComment });
-						if (savedRecord) {
-							selectNote(savedRecord.id);
-							focusNoteThread(savedRecord.id, sidebarRef.current);
-						}
+						if (savedRecord) selectNote(savedRecord.id, { focus: true });
 						return savedRecord;
 					} finally {
 						isSubmittingRef.current = false;
@@ -113231,11 +113228,13 @@ If there's a particular need for this, please submit a feature request at https:
 			registerThread,
 			unregisterThread
 		]);
+		const isPlaced = !floating || floating.y !== void 0;
 		(0, _wordpress_element.useEffect)(() => {
-			if (!isSelected || note.id === "new") return;
+			if (!isSelected || !isPlaced || note.id === "new") return;
 			scrollNoteThreadIntoView(note.id, sidebarRef.current);
 		}, [
 			isSelected,
+			isPlaced,
 			floating?.y,
 			floating?.height,
 			note.id,
@@ -113300,7 +113299,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const ariaLabel = !!note.blockClientId ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Note: %s"), noteExcerpt) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Original block deleted. Note: %s"), noteExcerpt);
 		if (isFloating && note.id === "new") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNote, {
 			clientId: anchorClientId,
-			sidebarRef,
 			floating: {
 				y: floating.y,
 				ref: floatingRef
@@ -113598,10 +113596,7 @@ If there's a particular need for this, please submit a feature request at https:
 				if (node) sidebarRef.current = node;
 			},
 			"aria-label": isFloating ? (0, _wordpress_i18n.__)("Unresolved notes") : (0, _wordpress_i18n.__)("All notes"),
-			children: [isAddingNote && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNote, {
-				clientId: selectedBlockClientId,
-				sidebarRef
-			}, selectedBlockClientId), threads.map((thread, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_element.Fragment, { children: [index === firstResolvedIndex && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
+			children: [isAddingNote && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNote, { clientId: selectedBlockClientId }, selectedBlockClientId), threads.map((thread, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_element.Fragment, { children: [index === firstResolvedIndex && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
 				direction: "row",
 				align: "center",
 				justify: "center",
